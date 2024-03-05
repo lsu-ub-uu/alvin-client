@@ -1,0 +1,517 @@
+{
+    "dataList": {
+        "fromNo": "0",
+        "data": [
+            {
+                "record": {
+                    "data": {
+                        "children": [
+                            {
+                                "repeatId": "0",
+                                "children": [
+                                    {
+                                        "name": "geographic",
+                                        "value": "Uppsala"
+                                    }
+                                ],
+                                "name": "authority",
+                                "attributes": {
+                                    "lang": "swe"
+                                }
+                            },
+                            {
+                                "repeatId": "1",
+                                "children": [
+                                    {
+                                        "name": "geographic",
+                                        "value": "Ubsaliæ"
+                                    }
+                                ],
+                                "name": "variant",
+                                "attributes": {
+                                    "lang": "lat"
+                                }
+                            },
+                            {
+                                "repeatId": "2",
+                                "children": [
+                                    {
+                                        "name": "geographic",
+                                        "value": "Upsala"
+                                    }
+                                ],
+                                "name": "variant",
+                                "attributes": {
+                                    "lang": "swe"
+                                }
+                            },
+                            {
+                                "repeatId": "3",
+                                "children": [
+                                    {
+                                        "name": "geographic",
+                                        "value": "Upsal"
+                                    }
+                                ],
+                                "name": "variant",
+                                "attributes": {
+                                    "lang": "fre"
+                                }
+                            },
+                            {
+                                "repeatId": "4",
+                                "children": [
+                                    {
+                                        "name": "geographic",
+                                        "value": "Upsaliæ"
+                                    }
+                                ],
+                                "name": "variant",
+                                "attributes": {
+                                    "lang": "lat"
+                                }
+                            },
+                            {
+                                "name": "country",
+                                "value": "sw"
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "name": "latitude",
+                                        "value": "59.85488966429547"
+                                    },
+                                    {
+                                        "name": "longitude",
+                                        "value": "17.631198404124007"
+                                    }
+                                ],
+                                "name": "point"
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "name": "id",
+                                        "value": "679"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "name": "linkedRecordType",
+                                                "value": "recordType"
+                                            },
+                                            {
+                                                "name": "linkedRecordId",
+                                                "value": "alvin-place"
+                                            }
+                                        ],
+                                        "actionLinks": {
+                                            "read": {
+                                                "requestMethod": "GET",
+                                                "rel": "read",
+                                                "url": "https://cora.epc.ub.uu.se/alvin/rest/record/recordType/alvin-place",
+                                                "accept": "application/vnd.uub.record+json"
+                                            }
+                                        },
+                                        "name": "type"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "name": "linkedRecordType",
+                                                "value": "validationType"
+                                            },
+                                            {
+                                                "name": "linkedRecordId",
+                                                "value": "place"
+                                            }
+                                        ],
+                                        "actionLinks": {
+                                            "read": {
+                                                "requestMethod": "GET",
+                                                "rel": "read",
+                                                "url": "https://cora.epc.ub.uu.se/alvin/rest/record/validationType/place",
+                                                "accept": "application/vnd.uub.record+json"
+                                            }
+                                        },
+                                        "name": "validationType"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "name": "linkedRecordType",
+                                                "value": "system"
+                                            },
+                                            {
+                                                "name": "linkedRecordId",
+                                                "value": "alvin"
+                                            }
+                                        ],
+                                        "actionLinks": {
+                                            "read": {
+                                                "requestMethod": "GET",
+                                                "rel": "read",
+                                                "url": "https://cora.epc.ub.uu.se/alvin/rest/record/system/alvin",
+                                                "accept": "application/vnd.uub.record+json"
+                                            }
+                                        },
+                                        "name": "dataDivider"
+                                    },
+                                    {
+                                        "repeatId": "0",
+                                        "children": [
+                                            {
+                                                "children": [
+                                                    {
+                                                        "name": "linkedRecordType",
+                                                        "value": "user"
+                                                    },
+                                                    {
+                                                        "name": "linkedRecordId",
+                                                        "value": "151515"
+                                                    }
+                                                ],
+                                                "actionLinks": {
+                                                    "read": {
+                                                        "requestMethod": "GET",
+                                                        "rel": "read",
+                                                        "url": "https://cora.epc.ub.uu.se/alvin/rest/record/user/151515",
+                                                        "accept": "application/vnd.uub.record+json"
+                                                    }
+                                                },
+                                                "name": "updatedBy"
+                                            },
+                                            {
+                                                "name": "tsUpdated",
+                                                "value": "2024-01-15T13:57:11.800629Z"
+                                            }
+                                        ],
+                                        "name": "updated"
+                                    },
+                                    {
+                                        "repeatId": "1",
+                                        "children": [
+                                            {
+                                                "children": [
+                                                    {
+                                                        "name": "linkedRecordType",
+                                                        "value": "user"
+                                                    },
+                                                    {
+                                                        "name": "linkedRecordId",
+                                                        "value": "151515"
+                                                    }
+                                                ],
+                                                "actionLinks": {
+                                                    "read": {
+                                                        "requestMethod": "GET",
+                                                        "rel": "read",
+                                                        "url": "https://cora.epc.ub.uu.se/alvin/rest/record/user/151515",
+                                                        "accept": "application/vnd.uub.record+json"
+                                                    }
+                                                },
+                                                "name": "updatedBy"
+                                            },
+                                            {
+                                                "name": "tsUpdated",
+                                                "value": "2024-01-17T09:59:09.853106Z"
+                                            }
+                                        ],
+                                        "name": "updated"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "name": "linkedRecordType",
+                                                "value": "user"
+                                            },
+                                            {
+                                                "name": "linkedRecordId",
+                                                "value": "151515"
+                                            }
+                                        ],
+                                        "actionLinks": {
+                                            "read": {
+                                                "requestMethod": "GET",
+                                                "rel": "read",
+                                                "url": "https://cora.epc.ub.uu.se/alvin/rest/record/user/151515",
+                                                "accept": "application/vnd.uub.record+json"
+                                            }
+                                        },
+                                        "name": "createdBy"
+                                    },
+                                    {
+                                        "name": "tsCreated",
+                                        "value": "2024-01-15T13:57:11.800629Z"
+                                    }
+                                ],
+                                "name": "recordInfo"
+                            }
+                        ],
+                        "name": "place"
+                    },
+                    "actionLinks": {
+                        "read": {
+                            "requestMethod": "GET",
+                            "rel": "read",
+                            "url": "https://cora.epc.ub.uu.se/alvin/rest/record/alvin-place/679",
+                            "accept": "application/vnd.uub.record+json"
+                        },
+                        "read_incoming_links": {
+                            "requestMethod": "GET",
+                            "rel": "read_incoming_links",
+                            "url": "https://cora.epc.ub.uu.se/alvin/rest/record/alvin-place/679/incomingLinks",
+                            "accept": "application/vnd.uub.recordList+json"
+                        },
+                        "update": {
+                            "requestMethod": "POST",
+                            "rel": "update",
+                            "contentType": "application/vnd.uub.record+json",
+                            "url": "https://cora.epc.ub.uu.se/alvin/rest/record/alvin-place/679",
+                            "accept": "application/vnd.uub.record+json"
+                        },
+                        "index": {
+                            "requestMethod": "POST",
+                            "rel": "index",
+                            "body": {
+                                "children": [
+                                    {
+                                        "children": [
+                                            {
+                                                "name": "linkedRecordType",
+                                                "value": "recordType"
+                                            },
+                                            {
+                                                "name": "linkedRecordId",
+                                                "value": "alvin-place"
+                                            }
+                                        ],
+                                        "name": "recordType"
+                                    },
+                                    {
+                                        "name": "recordId",
+                                        "value": "679"
+                                    },
+                                    {
+                                        "name": "type",
+                                        "value": "index"
+                                    }
+                                ],
+                                "name": "workOrder"
+                            },
+                            "contentType": "application/vnd.uub.record+json",
+                            "url": "https://cora.epc.ub.uu.se/alvin/rest/record/workOrder/",
+                            "accept": "application/vnd.uub.record+json"
+                        }
+                    }
+                }
+            },
+            {
+                "record": {
+                    "data": {
+                        "children": [
+                            {
+                                "repeatId": "0",
+                                "children": [
+                                    {
+                                        "name": "geographic",
+                                        "value": "Ockelbo"
+                                    }
+                                ],
+                                "name": "authority",
+                                "attributes": {
+                                    "lang": "swe"
+                                }
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "name": "id",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "name": "linkedRecordType",
+                                                "value": "validationType"
+                                            },
+                                            {
+                                                "name": "linkedRecordId",
+                                                "value": "place"
+                                            }
+                                        ],
+                                        "actionLinks": {
+                                            "read": {
+                                                "requestMethod": "GET",
+                                                "rel": "read",
+                                                "url": "https://cora.epc.ub.uu.se/alvin/rest/record/validationType/place",
+                                                "accept": "application/vnd.uub.record+json"
+                                            }
+                                        },
+                                        "name": "validationType"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "name": "linkedRecordType",
+                                                "value": "system"
+                                            },
+                                            {
+                                                "name": "linkedRecordId",
+                                                "value": "alvin"
+                                            }
+                                        ],
+                                        "actionLinks": {
+                                            "read": {
+                                                "requestMethod": "GET",
+                                                "rel": "read",
+                                                "url": "https://cora.epc.ub.uu.se/alvin/rest/record/system/alvin",
+                                                "accept": "application/vnd.uub.record+json"
+                                            }
+                                        },
+                                        "name": "dataDivider"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "name": "linkedRecordType",
+                                                "value": "recordType"
+                                            },
+                                            {
+                                                "name": "linkedRecordId",
+                                                "value": "alvin-place"
+                                            }
+                                        ],
+                                        "actionLinks": {
+                                            "read": {
+                                                "requestMethod": "GET",
+                                                "rel": "read",
+                                                "url": "https://cora.epc.ub.uu.se/alvin/rest/record/recordType/alvin-place",
+                                                "accept": "application/vnd.uub.record+json"
+                                            }
+                                        },
+                                        "name": "type"
+                                    },
+                                    {
+                                        "children": [
+                                            {
+                                                "name": "linkedRecordType",
+                                                "value": "user"
+                                            },
+                                            {
+                                                "name": "linkedRecordId",
+                                                "value": "151515"
+                                            }
+                                        ],
+                                        "actionLinks": {
+                                            "read": {
+                                                "requestMethod": "GET",
+                                                "rel": "read",
+                                                "url": "https://cora.epc.ub.uu.se/alvin/rest/record/user/151515",
+                                                "accept": "application/vnd.uub.record+json"
+                                            }
+                                        },
+                                        "name": "createdBy"
+                                    },
+                                    {
+                                        "name": "tsCreated",
+                                        "value": "2024-01-23T10:40:41.933066Z"
+                                    },
+                                    {
+                                        "repeatId": "0",
+                                        "children": [
+                                            {
+                                                "children": [
+                                                    {
+                                                        "name": "linkedRecordType",
+                                                        "value": "user"
+                                                    },
+                                                    {
+                                                        "name": "linkedRecordId",
+                                                        "value": "151515"
+                                                    }
+                                                ],
+                                                "actionLinks": {
+                                                    "read": {
+                                                        "requestMethod": "GET",
+                                                        "rel": "read",
+                                                        "url": "https://cora.epc.ub.uu.se/alvin/rest/record/user/151515",
+                                                        "accept": "application/vnd.uub.record+json"
+                                                    }
+                                                },
+                                                "name": "updatedBy"
+                                            },
+                                            {
+                                                "name": "tsUpdated",
+                                                "value": "2024-01-23T10:40:41.933066Z"
+                                            }
+                                        ],
+                                        "name": "updated"
+                                    }
+                                ],
+                                "name": "recordInfo"
+                            }
+                        ],
+                        "name": "place"
+                    },
+                    "actionLinks": {
+                        "read": {
+                            "requestMethod": "GET",
+                            "rel": "read",
+                            "url": "https://cora.epc.ub.uu.se/alvin/rest/record/alvin-place/1",
+                            "accept": "application/vnd.uub.record+json"
+                        },
+                        "update": {
+                            "requestMethod": "POST",
+                            "rel": "update",
+                            "contentType": "application/vnd.uub.record+json",
+                            "url": "https://cora.epc.ub.uu.se/alvin/rest/record/alvin-place/1",
+                            "accept": "application/vnd.uub.record+json"
+                        },
+                        "index": {
+                            "requestMethod": "POST",
+                            "rel": "index",
+                            "body": {
+                                "children": [
+                                    {
+                                        "children": [
+                                            {
+                                                "name": "linkedRecordType",
+                                                "value": "recordType"
+                                            },
+                                            {
+                                                "name": "linkedRecordId",
+                                                "value": "alvin-place"
+                                            }
+                                        ],
+                                        "name": "recordType"
+                                    },
+                                    {
+                                        "name": "recordId",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "name": "type",
+                                        "value": "index"
+                                    }
+                                ],
+                                "name": "workOrder"
+                            },
+                            "contentType": "application/vnd.uub.record+json",
+                            "url": "https://cora.epc.ub.uu.se/alvin/rest/record/workOrder/",
+                            "accept": "application/vnd.uub.record+json"
+                        },
+                        "delete": {
+                            "requestMethod": "DELETE",
+                            "rel": "delete",
+                            "url": "https://cora.epc.ub.uu.se/alvin/rest/record/alvin-place/1"
+                        }
+                    }
+                }
+            }
+        ],
+        "totalNo": "2",
+        "containDataOfType": "alvin-place",
+        "toNo": "2"
+    }
+}

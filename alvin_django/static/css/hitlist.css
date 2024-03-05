@@ -1,0 +1,65 @@
+*
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+.clearfix {
+  transform: scale(1); /* For IE 6/7 */
+}
+.divMenuContainer1
+{
+    border-top: dotted 1px black;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    background: #FFFFFF;
+}
+.divMenuBlankLeftRight
+{
+    float: left;
+    width: 19%;
+    background: #FFFFFF;
+}
+.divMenuBlankLeft
+{
+    float: left;
+    width: 24px;
+    background: #FFFFFF;
+}
+.divMenuCenterContainer
+{
+    margin-left: 24px;
+    width: 96%;
+    background: #FFFFFF;
+    text-align: center;
+    border: solid 0px black;
+}
+.divMenuMiddleElement
+{
+    float: left;
+    width: 40%;
+    background: #FFFFFF;
+}
+.divMenuLeftMiddleElement
+{
+    float: left;
+    width: 84%;
+    background: #FFFFFF;
+}
+.divMenuRightMiddleElement
+{
+    float: left;
+    width: 34px;
+    background: #FFFFFF;
+}
+.divMenuBlankRight
+{
+    float: left;
+    width: 102px;
+    background: #FFFFFF;
+    padding-bottom:10px; 
+
+}

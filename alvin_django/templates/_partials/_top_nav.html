@@ -1,0 +1,22 @@
+<div class="responsive-menu-container-bottom">
+    <div class="sub">Digitalt kulturarv</div>
+    <nav aria-label="Huvudmeny" class="top-nav-wrap container">
+        <ul class="top-nav first-level is-uppercase clearfix">
+            <li class="{% if request.resolver_match.url_name == 'start' %}active{% endif %}">
+                <a href="{% url 'start' %}"> Start </a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'medlemmar' %}active{% endif %}">
+                <a href="{% url 'medlemmar' %}"> Medlemmar </a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'kontakt' %}active{% endif %}">
+                <a href="{% url 'kontakt' %}"> Kontakt </a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'webbplatskarta' %}active{% endif %}">
+                <a href="{% url 'webbplatskarta' %}"> Webbplatskarta </a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'lista_platser' %}active{% endif %}">
+                <a href="{% url 'alvin_place_list' %}"> Platser </a>
+            </li>
+        </ul>
+    </nav>
+</div>

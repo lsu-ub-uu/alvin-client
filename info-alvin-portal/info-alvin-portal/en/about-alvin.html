@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="index, follow">
+  <meta name="DC.Publisher" content="Uppsala university">
+  <meta name="keywords" content="Alvin, cultural heritage, digital collections, databases, libraries">
+  <meta name="description" content="Alvin - Nordic platform for preserving and making digitised cultural heritage available">
+  <meta name="DC.Creator.PersonalName" content="UUB Alvin support">
+  <meta name="internal-robots" content="noindex">
+  <meta name="siteName" content="Alvin">
+  <meta name="creator" content="UUB Alvin support">
+  <link href="../css/v2-aggregated-css-base.css" rel="stylesheet" type="text/css">
+  <link href="../css/v2-aggregated-css-modules.css" rel="stylesheet" type="text/css">
+  <link href="../css/v2-aggregated-css-post.css" rel="stylesheet" type="text/css">
+  <link href="../css/v2-aggregated-css-media-queries.css" rel="stylesheet" type="text/css">
+  <link href="../css/css-custom-site.css" rel="stylesheet" type="text/css">
+  <link href="../css/css-custom-site-theme-alvin.css" rel="stylesheet" type="text/css">
+  <link href="../css/alvin.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" href="../img/android-chrome-192x192.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <title>Alvin - About Alvin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ </head>
+ <body class="custom-site not-centralised" id="top">
+  <div class="main-wrapper">
+   <div class="skip-to-content">
+    <a class="is-visually-hidden is-show-on-focus btn-skip btn" href="#maincontent">Skip to main content</a>
+   </div>
+   <header class="header-element">
+    <div class="container top-content clearfix">
+     <div class="logo-wrap">
+      <a href="start.html" title="Alvin - Digital cultural heritage" class="logo-link">
+       <img src="../img/alvinlogo.png" alt="Alvin logo" class="logo">
+      </a>
+     </div>
+     <div class="searchForm" aria-label="Search in Alvin" role="search">
+      <form class="search"
+       action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
+       <div class="search-group flex">
+        <label for="mainSearchField" class="is-visually-hidden">Search</label>
+        <div id="js-main-search-complete-output" class="search-complete-output">
+         <div class="autocomplete__wrapper search-progressive-input">
+          <input id="mainSearchField" class="autocomplete__input autocomplete__input--default"
+           name="query" type="text" placeholder="Search in Alvin">
+         </div>
+        </div>
+        <input type="submit" class="btn btn-search submit-search" value="Search">
+       </div>
+      </form>
+     </div>
+     <div class="responsive-menu-container-bottom">
+      <div class="sub">Digital cultural heritage</div>
+      <nav aria-label="Huvudmeny" class="top-nav-wrap container">
+       <ul class="top-nav first-level is-uppercase clearfix">
+        <li class="first">
+         <a href="start.html"> Start </a>
+        </li>
+        <li class="">
+         <a href="members.html"> Members </a>
+        </li>
+        <li class="">
+         <a href="contact.html"> Contact </a>
+        </li>
+        <li class="">
+         <a href="sitemap.html"> Sitemap </a>
+        </li>
+       </ul>
+      </nav>
+     </div>
+    </div>
+    <div class="mobile-search-container" aria-label="Search in Alvin" role="search">
+     <form class="mobile-search" id="mobile-search-form"
+      action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
+      <div class="search-group flex justify-content-end">
+       <label for="mainSearchFieldMobile" class="is-visually-hidden">Search</label>
+       <div class="textfield search-complete-output-mobile" style="display: block; width: initial;">
+        <div class="autocomplete__wrapper">
+         <input autocomplete="off" class="autocomplete__input autocomplete__input--default"
+          id="mainSearchFieldMobile" name="query" placeholder="Search in Alvin" type="text">
+        </div>
+       </div>
+       <input type="submit" class="submit-icon submit-search" value="" aria-label="Search">
+      </div>
+     </form>
+    </div>
+    <script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function showMenu() {
+      document.getElementById("mobileMenu").classList.toggle("show");
+    }
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i > dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    } 
+    </script>
+    <div
+     class="local-nav-mobile-header align-items-center flex-row local-nav-mobile-static dropdown">
+     <button id="local-nav-mobile-button" class="local-nav-mobile-icon dropbtn" aria-controls="mobileMenu" aria-expanded="false" aria-label="Main menu" onclick="showMenu()"></button> 
+     <span class="current-page is-berling"> Alvin - digital cultural heritage</span>
+    </div>
+    <nav id="mobileMenu" aria-label="Main menu" class="local-nav-mobile">
+     <ul class="menuLevel0">
+      <li class="active"><a href="about-alvin.html">About Alvin</a>
+       <ul class="menuLevel1">
+        <li><a href="#background">Background and history</a></li>
+        <li><a href="#reference-model">Reference model</a></li>
+        <li><a href="#metadata">Metadata</a></li>
+        <li><a href="#oai-pmh">OAI-PMH</a></li>
+        <li><a href="#accessibility">Accessibility</a></li>
+       </ul>
+      </li>
+      <li><a href="search-tips.html">Search tips</a></li>
+      <li><a href="copyright.html">Copyright</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="sitemap.html">Sitemap</a></li>
+     </ul> 
+    </nav>
+   </header>
+   <div class="l-main-container clearfix main-wrapper">
+    <div class="page-content container with-menu">
+     <div class="l-top-container flex-row">
+      <div class="breadcrumbs no-print">
+       <a href="start.html"> Start </a>
+       <span> About Alvin </span>
+      </div>
+      <div class="page-tools-top clearfix">
+       <div class="page-tool language">
+        <a href="about-alvin.html" class="language en" lang="en">
+         <span class="language-text"> English </span>
+        </a>
+        <a href="../no/om-alvin.html" class="language no" lang="no">
+         <span class="language-text"> Norsk </span>
+        </a>
+        <a href="../sv/om-alvin.html" class="language sv" lang="sv">
+         <span class="language-text"> Svenska </span>
+        </a>
+       </div>
+      </div>
+     </div>
+     <div class="l-left-nav-wrap clearfix">
+      <nav class="left-nav clearfix">
+       <h2 class="left-nav-heading">
+        <a class="left-nav-heading-unskew" href="about-alvin.html">About Alvin</a>
+       </h2>
+       <ul class="menuLevel0">
+        <li><a href="#background">Background and history</a></li>
+        <li><a href="#reference-model">Reference model</a></li>
+        <li><a href="#metadata">Metadata</a></li>
+        <li><a href="#oai-pmh">OAI-PMH</a></li>
+        <li><a href="#accessibility">Accessibility</a></li>
+       </ul>
+      </nav>
+     </div>
+     <div class="l-article-wrap">
+      <div id="maincontent">
+       <div class="main-content">
+        <div id="xp1" class="rs_addtools rs_splitbutton rs_preserve rs_skip container"></div> 
+        <div id="readspeaker-content" >
+         <!-- index_start -->
+         <div class="container wide-puff is-less-margin-bottom ">
+          <div class="main-image">
+           <div class="wide-puff-image">
+            <img src="../digitalAssets/c_775202-l_3-k_imagepuff.jpg" alt="Detalj från kopparstick av Joan Blaeu">
+           </div>
+          </div>
+          <div class="wide-puff-info bg-dark-trans">
+           <h1 class="is-helvetica wide-puff-header">Alvin - Nordic platform for preserving and making digitised cultural heritage available</h1>
+          </div>
+         </div>
+         <!-- index_start -->
+         <article id="article_component_3_2" class="article imageRight">
+          <h2>About Alvin</h2>
+          <div class="size2of3 unit">
+           <p class="ingress">Alvin is a platform for publishing and long-term preservation of digitised cultural heritage material from library, archive and museum collections in Sweden and Norway.</p>
+           <p>The system was developed at Uppsala University Library and has been in operation since 2014. It is led by a consortium consisting of the university libraries in Uppsala, Lund and Gothenburg. In addition to these, there are about twenty members and another twenty institutions that have published material in Alvin.</p>        
+          </div>
+          <div class="size1of3 unit last">
+           <img src="../digitalAssets/c_606082-l_3-k_carolina.jpg" alt="Front of Carolina Rediviva" class="">
+          </div>
+          <div class="size2of3 unit">
+           <p>In addition to the institutions' own collections, Alvin functions as a digital archive to keep the results from a number of externally funded research and digitisation projects available in a long-term perspective.</p>
+           <p>The portal contains archives, books, manuscripts, images, maps, objects, notated music, video, audio files and some other material. Most of the digital content is openly available in high definition form and free of known copyright restrictions under the Public Domain Mark. Metadata records are freely available under Creative Commons CC0.</p>  
+          </div>
+          <div class="size1of3 unit last">
+           <img src="../digitalAssets/c_606082-l_3-k_ub.jpg" alt="Front of the University Library in Lund" class="">
+          </div>
+         </article>
+         
+         
+         
+         <article id="article_component_3_3" class="article simple">
+          <span id='background'></span>
+          <h2>Background and history</h2>
+          <div class="articleText" id="articleText_component_3_3">
+           <p class="ingress">Alvin was originally developed because existing library systems did not adequately handle:</p>
+           <ul>
+            <li><strong>cataloguing of non-book materials</strong></li>
+            <li><strong>linked data</strong></li>
+            <li><strong>item-specific information</strong></li>
+            <li><strong>storage/display of digital material</strong></li>
+            <li><strong>search engine friendliness (Google etc.)</strong></li>
+           </ul>
+           <p class="ingress">In addition, a uniform solution was sought for different types of material instead of specific systems for different resource types, collections or projects.</p>
+           <p>Alvin has his foundation in a number of different projects that have been run over the years at the Electronic Publishing Centre and later the Unit for Library Systems at Uppsala University Library.</p>
+           <p>Some examples are self-developed database solutions for Erik Waller's extensive autograph collection as well as the map and image collections at Uppsala University Library, and the collaborative projects ProBok (book bindings and provenances) and Ediffah (personal archives).</p>
+           <p>Added to these were a number of smaller projects or systems developed for the library by other parties.</p>
+           <p>Over time, it became clear that the management, operation and further development of such a wild flora of disparate systems and technologies, which had to be managed by IT managers as well as the respective users, was clearly unsustainable in the long run.</p>
+           <p>The systems were also not designed to communicate with each other. Neither had the various underlying development projects been coordinated in any way, but had been run completely separately from each other.</p>
+           <h3>LUPP</h3>
+           <p>In <a class="external-link" href="http://urn.kb.se/resolve?urn=urn:nbn:se:uu:diva-328092" title="Slutrapport från LUPP">the final report</a> (2011) to the LUPP project (Digitalisation collaboration between the Diocesan Library at Linköping City Library and Uppsala University Library) it was found that if no radical change is made, it is highly likely that all these services will fade away as staff disappear or technical platforms become outdated and have to be replaced/shut down.</p>
+           <p>In the LUPP report, Alvin was therefore launched as a concept for the first time. The idea was that instead of using ten different database software or scripting languages, the same software and method for generating web pages should be used for all applications. Only in that way can they be maintained in a longer perspective. Technological development is fast, even if the needs for it do not change at the same pace, which means that systems that are not constantly further developed or renewed cannot survive in the long term. A common platform means that entire components, such as a search engine or database software, can be replaced in step with the technological development of these. It also means that personal dependence is reduced because several developers work with the same solutions.
+            
+           </p>
+           <h2>ArkA-D</h2>
+           <p>The technical development of Alvin as a tool for digitising the research libraries' archive collections was founded in the project <a class="external-link" href="https://www.rj.se/anslag/2011/arka-d---ett-verktyg-for-digitalisering-av-forskningsbibliotekens-arkivsamlingar/">ArkA-D</a>, a two-year infrastructure project that was carried out between 2012 and 2014.</p>
+           <p>As the end point of the project, Alvin was launched at the conference <em>Digitalisera - men sen då?</em> at the Nordic Museum on 28 November 2014.</p>
+           <figure class="image-captioned"><img alt="Alvin start page 2014" src="../digitalAssets/c_606082-l_3-k_image.png" style="border-style:solid; border-width:1px">
+            <figcaption>Alvin start page, December 2014</figcaption>
+           </figure>
+           <h2>Management</h2>
+           <p>Since a digital platform like Alvin would certainly attract interest among other cultural heritage institutions, the ArkA-D project worked out a consortium model that would be able to bear the costs of the system even after the end of the project. It was partly based on experiences from the publishing platform <a class="external-link" href="http://www.diva-portal.org" title="DiVA-portal">DiVA</a>.</p>
+           <p>In 2015, the consortium began to take shape with Linköping City Library (the original partner from LUPP) as the first member of Alvin after Uppsala University Library.</p>
+           <p>As of mid-year 2017, Alvin transitioned from the previous project stage to a system in full production, now with a number of new <a href="members.html">members and other organizations</a> with material in the system. Operation and support of the system is thus financed through annual membership fees.</p>
+          </div>
+          
+          
+         </article>
+         
+         <article id="article_component_3_4" class="article simple">
+          <span id='reference-model'></span>
+          <h2>Reference model</h2>
+          <div class="articleText" id="articleText_component_3_4">
+           <p>Conceptually, the system is based on the OAIS model (Open Archival Information System).</p>     
+           <p>An OAIS-built digital archive is built on six functional components:</p>
+            <ol>
+             <li><em>Ingest</em> provides functions and services to receive information packages and to prepare them for storage and handling in the archive.</li>
+             <li><em>Archival Storage</em> provides services and functions for storage.</li>
+             <li><em>Data Management</em> provides services and functions such as being able to create, maintain and retrieve descriptive information stored in the archive. The aim is for the digital information to be available for a longer period of time.</li>
+             <li><em>Administration</em> provides services and functions for the overall maintenance of the archive.</li>
+             <li><em>Access</em> provides services and functions that help the user find the information stored in the archive.</li>
+             <li><em>Preservation planning</em> provides services and functions that are tasked with monitoring the archive's external environment and making recommendations to ensure that the information is not lost over time.</li>
+            </ol>
+           <figure class="image-captioned"><img alt="OAIS reference model" src="../digitalAssets/image2022-2-16_10-59-11.png" style="border-style:solid; border-width:1px">
+            <figcaption>OAIS reference model</figcaption>
+           </figure>
+           <h2>Permanent links - URN:NBN</h2>
+           <p>A URN is a unique and permanent identifier for electronic resources on the Internet. In Alvin, <a href="https://datatracker.ietf.org/doc/html/rfc8458">URN:NBN</a> is used for permanent links to the records.</p>
+           </div>
+         </article>
+         
+         <article id="article_component_3_5" class="article simple">
+          <span id='metadata'></span>
+          <h2>Metadata</h2>
+          <div class="articleText" id="articleText_component_3_5">
+           <p>Metadata in Alvin is stored in an internal format. The aim is to be able to describe different types of resources in one and the same system. Descriptive elements are based on international standards for archives (<a href="http://www.loc.gov/ead/">EAD</a>) and libraries (<a href="http://www.loc.gov/standards/mods/">MODS</a>/<a class="external-link" href="http://www.loc.gov/standards/mads/">MADS</a>, <a href="http://www.loc.gov/marc/">MARC).</a> Some special adaptations for manuscript volumes have also been made according to <a href="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/MS.html">TEI-MS</a>. As import format to Alvin, a combination of <a href="http://www.loc.gov/standards/mods/">MODS</a> and <a href="http://www.loc.gov/standards/mets/">METS</a> is used to connect descriptive metadata with digital files.</p>
+           <p>
+            In Alvin there are two main types of records:</p>
+            <ol>
+             <li>Bibliographic records describing a single resource (text, image, map, etc.) or a collection of resources (eg an archive)</li>
+             <li>Authority records that describe persons, families, organisations and geographic locations.</li>
+            </ol>
+            <p>
+             Bibliographic records and authority records are linked by a type of relationship (role). A book can be linked to a person through the &quot;author&quot; relationship type. An archive can be linked to a person through the &quot;archive creator&quot; relationship type.
+           </p>
+           <p>Alvin's metadata format is also based on linked data and describing relationships between different bibliographic records. The link can be hierarchical (Included in/part), parallel (different version or format) or to another related record (such as series or reference).</p>
+           <ul>
+            <li><a href="../digitalAssets/Alvin-formathandbok.pdf">Alvin format manual</a> (in Swedish)</li>
+            <li><a href="../digitalAssets/Alvin-importformat.pdf">Alvin import format</a> (in Swedish)</li>
+           </ul>
+          </div>
+         </article>
+         
+         <article id="article_component_3_6" class="article simple">
+          <span id='oai-pmh'></span>
+          <h2>OAI-PMH</h2>
+          <div class="articleText" id="articleText_component_3_6">         
+           <p>Metadata records from Alvin can be harvested via the <a href="https://www.openarchives.org/OAI/openarchivesprotocol.html">OAI-PMH, Version 2</a> (The Open Archives Initiative Protocol for Metadata Harvesting) protocol. See: <a href="https://www.alvin-portal.org/oai/oai?verb=Identify">https://www.alvin-portal.org/oai/oai?verb=Identify</a></p>
+           </div>
+         </article>
+         
+        
+         <article id="article_component_3_7" class="article simple">
+          <span id='accessibility'></span>
+          <h2>Accessibility</h2>
+          <div class="articleText" id="articleText_component_3_7">
+           <p>The content of Alvin consists of reproductions of objects from cultural heritage collections. In <a href="https://www.riksdagen.se/sv/dokument-lagar/dokument/svensk-forfattningssamling/lag-20181937-om-tillganglighet-till-digital_sfs-2018-1937">Act (2018: 1937) on access to digital public service</a>, according to § 9, section 4 &quot;reproductions of objects from cultural heritage collections that cannot be made fully accessible without significant obstacles&quot; are excluded from the scope of the Act.</p>
+           <p>By objects from cultural heritage collections (according to § 7) are meant private or publicly owned objects of historical, artistic, archaeological, aesthetic, scientific or technical interest that are included in collections managed by cultural institutions.</p>
+          </div>
+         </article>
+    
+         <!-- index_stop -->
+
+         <div class="container page-tools-bottom page-tools">
+          <div class="page-tool print">
+           <span class="print-icon">
+            <a accesskey="P" href="" class="js-print-page" onclick="window.print()">Print</a>
+           </span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <button onclick="topFunction()" id="scrollToTop" title="Go to top"></button>
+  <script>
+// Get the button
+let topbutton = document.getElementById("scrollToTop");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    topbutton.style.display = "block";
+  } else {
+    topbutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+ </script>
+ </body>
+</html>

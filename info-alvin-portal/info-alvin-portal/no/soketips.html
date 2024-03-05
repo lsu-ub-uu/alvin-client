@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="no">
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="index, follow">
+  <meta name="DC.Publisher" content="Uppsala universitet">
+  <meta name="keywords" content="Alvin, kulturarv, digitale samlinger, databaser, bibliotek">
+  <meta name="description" content="Alvin - Nordisk plattform for bevaring og tilgjengeliggjøring av digitalisert kulturarv">
+  <meta name="DC.Creator.PersonalName" content="UUB Alvin support">
+  <meta name="internal-robots" content="noindex">
+  <meta name="siteName" content="Alvin">
+  <meta name="creator" content="UUB Alvin support">
+  <link href="../css/v2-aggregated-css-base.css" rel="stylesheet" type="text/css">
+  <link href="../css/v2-aggregated-css-modules.css" rel="stylesheet" type="text/css">
+  <link href="../css/v2-aggregated-css-post.css" rel="stylesheet" type="text/css">
+  <link href="../css/v2-aggregated-css-media-queries.css" rel="stylesheet" type="text/css">
+  <link href="../css/css-custom-site.css" rel="stylesheet" type="text/css">
+  <link href="../css/css-custom-site-theme-alvin.css" rel="stylesheet" type="text/css">
+  <link href="../css/alvin.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" href="../img/android-chrome-192x192.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+   <title>Alvin - Søketips</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ </head>
+ <body class="custom-site not-centralised" id="top">
+  <div class="main-wrapper">
+   <div class="skip-to-content">
+    <a class="is-visually-hidden is-show-on-focus btn-skip btn" href="#maincontent">Gå til hovedinnhold</a>
+   </div>
+   <header class="header-element">
+    <div class="container top-content clearfix">
+     <div class="logo-wrap">
+      <a href="start.html" title="Alvin - Digital kulturarv" class="logo-link">
+       <img src="../img/alvinlogo.png" alt="Alvin logo" class="logo">
+      </a>
+     </div>
+     <div class="searchForm" aria-label="Søk i Alvin" role="search">
+      <form class="search"
+       action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
+       <div class="search-group flex">
+        <label for="mainSearchField" class="is-visually-hidden">Søk</label>
+        <div id="js-main-search-complete-output" class="search-complete-output">
+         <div class="autocomplete__wrapper search-progressive-input">
+          <input id="mainSearchField" class="autocomplete__input autocomplete__input--default"
+           name="query" type="text" placeholder="Søk i Alvin">
+         </div>
+        </div>
+        <input type="submit" class="btn btn-search submit-search" value="Søk">
+       </div>
+      </form>
+     </div>
+     <div class="responsive-menu-container-bottom">
+      <div class="sub">Digital kulturarv</div>
+      <nav aria-label="Main menu" class="top-nav-wrap container">
+       <ul class="top-nav first-level is-uppercase clearfix">
+        <li class="first">
+         <a href="start.html"> Start </a>
+        </li>
+        <li class="">
+         <a href="medlemmer.html"> Medlemmer </a>
+        </li>
+        <li class="">
+         <a href="kontakt.html"> Kontakt </a>
+        </li>
+        <li class="">
+         <a href="nettstedskart.html"> Nettstedskart </a>
+        </li>
+       </ul>
+      </nav>
+     </div>
+    </div>
+    <div class="mobile-search-container" aria-label="Søk i Alvin" role="search">
+     <form class="mobile-search" id="mobile-search-form"
+      action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
+      <div class="search-group flex justify-content-end">
+       <label for="mainSearchFieldMobile" class="is-visually-hidden">Søk</label>
+       <div class="textfield search-complete-output-mobile" style="display: block; width: initial;">
+        <div class="autocomplete__wrapper">
+         <input autocomplete="off" class="autocomplete__input autocomplete__input--default"
+          id="mainSearchFieldMobile" name="query" placeholder="Søk i Alvin" type="text">
+        </div>
+       </div>
+       <input type="submit" class="submit-icon submit-search" value="" aria-label="Søk">
+      </div>
+     </form>
+    </div>
+    <script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function showMenu() {
+      document.getElementById("mobileMenu").classList.toggle("show");
+    }
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i > dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    } 
+    </script>
+    <div
+     class="local-nav-mobile-header align-items-center flex-row local-nav-mobile-static dropdown">
+     <button id="local-nav-mobile-button" class="local-nav-mobile-icon dropbtn" aria-controls="mobileMenu" aria-expanded="false" aria-label="Hovedmeny" onclick="showMenu()"></button> 
+     <span class="current-page is-berling"> Alvin - digital kulturarv</span>
+    </div>
+    <nav id="mobileMenu" aria-label="Hovedmeny" class="local-nav-mobile">
+     <ul class="menuLevel0">
+      <li><a href="om-alvin.html">Om Alvin</a></li>
+      <li class="active"><a href="soketips.html">Søketips</a>
+       <ul class="menuLevel1">
+        <li><a href="#enkelt-sok">Enkelt søk</a></li>
+        <li><a href="#utvidet-sok">Utvidet søk</a></li>
+        <li><a href="#filtre">Filtre</a></li>
+        <li><a href="#sortering">Sortering</a></li>
+        <li><a href="#visning">Visning</a></li>
+        <li><a href="#trunkering-maskering-og-fraser">Trunkering, maskering og fraser</a></li>
+        <li><a href="#fulltekstsok">Fulltekstsøk</a></li>
+        <li><a href="#last-ned-og-bruk">Last ned og bruk</a></li>
+        <li><a href="#sprak-og-tegnkoding">Språk- og tegnkoding</a></li>
+        <li><a href="#bildefremviser">Bildefremviser</a></li>
+        <li><a href="#autoritetsposter">Autoritetsposter</a></li>
+       </ul>
+      </li>
+      <li><a href="opphavsrett.html">Opphavsrett</a></li>
+      <li><a href="medlemmer.html">Medlemmer</a>
+      </li>
+      <li><a href="kontakt.html">Kontakt</a></li>
+      <li><a href="nettstedskart.html">Nettstedskart</a></li>
+     </ul>
+    </nav>
+   </header>
+   <div class="l-main-container clearfix main-wrapper">
+    <div class="page-content container with-menu">
+     <div class="l-top-container flex-row">
+      <div class="breadcrumbs no-print">
+       <a href="start.html"> Start </a>
+       <span> Søketips </span>
+      </div>
+      <div class="page-tools-top clearfix">
+       <div class="page-tool language">
+        <a href="../en/search-tips.html" class="language en" lang="en">
+         <span class="language-text"> English </span>
+        </a>
+        <a href="soketips.html" class="language no" lang="no">
+         <span class="language-text"> Norsk </span>
+        </a>
+        <a href="../sv/soktips.html" class="language sv" lang="sv">
+         <span class="language-text"> Svenska </span>
+        </a>
+       </div>
+      </div>
+     </div>
+     <div class="l-left-nav-wrap clearfix">
+      <nav class="left-nav clearfix">
+       <h2 class="left-nav-heading">
+        <a class="left-nav-heading-unskew" href="soketips.html">Søketips</a>
+       </h2>
+       <ul class="menuLevel0">
+         <li><a href="#enkelt-sok">Enkelt søk</a></li>
+         <li><a href="#utvidet-sok">Utvidet søk</a></li>
+         <li><a href="#filtre">Filtre</a></li>
+         <li><a href="#sortering">Sortering</a></li>
+         <li><a href="#visning">Visning</a></li>
+         <li><a href="#trunkering-maskering-og-fraser">Trunkering, maskering og fraser</a></li>
+         <li><a href="#fulltekstsok">Fulltekstsøk</a></li>
+         <li><a href="#last-ned-og-bruk">Last ned og bruk</a></li>
+         <li><a href="#sprak-og-tegnkoding">Språk- og tegnkoding</a></li>
+         <li><a href="#bildefremviser">Bildefremviser</a></li>
+         <li><a href="#autoritetsposter">Autoritetsposter</a></li>
+        
+       </ul>
+      </nav>
+     </div>
+     <div class="l-article-wrap">
+      <div id="maincontent">
+       <div class="main-content">
+        <div id="xp1" class="rs_addtools rs_splitbutton rs_preserve rs_skip container"></div>
+        <div id="readspeaker-content">
+         <!-- index_start -->
+         <article id="article_component_56_2" class="article simple">
+          <h1>Søketips</h1>
+          <div class="articleText" id="articleText_component_56_2">          
+           <p class="ingress">Det er to typer søk du kan gjøre i Alvin, enkelt og avansert. Det enkle søket er søkeboksen du finner på Alvins startside. Det avanserte søket tar deg til en søkeside som gir deg flere muligheter til å avgrense søket og kombinere søkeord. Etter at du har gjort et søk, kan du avgrense søkeresultatet ytterligere ved å bruke et av Alvins mange filtre.</p>
+           <p class="ingress"></p>
+           <h2 id="enkelt-sok">Enkelt søk</h2>
+           <p>Det enkle søket finner du øverst på Alvin-portalens forside og det følger med i navigasjonen uansett hvor du befinner deg i søkegrensesnittet. Den lar deg gjøre et fritekstsøk i hele Alvin samt enkelt endre et pågående søk eller starte et nytt. Det er også mulig å begrense det enkle søket til spesifikke ressurstyper ved å velge typen du ønsker i nedtrekkslisten til venstre for søkeboksen.</p>
+           <h2 id="utvidet-sok">Utvidet søk</h2>
+           <p>For å komme til denne typen søk må du klikke på <a href="https://www.alvin-portal.org/alvin/advanced.jsf">Utvidet søk</a>-lenken til høyre for søkefeltet. I det utvidede søket kan du søke etter et eller flere av de spesifikke feltene som katalogisatorene har fylt ut med informasjon om de ulike objektene. Her kan du for eksempel avgrense søkene dine til å søke etter spesifikke emneord eller en bestemt teknikk som har blitt brukt for å lage et fysisk objekt som er digitalisert og gjort tilgjengelig i Alvin. Du kan også kombinere flere nøkkelord med såkalte boolske operatorer, hvor du for eksempel kan ekskludere enkelte nøkkelord eller søke blant synonymer.</p>
+           <h2 id="filtre">Filtre</h2>
+           <p>Etter å ha gjort ditt enkle eller utvidede søk, ender du opp med en side med søkeresultatene dine. Her kan du avgrense søkeresultatene dine ytterligere ved å velge et av de mange filtrene som finnes i kolonnen til venstre for søkeresultatlisten. Det er flere typer filtre å velge mellom: ressurstype, person/organisasjon, arkivinstitusjon, opprinnelsesland og år, og språk. Hvis du for eksempel kun er interessert i resultatene til et spesifikt Alvin-medlem, har du mulighet til å klikke på dette blant arkivinstitusjoner.</p>
+           <p>Dersom det er digitalt publisert materiale blant treffene, er det også mulig å raskt begrense resultatet til kun disse ved å velge &quot;Fritt online&quot;-avgrensningen øverst i venstre kolonne.</p>
+           <h2 id="sortering">Sortering av søkeresultatet</h2>
+           <p>Det er mulig å sortere trefflisten i Alvin i alfabetisk rekkefølge (både stigende og synkende) etter tittel, første skaper eller ressurstype, eller etter opprinnelsesår (eldste/nyeste).</p>
+           <p>Standardinnstillingen er imidlertid etter relevans, der systemet rangerer treffene etter hvor mange ganger søkeordet vises i posten eller i hvilke felt det finnes. For eksempel er tittel og forfatter høyere rangert enn notater. Poster med høyest rangering kommer først i trefflisten.</p>
+           <h2 id="visning">Visning av søkeresultater</h2>
+           <p>Du kan velge å vise mellom 10 og 250 poster om gangen i trefflisten. Den kan også vises enten som en liste (standardinnstilling) eller som bilder. I sistnevnte tilfelle vises kun miniatyrbildet av posten på siden, noe som kan være mer oversiktlig, for eksempel under et bildesøk.</p>
+           <p></p>
+           <h2 id="trunkering-maskering-og-fraser">Trunkering, maskering og fraser</h2>
+           
+           <h3>Trunkering</h3>
+           <p>Du kan trunkere med en asterisk (*) for å finne ord med en rekke ulike endelser og avledninger. Høyretrunkering er den vanligste. I dette tilfellet vil søket finne alle ordene som begynner med ordstammen som brukes.</p>
+           <p><strong>Eksempel:</strong> catalog*<br>
+            <strong>Resultat:</strong> Dette søket vil finne poster som inneholder ordene <strong>catalog</strong>, catalog<strong>ue</strong>, catalog<strong>ues</strong>, catalog<strong>ing</strong>, catalog<strong>uing</strong> osv.</p>
+           <p>Du kan også bruke trunkeringstegnet inni et søkeord.</p>
+           <p><strong>Eksempel:</strong> johans*on<br>
+            <strong>Resultat:</strong> Dette søket vil finne poster som inneholder enten Johan<strong>s</strong>on eller Johan<strong>ss</strong>on.</p>
+           <h3>Maskering</h3>
+           <p>Du kan maskere tegn med et spørsmålstegn (?) for å finne en rekke ulike stavemåter. Hvert spørsmålstegn tilsvarer ett tegn.</p>
+           <p><strong>Eksempel:</strong> lind??ist<br>
+            <strong>Resultat:</strong> Dette søket vil finne poster som inneholder Lind<strong>kv</strong>ist, Lind<strong>qv</strong>ist, Lind<strong>qu</strong>ist etc.</p>
+           <p>Maskeringstegnet kan brukes sammen med trunkeringstegnet (i samme søkeord). I så fall må maskeringstegnet gå foran trunkeringstegnet.</p>
+           <p><strong>Eksempel:</strong> e?onom*<br>
+            <strong>Resultat:</strong> Dette søket vil finne poster som inneholder <strong>ekonom</strong>, ekonom<strong>i</strong>, ekonom<strong>isk</strong>, e<strong>c</strong>onom<strong>ist</strong>, e<strong>c</strong>onom<strong>y</strong> é<strong>c</strong>onom<strong>ique</strong> osv.</p>
+           <h3>Fraser</h3>
+           <p>Du kan søke etter <strong>eksakte fraser</strong> ved å plassere uttrykket innenfor anførselstegn (&quot;).</p>
+           <p><strong>Eksempel:</strong> &quot;teknisk fysik&quot;<br>
+            <strong>Resultat:</strong> Dette søket vil finne poster som inneholder ordene i den samme rekkefølgen.</p>
+           
+           <h2 id="fulltekstsok">Fulltekstsøk</h2>
+           
+           <p>Enkelt og utvidet søk i Alvin vil søke i alle registrerte metadata (titler, beskrivelser, emneord etc.), men ikke i selve den skannede dokumentteksten eller transkripsjoner av denne.</p>
+           <p>Siden en stor del av Alvins trykte tekstdokumenter også publiseres som OCR (object character recognition) -tolkede PDF-filer, er det til en viss grad mulig å gjøre slike søk i søkemotorer som indekserer PDF-filer, som f.eks.  <a href="https://www.google.com">Google</a>.</p>
+           <p>Skriv deretter inn ett eller flere nøkkelord i Google-søkeboksen og legg til avgrensingene site:www.alvin-portal.org og filetype:pdf for å søke spesifikt etter PDF-filer i Alvin.</p>
+           <p>
+            <strong>Eksempel</strong>: <a href="https://www.google.com/search?hl=sv&amp;as_q=mynt&amp;as_epq=&amp;as_oq=&amp;as_eq=&amp;as_nlo=&amp;as_nhi=&amp;lr=&amp;cr=&amp;as_qdr=all&amp;as_sitesearch=www.alvin-portal.org&amp;as_occt=any&amp;safe=images&amp;as_filetype=pdf&amp;tbs=" title="Google search för mynt (coin) in Alvin">mynt site: www.alvin-portal.org filetype: pdf</a></p>
+           <p>for å finne tekster på Alvin med søkeordet &quot;mynt&quot;</p>
+           <p>Vær oppmerksom på at alle PDF-filer i Alvin ikke er garantert å bli indeksert i Google.</p>
+           <p></p>
+           
+           <h2 id="last-ned-og-bruk">Last ned og bruk</h2>
+           
+           <h3>Hvordan laster jeg ned en høyoppløselig fil?</h3>
+           <p>Klikk på bildet du vil laste ned i <a href="#bildefremviser">bildefremviseren</a>. Deretter åpnes et nytt vindu som viser knappen &quot;Last ned&quot;.</p>
+           <h3>Hvordan laster jeg ned en lavoppløselig bildefil?</h3>
+           <p>Høyreklikk på det store bildet midt på en innleggsside og velg &quot;Lagre bilde som&quot;.</p>
+           <h3>Hvordan laster jeg ned en komplett bok?</h3>
+           <p>De fleste bøker/tekster er, i tillegg til høyoppløselige bilder per side, publisert som et vedlegg i form av en sammenhengende PDF-fil med alle inkluderte sider. Er det en trykt original, blir denne filen ofte også OCR-tolket, dvs. det er mulig å søke etter tekst i selve dokumentet. Vedlegg vises i høyre marg på siden til posten, og åpnes når du klikker på lenken.</p>
+           <h3>Hvilken lenke skal jeg bruke når jeg vil dele/sende en post i Alvin?</h3>
+           <p>Det er to lenker til hver post. Vi anbefaler den permanente lenken som lenke til en Alvin-post når du vil at det skal fungere i et lengre perspektiv. Det går via en resolver på Kungliga biblioteket. Direktelenken går direkte til Alvin-posten og fungerer på kort sikt, men har ikke samme stabilitet som den permanente lenken og kan slutte å fungere ved for eksempel en databaseflytting.</p>
+           <h3>Hvordan sender jeg enklest en høyoppløselig fil fra Alvin?</h3>
+           <p>Klikk på bildet  du vil sende i <a href="#bildefremviser">bildefremviseren</a>. Klikk på &quot;Lenke til bilde&quot;. Kopier lenken under &quot;Lenke til fil&quot; og lim den inn i meldingen din.</p>
+           <h3>Hvordan lager jeg en lenke til en bestemt side i en bok?</h3>
+           <p>Klikk på siden du vil referere til i <a href="#bildefremviser">bildefremviseren</a>. Klikk på &quot;Lenke til bilde&quot;. Kopier lenken under &quot;Lenke til bilde i bildeviser&quot;</p>
+                   
+           <h3>Kan jeg publisere alt jeg finner i Alvin?</h3>
+           <p>Nesten alt du finner i Alvin kan brukes uten restriksjoner. Vær imidlertid oppmerksom på at noe av det mer moderne materialet kan være opphavsrettsbeskyttet. Rettighetslisensen angir hvilke rettigheter som gjelder.</p>
+           <h3>Hva betyr rettighetslisensene?</h3>
+           <p>Klikk på lisensen for å se en forklarende tekst. Den vanligste lisensen, <strong>Public Domain Mark,</strong> betyr at opphavsretten er utløpt og at verket kan brukes uten begrensninger.</p>
+           
+           <h3>Jeg vil gjerne publisere et bilde jeg har funnet i Alvin. Hva skal jeg skrive i bildeteksten?</h3>
+           <p>Hvis mulig skal opphavspersonens navn alltid oppgis. Det skal også oppgis navn på institusjonen som eier materialet og eventuelt hyllemerke mv. For eksempel: <em>&quot;Ödet ger vika&quot;, Manuskript av Karin Boye. Originalen tilhører Uppsala universitetsbibliotek, K. Boye 4.</em></p>
+           <h2 id="sprak-og-tegnkoding">Språk- og tegnkoding</h2>
+           
+           <h3>Språk i søkegrensesnittet</h3>
+           <p>Hvis nettleseren din har valgt norsk som språkvalg, vil navigasjon, overskrifter, veiledningstekster og annen generell tekstinformasjon vises på norsk. Hvis et annet språk er spesifisert i nettleserinnstillingene, vil de tilsvarende tekstene vises på engelsk. Du kan også endre språket i selve grensesnittet ved å bruke språkvalgknappen øverst til høyre i menyen.</p>
+           <h3>Katalogiseringsspråk</h3>
+           <p>Metadata vises på språket de er registrert. Svensk eller norsk brukes normalt som katalogiseringsspråk i Alvin, dvs. beskrivelser, emneord og andre merknader er registrert på svensk eller norsk. Det er imidlertid relativt store unntak i form av eldre databaser, ofte resultater fra forskningsprosjekter, som er migrert til Alvin, hvor hovedsakelig engelsk har vært brukt som katalogiseringsspråk. Det betyr at metadataene i Alvin består av beskrivelser på blandede språk og for omfattende søk anbefales søkeord både på svensk eller norsk og engelsk.</p>
+           <h3>Diakritiske tegn og aksenttegn</h3>
+           <p>Alvins søkemotor gjør ingen forskjell på diakritiske tegn, aksenttegn eller språkspesifikke bokstaver. Et søk på &quot;linne&quot; gir samme resultat som et søk på &quot;Linné&quot; og et søk på &quot;bada&quot; gir samme resultat som et søk på &quot;båda&quot;.</p>
+           <h3>Tegnkoding</h3>
+           <p>Unicode UTF-8 brukes til å lagre metadata i Alvin. Titler eller annen informasjon registrert med for eksempel kyrillisk eller arabisk alfabet kan dermed søkes med tilsvarende tegn direkte i søkeboksen. Hvis titler er oppført i en annen skrift enn det latinske alfabetet, anbefales det å legge til et alternativ med latinsk alfabet ved registrering.</p>
+           <p></p>
+           
+           <h2 id="bildefremviser">Bildefremviser</h2>
+           
+           <p class="ingress">Filer i bildeformater som .tif, .jpg eller .gif kan åpnes i Alvins bildefremviser. Klikk på bildet midt på en postside for å åpne det tilsvarende bildet i bildefremviseren.</p>
+           <p class="ingress"><img alt="Select image viewer" src="../digitalAssets/c_775120-l_3-k_bildvisare0.png" style="border-style:solid; border-width:1px"></p>
+           <p>I bildefremviseren kan du zoome inn og ut av bildet ved enten å klikke direkte på det eller bruke + og - i navigasjonen nederst i venstre hjørne. Hvor langt du kan zoome inn i bildet avhenger av oppløsningen; jo høyere oppløsning, jo dypere. Zoomen tilbakestilles til utgangsposisjonen hver gang du velger et nytt bilde.</p>
+           <p><img alt="Image viewer - start" src="../digitalAssets/c_775120-l_3-k_bildvisare1.png" style="border-style:solid; border-width:1px"></p>
+           <p>Det er også mulig å rotere bildet til høyre eller venstre ved hjelp av pilene i navigasjonen.</p>
+           <p>Ved å velge overskriften <em>Miniatyrbilder</em> i høyre rute i bildefremviseren får du raskt en oversikt over alle bilder som er knyttet til posten, for eksempel alle sider i en bok, for enkel navigering til en bestemt side eller bilde. Alternativt kan du hoppe over ett eller flere trinn fremover og bakover i navigasjonen øverst i bildefremviseren.</p>
+           <p><img alt="Image viewer - thumbnails" src="../digitalAssets/c_775120-l_3-k_bildvisare2.png" style="border-style:solid; border-width:1px"></p>
+           <p>Ved å bruke pilen midt på siden kan høyre felt skjules og det blir mer plass på skjermen til selve bildet.</p>
+           <p><img alt="Image viewer - zoom" src="../digitalAssets/c_775120-l_3-k_bildvisare3.png" style="border-style:solid; border-width:1px"><br>
+           </p>
+           
+           <h2 id="autoritetsposter">Autoritetsposter</h2>
+           
+           <p class="ingress">Autoritetsposter brukes til å etablere navneformer for personer, organisasjoner, steder og musikkverk. Autoritetsposterne gjør det mulig å lage enhetlige søk og å tydelig identifisere skapere, steder eller verk.</p>
+           <p>Ved å velge <em>Person</em>, <em>Organisasjon</em>, <em>Sted</em> eller <em>Verk</em> under indeksoverskriften nederst på utvalgslisten før søkefeltet, kan du starte et søk basert på en av disse inngangene og deretter finne ressursene som er knyttet til den respektive autoritetsposten.</p>
+           <p>Autoritetsposter kan i tillegg til autorisert navneform også inneholde alternative navneformer. Et søk etter "Ernst Ahlgren" fører til den autoriserte søkeinngangen &quot;Victoria Benedictsson&quot;.</p>
+           <p>Postene kan også inneholde biografisk informasjon og, for steder, geografiske koordinater samt lenker til andre relaterte autoritetsposter.</p>
+           <p></p>
+           <p></p>
+           
+          </div>
+         </article>
+         <!-- index_stop -->
+         <div class="container page-tools-bottom page-tools">
+          <div class="page-tool print">
+           <span class="print-icon">
+            <a accesskey="P" href="" class="js-print-page" onclick="window.print()">Skriv ut</a>
+           </span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <button onclick="topFunction()" id="scrollToTop" title="Gå til toppen"></button>
+  <script>
+// Get the button
+let topbutton = document.getElementById("scrollToTop");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    topbutton.style.display = "block";
+  } else {
+    topbutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+ </script>
+ </body>
+</html>

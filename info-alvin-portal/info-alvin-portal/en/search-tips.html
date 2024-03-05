@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="sv">
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="index, follow">
+  <meta name="DC.Publisher" content="Uppsala university">
+  <meta name="keywords" content="Alvin, cultural heritage, digital collections, databases, libraries">
+  <meta name="description" content="Alvin - Nordic platform for preserving and making digitised cultural heritage available">
+  <meta name="DC.Creator.PersonalName" content="UUB Alvin support">
+  <meta name="internal-robots" content="noindex">
+  <meta name="siteName" content="Alvin">
+  <meta name="creator" content="UUB Alvin support">
+  <link href="../css/v2-aggregated-css-base.css" rel="stylesheet" type="text/css">
+  <link href="../css/v2-aggregated-css-modules.css" rel="stylesheet" type="text/css">
+  <link href="../css/v2-aggregated-css-post.css" rel="stylesheet" type="text/css">
+  <link href="../css/v2-aggregated-css-media-queries.css" rel="stylesheet" type="text/css">
+  <link href="../css/css-custom-site.css" rel="stylesheet" type="text/css">
+  <link href="../css/css-custom-site-theme-alvin.css" rel="stylesheet" type="text/css">
+  <link href="../css/alvin.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" href="../img/android-chrome-192x192.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <title>Alvin - Search tips</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ </head>
+ <body class="custom-site not-centralised" id="top">
+  <div class="main-wrapper">
+   <div class="skip-to-content">
+    <a class="is-visually-hidden is-show-on-focus btn-skip btn" href="#maincontent">Skip to main content</a>
+   </div>
+   <header class="header-element">
+    <div class="container top-content clearfix">
+     <div class="logo-wrap">
+      <a href="start.html" title="Alvin - Digital cultural heritage" class="logo-link">
+       <img src="../img/alvinlogo.png" alt="Alvin logo" class="logo">
+      </a>
+     </div>
+     <div class="searchForm" aria-label="Search in Alvin" role="search">
+      <form class="search"
+       action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
+       <div class="search-group flex">
+        <label for="mainSearchField" class="is-visually-hidden">Search</label>
+        <div id="js-main-search-complete-output" class="search-complete-output">
+         <div class="autocomplete__wrapper search-progressive-input">
+          <input id="mainSearchField" class="autocomplete__input autocomplete__input--default"
+           name="query" type="text" placeholder="Search in Alvin">
+         </div>
+        </div>
+        <input type="submit" class="btn btn-search submit-search" value="Search">
+       </div>
+      </form>
+     </div>
+     <div class="responsive-menu-container-bottom">
+      <div class="sub">Digital cultural heritage</div>
+      <nav aria-label="Huvudmeny" class="top-nav-wrap container">
+       <ul class="top-nav first-level is-uppercase clearfix">
+        <li class="first">
+         <a href="start.html"> Start </a>
+        </li>
+        <li class="">
+         <a href="members.html"> Members </a>
+        </li>
+        <li class="">
+         <a href="contact.html"> Contact </a>
+        </li>
+        <li class="">
+         <a href="sitemap.html"> Sitemap </a>
+        </li>
+       </ul>
+      </nav>
+     </div>
+    </div>
+    <div class="mobile-search-container" aria-label="Search in Alvin" role="search">
+     <form class="mobile-search" id="mobile-search-form"
+      action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
+      <div class="search-group flex justify-content-end">
+       <label for="mainSearchFieldMobile" class="is-visually-hidden">Search</label>
+       <div class="textfield search-complete-output-mobile" style="display: block; width: initial;">
+        <div class="autocomplete__wrapper">
+         <input autocomplete="off" class="autocomplete__input autocomplete__input--default"
+          id="mainSearchFieldMobile" name="query" placeholder="Search in Alvin" type="text">
+        </div>
+       </div>
+       <input type="submit" class="submit-icon submit-search" value="" aria-label="Search">
+      </div>
+     </form>
+    </div>
+    <script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function showMenu() {
+      document.getElementById("mobileMenu").classList.toggle("show");
+    }
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i > dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    } 
+    </script>
+    <div
+     class="local-nav-mobile-header align-items-center flex-row local-nav-mobile-static dropdown">
+     <button id="local-nav-mobile-button" class="local-nav-mobile-icon dropbtn"
+      aria-controls="mobileMenu" aria-expanded="false" aria-label="Huvudmeny" onclick="showMenu()"> </button>
+     <span class="current-page is-berling"> Alvin - digital cultural heritage</span>
+    </div>
+    <nav id="mobileMenu" aria-label="Huvudmeny" class="local-nav-mobile">
+     <ul class="menuLevel0">
+      <li><a href="about-alvin.html">About Alvin</a></li>
+      <li class="active"><a href="search-tips.html">Search tips</a>
+       <ul class="menuLevel1">
+        <li><a href="#simple-search">Simple search</a></li>
+        <li><a href="#extended-search">Extended search</a></li>
+        <li><a href="#filters">Filters</a></li>
+        <li><a href="#sorting">Sorting</a></li>
+        <li><a href="#display">Display</a></li>
+        <li><a href="#truncation-masking-and-phrases">Truncation, masking and phrases</a></li>
+        <li><a href="#full-text-search">Full-text search</a></li>
+        <li><a href="#download-and-use">Download and use</a></li>
+        <li><a href="#language-and-character-encoding">Language and character encoding</a></li>
+        <li><a href="#image-viewer">Image viewer</a></li>
+        <li><a href="#authority-records">Authority records</a></li>
+       </ul>
+      </li>
+      <li><a href="copyright.html">Copyright</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="sitemap.html">Sitemap</a></li>
+     </ul>
+    </nav>
+   </header>
+   <div class="l-main-container clearfix main-wrapper">
+    <div class="page-content container with-menu">
+     <div class="l-top-container flex-row">
+      <div class="breadcrumbs no-print">
+       <a href="start.html"> Start </a>
+       <span> Search tips </span>
+      </div>
+      <div class="page-tools-top clearfix">
+       <div class="page-tool language">
+        <a href="search-tips.html" class="language en" lang="en">
+         <span class="language-text"> English </span>
+        </a>
+        <a href="../no/soketips.html" class="language no" lang="no">
+         <span class="language-text"> Norsk </span>
+        </a>
+        <a href="../sv/soktips.html" class="language sv" lang="sv">
+         <span class="language-text"> Svenska </span>
+        </a>
+       </div>
+      </div>
+     </div>
+     <div class="l-left-nav-wrap clearfix">
+      <nav class="left-nav clearfix">
+       <h2 class="left-nav-heading">
+        <a class="left-nav-heading-unskew" href="search-tips.html">Search tips</a>
+       </h2>
+       <ul class="menuLevel0">
+        <li><a href="#simple-search">Simple search</a></li>
+        <li><a href="#extended-search">Extended search</a></li>
+        <li><a href="#filters">Filters</a></li>
+        <li><a href="#sorting">Sorting</a></li>
+        <li><a href="#display">Display</a></li>
+        <li><a href="#truncation-masking-and-phrases">Truncation, masking and phrases</a></li>
+        <li><a href="#full-text-search">Full-text search</a></li>
+        <li><a href="#download-and-use">Download and use</a></li>
+        <li><a href="#language-and-character-encoding">Language and character encoding</a></li>
+        <li><a href="#image-viewer">Image viewer</a></li>
+        <li><a href="#authority-records">Authority records</a></li>
+       </ul>
+      </nav>
+     </div>
+     <div class="l-article-wrap">
+      <div id="maincontent">
+       <div class="main-content">
+        <div id="xp1" class="rs_addtools rs_splitbutton rs_preserve rs_skip container"></div>
+        <div id="readspeaker-content">
+         <!-- index_start -->
+         <article id="article_component_56_2" class="article simple">
+          <h1>Search tips</h1>
+          <div class="articleText" id="articleText_component_56_2">          
+           <p class="ingress">There are two types of searches you can do in Alvin, one simple and one extended. The simple search is the search box you find right when you land on Alvin's homepage. The extended search takes you to a search page that gives you more opportunities to refine your search and combine keywords. After you have done a search, you can further refine the search result by applying one of Alvin's many filters.</p>
+            <p class="ingress"></p>
+            <h2 id="simple-search">Simple search</h2>
+           <p>The simple search can be found at the top of the Alvin portal's front page and it follows in the navigation no matter where you are in the search interface. It allows you to do a free text search throughout Alvin as well as easily change an ongoing search or start a new one. It is also possible to narrow the simple search to specific resource types by selecting the type you want in the drop-down list to the left of the search box.</p>
+            <h2 id="extended-search">Extended search</h2>
+            <p>To get to this type of search you need to click on the <a href="https://www.alvin-portal.org/alvin/advanced.jsf">Extended search</a> link to the right of the search box. In the extended search, you can search for one or more of the specific fields that the cataloguers filled in with information about the different objects. For example, here you can refine your searches to search for specific subject words or a particular technique that has been used to create a physical object that has been digitised and made available in Alvin. You can also combine several keywords with so-called Boolean operators where you can, for example, exclude certain keywords or search among synonyms.</p>
+            <h2 id="filters">Filters</h2>
+           <p>After doing your simple or extended search, you end up with a page with your search results. Here you can further refine your search results by selecting one of the many filters found in the column to the left of the search results list. There are several types of filters to choose from: resource type, person/organisation, archive institution, country of origin and year, and language. For example, if you are only interested in the results of a specific Alvin member, you have the opportunity to click on this among archive institutions.</p>
+           <p>If there is digitally published material among the hits, it is also possible to quickly limit the result to only those by selecting the &quot;Free online&quot; boundary at the top of the left column.</p>
+           <h2 id="sorting">Sorting the search result</h2>
+           <p>It is possible to sort the hit list in Alvin in alphabetical order (both ascending and descending) by title, first creator or resource type or by year of origin (oldest/newest).</p>
+           <p>However, the default setting is &quot;relevance&quot; where the system ranks the hits by how many times the keyword appears in the record or in which fields it exists. For example, title and author are higher ranked than notes. Items with the highest ranking come first in the hit list.</p>
+           <h2 id="display">Display of search results</h2>
+           <p>You can choose to display between 10 and 250 entries at a time in the hit list. It can also be displayed either as a list (default setting) or as images. In the latter case, only the thumbnail image of the entry is displayed on the page, which may be more clear, for example during an image search.</p>
+            <p></p>
+           <h2 id="truncation-masking-and-phrases">Truncation, masking and phrases</h2>
+            
+           <h3>Truncation</h3>
+           <p>You can truncate with an asterisk (*) to find words with a variety of different endings and derivatives. Right-hand truncation is the most common. In this case, the search will find all the words that begin with the word stem used.</p>
+           <p><strong>Example:</strong> catalog*<br>
+            <strong>Result:</strong> This search will find records containing the words <strong>catalog</strong>, catalog<strong>ue</strong>, catalog<strong>ues</strong>, catalog<strong>ing</strong>, catalog<strong>uing</strong> etc.</p>
+           <p>You can also use the truncation character within a search term.</p>
+           <p><strong>Example:</strong> johans*on<br>
+            <strong>Result:</strong> This search will find records containing either Johan<strong>s</strong>on or Johan<strong>ss</strong>on.</p>
+           <h3>Masking</h3>
+           <p>You can mask characters with a question mark (?) to find a variety of different spellings. Each question mark corresponds to one character.</p>
+           <p><strong>Example:</strong> lind??ist<br>
+            <strong>Result:</strong> This search will find records containing Lind<strong>kv</strong>ist, Lind<strong>qv</strong>ist, Lind<strong>qu</strong>ist etc.</p>
+           <p>The masking character can be used together with the truncation character (in the same search term). In that case the masking character must precede the truncation character.</p>
+           <p><strong>Example:</strong> e?onom*<br>
+            <strong>Result:</strong> This search will find records containing the words <strong>ekonom</strong>, ekonom<strong>i</strong>, ekonom<strong>isk</strong>, e<strong>c</strong>onom<strong>ist</strong>, e<strong>c</strong>onom<strong>y</strong> é<strong>c</strong>onom<strong>ique</strong> etc.</p>
+           <h3>Phrases</h3>
+           <p>You can search for <strong>exact phrases</strong> by placing the phrase within quotation marks (&quot;).</p>
+           <p><strong>Example:</strong> &quot;teknisk fysik&quot;<br>
+            <strong>Result:</strong> This search will find records containing the words together in that order.</p>
+            
+           <h2 id="full-text-search">Full-text search</h2>
+            
+           <p>Simple and extended search in Alvin will search in all&nbsp;registered metadata (titles, descriptions, subject words etc.) but not in the scanned document text itself or transcriptions of it.</p>
+           <p>However, since a large part of Alvin's printed text documents are also published as OCR (object character recognition) -interpreted PDF files, it is possible to some extent to do such searches in search engines that index PDF files, such as for example <a href="https://www.google.com">Google</a>.</p>
+           <p>Then enter one or more keywords in the Google search box and add the definitions site: www.alvin-portal.org and filetype: pdf to search specifically for PDF files in Alvin.</p>
+           <p><strong>Example</strong>: <a href="https://www.google.com/search?hl=sv&amp;as_q=mynt&amp;as_epq=&amp;as_oq=&amp;as_eq=&amp;as_nlo=&amp;as_nhi=&amp;lr=&amp;cr=&amp;as_qdr=all&amp;as_sitesearch=www.alvin-portal.org&amp;as_occt=any&amp;safe=images&amp;as_filetype=pdf&amp;tbs=" title="Google search för mynt (coin) in Alvin">mynt site: www.alvin-portal.org filetype: pdf</a></p>
+           <p>to find texts in Alvin with the keyword "mynt" (Swedish for "coin").</p>
+           <p>Please note that all PDFs in Alvin are not guaranteed to be indexed in Google.</p>
+            <p></p>
+            
+           <h2 id="download-and-use">Download and use</h2>
+            
+           <h3>How do I download a high resolution file?</h3>
+            <p>Click on the picture you want to download in the <a href="#image-viewer" title="Image viewer">image viewer</a>. Then a new window will open, showing the button &quot;Download&quot;.</p>
+           <h3>How do I download a low resolution image file?</h3>
+            <p>Right-click on the large image in the middle of a post page and select &quot;Save Image As&quot;.</p>
+           <h3>How do I download a complete book?</h3>
+            <p>Most books/texts are, in addition to high resolution images per page, published as an attachment in the form of a coherent PDF file with all included pages. If it is a printed original, this file is often also OCR interpreted, ie. it is possible to search for text in the document itself. Attachments appear in the right margin on the post page and open when you click on the link.</p>
+           <h3>Which link should I use when I want to share/send a post in Alvin?</h3>
+            <p>There are two links to each post. We recommend <strong>the permanent link</strong> as a link to an Alvin post when you want it to work for a long time. That link goes via a resolver at the National Library of Sweden. <strong>The direct link</strong> goes straight to the Alvin post and it will work perfectly in the short term but it is not as stable as the permanent link and may stop working if, for example, a database is moved.</p>
+           <h3>What is the easiest way to send a high resolution file from Alvin?</h3>
+            <p>Click on the picture in the <a href="#image-viewer" title="Image viewer">image viewer</a> that you want to send. Click on &quot;Link to the picture&quot;. Copy the link under &quot;Link to the file&quot; and paste it into your message.</p>
+           <h3>How do I create a link to a specific page in a book?</h3>
+            <p>Click on the pagein the <a href="#image-viewer" title="Image viewer">image viewer</a> that you want to refer to. Click on &quot;Link to the picture&quot;. Copy the link under &quot;Link to the picture in the image viewer&quot;</p>
+           <h3>Can I publish everything I find in Alvin?</h3>
+            <p>Almost everything you will find in Alvin can be used without restrictions. However, be aware that some of the more modern material may be copyrighted. The rights license states what rights apply.</p>
+           <h3>What is the meaning of the rights licenses?</h3>
+            <p>Click on the licence to see an explanatory text. The most common licence,<strong> Public Domain Mark, </strong>means the copyright has expired and the work can be used without any restrictions.</p>
+
+            <h3>I would like to publish a picture I have found in Alvin. What should I write in the caption?</h3>
+             <p>If possible, the name of the author should always be stated. The name of the department that owns the item and any hallmark etc. should also be stated. For example: <em>&quot;Ödet ger vika&quot;, Manuscript by Karin Boye. The original belongs to Uppsala University Library, K. Boye 4.</em></p>
+           <h2 id="language-and-character-encoding">Language and character encoding</h2>
+            
+            <h3>Language in the search interface</h3>
+            <p>If your browser has Swedish selected as the language choice, navigation, headings, guiding texts, and other general text information will be displayed in Swedish. If any other language is specified in the browser settings, the corresponding texts will be displayed in English. But you can also change the language in the interface itself by using the language selection button at the top right of the menu.</p>
+            <h3>Cataloguing language</h3>
+            <p>Metadata is displayed in the language it is registered. Swedish or Norwegian are normally used as a cataloguing language in Alvin, ie. descriptions, subject words and other notes are registered in Swedish or Norwegian. However, there are relatively large exceptions in the form of older databases, often results from research projects, which have been migrated to Alvin, where mainly English has been used as a cataloguing language. This means that the metadata in Alvin consists of descriptions in mixed languages ​​and for comprehensive searches, search terms are recommended in both Swedish or Norwegian and English.</p>
+            <h3>Diacritics and accents</h3>
+            <p>Alvin's search engine makes no difference to diacritics or accented characters and basic characters. A search on &quot;linne&quot; gives the same result as a search on &quot;Linné&quot; and a search on &quot;bada&quot; gives the same result as a search on &quot;båda&quot;.</p>
+            <h3>Character encoding</h3>
+            <p>Unicode UTF-8 is used to store metadata in Alvin. Titles or other information registered with, for example, Cyrillic or Arabic alphabet can thus be searched with corresponding characters directly in the search box. However, if titles are listed in a font other than the Latin alphabet, the addition of a romanised alternative title is recommended upon registration.</p>
+            <p></p>
+            
+           <h2 id="image-viewer">Image viewer</h2>
+            
+           <p class="ingress">Files in image formats such as .tif, .jpg or .gif can be opened in Alvin's special image viewer. Click on the image in the middle of a post page to open the corresponding image in the image viewer.</p>
+            <p class="ingress"><img alt="Select image viewer" src="../digitalAssets/c_775120-l_3-k_bildvisare0.png" style="border-style:solid; border-width:1px"></p>
+           <p>In the image viewer, you can zoom in and out of the image by either directly clicking on it or using + and - in the navigation at the bottom left corner. How far you can zoom into the image depends on its resolution; the higher the resolution the deeper. The zoom is reset to the initial position each time you select a new image.</p>
+            <p><img alt="Image viewer - start" src="../digitalAssets/c_775120-l_3-k_bildvisare1.png" style="border-style:solid; border-width:1px"></p>
+           <p>It is also possible to rotate the image to the right or left using the arrows in the navigation.</p>
+           <p>By selecting the heading <em>Thumbnails</em> in the right pane of the image viewer, you quickly get an overview of all images linked to the record, such as all pages in a book, for easy navigation to a specific page or image. Alternatively, you can skip one or more steps forward and backward in the navigation at the top of the image viewer.</p>
+           <p><img alt="Image viewer - thumbnails" src="../digitalAssets/c_775120-l_3-k_bildvisare2.png" style="border-style:solid; border-width:1px"></p>
+           <p>Using the arrow in the middle of the page, the right field can be folded in and more space is left on the screen for the image itself.</p>
+            <p><img alt="Image viewer - zoom" src="../digitalAssets/c_775120-l_3-k_bildvisare3.png" style="border-style:solid; border-width:1px"><br>
+            </p>
+            
+           <h2 id="authority-records">Authority records</h2>
+            
+           <p class="ingress">Authority records are used to establish name forms for people, organisations, places and musical works. The authority records make it possible to create uniform search entries and to clearly identify creators, places or works.</p>
+           <p>By selecting <em>Person</em>, <em>Organisation</em>, <em>Place </em>or <em>Work</em> under the Index heading at the bottom of the selection list before the search field, you can start a search based on one of these inputs and then find the resources that are linked to the respective authority record.</p>
+           <p>The authority records may, in addition to the authorised name form, also contain alternative name forms. A search for &quot;Ernst Ahlgren&quot; leads to the authorised entry &quot;Victoria Benedictsson&quot;.</p>
+           <p>The records may also contain biographical information and, for places, geographical coordinates as well as links to other related authority records.</p>
+            <p></p>
+            <p></p>
+            
+          </div>
+         </article>
+         <!-- index_stop -->
+         <div class="container page-tools-bottom page-tools">
+          <div class="page-tool print">
+           <span class="print-icon">
+            <a accesskey="P" href="" class="js-print-page" onclick="window.print()">Print</a>
+           </span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <button onclick="topFunction()" id="scrollToTop" title="Go to top"></button>
+  <script>
+// Get the button
+let topbutton = document.getElementById("scrollToTop");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    topbutton.style.display = "block";
+  } else {
+    topbutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+ </script>
+ </body>
+</html>

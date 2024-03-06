@@ -52,7 +52,7 @@
                   {% for authority_name in data.authority_names %}
                   <li>
                     <a href="{% url 'alvin_place' id %}">
-                      <h3>{{authority_name}}</h3>
+                      {{authority_name}}
                     </a>
                     {% endfor %}
                     {% if data.variant_names %}

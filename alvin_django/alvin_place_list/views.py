@@ -31,8 +31,6 @@ def alvin_place_list(request):
         },
     }
 
-    print(metadata['places'])
-
     context = {
         "metadata":metadata,
         "xml":response.content,

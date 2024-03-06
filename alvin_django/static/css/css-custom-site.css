@@ -61,10 +61,6 @@ padding-left: 14px;
 .top-nav a:hover {
 border-bottom-width: 2px; 
 }
-.searchForm,
-.search-group {
-
-}
 .search input.submit-icon {
 background: #fff url('/img/icon-search-custom.png') 4px 4px no-repeat;
 background-size: 27px;
@@ -94,81 +90,6 @@ top: 6px !important;
 .local-nav-mobile-header {
 border-top: none;
 margin-top: 12px;
-}
-/* ---------------------------------------------
-CSS FOOTER (CUSTOM SITES) FOR UPPSALA UNIVERSITET
-- Contains styling of footer
---------------------------------------------- */
-.bg-city,
-.footer-stripe {
-display: none
-}
-.footer-element {
-background-color: #ddd; 
-background-image: none;
-color: #000;
-border-top: 1px solid #ccc;
-}
-.footer-element h3 {
-margin-top: 30px;
-}
-.footer-element::before {
-height: 0;
-}
-.footer-element a {
-color: #000;
-}
-.footer-content-wrap {
-color: #000;
-}
-.footer-goto-top {
-background-color: #333;
-}
-.footer-goto-top:hover {
-background-color: #222;
-}
-a.footer-goto-top {
-color: #fff;
-padding: 15px 0;
-text-decoration: none;
-}
-a.footer-hosted-by-uu {
-background: rgba(242, 242, 242, 0.7);
-border-radius: 50%;
-box-sizing: border-box;
-font-weight: normal;
-height: 14vw;
-padding: 1.5vw;
-position: absolute;
-bottom: 2vw;
-right: 2vw;
-text-align: center;
-text-decoration: none;
-width: 14vw;
-}
-a.footer-hosted-by-uu:hover {
-background: rgba(242, 242, 242, 0.9);
-}
-.footer-hosted-by-uu-logo {
-display: block;
-height: 5vw;
-margin: 0.5vw auto 0;
-}
-.footer-hosted-by-uu-text {
-color: #000;
-display: block;
-font-size: 0.9vw;
-margin-top: 2vw;
-}
-.show-hosted-by-uu .footer-goto-top {
-box-sizing: border-box;
-height: 8vw;
-}
-.show-hosted-by-uu .footer-goto-top span {
-padding: 0;
-}
-.show-hosted-by-uu .footer-content-wrap {
-padding-bottom: 7vw;
 }
 /* -------------------------------------- */
 /* NEW VISUAL GUIDELINES CUSTOM SITE BASE */
@@ -226,22 +147,6 @@ width: 100%;
 }
 .notice-content ul {
 padding-left: 20px;
-}
-/* ---------------------------------------------------- */
-/*	CSS LIST (CUSTOM SITES) FOR UPPSALA UNIVERSITET 		*/
-/* ---------------------------------------------------- */
-.news-list-container h2 {
-border-bottom: 1px solid #7f7f7f;
-}
-.list-item h3, 
-.list-nyhetsbanken li .news-title {
-text-transform: none;
-color: #000;
-}
-.list-item a,
-.list-nyhetsbanken li a {
-padding-left: 0;
-padding-right: 0;
 }
 /* ---------------------------------------------------- */
 /*	CSS LEFT NAVIGATION (CUSTOM SITES) FOR UPPSALA UNIVERSITET 		*/
@@ -534,19 +439,6 @@ line-height: 1.5em;
 padding-left: 10px;
 text-transform: none;
 }
-.image-video-slider .slides > li {
-height: auto;
-max-height: none;
-}
-.image-video-slider .puff-image,
-.image-video-slider .slides img {
-height: auto;
-width: 100%;
-}
-.image-video-slider .puff-image .module-content {
-position: absolute;
-bottom: 0;
-}
 /* ----------------------------------------- */
 /* NEW VISUAL GUIDELINES CUSTOM SITE MODULES */
 /* ----------------------------------------- */
@@ -785,19 +677,3 @@ content: " \21E7";
 text-decoration: none;
 font-size: 2em;
 }
-/* ---------------------------------------------------- */
-/* CSS IG ADMIN FOR CUSTOM SITES FOR UPPSALA UNIVERSITY	*/
-/* - Contains rules to style custom sites in the CMS	*/
-/* ---------------------------------------------------- */
-.decorated-mode .top-nav-wrap {
-width: auto;
-}
-.decorated-mode .no-menu,
-.decorated-mode .no-menu .slot-box {
-width: auto;
-max-width: none;
-}
-.decorated-mode .no-menu .container.module-group {
-max-width: 1140px;
-}
-

@@ -336,57 +336,6 @@ padding-left: 1.7vw;
 /* CSS TABLET PORTRAIT, PHONE LANDSCAPE FOR UPPSALA UNIVERSITET	*/
 /* - Contains styles for screens smaller than 766px				*/
 /* ----------------------------------------------------			*/
-@media screen and (min-width: 767px) {	
-.employee-column .employeeEmployments,
-.employee-column .employee-contact-links {
-padding: 0 .5em;
-}
-.employee-column .employee .employee-image-name .name {
-display: block;
-}
-.employee-column .employee .employee-contacts .name {
-display: none;
-}
-.employee-column .employee {
-display: block;
-}
-.employee-column .employee-contacts {
-margin-left: 0;
-}
-.employee-presentation .employee-column .employee {
-width: 31.8%;
-}
-.employee-column .employee-image-name {
-width: 100%;
-}
-.employee-column .employee + .employee {
-margin-top: 0;
-}
-.employee-column .employee + .employee {
-margin-left: 2.3%;
-}
-.employee-column .employee:nth-child(4),
-.employee-column .employee:nth-child(7),
-.employee-column .employee:nth-child(10) {
-margin-left: 0;
-}
-.employee-column .employee-image-name .name {
-background: rgba(255,255,255,0.8);
-box-sizing: border-box;
-color: #000;
-margin: 0;
-padding: 1em 0.5em;
-position: absolute;
-bottom: 0;
-width: 100%;
-}
-.employee-column .employmentContactInfo > p:first-of-type {
-margin-top: 0.5em;
-}
-article.simple + .video {
-margin-top: -2em;
-}
-}
 @media only screen and (max-width: 766px) {
 p {
 margin-bottom: 1.5em;
@@ -589,12 +538,6 @@ display: block;
 .search-row-content {	
 width: 100%; 
 }
-.puff-search-filters .search-filters-mobile {
-display: block;
-}
-.puff-search-filters .search-filters-desktop {
-display: none;
-}
 .tabs li {
 clear: left;
 display: block;
@@ -678,59 +621,6 @@ width: auto;
 .no-menu .wide-puff .main-image .wide-puff-image img {
 height: auto;
 max-width: 100%;
-}
-.puff-video-text .read-more {
-float: none !important;
-}
-.puff-search {
-border-right: none;
-font-size: 1rem;
-}
-.puff-search-column:nth-child(n) {
-border-right: none;
-display: block;
-min-height: initial;
-width: 100%;
-}
-.puff-search-column:nth-child(1) {
-border-bottom: 1px solid #505050;
-}
-.puff-search-links {
-padding-bottom: 1em;
-}
-.puff-search-options-links a {
-margin: 0 1em 0 0;
-}
-.puff-search-options .puff-search-options-links {
-display: block;
-margin-top: 0.5em;
-position: static;
-}
-.image-video-slider .slides > li {
-height: auto;
-max-height: none;
-overflow: visible;
-}
-.image-video-slider .puff-image {
-height: auto;
-max-height: 432px;
-overflow: hidden;
-}
-.no-menu .puff-video-text {
-margin: 0 -2.5%;
-max-width: 100%;
-padding: 1em;
-position: relative;
-}
-.with-menu .puff-video-text {
-margin: 2em -2.5% 0;
-max-width: 100%;
-padding: 1em;
-position: relative;
-}
-.with-menu .video-full-width {
-margin: 0 -2.5%;
-width: 105%;
 }
 .article {
 margin-bottom: 5px;
@@ -824,7 +714,7 @@ margin: 0 auto 1em;
 }
 .module,
 .puff-container .module,
-.puff-container .puff-call-to-action {
+.puff-container {
 float: none;
 height: auto;
 width: 100%;
@@ -836,11 +726,8 @@ flex-direction: row;
 width: auto;
 max-width: 360px;
 }
-.call-to-action-puff .big-link {
-height: 125px;
-}
 .number-of-slots-3 .module-content .description,
-.call-to-action-puff .big-link {
+.big-link {
 font-size: 1rem;
 }
 .article .module {
@@ -908,12 +795,6 @@ margin: 0.5em auto;
 .puff-block h3 {
 padding: 0 10px;
 }
-.related-content {
-height: auto;
-}
-.related-content img {
-width: 100%;
-}
 .show-hide-filters {
 display: block;
 }
@@ -945,27 +826,6 @@ width: 96%;
 margin-left: 0!important;
 padding: 0!important;
 }
-.nyhetsbanken-image img {
-width: 100%;
-max-width: 100%;
-}
-.nyhetsbanken-image {
-width: auto;
-max-width: 100%;
-}
-.search-list .nyhetsbankenSearchText input[type="text"], 
-.search-list .nyhetsbankenSearchFor select,
-.search-list .nyhetsbankenYear select,
-.search-list .nyhetsbankenMonth select {
-margin-right: 0;
-padding: 5px 2%;
-width: 100%;
-max-width: 100%;
-}
-.search-list .nyhetsbankenSearchText input[type="text"] {
-max-width: 96%;
-width: 96%;
-}
 .scroll-to-top-link {
 position: fixed;
 bottom: 5%;
@@ -996,55 +856,6 @@ margin: 0.5em 1em;
 .search-row-label {
 line-height: 2;
 width: 100%;
-}
-.diva-reader .defence .place {
-margin-bottom: 0.2em;
-}
-.diva-reader .type {
-margin-bottom: 0.5em;
-}
-.diva-reader .defence .place.comma-after::after {
-content: "";
-}
-.altmetric-embed.altmetric-mobile {
-margin-top: 1em;
-}
-.altmetric-embed.altmetric-mobile a img {
-padding: 0;
-}
-.altmetric-embed.altmetric-mobile a {
-line-height: 0;
-overflow: hidden;
-padding: 0;
-}
-.diva-reader .list-item-extras {
-align-items: flex-start;
-margin-top: 0.5em;
-}
-.list-item .open-access-icon {
-margin-left: inherit;
-margin-right: auto;
-}
-.contact-list dt, 
-.contact-list dd {
-clear: both;
-float: left;
-width: 100%;
-}
-.contact-list dt {
-margin-bottom: 0.2em;
-}
-.contact-list dd {
-margin: 0 0 1em 0;
-}
-.altmetric-desktop {
-display: none;
-}
-.altmetric-embed.altmetric-mobile {
-display: block;
-}
-.altmetric-embed.altmetric-mobile.altmetric-hidden {
-display: none;
 }
 }
 /* ---------------------------------------------------- */
@@ -1110,14 +921,6 @@ font-size: 1.85rem;
 .number-of-slots-4 .module ul {
 height: auto;
 min-height: 50px;
-}
-.module-calendar .link, 
-.module-list .link {
-position: relative;
-}
-.call-to-action-puff .big-link {
-font-size: 0.8em;
-height: 110px;
 }
 .caption-lower-left,
 .caption-lower-right {
@@ -1415,4 +1218,3 @@ background: #E5E5E580;
 padding-bottom: 10px;
 }
 }
-

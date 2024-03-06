@@ -472,11 +472,12 @@ min-width: 320px;
 }
 a {
 color: #BF7125;
+text-decoration: none;
 }
 a:hover {
 background-color: #e5e5e5;
 cursor: pointer !important;
-text-decoration: underline;
+text-decoration: none;
 }
 a:not([href]),
 a:not([href]):hover {

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 import requests
 from lxml import etree
 
@@ -17,23 +18,31 @@ def alvin_place_list(request):
 
     response = requests.get(preview_place_list_url, headers=xml_headers_list)
 
-    alvin_place_search_xml = etree.XML(response.content)
+    if response.status_code == 200:
+        alvin_place_search_xml = etree.XML(response.content)
 
-    metadata = {
-        "fromNo":alvin_place_search_xml.xpath("//fromNo/text()"),
-        "toNo":alvin_place_search_xml.xpath("//toNo/text()"),
-        "totalNo":alvin_place_search_xml.xpath("//totalNo/text()"),
-        "places":{
-            int(place.find("recordInfo/id").text):{
-                "authority_names":place.xpath("./authority/geographic/text()"),
+        paginated_metadata = [
+                {"authority_names":list(zip(place.xpath("./authority/geographic/text()"), place.xpath("./authority/@lang"))),
                 "variant_names":list(zip(place.xpath("./variant/geographic/text()"), place.xpath("./variant/@lang"))),
-            } for place in alvin_place_search_xml.iter("place")
-        },
-    }
+                "id":place.find("./recordInfo/id").text
+                } for place in alvin_place_search_xml.iter("place")
+            ]
+        
+        paginator = Paginator(paginated_metadata, 2)
+        
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
 
-    context = {
-        "metadata":metadata,
-        "xml":response.content,
-    }
+        metadata = {
+            "fromNo":alvin_place_search_xml.xpath("//fromNo/text()"),
+            "toNo":alvin_place_search_xml.xpath("//toNo/text()"),
+            "totalNo":alvin_place_search_xml.xpath("//totalNo/text()"),
+        }
+
+        context = {
+            "metadata":metadata,
+            "xml":response.content,
+            "page_obj":page_obj,
+        }
 
     return render(request, "alvin_place_list/alvin_place_list.html", context)

@@ -47,26 +47,42 @@
                 {{ metadata.toNo.0 }}
                 {{ metadata.totalNo.0 }}
                 <br />
-                <ul>
-                  {% for id, data in metadata.places.items %}
-                  {% for authority_name in data.authority_names %}
+                <ul class="place-list">
+                  {% for place in page_obj %}
                   <li>
-                    <a href="{% url 'alvin_place' id %}">
-                      {{authority_name}}
-                    </a>
+                    {% for authority_name in place.authority_names %}
+                      <a href="{% url 'alvin_place' place.id %}">{{authority_name}}</a>
+                        <br/>
                     {% endfor %}
-                    {% if data.variant_names %}
-                    <strong>Alternativa namnformer</strong>
-                    <br />
-                    {% for variant_name in data.variant_names %}
-                    {{variant_name.0 }} ({{variant_name.1}})
-                    <br />
-                    {% endfor %}
+                    {% if place.variant_names %}
+                      <strong>Alternativa namnformer</strong>
+                      <br />
+                      {% for variant_name in place.variant_names %}
+                        {{variant_name.0 }} ({{variant_name.1}})
+                        <br />
+                      {% endfor %}
                     {% endif %}
-                    {% endfor %}
                   </li>
+                  {% endfor %}
                 </ul>
-                {{ metadata }}
+                <div class="pagination">
+                  <span class="step-links">
+                      {% if page_obj.has_previous %}
+                          <a href="?page=1"><bold>&laquo;</bold></a>
+                          <a href="?page={{ page_obj.previous_page_number }}"><bold>&lsaquo;</bold></a>
+                      {% endif %}
+              
+                      <span class="current">
+                          Sida {{ page_obj.number }} av {{ page_obj.paginator.num_pages }}.
+                      </span>
+              
+                      {% if page_obj.has_next %}
+                          <a href="?page={{ page_obj.next_page_number }}"><bold>&rsaquo;</bold></a>
+                          <a href="?page={{ page_obj.paginator.num_pages }}"><bold>&raquo;</bold></a>
+                      {% endif %}
+                  </span>
+                </div>
+                {{ xml }}
             </article>
             <div class="container page-tools-bottom page-tools">
               <div class="page-tool print">

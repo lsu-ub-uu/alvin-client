@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record>
+    <data>
+        <place>
+            <authority lang="swe" repeatId="0">
+                <geographic>Uppsala</geographic>
+            </authority>
+            <variant lang="lat" repeatId="1">
+                <geographic>Ubsali\xc3\xa6</geographic>
+            </variant>
+            <variant lang="swe" repeatId="2">
+                <geographic>Upsala</geographic>
+            </variant>
+            <variant lang="fre" repeatId="3">
+                <geographic>Upsal</geographic>
+            </variant>
+            <variant lang="lat" repeatId="4">
+                <geographic>Upsali\xc3\xa6</geographic>
+            </variant>
+            <country>sw</country>
+            <point>
+                <latitude>59.85488966429547</latitude>
+                <longitude>17.631198404124007</longitude>
+            </point>
+            <recordInfo>
+                <id>679</id>
+                <type>
+                    <linkedRecordType>recordType</linkedRecordType>
+                    <linkedRecordId>alvin-place</linkedRecordId>
+                    <actionLinks>
+                        <read>
+                            <requestMethod>GET</requestMethod>
+                            <rel>read</rel>
+                            <url>https://cora.epc.ub.uu.se/alvin/rest/record/recordType/alvin-place</url>
+                            <accept>application/vnd.uub.record+xml</accept>
+                        </read>
+                    </actionLinks>
+                </type>
+                <validationType>
+                    <linkedRecordType>validationType</linkedRecordType>
+                    <linkedRecordId>place</linkedRecordId>
+                    <actionLinks>
+                        <read>
+                            <requestMethod>GET</requestMethod>
+                            <rel>read</rel>
+                            <url>https://cora.epc.ub.uu.se/alvin/rest/record/validationType/place</url>
+                            <accept>application/vnd.uub.record+xml</accept>
+                        </read>
+                    </actionLinks>
+                </validationType>
+                <dataDivider>
+                    <linkedRecordType>system</linkedRecordType>
+                    <linkedRecordId>alvinData</linkedRecordId>
+                    <actionLinks>
+                        <read>
+                            <requestMethod>GET</requestMethod>
+                            <rel>read</rel>
+                            <url>https://cora.epc.ub.uu.se/alvin/rest/record/system/alvinData</url>
+                            <accept>application/vnd.uub.record+xml</accept>
+                        </read>
+                    </actionLinks>
+                </dataDivider>
+                <updated repeatId="0">
+                    <updatedBy>
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated>2024-01-15T13:57:11.800629Z</tsUpdated>
+                </updated>
+                <updated repeatId="1">
+                    <updatedBy>
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated>2024-01-17T09:59:09.853106Z</tsUpdated>
+                </updated>
+                <updated repeatId="2">
+                    <updatedBy>
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated>2024-02-26T07:48:36.627208Z</tsUpdated>
+                </updated>
+                <updated repeatId="3">
+                    <updatedBy>
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated>2024-03-06T10:23:08.210212Z</tsUpdated>
+                </updated>
+                <updated repeatId="4">
+                    <updatedBy>
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated>2024-04-22T10:22:34.189533Z</tsUpdated>
+                </updated>
+                <createdBy>
+                    <linkedRecordType>user</linkedRecordType>
+                    <linkedRecordId>151515</linkedRecordId>
+                </createdBy>
+                <tsCreated>2024-01-15T13:57:11.800629Z</tsCreated>
+            </recordInfo>
+        </place>
+    </data>
+    <actionLinks>
+        <read>
+            <requestMethod>GET</requestMethod>
+            <rel>read</rel>
+            <url>https://cora.epc.ub.uu.se/alvin/rest/record/alvin-place/679</url>
+            <accept>application/vnd.uub.record+xml</accept>
+        </read>
+        <read_incoming_links>
+            <requestMethod>GET</requestMethod>
+            <rel>read_incoming_links</rel>
+            <url>https://cora.epc.ub.uu.se/alvin/rest/record/alvin-place/679/incomingLinks</url>
+            <accept>application/vnd.uub.recordList+xml</accept>
+        </read_incoming_links>
+    </actionLinks>
+</record>

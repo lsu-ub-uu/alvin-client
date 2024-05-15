@@ -24,4 +24,5 @@ urlpatterns = [
     path('webbplatskarta/', include('webbplatskarta.urls')),
     path('alvin-place/', include('alvin_place.urls')),
     path('alvin-place/', include('alvin_place_list.urls')),
+    path('__reload__/', include('django_browser_reload.urls')),
 ]

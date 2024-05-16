@@ -7,22 +7,14 @@
 {% endblock %}
 
 {% block content %}
-<div class="l-main-container clearfix no-menu without-max-width main-wrapper">
-    <div class="page-tools-top container clearfix">
-        <div class="page-tool language">
-            <a href="../en/start.html" class="language en" lang="en">
-                <span class="language-text"> English </span>
-            </a>
-            <a href="../no/start.html" class="language no" lang="no">
-                <span class="language-text"> Norsk </span>
-            </a>
-            <a href="start.html" class="language sv" lang="sv">
-                <span class="language-text"> Svenska </span>
-            </a>
-        </div>
+<main class="mt-20 flex items-center justify-center bg-gradient-to-r from-alvinGreen to-alvinOrange bg-center h-screen">
+    <search>
 
-    </div>
-    <div id="maincontent">
+        <form action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
+                <input id="mainSearchField" class="autocomplete__input autocomplete__input--default"
+                    name="query" type="text" placeholder="Sök i Alvin">
+        </form>
+
         <div class="main-content page-content-fullwidth">
             <div id="xp1" class="rs_addtools rs_splitbutton rs_preserve rs_skip container">
                 <button type="button" class="rsbtn_tooltoggle" title="Open/close toolbar" style="display:none"
@@ -31,71 +23,8 @@
                         style="width: 0px; height: 0px;">Open/close toolbar</span>
                 </button>
             </div>
-            <div id="readspeaker-content">
-                <!-- index_start -->
-                <div> </div>
-                <div class="puff-container is-full-width number-of-slots-3 nocontent">
-                    <div class="container module-group">
-                        <section class="module unit puff-image" aria-label="Det här är Alvin">
-                            <div class="module-header bg-dark-solid">
-                                <h2>Det här är Alvin</h2>
-                            </div>
-                            <img src="{% static 'img/c_775214-l_3-k_imagepuff.jpg' %}"
-                                alt="Porträtt av tre välklädda musiker">
-                            <div class="module-content has-description">
-                                <div class="description bg-dark-trans">
-                                    <p>Få reda på mer om Alvins bakgrund och tekniska lösningar.</p>
-                                </div>
-                                <div class="link bg-dark-trans">
-                                    <p><a href="om-alvin.html">Om Alvin</a></p>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="module unit puff-image" aria-label="Söka och ladda ner">
-                            <div class="module-header bg-dark-solid">
-                                <h2>Söka och ladda ner</h2>
-                            </div>
-                            <img src="{% static 'img/c_775208-l_3-k_imagepuff.jpeg' %}"
-                                alt="Skäggig man röker en cigarett medan han tittar i en kikare">
-                            <div class="module-content has-description">
-                                <div class="description bg-dark-trans">
-                                    <p>Få tips och tricks på hur du kan söka reda på och ladda ned material
-                                        ifrån Alvin.</p>
-                                </div>
-                                <div class="link bg-dark-trans">
-                                    <p><a href="soktips.html">Söktips</a></p>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="module unit puff-image" aria-label="Upphovsrätt">
-                            <div class="module-header bg-dark-solid">
-                                <h2>Upphovsrätt och användning</h2>
-                            </div>
-                            <img src="{% static 'img/c_775212-l_3-k_imagepuff.jpg' %}"
-                                alt="Äldre porträttfotografi på uniformerad polis med mustasch">
-                            <div class="module-content has-description">
-                                <div class="description bg-dark-trans">
-                                    <p>Få reda på vad som egentligen gäller för det material du hittar i Alvin.
-                                    </p>
-                                </div>
-                                <div class="link bg-dark-trans">
-                                    <p><a href="upphovsratt.html">Upphovsrätt</a></p>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-                <span id="anchor-811912"></span>
-                <!-- index_stop -->
-                <div class="container page-tools-bottom page-tools">
-                    <div class="page-tool print">
-                        <span class="print-icon">
-                            <a accesskey="P" href="" class="js-print-page" onclick="window.print()">Skriv ut</a>
-                        </span>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
-</div>
+    </search>
+</main>
+<footer>Footer börjar här</footer>
 {% endblock %}

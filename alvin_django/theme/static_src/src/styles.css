@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Universalis';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Universalis ADF Std Regular'), url('fonts/UniversalisADFStd-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    font-style: normal;
+    font-weight: normal;
+    src: local('OpenSans Regular'), url('fonts/opensan/OpenSans-Regular.ttf') format('ttf');
+}
+
+@layer base {
+    html {
+      font-family: "Open Sans", sans-serif;
+    }
+  }

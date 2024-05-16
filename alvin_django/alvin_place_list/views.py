@@ -28,7 +28,7 @@ def alvin_place_list(request):
                 } for place in alvin_place_search_xml.iter("place")
             ]
         
-        paginator = Paginator(paginated_metadata, 2)
+        paginator = Paginator(paginated_metadata, 1)
         
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)

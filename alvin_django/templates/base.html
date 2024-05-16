@@ -1,149 +1,47 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="sv">
+<html class="overflow-scroll" lang="sv">
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="robots" content="index, follow">
     <meta name="DC.Publisher" content="Uppsala universitet">
     <meta name="keywords" content="Alvin, kulturarv, digitala samlingar, databaser, bibliotek">
-    <meta name="description"
-        content="Alvin - nordisk plattform för bevarande och tillgängliggörande av digitaliserat kulturarv">
+    <meta name="description" content="Alvin - nordisk plattform för bevarande och tillgängliggörande av digitaliserat kulturarv">
     <meta name="DC.Creator.PersonalName" content="UUB Alvin support">
     <meta name="internal-robots" content="noindex">
     <meta name="siteName" content="Alvin">
     <meta name="creator" content="UUB Alvin support">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% tailwind_css %}
+
     {% load static %}
-    <link href="{% static 'css/v2-aggregated-css-base.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/v2-aggregated-css-modules.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/v2-aggregated-css-post.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/v2-aggregated-css-media-queries.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/css-custom-site.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/css-custom-site-theme-alvin.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/alvin.css' %}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
     <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% tailwind_css %}
+    
     {% block head %}
     {% endblock %}
+
     {% block jshead %}
     {% endblock %}
+
 </head>
 
-<body class="custom-site not-centralised" id="top">
-    <div class="main-wrapper">
-        <div class="skip-to-content">
-            <a class="is-visually-hidden is-show-on-focus btn-skip btn" href="#maincontent">Hoppa till
-                huvudinnehållet</a>
-        </div>
-        <header class="header-element">
-            <div class="container top-content clearfix">
-                <div class="logo-wrap">
-                    <a href="{% url 'start' %}" title="Alvin - Digitalt kulturarv" class="logo-link">
-                        <img src="{% static 'img/alvinlogo.png' %}" alt="Alvin logo" class="logo">
-                    </a>
-                </div>
-                <div class="searchForm" aria-label="Sök i Alvin" role="search">
-                    <form class="search"
-                        action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
-                        <div class="search-group flex">
-                            <label for="mainSearchField" class="is-visually-hidden">Sök</label>
-                            <div id="js-main-search-complete-output" class="search-complete-output">
-                                <div class="autocomplete__wrapper search-progressive-input">
-                                    <input id="mainSearchField" class="autocomplete__input autocomplete__input--default"
-                                        name="query" type="text" placeholder="Sök i Alvin">
-                                </div>
-                            </div>
-                            <input type="submit" class="btn btn-search submit-search" value="Sök">
-                        </div>
-                    </form>
-                </div>
-                {% include '_partials/_top_nav.html' %}
-            </div>
-            <div class="mobile-search-container" aria-label="Sök i Alvin" role="search">
-                <form class="mobile-search" id="mobile-search-form"
-                    action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
-                    <div class="search-group flex justify-content-end">
-                        <label for="mainSearchFieldMobile" class="is-visually-hidden">Sök</label>
-                        <div class="textfield search-complete-output-mobile" style="display: block; width: initial;">
-                            <div class="autocomplete__wrapper">
-                                <input autocomplete="off" class="autocomplete__input autocomplete__input--default"
-                                    id="mainSearchFieldMobile" name="query" type="text" placeholder="Sök i Alvin">
-                            </div>
-                        </div>
-                        <input type="submit" class="submit-icon submit-search" value="" aria-label="Sök">
-                    </div>
-                </form>
-            </div>
-            <script>
-                /* When the user clicks on the button,
-                toggle between hiding and showing the dropdown content */
-                function showMenu() {
-                    document.getElementById("mobileMenu").classList.toggle("show");
-                }
-                // Close the dropdown menu if the user clicks outside of it
-                window.onclick = function (event) {
-                    if (!event.target.matches('.dropbtn')) {
-                        var dropdowns = document.getElementsByClassName("dropdown-content");
-                        var i;
-                        for (i = 0; i < dropdowns.length; i++) {
-                            var openDropdown = dropdowns[i];
-                            if (openDropdown.classList.contains('show')) {
-                                openDropdown.classList.remove('show');
-                            }
-                        }
-                    }
-                } 
-            </script>
-            <div class="local-nav-mobile-header align-items-center flex-row local-nav-mobile-static dropdown">
-                <button id="local-nav-mobile-button" class="local-nav-mobile-icon dropbtn" aria-controls="mobileMenu"
-                    aria-expanded="false" aria-label="Huvudmeny" onclick="showMenu()"> </button>
-                <span class="current-page is-berling"> Alvin - digitalt kulturarv</span>
-            </div>
-            <nav id="mobileMenu" aria-label="Huvudmeny" class="local-nav-mobile">
-                <ul class="menuLevel0">
-                    <li><a href="om-alvin.html">Om Alvin</a></li>
-                    <li><a href="soktips.html">Söktips</a></li>
-                    <li><a href="upphovsratt.html">Upphovsrätt</a></li>
-                    <li><a href="medlemmar.html">Medlemmar</a></li>
-                    <li><a href="kontakt.html">Kontakt</a></li>
-                    <li><a href="webbplatskarta.html">Webbplatskarta</a></li>
-                </ul>
-            </nav>
-        </header>
+<body id="top">
 
+        {% include '_partials/_top_nav.html' %}
+        
         {% block content %}
+
         {% endblock %}
-            
-    </div>
-    <button onclick="topFunction()" id="scrollToTop" title="Gå till toppen"></button>
 
-    <script>
-        // Get the button
-        let topbutton = document.getElementById("scrollToTop");
-
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function () { scrollFunction() };
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                topbutton.style.display = "block";
-            } else {
-                topbutton.style.display = "none";
-            }
-        }
-
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-    </script>
     {% block jsbody %}
+
     {% endblock %}
+    
 </body>
 
 </html>

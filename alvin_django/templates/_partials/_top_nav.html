@@ -1,22 +1,18 @@
-<div class="responsive-menu-container-bottom">
-    <div class="sub">Digitalt kulturarv</div>
-    <nav aria-label="Huvudmeny" class="top-nav-wrap container">
-        <ul class="top-nav first-level is-uppercase clearfix">
-            <li class="{% if request.resolver_match.url_name == 'start' %}active{% endif %}">
-                <a href="{% url 'start' %}"> Start </a>
-            </li>
-            <li class="{% if request.resolver_match.url_name == 'medlemmar' %}active{% endif %}">
-                <a href="{% url 'medlemmar' %}"> Medlemmar </a>
-            </li>
-            <li class="{% if request.resolver_match.url_name == 'kontakt' %}active{% endif %}">
-                <a href="{% url 'kontakt' %}"> Kontakt </a>
-            </li>
-            <li class="{% if request.resolver_match.url_name == 'webbplatskarta' %}active{% endif %}">
-                <a href="{% url 'webbplatskarta' %}"> Webbplatskarta </a>
-            </li>
-            <li class="{% if request.resolver_match.url_name == 'lista_platser' %}active{% endif %}">
-                <a href="{% url 'alvin_place_list' %}"> Platser </a>
-            </li>
-        </ul>
-    </nav>
-</div>
+{% load static %}
+<nav class="fixed top-0 pr-4 w-full h-20 z-50 bg-white border-t-8 border-t-alvinGreen" aria-label="Huvudmeny">
+    <div class="mx-auto">
+        <div class="flex justify-between">
+            <div class="flex items-center py-5 px-3">
+                <a class="text-3xl pb-5 pl-3 pr-5" href="#">☰</a>
+                <a class="border-b-8 border-b-alvinGreen text-5xl font-universalis" href="{% url 'start' %}" title="Alvin - Digitalt kulturarv">ALVIN</a>
+            </div>
+            <div class="flex items-center h-20">
+                <a class="hover:text-alvinOrange py-5 px-3 border-b-8 {% if request.resolver_match.url_name == 'start' %}border-b-alvinGreen{% else %}border-b-transparent{% endif %}" href="{% url 'start' %}"> Start </a>
+                <a class="hover:text-alvinOrange py-5 px-3 border-b-8 {% if request.resolver_match.url_name == 'kontakt' %}border-b-alvinGreen{% else %}border-b-transparent{% endif %}" href="{% url 'kontakt' %}"> Kontakt </a>
+                <a class="hover:text-alvinOrange py-5 px-3 border-b-8 {% if request.resolver_match.url_name == 'medlemmar' %}border-b-alvinGreen{% else %}border-b-transparent{% endif %}" href="{% url 'medlemmar' %}"> Medlemmar </a>
+                <a class="hover:text-alvinOrange py-5 px-3 border-b-8 {% if request.resolver_match.url_name == 'webbplatskarta' %}border-b-alvinGreen{% else %}border-b-transparent{% endif %}" href="{% url 'webbplatskarta' %}"> Webbplatskarta </a>
+                <a class="hover:text-alvinOrange py-5 px-3 border-b-8 {% if request.resolver_match.url_name == 'alvin_place_list' %}border-b-alvinGreen{% else %}border-b-transparent{% endif %}" href="{% url 'alvin_place_list' %}"> Platser </a>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -7,24 +7,31 @@
 {% endblock %}
 
 {% block content %}
-<main class="mt-20 flex items-center justify-center bg-gradient-to-r from-alvinGreen to-alvinOrange bg-center h-screen">
-    <search>
-
-        <form action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
-                <input id="mainSearchField" class="autocomplete__input autocomplete__input--default"
-                    name="query" type="text" placeholder="Sök i Alvin">
+<main class="flex flex-col items-center justify-center bg-[url('img/bg-img-start.webp')] bg-cover bg-center bg-no-repeat min-h-screen border-b-8 border-b-alvinGreen space-y-4">
+    <h1 class="text-white text-5xl md:text-8xl font-universalis text-center [text-shadow:_0_3px_0_#7FBFA7]">Digitaliserat kulturarv</h1>
+    <h2 class="text-white text-2xl md:text-5xl font-universalis text-center [text-shadow:_0_3px_0_#7FBFA7] mb-4 ">från nordiska kulturarvsinstitutioner</h1>
+    <search class="flex w-full sm:w-1/2">
+        <form class="flex w-full" action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
+            <input class="flex-grow p-3 border-4 border-alvinGreen  rounded-l-3xl focus:border-alvinOrange focus:outline-none focus:ring-0"id="mainSearchField"
+                name="query" type="text" placeholder="Sök i Alvin">
+            <button class="flex-none w-16 bg-black text-white font-universalis" type="submit">Sök</button>
         </form>
-
-        <div class="main-content page-content-fullwidth">
-            <div id="xp1" class="rs_addtools rs_splitbutton rs_preserve rs_skip container">
-                <button type="button" class="rsbtn_tooltoggle" title="Open/close toolbar" style="display:none"
-                    aria-expanded="false" data-rs-container="xp1" data-rsevent-id="rs_469097" accesskey="1"><i
-                        class="rsicn rsicn-arrow-down" aria-hidden="true"></i><span class="rsbtn_btnlabel"
-                        style="width: 0px; height: 0px;">Open/close toolbar</span>
-                </button>
-            </div>
-        </div>
     </search>
 </main>
-<footer>Footer börjar här</footer>
+<section class="flex flex-wrap justify-between w-full py-2 border-b-8 border-b-alvinOrange">
+    <div class="flex justify-center w-full sm:w-1/3 p-2">
+        <img src="{% static 'img/omalvin.jpg' %}" alt="Description of Image 1" class="w-full h-auto">
+    </div>
+    <div class="flex justify-center w-full sm:w-1/3 p-2">
+        <img src="{% static 'img/söktips.jpg' %}" alt="Description of Image 2" class="w-full h-auto">
+    </div>
+    <div class="flex justify-center w-full sm:w-1/3 p-2">
+        <img src="{% static 'img/upphovsrätt.jpg' %}" alt="Description of Image 3" class="w-full h-auto">
+    </div>
+</section>
+<footer class="bg-black h-screen p-8">
+    
+    <p class="text-white font-universalis">Om Alvin:</p>
+    <p class="text-white">Alvin är en plattform för publicering och långsiktigt bevarande av digitaliserat kulturarvsmaterial från biblioteks-, arkiv- och museisamlingar i Sverige och Norge.</p>
+</footer>
 {% endblock %}

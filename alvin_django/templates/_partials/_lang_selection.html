@@ -1,23 +1,22 @@
 {% load static %}
 {% load i18n %}
 
-<nav class="ml-4" id="languageSelection">
-    <figure>
-        <img class="w-5 h-5 ml-1 mb-4 cursor-pointer" src="{% static 'img/globe-icon-36.png' %}">
-    </figure>
-    <div class="absolute bg-white border border-1 rounded cursor-pointer">
-        <ul class="">
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_available_languages as LANGUAGES %}
-            {% get_language_info_list for LANGUAGES as langs %}
-            {% for lang in langs %}
-            <a lang="{{ lang.code }}" href="/{{ lang.code }}/" hreflang="{{ lang.code }}">
-                <li class="px-4 py-2 hover:bg-gray-200">{{ lang.name_local.title }}</li>
-            </a>
-            {% if not forloop.last %}
-            <hr>
-            {% endif %}
-            {% endfor %}
-        </ul>        
+<figure>
+    <img class="w-5 h-5 ml-1 mb-9 cursor-pointer" src="{% static 'img/globe-icon-36.png' %}">
+</figure>
+<form class="absolute ml-40" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}">
+    <div class="block">
+    <select class="bg-white border border-1 rounded cursor-pointer focus:border-alvinGreen focus:outline-none focus:ring-0" name="language">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            <option class="peer-hover:bg-alvinGreen" value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                {{ language.name_local.title }}
+            </option>
+        {% endfor %}
+    </select>
     </div>
-</nav>
+    <input type="submit" value="Go">
+</form>

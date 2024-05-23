@@ -49,7 +49,7 @@ NPM_BIN_PATH = 'C:/Program Files/nodejs/npm.cmd'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.locale.LocaleMiddleware', # Localization
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -135,9 +135,11 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-from django.utils.translation import gettext_lazy as _
+# Localization
 
 LANGUAGE_CODE = 'sv'
+
+USE_I18N = True
 
 LANGUAGES = (
     ('sv', 'Svenska'),
@@ -145,6 +147,6 @@ LANGUAGES = (
     ('en', 'English'),
 )
 
-LOCALE_PATHS = (
+LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
-)
+]

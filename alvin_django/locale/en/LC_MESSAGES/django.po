@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-23 11:48+0200\n"
+"POT-Creation-Date: 2024-05-24 10:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\kontakt\templates\kontakt\kontakt.html:8
+msgid "Alvin - Kontakt"
+msgstr "Alvin - Contact"
+
+#: .\kontakt\templates\kontakt\kontakt.html:15
+#: .\templates\_partials\_top_nav.html:16
+msgid "Kontakt"
+msgstr "Contact"
+
+#: .\kontakt\templates\kontakt\kontakt.html:18
+msgid ""
+"Har du frågor kring materialet som är publicerat i Alvin eller önskar "
+"beställa digitalisering, kontakta "
+msgstr "If you have questions on the materials published in Alvin, or would like to request digitisation, please contact"
+
+#: .\kontakt\templates\kontakt\kontakt.html:19
+msgid "respektive ägande institution"
+msgstr "the institution holding the materials"
+
+#: .\kontakt\templates\kontakt\kontakt.html:20
+msgid "Frågor som rör registrering eller annan teknisk support i Alvin"
+msgstr "Questions regarding registration or other technical support in Alvin"
+
+#: .\kontakt\templates\kontakt\kontakt.html:21
+#: .\kontakt\templates\kontakt\kontakt.html:26
+msgid "E-post"
+msgstr "Email"
+
+#: .\kontakt\templates\kontakt\kontakt.html:24
+msgid ""
+"För andra frågor om Alvin, konsortiet eller publicering av ett digitalt "
+"kulturarv, kontakta Uppsala universitetsbibliotek genom"
+msgstr "For other questions about Alvin, the consortium or the publishing of cultural heritage materials, contact Uppsala University Library through"
 
 #: .\start\templates\start\start.html:19
 msgid "Digitaliserat kulturarv"
@@ -28,7 +62,7 @@ msgstr "from nordic cultural heritage institutions"
 
 #: .\start\templates\start\start.html:25
 msgid "Sök i Alvin"
-msgstr ""
+msgstr "Search Alvin"
 
 #: .\start\templates\start\start.html:26
 msgid "Sök"
@@ -61,10 +95,6 @@ msgstr "Digitised cultural heritage"
 #: .\templates\_partials\_top_nav.html:15
 msgid "Start"
 msgstr ""
-
-#: .\templates\_partials\_top_nav.html:16
-msgid "Kontakt"
-msgstr "Contact"
 
 #: .\templates\_partials\_top_nav.html:17
 msgid "Medlemmar"

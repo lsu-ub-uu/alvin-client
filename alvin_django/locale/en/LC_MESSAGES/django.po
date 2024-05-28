@@ -102,7 +102,7 @@ msgstr "Members"
 
 #: .\templates\_partials\_top_nav.html:18
 msgid "Webbplatskarta"
-msgstr "Site map"
+msgstr "Sitemap"
 
 #: .\templates\_partials\_top_nav.html:19
 msgid "Platser"

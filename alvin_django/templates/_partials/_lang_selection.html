@@ -1,22 +1,19 @@
 {% load static %}
 {% load i18n %}
 
-<figure>
-    <img class="w-5 h-5 ml-1 mb-9 cursor-pointer" src="{% static 'img/globe-icon-36.png' %}">
-</figure>
-<form class="absolute ml-40" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+<form id="languageSelector" class="absolute top-20 right-4 z-50" action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
     <input name="next" type="hidden" value="{{ redirect_to }}">
-    <div class="block">
-    <select class="bg-white border border-1 rounded cursor-pointer focus:border-alvinGreen focus:outline-none focus:ring-0" name="language">
-        {% get_current_language as LANGUAGE_CODE %}
-        {% get_available_languages as LANGUAGES %}
-        {% get_language_info_list for LANGUAGES as languages %}
-        {% for language in languages %}
-            <option class="peer-hover:bg-alvinGreen" value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}selected{% endif %}>
-                {{ language.name_local.title }}
-            </option>
-        {% endfor %}
-    </select>
+    <div class="flex h-10">
+        <select class="bg-white border border-1 rounded cursor-pointer focus:border-alvinGreen focus:outline-none focus:ring-0" onchange="this.form.submit()" name="language">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+                <option class="text-sm" value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                    {{ language.name_local.title }}
+                </option>
+            {% endfor %}
+        </select>
     </div>
-    <input type="submit" value="Go">
 </form>

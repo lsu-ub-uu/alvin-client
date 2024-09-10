@@ -24,6 +24,10 @@
     <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
     <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
     
+    <!-- HTMX + AlpineJS -->
+    <script src="{% static 'js/htmx.min.js' %}" defer></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    
     {% block head %}
     {% endblock %}
 
@@ -35,6 +39,8 @@
 <body id="top">
 
         {% include '_partials/_top_nav.html' %}
+
+        {% include '_partials/_lang_selection.html' %}
         
         {% block content %}
 

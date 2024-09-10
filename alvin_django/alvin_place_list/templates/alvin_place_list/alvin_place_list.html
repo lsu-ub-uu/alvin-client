@@ -1,90 +1,146 @@
 {% extends 'base.html' %}
 
+<!-- LOCALIZATION -->
+{% load i18n %}
+
+<!-- STATIC -->
 {% load static %}
 
 {% block head %}
-<title>Alvin - Platser</title>
+    <title>{% translate 'Alvin - Platser' %}</title>
 {% endblock %}
 
 {% block content %}
-
-<main class="mt-20">
-    <nav class="text-sm ml-4">
-      <a href="{% url 'start' %}" class="text-alvinGreen hover:text-alvinOrange">..</a>
-      <span class="mx-1">/</span>
-      <span>Platser</span>
+<main class="mt-12">
+    <!-- Breadcrumb Navigation -->
+    <nav class="text-sm ml-4 mb-4">
+        <a href="{% url 'start' %}" class="text-alvinGreen hover:text-alvinOrange">..</a>
+        <span class="mx-1">/</span>
+        <span>{% translate 'Platser' %}</span>
     </nav>
-    <div class="flex justify-center ">
-        <!-- Left Sidebar for Filtering Options -->
-        <div class="w-1/5 mt-4 px-4">
+    
+    <div class="flex justify-center bt-2">
+        <!-- Vänster sidomeny för filtrering -->
+        <aside class="hidden lg:block lg:w-1/6 px-4">
             <h2 class="text-xl font-bold mb-4">Filter</h2>
-            <!-- Filter options go here -->
             <form method="get" action=".">
-                <div>
-                    <label for="country" class="block text-gray-700">Land</label>
-                    <select id="country" name="country" class="block w-full mt-1 rounded-md border-gray-300">
-                      <option value="">Alla</option>
-                      {% for country in countries %}
-                          <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>{{ country }}</option>
-                      {% endfor %}
+                <div class="mb-4">
+                    <label for="country" class="block text-gray-700"><strong>{% translate 'Land' %}</strong></label>
+                    <select id="country" name="country" class="block w-full mt-1 rounded-md border-gray-300 focus:border-alvinOrange focus:outline-none focus:ring-0 shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out">
+                        <option value="">{% translate 'Alla' %}</option>
+                        {% for country in countries %}
+                            <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>{{ country }}</option>
+                        {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md">Filter</button>
+                <button type="submit" class="bg-alvinGreen text-white px-4 py-2 rounded-md hover:bg-alvinOrange transition">Filter</button>
             </form>
-        </div>
+        </aside>
 
-        <!-- Main Content for Search Results -->
-        <div class="w-3/5 border-x-2">
-            <article class="mt-4 px-4">
-                {{ metadata.fromNo.0 }}
-                {{ metadata.toNo.0 }}
-                {{ metadata.totalNo.0 }}
-                <br>
-                <ul class="place-list">
-                    {% for place in page_obj %}
-                    <li class="mb-4">
-                        {% for authority_name in place.authority_names %}
-                        <a href="{% url 'alvin_place' place.id %}" class="text-alvinOrange hover:underline">{{ authority_name }}</a>
-                        <br />
-                        {% endfor %}
+        <!-- Innehåll resultatlista -->
+        <section class="lg:w-5/6 border-l-2 px-4">
+            <!-- Antal träffar -->
+            <div class="pb-4">
+                <p class="text-gray-600"><strong>{% translate 'Träff' %} {{ metadata.fromNo.0 }}-{{ metadata.toNo.0 }} {% translate 'av' %} {{ metadata.totalNo.0 }}</strong></p>
+            </div>
+
+            <!-- Lista över platser i träfflistan -->
+            <ul class="place-list w-full space-y-1">
+                {% for place in page_obj %}
+                    <li class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out">
+                        <!-- Place Names and Icon -->
+                        <div class="flex items-center mb-2">
+                            <img class="w-5 h-5 mr-2" src="{% static 'img/place.svg' %}" alt="Globe with marker">
+                            {% for authority_name in place.authority_names %}
+                                <a href="{% url 'alvin_place' place.id %}" class="text-alvinOrange text-xl font-semibold hover:underline">{{ authority_name.0 }}</a>
+                                {% if not forloop.last %}
+                                    <span class="mx-2 text-gray-400">|</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <!-- Variant Names (if available) -->
                         {% if place.variant_names %}
-                        <strong>Alternativa namnformer</strong>
-                        <br />
-                        {% for variant_name in place.variant_names %}
-                        {{ variant_name.0 }} ({{ variant_name.1 }})
-                        <br />
-                        {% endfor %}
+                            <div class="mt-2">
+                                <strong class="block text-gray-700">{% translate 'Alternativa namnformer:' %}</strong>
+                                <ul class="list-disc ml-5 text-gray-600">
+                                    {% for variant_name in place.variant_names %}
+                                        <li>{{ variant_name.0 }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         {% endif %}
                     </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Pagination -->
+            <nav class="pagination mt-6">
+                <ul class="flex items-center justify-center space-x-2">
+                    {% if page_obj.has_previous %}
+                        <!-- First Page Button -->
+                        <li>
+                            <a href="?page=1{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                            class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-lg text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
+                            aria-label="First page">
+                            &laquo;
+                            </a>
+                        </li>
+                        <!-- Previous Page Button -->
+                        <li>
+                            <a href="?page={{ page_obj.previous_page_number }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                            class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-lg text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
+                            aria-label="Previous page">
+                            &lsaquo;
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <!-- Page Numbers -->
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <!-- Current Page -->
+                            <li>
+                                <span class="inline-flex items-center px-3 py-1 border border-alvinGreen text-white bg-alvinGreen rounded-lg">
+                                    {{ num }}
+                                </span>
+                            </li>
+                        {% else %}
+                            <!-- Other Pages -->
+                            <li>
+                                <a href="?page={{ num }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                                class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-lg text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
+                                aria-label="Page {{ num }}">
+                                {{ num }}
+                                </a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <!-- Next Page Button -->
+                        <li>
+                            <a href="?page={{ page_obj.next_page_number }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                            class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-lg text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
+                            aria-label="Next page">
+                            &rsaquo;
+                            </a>
+                        </li>
+                        <!-- Last Page Button -->
+                        <li>
+                            <a href="?page={{ page_obj.paginator.num_pages }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                            class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-lg text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
+                            aria-label="Last page">
+                            &raquo;
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
-                <div class="pagination">
-                    <span class="step-links flex justify-between mt-4">
-                        {% if page_obj.has_previous %}
-                        <a href="?page=1{% if selected_country %}&country={{ selected_country }}{% endif %}" class="text-blue-500 hover:underline">&laquo;</a>
-                        <a href="?page={{ page_obj.previous_page_number }}{% if selected_country %}&country={{ selected_country }}{% endif %}" class="text-blue-500 hover:underline">&lsaquo;</a>
-                        {% endif %}
+            </nav>
 
-                        <span class="current">
-                            Sida {{ page_obj.number }} av {{ page_obj.paginator.num_pages }}.
-                        </span>
-
-                        {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}{% if selected_country %}&country={{ selected_country }}{% endif %}" class="text-blue-500 hover:underline">&rsaquo;</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}{% if selected_country %}&country={{ selected_country }}{% endif %}" class="text-blue-500 hover:underline">&raquo;</a>
-                        {% endif %}
-                    </span>
-                </div>
-                <div class="bg-gray-200 p-4 mt-4 rounded">{{ xml }}</div>
-            </article>
-        </div>
-
-        <!-- Right Sidebar for Added Records of Interest (Placeholder for now) -->
-        <div class="w-1/5 mt-4 px-4">
-            <h2 class="text-xl font-bold mb-4">Grejer goes here</h2>
-            <!-- Content for added records goes here -->
-        </div>
+            <!-- XML -->
+            <div class="bg-gray-200 p-4 mt-4 rounded">{{ xml }}</div>
+        </section>
     </div>
 </main>
-
 {% endblock %}

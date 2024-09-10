@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+<title>Alvin - Platser</title>
+{% endblock %}
+
+{% block content %}
+
+<main class="mt-20">
+    <div class="flex justify-center ">
+        <!-- Left Sidebar for Filtering Options -->
+        <div class="w-1/5 mt-4 px-4">
+            <h2 class="text-xl font-bold mb-4">Filter</h2>
+            <!-- Filter options go here -->
+            <form method="get" action=".">
+                <div>
+                    <label for="country" class="block text-gray-700">Land</label>
+                    <select id="country" name="country" class="block w-full mt-1 rounded-md border-gray-300">
+                      <option value="">Alla</option>
+                      {% for country in countries %}
+                          <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>{{ country }}</option>
+                      {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md">Filter</button>
+            </form>
+        </div>
+
+        <!-- Main Content for Search Results -->
+        <div class="w-3/5 border-x-2">
+            <article class="mt-4 px-4">
+                <div class="container mx-auto py-8">
+                    <h1 class="text-3xl font-bold mb-6">Träfflista</h1>
+                    <div id="api-data-container" class="space-y-8">
+                        {% for record_wrapper in records %}
+                            {% with record=record_wrapper.record.data %}
+                                <div class="bg-white p-6 rounded-lg shadow-md">
+                                    {% for child in record.children %}
+                                        {% if child.name == "authority" %}
+                                            <h2 class="text-xl font-semibold mb-2">Authority</h2>
+                                            <ul class="list-disc pl-5 mb-4">
+                                                {% for auth_child in child.children %}
+                                                    <li>{{ auth_child.name }}: {{ auth_child.value }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% elif child.name == "variant" %}
+                                            <h2 class="text-xl font-semibold mb-2">Variant</h2>
+                                            <ul class="list-disc pl-5 mb-4">
+                                                {% for var_child in child.children %}
+                                                    <li>{{ var_child.name }}: {{ var_child.value }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% elif child.name == "country" %}
+                                            <h2 class="text-xl font-semibold mb-2">Country</h2>
+                                            <p class="mb-4">{{ child.value }}</p>
+                                        {% elif child.name == "point" %}
+                                            <h2 class="text-xl font-semibold mb-2">Coordinates</h2>
+                                            <ul class="list-disc pl-5 mb-4">
+                                                {% for point_child in child.children %}
+                                                    <li>{{ point_child.name }}: {{ point_child.value }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% elif child.name == "recordInfo" %}
+                                            <h2 class="text-xl font-semibold mb-2">Record Info</h2>
+                                            <ul class="list-disc pl-5 mb-4">
+                                                {% for info_child in child.children %}
+                                                    <li>{{ info_child.name }}: 
+                                                        {% if info_child.children %}
+                                                            <ul class="list-disc pl-5">
+                                                                {% for nested_child in info_child.children %}
+                                                                    <li>{{ nested_child.name }}: {{ nested_child.value }}</li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% else %}
+                                                            {{ info_child.value }}
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="bg-gray-200 p-4 mt-4 rounded">{{ data }}</div>
+            </article>
+        </div>
+
+        <!-- Right Sidebar for Added Records of Interest (Placeholder for now) -->
+        <div class="w-1/5 mt-4 px-4">
+            <h2 class="text-xl font-bold mb-4">Grejer goes here</h2>
+            <!-- Content for added records goes here -->
+        </div>
+    </div>
+</main>
+
+{% endblock %}

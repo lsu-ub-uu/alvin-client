@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     'webbplatskarta',
     'alvin_place',
     'alvin_place_list',
-
+    'search',
+    "django_htmx",
     'tailwind',
     'theme',
     'django_browser_reload',
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_htmx.middleware.HtmxMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 

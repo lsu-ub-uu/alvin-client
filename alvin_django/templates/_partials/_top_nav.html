@@ -14,23 +14,19 @@
                     <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'start' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'start' %}">{% translate 'Start' %}</a>
                     <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'kontakt' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'kontakt' %}">{% translate 'Kontakt' %}</a>
                     <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'medlemmar' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'medlemmar' %}">{% translate 'Medlemmar' %}</a>
+                    <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'search' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'search' %}">{% translate 'Sök' %}</a>
                     <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 mr-4 {% if request.resolver_match.url_name == 'alvin_place_list' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'alvin_place_list' %}">{% translate 'Platser' %}</a>
-                    <figure>
-                        <img class="w-6 inline-block cursor-pointer" src="{% static 'img/globe-icon-36.png' %}">
-                    </figure>              
+                    {% include '_partials/_lang_selection.html' %}
                 </div>
                 <div class="flex items-center justify-center lg:hidden">
-                    <figure>
-                        <img class="w-6 mt-2 ml-6 mr-4 inline-block cursor-pointer" src="{% static 'img/globe-icon-36.png' %}">
-                    </figure>
-                    <a href="#">
+                    {% include '_partials/_lang_selection.html' %}
+                    <button id="mobile-menu-button">
                         <figure>
                             <img class="w-6 mt-2 mr-6 ml-2 inline-block" src="{% static 'img/mobile-menu-icon.png' %}">
                         </figure>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
-        {% include '_partials/_lang_selection.html' %}
     </nav>
 </header>

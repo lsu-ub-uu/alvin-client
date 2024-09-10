@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content %}
-<main class="mt-20">
+<main class="mt-12">
   <nav class="text-sm ml-4">
     <a href="{% url 'start' %}" class="text-alvinGreen hover:text-alvinOrange">..</a>
     <span class="mx-1">/</span>
@@ -26,10 +26,15 @@
   <div class="flex items-center justify-center">
 
 
-    <div class="w-3/5 px-4 border-x-2">
+    <div class="w-4/6 px-4 lg:border-x-2">
+      {% if metadata.latitude and metadata.longitude %}
+      <div class="mb-4">
+        <div class="h-[400px] border-alvinOrange border-2" id="map"></div>
+      </div>
+      {% endif %}
       <h1 class="text-4xl font-universalis font-bold mt-4 mb-4">{{ metadata.authority_names.0 }}</h1>
       <div class="flex items-center mb-4">
-        <img src="{% static 'img/place.svg' %}" alt="Place Icon" class="w-6 h-6 mr-2">
+        <img src="{% static 'img/place.svg' %}" alt="Globe with marker" class="w-6 h-6 mr-2">
         <span class="font-semibold">Plats</span>
       </div>
       {% if metadata.variant_names %}
@@ -48,12 +53,10 @@
         <p>{{ metadata.country.0 }}</p>
       </div>
       {% endif %}
-      {% if metadata.latitude and metadata.longitude %}
+      
       <div class="mb-4">
-        <strong class="font-semibold">Karta</strong>
-        <div class="h-[400px] border-alvinOrange border-2" id="map"></div>
+        <strong class="font-semibold">Id</strong><p>alvin-place:{{ metadata.id.0 }}</p>
       </div>
-      {% endif %}
     </div>
   </div>
 </main>

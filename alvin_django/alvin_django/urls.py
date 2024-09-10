@@ -11,6 +11,7 @@ urlpatterns = [
     path('webbplatskarta/', include('webbplatskarta.urls')),
     path('alvin-place/', include('alvin_place.urls')),
     path('alvin-place/', include('alvin_place_list.urls')),
+    path('search/', include('search.urls')),
     path('__reload__/', include('django_browser_reload.urls')),
     path("i18n/", include("django.conf.urls.i18n")),
 ]
@@ -22,4 +23,5 @@ urlpatterns += i18n_patterns (
     path('webbplatskarta/', include('webbplatskarta.urls')),
     path('alvin-place/', include('alvin_place.urls')),
     path('alvin-place/', include('alvin_place_list.urls')),
+    path('search/', include('search.urls')),
 )

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-24 10:51+0200\n"
+"POT-Creation-Date: 2024-09-05 13:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,12 +18,41 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:10
+msgid "Alvin - Platser"
+msgstr ""
+
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:19
+#: .\templates\_partials\_top_nav.html:18
+msgid "Platser"
+msgstr ""
+
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:28
+msgid "Land"
+msgstr ""
+
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:30
+msgid "Alla"
+msgstr ""
+
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:44
+msgid "Träff"
+msgstr ""
+
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:44
+msgid "av"
+msgstr ""
+
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:65
+msgid "Alternativa namnformer:"
+msgstr ""
+
 #: .\kontakt\templates\kontakt\kontakt.html:8
 msgid "Alvin - Kontakt"
 msgstr ""
 
 #: .\kontakt\templates\kontakt\kontakt.html:15
-#: .\templates\_partials\_top_nav.html:16
+#: .\templates\_partials\_top_nav.html:15
 msgid "Kontakt"
 msgstr ""
 
@@ -64,7 +93,7 @@ msgstr ""
 msgid "Sök i Alvin"
 msgstr ""
 
-#: .\start\templates\start\start.html:26
+#: .\start\templates\start\start.html:26 .\templates\_partials\_top_nav.html:17
 msgid "Sök"
 msgstr ""
 
@@ -79,6 +108,10 @@ msgid ""
 "i Sverige och Norge."
 msgstr ""
 
+#: .\start\templates\start\start.html:45
+msgid "Webbplatskarta"
+msgstr ""
+
 #: .\templates\_partials\_top_nav.html:7
 msgid "Huvudmeny"
 msgstr ""
@@ -87,20 +120,12 @@ msgstr ""
 msgid "Alvin - Digitalt kulturarv"
 msgstr ""
 
-#: .\templates\_partials\_top_nav.html:15
+#: .\templates\_partials\_top_nav.html:14
 msgid "Start"
 msgstr ""
 
-#: .\templates\_partials\_top_nav.html:17
+#: .\templates\_partials\_top_nav.html:16
 msgid "Medlemmar"
-msgstr ""
-
-#: .\templates\_partials\_top_nav.html:18
-msgid "Webbplatskarta"
-msgstr ""
-
-#: .\templates\_partials\_top_nav.html:19
-msgid "Platser"
 msgstr ""
 
 #: .\templates\base.html:11

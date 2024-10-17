@@ -21,16 +21,21 @@
 
 {% block content %}
 <main class="mt-12 bg-[#F5F5F5]">
-  <nav class="text-sm ml-4">
-    <a href="{% url 'start' %}" class="text-alvinGreen hover:text-alvinOrange">..</a>
-    <span class="mx-1">/</span>
-    <a href="{% url 'alvin_place_list' %}" class="text-alvinGreen hover:text-alvinOrange">Platser</a>
-    <span class="mx-1">/</span>
-    <span>{{ metadata.authority_names.0 }}</span>
-  </nav>
+  <div class="flex w-full text-sm ml-4">
+    {% for crumb in breadcrumbs %}
+      {% if forloop.last %}
+        <p>{{ crumb.name }}</p>
+        
+        {% elif not forloop.last %}
+        <a href='{{ crumb.url }}' class="text-alvinOrange">{% translate crumb.name %}</a>
+        
+        {% if not forloop.last %}
+          <span class="text-alvinGreen px-1">/</span>
+        {% endif %}
 
-  {{ breadcrumbs }}
-
+      {% endif %}
+    {% endfor %}
+  </div>
   
   <div class="flex items-center justify-center">
     <div class="w-4/6 h-screen px-4">

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-05 13:49+0200\n"
+"POT-Creation-Date: 2024-10-17 11:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,36 +17,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: .\alvin_place\templates\alvin_place\alvin_place.html:43
+#, fuzzy
+#| msgid "Platser"
+msgid "Plats"
+msgstr "Steder"
+
+#: .\alvin_place\templates\alvin_place\alvin_place.html:48
+msgid "Alternativa namnformer"
+msgstr "Alternative navneformer"
+
+#: .\alvin_place\templates\alvin_place\alvin_place.html:59
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:135
+msgid "Land"
+msgstr ""
+
 #: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:10
 #, fuzzy
 #| msgid "Platser"
 msgid "Alvin - Platser"
-msgstr "Steder"
+msgstr "Alvin - Steder"
 
 #: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:19
 #: .\templates\_partials\_top_nav.html:18
 msgid "Platser"
 msgstr "Steder"
 
-#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:28
-msgid "Land"
-msgstr ""
-
-#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:30
-msgid "Alla"
-msgstr "Alle"
-
-#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:44
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:22
 msgid "Träff"
 msgstr "Treff"
 
-#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:44
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:22
 msgid "av"
 msgstr ""
 
-#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:65
-msgid "Alternativa namnformer:"
-msgstr "Alternative navneformer:"
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:137
+msgid "Alla"
+msgstr "Alle"
 
 #: .\kontakt\templates\kontakt\kontakt.html:8
 msgid "Alvin - Kontakt"

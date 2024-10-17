@@ -11,59 +11,40 @@
 {% endblock %}
 
 {% block content %}
-<main class="mt-12">
+<main class="mt-12 bg-alvinGrey">
     <!-- Breadcrumb Navigation -->
-    <nav class="text-sm ml-4 mb-4">
+    <nav class="text-sm ml-4">
         <a href="{% url 'start' %}" class="text-alvinGreen hover:text-alvinOrange">..</a>
         <span class="mx-1">/</span>
         <span>{% translate 'Platser' %}</span>
     </nav>
-    
+    <div class="py-2 pl-4">
+        <p class="text-gray-600"><strong>{% translate 'Träff' %} {{ metadata.fromNo.0 }}-{{ metadata.toNo.0 }} {% translate 'av' %} {{ metadata.totalNo.0 }}</strong></p>
+    </div>
     <div class="flex justify-center bt-2">
-        <!-- Vänster sidomeny för filtrering -->
-        <aside class="hidden lg:block lg:w-1/6 px-4">
-            <h2 class="text-xl font-bold mb-4">Filter</h2>
-            <form method="get" action=".">
-                <div class="mb-4">
-                    <label for="country" class="block text-gray-700"><strong>{% translate 'Land' %}</strong></label>
-                    <select id="country" name="country" class="block w-full mt-1 rounded-md border-gray-300 focus:border-alvinOrange focus:outline-none focus:ring-0 shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out">
-                        <option value="">{% translate 'Alla' %}</option>
-                        {% for country in countries %}
-                            <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>{{ country }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="bg-alvinGreen text-white px-4 py-2 rounded-md hover:bg-alvinOrange transition">Filter</button>
-            </form>
-        </aside>
-
+        
         <!-- Innehåll resultatlista -->
-        <section class="lg:w-5/6 border-l-2 px-4">
+        <section class="lg:w-5/6 px-4">
             <!-- Antal träffar -->
-            <div class="pb-4">
-                <p class="text-gray-600"><strong>{% translate 'Träff' %} {{ metadata.fromNo.0 }}-{{ metadata.toNo.0 }} {% translate 'av' %} {{ metadata.totalNo.0 }}</strong></p>
-            </div>
 
             <!-- Lista över platser i träfflistan -->
-            <ul class="place-list w-full space-y-1">
+            <ul class="w-full space-y-1">
                 {% for place in page_obj %}
-                    <li class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out">
+                    <li class="p-4 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow ease-in-out duration-150">
                         <!-- Place Names and Icon -->
                         <div class="flex items-center mb-2">
                             <img class="w-5 h-5 mr-2" src="{% static 'img/place.svg' %}" alt="Globe with marker">
-                            {% for authority_name in place.authority_names %}
-                                <a href="{% url 'alvin_place' place.id %}" class="text-alvinOrange text-xl font-semibold hover:underline">{{ authority_name.0 }}</a>
-                                {% if not forloop.last %}
-                                    <span class="mx-2 text-gray-400">|</span>
-                                {% endif %}
-                            {% endfor %}
+                            <a href='{{ place.id }}' class="text-alvinOrange text-2xl font-semibold">
+                                {% for authority_name in place.authority_names %}
+                                    {{ authority_name.0 }}</a>
+                                {% endfor %}
                         </div>
 
                         <!-- Variant Names (if available) -->
                         {% if place.variant_names %}
                             <div class="mt-2">
-                                <strong class="block text-gray-700">{% translate 'Alternativa namnformer:' %}</strong>
-                                <ul class="list-disc ml-5 text-gray-600">
+                                <strong class="block text-gray-700">{% translate 'Alternativa namnformer' %}</strong>
+                                <ul class="list-none text-gray-600">
                                     {% for variant_name in place.variant_names %}
                                         <li>{{ variant_name.0 }}</li>
                                     {% endfor %}
@@ -141,6 +122,23 @@
             <!-- XML -->
             <div class="bg-gray-200 p-4 mt-4 rounded">{{ xml }}</div>
         </section>
+
+        <!-- Höger sidomeny för filtrering -->
+        <aside class="hidden lg:block lg:w-1/6 px-4">
+            <h2 class="text-xl font-bold mb-4">Filter</h2>
+            <form method="get" action=".">
+                <div class="mb-4">
+                    <label for="country" class="block text-gray-700"><strong>{% translate 'Land' %}</strong></label>
+                    <select id="country" name="country" class="w-full mt-1 rounded-md border-gray-300 focus:border-alvinOrange focus:outline-none focus:ring-0 shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out">
+                        <option value="">{% translate 'Alla' %}</option>
+                        {% for country in countries %}
+                            <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>{{ country }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="bg-alvinGreen text-white px-4 py-2 rounded-md hover:bg-alvinOrange transition">Filter</button>
+            </form>
+        </aside>
     </div>
 </main>
 {% endblock %}

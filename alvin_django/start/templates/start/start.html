@@ -13,7 +13,7 @@
 
 <!-- CONTENT -->
 {% block content %}
-<main>
+<main class="bg-[#F5F5F5]">
     <section class="flex flex-col items-center justify-center bg-[url('img/bg-img-start.webp')] bg-cover bg-center bg-no-repeat min-h-screen border-b-8 border-b-alvinGreen space-y-4">
         <h1>
             <span class="block text-white text-6xl md:text-7xl font-universalis text-center [text-shadow:_0_3px_0_#7FBFA7] mb-4">{% translate 'Digitaliserat kulturarv' %}</span>
@@ -23,7 +23,7 @@
             <form class="flex w-full" action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
                 <input class="flex-grow p-3 border-4 border-alvinGreen  rounded-l-3xl focus:border-alvinOrange focus:outline-none focus:ring-0"
                     name="query" type="text" placeholder="{% translate 'Sök i Alvin' %}">
-                <button class="flex-none w-16 bg-black hover:bg-alvinOrange text-white font-universalis" type="submit">{% translate 'Sök' %}</button>
+                <button class="flex-none w-16 rounded-r-3xl bg-black hover:bg-alvinOrange text-white font-universalis" type="submit">{% translate 'Sök' %}</button>
             </form>
         </search>
     </section>

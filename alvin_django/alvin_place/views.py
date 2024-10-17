@@ -32,4 +32,4 @@ def alvin_place(request, place_id):
         "xml": response.content,
     }
     
-    return render(request, "alvin_place/alvin_place.html", context)
+    #return render(request, "alvin_place/alvin_place.html", context)

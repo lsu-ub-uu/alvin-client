@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'alvin_place',
     'alvin_place_list',
     'search',
+    'alvin_viewer',
     "django_htmx",
     'tailwind',
     'theme',

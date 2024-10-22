@@ -37,18 +37,17 @@
 </head>
 
 <body id="top">
+    
+    {% block content %}
 
-        {% include '_partials/_top_nav.html' %}
-
-        {% include '_partials/_lang_selection.html' %}
-        
-        {% block content %}
-
-        {% endblock %}
+    {% endblock %}
 
     {% block jsbody %}
 
     {% endblock %}
+
+    <!-- PARTIALS -->
+    {% include '_partials/_top_nav.html' %}
     
 </body>
 

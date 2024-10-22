@@ -49,6 +49,7 @@ def extract_metadata(record_xml, record_type):
     if record_type == 'alvin-place':
         return {
             "authority_names": record_xml.xpath("//authority/geographic/text()"),
+            "variant_names":list(zip(record_xml.xpath("//variant/geographic/text()"), record_xml.xpath("//variant/@lang"))),
             "country": record_xml.xpath("//country/text()"),
             "latitude": record_xml.xpath("//point/latitude/text()"),
             "longitude": record_xml.xpath("//point/longitude/text()"),
@@ -68,7 +69,7 @@ def extract_metadata(record_xml, record_type):
 def generate_breadcrumbs(record_type, record_id, metadata):
     
     breadcrumbs = [
-        {'name': '..', 'url': '/'},  # Home or start page
+        {'name': '..', 'url': '/'},  # Start
     ]
     
     if record_type == 'alvin-place':

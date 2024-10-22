@@ -1,31 +1,46 @@
-{% load static %}
-
 <!-- LOCALIZATION -->
 {% load i18n %}
 
-<header>
-    <nav class="fixed top-0 w-full h-20 z-50 bg-white border-t-8 border-b-4 border-t-alvinGreen select-none" aria-label="{% translate 'Huvudmeny' %}">
-        <div>
-            <div class="flex justify-between">
-                <div class="mt-4 mx-4">
-                    <a class="mb-6 text-5xl font-universalis" href="{% url 'start' %}" title="{% translate 'Alvin - Digitalt kulturarv' %}">ALVIN</a>
-                </div>
-                <div class="hidden lg:flex items-center h-20 mr-5">
-                    <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'start' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'start' %}">{% translate 'Start' %}</a>
-                    <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'kontakt' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'kontakt' %}">{% translate 'Kontakt' %}</a>
-                    <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'medlemmar' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'medlemmar' %}">{% translate 'Medlemmar' %}</a>
-                    <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'search' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'search' %}">{% translate 'Sök' %}</a>
-                    <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 mr-4 {% if request.resolver_match.url_name == 'alvin_place_list' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'alvin_place_list' %}">{% translate 'Platser' %}</a>
-                    {% include '_partials/_lang_selection.html' %}
-                </div>
-                <div class="flex items-center justify-center lg:hidden">
-                    {% include '_partials/_lang_selection.html' %}
-                    <button id="mobile-menu-button">
-                        <figure>
-                            <img class="w-6 mt-2 mr-6 ml-2 inline-block" src="{% static 'img/mobile-menu-icon.png' %}">
-                        </figure>
-                    </button>
-                </div>
+<!-- STATIC -->
+{% load static %}
+
+<header 
+    x-data="{ isScrollingDown: false, lastScroll: 0 }"
+    x-init="
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            if (currentScroll > lastScroll) {
+                isScrollingDown = true;
+            } else {
+                isScrollingDown = false;
+            }
+            lastScroll = currentScroll;
+        })
+    "
+    :class="{'-translate-y-full': isScrollingDown, 'translate-y-0': !isScrollingDown}"
+    class="fixed top-0 w-full h-20 z-40 bg-white border-t-8 border-b-4 border-t-alvinGreen select-none transition-transform duration-500 ease-in-out"
+    aria-label="{% translate 'Huvudmeny' %}"
+>
+    <nav>
+        <div class="flex justify-between">
+            <div class="mt-4 mx-4 flex item-center">
+                <a class="mb-6 text-5xl font-universalis" href="{% url 'start' %}" title="{% translate 'Alvin - Digitalt kulturarv' %}">ALVIN</a>
+            </div>
+            <div class="hidden lg:flex items-center h-20 mr-5">
+                <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'start' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'start' %}">{% translate 'Start' %}</a>
+                <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'kontakt' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'kontakt' %}">{% translate 'Kontakt' %}</a>
+                <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'medlemmar' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'medlemmar' %}">{% translate 'Medlemmar' %}</a>
+                <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 {% if request.resolver_match.url_name == 'search' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'search' %}">{% translate 'Sök' %}</a>
+                <a class="hover:text-alvinOrange pt-5 pb-4 px-4 border-b-4 mr-4 {% if request.resolver_match.url_name == 'alvin_place_list' %}border-b-alvinGreen text-alvinOrange{% else %}border-b-transparent{% endif %}" href="{% url 'alvin_place_list' %}">{% translate 'Platser' %}</a>
+                {% include '_partials/_lang_selection.html' %}
+            </div>
+            <div class="flex items-center justify-center lg:hidden">
+                {% include '_partials/_lang_selection.html' %}
+                <button id="mobile-menu-button">
+                    <figure>
+                        <img class="w-6 mt-2 mr-6 ml-2 inline-block" src="{% static 'img/mobile-menu-icon.png' %}" alt="{% translate 'Mobilmeny' %}">
+                    </figure>
+                </button>
             </div>
         </div>
     </nav>

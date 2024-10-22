@@ -1,10 +1,14 @@
-{% load static %}
+<!-- LOCALIZATION -->
 {% load i18n %}
+
+<!-- STATIC -->
+{% load static %}
+
 <div class="inline-block" x-data="{ showLanguageDropdown: false }" class="flex">
     <figure>
         <img @click="showLanguageDropdown = !showLanguageDropdown" class="w-6 h-6 cursor-pointer" src="{% static 'img/globe-icon-36.png' %}">
     </figure>
-    <form x-show="showLanguageDropdown" id="language-selector" class="absolute top-20 right-2 z-50" action="{% url 'set_language' %}" method="post">
+    <form x-show="showLanguageDropdown" x-cloak id="language-selector" class="absolute top-20 right-2 z-50" action="{% url 'set_language' %}" method="post">
         {% csrf_token %}
         <input name="next" type="hidden" value="{{ redirect_to }}">
         <div class="flex h-10">

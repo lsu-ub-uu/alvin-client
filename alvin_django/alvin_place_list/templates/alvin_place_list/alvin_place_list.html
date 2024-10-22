@@ -11,14 +11,14 @@
 {% endblock %}
 
 {% block content %}
-<main class="mt-12 bg-alvinGrey">
+<main class="bg-alvinGrey pt-20">
     <!-- Breadcrumb Navigation -->
     <nav class="text-sm ml-4">
         <a href="{% url 'start' %}" class="text-alvinGreen hover:text-alvinOrange">..</a>
         <span class="mx-1">/</span>
         <span>{% translate 'Platser' %}</span>
     </nav>
-    <div class="py-2 pl-4">
+    <div class="pt-6 pb-2 pl-4">
         <p class="text-gray-600"><strong>{% translate 'Träff' %} {{ metadata.fromNo.0 }}-{{ metadata.toNo.0 }} {% translate 'av' %} {{ metadata.totalNo.0 }}</strong></p>
     </div>
     <div class="flex justify-center bt-2">
@@ -136,7 +136,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="bg-alvinGreen text-white px-4 py-2 rounded-md hover:bg-alvinOrange transition">Filter</button>
+                <button type="submit" class="bg-black text-white px-4 py-2 rounded-md hover:bg-alvinOrange transition">Filter</button>
             </form>
         </aside>
     </div>

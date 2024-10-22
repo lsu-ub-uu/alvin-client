@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-17 11:40+0200\n"
+"POT-Creation-Date: 2024-10-22 11:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,18 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\alvin_place\templates\alvin_place\alvin_place.html:43
+#: .\alvin_place\templates\alvin_place\alvin_place.html:45
+#: .\alvin_viewer\templates\alvin_viewer\alvin_place.html:36
 #, fuzzy
 #| msgid "Platser"
 msgid "Plats"
 msgstr "Places"
 
-#: .\alvin_place\templates\alvin_place\alvin_place.html:48
+#: .\alvin_place\templates\alvin_place\alvin_place.html:50
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:46
+#: .\alvin_viewer\templates\alvin_viewer\alvin_place.html:41
 msgid "Alternativa namnformer"
 msgstr "Alternative name forms"
 
-#: .\alvin_place\templates\alvin_place\alvin_place.html:59
-#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:135
+#: .\alvin_place\templates\alvin_place\alvin_place.html:61
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:131
+#: .\alvin_viewer\templates\alvin_viewer\alvin_place.html:52
 msgid "Land"
 msgstr "Country"
 
@@ -40,7 +44,7 @@ msgid "Alvin - Platser"
 msgstr "Alvin - Contact"
 
 #: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:19
-#: .\templates\_partials\_top_nav.html:18
+#: .\templates\_partials\_top_nav.html:34
 msgid "Platser"
 msgstr "Places"
 
@@ -52,7 +56,7 @@ msgstr "Results"
 msgid "av"
 msgstr "of"
 
-#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:137
+#: .\alvin_place_list\templates\alvin_place_list\alvin_place_list.html:133
 msgid "Alla"
 msgstr "All"
 
@@ -61,7 +65,7 @@ msgid "Alvin - Kontakt"
 msgstr "Alvin - Contact"
 
 #: .\kontakt\templates\kontakt\kontakt.html:15
-#: .\templates\_partials\_top_nav.html:15
+#: .\templates\_partials\_top_nav.html:31
 msgid "Kontakt"
 msgstr "Contact"
 
@@ -106,7 +110,7 @@ msgstr "from nordic cultural heritage institutions"
 msgid "Sök i Alvin"
 msgstr "Search Alvin"
 
-#: .\start\templates\start\start.html:26 .\templates\_partials\_top_nav.html:17
+#: .\start\templates\start\start.html:26 .\templates\_partials\_top_nav.html:33
 msgid "Sök"
 msgstr "Search"
 
@@ -128,23 +132,27 @@ msgstr ""
 msgid "Webbplatskarta"
 msgstr "Sitemap"
 
-#: .\templates\_partials\_top_nav.html:7
+#: .\templates\_partials\_top_nav.html:22
 msgid "Huvudmeny"
 msgstr "Main menu"
 
-#: .\templates\_partials\_top_nav.html:11
+#: .\templates\_partials\_top_nav.html:27
 #, fuzzy
 #| msgid "Digitaliserat kulturarv"
 msgid "Alvin - Digitalt kulturarv"
 msgstr "Digitised cultural heritage"
 
-#: .\templates\_partials\_top_nav.html:14
+#: .\templates\_partials\_top_nav.html:30
 msgid "Start"
 msgstr ""
 
-#: .\templates\_partials\_top_nav.html:16
+#: .\templates\_partials\_top_nav.html:32
 msgid "Medlemmar"
 msgstr "Members"
+
+#: .\templates\_partials\_top_nav.html:41
+msgid "Mobilmeny"
+msgstr ""
 
 #: .\templates\base.html:11
 msgid "Alvin, kulturarv, digitala samlingar, databaser, bibliotek"

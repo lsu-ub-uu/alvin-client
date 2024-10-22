@@ -6,14 +6,14 @@
     font-family: 'Universalis';
     font-style: normal;
     font-weight: normal;
-    src: local('Universalis ADF Std Regular'), url('fonts/UniversalisADFStd-Bold.woff') format('woff');
+    src: local('Universalis ADF Std Regular'), url('/static/fonts/UniversalisADFStd-Bold.woff') format('woff');
 }
 
 @font-face {
     font-family: 'OpenSans';
     font-style: normal;
     font-weight: normal;
-    src: local('OpenSans Regular'), url('fonts/opensan/OpenSans-Regular.ttf') format('ttf');
+    src: local('OpenSans Regular'), url('/static/fonts/opensans/OpenSans-Regular.ttf') format('ttf');
 }
 
 @layer base {
@@ -21,3 +21,9 @@
       font-family: "Open Sans", sans-serif;
     }
   }
+
+@layer utilities {
+  [x-cloak] {
+    display: none !important;
+  }
+}

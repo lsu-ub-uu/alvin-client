@@ -6,7 +6,7 @@
       {% for crumb in breadcrumbs %}
         <li class="breadcrumb-item {% if forloop.last %}active{% endif %}">
           {% if forloop.last %}
-            <span>{{ crumb.name }}</span>
+            <span class="font-semibold">{{ crumb.name }}</span>
           {% else %}
             <a href="{{ crumb.url }}" class="text-alvinOrange">{% translate crumb.name %}</a><span class="text-alvinGreen px-1 overflow-hidden max-w-full">/</span>
             

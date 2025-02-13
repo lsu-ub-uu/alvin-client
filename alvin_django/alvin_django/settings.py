@@ -16,7 +16,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -34,7 +33,6 @@ INSTALLED_APPS = [
     'alvin_place_list',
     'search',
     'alvin_viewer',
-    "django_htmx",
     'tailwind',
     'theme',
     'django_browser_reload',
@@ -57,7 +55,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_htmx.middleware.HtmxMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
@@ -130,7 +127,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static", "theme/static/",
+    BASE_DIR / "theme/static/",
 ]
 
 # Default primary key field type

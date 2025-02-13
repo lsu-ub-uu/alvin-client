@@ -51,7 +51,8 @@ module.exports = {
             },
             fontFamily: {
                 universalis: ["Universalis", "sans-serif"],
-                opensans: ["OpenSans", "sans-serif"]
+                opensans: ["OpenSans", "sans-serif"],
+                notosans: ["NotoSans", "sans-serif"]
             },
         },
      },

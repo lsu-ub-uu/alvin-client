@@ -41,7 +41,7 @@
       
       <h1 class="text-4xl font-universalis font-bold mt-4 mb-4">{{ metadata.authority_names.0 }}</h1>
       <div class="flex items-center mb-4">
-        <img src="{% static 'img/place.svg' %}" alt="Globe with marker" class="w-6 h-6 mr-2">
+        <img src="/static/img/authorityTypes/place.svg" alt="Map marker" class="w-6 h-6 mr-2">
         <span class="font-semibold">{% translate 'Plats' %}</span>
       </div>
 
@@ -71,9 +71,9 @@
 </main>
 {% endblock %}
 
-{% block jsbody %}
-<script src="{% static 'js/map.js' %}" 
-  data-latitude="{{ metadata.latitude.0 }}"
-  data-longitude="{{ metadata.longitude.0 }}">
-</script>
-{% endblock %}
+  {% block jsbody %}
+  <script src="{% static 'js/map.js' %}" 
+    data-latitude="{{ metadata.latitude.0 }}"
+    data-longitude="{{ metadata.longitude.0 }}">
+  </script>
+  {% endblock %}

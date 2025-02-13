@@ -16,9 +16,16 @@
     src: local('OpenSans Regular'), url('/static/fonts/opensans/OpenSans-Regular.ttf') format('ttf');
 }
 
+@font-face {
+    font-family: "NotoSans", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    src: local('NotoSans Regular'), url('/static/fonts/noto/NotoSans-Regular.ttf') format('tff');
+}
+
 @layer base {
     html {
-      font-family: "Open Sans", sans-serif;
+      font-family: "NotoSans", sans-serif;
     }
   }
 

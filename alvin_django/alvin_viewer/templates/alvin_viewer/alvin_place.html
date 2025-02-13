@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block content %}
-<main class="bg-alvinGrey pt-20 max-w-full">
+<main class="bg-[#FAFAFA] pt-20 max-w-full">
   {% include '_partials/_breadcrumbs.html' %}
   
   <div class="flex items-center justify-center">
@@ -32,7 +32,7 @@
       
       <h1 class="text-4xl font-universalis font-bold mt-4 mb-4">{{ metadata.authority_names.0 }}</h1>
       <div class="flex items-center mb-4">
-        <img src="/static/img/authorityTypes/map-pin.svg" alt="Globe with marker" class="w-6 h-6 mr-2">
+        <img src="/static/img/authorityTypes/place.svg" alt="Map marker" class="w-6 h-6 mr-2">
         <span class="font-semibold">{% translate 'Plats' %}</span>
       </div>
 

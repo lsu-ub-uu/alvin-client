@@ -23,13 +23,13 @@
         <nav class="flex justify-between items-center h-full">
             
             <!-- Hamburger menu -->
-            <button class="flex w-full h-full items-center p-4 border-r-4 border-black">
+            <button class="flex w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvinGreen">
                 <img class="w-7" src="/static/img/nav/menu.svg" alt="{% translate 'Mobilmeny' %}">
             </button>
 
             <!-- Home button -->
-            <button class="w-full h-full mt-2 text-center inline-block">
-                <a class="text-4xl mx-4 mt-4 font-universalis" href="{% url 'start' %}">
+            <button class="w-full h-full mt-2 text-center">
+                <a class="text-4xl mx-4 mt-4 font-universalis text-black hover:text-alvinGreen" href="{% url 'start' %}">
                     ALVIN
                 </a>
             </button>
@@ -37,13 +37,17 @@
         </nav>
 
 
-        <nav class="flex justify-between items-center h-full border-l-4 border-black">
-            
+        <nav class="flex flex-shrink-0 justify-between items-center h-full border-black">
+
+            <button>
+                <a class="flex w-full h-full justify-between items-center mt-1 p-4 border-black font-universalis text-nowrap text-black hover:text-alvinGreen max-lg:hidden">Om Alvin</a>
+            </button>
+
             <!-- Search -->
-            <button @click="showSearch = !showSearch" class="flex w-full h-full justify-between items-center p-4 border-r-4 border-black">
+            <button @click="showSearch = !showSearch" class="flex w-full h-full justify-between items-center p-4 border-x-4 border-black hover:bg-alvinGreen">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Sök</p>
                 <img class="w-7 transition-all duration-300" src="/static/img/nav/binocular.svg"
-                    x-show="!showSearch" x-cloak>
+                    x-show="!showSearch">
                 <img class="w-7 transition-all duration-300" src="/static/img/nav/xmark.svg"
                     x-show="showSearch" x-cloak>
             </button>
@@ -118,7 +122,7 @@
             </nav>
 
             <!-- Help button -->
-            <button class="flex w-full h-full justify-between items-center p-4 border-black">
+            <button class="flex w-full h-full justify-between items-center p-4 border-black hover:bg-alvinOrange">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Hjälp</p>
                 <img class="w-7" src="/static/img/nav/help-circle.svg">
             </button>

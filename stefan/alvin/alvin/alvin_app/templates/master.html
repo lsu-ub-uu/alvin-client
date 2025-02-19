@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="index, follow">
+    <meta name="DC.Publisher" content="Uppsala university library">
+    <meta name="keywords" content="Alvin, cultural heritage, digital collections, databases, libraries, archives">
+    <meta name="description" content="Alvin - Nordic platform for preserving and making digitised cultural heritage available">
+    <link href="{% static 'css/alvin.css' %}" rel="stylesheet">
+    <link href="{% static 'css/fa-fa.css' %}" rel="stylesheet">
+    <link href="{% static 'css/hero-image.css' %}" rel="stylesheet">
+    <link href="{% static 'css/slides.css' %}" rel="stylesheet">
+    <link href="{% static 'css/tabs.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto%20Sans" rel="stylesheet">
+    <link href="{% static 'css/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">    
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}"> 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin="">  
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>     
+  </head>
+  <body>
+    <a href="#maincontent" class="skip">Skip to main content</a>
+    <button onclick="topFunction()" id="topBtn" title="Top"><i class="fa fa-arrow-circle-up"></i></button>
+    <script src="{% static 'js/topButton.js' %}"></script>
+    <div class="header">
+      <h1 class="logo"><a href="/" class="logo">ALVIN</a></h1>         
+      <button class="accordion"><i class="fa fa-search"></i></button>
+      <div class="panel">
+        <div class="search-container">
+          <form action="searchresults.html" class="search-form">
+            <input type="text"  onfocus="this.value=''" placeholder="Half a million+ items" name="search" class="search-bar"><button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+           </form>              
+         </div>
+       </div>
+       <script src="{% static 'js/accordion.js' %}"></script>
+     </div>
+     <div class="topnav" id="topnav">
+       <a href="/" class="active"><i class="fa fa-home"></i> Home</a>
+       <a href="/about.html"><i class="fa fa-info-circle"></i> About Alvin</a>
+       <a href="/members.html"><i class="fa fa-university"></i> Members</a>
+       <a href="/copyright.html"><i class="fa fa-copyright"></i> Copyright</a>          
+       <a href="/help.html" class="split"><i class="fa fa-question-circle"></i> Help</a>
+       <script src="{% static 'js/topNav.js' %}"></script> 
+       <a href="javascript:void(0);" class="icon" onclick="topNav()"><i class="fa fa-bars"></i></a>
+     </div>
+     {% block content %}
+     {% endblock %}
+     <div class="footer">
+       <div class="footerleft">
+         <i class="fa fa-envelope-o"></i> <a href="mailto:alvin-support@ub.uu.se"> alvin-support@ub.uu.se</a>
+       </div>
+       <div class="footermiddle">
+         <i class="fa fa-globe"></i> <a href="../en/index.html">English</a>
+         <a href="../no/index.html">Norsk</a>
+         <a href="../sv/index.html">Svenska</a>
+       </div>  
+       <div class="footerright">
+<!--
+          <a href="/cora/" style="   
+                    padding:0;
+                    text-decoration: none;
+                    text-decoration:none;
+                    color:black;
+                    max-width: fit-content;">                   
+             <div style="color:black; padding:3px 2px 2px 2px;  background-color:white; text-align:right; float:right; white-space: nowrap;  outline-style: solid;
+                    outline-color: white;
+                    outline-width: 2px;"> 
+                    <span style="font-family:'coraLogoFont'; font-size:24px;">
+                        <span style="background:#990000;color:white;padding:2px 8px 2px 8px;margin-right:4px;">C</span><span style="background:#9C6114;color:white;padding:2px 8px 2px 8px;margin-right:4px">O</span><span style="background:#004b89;color:white;padding:2px 8px 2px 8px;margin-right:4px">R</span><span style="background:black;color:white;padding:2px 8px 2px 8px;">A</span>
+                    </span> 
+              </div>                 
+            </a>
+-->
+       </div>            
+     </div>
+  </body>
+</html>

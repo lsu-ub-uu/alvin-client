@@ -11,28 +11,29 @@
 {% endblock %}
 
 {% block content %}
-<main class="bg-alvinGrey pt-20">
-    <!-- Breadcrumb Navigation -->
-    <nav class="text-sm ml-4">
-        <a href="{% url 'start' %}" class="text-alvinGreen hover:text-alvinOrange">..</a>
-        <span class="mx-1">/</span>
-        <span>{% translate 'Platser' %}</span>
-    </nav>
-    <div class="pt-6 pb-2 pl-4">
-        <p class="text-gray-600"><strong>{% translate 'Träff' %} {{ metadata.fromNo.0 }}-{{ metadata.toNo.0 }} {% translate 'av' %} {{ metadata.totalNo.0 }}</strong></p>
-    </div>
-    <div class="flex justify-center bt-2">
+<main class="flex bg-alvinGrey pt-20 px-10 border-4 border-black">
+    
+    <!-- Resultatlista  -->
+    <section class="w-full" x-data="{showFilter: false}">
         
-        <!-- Innehåll resultatlista -->
-        <section class="lg:w-5/6 px-4">
-            <!-- Antal träffar -->
+        <!-- Resultaträkning och filtreringsknapp -->
+        <aside class="flex pb-4 justify-between">
+            <p class="text-gray-600"><strong>{% translate 'Träff' %} {{ metadata.fromNo.0 }}-{{ metadata.toNo.0 }} {% translate 'av' %} {{ metadata.totalNo.0 }}</strong></p>
+            
+            <button class="flex align-top">
+                <img @click="showFilter = !showFilter" class="" src="/static/img/nav/filter-solid.svg" x-show="!showFilter" x-cloak>
+                <img @click="showFilter = !showFilter" src="/static/img/nav/filter.svg" x-show="showFilter" x-cloak>
+            </button>
+        </aside>
 
+        <!-- Innehåll resultatlista -->
+        <section class="flex gap-5">
             <!-- Lista över platser i träfflistan -->
             <ul class="w-full space-y-1">
                 {% for place in page_obj %}
-                    <li class="p-4 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow ease-in-out duration-150">
+                    <li class="p-4 border-4 border-black bg-[#fcfcfc] shadow-sm hover:shadow-lg transition-shadow ease-in-out duration-150">
                         <!-- Place Names and Icon -->
-                        <div class="flex items-center mb-2">
+                        <div class="flex items-center overflow-clip">
                             <img class="w-5 h-5 mr-2" src="/static/img/authorityTypes/place.svg" alt="Map marker">
                             <a href='{{ place.id }}' class="text-alvinOrange text-2xl font-semibold">
                                 {% for authority_name in place.authority_names %}
@@ -54,91 +55,94 @@
                     </li>
                 {% endfor %}
             </ul>
-
-            <!-- Pagination -->
-            <nav class="pagination mt-6">
-                <ul class="flex items-center justify-center space-x-2">
-                    {% if page_obj.has_previous %}
-                        <!-- First Page Button -->
-                        <li>
-                            <a href="?page=1{% if selected_country %}&country={{ selected_country }}{% endif %}"
-                            class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-lg text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
-                            aria-label="First page">
-                            &laquo;
-                            </a>
-                        </li>
-                        <!-- Previous Page Button -->
-                        <li>
-                            <a href="?page={{ page_obj.previous_page_number }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
-                            class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-lg text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
-                            aria-label="Previous page">
-                            &lsaquo;
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    <!-- Page Numbers -->
-                    {% for num in page_obj.paginator.page_range %}
-                        {% if page_obj.number == num %}
-                            <!-- Current Page -->
-                            <li>
-                                <span class="inline-flex items-center px-3 py-1 border border-alvinGreen text-white bg-alvinGreen rounded-lg">
-                                    {{ num }}
-                                </span>
-                            </li>
-                        {% else %}
-                            <!-- Other Pages -->
-                            <li>
-                                <a href="?page={{ num }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
-                                class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-lg text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
-                                aria-label="Page {{ num }}">
-                                {{ num }}
-                                </a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-
-                    {% if page_obj.has_next %}
-                        <!-- Next Page Button -->
-                        <li>
-                            <a href="?page={{ page_obj.next_page_number }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
-                            class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-lg text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
-                            aria-label="Next page">
-                            &rsaquo;
-                            </a>
-                        </li>
-                        <!-- Last Page Button -->
-                        <li>
-                            <a href="?page={{ page_obj.paginator.num_pages }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
-                            class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-lg text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
-                            aria-label="Last page">
-                            &raquo;
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
-
-            <!-- XML -->
-            <div class="bg-gray-200 p-4 mt-4 rounded">{{ xml }}</div>
+            
+            
+            
+            <!-- Filtrering -->
+            <aside class="w-3/12 border-4 border-black text-center" x-show="showFilter" x-cloak x-transition>
+                <h2 class="text-2xl font-universalis font-bold py-4 m-auto border-b-4 border-black bg-alvinGreen">Filter</h2>
+                <form method="get" action=".">
+                    <div class="mb-4">
+                        <label for="country" class="block text-gray-700"><strong>{% translate 'Land' %}</strong></label>
+                        <select id="country" name="country" class="w-full mt-1 border-black focus:border-alvinOrange focus:outline-none focus:ring-0 shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out">
+                            <option value="">{% translate 'Alla' %}</option>
+                            {% for country in countries %}
+                                <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>{{ country }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="bg-black text-white px-4 py-2 hover:bg-alvinOrange transition">Filter</button>
+                </form>
+            </aside>
         </section>
 
+        <!-- Paginering -->
+        <nav class="pagination my-8">
+            <ul class="flex items-center justify-center space-x-2">
+                {% if page_obj.has_previous %}
+                    <!-- First Page Button -->
+                    <li>
+                        <a href="?page=1{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                        class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black bg-white hover:bg-gray-100 hover:text-gray-700"
+                        aria-label="First page">
+                        &laquo;
+                        </a>
+                    </li>
+                    <!-- Previous Page Button -->
+                    <li>
+                        <a href="?page={{ page_obj.previous_page_number }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                        class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black bg-white hover:bg-gray-100 hover:text-gray-700"
+                        aria-label="Previous page">
+                        &lsaquo;
+                        </a>
+                    </li>
+                {% endif %}
+
+                <!-- Page Numbers -->
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <!-- Current Page -->
+                        <li>
+                            <span class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black text-white bg-alvinGreen">
+                                {{ num }}
+                            </span>
+                        </li>
+                    {% else %}
+                        <!-- Other Pages -->
+                        <li>
+                            <a href="?page={{ num }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                            class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black bg-white hover:bg-gray-100 hover:text-gray-700"
+                            aria-label="Page {{ num }}">
+                            {{ num }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <!-- Next Page Button -->
+                    <li>
+                        <a href="?page={{ page_obj.next_page_number }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                        class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black bg-white hover:bg-gray-100 hover:text-gray-700"
+                        aria-label="Next page">
+                        &rsaquo;
+                        </a>
+                    </li>
+                    <!-- Last Page Button -->
+                    <li>
+                        <a href="?page={{ page_obj.paginator.num_pages }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                        class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black bg-white hover:bg-gray-100 hover:text-gray-700"
+                        aria-label="Last page">
+                        &raquo;
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
         <!-- Höger sidomeny för filtrering -->
-        <aside class="hidden lg:block lg:w-1/6 px-4">
-            <h2 class="text-xl font-bold mb-4">Filter</h2>
-            <form method="get" action=".">
-                <div class="mb-4">
-                    <label for="country" class="block text-gray-700"><strong>{% translate 'Land' %}</strong></label>
-                    <select id="country" name="country" class="w-full mt-1 rounded-md border-gray-300 focus:border-alvinOrange focus:outline-none focus:ring-0 shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out">
-                        <option value="">{% translate 'Alla' %}</option>
-                        {% for country in countries %}
-                            <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>{{ country }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="bg-black text-white px-4 py-2 rounded-md hover:bg-alvinOrange transition">Filter</button>
-            </form>
-        </aside>
+        
+        </section>
     </div>
 </main>
 {% endblock %}

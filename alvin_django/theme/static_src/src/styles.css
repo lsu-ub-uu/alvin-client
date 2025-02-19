@@ -27,7 +27,33 @@
     html {
       font-family: "NotoSans", sans-serif;
     }
+
+    a {
+      color: #BF7125;
+    }
   }
+
+@layer components {
+    .md-row {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: flex-start;
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+
+    .md-label {
+      width: 15rem;
+      font-weight: 600;
+    }
+
+    @media not all and (min-width: 640px) {
+      .md-label {
+        width: 100%;
+      }
+    }
+}
 
 @layer utilities {
   [x-cloak] {

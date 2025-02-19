@@ -1,0 +1,75 @@
+<!-- LOCALIZATION -->
+{% load i18n %}
+
+<!-- STATIC -->
+{% load static %}
+
+{% load metadata_wrangler %}
+
+<!-- Overview -->
+<section class="block w-full border-t-4 border-black" x-show="activeTab === 0">
+    <dl class="flex flex-col gap-y-4 py-4">
+        <div class="md-row">
+            <dt class="md-label">{% translate 'Född' %}</dt>
+            <dd> </dd>
+        </div>
+        <div class="md-row">
+            <dt class="md-label">{% translate 'Död' %}</dt>
+            <dd> </dd>
+        </div>
+        <div class="md-row">
+            <dt class="md-label">{% translate 'Yrke' %}</dt>
+            <dd>{{ metadata.field_of_endeavor }}</dd>
+        </div>
+        <div class="md-row">
+            <dt class="md-label">Id</dt>
+            <dd>alvin-person:{{ metadata.id }}</dd>
+        </div>
+</section>
+
+<!-- All metadata -->
+<section class="block w-full border-t-4 border-black" x-show="activeTab === 1">
+    <dl class="flex flex-col gap-y-4 py-4">
+        {% for lang, name in metadata.authority_names.items %}
+        <div class="md-row">
+            <dt class="md-label">{% translate 'Namn' %} [{{ lang }}]</dt>
+            <dd>{{ metadata|alvin_person_name }}</dd>
+        </div>
+        {% endfor %}
+        {% if metadata.variant_names %}
+            {% for variant_name, lang in metadata.variant_names %}
+            <div class="md-row">
+                <dt class="md-label">{% translate 'Alternativt namn' %} [{{ lang }}]</dt>
+                <dd>{{ variant_name }}</dd>
+            </div>
+            {% endfor %}
+        {% endif %}
+        <div class="md-row">
+            <dt class="md-label">{% translate 'Biografi' %}</dt>
+            <dd>{{ metadata.note }}</dd>
+        </div>
+        <div class="md-row">
+            <dt class="md-label">Id</dt>
+            <dd>alvin-place:{{ metadata.id }}</dd>
+        </div>
+        <div class="md-row">
+            <dt class="md-label">{% translate 'Post skapad' %}</dt>
+            <dd>{{ metadata.created }}</dd>
+        </div>
+        <div class="md-row">
+            <dt class="md-label">{% translate 'Senast uppdaterad' %}</dt>
+            <dd>{{ metadata.last_updated }}</dd>
+        </div>
+        <div class="md-row">
+            <dt class="md-label">{% translate 'Källdata' %}</dt>
+            <dd><a href="{{ metadata.source_xml }}" class="text-alvinOrange">{{ metadata.source_xml }}</a></dd>
+        </div>
+        </div>
+</section>
+
+<!-- Map -->
+{% if metadata.latitude and metadata.longitude %}
+<aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvinOrange border-4 mb-10" id="map" x-show="activeTab != 2"></aside>
+{% endif %}
+
+<p>{{ xml }}</p>

@@ -1,0 +1,23 @@
+{% extends "master.html" %}
+
+{% load static %}
+
+
+
+
+{% block title %}Alvin - {{title}}{% endblock %}
+ 
+    {% block content %}
+    
+    <div id="maincontent">
+      <div class="menu"></div>
+
+ {{location}} 
+
+
+      
+     <script src="{% static 'js/openTab.js' %}"></script>
+      <div class="right"></div>
+    </div>
+
+    {% endblock %}

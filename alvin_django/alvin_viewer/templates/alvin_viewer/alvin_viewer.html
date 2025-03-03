@@ -6,8 +6,10 @@
 <!-- STATIC -->
 {% load static %}
 
+{% load metadata_wrangler %}
+
 {% block head %}
-<title>Alvin - {{ metadata.authority_names.0 }}</title>
+<title>Alvin - {{ metadata|alvin_title }}</title>
 {% endblock %}
 
 {% block jshead %}
@@ -20,58 +22,47 @@
 {% endblock %}
 
 {% block content %}
-<main class="flex flex-col flex-wrap min-h-svh w-full bg-alvinGrey pt-20 px-10 border-4 border-black"  x-data="{ activeTab: 0 }">
-  
-  {% load metadata_wrangler %}
+<main class="flex flex-col flex-wrap min-h-svh w-full bg-alvinGrey pt-20 px-10 border-4 border-black"  x-data="{ activeTab: 'overview' }">
 
+  <h1 class="w-full text-5xl max-sm:text-3xl break-words font-universalis font-bold mt-4 mb-4">
+    {{ metadata|alvin_title }}
+  </h1>
+
+  <!-- Ikon och namn för resurstyp -->
+  <div class="flex w-full items-center mb-4">
   {% if record_type == 'alvin-place' %}
-  <h1 class="text-5xl font-universalis font-bold mt-4 mb-4">
-    {{ metadata.authority_names }}
-  </h1>
-  <div class="flex items-center mb-4">
-      <img src="/static/img/authorityTypes/place.svg" alt="{%translate 'Kartnål' %}" class="w-6 h-6 mr-2">
-      <span class="font-semibold">{% translate 'Plats' %}</span>
-  </div>
+      <img src="/static/img/authorityTypes/place.svg" alt="{%translate 'Kartnål' %}" 
+          class="w-6 h-6 mr-2">
+      <span class="w-full font-semibold">{% translate 'Plats' %}</span>
   {% elif record_type == 'alvin-person' %}
-  <h1 class="text-5xl font-universalis font-bold mt-4 mb-4">
-    {{ metadata|alvin_person_title }}
-  </h1>
-  <div class="flex items-center mb-4">
-      <img src="/static/img/authorityTypes/person.svg" alt="{%translate 'Person' %}" class="w-6 h-6 mr-2">
-      <span class="font-semibold">{% translate 'Person' %}</span>
-  </div>
+      <img src="/static/img/authorityTypes/person.svg" alt="{%translate 'Person' %}" 
+          class="w-6 h-6 mr-2">
+      <span class="w-full font-semibold">{% translate 'Person' %}</span>
   {% elif record_type == 'alvin-organisation' %}
-  <div class="flex items-center mb-4">
       <img src="/static/img/authorityTypes/organisation.svg" alt="{%translate 'Grupp av personer' %}"
           class="w-6 h-6 mr-2">
-      <span class="font-semibold">{% translate 'Organisation' %}</span>
-  </div>
+      <span class="w-full font-semibold">{% translate 'Organisation' %}</span>
   {% elif record_type == 'alvin-work' %}
-  <div class="flex items-center mb-4">
       <img src="/static/img/authorityTypes/work.svg" alt="{%translate 'Verksymbol' %}" class="w-6 h-6 mr-2">
-      <span class="font-semibold">{% translate 'Verk' %}</span>
-  </div>
+      <span class="w-full font-semibold">{% translate 'Verk' %}</span>
   {% endif %}
+  </div>
 
   <nav class="flex flex-none flex-wrap justify-start w-full text-xl">
-    <button @click="activeTab = 0" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" :class="{ 'bg-alvinGreen': activeTab === 0, 'bg-gray-300': activeTab != 0 }">{% translate 'Översikt' %}</button>
-    <button @click="activeTab = 1" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" :class="{ 'bg-alvinGreen': activeTab === 1, 'bg-gray-300': activeTab != 1 }">{% translate 'All metadata' %}</button>
+    <button @click="activeTab = 'overview'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" :class="{ 'bg-alvinGreen': activeTab === 'overview', 'bg-gray-300': activeTab != 'overview' }">{% translate 'Översikt' %}</button>
+    <button @click="activeTab = 'all_metadata'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" :class="{ 'bg-alvinGreen': activeTab === 'all_metadata', 'bg-gray-300': activeTab != 'all_metadata' }">{% translate 'All metadata' %}</button>
     {% if record_type != 'alvin-place' %}
-    <button @click="activeTab = 2" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" :class="{ 'bg-alvinGreen': activeTab === 2, 'bg-gray-300': activeTab != 2 }">{% translate 'Relaterat' %}</button>
+      <button @click="activeTab = 'related'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" :class="{ 'bg-alvinGreen': activeTab === 'related', 'bg-gray-300': activeTab != 'related' }">{% translate 'Relaterat' %}</button>
     {% endif %}
-  </nav>
+    </nav>
   
   {% if record_type == 'alvin-place' %}
     {% include './_partials/_alvin_place.html' %}
   {% elif record_type == 'alvin-person' %}
     {% include './_partials/_alvin_person.html' %}
+  {% elif record_type == 'alvin-organisation' %}
+    {% include './_partials/_alvin_organisation.html' %}
   {% endif %}
 
-{% endblock %}
-
-{% block jsbody %}
-  <script defer src="{% static 'js/map.js' %}" 
-    data-latitude="{{ metadata.latitude.0 }}"
-    data-longitude="{{ metadata.longitude.0 }}">
-  </script>
+</main>
 {% endblock %}

@@ -15,10 +15,10 @@
 {% block content %}
 <main class="bg-alvinGrey">
     <section class="flex flex-col bg-[url('/static/img/cartamarina.webp')] bg-center items-center justify-center min-h-screen border-x-4 border-x-black border-b-8 border-b-alvinGreen space-y-4">
-        <h1 class="mb-4 px-16 text-[#FAFAFA] text-7xl max-sm:text-5xl text-center drop-shadow-[_0_3px_0_#36454F]">
-            {% translate 'Digitaliserat kulturarv från nordiska kulturarvs&shy;institutioner' %}
+        <h1 class="mb-4 text-7xl max-sm:text-5xl break-words text-[#FAFAFA] text-center drop-shadow-[_0_3px_0_#36454F]">
+            {% translate 'Digitaliserade samlingar från nordiska kulturarvs&shy;institutioner' %}
         </h1>
-        <search class="flex w-4/5 sm:w-1/2">
+        <search class="flex w-4/5 sm:w-1/2 overflow-hidden">
             <form class="flex w-full" action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
                 <input class="flex-grow p-3 border-4 border-black focus:border-black focus:outline-none border-black focus:ring-0"
                     name="query" type="text" placeholder="{% translate 'Sök i Alvin...' %}">

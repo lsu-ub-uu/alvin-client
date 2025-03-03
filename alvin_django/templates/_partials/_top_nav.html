@@ -20,22 +20,21 @@
 
     <nav class="flex justify-between h-full" x-data="{ showSearch: false }">
 
-        <nav class="flex justify-between items-center h-full">
+        <nav class="flex flex-shrink-0 items-center h-full">
             
             <!-- Hamburger menu -->
-            <button class="flex w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvinGreen">
+            <button class="w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvinGreen">
                 <img class="w-7" src="/static/img/nav/menu.svg" alt="{% translate 'Mobilmeny' %}">
             </button>
 
             <!-- Home button -->
-            <button class="w-full h-full mt-2 text-center">
+            <button class="h-full mt-2 text-center">
                 <a class="text-4xl mx-4 mt-4 font-universalis text-black hover:text-alvinGreen" href="{% url 'start' %}">
                     ALVIN
                 </a>
             </button>
 
         </nav>
-
 
         <nav class="flex flex-shrink-0 justify-between items-center h-full border-black">
 
@@ -53,7 +52,7 @@
             </button>
 
             <!-- Search menu -->
-            <nav class="fixed top-16 left-0 w-screen bg-[#fcfcfc] border-b-2 border-b-black -z-40 ease-in-out duration-300"
+            <nav class="fixed top-16 left-0 w-full bg-[#fcfcfc] border-b-2 border-b-black -z-40 ease-in-out duration-300"
                 x-show="showSearch" x-cloak x-transition>
                 <search>
                     <form

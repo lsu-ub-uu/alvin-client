@@ -1,0 +1,28 @@
+<!-- LOCALIZATION -->
+{% load i18n %}
+
+<!-- STATIC -->
+{% load static %}
+
+{% if value %}
+<div class="md-row">
+    <dt class="md-label">
+        {% translate label %}
+        {% if extra_label %}
+            [{{ extra_label }}]
+        {% endif %}
+    </dt>
+    <dd class="w-[56%] max-sm:w-full">
+        {% if url %}
+            <a href="{{ url }}">
+                {{ value }}
+            </a>
+        {% else %}
+            {{ value }} 
+            {% if extra_value %}
+                ({% translate extra_value %})
+            {% endif %}
+        {% endif %}
+    </dd>
+</div>
+{% endif %}

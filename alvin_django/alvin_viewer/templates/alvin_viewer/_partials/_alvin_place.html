@@ -5,85 +5,43 @@
 {% load static %}
 
 <!-- Overview -->
-<section class="block w-full border-t-4 border-black" x-show="activeTab === 0">
-    <dl class="flex flex-col gap-y-4 py-4">
-        {% if metadata.country %}
-        <div class="md-row">
-            <dt class="md-label">{% translate 'Land' %}</dt>
-            <dd>{{ metadata.country }}</dd>
+<section class="block w-full border-t-4 border-black">
+    
+    <dl class="py-4">
+        
+        <!-- Metadata -->
+        <div class="flex flex-col gap-y-4" x-show="activeTab != 'related'">
+            <div class="flex flex-col gap-y-4" x-show="activeTab === 'all_metadata'" x-cloak>
+                {% for lang, name in metadata.authority_names.items %}
+                    {% include "./_metadata_row.html" with label="Namn" value=name extra_label=lang %}
+                {% endfor %}
+                {% for lang, name in metadata.variant_names.items %}
+                    {% include "./_metadata_row.html" with label="Alternativt namn" value=name extra_label=lang %}
+                {% endfor %}
+            </div>
+            {% include "./_metadata_row.html" with label="Land" value=metadata.country %}
+            <div class="flex flex-col gap-y-4" x-show="activeTab === 'overview'">
+            {% if metadata.longitude and metadata.latitude %}
+                {% include "./_metadata_row.html" with label="Vägbeskrivning" url="https://maps.google.com/?q="|add:metadata.latitude|add:","|add:metadata.longitude value="Google maps" %}
+            {% endif %}
+            </div>
+            <div class="flex flex-col gap-y-4" x-show="activeTab === 'all_metadata'" x-cloak>
+                {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
+                {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
+                {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
+            </div>
+            {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
         </div>
+        
+        <!-- Map -->
+        {% if metadata.latitude and metadata.longitude %}
+        <aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvinOrange border-4 mb-10" id="map" x-show="activeTab != 'related'" x-cloak></aside>
         {% endif %}
-        {% if metadata.longitude and metadata.latitude %}
-        <div class="md-row">
-            <dt class="md-label">Vägbeskrivning</dt>
-            <dd>
-                <a href="https://maps.google.com/?q={{metadata.latitude }},{{metadata.longitude }}" class="text-alvinOrange">
-                    Google maps
-                </a>
-            </dd>
-        </div>
-        {% endif %}
-        <div class="md-row">
-            <dt class="md-label">Id</dt>
-            <dd>alvin-place:{{ metadata.id }}</dd>
-        </div>
 </section>
 
-<!-- All metadata -->
-<section class="block w-full border-t-4 border-black" x-show="activeTab === 1">
-    <dl class="flex flex-col gap-y-4 py-4">
-        {% for lang, authority_name in metadata.authority_names.items %}
-        <div class="md-row">
-            <dt class="md-label">{% translate 'Namn' %} [{{ lang }}]</dt>
-            <dd>{{ authority_name }}</dd>
-        </div>
-        {% endfor %}
-        {% if metadata.variant_names %}
-        {% for lang, variant_name in metadata.variant_names.items %}
-        <div class="md-row">
-            <dt class="md-label">{% translate 'Alternativt namn' %} [{{ lang }}]</dt>
-            <dd>{{ variant_name }}</dd>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% if metadata.country %}
-        <div class="md-row">
-            <dt class="md-label">{% translate 'Land' %}</dt>
-            <dd>{{ metadata.country }}</dd>
-        </div>
-        {% endif %}
-        {% if metadata.longitude and metadata.latitude %}
-        <div class="md-row">
-            <dt class="md-label">{% translate 'Latitud' %}</dt>
-            <dd>{{metadata.latitude }}</dd>
-        </div>
-        <div class="md-row">
-            <dt class="md-label">{% translate 'Longitud' %}</dt>
-            <dd>{{metadata.longitude }}</dd>
-        </div>
-        {% endif %}
-        <div class="md-row">
-            <dt class="md-label">Id</dt>
-            <dd>alvin-place:{{ metadata.id }}</dd>
-        </div>
-        <div class="md-row">
-            <dt class="md-label">{% translate 'Post skapad' %}</dt>
-            <dd>{{ metadata.created }}</dd>
-        </div>
-        <div class="md-row">
-            <dt class="md-label">{% translate 'Senast uppdaterad' %}</dt>
-            <dd>{{ metadata.last_updated }}</dd>
-        </div>
-        <div class="md-row">
-            <dt class="md-label">{% translate 'Källdata' %}</dt>
-            <dd><a href="{{ metadata.source_xml }}" class="text-alvinOrange">{{ metadata.source_xml }}</a></dd>
-        </div>
-        </div>
-</section>
-
-<!-- Map -->
-{% if metadata.latitude and metadata.longitude %}
-<aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvinOrange border-4 mb-10" id="map" x-show="activeTab != 2"></aside>
-{% endif %}
-
-<p>{{ xml }}</p>
+{% block jsbody %}
+<script defer src="{% static 'js/map.js' %}" 
+  data-latitude="{{ metadata.latitude }}"
+  data-longitude="{{ metadata.longitude }}">
+</script>
+{% endblock %}

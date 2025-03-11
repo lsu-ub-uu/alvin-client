@@ -35,6 +35,8 @@ def alvin_place_list(request):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
+        print(type(page_obj))
+
         metadata = {
             "fromNo":alvin_place_search_xml.xpath("//fromNo/text()"),
             "toNo":alvin_place_search_xml.xpath("//toNo/text()"),

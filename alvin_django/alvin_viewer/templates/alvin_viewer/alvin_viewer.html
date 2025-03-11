@@ -44,7 +44,8 @@
       <span class="w-full font-semibold">{% translate 'Organisation' %}</span>
   {% elif record_type == 'alvin-work' %}
       <img src="/static/img/authorityTypes/work.svg" alt="{%translate 'Verksymbol' %}" class="w-6 h-6 mr-2">
-      <span class="w-full font-semibold">{% translate 'Verk' %}</span>
+      <img src="/static/img/recordTypes/{{metadata.form_of_work}}.svg" alt="{%translate 'Bok' %}" class="w-6 h-6 mr-2">
+      <span class="w-full font-semibold">{% translate 'Verk' %}, {% translate metadata.form_of_work %}</span>
   {% endif %}
   </div>
 
@@ -62,7 +63,9 @@
     {% include './_partials/_alvin_person.html' %}
   {% elif record_type == 'alvin-organisation' %}
     {% include './_partials/_alvin_organisation.html' %}
+  {% elif record_type == 'alvin-work' %}
+    {% include './_partials/_alvin_work.html' %}
   {% endif %}
-
+  
 </main>
 {% endblock %}

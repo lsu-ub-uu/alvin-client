@@ -59,7 +59,7 @@ def alvin_viewer(request, record_type, record_id):
         "record_type": record_type
     }
 
-    return render(request, f'alvin_viewer/alvin_viewer.html', context)
+    return render(request, 'alvin_viewer/alvin_viewer.html', context)
 
 # Extrahera metadata baserat på recordType
 def extract_metadata(record_xml, record_type):
@@ -193,6 +193,36 @@ def extract_metadata(record_xml, record_type):
                 
             for related_organisation in record_xml.xpath("//related")],
         
+        })
+
+    elif record_type == 'alvin-work':
+        
+        def get_titles(title_type):
+            return [
+                {"main_title": title.findtext("./mainTitle"),
+                "subtitle": title.findtext("./subtitle"),
+                "orientation_code": title.findtext("./orientationCode"),
+                "type": title.get("variantType")
+                } for title in record_xml.xpath(f"//{title_type}")]
+
+        metadata.update({
+        "form_of_work": record_xml.findtext(".//formOfWork"),
+        "main_title": get_titles("//work/title"),
+        "variant_titles": get_titles("//variantTitle"),
+        "start_date": get_dates("start", record_xml),
+        "end_date": get_dates("end", record_xml),
+        "display_date": record_xml.findtext(".//displayDate"),
+        "date_other": [{
+                        "start_date": get_dates("start", date), 
+                        "end_date": get_dates("end", date),
+                        "type": date.get("type"),
+                        "date_note": date.findtext("./note"),
+                        } 
+                        for date in record_xml.xpath("//dateOther")],
+        "incipit": record_xml.findtext(".//incipit"),
+        "listBibl": record_xml.findtext(".//listBibl"),
+        "notes": {note.get("noteType"): note.findtext(".") 
+                  for note in record_xml.xpath("//work/note")},
         })
 
     return metadata

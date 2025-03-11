@@ -5,54 +5,71 @@ register = template.Library()
 
 @register.filter
 def alvin_title(metadata):
-
     record_type = metadata.get("record_type")
-    authority_names = metadata.get("authority_names")
+    # authority_names om plats, person, eller organisation, annars main_title
+    title = (metadata.get("authority_names")
+             if record_type in {"alvin-place", "alvin-person", "alvin-organisation"}
+             else metadata.get("main_title"))
 
-    if record_type == "alvin-place":
-        keys = None
-    elif record_type == "alvin-person":
-        joiner = " "
-        keys = [
-                "given_name",
-                "family_name",
-                "numeration"
-                ]
-    elif record_type == "alvin-organisation":
-        joiner = ". "
-        keys = [
-                "corporate_name",
-                "subordinate_name"
-                ]
-    else:
-        ValueError("Record type is not valid")
-
-    # Avgör föredraget språk
-    lang = get_language() if authority_names.get(get_language()) else next(iter(authority_names))
-    lang_data = authority_names.get(lang, {})
-
-    if record_type == "alvin-place":
-        return lang_data.get("geographic", "")
-
-    title_part = joiner.join(filter(None, [lang_data.get(key) for key in keys]))
-    term = lang_data.get("term_of_address")
+    # Mappar record_type med (joiner, keys)
+    mapping = {
+        "alvin-place": (None, None),  # Hanteras separat nedan
+        "alvin-person": (" ", ["given_name", "family_name", "numeration"]),
+        "alvin-organisation": (". ", ["corporate_name", "subordinate_name"]),
+        "alvin-work": (" : ", ["main_title", "subtitle"]),
+    }
     
-    if term:
-        return f"{title_part}, {term}" if title_part else term
+    if record_type not in mapping:
+        raise ValueError("Record type is not valid")
+    
+    joiner, keys = mapping[record_type]
+    
+    # För alvin-place, välj geographic som auktoriserat namn
+    if record_type == "alvin-place":
+        lang = get_language() if title.get(get_language()) else next(iter(title))
+        return title.get(lang, {}).get("geographic", "")
+    
+    # För alvin-person och alvin-organisation, join baserad på valt språk
+    if record_type in {"alvin-person", "alvin-organisation"}:
+        lang = get_language() if title.get(get_language()) else next(iter(title))
+        lang_data = title.get(lang, {})
+        title_part = joiner.join(filter(None, (lang_data.get(key) for key in keys)))
+        if record_type == "alvin-person":
+            term = lang_data.get("term_of_address")
+            # Om term exists, inkludera denna; annars returneras enbart title_part.
+            return f"{title_part}, {term}" if term and title_part else term or title_part
+        return title_part
+
+    # För alvin-work och resurstyper antas att title är en lista och använd det första elementet
+    title_part = joiner.join(
+        filter(None, (title[0].get(key) for key in keys))
+    )
     return title_part
+
 
 @register.filter
 def alvin_person_name(metadata):
-    return " ".join(filter(None, [
-                            metadata.get("given_name"), 
-                            metadata.get("family_name"), 
-                            metadata.get("numeration")
-                            ]))
+    keys = ["given_name", "family_name", "numeration"]
+    return " ".join(filter(None, (metadata.get(key) for key in keys)))
+
 
 @register.filter
 def alvin_organisation_name(metadata):
-    return ". ".join(filter(None, [
-                            metadata.get("corporate_name"),
-                             metadata.get("subordinate_name"),
-                             metadata.get("term_of_address")
-                            ]))
+    keys = ["corporate_name", "subordinate_name", "term_of_address"]
+    return ". ".join(filter(None, (metadata.get(key) for key in keys)))
+
+@register.filter
+def alvin_work_name(metadata):
+    keys = ["main_title", "subtitle"]
+    return " : ".join(filter(None, (metadata.get(key) for key in keys)))
+
+@register.filter
+def alvin_place_name(metadata):
+    lang = get_language() if metadata.get(get_language()) else next(iter(metadata))
+    return metadata.get(lang, {}).get("geographic", "")
+
+@register.filter
+def date_other_join(metadata):
+    date_keys = ["start_date", "end_date"]
+    joined_date = " -- ".join(filter(None, (metadata.get(key) for key in date_keys)))
+    return ". ".join(filter(None, [joined_date, metadata.get("date_note")]))

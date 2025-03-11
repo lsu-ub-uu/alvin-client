@@ -36,25 +36,37 @@
 @layer components {
     .md-row {
       display: flex;
-      column-gap: 10%;
-      width: 100%;
       justify-content: flex-start;
+      width: 100%;
       font-size: 1.25rem;
       line-height: 1.75rem;
       overflow-wrap: break-word;
+      padding-top: 8px;
+      padding-bottom: 8px; 
     }
 
     .md-label {
-      width: 33%;
+      width: 20%;
       font-weight: 600;
     }
 
+    .md-row:hover {
+      background-color:#d1d5db;
+    }
+
+    .md-value {
+      width: 65%;
+    }
+
     @media not all and (min-width: 640px) {
+      .md-row {
+        flex-wrap: wrap;
+      }
       .md-label {
         width: 100%;
       }
-      .md-row {
-        flex-wrap: wrap;
+      .md-value {
+        width: 100%;
       }
     }
 }

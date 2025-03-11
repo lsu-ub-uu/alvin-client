@@ -22,12 +22,12 @@
 
         <nav class="flex flex-shrink-0 items-center h-full">
             
-            <!-- Hamburger menu -->
+            <!-- Hamburgermeny -->
             <button class="w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvinGreen">
                 <img class="w-7" src="/static/img/nav/menu.svg" alt="{% translate 'Mobilmeny' %}">
             </button>
 
-            <!-- Home button -->
+            <!-- Hem -->
             <button class="h-full mt-2 text-center">
                 <a class="text-4xl mx-4 mt-4 font-universalis text-black hover:text-alvinGreen" href="{% url 'start' %}">
                     ALVIN
@@ -39,11 +39,15 @@
         <nav class="flex flex-shrink-0 justify-between items-center h-full border-black">
 
             <button>
+                <a class="flex w-full h-full justify-between items-center mt-1 p-2 border-black font-universalis text-nowrap text-black hover:text-alvinGreen max-lg:hidden">Copyright</a>
+            </button>
+            <button>
                 <a class="flex w-full h-full justify-between items-center mt-1 p-4 border-black font-universalis text-nowrap text-black hover:text-alvinGreen max-lg:hidden">Om Alvin</a>
             </button>
 
-            <!-- Search -->
-            <button @click="showSearch = !showSearch" class="flex w-full h-full justify-between items-center p-4 border-x-4 border-black hover:bg-alvinGreen">
+            <!-- Sök -->
+            <button @click="showSearch = !showSearch; $nextTick(() => { $refs.alvinsearch.focus(); });" class="flex w-full h-full justify-between items-center p-4 border-x-4 border-black hover:bg-alvinGreen"
+                    :class="{'bg-alvinGreen': showSearch}">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Sök</p>
                 <img class="w-7 transition-all duration-300" src="/static/img/nav/binocular.svg"
                     x-show="!showSearch">
@@ -51,76 +55,97 @@
                     x-show="showSearch" x-cloak>
             </button>
 
-            <!-- Search menu -->
-            <nav class="fixed top-16 left-0 w-full bg-[#fcfcfc] border-b-2 border-b-black -z-40 ease-in-out duration-300"
-                x-show="showSearch" x-cloak x-transition>
+            <!-- Sökmeny -->
+            <nav class="absolute top-14 left-0 w-full bg-[#fcfcfc] border-b-2 border-b-black -z-40 drop-shadow-2xl"
+                x-show="showSearch" x-cloak x-translate>
                 <search>
                     <form
                         action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
                         <input
-                            class="w-full focus:outline-none focus:ring-0"
-                            name="query" type="text" placeholder="{% translate 'Sök i Alvin' %}">
+                            class="w-full border-y-4 border-x-0 border-black focus:border-black focus:outline-none focus:ring-0"
+                            name="query" type="text" id="alvinsearch" x-ref="alvinsearch" placeholder="{% translate 'Sök i Alvin...' %}">
                     </form>
                 </search>
-                <div class="border-y-2 overflow-scroll">
-                    <h1 class="text-xl font-bold font-universalis text-center">Bläddra bland resurstyper</h1>
+                <div class="flex flex-col">
+                    <h1 class="pl-4 pt-2 border-b-2 border-black font-bold font-universalis text-xl lg:text-center bg-alvinGreen ">{% translate 'Bläddra bland resurstyper' %}</h1>
                     
-                    <div class="flex justify-center">
-                        <button class="m-4">
-                            <img class="w-10" src="/static/img/recordTypes/archive.svg">
+                    <div class="flex lg:justify-center justify-start overflow-x-auto 
+                    [&::-webkit-scrollbar]:w-1
+                    [&::-webkit-scrollbar-track]:bg-alvinGrey
+                    [&::-webkit-scrollbar-thumb]:bg-alvinGreen
+                    [&::-webkit-scrollbar-thumb]:rounded-sm
+                    [&::-webkit-scrollbar-thumb]:border-black
+                    [&::-webkit-scrollbar-thumb]:border-8"
+                    >
+                        <button class="m-4 flex flex-col items-center justify-center">
+                            <img class="w-7" src="/static/img/recordTypes/archive.svg">
                             <span class="font-universalis">Arkiv</span>
                         </button>
-                        <button class="m-4">
-                            <img class="w-10" src="/static/img/recordTypes/book.svg">
+                        <button class="m-4 flex flex-col items-center justify-center">
+                            <img class="w-7" src="/static/img/recordTypes/text.svg">
                             <span class="font-universalis">Text</span>
                         </button>
-                        <button class="m-4">
-                            <img class="w-10" src="/static/img/recordTypes/coins.svg">
+                        <button class="m-4 flex flex-col items-center justify-center">
+                            <img class="w-7" src="/static/img/recordTypes/coins.svg">
                             <span class="font-universalis">Mynt</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-10" src="/static/img/recordTypes/combine.svg">
+                            <img class="w-7" src="/static/img/recordTypes/combine.svg">
                             <span class="font-universalis">Blandat material</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-10" src="/static/img/recordTypes/image.svg">
+                            <img class="w-7" src="/static/img/recordTypes/image.svg">
                             <span class="font-universalis">Bild</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-10" src="/static/img/recordTypes/map.svg">
+                            <img class="w-7" src="/static/img/recordTypes/cartography.svg">
                             <span class="font-universalis">Karta</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-10" src="/static/img/recordTypes/movingimage.svg">
+                            <img class="w-7" src="/static/img/recordTypes/movingimage.svg">
                             <span class="font-universalis">Rörlig bild</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-10" src="/static/img/recordTypes/music.svg">
+                            <img class="w-7" src="/static/img/recordTypes/music.svg">
                             <span class="font-universalis">Musikalier</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-10" src="/static/img/recordTypes/object.svg">
+                            <img class="w-7" src="/static/img/recordTypes/object.svg">
                             <span class="font-universalis">Föremål</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-10" src="/static/img/recordTypes/software.svg">
+                            <img class="w-7" src="/static/img/recordTypes/software.svg">
                             <span class="font-universalis">Programvara</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-10" src="/static/img/recordTypes/soundrecording.svg">
+                            <img class="w-7" src="/static/img/recordTypes/soundrecording.svg">
                             <span class="font-universalis">Ljudinspelning</span>
+                        </button>
+                        <button class="m-4 flex flex-col items-center justify-center">
+                            <img class="w-7" src="/static/img/authorityTypes/person.svg">
+                            <span class="font-universalis">Person</span>
+                        </button>
+                        <button class="m-4 flex flex-col items-center justify-center">
+                            <img class="w-7" src="/static/img/authorityTypes/organisation.svg">
+                            <span class="font-universalis">Organisation</span>
+                        </button>
+                        <button class="m-4 flex flex-col items-center justify-center">
+                            <a href="{% url 'alvin_place_list' %}">
+                                <img class="w-8" src="/static/img/authorityTypes/place.svg">
+                            </a>
+                            <span class="font-universalis">Plats</span>
+                        </button>
+                        <button class="m-4 flex flex-col items-center justify-center">
+                            <a href="/alvin-work">
+                                <img class="w-7" src="/static/img/authorityTypes/work.svg">
+                            </a>
+                            <span class="font-universalis">Verk</span>
                         </button>
                     </div>
                 </div>
-                <div class="flex border-y-2">
-                    <img class="w-8" src="/static/img/authorityTypes/person.svg">
-                    <img class="w-8" src="/static/img/authorityTypes/organisation.svg">
-                    <a href="{% url 'alvin_place_list' %}"><img class="w-8" src="/static/img/authorityTypes/place.svg"></a>
-                    <img class="w-8" src="/static/img/authorityTypes/work.svg">
-                </div>
             </nav>
 
-            <!-- Help button -->
+            <!-- Hjälp -->
             <button class="flex w-full h-full justify-between items-center p-4 border-black hover:bg-alvinOrange">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Hjälp</p>
                 <img class="w-7" src="/static/img/nav/help-circle.svg">

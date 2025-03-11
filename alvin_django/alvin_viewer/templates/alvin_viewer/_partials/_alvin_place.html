@@ -4,14 +4,16 @@
 <!-- STATIC -->
 {% load static %}
 
+{% load metadata_wrangler %}
+
 <!-- Overview -->
 <section class="block w-full border-t-4 border-black">
     
-    <dl class="py-4">
+    <dl>
         
         <!-- Metadata -->
-        <div class="flex flex-col gap-y-4" x-show="activeTab != 'related'">
-            <div class="flex flex-col gap-y-4" x-show="activeTab === 'all_metadata'" x-cloak>
+        <div class="flex flex-col" x-show="activeTab != 'related'">
+            <div class="flex flex-col" x-show="activeTab === 'all_metadata'" x-cloak>
                 {% for lang, name in metadata.authority_names.items %}
                     {% include "./_metadata_row.html" with label="Namn" value=name extra_label=lang %}
                 {% endfor %}
@@ -20,12 +22,12 @@
                 {% endfor %}
             </div>
             {% include "./_metadata_row.html" with label="Land" value=metadata.country %}
-            <div class="flex flex-col gap-y-4" x-show="activeTab === 'overview'">
+            <div class="flex flex-col" x-show="activeTab === 'overview'">
             {% if metadata.longitude and metadata.latitude %}
                 {% include "./_metadata_row.html" with label="Vägbeskrivning" url="https://maps.google.com/?q="|add:metadata.latitude|add:","|add:metadata.longitude value="Google maps" %}
             {% endif %}
             </div>
-            <div class="flex flex-col gap-y-4" x-show="activeTab === 'all_metadata'" x-cloak>
+            <div class="flex flex-col" x-show="activeTab === 'all_metadata'" x-cloak>
                 {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
                 {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
                 {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
@@ -35,8 +37,9 @@
         
         <!-- Map -->
         {% if metadata.latitude and metadata.longitude %}
-        <aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvinOrange border-4 mb-10" id="map" x-show="activeTab != 'related'" x-cloak></aside>
+            <aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvinOrange border-4 mb-10" id="map" x-show="activeTab != 'related'" x-cloak></aside>
         {% endif %}
+
 </section>
 
 {% block jsbody %}

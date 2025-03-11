@@ -18,63 +18,47 @@
         
         <!-- Resultaträkning och filtreringsknapp -->
         <aside class="flex pb-4 justify-between">
-            <p class="text-gray-600"><strong>{% translate 'Träff' %} {{ metadata.fromNo.0 }}-{{ metadata.toNo.0 }} {% translate 'av' %} {{ metadata.totalNo.0 }}</strong></p>
+            <p><strong>{% translate 'Träff' %} {{ metadata.fromNo.0 }}-{{ metadata.toNo.0 }} {% translate 'av' %} {{ metadata.totalNo.0 }}</strong></p>
             
-            <button class="flex align-top">
-                <img @click="showFilter = !showFilter" class="" src="/static/img/nav/filter-solid.svg" x-show="!showFilter" x-cloak>
-                <img @click="showFilter = !showFilter" src="/static/img/nav/filter.svg" x-show="showFilter" x-cloak>
+            <button @click="showFilter = !showFilter" class="flex gap-1">
+                <p class="font-universalis" x-show="!showFilter" x-cloak>Filter</p>
+                <img src="/static/img/nav/filter-solid.svg" x-show="!showFilter" x-cloak>
+                <img src="/static/img/nav/xmark.svg" x-show="showFilter" x-cloak>
             </button>
         </aside>
 
         <!-- Innehåll resultatlista -->
         <section class="flex gap-5">
             <!-- Lista över platser i träfflistan -->
-            <ul class="w-full space-y-1">
+            <ul class="w-full border-y-4 border-black space-y-1">
                 {% for place in page_obj %}
-                    <li class="p-4 border-4 border-black bg-[#fcfcfc] shadow-sm hover:shadow-lg transition-shadow ease-in-out duration-150">
-                        <!-- Place Names and Icon -->
-                        <div class="flex items-center overflow-clip">
-                            <img class="w-5 h-5 mr-2" src="/static/img/authorityTypes/place.svg" alt="Map marker">
-                            <a href='{{ place.id }}' class="text-alvinOrange text-2xl font-semibold">
-                                {% for authority_name in place.authority_names %}
-                                    {{ authority_name.0 }}</a>
+                <a href='{{ place.id }}'>
+                    <li class="flex justify-start my-1 p-4 bg-[#fcfcfc] hover:border-[#F2F4F8] hover:shadow-xl shadow-inner transition-shadow ease-in-out duration-150">
+                        
+                        <img class="w-7 h-full mr-2" src="/static/img/authorityTypes/place.svg" alt="Map marker">       
+                        
+                        <div class="flex gap-x-2 items-baseline">
+                            <!-- Auktoriserat namn -->
+                            {% for authority_name in place.authority_names %}
+                            <p class="block max-sm:w-full text-alvinOrange text-xl font-semibold break-all">{{ authority_name.0 }}</p>
+                            {% endfor %}
+                            
+                            <!-- Alternativa namn -->
+                            {% if place.variant_names %}
+                            <p class="block max-sm:w-full text-gray-600  break-all">
+                                {% for variant_name, lang in place.variant_names %}
+                                    {{variant_name }}
                                 {% endfor %}
+                            </p>    
+                            {% endif %}
                         </div>
-
-                        <!-- Variant Names (if available) -->
-                        {% if place.variant_names %}
-                            <div class="mt-2">
-                                <strong class="block text-gray-700">{% translate 'Alternativa namnformer' %}</strong>
-                                <ul class="list-none text-gray-600">
-                                    {% for variant_name in place.variant_names %}
-                                        <li>{{ variant_name.0 }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        {% endif %}
                     </li>
+                </a>
                 {% endfor %}
             </ul>
             
-            
-            
             <!-- Filtrering -->
-            <aside class="w-3/12 border-4 border-black text-center" x-show="showFilter" x-cloak x-transition>
-                <h2 class="text-2xl font-universalis font-bold py-4 m-auto border-b-4 border-black bg-alvinGreen">Filter</h2>
-                <form method="get" action=".">
-                    <div class="mb-4">
-                        <label for="country" class="block text-gray-700"><strong>{% translate 'Land' %}</strong></label>
-                        <select id="country" name="country" class="w-full mt-1 border-black focus:border-alvinOrange focus:outline-none focus:ring-0 shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out">
-                            <option value="">{% translate 'Alla' %}</option>
-                            {% for country in countries %}
-                                <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>{{ country }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <button type="submit" class="bg-black text-white px-4 py-2 hover:bg-alvinOrange transition">Filter</button>
-                </form>
-            </aside>
-        </section>
+            {% include './_partials/_filters.html' %}
 
         <!-- Paginering -->
         <nav class="pagination my-8">

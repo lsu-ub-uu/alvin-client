@@ -4,8 +4,8 @@ from django.utils.translation import get_language
 register = template.Library()
 
 @register.filter
-def alvin_title(metadata):
-    record_type = metadata.get("record_type")
+def alvin_title(metadata, record_type):
+
     # authority_names om plats, person, eller organisation, annars main_title
     title = (metadata.get("authority_names")
              if record_type in {"alvin-place", "alvin-person", "alvin-organisation"}
@@ -40,7 +40,7 @@ def alvin_title(metadata):
             return f"{title_part}, {term}" if term and title_part else term or title_part
         return title_part
 
-    # För alvin-work och resurstyper antas att title är en lista och använd det första elementet
+    # För alvin-work och resurstyper antas att title är en lista och det första elementet används
     title_part = joiner.join(
         filter(None, (title[0].get(key) for key in keys))
     )
@@ -60,6 +60,10 @@ def alvin_organisation_name(metadata):
 
 @register.filter
 def alvin_work_name(metadata):
+    # Hantering av namn för listning
+    if isinstance(metadata, list):
+        metadata = metadata[0]
+    # Gemensam hantering av namn
     keys = ["main_title", "subtitle"]
     return " : ".join(filter(None, (metadata.get(key) for key in keys)))
 
@@ -69,7 +73,16 @@ def alvin_place_name(metadata):
     return metadata.get(lang, {}).get("geographic", "")
 
 @register.filter
+def role_list(metadata):
+    return ", ".join(filter(None, metadata))
+
+@register.filter
+def origin_countries(metadata):
+    keys = ["country", "historical_country"]
+    return ", ".join(filter(None, (metadata.get(key) for key in keys)))
+
+@register.filter
 def date_other_join(metadata):
-    date_keys = ["start_date", "end_date"]
-    joined_date = " -- ".join(filter(None, (metadata.get(key) for key in date_keys)))
+    keys = ["start_date", "end_date"]
+    joined_date = " -- ".join(filter(None, (metadata.get(key) for key in keys)))
     return ". ".join(filter(None, [joined_date, metadata.get("date_note")]))

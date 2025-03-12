@@ -1,27 +1,21 @@
-<!-- LOCALIZATION -->
-{% load i18n %}
-
-<!-- STATIC -->
-{% load static %}
-
-{% load metadata_wrangler %}
+{% load i18n static metadata_wrangler %}
 
 <!-- Metadata -->
 {% for work in page_obj %}
 <a href="{{ work.id }}">
     <li class="flex justify-start my-1 p-4 bg-[#fcfcfc] hover:border-[#F2F4F8] hover:shadow-xl shadow-inner transition-shadow ease-in-out duration-150">
-        <article>
-            <div class="flex gap-x-2 items-center">
-                <img class="w-7 h-full" src="/static/img/authorityTypes/work.svg" alt="{% translate 'Verksymbol' %}">
-                <img class="w-7 h-full" src="/static/img/recordTypes/{{work.form_of_work}}.svg" alt="{{form_of_work}}">
-                 <!-- Huvudtitel -->
-                <div>
-                    <h1 class="block w-full text-alvinOrange text-xl font-semibold">{{ work|alvin_title }}</h1>
-                    {% for title in work.variant_titles %}
-                        <h2 class="block w-full text-gray-600">{{ title.0|alvin_work_name }}</h2>
-                    {% endfor %}
-                </div>
-                </div>
+        <article class="flex gap-x-2 items-center">
+            <div class="relative w-10 h-10 flex-none">
+                <img class="absolute top-0 right-1 w-7" src="/static/img/authorityTypes/work.svg" alt="{% translate 'Verksymbol' %}">
+                <img class="absolute top-3 left-0 w-6 bg-[#fcfcfc] rounded-md" src="/static/img/recordTypes/{{work.form_of_work}}.svg" alt="{{form_of_work}}">
+            </div>
+            <!-- Huvudtitel -->
+            <div>
+                <h1 class="block w-full text-alvinOrange text-xl font-semibold">{{ work.main_title|alvin_work_name }}</h1>
+                {% for title in work.variant_titles %}
+                    <h2 class="block w-full text-gray-600">{{ title|alvin_work_name }}</h2>
+                {% endfor %}
+            </div>
         </article>
     </li>
 </a>

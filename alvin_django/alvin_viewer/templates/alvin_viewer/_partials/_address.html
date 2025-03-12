@@ -1,0 +1,29 @@
+{% load i18n static %}
+
+<div class="md-row">
+    <dt class="md-label">
+        {% translate 'Adress' %}
+    </dt>
+    <dd class="md-value">
+        <address>
+            {% if box %}
+                <p>Box {{ box }}</p>
+            {% endif %}
+            {% if street %}
+                <p>{{ street }}</p>
+            {% endif %}
+            {% if postcode %}
+                <p>{{ postcode }}
+                    {% if place_id %}
+                        <a href="{% url 'alvin_viewer' 'alvin-place' place_id %}">
+                            {{ place_id }}
+                        </a>
+                    {% endif %}
+                {% endif %}
+                </p>
+            {% if country %}
+                <p>{{ country }}</p>
+            {% endif %}
+        </address>
+    </dd>
+</div>

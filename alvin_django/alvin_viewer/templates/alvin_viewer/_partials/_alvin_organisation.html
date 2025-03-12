@@ -1,49 +1,37 @@
-<!-- LOCALIZATION -->
-{% load i18n %}
-
-<!-- STATIC -->
-{% load static %}
-
-{% load metadata_wrangler %}
+{% load i18n static metadata_wrangler %}
 
 <!-- Metadata -->
-<section class="block w-full border-t-4 border-black">
-    
-    <dl class="py-4">
-        
-        <!-- Metadata -->
-        <div class="flex flex-col gap-y-4" x-show="activeTab != 'related'">
-            <div class="flex flex-col gap-y-4" x-show="activeTab === 'all_metadata'" x-cloak>
-                {% for lang, name in metadata.authority_names.items %}
-                    {% include "./_metadata_row.html" with label="Namn" extra_label=lang value=name|alvin_organisation_name %}
-                {% endfor %}
-                {% for lang, name in metadata.variant_names.items %}
-                    {% include "./_metadata_row.html" with label="Alternativt namn" extra_label=lang value=name|alvin_organisation_name extra_value=name.variant_type %}
-                {% endfor %}
-            </div>
-            {% include "./_metadata_row.html" with label="Startdatum" value=metadata.start_date %}
-            {% include "./_metadata_row.html" with label="Slutdatum" value=metadata.end_date %}
-            {% include "./_metadata_row.html" with label="Årtal" value=metadata.display_date %}
-            {% include "./_metadata_row.html" with label="Address" value=metadata.adress %}
-            {% for electronic_locator in metadata.electronic_locators %}
-                {% include "./_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}
-            {% endfor %}
-            <div class="flex flex-col gap-y-4" x-show="activeTab === 'all_metadata'" x-cloak>
-                {% for type, note in metadata.notes.items %}
-                    {% include "./_metadata_row.html" with label="Anmärkning" extra_label=type value=note|linebreaksbr %}
-                {% endfor %}
-                {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
-                {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
-                {% for type, id in metadata.identifiers.items %}
-                    {% include "./_metadata_row.html" with label="Identifikator" extra_label=type value=id %}
-                {% endfor %}
-                {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
-            </div>
-            {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
-        </div>
-        <div class="flex flex-col gap-y-4" x-show="activeTab === 'related'" x-cloak>
-            {% for related_organisation in metadata.related_organisations %}
-                {% include "./_metadata_row.html" with label="Relaterade organisationer" extra_label=related_organisation.type value=related_organisation.url %}
-            {% endfor %}
-        </div>
-</section>
+<div class="flex flex-col" x-show="activeTab != 'related'">
+    <div class="flex flex-col" x-show="activeTab === 'all_metadata'" x-cloak>
+        {% for lang, name in metadata.authority_names.items %}
+            {% include "./_metadata_row.html" with label="Namn" extra_label=lang value=name|alvin_organisation_name %}
+        {% endfor %}
+        {% for lang, name in metadata.variant_names.items %}
+            {% include "./_metadata_row.html" with label="Alternativt namn" extra_label=lang value=name|alvin_organisation_name attribute=name.variant_type %}
+        {% endfor %}
+    </div>
+    {% include "./_metadata_row.html" with label="Startdatum" value=metadata.start_date %}
+    {% include "./_metadata_row.html" with label="Slutdatum" value=metadata.end_date %}
+    {% include "./_metadata_row.html" with label="Årtal" value=metadata.display_date %}
+    {% include "./_address.html" with place_id=metadata.address.place_id box=metadata.address.box street=metadata.address.street postcode=metadata.address.postcode country=metadata.address.country %}
+    {% for electronic_locator in metadata.electronic_locators %}
+        {% include "./_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}
+    {% endfor %}
+    <div class="flex flex-col" x-show="activeTab === 'all_metadata'" x-cloak>
+        {% for type, note in metadata.notes.items %}
+            {% include "./_metadata_row.html" with label="Anmärkning" extra_label=type value=note|linebreaksbr %}
+        {% endfor %}
+        {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
+        {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
+        {% for type, id in metadata.identifiers.items %}
+            {% include "./_metadata_row.html" with label="Identifikator" extra_label=type value=id %}
+        {% endfor %}
+        {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
+    </div>
+    {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
+</div>
+<div class="flex flex-col" x-show="activeTab === 'related'" x-cloak>
+    {% for related_organisation in metadata.related_organisations %}
+        {% include "./_metadata_row.html" with label="Relaterade organisationer" extra_label=related_organisation.type value=related_organisation.url %}
+    {% endfor %}
+</div>

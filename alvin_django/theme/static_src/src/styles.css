@@ -29,7 +29,7 @@
     }
 
     a {
-      color: #BF7125;
+      color: #BF7F7F;
     }
   }
 
@@ -42,7 +42,8 @@
       line-height: 1.75rem;
       overflow-wrap: break-word;
       padding-top: 8px;
-      padding-bottom: 8px; 
+      padding-bottom: 8px;
+      column-gap: 40px;
     }
 
     .md-label {
@@ -58,7 +59,7 @@
       width: 65%;
     }
 
-    @media not all and (min-width: 640px) {
+    @media not all and (min-width: 768px) {
       .md-row {
         flex-wrap: wrap;
       }

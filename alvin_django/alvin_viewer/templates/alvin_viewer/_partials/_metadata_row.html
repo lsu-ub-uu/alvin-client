@@ -1,8 +1,4 @@
-<!-- LOCALIZATION -->
-{% load i18n %}
-
-<!-- STATIC -->
-{% load static %}
+{% load i18n static %}
 
 {% if value %}
 <div class="md-row">
@@ -18,10 +14,13 @@
                 {{ value }}
             </a>
         {% else %}
-            {{ value }} 
-            {% if extra_value %}
-                ({% translate extra_value %})
-            {% endif %}
+            {{ value }}
+        {% endif %}
+        {% if extra_value %}
+            {% translate extra_value %}
+        {% endif %}
+        {% if attribute %}
+            ({% translate attribute %})
         {% endif %}
     </dd>
 </div>

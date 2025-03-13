@@ -112,6 +112,7 @@ def extract_person_metadata(record_xml):
             "numeration": name.findtext("./name/namePart[@type='numeration']"),
             "term_of_address": name.findtext("./name/namePart[@type='termsOfAddress']"),
             "orientation_code": name.findtext("./name/orientationCode"),
+            "variant_type": name.get("variantType"),
         }
         for name in record_xml.xpath(f"//{name_type}")
     }

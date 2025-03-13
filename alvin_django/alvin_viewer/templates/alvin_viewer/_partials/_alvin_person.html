@@ -7,7 +7,7 @@
             {% include "./_metadata_row.html" with label="Namn" extra_label=lang value=name|alvin_person_name %}
         {% endfor %}
         {% for lang, name in metadata.variant_names.items %}
-            {% include "./_metadata_row.html" with label="Alternativt namn" extra_label=lang value=name|alvin_person_name %}
+            {% include "./_metadata_row.html" with label="Alternativt namn" extra_label=lang value=name|alvin_person_name attribute=name.variant_type %}
         {% endfor %}
     </div>
     {% include "./_metadata_row.html" with label="Född" value=metadata.birth_date %}

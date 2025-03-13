@@ -36,15 +36,16 @@ def alvin_list_viewer(request, record_type):
     list_xml = etree.fromstring(response.content)
     list_xml = etree.XML(response.content)
 
-    context = {
-            "record_type": record_type,
-            "xml": response.content,
-        }
-    
     metadata = {
             "fromNo":list_xml.findtext(".//fromNo"),
             "toNo":list_xml.findtext(".//toNo"),
             "totalNo":list_xml.findtext(".//totalNo"),
+        }
+
+    context = {
+            "record_type": record_type,
+            "xml": response.content,
+            "metadata": metadata,
         }
     
     # Extrahera metadata
@@ -54,36 +55,11 @@ def alvin_list_viewer(request, record_type):
         context.update(extract_place_list_metadata(request, list_xml))
     elif record_type == "alvin-organisation":
         context.update(extract_organisation_list_metadata(request, list_xml))
+    elif record_type == "alvin-person":
+        context.update(extract_person_list_metadata(request, list_xml))
     
     return render(request, 'alvin_list_viewer/alvin_list_viewer.html', context)
     
-def extract_work_list_metadata(request, list_xml):
-    def get_titles(title_type, metadata):
-        return [{
-                "main_title": title.findtext(f"./{title_type}/mainTitle"),
-                "subtitle": title.findtext(f"./{title_type}/subtitle"),
-                "orientation_code": title.findtext(f"./{title_type}/orientationCode"),
-                } for title in metadata.xpath(".")
-        ]
-
-    paginated_metadata = [
-            {
-            "main_title": get_titles("title", work), # Huvudtitel är satt som 1-1 så för att underlätta hämtar jag bara den första titeln i listan, fungerar med huvudtitel eftersom den är obligastorisk
-            "variant_titles": [get_titles(".", title) for title in work.xpath(".//variantTitle")],
-            "form_of_work": work.findtext("./formOfWork"),
-            "id": work.findtext(".//recordInfo/id"),
-            } for work in list_xml.xpath("//work")
-        ]
-
-    paginator = Paginator(paginated_metadata, 20)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    return {
-    "page_obj": page_obj,
-    "page_number": page_number,
-    }
-
 def extract_place_list_metadata(request, list_xml):    
     def get_names(name_type, metadata):
         return {
@@ -110,9 +86,41 @@ def extract_place_list_metadata(request, list_xml):
     "page_number": page_number,
     }
 
+def extract_person_list_metadata(request, list_xml):
+    
+    def get_names(metadata):
+        return {
+            name.get("lang"): {
+            "family_name": name.findtext(".//name/namePart[@type='family']"),
+            "given_name": name.findtext(".//name/namePart[@type='given']"),
+            "numeration": name.findtext(".//name/namePart[@type='numeration']"),
+            "term_of_address": name.findtext(".//name/namePart[@type='termsOfAddress']"),
+            "orientation_code": name.findtext(".//name/orientationCode"),
+            "variant_type": name.get("variantType"),
+            }
+            for name in metadata.xpath(".")
+        }
+
+    paginated_metadata = [
+            {
+            "title": 
+                {"authority_names": get_names(name) for name in person.xpath("./authority")},
+            "id": person.findtext(".//recordInfo/id"),
+            } for person in list_xml.xpath("//person")
+        ]
+        
+    paginator = Paginator(paginated_metadata, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    return {
+    "page_obj": page_obj,
+    "page_number": page_number,
+    }
+
 def extract_organisation_list_metadata(request, list_xml):
   
-    def get_names(name_type, metadata):
+    def get_names(metadata):
         return {
             name.get("lang"): {
             "corporate_name": name.findtext("./name/namePart[@type='corporateName']"),
@@ -126,10 +134,38 @@ def extract_organisation_list_metadata(request, list_xml):
     
     paginated_metadata = [
             {
-            "names": 
-                {"authority_names": get_names(".", name) for name in organisation.xpath(".//authority")},
+            "title": 
+                {"authority_names": get_names(name) for name in organisation.xpath("./authority")},
             "id": organisation.findtext(".//recordInfo/id"),
             } for organisation in list_xml.xpath("//organisation")
+        ]
+
+    paginator = Paginator(paginated_metadata, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return {
+    "page_obj": page_obj,
+    "page_number": page_number,
+    }
+
+def extract_work_list_metadata(request, list_xml):
+
+    def get_titles(title_type, metadata):
+        return [{
+                "main_title": title.findtext(f"./{title_type}/mainTitle"),
+                "subtitle": title.findtext(f"./{title_type}/subtitle"),
+                "orientation_code": title.findtext(f"./{title_type}/orientationCode"),
+                } for title in metadata.xpath(".")
+        ]
+
+    paginated_metadata = [
+            {
+            "main_title": get_titles("title", work), # Huvudtitel är satt som 1-1 så för att underlätta hämtar jag bara den första titeln i listan, fungerar med huvudtitel eftersom den är obligastorisk
+            "variant_titles": [get_titles(".", title) for title in work.xpath(".//variantTitle")],
+            "form_of_work": work.findtext("./formOfWork"),
+            "id": work.findtext(".//recordInfo/id"),
+            } for work in list_xml.xpath("//work")
         ]
 
     paginator = Paginator(paginated_metadata, 20)

@@ -68,8 +68,7 @@
                 </search>
                 <div class="flex flex-col">
                     <h1 class="pl-4 pt-2 border-b-2 border-black font-bold font-universalis text-xl lg:text-center bg-alvinGreen ">{% translate 'Bläddra bland resurstyper' %}</h1>
-                    
-                    <div class="flex lg:justify-center justify-start overflow-x-auto 
+                    <div class="flex lg:justify-center justify-start items-baseline overflow-x-auto 
                     [&::-webkit-scrollbar]:w-1
                     [&::-webkit-scrollbar-track]:bg-alvinGrey
                     [&::-webkit-scrollbar-thumb]:bg-alvinGreen
@@ -121,26 +120,30 @@
                             <img class="w-7" src="/static/img/recordTypes/soundrecording.svg">
                             <span class="font-universalis">Ljudinspelning</span>
                         </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/authorityTypes/person.svg">
-                            <span class="font-universalis">Person</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/authorityTypes/organisation.svg">
-                            <span class="font-universalis">Organisation</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <a href="{% url 'alvin_place_list' %}">
-                                <img class="w-8" src="/static/img/authorityTypes/place.svg">
-                            </a>
-                            <span class="font-universalis">Plats</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <a href="/alvin-work">
+                        <a href="{% url 'alvin_list_viewer' 'alvin-person' %}">
+                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
+                                <img class="w-7" src="/static/img/authorityTypes/person.svg">
+                                <span class="font-universalis">Person</span>
+                            </button>
+                        </a>
+                        <a href="{% url 'alvin_list_viewer' 'alvin-organisation' %}">
+                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
+                                <img class="w-7" src="/static/img/authorityTypes/organisation.svg">
+                                <span class="font-universalis">Organisation</span>
+                            </button>
+                        </a>
+                        <a href="{% url 'alvin_list_viewer' 'alvin-place' %}">
+                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
+                                <img class="w-7" src="/static/img/authorityTypes/place.svg">
+                                <span class="font-universalis">Plats</span>
+                            </button>
+                        </a>
+                        <a href="{% url 'alvin_list_viewer' 'alvin-work' %}">
+                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
                                 <img class="w-7" src="/static/img/authorityTypes/work.svg">
-                            </a>
-                            <span class="font-universalis">Verk</span>
-                        </button>
+                                <span class="font-universalis">Verk</span>
+                            </button>
+                        </a>
                     </div>
                 </div>
             </nav>

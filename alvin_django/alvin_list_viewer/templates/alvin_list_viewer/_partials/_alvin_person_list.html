@@ -9,10 +9,9 @@
                 <img class="w-7 h-full" src="/static/img/authorityTypes/person.svg" alt="{% translate 'Konturer av person' %}">
                  <!-- Huvudtitel -->
                 <div>   
-                    <h1 class="block w-full text-alvinOrange text-xl font-semibold">{{ person.title|alvin_title:record_type }}</h1>
-                       
+                    <h1 class="block w-full text-alvinOrange text-xl font-semibold">{{ person|alvin_title:record_type }}</h1>
                     {% for name in person.variant_names %}
-                        <h2 class="block w-full text-gray-600">{{ name }}</h2>
+                        <h2 class="block w-full text-gray-600">{{ name|alvin_person_name }}</h2>
                     {% endfor %}
                 </div>
             </div>

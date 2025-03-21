@@ -9,7 +9,8 @@
         {% include "./_metadata_row.html" with label=agent.type url=agent.url value=agent.url attribute=agent.role|role_list %}
     {% endfor %}
     {% for place in metadata.origin_places %}
-        {% include "./_metadata_row.html" with label="Ursprungsplats" url=place.url value=place.url extra_value=place|origin_countries %}
+        {% url 'alvin_viewer' 'alvin-place' place.id as place_url %}
+        {% include "./_metadata_row.html" with label="Ursprungsplats" url=place_url value=place_url extra_value=place|origin_countries %}
     {% endfor %}
     {% include "./_metadata_row.html" with label="Startdatum" value=metadata.start_date %}
     {% include "./_metadata_row.html" with label="Slutdatum" value=metadata.end_date %}

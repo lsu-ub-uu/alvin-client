@@ -15,11 +15,11 @@
                 <img class="w-7 h-full" src="/static/img/authorityTypes/place.svg" alt="{% translate 'Kartnål' %}">
                  <!-- Huvudtitel -->
                 <div>
-                    {% for name in place.authority_names %}
-                        <h1 class="block w-full text-alvinOrange text-xl font-semibold">{{ name|alvin_place_name }}</h1>
-                    {% endfor %}
+
+                    <h1 class="block w-full text-alvinOrange text-xl font-semibold">{{ place|alvin_title:record_type }}</h1>
+
                     {% for name in place.variant_names %}
-                        <h2 class="block w-full text-gray-600">{{ name|alvin_place_name }}</h2>
+                        <h2 class="block w-full text-gray-600">{{ name.geographic }}</h2>
                     {% endfor %}
                 </div>
             </div>

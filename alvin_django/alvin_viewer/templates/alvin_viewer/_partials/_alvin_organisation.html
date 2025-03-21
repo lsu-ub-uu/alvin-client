@@ -6,8 +6,8 @@
         {% for lang, name in metadata.authority_names.items %}
             {% include "./_metadata_row.html" with label="Namn" extra_label=lang value=name|alvin_organisation_name %}
         {% endfor %}
-        {% for lang, name in metadata.variant_names.items %}
-            {% include "./_metadata_row.html" with label="Alternativt namn" extra_label=lang value=name|alvin_organisation_name attribute=name.variant_type %}
+        {% for name in metadata.variant_names %}
+            {% include "./_metadata_row.html" with label="Alternativt namn" extra_label=name.language value=name|alvin_organisation_name attribute=name.variant_type %}
         {% endfor %}
     </div>
     {% include "./_metadata_row.html" with label="Startdatum" value=metadata.start_date %}
@@ -32,6 +32,7 @@
 </div>
 <div class="flex flex-col" x-show="activeTab === 'related'" x-cloak>
     {% for related_organisation in metadata.related_organisations %}
-        {% include "./_metadata_row.html" with label="Relaterade organisationer" extra_label=related_organisation.type value=related_organisation.url %}
+        {% url 'alvin_viewer' 'alvin-organisation' related_organisation.id as related_organisation_url %}
+        {% include "./_metadata_row.html" with label="Relaterade organisationer" extra_label=related_organisation.type url=related_organisation_url value=related_organisation.url %}
     {% endfor %}
 </div>

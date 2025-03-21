@@ -1,0 +1,86 @@
+{% load i18n static metadata_wrangler %}
+
+<!-- Metadata -->
+<div class="flex flex-col" x-show="activeTab != 'related'">
+    {% for title in metadata.variant_titles %}
+        {% include "./_metadata_row.html" with label="Alternativ titel" value=title|alvin_work_name attribute=title.type %}
+    {% endfor %}
+    {% for agent in metadata.agents %}
+        {% url 'alvin_viewer' agent.type agent.id as agent_url %}
+        {% include "./_metadata_row.html" with label=agent.type url=agent_url value=agent_url attribute=agent.role|role_list %}
+    {% endfor %}
+    {% for place in metadata.origin_places %}
+        {% url 'alvin_viewer' 'alvin-place' place.id as place_url %}
+        {% include "./_metadata_row.html" with label="Ursprungsplats" url=place_url value=place_url extra_value=place|origin_countries %}
+    {% endfor %}
+    {% include "./_metadata_row.html" with label="Startdatum" value=metadata.start_date %}
+    {% include "./_metadata_row.html" with label="Slutdatum" value=metadata.end_date %}
+    {% include "./_metadata_row.html" with label="Årtal" value=metadata.display_date %}
+    <div class="flex flex-col" x-show="activeTab == 'all_metadata'" x-cloak>
+        {% include "./_metadata_row.html" with label="Utgåva/upplaga" value=metadata.edition_statement %}
+        {% for publication in metadata.publications %}
+            {% include "./_metadata_row.html" with label="Utgivning" value=publication %}
+        {% endfor %}
+        {% for date in metadata.date_other %}
+            {% include "./_metadata_row.html" with label="Övriga datum" value=date|date_other_join attribute=date.type  %}
+        {% endfor %}
+        {% include "./_metadata_row.html" with label="Språk" value=metadata.languages|join:"<br>"|safe %}
+        {% include "./_metadata_row.html" with label="Katalogiseringsspråk" value=metadata.description_languages|join:"<br>"|safe %}
+        {% include "./_metadata_row.html" with label="Ägande institution" value=metadata.physical_location.held_by %}
+        {% include "./_metadata_row.html" with label="Placering" value=metadata.physical_location.sublocation %}
+        {% include "./_metadata_row.html" with label="Signum" value=metadata.physical_location.shelf_mark %}
+        {% for former_shelf_mark in metadata.physical_location.former_shelf_mark %}
+            {% include "./_metadata_row.html" with label="Tidigare signum" value=former_shelf_mark %}
+        {% endfor %}
+        {% for subcollection in metadata.physical_location.subcollection %}
+            {% include "./_metadata_row.html" with label="Samling" value=subcollection %}
+        {% endfor %}
+        {% include "./_metadata_row.html" with label="Anmärkning" extra_label="Fysisk placering" value=metadata.physical_location.note|linebreaksbr %}
+        {% include "./_metadata_row.html" with label="Material" value=metadata.base_material|join:", " %}
+        {% include "./_metadata_row.html" with label="Omfång" value=metadata.extent|linebreaksbr %}
+        {% for dimension in metadata.dimensions %}
+            {% include "./_metadata_row.html" with label="Mått" extra_label=dimension.scope value=dimension|dimensions_join attribute=dimension.unit %}
+        {% endfor %}
+        {% for note in metadata.physical_description_notes %}
+            {% include "./_metadata_row.html" with label="Övrig fysisk beskrivning" value=note.note|linebreaksbr attribute=note.type %}
+        {% endfor %}
+        {% for note in metadata.notes %}
+            {% include "./_metadata_row.html" with label="Anmärkning" value=note.note|linebreaksbr attribute=note.type %}
+        {% endfor %}
+        {% include "./_metadata_row.html" with label="Beskrivning/sammanfattning" value=metadata.summary|linebreaksbr %}
+        {% include "./_metadata_row.html" with label="Transkription" value=metadata.transcription|linebreaksbr %}
+        {% include "./_metadata_row.html" with label="Innehållsförteckning" value=metadata.table_of_contents|linebreaksbr %}
+        {% include "./_metadata_row.html" with label="Litteratur" value=metadata.literature|linebreaksbr %}
+        {% include "./_metadata_row.html" with label="Villkor för användning och åtkomst" value=metadata.access_policy|linebreaksbr %}
+        {% for identifier in metadata.identifiers %}
+            {% include "./_metadata_row.html" with label="Identifikator" extra_label=identifier.type value=identifier.identifier %}
+        {% endfor %}
+        {% if metadata.longitude and metadata.latitude %}
+            {% include "./_metadata_row.html" with label="Longitud" value=metadata.longitude %}
+            {% include "./_metadata_row.html" with label="Latitud" value=metadata.latitude %}
+        {% endif %}
+        {% include "./_metadata_row.html" with label="Incipit" value=metadata.incipit %}
+        {% include "./_metadata_row.html" with label="Anmärkning" value=metadata.note|linebreaksbr %}
+        {% include "./_metadata_row.html" with label="Litteratur" value=metadata.literature|linebreaksbr %}
+        {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
+        {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
+        {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
+    </div>
+    {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
+
+    <div class="flex flex-col" x-show="activeTab == 'related'" x-cloak>
+
+    </div>
+</div>
+<p>{{xml}}</p>
+<!-- Karta -->
+{% if metadata.latitude and metadata.longitude %}
+    <aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvinOrange border-4 mb-10" id="map" x-show="activeTab != 'related'" x-cloak></aside>
+
+    {% block jsbody %}
+        <script defer src="{% static 'js/map.js' %}" 
+            data-latitude="{{ metadata.latitude }}"
+            data-longitude="{{ metadata.longitude }}">
+        </script>
+    {% endblock %}
+{% endif %}

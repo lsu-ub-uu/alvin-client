@@ -5,18 +5,18 @@ register = template.Library()
 
 @register.filter
 def alvin_title(metadata, record_type):
-
     # authority_names om plats, person, eller organisation, annars main_title
     title = (metadata.get("authority_names")
              if record_type in {"alvin-place", "alvin-person", "alvin-organisation"}
              else metadata.get("main_title"))
-
+    
     # Mappar record_type med (joiner, keys)
     mapping = {
         "alvin-place": (None, None),  # Hanteras separat nedan
         "alvin-person": (" ", ["given_name", "family_name", "numeration"]),
         "alvin-organisation": (". ", ["corporate_name", "subordinate_name"]),
         "alvin-work": (" : ", ["main_title", "subtitle"]),
+        "alvin-record": (" : ", ["main_title", "subtitle"]),
     }
     
     if record_type not in mapping:
@@ -24,7 +24,7 @@ def alvin_title(metadata, record_type):
     
     joiner, keys = mapping[record_type]
     
-    # För alvin-place, välj geographic som auktoriserat namn
+    # Välj geographic som auktoriserat namn för alvin-place
     if record_type == "alvin-place":
         lang = get_language() if title.get(get_language()) else next(iter(title))
         return title.get(lang, {}).get("geographic", "")
@@ -35,7 +35,7 @@ def alvin_title(metadata, record_type):
         lang_data = title.get(lang, {})
         title_part = joiner.join(filter(None, (lang_data.get(key) for key in keys)))
         if record_type == "alvin-person":
-            term = lang_data.get("term_of_address")
+            term = lang_data.get("terms_of_address")
             # Om term exists, inkludera denna; annars returneras enbart title_part.
             return f"{title_part}, {term}" if term and title_part else term or title_part
         return title_part
@@ -46,16 +46,17 @@ def alvin_title(metadata, record_type):
     )
     return title_part
 
-
 @register.filter
 def alvin_person_name(metadata):
     keys = ["given_name", "family_name", "numeration"]
-    return " ".join(filter(None, (metadata.get(key) for key in keys)))
-
+    name = " ".join(filter(None, (metadata.get(key) for key in keys)))
+    if metadata.get("terms_of_address"):
+        return f"{name}, {metadata['terms_of_address']}"
+    return name
 
 @register.filter
 def alvin_organisation_name(metadata):
-    keys = ["corporate_name", "subordinate_name", "term_of_address"]
+    keys = ["corporate_name", "subordinate_name", "terms_of_address"]
     return ". ".join(filter(None, (metadata.get(key) for key in keys)))
 
 @register.filter
@@ -86,3 +87,8 @@ def date_other_join(metadata):
     keys = ["start_date", "end_date"]
     joined_date = " -- ".join(filter(None, (metadata.get(key) for key in keys)))
     return ". ".join(filter(None, [joined_date, metadata.get("date_note")]))
+
+@register.filter
+def dimensions_join(metadata):
+    keys = ["height", "width", "depth", "diameter"]
+    return "x".join(filter(None, (metadata.get(key) for key in keys)))

@@ -2,8 +2,7 @@
 
 {% load i18n static metadata_wrangler %}
 
-{% block head %}
-<title>Alvin - {{ metadata|alvin_title:metadata.record_type }}</title>
+{% block title %}
 {% endblock %}
 
 {% block jshead %}
@@ -16,10 +15,10 @@
 {% endblock %}
 
 {% block content %}
-<main class="flex flex-col flex-wrap min-h-svh w-full bg-alvinGrey pt-20 px-10 border-4 border-black"  x-data="{ activeTab: 'overview' }">
+<main class="flex flex-col flex-wrap min-h-svh w-full bg-alvinGrey pt-20 pb-10 px-10 border-4 border-black"  x-data="{ activeTab: 'overview' }">
  
   <!-- Titel -->
-  <h1 class="w-full text-5xl max-md:text-4xl break-words font-universalis font-bold mt-1 mb-2">
+  <h1 class="w-full text-5xl max-md:text-4xl break-words font-universalis font-bold pt-4">
     {{ metadata|alvin_title:metadata.record_type }}
   </h1>
 
@@ -73,6 +72,8 @@
         {% include './_partials/_alvin_organisation.html' %}
       {% elif metadata.record_type == 'alvin-work' %}
         {% include './_partials/_alvin_work.html' %}
+      {% elif metadata.record_type == 'alvin-record' %}
+        {% include './_partials/_alvin_record.html' %}
       {% endif %}
     </dl>
   </section>

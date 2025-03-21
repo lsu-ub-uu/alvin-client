@@ -10,6 +10,27 @@ xml_headers_record = {
     'Accept':'application/vnd.uub.record+xml',
     }
 
+def get_authority_names(metadata, name_parts):
+    # Extraherar auktoritetsnamn baserat på en angiven dict, name_parts, där nyckeln är ett metadatafält och värdet är en xpath.
+    return {
+        name.get("lang"): {
+            key: name.findtext(xpath)
+            for key, xpath in name_parts.items()
+        }
+        for name in metadata.xpath("//authority")
+    }
+
+def get_variant_names(metadata, name_parts):
+    # Extraherar alternativa namn baserat på en angiven dict, name_parts, där nyckeln är ett metadatafält och värdet är en xpath.
+    result = {}
+    for key, xpath in name_parts.items():
+        if xpath.startswith("./@"):
+            attribute = xpath[3:]
+            result[key] = metadata.get(attribute)
+        else:
+            result[key] = metadata.findtext(xpath)
+    return result
+
 def get_dates(date_type, record_xml):
     date_parts = filter(None, [
         record_xml.findtext(f".//{date_type}Date//year"),
@@ -19,6 +40,46 @@ def get_dates(date_type, record_xml):
     date_str = "-".join(date_parts)
     era = record_xml.findtext(f".//{date_type}Date//era")
     return f"{date_str} {era}" if era else date_str
+
+def get_date_other(record_xml):
+    return [{
+            "start_date": get_dates("start", date), 
+            "end_date": get_dates("end", date),
+            "type": date.get("type"),
+            "date_note": date.findtext("./note"),
+            } 
+            for date in record_xml.xpath("//dateOther")]
+
+def get_electronic_locators(record_xml):
+    return [{
+            "url": electronic_locator.findtext("./url"),
+            "display_label":electronic_locator.findtext("./displayLabel")
+            }
+            for electronic_locator in record_xml.xpath("//electronicLocator")]
+
+def get_related(record_xml, type):
+    return [
+            {
+            "id": related.findtext(".//linkedRecordId"),
+            "url": related.findtext(".//url")
+            }
+            for related in record_xml.xpath(f"//related[@type='{type}']")]
+
+def get_agents(record_xml):
+    return [{
+            "type": f'alvin-{agent.get("type")}',
+            "id": agent.findtext(".//linkedRecordId"),
+            "role": [role.findtext(".") for role in agent.xpath(".//role")],
+            "certainty": agent.findtext("./certainty")
+            } for agent in record_xml.xpath("//agent")]
+
+def get_origin_places(record_xml):
+    return [{"id": origin_place.findtext(".//linkedRecordId"),
+            "country": origin_place.findtext(".//country"),
+            "historical_country": origin_place.findtext(".//historicalCountry"),
+            "certainty": origin_place.findtext(".//certainty"),
+            "publication": [publication.findtext(".") for publication in origin_place.xpath("..//publication")],
+            } for origin_place in record_xml.xpath('//originPlace')]
 
 # Generaliserad view för flera typer
 def alvin_viewer(request, record_type, record_id):
@@ -30,7 +91,8 @@ def alvin_viewer(request, record_type, record_id):
         'alvin-place': f'alvin-place/{record_id}',
         'alvin-person': f'alvin-person/{record_id}',
         'alvin-organisation': f'alvin-organisation/{record_id}',
-        'alvin-work': f'alvin-work/{record_id}'
+        'alvin-work': f'alvin-work/{record_id}',
+        'alvin-record': f'alvin-record/{record_id}',
     }
 
     if record_type not in api_urls:
@@ -66,7 +128,7 @@ def extract_metadata(record_xml, record_type):
         "created": record_xml.findtext(".//tsCreated"),
         "last_updated": record_xml.xpath("//tsUpdated")[-1].findtext("."),
         "source_xml": record_xml.findtext("./actionLinks/read/url"),
-        "record_type": record_type
+        "record_type": record_type,
     }
 
     if record_type == 'alvin-place':
@@ -77,26 +139,28 @@ def extract_metadata(record_xml, record_type):
         metadata.update(extract_organisation_metadata(record_xml))
     elif record_type == 'alvin-work':
         metadata.update(extract_work_metadata(record_xml))
+    elif record_type == 'alvin-record':
+        metadata.update(extract_record_metadata(record_xml))
 
     return metadata
 
 def extract_place_metadata(record_xml):
     
-    def get_names(name_type):
-        return {
-            name.get("lang"): {
-            "geographic": name.findtext("./geographic"),
-            "orientation_code": name.findtext("./orientationCode"),
+    authority_name_parts = {
+            "geographic": "./geographic",
+            "orientation_code": "./orientationCode",
         }
-        for name in record_xml.xpath(f"//{name_type}")
-    }
 
-    authority_names = get_names('authority')
-    variant_names = get_names('variant')
+    variant_name_parts = {
+            "language": "./@lang",
+            "geographic": "./geographic",
+            "orientation_code": "./orientationCode",
+        }
+    print(get_variant_names(record_xml, variant_name_parts))
     
     return {
-        "authority_names": authority_names,
-        "variant_names": variant_names,
+        "authority_names": get_authority_names(record_xml, authority_name_parts),
+        "variant_names": [get_variant_names(name, variant_name_parts) for name in record_xml.xpath("//variant")],
         "country": record_xml.findtext(".//country"),
         "latitude": record_xml.findtext(".//point/latitude"),
         "longitude": record_xml.findtext(".//point/longitude"),
@@ -104,29 +168,33 @@ def extract_place_metadata(record_xml):
 
 def extract_person_metadata(record_xml):
     
-    def get_names(name_type):
-        return {
-            name.get("lang"): {
-            "family_name": name.findtext("./name/namePart[@type='family']"),
-            "given_name": name.findtext("./name/namePart[@type='given']"),
-            "numeration": name.findtext("./name/namePart[@type='numeration']"),
-            "term_of_address": name.findtext("./name/namePart[@type='termsOfAddress']"),
-            "orientation_code": name.findtext("./name/orientationCode"),
-            "variant_type": name.get("variantType"),
+    authority_name_parts = {
+            "family_name": "./name/namePart[@type='family']",
+            "given_name": "./name/namePart[@type='given']",
+            "numeration": "./name/namePart[@type='numeration']",
+            "terms_of_address": "./name/namePart[@type='termsOfAddress']",
+            "orientation_code": "./name/orientationCode",
+            "variant_type": "variantType",
         }
-        for name in record_xml.xpath(f"//{name_type}")
-    }
-    
-    authority_names = get_names("authority")
-    variant_names = get_names("variant")
-    
+
+    # Variantnamn måste hanteras separat eftersom de kan innehålla olika namn på samma språk
+    variant_name_parts = {
+            "language": "./@lang",
+            "family_name": "./name/namePart[@type='family']",
+            "given_name": "./name/namePart[@type='given']",
+            "numeration": "./name/namePart[@type='numeration']",
+            "terms_of_address": "./name/namePart[@type='termsOfAddress']",
+            "orientation_code": "./name/orientationCode",
+            "variant_type": "variantType",
+        }
+        
     return {
-        "authority_names": authority_names,
-        "variant_names": variant_names,
+        "authority_names": get_authority_names(record_xml, authority_name_parts),
+        "variant_names": [get_variant_names(name, variant_name_parts) for name in record_xml.xpath("//variant")],
         "birth_date": get_dates("birth", record_xml),
         "birth_place": record_xml.findtext('.//birthPlace//linkedRecordId'),
         "death_date": get_dates("death", record_xml),
-        "death_place": record_xml.findtext(".//deathPlace//url"),
+        "death_place": record_xml.findtext(".//deathPlace//linkedRecordId"),
         "display_date": record_xml.findtext(".//displayDate"),
         "nationality": [nation.findtext("./country") for nation in record_xml.xpath("//nationality")],
         "gender": record_xml.findtext(".//gender"),
@@ -134,37 +202,33 @@ def extract_person_metadata(record_xml):
         "notes": {note.get("noteType"): note.findtext(".") for note in record_xml.xpath("//note")},
         "identifiers": {identifier.get("type"): identifier.findtext(".") 
                     for identifier in record_xml.xpath("//identifier")},
-        "electronic_locators": [{
-            "url": electronic_locator.findtext("./url"),
-            "display_label":electronic_locator.findtext("./displayLabel")}
-        
-            for electronic_locator in record_xml.xpath("//electronicLocator")],
-        "related_persons": [
-            {"id": related_person.findtext(".//linkedRecordId"),
-                "url": related_person.findtext(".//url")}
-            for related_person in record_xml.xpath("//related[@type='person']")],
-        "related_organisations": [{
-            "id": related_organisation.findtext(".//linkedRecordId"),
-            "url": related_organisation.findtext(".//url")} 
-            for related_organisation in record_xml.xpath("//related[@type='organisation']")],
+        "electronic_locators": get_electronic_locators(record_xml),
+        "related_persons": get_related(record_xml, 'person'),
+        "related_organisations": get_related(record_xml, 'organisation'),
     }
 
 def extract_organisation_metadata(record_xml):
-    def get_names(name_type):
-        return {
-            name.get("lang"): {
-            "corporate_name": name.findtext("./name/namePart[@type='corporateName']"),
-            "subordinate_name": name.findtext("./name/namePart[@type='subordinate']"),
-            "term_of_address": name.findtext("./name/namePart[@type='termsOfAddress']"),
-            "variant_type": name.get("variantType"),
-            "orientation_code": name.findtext("./name/orientationCode"),
+    
+    authority_name_parts = {
+            "corporate_name": "./name/namePart[@type='corporateName']",
+            "subordinate_name": "./name/namePart[@type='subordinate']",
+            "terms_of_address": "./name/namePart[@type='termsOfAddress']",
+            "variant_type": "variantType",
+            "orientation_code": "./name/orientationCode",
             }
-            for name in record_xml.xpath(f"//{name_type}")
-        }
 
+    variant_name_parts = {
+            "language": "./@lang",
+            "corporate_name": "./name/namePart[@type='corporateName']",
+            "subordinate_name": "./name/namePart[@type='subordinate']",
+            "terms_of_address": "./name/namePart[@type='termsOfAddress']",
+            "variant_type": "./@variantType",
+            "orientation_code": "./name/orientationCode",
+            }
+    
     return {
-    "authority_names": get_names("authority"),
-    "variant_names": get_names("variant"),
+    "authority_names": get_authority_names(record_xml, authority_name_parts),
+    "variant_names": [get_variant_names(name, variant_name_parts) for name in record_xml.xpath("//variant")],
     "start_date": get_dates("start", record_xml),
     "end_date": get_dates("end", record_xml),
     "display_date": record_xml.findtext(".//displayDate"),
@@ -179,10 +243,7 @@ def extract_organisation_metadata(record_xml):
         "place_id":record_xml.findtext('.//address/place//linkedRecordId'),
         "country": record_xml.findtext('.//address/country'),
         },
-    "electronic_locators": [{
-            "url": electronic_locator.findtext("./url"), 
-            "display_label":electronic_locator.findtext("./displayLabel")
-            } for electronic_locator in record_xml.xpath("//electronicLocator")],
+    "electronic_locators": get_electronic_locators(record_xml),
     "related_organisations": [{
             "type": related_organisation.get("type"),
             "id": related_organisation.findtext(".//linkedRecordId"),
@@ -206,30 +267,78 @@ def extract_work_metadata(record_xml):
     "variant_titles": get_titles("//variantTitle"),
     "start_date": get_dates("start", record_xml),
     "end_date": get_dates("end", record_xml),
-    "origin_places": [{"url": f'/{origin_place.findtext(".//linkedRecordType")}/{origin_place.findtext(".//linkedRecordId")}',
-                       "country": origin_place.findtext(".//country"),
-                       "historical_country": origin_place.findtext(".//historicalCountry"),
-                       "certainty": origin_place.findtext(".//certainty"),
-                       } for origin_place in record_xml.xpath('//originPlace')],
+    "origin_places": get_origin_places(record_xml),
     "display_date": record_xml.findtext(".//displayDate"),
-    "date_other": [{
-                    "start_date": get_dates("start", date), 
-                    "end_date": get_dates("end", date),
-                    "type": date.get("type"),
-                    "date_note": date.findtext("./note"),
-                    } 
-                    for date in record_xml.xpath("//dateOther")],
+    "date_other": get_date_other(record_xml),
     "incipit": record_xml.findtext(".//incipit"),
-    "listBibl": record_xml.findtext(".//listBibl"),
+    "literature": record_xml.findtext(".//listBibl"),
     "note": record_xml.findtext(".//work/note"),
     "literature": record_xml.findtext(".//work/listBibl"),
-    "agents": [{
-            "type": agent.get("type"),
-            "url": f'/{agent.findtext(".//linkedRecordType")}/{agent.findtext(".//linkedRecordId")}',
-            "role": [role.findtext(".") for role in agent.xpath(".//role")],
-            "certainty": agent.findtext("./certainty")
-            } for agent in record_xml.xpath("//agent")],
+    "agents": get_agents(record_xml),
     "longitude": record_xml.findtext(".//point/longitude"),
     "latitude": record_xml.findtext(".//point/latitude"),
     }
 
+def extract_record_metadata(record_xml):
+    
+    def get_titles(title_type):
+        return [
+            {"main_title": title.findtext("./mainTitle"),
+            "subtitle": title.findtext("./subtitle"),
+            "orientation_code": title.findtext("./orientationCode"),
+            "type": title.get("variantType"),
+            } for title in record_xml.xpath(f"//{title_type}")]
+
+    return {
+    "type_of_resource": record_xml.findtext(".//data/record/typeOfResource"),
+    "main_title": get_titles("//data/record/title"),
+    "variant_titles": get_titles("//data/record/variantTitle"),
+    "agents": get_agents(record_xml),
+    "edition_statement": record_xml.findtext(".//record/editionStatement"),
+    "publications": [publication.findtext(".") for publication in record_xml.xpath("//data/record/publication")],
+    "origin_places": get_origin_places(record_xml),
+    "start_date": get_dates("start", record_xml),
+    "end_date": get_dates("end", record_xml),
+    "display_date": record_xml.findtext(".//displayDate"),
+    "date_other": get_date_other(record_xml),
+    "physical_location": {
+        "held_by": record_xml.findtext(".//physicalLocation/heldBy/location/linkedRecordId"),
+        "sublocation": record_xml.findtext(".//physicalLocation/sublocation"),
+        "shelf_mark": record_xml.findtext(".//physicalLocation/shelfMark"),
+        "former_shelf_mark": [shelfmark.findtext(".") for shelfmark in record_xml.xpath("//physicalLocation/formerShelfMark")],
+        "subcollection": [subcollection.findtext(".") for subcollection in record_xml.xpath("//physicalLocation/subcollection/*")],
+        "note": record_xml.findtext(".//physicalLocation/note[@noteType='general']"),
+    },
+    "languages": [language.findtext(".") for language in record_xml.xpath("//data/record/language")],
+    "description_languages": [language.findtext(".") for language in record_xml.xpath("//data/record/adminMetadata/descriptionLanguage")],
+    "base_material": [material.findtext(".") for material in record_xml.xpath("//baseMaterial")],
+    "extent": record_xml.findtext(".//record/extent"),
+    "dimensions": [
+                    {"scope": dimension.findtext("./scope"),
+                    "height": dimension.findtext("./height"),
+                    "width": dimension.findtext("./width"),
+                    "depth": dimension.findtext("./depth"),
+                    "diameter": dimension.findtext("./diameter"),
+                    "unit": dimension.findtext("./unit"),
+                    "scope": dimension.findtext("./scope"),}
+                    for dimension in record_xml.xpath("//data/record/dimensions")],
+    "physical_description_notes": [{
+        "type": note.get("noteType"),
+        "note": note.findtext("."),
+    } for note in record_xml.xpath("//physicalDescription/note")],
+    "notes": [{
+        "type": note.get("noteType"),
+        "note": note.findtext("."),
+        } 
+        for note in record_xml.xpath("//record/note")],
+    "summary": record_xml.findtext(".//record/summary"),
+    "transcription": record_xml.findtext(".//record/transcription"),
+    "table_of_contents": record_xml.findtext(".//record/tableOfContents"),
+    "literature": record_xml.findtext(".//record/listBibl"),
+    "access_policy": record_xml.findtext(".//record/accessPolicy"),
+    "identifiers": [{
+        "type": identifier.get("type"),
+        "identifier": identifier.findtext("."),
+        } 
+        for identifier in record_xml.xpath("//record/identifier")],
+    }

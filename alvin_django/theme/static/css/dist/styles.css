@@ -800,12 +800,12 @@ a {
   overflow-wrap: break-word;
   padding-top: 8px;
   padding-bottom: 8px;
-  -moz-column-gap: 40px;
-       column-gap: 40px;
+  -moz-column-gap: 60px;
+       column-gap: 60px;
 }
 
 .md-label {
-  width: 20%;
+  width: 31%;
   font-weight: 600;
 }
 
@@ -814,7 +814,7 @@ a {
 }
 
 .md-value {
-  width: 65%;
+  width: 55%;
 }
 
 @media not all and (min-width: 768px) {
@@ -895,11 +895,6 @@ a {
   margin: 1rem;
 }
 
-.mx-1 {
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-}
-
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -936,10 +931,6 @@ a {
   margin-bottom: 1.5rem;
 }
 
-.ml-4 {
-  margin-left: 1rem;
-}
-
 .mr-1 {
   margin-right: 0.25rem;
 }
@@ -950,10 +941,6 @@ a {
 
 .mt-1 {
   margin-top: 0.25rem;
-}
-
-.mt-12 {
-  margin-top: 3rem;
 }
 
 .mt-2 {
@@ -990,10 +977,6 @@ a {
 
 .hidden {
   display: none;
-}
-
-.h-1\/2 {
-  height: 50%;
 }
 
 .h-10 {
@@ -1048,10 +1031,6 @@ a {
   width: 60%;
 }
 
-.w-4\/6 {
-  width: 66.666667%;
-}
-
 .w-44 {
   width: 11rem;
 }
@@ -1062,10 +1041,6 @@ a {
 
 .w-7 {
   width: 1.75rem;
-}
-
-.w-8 {
-  width: 2rem;
 }
 
 .w-full {
@@ -1100,16 +1075,8 @@ a {
           user-select: none;
 }
 
-.list-outside {
-  list-style-position: outside;
-}
-
 .list-disc {
   list-style-type: disc;
-}
-
-.list-none {
-  list-style-type: none;
 }
 
 .flex-row {
@@ -1189,10 +1156,6 @@ a {
 
 .break-words {
   overflow-wrap: break-word;
-}
-
-.break-all {
-  word-break: break-all;
 }
 
 .rounded {
@@ -1305,11 +1268,6 @@ a {
   border-bottom-color: transparent;
 }
 
-.bg-\[\#F5F5F5\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 245 245 / var(--tw-bg-opacity));
-}
-
 .bg-\[\#fcfcfc\] {
   --tw-bg-opacity: 1;
   background-color: rgb(252 252 252 / var(--tw-bg-opacity));
@@ -1412,6 +1370,10 @@ a {
   padding-bottom: 0.25rem;
 }
 
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -1430,6 +1392,10 @@ a {
 
 .pt-20 {
   padding-top: 5rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
 }
 
 .pt-9 {
@@ -1489,11 +1455,6 @@ a {
 .text-\[\#FAFAFA\] {
   --tw-text-opacity: 1;
   color: rgb(250 250 250 / var(--tw-text-opacity));
-}
-
-.text-alvinGreen {
-  --tw-text-opacity: 1;
-  color: rgb(127 191 167 / var(--tw-text-opacity));
 }
 
 .text-alvinOrange {

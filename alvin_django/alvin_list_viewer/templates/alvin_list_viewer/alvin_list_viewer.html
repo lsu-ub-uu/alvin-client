@@ -19,7 +19,6 @@
         <!-- Resultatlista  -->
         <section class="flex gap-5">
         
-            
             <!-- Listning -->
             <ol class="w-full border-y-4 border-black space-y-1">
                 {% if record_type == 'alvin-place' %}
@@ -34,11 +33,11 @@
             </ol>
 
             {% include '../_partials/_filters.html' %}
-        
+
         </section>
 
         {% include './_partials/_pagination.html' %}
-        <p>{{xml}}</p>
+
     </section>
 
 </main>

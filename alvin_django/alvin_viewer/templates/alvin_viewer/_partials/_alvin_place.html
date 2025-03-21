@@ -6,8 +6,8 @@
         {% for lang, name in metadata.authority_names.items %}
             {% include "./_metadata_row.html" with label="Namn" value=name.geographic extra_label=lang %}
         {% endfor %}
-        {% for lang, name in metadata.variant_names.items %}
-            {% include "./_metadata_row.html" with label="Alternativt namn" value=name.geographic extra_label=lang %}
+        {% for name in metadata.variant_names %}
+            {% include "./_metadata_row.html" with label="Alternativt namn" extra_label=name.language value=name.geographic %}
         {% endfor %}
     </div>
     {% include "./_metadata_row.html" with label="Land" value=metadata.country %}

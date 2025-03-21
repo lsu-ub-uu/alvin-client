@@ -8,6 +8,39 @@ from lxml import etree
 from alvin_viewer.views import get_dates
 from alvin_viewer.templatetags import metadata_wrangler
 
+def get_authority_names(metadata, name_parts):
+
+    # Extraherar auktoritetsnamn baserat på en angiven dict, name_parts, där nyckeln är ett metadatafält och värdet är en xpath.
+    return {
+        name.get("lang"): {
+            key: name.findtext(xpath)
+            for key, xpath in name_parts.items()
+        }
+        for name in metadata.xpath("./authority")
+    }
+
+def get_variant_names(metadata, name_parts):
+
+    # Extraherar alternativa namn baserat på en angiven dict, name_parts, där nyckeln är ett metadatafält och värdet är en xpath.
+    return [
+        {
+            key: name.findtext(xpath)
+            for key, xpath in name_parts.items()
+        }
+        for name in metadata.xpath("./variant")
+    ]
+
+def paginator(request, paginated_metadata):
+    
+    paginator = Paginator(paginated_metadata, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return {
+    "page_obj": page_obj,
+    "page_number": page_number,
+    }
+
 def alvin_list_viewer(request, record_type):
     
     xml_headers_list = {'Content-Type':'application/vnd.uub.recordList+xml','Accept':'application/vnd.uub.recordList+xml'}
@@ -61,93 +94,88 @@ def alvin_list_viewer(request, record_type):
     return render(request, 'alvin_list_viewer/alvin_list_viewer.html', context)
     
 def extract_place_list_metadata(request, list_xml):    
-    def get_names(name_type, metadata):
+    
+    def get_authority_names(metadata):
         return {
             name.get("lang"): {
             "geographic": name.findtext("./geographic"),
         }
-        for name in metadata.xpath(f".")
+        for name in metadata.xpath("./authority")
     }
+    
+    def get_variant_names(metadata):
+        return [
+            {
+            "geographic": name.findtext("./geographic"),
+        }
+        for name in metadata.xpath("./variant")]
     
     paginated_metadata = [
             {
-            "authority_names": [get_names(".", name) for name in place.xpath(".//authority")],
-            "variant_names": [get_names(".", name) for name in place.xpath(".//variant")],
-            "id": place.findtext(".//recordInfo/id"),
-            } for place in list_xml.xpath("//place")
+            "authority_names": get_authority_names(place),
+            "variant_names": get_variant_names(place),
+            "id": place.findtext("./recordInfo/id"),
+            } for place in list_xml.xpath("//data/place")
         ]
 
-    paginator = Paginator(paginated_metadata, 20)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    return paginator(request, paginated_metadata)
 
-    return {
-    "page_obj": page_obj,
-    "page_number": page_number,
-    }
 
 def extract_person_list_metadata(request, list_xml):
     
-    def get_names(metadata):
-        return {
-            name.get("lang"): {
-            "family_name": name.findtext(".//name/namePart[@type='family']"),
-            "given_name": name.findtext(".//name/namePart[@type='given']"),
-            "numeration": name.findtext(".//name/namePart[@type='numeration']"),
-            "term_of_address": name.findtext(".//name/namePart[@type='termsOfAddress']"),
-            "orientation_code": name.findtext(".//name/orientationCode"),
-            "variant_type": name.get("variantType"),
+    authority_name_parts = {
+            "family_name": ".//name/namePart[@type='family']",
+            "given_name": ".//name/namePart[@type='given']",
+            "numeration": ".//name/namePart[@type='numeration']",
+            "terms_of_address": ".//name/namePart[@type='termsOfAddress']",
+            "orientation_code": ".//name/orientationCode",
             }
-            for name in metadata.xpath(".")
-        }
+    
+    variant_name_parts = {
+            "family_name": ".//name/namePart[@type='family']",
+            "given_name": ".//name/namePart[@type='given']",
+            "numeration": ".//name/namePart[@type='numeration']",
+            "terms_of_address": ".//name/namePart[@type='termsOfAddress']",
+            "orientation_code": ".//name/orientationCode",
+            "variant_type": "variantType",
+            }
 
     paginated_metadata = [
             {
-            "title": 
-                {"authority_names": get_names(name) for name in person.xpath("./authority")},
-            "id": person.findtext(".//recordInfo/id"),
-            } for person in list_xml.xpath("//person")
+            "authority_names": get_authority_names(person, authority_name_parts),
+            "variant_names": get_variant_names(person, variant_name_parts),
+            "id": person.findtext("./recordInfo/id"),
+            } for person in list_xml.xpath("//data/person")
         ]
         
-    paginator = Paginator(paginated_metadata, 20)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    
-    return {
-    "page_obj": page_obj,
-    "page_number": page_number,
-    }
+    return paginator(request, paginated_metadata)
 
 def extract_organisation_list_metadata(request, list_xml):
   
-    def get_names(metadata):
-        return {
-            name.get("lang"): {
-            "corporate_name": name.findtext("./name/namePart[@type='corporateName']"),
-            "subordinate_name": name.findtext("./name/namePart[@type='subordinate']"),
-            "term_of_address": name.findtext("./name/namePart[@type='termsOfAddress']"),
-            "variant_type": name.get("variantType"),
-            "orientation_code": name.findtext("./name/orientationCode"),
+    authority_name_parts = {
+            "corporate_name": "./name/namePart[@type='corporateName']",
+            "subordinate_name": "./name/namePart[@type='subordinate']",
+            "terms_of_address": "./name/namePart[@type='termsOfAddress']",
+            "orientation_code": "./name/orientationCode",
             }
-            for name in metadata.xpath(".")
-        }
+    
+    variant_name_parts = {
+            "corporate_name": "./name/namePart[@type='corporateName']",
+            "subordinate_name": "./name/namePart[@type='subordinate']",
+            "terms_of_address": "./name/namePart[@type='termsOfAddress']",
+            "variant_type": "variantType",
+            "orientation_code": "./name/orientationCode",
+            }
     
     paginated_metadata = [
             {
-            "title": 
-                {"authority_names": get_names(name) for name in organisation.xpath("./authority")},
-            "id": organisation.findtext(".//recordInfo/id"),
-            } for organisation in list_xml.xpath("//organisation")
+            "authority_names": get_authority_names(organisation, authority_name_parts),
+            "variant_names":  get_variant_names(organisation, variant_name_parts),
+            "id": organisation.findtext("./recordInfo/id"),
+            } for organisation in list_xml.xpath("//data/organisation")
         ]
 
-    paginator = Paginator(paginated_metadata, 20)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    return {
-    "page_obj": page_obj,
-    "page_number": page_number,
-    }
+    return paginator(request, paginated_metadata)
 
 def extract_work_list_metadata(request, list_xml):
 
@@ -161,18 +189,11 @@ def extract_work_list_metadata(request, list_xml):
 
     paginated_metadata = [
             {
-            "main_title": get_titles("title", work), # Huvudtitel är satt som 1-1 så för att underlätta hämtar jag bara den första titeln i listan, fungerar med huvudtitel eftersom den är obligastorisk
-            "variant_titles": [get_titles(".", title) for title in work.xpath(".//variantTitle")],
+            "main_title": get_titles("title", work),
+            "variant_titles": [get_titles(".", title) for title in work.xpath("./variantTitle")],
             "form_of_work": work.findtext("./formOfWork"),
-            "id": work.findtext(".//recordInfo/id"),
-            } for work in list_xml.xpath("//work")
+            "id": work.findtext("./recordInfo/id"),
+            } for work in list_xml.xpath("//data/work")
         ]
 
-    paginator = Paginator(paginated_metadata, 20)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    return {
-    "page_obj": page_obj,
-    "page_number": page_number,
-    }
+    return paginator(request, paginated_metadata)

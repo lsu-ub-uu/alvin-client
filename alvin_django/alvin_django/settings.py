@@ -29,8 +29,6 @@ INSTALLED_APPS = [
     'kontakt',
     'medlemmar',
     'webbplatskarta',
-    'alvin_place',
-    'alvin_place_list',
     'search',
     'alvin_viewer',
     'alvin_list_viewer',

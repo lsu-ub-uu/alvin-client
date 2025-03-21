@@ -15,6 +15,5 @@ urlpatterns += i18n_patterns (
     path('webbplatskarta/', include('webbplatskarta.urls')),
     path('', include('alvin_viewer.urls')),
     path('', include('alvin_list_viewer.urls')),
-    path('alvin-place/', include('alvin_place_list.urls')),
     path('search/', include('search.urls')),
 )

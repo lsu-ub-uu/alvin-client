@@ -1,5 +1,6 @@
 {% load i18n static %}
 
+{% if box or street or postcode or place_id or country %}
 <div class="md-row">
     <dt class="md-label">
         {% translate 'Adress' %}
@@ -27,3 +28,4 @@
         </address>
     </dd>
 </div>
+{% endif %}

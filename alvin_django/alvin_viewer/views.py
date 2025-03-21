@@ -156,7 +156,6 @@ def extract_place_metadata(record_xml):
             "geographic": "./geographic",
             "orientation_code": "./orientationCode",
         }
-    print(get_variant_names(record_xml, variant_name_parts))
     
     return {
         "authority_names": get_authority_names(record_xml, authority_name_parts),
@@ -280,6 +279,12 @@ def extract_work_metadata(record_xml):
     }
 
 def extract_record_metadata(record_xml):
+
+    def get_subject_authority(record_xml):
+        return [{
+                "type": f'alvin-{authority.get("type")}',
+                "id": authority.findtext(".//linkedRecordId"),
+                } for authority in record_xml.xpath("//record/subject[@type = 'person' or @type = 'organisation' or @type = 'place']")]
     
     def get_titles(title_type):
         return [
@@ -341,4 +346,22 @@ def extract_record_metadata(record_xml):
         "identifier": identifier.findtext("."),
         } 
         for identifier in record_xml.xpath("//record/identifier")],
+    "genre_form": [genre.findtext(".") for genre in record_xml.xpath("//data/record/genreForm")],
+    "subjects": [{
+        "type": subject.get("authority"),
+        "topic": subject.findtext(".//topic"),
+        "genreForm": subject.findtext(".//genreForm"),
+        "geographicCoverage": subject.findtext(".//geographicCoverage"),
+        "temporal": subject.findtext(".//temporal"),
+        "occupation": subject.findtext(".//occupation"),
+        } for subject in record_xml.xpath("//record/subject[not(@type = 'person' or @type = 'organisation' or @type = 'place')]")],
+        "subject_authority": [{
+                "type": f'alvin-{authority.get("type")}',
+                "id": authority.findtext(".//linkedRecordId"),
+                } for authority in record_xml.xpath("//record/subject[@type = 'person' or @type = 'organisation' or @type = 'place']")],
+        "classifications": [{
+            "type": classification.get("authority"),
+            "classification": classification.findtext("."),
+        } for classification in record_xml.xpath("//record/classification")],
+        "electronic_locators": get_electronic_locators(record_xml),
     }

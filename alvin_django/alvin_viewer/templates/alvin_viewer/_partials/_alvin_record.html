@@ -22,7 +22,7 @@
             {% include "./_metadata_row.html" with label="Utgivning" value=publication %}
         {% endfor %}
         {% for date in metadata.date_other %}
-            {% include "./_metadata_row.html" with label="Övriga datum" value=date|date_other_join attribute=date.type  %}
+            {% include "./_metadata_row.html" with label="Övrigt datum" value=date|date_other_join attribute=date.type  %}
         {% endfor %}
         {% include "./_metadata_row.html" with label="Språk" value=metadata.languages|join:"<br>"|safe %}
         {% include "./_metadata_row.html" with label="Katalogiseringsspråk" value=metadata.description_languages|join:"<br>"|safe %}
@@ -52,19 +52,32 @@
         {% include "./_metadata_row.html" with label="Innehållsförteckning" value=metadata.table_of_contents|linebreaksbr %}
         {% include "./_metadata_row.html" with label="Litteratur" value=metadata.literature|linebreaksbr %}
         {% include "./_metadata_row.html" with label="Villkor för användning och åtkomst" value=metadata.access_policy|linebreaksbr %}
+        {% for subject in metadata.subjects %}
+            {% include "./_metadata_row.html" with label="Ämnesord" extra_label=subject.type value=subject %}
+        {% endfor %}
+        {% include "./_metadata_row.html" with label="Genre/form" value=metadata.genre_form|join:"<br>"|safe %}
+        {% for subject in metadata.subject_authority %}
+            {% url 'alvin_viewer' subject.type subject.id as authority_url %}
+            {% include "./_metadata_row.html" with label="Ämnesord" extra_label=subject.type url=authority_url value=authority_url %}
+        {% endfor %}
+        {% for classification in metadata.classifications %}
+            {% include "./_metadata_row.html" with label="Klassifikation" extra_label=classification.type value=classification.classification %}
+        {% endfor %}
         {% for identifier in metadata.identifiers %}
             {% include "./_metadata_row.html" with label="Identifikator" extra_label=identifier.type value=identifier.identifier %}
+        {% endfor %}
+        {% for electronic_locator in metadata.electronic_locators %}
+            {% include "./_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}
         {% endfor %}
         {% if metadata.longitude and metadata.latitude %}
             {% include "./_metadata_row.html" with label="Longitud" value=metadata.longitude %}
             {% include "./_metadata_row.html" with label="Latitud" value=metadata.latitude %}
         {% endif %}
         {% include "./_metadata_row.html" with label="Incipit" value=metadata.incipit %}
-        {% include "./_metadata_row.html" with label="Anmärkning" value=metadata.note|linebreaksbr %}
-        {% include "./_metadata_row.html" with label="Litteratur" value=metadata.literature|linebreaksbr %}
         {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
         {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
         {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
+        
     </div>
     {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
 

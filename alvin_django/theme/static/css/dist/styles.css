@@ -959,6 +959,10 @@ a {
   margin-top: 1.25rem;
 }
 
+.mr-0 {
+  margin-right: 0px;
+}
+
 .block {
   display: block;
 }

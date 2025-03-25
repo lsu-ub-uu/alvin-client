@@ -92,3 +92,13 @@ def date_other_join(metadata):
 def dimensions_join(metadata):
     keys = ["height", "width", "depth", "diameter"]
     return "x".join(filter(None, (metadata.get(key) for key in keys)))
+
+@register.filter
+def subjects_join(metadata):
+    keys = ["topic", "genreForm", "geographicCoverage", "temporal", "occupation"]
+    return ", ".join(filter(None, (metadata.get(key) for key in keys)))
+
+@register.filter
+def part_join(metadata):
+    keys = ["number", "extent"]
+    return ", ".join(filter(None, (metadata.get(key) for key in keys)))

@@ -1,0 +1,15 @@
+{% load i18n static %}
+
+{% comment %} Följande variabler kan skickas in:
+    icon_path: sökväg till ikon
+    icon_alt: alt-text för ikonen
+    extra_icon_path (valbar): sökväg till den extra ikonen
+    extra_icon_alt (valbar): alt-text för den extra ikonen
+    label: namn på resursen
+{% endcomment %}
+
+<img src="{{ icon_path }}" alt="{% translate icon_alt %}" class="w-6 h-6 {% if extra_icon_path %}mr-0{% else %}mr-2{% endif %}">
+{% if extra_icon_path %}
+    <img src="{{ extra_icon_path }}" alt="{% translate extra_icon_alt %}" class="w-6 h-6 mr-2">
+{% endif %}
+<p class="w-full font-semibold">{{ label }}</p>

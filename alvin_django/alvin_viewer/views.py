@@ -4,6 +4,7 @@ from django.utils.translation import get_language
 import requests
 from lxml import etree
 
+
 # Globala variabler och funktioner
 xml_headers_record = {
     'Content-Type':'application/vnd.uub.record+xml',
@@ -279,20 +280,22 @@ def extract_work_metadata(record_xml):
     }
 
 def extract_record_metadata(record_xml):
-
-    def get_subject_authority(record_xml):
-        return [{
-                "type": f'alvin-{authority.get("type")}',
-                "id": authority.findtext(".//linkedRecordId"),
-                } for authority in record_xml.xpath("//record/subject[@type = 'person' or @type = 'organisation' or @type = 'place']")]
     
     def get_titles(title_type):
         return [
-            {"main_title": title.findtext("./mainTitle"),
+            {
+            "type": title.get("variantType"),
+            "main_title": title.findtext("./mainTitle"),
             "subtitle": title.findtext("./subtitle"),
             "orientation_code": title.findtext("./orientationCode"),
-            "type": title.get("variantType"),
             } for title in record_xml.xpath(f"//{title_type}")]
+
+
+
+    def get_subject_authority(type):
+        return [{
+            "id": authority.findtext(".//linkedRecordId"),
+            } for authority in record_xml.xpath(f"//record/subject[@type = '{type}']")]
 
     return {
     "type_of_resource": record_xml.findtext(".//data/record/typeOfResource"),
@@ -355,13 +358,22 @@ def extract_record_metadata(record_xml):
         "temporal": subject.findtext(".//temporal"),
         "occupation": subject.findtext(".//occupation"),
         } for subject in record_xml.xpath("//record/subject[not(@type = 'person' or @type = 'organisation' or @type = 'place')]")],
-        "subject_authority": [{
-                "type": f'alvin-{authority.get("type")}',
-                "id": authority.findtext(".//linkedRecordId"),
-                } for authority in record_xml.xpath("//record/subject[@type = 'person' or @type = 'organisation' or @type = 'place']")],
-        "classifications": [{
-            "type": classification.get("authority"),
-            "classification": classification.findtext("."),
-        } for classification in record_xml.xpath("//record/classification")],
-        "electronic_locators": get_electronic_locators(record_xml),
+    "subject_person": get_subject_authority('person'),
+    "subject_organisation": get_subject_authority('organisation'),
+    "subject_place": get_subject_authority('place'),
+    "classifications": [{
+        "type": classification.get("authority"),
+        "classification": classification.findtext("."),
+    } for classification in record_xml.xpath("//record/classification")],
+    "related_records": [{
+        "type": record.get("relatedToType"),
+        "id": record.findtext("./record/linkedRecordId"),
+        "parts": [
+                {
+                "type": part.get("partType"),
+                "number": part.findtext("./partNumber"),
+                "extent": part.findtext("./extent"),
+            } for part in record.xpath("part")],
+        } for record in record_xml.xpath("//relatedTo")],
+    "electronic_locators": get_electronic_locators(record_xml),
     }

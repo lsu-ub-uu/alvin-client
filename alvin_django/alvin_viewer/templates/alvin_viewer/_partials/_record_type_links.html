@@ -1,0 +1,26 @@
+{% load i18n static metadata_wrangler %}
+
+{% if record_type_links %}
+<div class="md-row">
+    <dt class="md-label">
+        {% translate label %}
+    </dt>
+    <dd class="md-value">
+        {% for record_type in record_type_links %}
+            {% url 'alvin_viewer' link_type record_type.id as record_type_url %}
+                <a href="{{ record_type_url }}">
+                    {{ record_type_url }}
+                </a>
+                {% if record_type.type %}
+                    ({{ record_type.type }})
+                {% endif %}
+                {% for part in record_type.parts %}
+                    <strong>{{ part.type }}</strong>: {{ part|part_join }}{% if not forloop.last %} ; {% endif %}
+                {% endfor %}
+                {% if not forloop.last %}
+                    <br>
+                {% endif %}
+        {% endfor %}
+    </dd>
+</div>
+{% endif %}

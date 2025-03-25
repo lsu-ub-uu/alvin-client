@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load i18n static metadata_wrangler %}
+{% load i18n static metadata_wrangler render_record_icon %}
 
 {% block title %}
 {% endblock %}
@@ -24,25 +24,7 @@
 
   <!-- Ikon och namn för resurstyp -->
   <div class="flex w-full items-center mb-4 max-md:text-sm">
-  {% if metadata.record_type == 'alvin-place' %}
-      <img src="/static/img/authorityTypes/place.svg" alt="{%translate 'Kartnål' %}" 
-          class="w-6 h-6 mr-2">
-      <p class="w-full font-semibold">{% translate 'Plats' %}</p>
-  {% elif metadata.record_type == 'alvin-person' %}
-      <img src="/static/img/authorityTypes/person.svg" alt="{%translate 'Person' %}" 
-          class="w-6 h-6 mr-2">
-      <p class="w-full font-semibold">{% translate 'Person' %}</p>
-  {% elif metadata.record_type == 'alvin-organisation' %}
-      <img src="/static/img/authorityTypes/organisation.svg" alt="{%translate 'Grupp av personer' %}"
-          class="w-6 h-6 mr-2">
-      <p class="w-full font-semibold">{% translate 'Organisation' %}</p>
-  {% elif metadata.record_type == 'alvin-work' %}
-      <img src="/static/img/authorityTypes/work.svg" alt="{%translate 'Verksymbol' %}" 
-            class="w-6 h-6">
-      <img src="/static/img/recordTypes/{{metadata.form_of_work}}.svg" alt="{%translate 'Bok' %}" 
-            class="w-6 h-6 mr-2">
-      <p class="w-full font-semibold">{% translate 'Verk' %}, {% translate metadata.form_of_work %}</p>
-  {% endif %}
+    {% render_record_icon metadata %}
   </div>
 
   <!-- Val av metadatavy -->

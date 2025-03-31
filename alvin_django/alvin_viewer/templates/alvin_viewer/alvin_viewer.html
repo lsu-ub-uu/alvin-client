@@ -5,59 +5,91 @@
 {% block title %}
 {% endblock %}
 
-{% block jshead %}
+{% block head%}
+  {% if metadata.type_of_resource %}
+  <link rel="stylesheet" href="{% static 'universalviewer-4.1.0/dist/uv.css' %}" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  {% endif %}
+{% endblock %}
+
+{% block jshead %}
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
     crossorigin="">
   </script>
+  {% if metadata.type_of_resource %}
+  <script type="application/javascript"
+    src="{% static 'universalviewer-4.1.0/dist/umd/UV.js' %}">
+  </script>
+  {% endif %}
 {% endblock %}
 
 {% block content %}
-<main class="flex flex-col flex-wrap min-h-svh w-full bg-alvinGrey pt-20 pb-10 px-10 border-4 border-black"  x-data="{ activeTab: 'overview' }">
- 
-  <!-- Titel -->
-  <h1 class="w-full text-5xl max-md:text-4xl break-words font-universalis font-bold pt-4">
-    {{ metadata|alvin_title:metadata.record_type }}
-  </h1>
+<main class="flex flex-col flex-wrap min-h-svh w-full bg-alvinGrey pb-10 pt-[60px] border-4 border-black"  x-data="{ activeTab: 'overview' }">
 
-  <!-- Ikon och namn för resurstyp -->
-  <div class="flex w-full items-center mb-4 max-md:text-sm">
-    {% render_record_icon metadata %}
+  {% if metadata.type_of_resource %}
+  <!-- Bildvisare UV -->
+  <div class="h-[80vh] max-sm:h-[50vh] w-full">
+    <div id="uv" class="uv h-full w-full"></div>
   </div>
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const options = {
+        manifest: "https://iiif.europeana.eu/presentation/9200333/BibliographicResource_3000059039321/manifest",
+        embedded: true
+      };
+  
+      const uvInstance = UV.init("uv", options);
+    });
+  </script>
+  {% endif %}
 
-  <!-- Val av metadatavy -->
-  <nav class="flex flex-wrap justify-start w-full text-xl max-md:text-base">
-    <button @click="activeTab = 'overview'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
-            :class="{ 'bg-alvinGreen': activeTab === 'overview', 'bg-gray-300': activeTab != 'overview' }">
-            {% translate 'Översikt' %}
-    </button>
-    <button @click="activeTab = 'all_metadata'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
-            :class="{ 'bg-alvinGreen': activeTab === 'all_metadata', 'bg-gray-300': activeTab != 'all_metadata' }">
-            {% translate 'All metadata' %}
-    </button>
-    <button @click="activeTab = 'related'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
-            :class="{ 'bg-alvinGreen': activeTab === 'related', 'bg-gray-300': activeTab != 'related' }">
-            {% translate 'Relaterat' %}
-    </button>
-  </nav>
+  <div class="px-10">
+    <div class="pt-4">
+      <!-- Titel -->
+      <h1 class="w-full text-5xl max-md:text-4xl break-words font-universalis font-bold">
+        {{ metadata|alvin_title:metadata.record_type }}
+      </h1>
 
-  <!-- Metadata -->
-  <section class="block w-full border-t-4 border-black">
-    <dl>
-      {% if metadata.record_type == 'alvin-place' %}
-        {% include './_partials/_alvin_place.html' %}
-      {% elif metadata.record_type == 'alvin-person' %}
-        {% include './_partials/_alvin_person.html' %}
-      {% elif metadata.record_type == 'alvin-organisation' %}
-        {% include './_partials/_alvin_organisation.html' %}
-      {% elif metadata.record_type == 'alvin-work' %}
-        {% include './_partials/_alvin_work.html' %}
-      {% elif metadata.record_type == 'alvin-record' %}
-        {% include './_partials/_alvin_record.html' %}
-      {% endif %}
-    </dl>
-  </section>
+      <!-- Ikon och namn för resurstyp -->
+      <div class="flex w-full items-center mb-4 max-md:text-sm">
+        {% render_record_icon metadata %}
+      </div>
+    </div>
+
+    <!-- Val av metadatavy -->
+    <nav class="flex flex-wrap justify-start w-full text-xl max-md:text-base">
+      <button @click="activeTab = 'overview'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
+              :class="{ 'bg-alvinGreen': activeTab === 'overview', 'bg-gray-300': activeTab != 'overview' }">
+              {% translate 'Översikt' %}
+      </button>
+      <button @click="activeTab = 'all_metadata'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
+              :class="{ 'bg-alvinGreen': activeTab === 'all_metadata', 'bg-gray-300': activeTab != 'all_metadata' }">
+              {% translate 'All metadata' %}
+      </button>
+      <button @click="activeTab = 'related'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
+              :class="{ 'bg-alvinGreen': activeTab === 'related', 'bg-gray-300': activeTab != 'related' }">
+              {% translate 'Relaterat' %}
+      </button>
+    </nav>
+
+    <!-- Metadata -->
+    <section class="block w-full border-t-4 border-black">
+      <dl>
+        {% if metadata.record_type == 'alvin-place' %}
+          {% include './_partials/_alvin_place.html' %}
+        {% elif metadata.record_type == 'alvin-person' %}
+          {% include './_partials/_alvin_person.html' %}
+        {% elif metadata.record_type == 'alvin-organisation' %}
+          {% include './_partials/_alvin_organisation.html' %}
+        {% elif metadata.record_type == 'alvin-work' %}
+          {% include './_partials/_alvin_work.html' %}
+        {% elif metadata.record_type == 'alvin-record' %}
+          {% include './_partials/_alvin_record.html' %}
+        {% endif %}
+      </dl>
+    </section>
+  </div>
 </main>
 {% endblock %}

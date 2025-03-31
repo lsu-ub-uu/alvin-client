@@ -31,9 +31,11 @@
     a {
       color: #BF7F7F;
     }
+
   }
 
 @layer components {
+
     .md-row {
       display: flex;
       justify-content: flex-start;
@@ -70,6 +72,7 @@
         width: 100%;
       }
     }
+
 }
 
 @layer utilities {

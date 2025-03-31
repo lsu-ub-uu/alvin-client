@@ -931,6 +931,10 @@ a {
   margin-bottom: 1.5rem;
 }
 
+.mr-0 {
+  margin-right: 0px;
+}
+
 .mr-1 {
   margin-right: 0.25rem;
 }
@@ -957,10 +961,6 @@ a {
 
 .mt-5 {
   margin-top: 1.25rem;
-}
-
-.mr-0 {
-  margin-right: 0px;
 }
 
 .block {
@@ -997,6 +997,10 @@ a {
 
 .h-\[600px\] {
   height: 600px;
+}
+
+.h-\[80vh\] {
+  height: 80vh;
 }
 
 .h-full {
@@ -1406,6 +1410,10 @@ a {
   padding-top: 2.25rem;
 }
 
+.pt-\[60px\] {
+  padding-top: 60px;
+}
+
 .text-left {
   text-align: left;
 }
@@ -1709,6 +1717,10 @@ a {
 @media not all and (min-width: 640px) {
   .max-sm\:h-\[400px\] {
     height: 400px;
+  }
+
+  .max-sm\:h-\[50vh\] {
+    height: 50vh;
   }
 
   .max-sm\:w-full {

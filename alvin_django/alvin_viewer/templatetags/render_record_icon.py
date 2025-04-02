@@ -22,12 +22,6 @@ def render_record_icon(metadata):
             'icon_alt': 'Organisation',
             'label': 'Organisation',
         }
-    elif metadata["type_of_resource"] == 'img':
-        return {
-            'icon_path': f'/static/img/recordTypes/image.svg',
-            'icon_alt': 'Bild',
-            'label': 'Bild',
-        }
     elif metadata["record_type"] == 'alvin-work':
         return {
             'icon_path': '/static/img/authorityTypes/work.svg',
@@ -35,5 +29,11 @@ def render_record_icon(metadata):
             'extra_icon_path': f'/static/img/recordTypes/{metadata["form_of_work"]}.svg',
             'extra_icon_alt': f'{metadata["form_of_work"]}',
             'label': f'Verk, {metadata["form_of_work"]}',
+        }
+    elif metadata["type_of_resource"] == 'img':
+        return {
+            'icon_path': f'/static/img/recordTypes/image.svg',
+            'icon_alt': 'Bild',
+            'label': 'Bild',
         }
     return {}

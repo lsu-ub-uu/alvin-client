@@ -7,9 +7,7 @@
 
 {% block head%}
   {% if metadata.type_of_resource %}
-  <link rel="stylesheet" href="{% static 'universalviewer-4.1.0/dist/uv.css' %}" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="{% static 'node_modules/tify/dist/tify.css' %}">
   {% endif %}
 {% endblock %}
 
@@ -18,33 +16,24 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
     crossorigin="">
   </script>
-  {% if metadata.type_of_resource %}
-  <script type="application/javascript"
-    src="{% static 'universalviewer-4.1.0/dist/umd/UV.js' %}">
-  </script>
-  {% endif %}
+  <script src="{% static 'node_modules/tify/dist/tify.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 <main class="flex flex-col flex-wrap min-h-svh w-full bg-alvinGrey pb-10 pt-[60px] border-4 border-black"  x-data="{ activeTab: 'overview' }">
 
-  {% if metadata.type_of_resource %}
-  <!-- Bildvisare UV -->
-  <div class="h-[80vh] max-sm:h-[50vh] w-full">
-    <div id="uv" class="uv h-full w-full"></div>
-  </div>
-  <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const options = {
-        manifest: "https://iiif.europeana.eu/presentation/9200333/BibliographicResource_3000059039321/manifest",
-        embedded: true
-      };
+  {% if metadata.files %}
+  <!-- Bildvisare TIFY -->
+  <div id="tify" class="h-[80vh] w-full"></div>
   
-      const uvInstance = UV.init("uv", options);
-    });
+  <script>
+    new Tify({
+      container: '#tify',
+      manifestUrl: "{% url 'iiif_manifest' metadata.id %}"
+    })
   </script>
   {% endif %}
-
+  
   <div class="px-10">
     <div class="pt-4">
       <!-- Titel -->
@@ -91,5 +80,7 @@
       </dl>
     </section>
   </div>
+  <p>{{metadata.id}}</p>
+  <p>{{xml}}</p>
 </main>
 {% endblock %}

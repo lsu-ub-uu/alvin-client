@@ -999,16 +999,20 @@ a {
   height: 600px;
 }
 
-.h-\[80vh\] {
-  height: 80vh;
-}
-
 .h-full {
   height: 100%;
 }
 
 .h-screen {
   height: 100vh;
+}
+
+.h-\[78vh\] {
+  height: 78vh;
+}
+
+.h-\[80vh\] {
+  height: 80vh;
 }
 
 .min-h-screen {
@@ -1717,10 +1721,6 @@ a {
 @media not all and (min-width: 640px) {
   .max-sm\:h-\[400px\] {
     height: 400px;
-  }
-
-  .max-sm\:h-\[50vh\] {
-    height: 50vh;
   }
 
   .max-sm\:w-full {

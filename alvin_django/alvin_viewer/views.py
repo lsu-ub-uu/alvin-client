@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.utils.translation import get_language
 import requests
+import json
 from lxml import etree
 
 
@@ -296,7 +297,7 @@ def extract_record_metadata(record_xml):
         return [{
             "id": authority.findtext(".//linkedRecordId"),
             } for authority in record_xml.xpath(f"//record/subject[@type = '{type}']")]
-
+    
     return {
     "type_of_resource": record_xml.findtext(".//data/record/typeOfResource"),
     "main_title": get_titles("//data/record/title"),
@@ -376,4 +377,66 @@ def extract_record_metadata(record_xml):
             } for part in record.xpath("part")],
         } for record in record_xml.xpath("//relatedTo")],
     "electronic_locators": get_electronic_locators(record_xml),
+    "files": record_xml.xpath("//record/classification"),
     }
+
+def iiif_manifest(request, record_id):
+
+    base_url = request.build_absolute_uri()
+
+    record_url = f"https://cora.alvin-portal.org/rest/record/alvin-record/{record_id}"
+    response = requests.get(record_url, headers=xml_headers_record)
+
+    record_xml = etree.fromstring(response.content)
+
+    def get_files(record_xml):
+
+        file_list = []
+
+        for i, file in enumerate(record_xml.xpath("//file"), start=1):
+
+            response = requests.get(file.findtext(".//url"))
+            file_xml = etree.fromstring(response.content)
+
+            canvas_id = f"{base_url}canvas/{i}"
+            image_id = f"https://cora.alvin-portal.org/iiif/{file_xml.findtext('.//iiif/identifier')}"
+
+            file_list.append({
+                "id": canvas_id,
+                "type": "Canvas",
+                "height": int(file_xml.findtext('.//master/height')),
+                "width": int(file_xml.findtext('.//master/width')),
+                "items": [
+                    {
+                    "id": f"{canvas_id}/page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                        "id": f"{canvas_id}/page/anno",
+                        "type": "Annotation",
+                        "motivation": "painting",
+                        "body": {
+                            "type": "Image",
+                            "id": f"{image_id}/full/full/0/default.jpg",
+                            "format": "image/jpeg",
+                            "height": int(file_xml.findtext('.//master/height')),
+                            "width": int(file_xml.findtext('.//master/width'))
+                        },
+                        "target": canvas_id
+                        }
+                    ]
+                }
+            ]
+        })
+
+        return file_list
+
+    manifest = {
+        "@context": "http://iiif.io/api/presentation/3/context.json",
+        "id": request.build_absolute_uri(),
+        "type": "Manifest",
+        # "label": " : ".join(filter(None, [record_xml.findtext(".//title/mainTitle"), record_xml.findtext(".//title/subtitle")])),
+        "items": get_files(record_xml),
+    }
+
+    return JsonResponse(manifest)

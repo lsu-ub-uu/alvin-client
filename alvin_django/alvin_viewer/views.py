@@ -399,7 +399,7 @@ def iiif_manifest(request, record_id):
             file_xml = etree.fromstring(response.content)
 
             canvas_id = f"{base_url}canvas/{i}"
-            image_id = f"https://cora.alvin-portal.org/iiif/{file_xml.findtext('.//iiif/identifier')}"
+            image_id = f"{file_xml.findtext('.//iiif/server')}/{file_xml.findtext('.//iiif/identifier')}"
 
             file_list.append({
                 "id": canvas_id,
@@ -415,27 +415,26 @@ def iiif_manifest(request, record_id):
                         "id": f"{canvas_id}/page/anno",
                         "type": "Annotation",
                         "motivation": "painting",
-                        "rendering": [
-                            {
-                                "id": f"{file_xml.findtext('.//master//url')}",
-                                "type": "Image",
-                                "label": "Ladda ned original",
-                                "format": f"{file_xml.findtext('.//master/mimeType')}"
-                            }
-                        ],
                         "body": {
-                            "type": "Image",
                             "id": f"{image_id}/full/full/0/default.jpg",
+                            "type": "Image",
                             "format": "image/jpeg",
                             "height": int(file_xml.findtext('.//master/height')),
                             "width": int(file_xml.findtext('.//master/width'))
-                        },
-                        "target": canvas_id
+                            },
                         }
-                    ]
+                    ],
                 }
-            ]
-        })
+                ],
+                "rendering": [
+                    {
+                    "id": "https://example.org/images/123/full/full/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "label": "Download original image"
+                    }
+                ]
+            })
 
         return file_list
 

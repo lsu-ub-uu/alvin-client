@@ -7,7 +7,7 @@ import requests
 def search_result(request):
     
     # List headers
-    json_headers_list = {'Content-Type':'application/vnd.uub.recordList+json','Accept':'application/vnd.uub.recordList+json'}
+    json_headers_list = {'Content-Type':'application/vnd.cora.recordList+json','Accept':'application/vnd.cora.recordList+json'}
 
     # För previewmiljön
     preview_place_list_base_url = 'https://cora.epc.ub.uu.se/alvin/rest/record/searchResult/placeSearch?searchData={"name":"placeSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"placeSearchTerm","value":"**"}]}]}]}'
@@ -23,7 +23,7 @@ def search_result(request):
 def search(request):
     
     # List headers
-    json_headers_list = {'Content-Type':'application/vnd.uub.recordList+json','Accept':'application/vnd.uub.recordList+json'}
+    json_headers_list = {'Content-Type':'application/vnd.cora.recordList+json','Accept':'application/vnd.cora.recordList+json'}
 
     # För previewmiljön
     preview_place_list_base_url = 'https://cora.epc.ub.uu.se/alvin/rest/record/searchResult/placeSearch?searchData={"name":"placeSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"placeSearchTerm","value":"**"}]}]}]}'

@@ -9,9 +9,7 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns (
-    path('', include('start.urls')),
-    path('kontakt/', include('kontakt.urls')),
-    path('medlemmar/', include('medlemmar.urls')),
+    path('', include('alvin_info.urls')),
     path('webbplatskarta/', include('webbplatskarta.urls')),
     path('', include('alvin_viewer.urls')),
     path('', include('alvin_list_viewer.urls')),

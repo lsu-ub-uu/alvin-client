@@ -1564,10 +1564,6 @@ a {
   transition-duration: 300ms;
 }
 
-.duration-500 {
-  transition-duration: 500ms;
-}
-
 .duration-\[30s\] {
   transition-duration: 30s;
 }

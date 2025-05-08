@@ -43,7 +43,7 @@ def paginator(request, paginated_metadata):
 
 def alvin_list_viewer(request, record_type):
     
-    xml_headers_list = {'Content-Type':'application/vnd.uub.recordList+xml','Accept':'application/vnd.uub.recordList+xml'}
+    xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
     
     # API URLs
     api_urls = {

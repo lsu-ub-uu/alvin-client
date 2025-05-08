@@ -8,8 +8,8 @@ from lxml import etree
 
 # Globala variabler och funktioner
 xml_headers_record = {
-    'Content-Type':'application/vnd.uub.record+xml',
-    'Accept':'application/vnd.uub.record+xml',
+    'Content-Type':'application/vnd.cora.recordGroup+xml',
+    'Accept':'application/vnd.cora.recordGroup+xml',
     }
 
 def get_authority_names(metadata, name_parts):

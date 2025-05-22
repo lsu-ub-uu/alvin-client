@@ -39,6 +39,6 @@
 <footer class="relative bg-black h-screen p-8">
     <p class="text-white font-universalis">{% translate 'Om Alvin:' %}</p>
     <p class="text-white">{% translate 'Alvin är en plattform för publicering och långsiktigt bevarande av digitaliserat kulturarvsmaterial från biblioteks-, arkiv- och museisamlingar i Sverige och Norge.' %}</p>
-    <a class="text-alvinOrange pt-9 pb-1  border-b-8 {% if request.resolver_match.url_name == 'webbplatskarta' %}border-b-alvinGreen{% else %}border-b-transparent{% endif %}" href="{% url 'webbplatskarta' %}">{% translate 'Webbplatskarta' %}</a>    
+    <a class="text-alvinOrange pt-9 pb-1" href="">{% translate 'Webbplatskarta' %}</a>
 </footer>
 {% endblock %}

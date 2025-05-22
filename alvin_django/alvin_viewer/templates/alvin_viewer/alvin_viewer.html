@@ -35,7 +35,7 @@
 
   {% endif %}
   <div class="px-10">
-    <div class="pt-4">
+    <div class="pt-8 pb-2">
       <!-- Titel -->
       <h1 class="w-full text-5xl max-md:text-4xl break-words font-universalis font-bold">
         {{ metadata|alvin_title:metadata.record_type }}
@@ -80,5 +80,6 @@
       </dl>
     </section>
   </div>
+  {{metadata}}
 </main>
 {% endblock %}

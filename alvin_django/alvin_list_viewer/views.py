@@ -120,7 +120,6 @@ def extract_place_list_metadata(request, list_xml):
 
     return paginator(request, paginated_metadata)
 
-
 def extract_person_list_metadata(request, list_xml):
     
     authority_name_parts = {

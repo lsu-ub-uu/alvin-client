@@ -1272,10 +1272,6 @@ a {
   border-bottom-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
-.border-b-transparent {
-  border-bottom-color: transparent;
-}
-
 .bg-\[\#fcfcfc\] {
   --tw-bg-opacity: 1;
   background-color: rgb(252 252 252 / var(--tw-bg-opacity));
@@ -1382,6 +1378,10 @@ a {
   padding-bottom: 2.5rem;
 }
 
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -1402,8 +1402,8 @@ a {
   padding-top: 5rem;
 }
 
-.pt-4 {
-  padding-top: 1rem;
+.pt-8 {
+  padding-top: 2rem;
 }
 
 .pt-9 {
@@ -1519,10 +1519,6 @@ a {
 
 .drop-shadow-\[_0_3px_0_\#36454F\] {
   --tw-drop-shadow: drop-shadow(0 3px 0 #36454F);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 

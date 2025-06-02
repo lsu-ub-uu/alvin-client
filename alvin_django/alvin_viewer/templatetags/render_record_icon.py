@@ -36,4 +36,10 @@ def render_record_icon(metadata):
             'icon_alt': 'Bild',
             'label': 'Bild',
         }
+    elif metadata["type_of_resource"] == 'txt':
+        return {
+            'icon_path': f'/static/img/recordTypes/text.svg',
+            'icon_alt': 'Text',
+            'label': 'Text',
+        }
     return {}

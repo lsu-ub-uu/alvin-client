@@ -11,8 +11,8 @@
             <p><strong>{% translate 'Totalt antal träffar:' %} {{ metadata.totalNo }}</strong></p>
             <button @click="showFilter = !showFilter" class="flex gap-1">
                 <p class="font-universalis" x-show="!showFilter" x-cloak>Filter</p>
-                <img src="/static/img/nav/filter-solid.svg" x-show="!showFilter" x-cloak>
-                <img src="/static/img/nav/xmark.svg" x-show="showFilter" x-cloak>
+                <img src="{% static '/img/nav/filter-solid.svg' %}" x-show="!showFilter" x-cloak>
+                <img src="{% static '/img/nav/xmark.svg' %}" x-show="showFilter" x-cloak>
             </button>
         </aside>
 

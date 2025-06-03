@@ -28,7 +28,7 @@
             
             <!-- Hamburgermeny -->
             <button class="w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvinGreen">
-                <img class="w-7" src="/static/img/nav/menu.svg" alt="{% translate 'Mobilmeny' %}">
+                <img class="w-7" src="{% static '/img/nav/menu.svg' %}" alt="{% translate 'Mobilmeny' %}">
             </button>
 
             <!-- Hem -->
@@ -53,9 +53,9 @@
             <button @click="showSearch = !showSearch; $nextTick(() => { $refs.alvinsearch.focus(); });" class="flex w-full h-full justify-between items-center p-4 border-x-4 border-black hover:bg-alvinGreen"
                     :class="{'bg-alvinGreen': showSearch}">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Sök</p>
-                <img class="w-7 transition-all duration-300" src="/static/img/nav/binocular.svg"
+                <img class="w-7 transition-all duration-300" src="{% static '/img/nav/binocular.svg' %}"
                     x-show="!showSearch">
-                <img class="w-7 transition-all duration-300" src="/static/img/nav/xmark.svg"
+                <img class="w-7 transition-all duration-300" src="{% static '/img/nav/xmark.svg' %}"
                     x-show="showSearch" x-cloak>
             </button>
 
@@ -81,70 +81,70 @@
                     [&::-webkit-scrollbar-thumb]:border-8"
                     >
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/recordTypes/archive.svg">
+                            <img class="w-7" src="{% static '/img/recordTypes/archive.svg' %}">
                             <span class="font-universalis">Arkiv</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/recordTypes/text.svg">
+                            <img class="w-7" src="{% static '/img/recordTypes/text.svg' %}">
                             <span class="font-universalis">Text</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/recordTypes/coins.svg">
+                            <img class="w-7" src="{% static '/img/recordTypes/coins.svg' %}">
                             <span class="font-universalis">Mynt</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/recordTypes/combine.svg">
+                            <img class="w-7" src="{% static '/img/recordTypes/combine.svg' %}">
                             <span class="font-universalis">Blandat material</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/recordTypes/image.svg">
+                            <img class="w-7" src="{% static '/img/recordTypes/image.svg' %}">
                             <span class="font-universalis">Bild</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/recordTypes/cartography.svg">
+                            <img class="w-7" src="{% static '/img/recordTypes/cartography.svg' %}">
                             <span class="font-universalis">Karta</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/recordTypes/movingimage.svg">
+                            <img class="w-7" src="{% static '/img/recordTypes/movingimage.svg' %}">
                             <span class="font-universalis">Rörlig bild</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/recordTypes/music.svg">
+                            <img class="w-7" src="{% static '/img/recordTypes/music.svg' %}">
                             <span class="font-universalis">Musikalier</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/recordTypes/object.svg">
+                            <img class="w-7" src="{% static '/img/recordTypes/object.svg' %}">
                             <span class="font-universalis">Föremål</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/recordTypes/software.svg">
+                            <img class="w-7" src="{% static '/img/recordTypes/software.svg' %}">
                             <span class="font-universalis">Programvara</span>
                         </button>
                         <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="/static/img/recordTypes/soundrecording.svg">
+                            <img class="w-7" src="{% static '/img/recordTypes/soundrecording.svg' %}">
                             <span class="font-universalis">Ljudinspelning</span>
                         </button>
                         <a href="{% url 'alvin_list_viewer' 'alvin-person' %}">
                             <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="/static/img/authorityTypes/person.svg">
+                                <img class="w-7" src="{% static '/img/authorityTypes/person.svg' %}">
                                 <span class="font-universalis">Person</span>
                             </button>
                         </a>
                         <a href="{% url 'alvin_list_viewer' 'alvin-organisation' %}">
                             <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="/static/img/authorityTypes/organisation.svg">
+                                <img class="w-7" src="{% static '/img/authorityTypes/organisation.svg' %}">
                                 <span class="font-universalis">Organisation</span>
                             </button>
                         </a>
                         <a href="{% url 'alvin_list_viewer' 'alvin-place' %}">
                             <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="/static/img/authorityTypes/place.svg">
+                                <img class="w-7" src="{% static '/img/authorityTypes/place.svg' %}">
                                 <span class="font-universalis">Plats</span>
                             </button>
                         </a>
                         <a href="{% url 'alvin_list_viewer' 'alvin-work' %}">
                             <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="/static/img/authorityTypes/work.svg">
+                                <img class="w-7" src="{% static '/img/authorityTypes/work.svg' %}">
                                 <span class="font-universalis">Verk</span>
                             </button>
                         </a>
@@ -155,7 +155,7 @@
             <!-- Hjälp -->
             <button class="flex w-full h-full justify-between items-center p-4 border-black hover:bg-alvinOrange">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Hjälp</p>
-                <img class="w-7" src="/static/img/nav/help-circle.svg">
+                <img class="w-7" src="{% static '/img/nav/help-circle.svg' %}">
             </button>
         </div>
 

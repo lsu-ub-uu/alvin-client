@@ -377,7 +377,7 @@ def extract_record_metadata(record_xml):
             } for part in record.xpath("part")],
         } for record in record_xml.xpath("//relatedTo")],
     "electronic_locators": get_electronic_locators(record_xml),
-    "files": record_xml.xpath("//record/classification"),
+    "files": record_xml.xpath("//record//file"),
     }
 
 def iiif_manifest(request, record_id):
@@ -442,7 +442,7 @@ def iiif_manifest(request, record_id):
         "@context": "http://iiif.io/api/presentation/3/context.json",
         "id": request.build_absolute_uri(),
         "type": "Manifest",
-        # "label": " : ".join(filter(None, [record_xml.findtext(".//title/mainTitle"), record_xml.findtext(".//title/subtitle")])),
+        #"label": " : ".join(filter(None, [record_xml.findtext(".//title/mainTitle"), record_xml.findtext(".//title/subtitle")])),
         "items": get_files(record_xml),
     }
 

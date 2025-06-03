@@ -6,8 +6,8 @@
     <li class="flex justify-start my-1 p-4 bg-[#fcfcfc] hover:border-[#F2F4F8] hover:shadow-xl shadow-inner transition-shadow ease-in-out duration-150">
         <article class="flex gap-x-2 items-center">
             <div class="relative w-10 h-10 flex-none">
-                <img class="absolute top-0 right-1 w-7" src="/static/img/authorityTypes/work.svg" alt="{% translate 'Verksymbol' %}">
-                <img class="absolute top-3 left-0 w-6 bg-[#fcfcfc] rounded-md" src="/static/img/recordTypes/{{work.form_of_work}}.svg" alt="{{form_of_work}}">
+                <img class="absolute top-0 right-1 w-7" src="{% static '/img/authorityTypes/work.svg' %}" alt="{% translate 'Verksymbol' %}">
+                <img class="absolute top-3 left-0 w-6 bg-[#fcfcfc] rounded-md" src="{% static '/img/recordTypes/{{work.form_of_work}}.svg' %}" alt="{{form_of_work}}">
             </div>
             <!-- Huvudtitel -->
             <div>

@@ -1,0 +1,126 @@
+<!--
+  ~ Copyright 2025 Uppsala University Library
+  ~
+  ~ This file is part of Cora.
+  ~
+  ~     Cora is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     Cora is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with Cora.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>se.uu.ub.cora</groupId>
+    <artifactId>cora-parent</artifactId>
+    <version>2.7.0</version>
+  </parent>
+
+  <artifactId>alvin-client</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>Alvin Client</name>
+  <packaging>pom</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <scm>
+    <connection>scm:git:https://github.com/lsu-ub-uu/alvin-client.git</connection>
+    <developerConnection>scm:git:https://github.com/lsu-ub-uu/alvin-client.git</developerConnection>
+    <url>https://https://github.com/lsu-ub-uu/alvin-client.git</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <build>
+    <plugins>
+
+      <!-- run django test -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>run-alvin-django-tests</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <workingDirectory>${basedir}/alvin_django</workingDirectory>
+              <executable>python3</executable>
+              <arguments>
+                <argument>manage.py</argument>
+                <argument>test</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- inline assembly to zip /alvin_django + selected files -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>make-alvin-client-zip</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>${project.artifactId}-${project.version}</finalName>
+              <appendAssemblyId>false</appendAssemblyId>
+              <descriptorRefs>
+              </descriptorRefs>
+              <assemblies>
+                <assembly>
+                  <id>alvin-client-zip</id>
+                  <formats>
+                    <format>zip</format>
+                  </formats>
+                  <includeBaseDirectory>false</includeBaseDirectory>
+                  <fileSets>
+                    <fileSet>
+                      <directory>alvin_django</directory>
+                      <outputDirectory>/</outputDirectory>
+                      <includes>
+                        <include>**/*</include>
+                      </includes>
+                    </fileSet>
+                    <fileSet>
+                      <directory>${basedir}</directory>
+                      <outputDirectory>/</outputDirectory>
+                      <includes>
+                        <include>requirements.txt</include>
+                        <include>Pipfile</include>
+                        <include>Pipfile.lock</include>
+                      </includes>
+                    </fileSet>
+                  </fileSets>
+                </assembly>
+              </assemblies>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>

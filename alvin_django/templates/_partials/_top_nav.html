@@ -1,8 +1,4 @@
-<!-- LOCALIZATION -->
-{% load i18n %}
-
-<!-- STATIC -->
-{% load static %}
+{% load i18n static %}
 
 <header x-data="{ isScrollingDown: false, lastScroll: 0 }" x-init="
         window.addEventListener('scroll', () => {
@@ -20,7 +16,7 @@
         })
     " :class="{'-translate-y-full': isScrollingDown, 'translate-y-0': !isScrollingDown}"
     class="fixed top-0 w-full h-16 bg-white border-4 border-black z-40 select-none transition-transform"
-    aria-label="{% translate 'Huvudmeny' %}">
+    aria-label="{% trans 'Huvudmeny' %}">
 
     <nav class="flex justify-between h-full" x-data="{ showSearch: false }">
 
@@ -28,15 +24,14 @@
             
             <!-- Hamburgermeny -->
             <button class="w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvinGreen">
-                <img class="w-7" src="{% static '/img/nav/menu.svg' %}" alt="{% translate 'Mobilmeny' %}">
+                <img class="w-7" src="{% static '/img/nav/menu.svg' %}" alt="{% trans 'Mobilmeny' %}">
             </button>
 
             <!-- Hem -->
-            <button class="h-full mt-2 text-center">
-                <a class="text-4xl mx-4 mt-4 font-universalis text-black hover:text-alvinGreen" href="{% url 'start' %}">
-                    ALVIN
-                </a>
-            </button>
+            <a class="h-full mt-6 text-center text-4xl mx-4 mt-4 font-universalis text-black hover:text-alvinGreen" href="{% url 'start' %}">
+                ALVIN
+            </a>
+
 
         </nav>
 
@@ -67,11 +62,11 @@
                         action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
                         <input
                             class="w-full border-y-4 border-x-0 border-black focus:border-black focus:outline-none focus:ring-0"
-                            name="query" type="text" id="alvinsearch" x-ref="alvinsearch" placeholder="{% translate 'Sök i Alvin...' %}">
+                            name="query" type="text" id="alvinsearch" x-ref="alvinsearch" placeholder="{% trans 'Sök i Alvin...' %}">
                     </form>
                 </search>
                 <div class="flex flex-col">
-                    <h1 class="pl-4 pt-2 border-b-2 border-black font-bold font-universalis text-xl lg:text-center bg-alvinGreen ">{% translate 'Bläddra bland resurstyper' %}</h1>
+                    <h1 class="pl-4 pt-2 border-b-2 border-black font-bold font-universalis text-xl lg:text-center bg-alvinGreen ">{% trans 'Bläddra bland resurstyper' %}</h1>
                     <div class="flex lg:justify-center justify-start items-baseline overflow-x-auto 
                     [&::-webkit-scrollbar]:w-1
                     [&::-webkit-scrollbar-track]:bg-alvinGrey
@@ -161,3 +156,31 @@
 
     </nav>
 </header>
+
+<!-- Sidomeny -->
+<nav class="fixed lg:w-3/6 max-lg:w-screen h-screen top-0 bg-white border-t-4 border-black border-4 z-50 flex flex-col">
+    
+    <button class="absolute top-2 left-2 p-2">
+        <img class="w-14 max-sm:w-10" src="/static/img/nav/xmark.svg">
+    </button>
+    
+    <div class="flex flex-col justify-stretch items-center gap-8 h-full py-40
+            overflow-y-auto
+            [&::-webkit-scrollbar]:w-4
+            [&::-webkit-scrollbar-track]:bg-alvinGrey
+            [&::-webkit-scrollbar-thumb]:bg-alvinGreen
+            [&::-webkit-scrollbar-thumb]:rounded-sm
+            [&::-webkit-scrollbar-thumb]:border-black
+            [&::-webkit-scrollbar-thumb]:border-8"
+            >
+        <a href="{% url 'about' %}" class="font-universalis text-5xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">Om Alvin</a>
+        <a href="{% url 'copyright' %}" class="font-universalis text-5xl visited:text-black max-sm:text-3xl hover:text-alvinGreen">Copyright</a>
+        <h1 class="font-universalis text-5xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">Medlemmar</h1>
+        <hr class="w-20 bg-black border-alvinGreen border-4 rounded-sm">
+        <h1 class="font-universalis text-5xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">Avancerad sök</h1>
+        <hr class="w-20 border-alvinGreen border-4 rounded-sm">
+        <h1 class="font-universalis text-5xl max-sm:text-3xl visited:text-black hover:text-alvinOrange">Hjälp</h1>
+        <hr class="w-20 border-alvinGreen border-4 rounded-sm">
+        <a href="{% url 'contact' %}" class="font-universalis text-5xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">Kontakt</a>
+    </div>
+</nav>

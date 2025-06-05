@@ -1,0 +1,14 @@
+/target/
+/.settings/
+/test-output/
+/.classpath
+/.project
+.sonar
+.idea
+*.iml
+*.iws
+*.ipr
+
+# Python bytecode
+*.pyc
+__pycache__/

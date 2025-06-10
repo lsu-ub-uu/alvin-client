@@ -61,7 +61,7 @@
                         </goals>
                         <configuration>
                             <workingDirectory>${project.build.directory}</workingDirectory>
-                            <executable>python3</executable>
+                            <executable>python</executable>
                             <arguments>
                                 <argument>-m</argument>
                                 <argument>venv</argument>

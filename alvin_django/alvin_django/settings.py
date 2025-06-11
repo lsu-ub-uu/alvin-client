@@ -159,3 +159,6 @@ LANGUAGES = (
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
+
+# ENV variables
+API_HOST = os.getenv('API_HOST', 'https://cora.alvin-portal.org')

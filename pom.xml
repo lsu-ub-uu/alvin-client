@@ -30,9 +30,9 @@
     </parent>
 
     <artifactId>alvin-client</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>Alvin Client</name>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,6 +46,7 @@
     </scm>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <!-- run django test in venv (debug true)-->
             <plugin>
@@ -100,7 +101,7 @@
                             <environmentVariables>
                                 <DEBUG>true</DEBUG>
                                 <PYTHONDONTWRITEBYTECODE>1</PYTHONDONTWRITEBYTECODE>
-                              </environmentVariables>
+                            </environmentVariables>
                             <executable>${project.build.directory}/venv/bin/python</executable>
                             <arguments>
                                 <argument>manage.py</argument>
@@ -111,24 +112,32 @@
                 </executions>
             </plugin>
 
-            <!-- create alvin-client zip -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.7.1</version>
+                <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>make-alvin-django-zip</id>
-                        <phase>package</phase>
+                        <id>copy-alvin-client</id>
+                        <phase>process-resources</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <finalName>${project.artifactId}-${project.version}</finalName>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <descriptors>
-                                <descriptor>src/assembly/assembly.xml</descriptor>
-                            </descriptors>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/alvin_django</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                                <resource>
+                                    <directory>${project.basedir}</directory>
+                                    <includes>
+                                        <include>requirements.txt</include>
+                                        <include>Pipfile</include>
+                                        <include>Pipfile.lock</include>
+                                    </includes>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>

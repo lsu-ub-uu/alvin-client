@@ -385,7 +385,7 @@ def iiif_manifest(request, record_id):
 
     base_url = request.build_absolute_uri()
 
-    record_url = f"{base_url}/alvin-record/{record_id}"
+    record_url = f"{settings.API_HOST}/rest/record/alvin-record/{record_id}"
     response = requests.get(record_url, headers=xml_headers_record)
 
     record_xml = etree.fromstring(response.content)

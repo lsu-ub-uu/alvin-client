@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, JsonResponse
 from django.utils.translation import get_language
+from django.conf import settings
 import requests
 import json
 from lxml import etree
@@ -86,7 +87,7 @@ def get_origin_places(record_xml):
 # Generaliserad view för flera typer
 def alvin_viewer(request, record_type, record_id):
 
-    base_url = 'https://cora.alvin-portal.org/rest/record/'
+    base_url = f'{settings.API_HOST}/rest/record/'
 
     # API URLs
     api_urls = {
@@ -384,7 +385,7 @@ def iiif_manifest(request, record_id):
 
     base_url = request.build_absolute_uri()
 
-    record_url = f"https://cora.alvin-portal.org/rest/record/alvin-record/{record_id}"
+    record_url = f"{base_url}/alvin-record/{record_id}"
     response = requests.get(record_url, headers=xml_headers_record)
 
     record_xml = etree.fromstring(response.content)

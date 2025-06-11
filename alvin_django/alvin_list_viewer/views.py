@@ -4,6 +4,7 @@ from django.utils.translation import get_language
 from django.core.paginator import Paginator
 import requests
 from lxml import etree
+from django.conf import settings
 
 from alvin_viewer.views import get_dates
 from alvin_viewer.templatetags import metadata_wrangler
@@ -45,6 +46,9 @@ def alvin_list_viewer(request, record_type):
     
     xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
     
+    # API host
+    api_host = settings.API_HOST
+
     # API URLs
     api_urls = {
         'alvin-place': 'alvin-place/',
@@ -58,7 +62,7 @@ def alvin_list_viewer(request, record_type):
     if record_type not in api_urls:
         raise Http404("Invalid list type")
     
-    list_url = f'https://cora.alvin-portal.org/rest/record/searchResult/{search_type}Search?searchData={{"name":"{search_type}Search","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"{search_type}SearchTerm","value":"**"}}]}}]}}]}}'
+    list_url = f'{api_host}/rest/record/searchResult/{search_type}Search?searchData={{"name":"{search_type}Search","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"{search_type}SearchTerm","value":"**"}}]}}]}}]}}'
 
     response = requests.get(list_url, headers=xml_headers_list)
 

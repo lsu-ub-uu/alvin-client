@@ -145,14 +145,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Localization
 
-LANGUAGE_CODE = 'swe'
+LANGUAGE_CODE = 'sv'
 
 USE_I18N = True
 
 LANGUAGES = (
-    ('swe', 'Svenska'),
-    ('nor', 'Norsk'),
-    ('eng', 'English'),
+    ('sv', 'Svenska'),
+    ('no', 'Norsk'),
+    ('en', 'English'),
 )
 
 LOCALE_PATHS = [

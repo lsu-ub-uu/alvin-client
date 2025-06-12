@@ -1,44 +1,48 @@
 {% extends 'base.html' %}
 
-<!-- LOCALIZATION -->
 {% load i18n static %}
 
-<!-- HEAD ELEMENT -->
 {% block head %}
 <title>Alvin - Start</title>
 {% endblock %}
 
-<!-- CONTENT -->
 {% block content %}
 <main class="bg-alvinGrey">
     <section 
-    x-data="{ shift: false }"
-    x-init="shift = true"
-    :style="shift ? 'background-position: left 48% bottom 30%' : 'background-position: left 25% top 15%'"
-    class="
-      flex flex-col
-      gap-y-8
-      min-h-screen
-      p-4 border-x-4 border-x-black border-b-8 border-b-alvinGreen
-      justify-center
-      bg-[url('/static/img/cartamarina.webp')] bg-cover bg-[left_25%_top_15%]
-      transition-all duration-[30s]"
-    >
-        <h1 class="text-7xl max-sm:text-5xl break-words text-[#FAFAFA] text-center drop-shadow-[_0_3px_0_#36454F]">
-            {% translate 'Digitaliserade samlingar från nordiska kulturarvs&shy;institutioner' %}
-        </h1>
-        <search class="w-full">
-            <form class="flex justify-center" action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
-                <input class="w-1/3 border-2 border-black rounded-l-xl focus:border-black focus:ring-0 max-sm:text-sm"
-                    name="query" type="text" placeholder="{% translate 'Sök i Alvin...' %}">
-                <button class="p-4 bg-black rounded-r-xl hover:text-alvinOrange text-white font-universalis" type="submit">{% translate 'Sök' %}</button>
-            </form>
-        </search>
-    </section>
+        x-data="{ shift: false }"
+        x-init="setTimeout(() => shift = true, 300)"
+        class="relative flex flex-col gap-8 items-center justify-center min-h-screen overflow-hidden p-4 border-x-4 border-x-black border-b-8 border-b-alvinGreen bg-alvinGrey"
+        >
+
+  <!-- Animated map -->
+  <img
+    src="/static/img/cartamarina.webp"
+    alt="{% trans 'Bakgrundskarta' %}"
+    class="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-[20s] ease-in-out"
+    :class="shift 
+      ? 'scale-110 translate-x-0 translate-y-0' 
+      : 'scale-150 -translate-x-1/4 -translate-y-1/4'"
+  />
+
+  <!-- Overlay -->
+  <h1 class="relative z-10 w-3/4 text-7xl max-sm:text-5xl text-[#FAFAFA] text-center drop-shadow-[_0_3px_0_#36454F]">
+    {% trans 'Digitaliserade samlingar från nordiska kulturarvs&shy;institutioner' %}
+  </h1>
+
+  <search class="relative z-10 w-full">
+    <form class="flex justify-center" action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
+      <input class="w-1/3 border-2 border-black rounded-l-xl focus:border-black focus:ring-0 max-sm:text-sm"
+        name="query" type="text" placeholder="{% trans 'Sök i Alvin...' %}">
+      <button class="p-4 bg-black rounded-r-xl hover:text-alvinOrange text-white font-universalis" type="submit">
+        {% trans 'Sök' %}
+      </button>
+    </form>
+  </search>
+</section>
 </main>
 <footer class="relative bg-black h-screen p-8">
-    <p class="text-white font-universalis">{% translate 'Om Alvin:' %}</p>
-    <p class="text-white">{% translate 'Alvin är en plattform för publicering och långsiktigt bevarande av digitaliserat kulturarvsmaterial från biblioteks-, arkiv- och museisamlingar i Sverige och Norge.' %}</p>
-    <a class="text-alvinOrange pt-9 pb-1" href="">{% translate 'Webbplatskarta' %}</a>
+    <p class="text-white font-universalis">{% trans 'Om Alvin:' %}</p>
+    <p class="text-white">{% trans 'Alvin är en plattform för publicering och långsiktigt bevarande av digitaliserat kulturarvsmaterial från biblioteks-, arkiv- och museisamlingar i Sverige och Norge.' %}</p>
+    <a class="text-alvinOrange pt-9 pb-1" href="">{% trans 'Webbplatskarta' %}</a>
 </footer>
 {% endblock %}

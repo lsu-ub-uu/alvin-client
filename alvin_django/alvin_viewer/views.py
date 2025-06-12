@@ -1,11 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, JsonResponse
-from django.utils.translation import get_language
 from django.conf import settings
 import requests
 import json
 from lxml import etree
-
 
 # Globala variabler och funktioner
 xml_headers_record = {

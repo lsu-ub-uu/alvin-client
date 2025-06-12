@@ -1,0 +1,274 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-12 13:45+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\alvin_info\templates\alvin_info\about.html:8
+#: .\alvin_info\templates\alvin_info\about.html:19
+#: .\templates\_partials\_top_nav.html:176
+#, fuzzy
+#| msgid "Om Alvin:"
+msgid "Om Alvin"
+msgstr "About Alvin:"
+
+#: .\alvin_info\templates\alvin_info\about.html:20
+#: .\alvin_info\templates\alvin_info\copyright.html:20
+#: .\alvin_info\templates\alvin_info\start.html:45
+msgid ""
+"Alvin är en plattform för publicering och långsiktigt bevarande av "
+"digitaliserat kulturarvsmaterial från biblioteks-, arkiv- och museisamlingar "
+"i Sverige och Norge."
+msgstr ""
+"Alvin is a platform for publishing and long-term preservation of digitised "
+"cultural heritage material from library, archive and museum collections in "
+"Sweden and Norway."
+
+#: .\alvin_info\templates\alvin_info\about.html:21
+#: .\alvin_info\templates\alvin_info\copyright.html:21
+#: .\alvin_info\templates\alvin_info\start.html:46
+msgid "Webbplatskarta"
+msgstr "Sitemap"
+
+#: .\alvin_info\templates\alvin_info\copyright.html:19
+#: .\alvin_info\templates\alvin_info\start.html:44
+msgid "Om Alvin:"
+msgstr "About Alvin:"
+
+#: .\alvin_info\templates\alvin_info\kontakt.html:6
+msgid "Alvin - Kontakt"
+msgstr "Alvin - Contact"
+
+#: .\alvin_info\templates\alvin_info\kontakt.html:13
+#: .\templates\_partials\_contact.html:4
+#: .\templates\_partials\_top_nav.html:184
+msgid "Kontakt"
+msgstr "Contact"
+
+#: .\alvin_info\templates\alvin_info\kontakt.html:16
+#: .\templates\_partials\_contact.html:7
+msgid ""
+"Har du frågor kring materialet som är publicerat i Alvin eller önskar "
+"beställa digitalisering, kontakta "
+msgstr ""
+"If you have questions on the materials published in Alvin, or would like to "
+"request digitisation, please contact"
+
+#: .\alvin_info\templates\alvin_info\kontakt.html:17
+#: .\templates\_partials\_contact.html:8
+msgid "respektive ägande institution"
+msgstr "the institution holding the materials"
+
+#: .\alvin_info\templates\alvin_info\kontakt.html:18
+#: .\templates\_partials\_contact.html:9
+msgid "Frågor som rör registrering eller annan teknisk support i Alvin"
+msgstr "Questions regarding registration or other technical support in Alvin"
+
+#: .\alvin_info\templates\alvin_info\kontakt.html:19
+#: .\alvin_info\templates\alvin_info\kontakt.html:24
+#: .\templates\_partials\_contact.html:10
+#: .\templates\_partials\_contact.html:15
+msgid "E-post"
+msgstr "Email"
+
+#: .\alvin_info\templates\alvin_info\kontakt.html:22
+#: .\templates\_partials\_contact.html:13
+msgid ""
+"För andra frågor om Alvin, konsortiet eller publicering av ett digitalt "
+"kulturarv, kontakta Uppsala universitetsbibliotek genom"
+msgstr ""
+"For other questions about Alvin, the consortium or the publishing of "
+"cultural heritage materials, contact Uppsala University Library through"
+
+#: .\alvin_info\templates\alvin_info\start.html:20
+msgid "Bakgrundskarta"
+msgstr ""
+
+#: .\alvin_info\templates\alvin_info\start.html:29
+#, fuzzy
+#| msgid "från nordiska kulturarvsinstitutioner"
+msgid "Digitaliserade samlingar från nordiska kulturarvs&shy;institutioner"
+msgstr "from nordic cultural heritage institutions"
+
+#: .\alvin_info\templates\alvin_info\start.html:35
+#: .\templates\_partials\_top_nav.html:66
+#, fuzzy
+#| msgid "Sök i Alvin"
+msgid "Sök i Alvin..."
+msgstr "Search Alvin"
+
+#: .\alvin_info\templates\alvin_info\start.html:37
+msgid "Sök"
+msgstr "Search"
+
+#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_organisation_list.html:9
+#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_place_list.html:15
+msgid "Kartnål"
+msgstr "Map pin"
+
+#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_person_list.html:9
+#, fuzzy
+#| msgid "Grupp av personer"
+msgid "Konturer av person"
+msgstr "Group of persons"
+
+#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_work_list.html:9
+msgid "Verksymbol"
+msgstr "Work symbol"
+
+#: .\alvin_list_viewer\templates\alvin_list_viewer\alvin_list_viewer.html:11
+msgid "Totalt antal träffar:"
+msgstr ""
+
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_address.html:6
+msgid "Adress"
+msgstr ""
+
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:55
+msgid "Översikt"
+msgstr "Overview"
+
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:59
+msgid "All metadata"
+msgstr ""
+
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:63
+msgid "Relaterat"
+msgstr "Related"
+
+#: .\templates\_partials\_filters.html:7
+msgid "Land"
+msgstr "Country"
+
+#: .\templates\_partials\_filters.html:9
+msgid "Alla"
+msgstr "All"
+
+#: .\templates\_partials\_top_nav.html:17
+msgid "Huvudmeny"
+msgstr "Main menu"
+
+#: .\templates\_partials\_top_nav.html:28
+msgid "Mobilmeny"
+msgstr "Mobile menu"
+
+#: .\templates\_partials\_top_nav.html:70
+msgid "Bläddra bland resurstyper"
+msgstr ""
+
+#: .\templates\_partials\_top_nav.html:177
+msgid "Copyright"
+msgstr ""
+
+#: .\templates\_partials\_top_nav.html:178
+msgid "Medlemmar"
+msgstr "Members"
+
+#: .\templates\_partials\_top_nav.html:180
+msgid "Avancerad sök"
+msgstr ""
+
+#: .\templates\_partials\_top_nav.html:182
+msgid "Hjälp"
+msgstr ""
+
+#: .\templates\base.html:10
+msgid "Uppsala universitet"
+msgstr ""
+
+#: .\templates\base.html:11
+msgid "Alvin, kulturarv, digitala samlingar, databaser, bibliotek"
+msgstr "Alvin, cultural heritage, digital collections, databases, libraries"
+
+#: .\templates\base.html:12
+msgid ""
+"Alvin - nordisk plattform för bevarande och tillgängliggörande av "
+"digitaliserat kulturarv"
+msgstr ""
+"Alvin - nordic platform for preservation and dissemination of digitised "
+"cultural heritage"
+
+#, fuzzy
+#~| msgid "Platser"
+#~ msgid "Plats"
+#~ msgstr "Places"
+
+#~ msgid "Alternativa namnformer"
+#~ msgstr "Variant names"
+
+#, fuzzy
+#~| msgid "Alvin - Kontakt"
+#~ msgid "Alvin - Platser"
+#~ msgstr "Alvin - Contact"
+
+#~ msgid "Träff"
+#~ msgstr "Results"
+
+#~ msgid "av"
+#~ msgstr "of"
+
+#~ msgid "Född"
+#~ msgstr "Born"
+
+#~ msgid "Död"
+#~ msgstr "Died"
+
+#~ msgid "Yrke"
+#~ msgstr "Occupation"
+
+#~ msgid "Namn"
+#~ msgstr "Name"
+
+#, fuzzy
+#~| msgid "Alternativa namnformer"
+#~ msgid "Alternativt namn"
+#~ msgstr "Variant name"
+
+#~ msgid "Anmärkning"
+#~ msgstr "Note"
+
+#~ msgid "Post skapad"
+#~ msgstr "Record created"
+
+#~ msgid "Senast uppdaterad"
+#~ msgstr "Last updated"
+
+#~ msgid "Källdata"
+#~ msgstr "Source data"
+
+#~ msgid "Latitud"
+#~ msgstr "Latitude"
+
+#~ msgid "Longitud"
+#~ msgstr "Longitude"
+
+#~ msgid "Verk"
+#~ msgstr "Work"
+
+#~ msgid "Sök i Alvin"
+#~ msgstr "Search Alvin"
+
+#~ msgid "Platser"
+#~ msgstr "Places"
+
+#~ msgid "Digitaliserat kulturarv"
+#~ msgstr "Digitised cultural heritage"
+
+#, fuzzy
+#~| msgid "Digitaliserat kulturarv"
+#~ msgid "Alvin - Digitalt kulturarv"
+#~ msgstr "Digitised cultural heritage"

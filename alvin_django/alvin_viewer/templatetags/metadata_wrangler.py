@@ -3,16 +3,26 @@ from django.utils.translation import get_language
 
 register = template.Library()
 
+def select_current_language():
+    lang_options = {
+        'sv': 'swe',
+        'en': 'eng',
+        'no': 'nor'
+        }
+    
+    return lang_options[get_language()]
+
 @register.filter
 def alvin_title(metadata, record_type):
-    # authority_names om plats, person, eller organisation, annars main_title
+    
+    # authority_names if place, person, or organisation otherwise main_title
     title = (metadata.get("authority_names")
              if record_type in {"alvin-place", "alvin-person", "alvin-organisation"}
              else metadata.get("main_title"))
     
-    # Mappar record_type med (joiner, keys)
+    # Maps record_type with (joiner, keys)
     mapping = {
-        "alvin-place": (None, None),  # Hanteras separat nedan
+        "alvin-place": (None, None),  # Handled separately below
         "alvin-person": (" ", ["given_name", "family_name", "numeration"]),
         "alvin-organisation": (". ", ["corporate_name", "subordinate_name"]),
         "alvin-work": (" : ", ["main_title", "subtitle"]),
@@ -26,12 +36,12 @@ def alvin_title(metadata, record_type):
     
     # Välj geographic som auktoriserat namn för alvin-place
     if record_type == "alvin-place":
-        lang = get_language() if title.get(get_language()) else next(iter(title))
+        lang = select_current_language() if title.get(select_current_language()) else next(iter(title))
         return title.get(lang, {}).get("geographic", "")
     
     # För alvin-person och alvin-organisation, join baserad på valt språk
     if record_type in {"alvin-person", "alvin-organisation"}:
-        lang = get_language() if title.get(get_language()) else next(iter(title))
+        lang = select_current_language() if title.get(select_current_language()) else next(iter(title))
         lang_data = title.get(lang, {})
         title_part = joiner.join(filter(None, (lang_data.get(key) for key in keys)))
         if record_type == "alvin-person":
@@ -70,7 +80,7 @@ def alvin_work_name(metadata):
 
 @register.filter
 def alvin_place_name(metadata):
-    lang = get_language() if metadata.get(get_language()) else next(iter(metadata))
+    lang = select_current_language() if metadata.get(select_current_language()) else next(iter(metadata))
     return metadata.get(lang, {}).get("geographic", "")
 
 @register.filter

@@ -1,10 +1,9 @@
 {% load i18n static %}
 
-<header x-data="{ isScrollingDown: false, lastScroll: 0 }" x-init="
+<header x-data="{ isScrollingDown: false, lastScroll: 0, showSideNav: false }" x-init="
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
             const triggerPoint = 100
-            console.log(currentScroll)
             if (currentScroll > triggerPoint) {
                 if (currentScroll > lastScroll) {
                     isScrollingDown = true;
@@ -14,16 +13,18 @@
                 lastScroll = currentScroll;
             }
         })
-    " :class="{'-translate-y-full': isScrollingDown, 'translate-y-0': !isScrollingDown}"
-    class="fixed top-0 w-full h-16 bg-white border-4 border-black z-40 select-none transition-transform"
+    "
     aria-label="{% trans 'Huvudmeny' %}">
 
-    <nav class="flex justify-between h-full" x-data="{ showSearch: false }">
+    <nav class="fixed top-0 flex justify-between w-full h-16 bg-white border-4 border-black z-40 select-none transition-transform" 
+        x-data="{ showSearch: false }" 
+        :class="{'-translate-y-full': isScrollingDown, 'translate-y-0': !isScrollingDown}"
+        >
 
         <nav class="flex flex-shrink-0 items-center h-full">
             
             <!-- Hamburgermeny -->
-            <button class="w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvinGreen">
+            <button @click="showSideNav = !showSideNav" class="w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvinGreen">
                 <img class="w-7" src="{% static '/img/nav/menu.svg' %}" alt="{% trans 'Mobilmeny' %}">
             </button>
 
@@ -152,35 +153,35 @@
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Hjälp</p>
                 <img class="w-7" src="{% static '/img/nav/help-circle.svg' %}">
             </button>
-        </div>
+        </nav>
 
     </nav>
-</header>
 
-<!-- Sidomeny -->
-<nav class="hidden fixed lg:w-3/6 max-lg:w-screen h-screen top-0 bg-white border-t-4 border-black border-4 z-50 flex flex-col">
-    
-    <button class="absolute top-2 left-2 p-2">
-        <img class="w-14 max-sm:w-10" src="/static/img/nav/xmark.svg">
-    </button>
-    
-    <div class="flex flex-col justify-stretch items-center gap-8 h-full py-40
-            overflow-y-auto
-            [&::-webkit-scrollbar]:w-4
-            [&::-webkit-scrollbar-track]:bg-alvinGrey
-            [&::-webkit-scrollbar-thumb]:bg-alvinGreen
-            [&::-webkit-scrollbar-thumb]:rounded-sm
-            [&::-webkit-scrollbar-thumb]:border-black
-            [&::-webkit-scrollbar-thumb]:border-8"
-            >
-        <a href="{% url 'about' %}" class="font-universalis text-5xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">Om Alvin</a>
-        <a href="{% url 'copyright' %}" class="font-universalis text-5xl visited:text-black max-sm:text-3xl hover:text-alvinGreen">Copyright</a>
-        <h1 class="font-universalis text-5xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">Medlemmar</h1>
-        <hr class="w-20 bg-black border-alvinGreen border-4 rounded-sm">
-        <h1 class="font-universalis text-5xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">Avancerad sök</h1>
-        <hr class="w-20 border-alvinGreen border-4 rounded-sm">
-        <h1 class="font-universalis text-5xl max-sm:text-3xl visited:text-black hover:text-alvinOrange">Hjälp</h1>
-        <hr class="w-20 border-alvinGreen border-4 rounded-sm">
-        <a href="{% url 'contact' %}" class="font-universalis text-5xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">Kontakt</a>
-    </div>
-</nav>
+    <!-- Sidomeny -->
+    <nav class="fixed top-0 left-0 flex flex-col lg:w-2/6 max-lg:w-4/6 max-md:w-full h-screen  bg-white border-t-4 border-black border-4 z-50 " x-show="showSideNav" x-cloak>
+        
+        <button @click="showSideNav = !showSideNav" class="absolute top-0 left-0 p-2">
+            <img class="w-10" src="/static/img/nav/xmark.svg">
+        </button>
+        
+        <div class="flex flex-col justify-stretch items-center gap-8 h-full py-40
+                overflow-y-auto
+                [&::-webkit-scrollbar]:w-4
+                [&::-webkit-scrollbar-track]:bg-alvinGrey
+                [&::-webkit-scrollbar-thumb]:bg-alvinGreen
+                [&::-webkit-scrollbar-thumb]:rounded-sm
+                [&::-webkit-scrollbar-thumb]:border-black
+                [&::-webkit-scrollbar-thumb]:border-8"
+                >
+            <a href="{% url 'about' %}" class="font-universalis text-3xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">{% trans 'Om Alvin' %}</a>
+            <a href="{% url 'copyright' %}" class="font-universalis text-3xl visited:text-black max-sm:text-3xl hover:text-alvinGreen">{% trans 'Copyright' %}</a>
+            <h1 class="font-universalis text-3xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">{% trans 'Medlemmar' %}</h1>
+            <hr class="w-20 bg-black border-alvinGreen border-4 rounded-sm">
+            <h1 class="font-universalis text-3xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">{% trans 'Avancerad sök' %}</h1>
+            <hr class="w-20 border-alvinGreen border-4 rounded-sm">
+            <h1 class="font-universalis text-3xl max-sm:text-3xl visited:text-black hover:text-alvinOrange">{% trans 'Hjälp' %}</h1>
+            <hr class="w-20 border-alvinGreen border-4 rounded-sm">
+            <a href="{% url 'contact' %}" class="font-universalis text-3xl max-sm:text-3xl visited:text-black hover:text-alvinGreen">{% trans 'Kontakt' %}</a>
+        </div>
+    </nav>
+</header>

@@ -1450,11 +1450,6 @@ a {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-
-.bg-\[url\(\'\/static\/img\/cartamarina\.webp\'\)\] {
-  background-image: url('/static/img/cartamarina.webp');
-}
-
 .bg-cover {
   background-size: cover;
 }

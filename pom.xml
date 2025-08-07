@@ -24,7 +24,7 @@
     <parent>
         <groupId>se.uu.ub.cora</groupId>
         <artifactId>cora-parent</artifactId>
-        <version>2.7.0</version>
+        <version>2.9.0</version>
     </parent>
 
     <artifactId>alvin-client</artifactId>
@@ -50,7 +50,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>create-venv</id>

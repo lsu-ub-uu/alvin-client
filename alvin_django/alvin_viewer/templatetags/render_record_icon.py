@@ -42,4 +42,10 @@ def render_record_icon(metadata):
             'icon_alt': 'Text',
             'label': 'Text',
         }
+    elif metadata["type_of_resource"] == 'col':
+        return {
+            'icon_path': f'/img/recordTypes/archive.svg',
+            'icon_alt': 'Arkiv',
+            'label': 'Arkiv',
+        }
     return {}

@@ -10,7 +10,7 @@
 <main class="bg-alvinGrey">
     <section 
         x-data="{ shift: false }"
-        x-init="setTimeout(() => shift = true, 300)"
+        x-init="setTimeout(() => shift = true, 100)"
         class="relative flex flex-col gap-8 items-center justify-center min-h-screen overflow-hidden p-4 border-x-4 border-x-black border-b-8 border-b-alvinGreen bg-alvinGrey"
         >
 
@@ -20,8 +20,8 @@
             alt="{% trans 'Bakgrundskarta' %}"
             class="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-[20s] ease-in-out"
             :class="shift 
-            ? 'scale-110 translate-x-0 translate-y-0' 
-            : 'scale-150 -translate-x-1/4 -translate-y-1/4'"
+            ? 'scale-110' 
+            : 'scale-200'"
         />
 
         <!-- Overlay -->

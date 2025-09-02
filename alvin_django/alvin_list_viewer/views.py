@@ -5,8 +5,6 @@ from django.core.paginator import Paginator
 import requests
 from lxml import etree
 from django.conf import settings
-
-from alvin_viewer.views import get_dates
 from alvin_viewer.templatetags import metadata_wrangler
 
 def get_authority_names(metadata, name_parts):

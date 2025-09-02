@@ -10,4 +10,4 @@ typing_extensions==4.8.0
 tzdata==2023.3
 urllib3==2.2.1
 django-tailwind
-django-cors-headers
+#django-cors-headers

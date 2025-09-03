@@ -43,7 +43,6 @@ def iiif_manifest(request, record_id: str):
                     },
                 }],
             }],
-            # (Valfri) rendering-länk—lägg riktig original-URL om du har en:
             # "rendering": [{"id": original_url, "type": "Image", "format": "image/jpeg", "label": "Download original image"}]
         })
 

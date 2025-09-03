@@ -58,6 +58,12 @@
               :class="{ 'bg-alvinGreen': activeTab === 'all_metadata', 'bg-gray-300': activeTab != 'all_metadata' }">
               {% translate 'All metadata' %}
       </button>
+      {% if metadata.type_of_resource == 'col' %}
+        <button @click="activeTab = 'inventory'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
+                :class="{ 'bg-alvinGreen': activeTab === 'inventory', 'bg-gray-300': activeTab != 'inventory' }">
+                {% translate 'Arkivförteckning' %}
+        </button>
+      {% endif %}
       <button @click="activeTab = 'related'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
               :class="{ 'bg-alvinGreen': activeTab === 'related', 'bg-gray-300': activeTab != 'related' }">
               {% translate 'Relaterat' %}

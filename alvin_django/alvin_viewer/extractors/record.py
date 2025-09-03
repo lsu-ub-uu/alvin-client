@@ -67,7 +67,7 @@ def extract(root: etree._Element) -> dict:
         "type_of_resource": root.findtext(".//data/record/typeOfResource"),
         "main_title": _titles(root, ".//data/record/title"),
         "variant_titles": _titles(root, ".//data/record/variantTitle"),
-        "agents": agents(root),
+        "agents": agents(root, ".//data/record/agent"),
         "edition_statement": root.findtext(".//record/editionStatement"),
         "publications": [p.findtext(".") for p in root.xpath("./data/record/publication")],
         "origin_places": origin_places(root),

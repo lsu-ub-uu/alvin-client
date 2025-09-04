@@ -4,7 +4,7 @@
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
             const triggerPoint = 100
-            if (currentScroll > triggerPoint) {
+            if (currentScroll >= triggerPoint) {
                 if (currentScroll > lastScroll) {
                     isScrollingDown = true;
                 } else {
@@ -29,7 +29,7 @@
             </button>
 
             <!-- Hem -->
-            <a class="h-full mt-6 text-center text-4xl mx-4 mt-4 font-universalis text-black hover:text-alvinGreen" href="{% url 'start' %}">
+            <a class="h-full mt-6 text-center text-4xl mx-4 font-universalis text-black hover:text-alvinGreen" href="{% url 'start' %}">
                 ALVIN
             </a>
 
@@ -75,75 +75,22 @@
                     [&::-webkit-scrollbar-thumb]:rounded-sm
                     [&::-webkit-scrollbar-thumb]:border-black
                     [&::-webkit-scrollbar-thumb]:border-8"
-                    >
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/archive.svg' %}">
-                            <span class="font-universalis">Arkiv</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/text.svg' %}">
-                            <span class="font-universalis">Text</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/coins.svg' %}">
-                            <span class="font-universalis">Mynt</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/combine.svg' %}">
-                            <span class="font-universalis">Blandat material</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/image.svg' %}">
-                            <span class="font-universalis">Bild</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/cartography.svg' %}">
-                            <span class="font-universalis">Karta</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/movingimage.svg' %}">
-                            <span class="font-universalis">Rörlig bild</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/music.svg' %}">
-                            <span class="font-universalis">Musikalier</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/object.svg' %}">
-                            <span class="font-universalis">Föremål</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/software.svg' %}">
-                            <span class="font-universalis">Programvara</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/soundrecording.svg' %}">
-                            <span class="font-universalis">Ljudinspelning</span>
-                        </button>
-                        <a href="{% url 'alvin_list_viewer' 'alvin-person' %}">
-                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="{% static '/img/authorityTypes/person.svg' %}">
-                                <span class="font-universalis">Person</span>
-                            </button>
-                        </a>
-                        <a href="{% url 'alvin_list_viewer' 'alvin-organisation' %}">
-                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="{% static '/img/authorityTypes/organisation.svg' %}">
-                                <span class="font-universalis">Organisation</span>
-                            </button>
-                        </a>
-                        <a href="{% url 'alvin_list_viewer' 'alvin-place' %}">
-                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="{% static '/img/authorityTypes/place.svg' %}">
-                                <span class="font-universalis">Plats</span>
-                            </button>
-                        </a>
-                        <a href="{% url 'alvin_list_viewer' 'alvin-work' %}">
-                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="{% static '/img/authorityTypes/work.svg' %}">
-                                <span class="font-universalis">Verk</span>
-                            </button>
-                        </a>
+                    >                        
+                        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/archive.svg' label='Arkiv' %}
+                        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/text.svg' label='Text' %}
+                        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/coins.svg' label='Mynt' %}
+                        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/combine.svg' label='Blandat material' %}
+                        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/image.svg' label='Bild' %}
+                        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/cartography.svg' label='Karta' %}
+                        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/movingimage.svg' label='Rörlig bild' %}
+                        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/music.svg' label='Musikalier' %}
+                        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/object.svg' label='Föremål' %}
+                        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/software.svg' label='Programvara' %}
+                        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/soundrecording.svg' label='Ljudinspelning' %}
+                        {% include './_record_type_link.html' with record_type='alvin-person' icon_url='/img/authorityTypes/person.svg' label='Person' %}
+                        {% include './_record_type_link.html' with record_type='alvin-organisation' icon_url='/img/authorityTypes/organisation.svg' label='Organisation' %}
+                        {% include './_record_type_link.html' with record_type='alvin-place' icon_url='/img/authorityTypes/place.svg' label='Plats' %}
+                        {% include './_record_type_link.html' with record_type='alvin-work' icon_url='/img/authorityTypes/work.svg' label='Verk' %}
                     </div>
                 </div>
             </nav>

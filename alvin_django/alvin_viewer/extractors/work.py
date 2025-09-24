@@ -22,7 +22,7 @@ def extract(root: etree._Element) -> dict:
         "incipit": root.findtext(".//incipit"),
         "literature": root.findtext(".//work/listBibl"),
         "note": root.findtext(".//work/note"),
-        "agents": agents(root),
+        "agents": agents(root, ".//data/work/agent"),
         "longitude": root.findtext(".//point/longitude"),
         "latitude": root.findtext(".//point/latitude"),
         "electronic_locators": electronic_locators(root),

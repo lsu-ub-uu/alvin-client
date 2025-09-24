@@ -9,9 +9,10 @@
     {% for title in metadata.variant_titles %}
         {% include "./_metadata_row.html" with label="Alternativ titel" value=title|alvin_work_name attribute=title.type %}
     {% endfor %}
-    {% for agent in metadata.agents %}
-        {% include "./_metadata_row.html" with label=agent.type url=agent.url value=agent.url attribute=agent.role|role_list %}
-    {% endfor %}
+        {% for agent in metadata.agents %}
+            {% url 'alvin_viewer' agent.type agent.id as agent_url %}
+            {% include "./_metadata_row.html" with label=agent.type url=agent_url value=agent_url attribute=agent.role|role_list %}
+        {% endfor %}
     {% for place in metadata.origin_places %}
         {% url 'alvin_viewer' 'alvin-place' place.id as place_url %}
         {% include "./_metadata_row.html" with label="Ursprungsplats" url=place_url value=place_url extra_value=place|origin_countries %}

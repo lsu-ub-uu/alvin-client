@@ -1,0 +1,14 @@
+{% for component in metadata.components %}
+
+<h3>
+  <button aria-expanded="true" aria-controls="panel1" id="accordion1">
+    {{ component.main_title }}
+  </button>
+</h3>
+<div id="panel1" role="region" aria-labelledby="accordion1">
+  <p>Innehåll för sektion 1</p>
+</div>
+
+{}
+
+{% endfor %}

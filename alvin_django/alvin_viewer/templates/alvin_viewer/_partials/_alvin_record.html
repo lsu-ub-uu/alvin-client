@@ -81,7 +81,6 @@
         {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
         {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
         {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
-        
     </div>
     {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
 
@@ -90,7 +89,7 @@
     </div>
 </div>
 
-<!-- Karta -->
+<!-- Map -->
 {% if metadata.latitude and metadata.longitude %}
     <aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvinOrange border-4 mb-10" id="map" x-show="activeTab != 'related'" x-cloak></aside>
 
@@ -100,4 +99,10 @@
             data-longitude="{{ metadata.longitude }}">
         </script>
     {% endblock %}
+{% endif %}
+
+<!-- Components -->
+{% if metadata.components %}
+    {% include './_components.html' %}
+    {{ metadata.components }}
 {% endif %}

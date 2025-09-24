@@ -1,0 +1,36 @@
+{% load i18n static metadata_wrangler %}
+
+  <header class="flex items-baseline bg-linear-to-tr text-lg p-4 my-2 border-t-4 border-r-4 border-black bg-gray-300 hover:bg-alvinGreen cursor-pointer" @click="open = !open">
+    {% if c.unitid %}
+    <span class="text-sm p-1 mr-2 border-black border-2 border-dashed" itemprop="identifier">{{ c.unitid }}</span>
+    {% endif %}
+    <h1>{{ c.title.main_title }}<span class="mx-2" x-text="open ? '▼' : '▶'"></span></h1>
+  </header>
+
+  <dl x-show="open" x-cloak>
+    {% for agent in c.agents %}
+        {% url 'alvin_viewer' agent.type agent.id as agent_url %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.type url=agent_url value=agent_url attribute=agent.role|role_list  %}
+    {% endfor %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label="Startdatum" value=c.start_date %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label="Slutdatum" value=c.end_date %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label="Årtal" value=c.display_date %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label="Omfång" value=c.extent|default:""|linebreaksbr %}
+    {% for electronic_locator in c.electronic_locators %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}
+    {% endfor %}
+    {% include "alvin_viewer/_partials/_record_type_links.html" with label="Relaterade poster" link_type="alvin-record" record_type_links=c.related_records %}
+    {% for accession_number in c.accession_numbers %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label="Accessionsnummer" value=accession_number %}
+    {% endfor %}
+    {% include "./_metadata_row.html" with label="Anmärkning" value=c.note|default:""|linebreaksbr %}
+    {% include "./_metadata_row.html" with label="Villkor för användning och åtkomst" value=c.access_policy|default:""|linebreaksbr %}
+  </dl>
+
+  {% if c %}
+    <article class="lg:ml-4 max-lg:ml-2" x-data="{ open: false }">
+    {% for component in c.components %}
+      {% include "alvin_viewer/_partials/_component.html" with c=component only %}
+    {% endfor %}
+    </article>    
+  {% endif %}

@@ -27,13 +27,13 @@ def electronic_locators(node: etree._Element):
         "display_label": loc.findtext("./displayLabel"),
     } for loc in node.xpath(".//electronicLocator")]
 
-def agents(node: etree._Element):
+def agents(node: etree._Element, path: str):
     return [{
         "type": f"alvin-{agent.get('type')}",
         "id": agent.findtext(".//linkedRecordId"),
         "role": texts(agent, "./role"),
         "certainty": agent.findtext("./certainty"),
-    } for agent in node.xpath(".//agent")]
+    } for agent in node.xpath(path)]
 
 def origin_places(node: etree._Element):
     return [{
@@ -66,19 +66,24 @@ def components(nodes: List[etree._Element]):
     for comp in nodes:
         sub = components(comp.xpath("./*[contains(name(), 'component')]"))
         md = {
-            "main_title": comp.findtext("./title/mainTitle"),
-            "sub_title": comp.findtext("./title/subTitle"),
+            "title": {
+                "main_title": comp.findtext("./title/mainTitle"),
+                "subtitle": comp.findtext("./title/subtitle"),
+                "orientation_code": comp.findtext("./title/orientationCode")
+            },
             "level": comp.findtext("./level"),
             "unitid": comp.findtext("./unitid"),
             "related_records": related_records(comp, "./relatedTo"),
-            "agents": agents(comp),
-            "start_date": get_dates("start", comp),
-            "end_date": get_dates("end", comp),
+            "agents": agents(comp, "./agent"),
+            "start_date": get_dates("start", comp.find("./originDate")),
+            "end_date": get_dates("end", comp.find("./originDate")),
             "place": comp.findtext("./place/linkedRecordId"),
             "display_date": comp.findtext("./originDate/displayDate"),
+            "extent": comp.findtext("./extent"),
             "electronic_locators": electronic_locators(comp),
             "note": comp.findtext("./note"),
             "access_policy": comp.findtext("./accessPolicy"),
+            "accession_numbers": [number.findtext(".") for number in comp.findall("./identifier[@type = 'accessionNumber']")]
         }
         if sub:
             md["components"] = sub

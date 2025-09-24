@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 lxml = "*"
+django = "~=4.2"
 
 [dev-packages]
 

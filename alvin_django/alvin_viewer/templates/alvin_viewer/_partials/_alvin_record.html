@@ -85,18 +85,28 @@
             {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
         </div>
         {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
+        {% if metadata.components %}
+            <div>
+                <h1 class="lg:text-3xl text-2xl  mt-6">
+                    {% translate 'Arkivförteckning' %}
+                </h1>
+                <div class="flex flex-col">
+                    {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
+                </div>
+            </div>
+        {% endif %}
     </div>
 
     <div class="flex flex-col" x-show="activeTab == 'related'" x-cloak>
 
     </div>
 
+    <!-- Components -->
     {% if metadata.components %}
         <div class="flex flex-col" x-show="activeTab == 'inventory'" x-cloak>
             {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
         </div>
     {% endif %}
-
 
 </div>
 
@@ -112,4 +122,3 @@
     {% endblock %}
 {% endif %}
 
-<!-- Components -->

@@ -4,7 +4,7 @@
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
             const triggerPoint = 100
-            if (currentScroll >= triggerPoint) {
+            if (currentScroll > triggerPoint) {
                 if (currentScroll > lastScroll) {
                     isScrollingDown = true;
                 } else {
@@ -23,27 +23,21 @@
 
         <nav class="flex flex-shrink-0 items-center h-full">
             
-            <!-- Hamburgermeny -->
+            <!-- Hamburger menu -->
             <button @click="showSideNav = !showSideNav" class="w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvinGreen">
                 <img class="w-7" src="{% static '/img/nav/menu.svg' %}" alt="{% trans 'Mobilmeny' %}">
             </button>
 
-            <!-- Hem -->
+            <!-- Start -->
             <a class="h-full mt-6 text-center text-4xl mx-4 font-universalis text-black hover:text-alvinGreen" href="{% url 'start' %}">
                 ALVIN
             </a>
-
-
+            
         </nav>
 
         <nav class="flex flex-shrink-0 justify-between items-center h-full border-black">
-
-            <button>
-                <a class="flex w-full h-full justify-between items-center mt-1 p-2 border-black font-universalis text-nowrap text-black hover:text-alvinGreen max-md:hidden">Copyright</a>
-            </button>
-            <button>
-                <a class="flex w-full h-full justify-between items-center mt-1 p-4 border-black font-universalis text-nowrap text-black hover:text-alvinGreen max-md:hidden">Om Alvin</a>
-            </button>
+            <a class="flex w-full h-full justify-between items-center mt-1 p-2 border-black font-universalis text-nowrap text-black hover:text-alvinGreen max-md:hidden">Copyright</a>
+            <a class="flex w-full h-full justify-between items-center mt-1 p-4 border-black font-universalis text-nowrap text-black hover:text-alvinGreen max-md:hidden">Om Alvin</a>
 
             <!-- Sök -->
             <button @click="showSearch = !showSearch; $nextTick(() => { $refs.alvinsearch.focus(); });" class="flex w-full h-full justify-between items-center p-4 border-x-4 border-black hover:bg-alvinGreen"

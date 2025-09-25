@@ -1,82 +1,118 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/*
+* This is where you can configure the folders that Tailwind will scan.
+* 
+* For detailed documents, check the Tailwind docs at:
+*
+* https://tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources
+*
+* This default configuration will scan all folder in your root project directory.
+*
+* Here is an example configuration that will only scan your templates/ folder:
+* 
+* @import "tailwindcss" source(none);
+*
+* @source "../../../templates";
+*/
+
+@import "tailwindcss";
+@source "../../../templates";
+@source "../../../**/*.html";
+@source "../../../**/*.py";
+@source "../../../**/*.{js,ts,tsx}";
+
+
+/*
+If you would like to customise you theme, you can do that here too.
+https://tailwindcss.com/docs/theme
+
+*/
 
 @font-face {
-    font-family: 'Universalis';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Universalis ADF Std Regular'), url('/static/fonts/UniversalisADFStd-Bold.woff') format('woff');
+  font-family: "Universalis";
+  src:
+    url("/static/fonts/UniversalisADFStd-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'OpenSans';
-    font-style: normal;
-    font-weight: normal;
-    src: local('OpenSans Regular'), url('/static/fonts/opensans/OpenSans-Regular.ttf') format('ttf');
+  font-family: "NotoSans";
+  src:
+    url("/static/fonts/NotoSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-@font-face {
-    font-family: "NotoSans", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    src: local('NotoSans Regular'), url('/static/fonts/noto/NotoSans-Regular.ttf') format('tff');
-}
+@theme {
 
-@layer base {
-    html {
-      font-family: "NotoSans", sans-serif;
-    }
-
-    a {
-      color: #BF7F7F;
-    }
-
-  }
-
-@layer components {
-
-    .md-row {
-      display: flex;
-      justify-content: flex-start;
-      width: 100%;
-      font-size: 1.25rem;
-      line-height: 1.75rem;
-      overflow-wrap: break-word;
-      padding-top: 8px;
-      padding-bottom: 8px;
-      column-gap: 60px;
-    }
-
-    .md-label {
-      width: 31%;
-      font-weight: 600;
-    }
-
-    .md-row:hover {
-      background-color:#d1d5db;
-    }
-
-    .md-value {
-      width: 55%;
-    }
-
-    @media not all and (min-width: 768px) {
-      .md-row {
-        flex-wrap: wrap;
-      }
-      .md-label {
-        width: 100%;
-      }
-      .md-value {
-        width: 100%;
-      }
-    }
+  /* Fonts */
+  --font-universalis: "Universalis", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "NotoSans", ui-sans-serif, system-ui, sans-serif;
+  
+  /* Colors */
+  --color-link: #bf7f7f;
+  --color-alvin-green: #7fbfa7;
+  --color-alvin-orange: #bf7125;
+  --color-alvin-grey: #f5f5f5;
 
 }
+
+html { @apply font-sans; }
+
+.md-row {
+  @apply flex justify-start w-full text-xl leading-7 break-words py-2
+         flex-wrap md:flex-nowrap hover:bg-gray-300;
+}
+
+.md-label {
+  @apply w-full md:w-[31%] font-semibold;
+}
+
+.md-value {
+  @apply w-full md:w-[55%];
+}
+
+a { 
+  @apply text-link;
+}
+
+.topnav a {
+   @apply text-inherit font-universalis text-black hover:text-alvin-green;
+}
+
+.sidenav a {
+   @apply text-inherit font-universalis text-black hover:text-alvin-green;
+}
+
+[x-cloak] { display: none !important; }
 
 @layer utilities {
-  [x-cloak] {
-    display: none !important;
+  .scrollbar-alvin-x {
+    /* Firefox */
+    scrollbar-width: auto;
+    scrollbar-color: theme(colors.alvin.green) theme(colors.alvin.grey);
+
+    /* WebKit */
+    &::-webkit-scrollbar { height: 0.25rem; } /* h-1 */
+    &::-webkit-scrollbar-track { background: theme(colors.alvin.grey); }
+    &::-webkit-scrollbar-thumb {
+      background: theme(colors.alvin.green);
+      border-width: 8px;            /* border-8 */
+      border-color: black;          /* border-black */
+      border-style: solid;
+      border-radius: 0.125rem;      /* rounded-sm */
+    }
   }
 }
+
+/* 
+Tailwind plugins
+https://tailwindcss.com/docs/functions-and-directives#plugin-directive
+
+*/
+
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/aspect-ratio";

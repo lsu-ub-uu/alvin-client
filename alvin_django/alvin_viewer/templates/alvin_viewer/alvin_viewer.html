@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block content %}
-<main class="flex flex-col flex-wrap min-h-svh w-full bg-alvinGrey pb-10 pt-[60px] border-4 border-black"  x-data="{ activeTab: 'overview' }">
+<main class="flex flex-col flex-wrap min-h-svh w-full bg-alvin-grey pb-10 pt-[60px] border-4 border-black"  x-data="{ activeTab: 'overview' }">
   {% if metadata.files %}
   
   <!-- Bildvisare TIFY -->
@@ -50,22 +50,22 @@
 
     <!-- Val av metadatavy -->
     <nav class="flex flex-wrap justify-start w-full text-xl max-md:text-base">
-      <button @click="activeTab = 'overview'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
-              :class="{ 'bg-alvinGreen': activeTab === 'overview', 'bg-gray-300': activeTab != 'overview' }">
+      <button @click="activeTab = 'overview'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
+              :class="{ 'bg-alvin-green': activeTab === 'overview', 'bg-gray-300': activeTab != 'overview' }">
               {% translate 'Översikt' %}
       </button>
-      <button @click="activeTab = 'all_metadata'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
-              :class="{ 'bg-alvinGreen': activeTab === 'all_metadata', 'bg-gray-300': activeTab != 'all_metadata' }">
+      <button @click="activeTab = 'all_metadata'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
+              :class="{ 'bg-alvin-green': activeTab === 'all_metadata', 'bg-gray-300': activeTab != 'all_metadata' }">
               {% translate 'All metadata' %}
       </button>
       {% if metadata.type_of_resource == 'col' %}
-        <button @click="activeTab = 'inventory'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
-                :class="{ 'bg-alvinGreen': activeTab === 'inventory', 'bg-gray-300': activeTab != 'inventory' }">
+        <button @click="activeTab = 'inventory'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
+                :class="{ 'bg-alvin-green': activeTab === 'inventory', 'bg-gray-300': activeTab != 'inventory' }">
                 {% translate 'Arkivförteckning' %}
         </button>
       {% endif %}
-      <button @click="activeTab = 'related'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvinGreen" 
-              :class="{ 'bg-alvinGreen': activeTab === 'related', 'bg-gray-300': activeTab != 'related' }">
+      <button @click="activeTab = 'related'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
+              :class="{ 'bg-alvin-green': activeTab === 'related', 'bg-gray-300': activeTab != 'related' }">
               {% translate 'Relaterat' %}
       </button>
     </nav>

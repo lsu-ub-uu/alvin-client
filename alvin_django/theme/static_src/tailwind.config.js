@@ -43,18 +43,9 @@ module.exports = {
 
     ],
     theme: {
-        extend: {
-            colors: {
-                alvinGreen: '#7FBFA7',
-                alvinOrange: '#BF7125',
-                alvinGrey: '#F5F5F5',
-            },
-            fontFamily: {
-                universalis: ["Universalis", "sans-serif"],
-                notosans: ["NotoSans", "sans-serif"],
-            },
-        },
-     },
+    
+    },
+
     plugins: [
         /**
          * '@tailwindcss/forms' is the forms plugin that provides a minimal styling

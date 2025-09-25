@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Universalis';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Universalis ADF Std Regular'), url('/static/fonts/UniversalisADFStd-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    font-style: normal;
+    font-weight: normal;
+    src: local('OpenSans Regular'), url('/static/fonts/opensans/OpenSans-Regular.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: "NotoSans", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    src: local('NotoSans Regular'), url('/static/fonts/noto/NotoSans-Regular.ttf') format('tff');
+}
+
+@layer base {
+    html {
+      font-family: "NotoSans", sans-serif;
+    }
+
+    a {
+      color: #BF7F7F;
+    }
+
+  }
+
+@layer components {
+
+    .md-row {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+      overflow-wrap: break-word;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      column-gap: 60px;
+    }
+
+    .md-label {
+      width: 31%;
+      font-weight: 600;
+    }
+
+    .md-row:hover {
+      background-color:#d1d5db;
+    }
+
+    .md-value {
+      width: 55%;
+    }
+
+    @media not all and (min-width: 768px) {
+      .md-row {
+        flex-wrap: wrap;
+      }
+      .md-label {
+        width: 100%;
+      }
+      .md-value {
+        width: 100%;
+      }
+    }
+
+}
+
+@layer utilities {
+  [x-cloak] {
+    display: none !important;
+  }
+}

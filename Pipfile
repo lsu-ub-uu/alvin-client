@@ -4,11 +4,20 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-requests = "*"
-lxml = "*"
-django = "~=4.2"
+asgiref = "==3.7.2"
+certifi = "==2024.2.2"
+charset-normalizer = "==3.3.2"
+idna = "==3.6"
+lxml = "==5.4.0"
+requests = "==2.31.0"
+sqlparse = "==0.4.4"
+typing-extensions = "==4.8.0"
+tzdata = "==2023.3"
+urllib3 = "==2.2.1"
+django-tailwind-4 = {extras = ["reload"], version = "*"}
+django = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.10"
+python_version = "3.13"

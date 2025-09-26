@@ -1,17 +1,17 @@
 {% load i18n static %}
 
 <aside class="w-3/12 border-t-4 border-black text-left" x-show="showFilter" x-cloak x-transition>
-    <h2 class="font-universalis text-xl font-semibold p-4 bg-alvinGreen">Filter</h2>
+    <h2 class="font-universalis text-xl font-semibold p-4 bg-alvin-green">Filter</h2>
     <form method="get" action=".">
         <div class="mb-4">
             <label for="country" class="block text-gray-700"><strong>{% translate 'Land' %}</strong></label>
-            <select id="country" name="country" class="w-full mt-1 border-black focus:border-alvinOrange focus:outline-none focus:ring-0 shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out">
+            <select id="country" name="country" class="w-full mt-1 border-black focus:border-alvin-orange focus:outline-none focus:ring-0 shadow-sm hover:shadow-md transition-shadow duration-200 ease-in-out">
                 <option value="">{% translate 'Alla' %}</option>
                 {% for country in countries %}
                     <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>{{ country }}</option>
                 {% endfor %}
             </select>
         </div>
-        <button type="submit" class="bg-black text-white px-4 py-2 hover:bg-alvinOrange transition">Filter</button>
+        <button type="submit" class="bg-black text-white px-4 py-2 hover:bg-alvin-orange transition">Filter</button>
     </form>
 </aside>

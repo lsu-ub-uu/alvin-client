@@ -3,15 +3,16 @@
 {% load i18n static %}
 
 {% block head %}
+
 <title>Alvin - Start</title>
 {% endblock %}
 
 {% block content %}
-<main class="bg-alvinGrey">
+<main class="bg-alvin-grey">
     <section 
         x-data="{ shift: false }"
         x-init="setTimeout(() => shift = true, 100)"
-        class="relative flex flex-col gap-8 items-center justify-center min-h-screen overflow-hidden p-4 border-x-4 border-x-black border-b-8 border-b-alvinGreen bg-alvinGrey"
+        class="relative flex flex-col gap-8 items-center justify-center min-h-screen overflow-hidden p-4 border-x-4 border-x-black border-b-8 border-b-alvin-green bg-alvin-grey"
         >
 
         <!-- Animated map -->
@@ -25,7 +26,7 @@
         />
 
         <!-- Overlay -->
-        <h1 class="relative z-10 w-3/4 text-7xl max-sm:text-5xl text-[#FAFAFA] text-center drop-shadow-[_0_3px_0_#36454F]">
+        <h1 class="relative z-10 w-3/4 text-8xl max-sm:text-5xl text-[#FAFAFA] text-center drop-shadow-[_0_3px_0_#36454F]">
             {% trans 'Digitaliserade samlingar från nordiska kulturarvs&shy;institutioner' %}
         </h1>
 
@@ -33,7 +34,7 @@
             <form class="flex justify-center" action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
             <input class="w-1/3 border-2 border-black rounded-l-xl focus:border-black focus:ring-0 max-sm:text-sm"
                 name="query" type="text" placeholder="{% trans 'Sök i Alvin...' %}">
-            <button class="p-4 bg-black rounded-r-xl hover:text-alvinOrange text-white font-universalis" type="submit">
+            <button class="p-4 bg-black rounded-r-xl hover:text-alvin-orange text-white font-universalis" type="submit">
                 {% trans 'Sök' %}
             </button>
             </form>
@@ -43,6 +44,6 @@
 <footer class="relative bg-black h-screen p-8">
     <p class="text-white font-universalis">{% trans 'Om Alvin:' %}</p>
     <p class="text-white">{% trans 'Alvin är en plattform för publicering och långsiktigt bevarande av digitaliserat kulturarvsmaterial från biblioteks-, arkiv- och museisamlingar i Sverige och Norge.' %}</p>
-    <a class="text-alvinOrange pt-9 pb-1" href="">{% trans 'Webbplatskarta' %}</a>
+    <a class="text-alvin pt-9 pb-1" href="">{% trans 'Webbplatskarta' %}</a>
 </footer>
 {% endblock %}

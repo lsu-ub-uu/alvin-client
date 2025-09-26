@@ -1,13 +1,13 @@
-[[source]]
-url = "https://pypi.org/simple"
-verify_ssl = true
-name = "pypi"
+[requires]
+python_version = "3.13"
 
 [packages]
-requests = "*"
+django = "==5.2.*"
+django-browser-reload = "*"
+django-tailwind-4 = "*"
 lxml = "*"
+requests = ">=2.32"
+arrow = "*"
 
 [dev-packages]
-
-[requires]
-python_version = "3.10"
+pytest = "*"

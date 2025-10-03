@@ -41,8 +41,7 @@ def origin_places(node: etree._Element):
         "country": op.findtext(".//country"),
         "historical_country": op.findtext(".//historicalCountry"),
         "certainty": op.findtext(".//certainty"),
-        "publication": texts(op, "..//publication"),
-    } for op in node.xpath(".//originPlace")]
+    } for op in node.xpath(".//data/record/originPlace")]
 
 def related(node: etree._Element, typ: str):
     return [{

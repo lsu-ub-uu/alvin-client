@@ -30,25 +30,25 @@ def render_record_icon(metadata):
             'extra_icon_alt': f'{metadata["form_of_work"]}',
             'label': f'Verk, {metadata["form_of_work"]}',
         }
-    elif metadata["type_of_resource"] == 'img':
+    elif metadata["type_of_resource"]["code"] == 'img':
         return {
             'icon_path': f'/img/recordTypes/image.svg',
             'icon_alt': 'Bild',
             'label': 'Bild',
         }
-    elif metadata["type_of_resource"] == 'not':
+    elif metadata["type_of_resource"]["code"] == 'not':
         return {
             'icon_path': f'/img/recordTypes/music.svg',
             'icon_alt': 'Not',
             'label': 'Musik',
         }
-    elif metadata["type_of_resource"] == 'txt':
+    elif metadata["type_of_resource"]["code"] == 'txt':
         return {
             'icon_path': f'/img/recordTypes/text.svg',
             'icon_alt': 'Text',
             'label': 'Text',
         }
-    elif metadata["type_of_resource"] == 'col':
+    elif metadata["type_of_resource"]["code"] == 'col':
         return {
             'icon_path': f'/img/recordTypes/archive.svg',
             'icon_alt': 'Arkiv',

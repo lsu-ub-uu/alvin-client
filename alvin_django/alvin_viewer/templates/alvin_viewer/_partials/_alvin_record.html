@@ -6,6 +6,7 @@
 
 <!-- Metadata -->
 <div class="flex flex-col">
+    {{metadata}}
     <div x-show="activeTab != 'related' && activeTab != 'inventory'">
         {% for title in metadata.variant_titles %}
             {% include "./_metadata_row.html" with label="Alternativ titel" value=title|alvin_work_name attribute=title.type %}
@@ -30,8 +31,8 @@
             {% for date in metadata.date_other %}
                 {% include "./_metadata_row.html" with label="Övrigt datum" value=date|date_other_join attribute=date.type  %}
             {% endfor %}
-            {% include "./_metadata_row.html" with label="Språk" value=metadata.languages|join:"<br>"|safe %}
-            {% include "./_metadata_row.html" with label="Katalogiseringsspråk" value=metadata.description_languages|join:"<br>"|safe %}
+            {% include "./_metadata_row.html" with label=metadata.languages.label value=metadata.languages.items|join:"<br>"|safe %}
+            {% include "./_metadata_row.html" with label="Katalogiseringsspråk" value=metadata.description_languages.items|join:"<br>"|safe %}
             {% include "./_metadata_row.html" with label="Ägande institution" value=metadata.physical_location.held_by %}
             {% include "./_metadata_row.html" with label="Placering" value=metadata.physical_location.sublocation %}
             {% include "./_metadata_row.html" with label="Signum" value=metadata.physical_location.shelf_mark %}

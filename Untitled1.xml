@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record>
+    <data>
+        <record _en="Record (alvin-record)" _no="Post (alvin-record)" _sv="Post (alvin-record)">
+            <typeOfResource _en="Resource type" _no="Ressurstype" _sv="Resurstyp"
+                _value_en="Still image" _value_no="Bilde" _value_sv="Bild">img</typeOfResource>
+            <title _en="Title" _no="Tittel" _sv="Titel">
+                <mainTitle _en="Main title" _no="Hovedtittel" _sv="Huvudtitel">En bild s&#228;ger
+                    mer &#228;n tusen ord</mainTitle>
+            </title>
+            <physicalLocation _en="Physical location" _no="Fysisk plassering" _sv="Fysisk placering">
+                <heldBy _en="Entity" _no="Enhet" _sv="Enhet">
+                    <location _en="Archival institution" _no="Arkivinstitusjon"
+                        _sv="Arkivinstitution">
+                        <linkedRecordType>alvin-location</linkedRecordType>
+                        <linkedRecordId>3</linkedRecordId>
+                        <linkedRecord>
+                            <location _en="Archival institution (alvin-location)"
+                                _no="Arkivinstitusjon (alvin-location)"
+                                _sv="Arkivinstitution (alvin-location)">
+                                <authority _en="Authority" _no="Autoritet" _sv="Auktoritet"
+                                    lang="swe" repeatId="0">
+                                    <name _en="Name" _no="Navn" _sv="Namn" type="corporate">
+                                        <namePart _en="Organisation name" _no="Organisasjonsnavn"
+                                            _sv="Organisationsnamn" type="corporateName">Uppsala
+                                            universitetsbibliotek</namePart>
+                                    </name>
+                                </authority>
+                                <authority _en="Authority" _no="Autoritet" _sv="Auktoritet"
+                                    lang="eng" repeatId="1">
+                                    <name _en="Name" _no="Navn" _sv="Namn" type="corporate">
+                                        <namePart _en="Organisation name" _no="Organisasjonsnavn"
+                                            _sv="Organisationsnamn" type="corporateName">Uppsala
+                                            University Library</namePart>
+                                    </name>
+                                </authority>
+                                <organisationInfo _en="Organisation information"
+                                    _no="Organisasjonsinformasjon" _sv="Organisationsinformation">
+                                    <descriptor _en="Member type" _no="Medlemstype" _sv="Medlemstyp"
+                                        _value_en="Consortium member"
+                                        _value_no="Medlem av konsortiet" _value_sv="Konsortiemedlem"
+                                        >consortium</descriptor>
+                                </organisationInfo>
+                                <electronicLocator _en="External electronic location (URL)"
+                                    _no="Ekstern elektronisk adresse (URL)"
+                                    _sv="Extern elektronisk adress (URL)">
+                                    <url _en="URL" _no="URL" _sv="URL"
+                                        >https://www.uu.se/bibliotek</url>
+                                    <displayLabel _en="Display label" _no="Linktekst"
+                                        _sv="L&#228;nktext">Website / Nettsted /
+                                        Webbplats</displayLabel>
+                                </electronicLocator>
+                                <identifier _en="Identifier" _no="Identifikator" _sv="Identifikator"
+                                    type="domain">uu</identifier>
+                                <email _en="Email" _no="E-post" _sv="E-post"
+                                    >fraga.biblioteket@ub.uu.se</email>
+                                <address _en="Address" _no="Adresse" _sv="Adress">
+                                    <postOfficeBox _en="Post office box" _no="Postboks"
+                                        _sv="Postbox">Box 510</postOfficeBox>
+                                    <street _en="Street" _no="Gate" _sv="Gata">Carolina Rediviva,
+                                        Dag Hammarskj&#246;lds v&#228;g 1</street>
+                                    <postcode _en="Postcode" _no="Postnummer" _sv="Postnummer">SE
+                                        751 20</postcode>
+                                    <place _en="Place" _no="Sted" _sv="Plats">
+                                        <linkedRecordType>alvin-place</linkedRecordType>
+                                        <linkedRecordId>679</linkedRecordId>
+                                        <linkedRecord>
+                                            <place _en="Place (alvin-place)"
+                                                _no="Sted (alvin-place)" _sv="Plats (alvin-place)">
+                                                <authority _en="Authority" _no="Autoritet"
+                                                  _sv="Auktoritet" lang="swe" repeatId="0">
+                                                  <geographic _en="Place" _no="Sted" _sv="Plats"
+                                                  >Uppsala</geographic>
+                                                </authority>
+                                                <variant _en="Variant" _no="Variant" _sv="Variant"
+                                                  lang="lat" repeatId="1">
+                                                  <geographic _en="Place" _no="Sted" _sv="Plats"
+                                                  >Ubsali&#230;</geographic>
+                                                </variant>
+                                                <variant _en="Variant" _no="Variant" _sv="Variant"
+                                                  lang="swe" repeatId="2">
+                                                  <geographic _en="Place" _no="Sted" _sv="Plats"
+                                                  >Upsala</geographic>
+                                                </variant>
+                                                <variant _en="Variant" _no="Variant" _sv="Variant"
+                                                  lang="fre" repeatId="3">
+                                                  <geographic _en="Place" _no="Sted" _sv="Plats"
+                                                  >Upsal</geographic>
+                                                </variant>
+                                                <variant _en="Variant" _no="Variant" _sv="Variant"
+                                                  lang="lat" repeatId="4">
+                                                  <geographic _en="Place" _no="Sted" _sv="Plats"
+                                                  >Upsali&#230;</geographic>
+                                                </variant>
+                                                <country _en="Country" _no="Land" _sv="Land"
+                                                  _value_en="Sweden" _value_no="Sverige"
+                                                  _value_sv="Sverige">sw</country>
+                                                <point _en="Geographical point"
+                                                  _no="Geografisk punkt" _sv="Geografisk punkt">
+                                                  <latitude _en="Latitude" _no="Latitude"
+                                                  _sv="Latitud">59.85488966429547</latitude>
+                                                  <longitude _en="Longitude" _no="Longitude"
+                                                  _sv="Longitud">17.631198404124007</longitude>
+                                                </point>
+                                                <recordInfo _en="Record information"
+                                                  _no="Postinformasjon" _sv="Postinformation">
+                                                  <id _en="Id" _no="Id" _sv="Id">679</id>
+                                                  <type _en="RecordType" _no="" _sv="Posttyp">
+                                                  <linkedRecordType>recordType</linkedRecordType>
+                                                  <linkedRecordId>alvin-place</linkedRecordId>
+                                                  <actionLinks>
+                                                  <read>
+                                                  <requestMethod>GET</requestMethod>
+                                                  <rel>read</rel>
+                                                  <url>https://cora.alvin-portal.org/rest/record/recordType/alvin-place</url>
+                                                  <accept>application/vnd.cora.record+xml</accept>
+                                                  </read>
+                                                  </actionLinks>
+                                                  </type>
+                                                  <validationType _en="Validation type"
+                                                  _sv="Valideringstyp">
+                                                  <linkedRecordType>validationType</linkedRecordType>
+                                                  <linkedRecordId>place</linkedRecordId>
+                                                  <actionLinks>
+                                                  <read>
+                                                  <requestMethod>GET</requestMethod>
+                                                  <rel>read</rel>
+                                                  <url>https://cora.alvin-portal.org/rest/record/validationType/place</url>
+                                                  <accept>application/vnd.cora.record+xml</accept>
+                                                  </read>
+                                                  </actionLinks>
+                                                  </validationType>
+                                                  <dataDivider _en="Data divider" _no=""
+                                                  _sv="Datadelare">
+                                                  <linkedRecordType>system</linkedRecordType>
+                                                  <linkedRecordId>alvinData</linkedRecordId>
+                                                  <actionLinks>
+                                                  <read>
+                                                  <requestMethod>GET</requestMethod>
+                                                  <rel>read</rel>
+                                                  <url>https://cora.alvin-portal.org/rest/record/system/alvinData</url>
+                                                  <accept>application/vnd.cora.record+xml</accept>
+                                                  </read>
+                                                  </actionLinks>
+                                                  </dataDivider>
+                                                  <updated _en="Update" _sv="Uppdatering"
+                                                  repeatId="0">
+                                                  <updatedBy _en="Updated by" _no="Oppdatert av"
+                                                  _sv="Uppdaterad av">
+                                                  <linkedRecordType>user</linkedRecordType>
+                                                  <linkedRecordId>151515</linkedRecordId>
+                                                  </updatedBy>
+                                                  <tsUpdated _en="Update time" _sv="Uppdateringstid"
+                                                  >2024-01-15T13:57:11.800629Z</tsUpdated>
+                                                  </updated>
+                                                  <updated _en="Update" _sv="Uppdatering"
+                                                  repeatId="1">
+                                                  <updatedBy _en="Updated by" _no="Oppdatert av"
+                                                  _sv="Uppdaterad av">
+                                                  <linkedRecordType>user</linkedRecordType>
+                                                  <linkedRecordId>151515</linkedRecordId>
+                                                  </updatedBy>
+                                                  <tsUpdated _en="Update time" _sv="Uppdateringstid"
+                                                  >2024-01-17T09:59:09.853106Z</tsUpdated>
+                                                  </updated>
+                                                  <updated _en="Update" _sv="Uppdatering"
+                                                  repeatId="2">
+                                                  <updatedBy _en="Updated by" _no="Oppdatert av"
+                                                  _sv="Uppdaterad av">
+                                                  <linkedRecordType>user</linkedRecordType>
+                                                  <linkedRecordId>151515</linkedRecordId>
+                                                  </updatedBy>
+                                                  <tsUpdated _en="Update time" _sv="Uppdateringstid"
+                                                  >2024-02-26T07:48:36.627208Z</tsUpdated>
+                                                  </updated>
+                                                  <updated _en="Update" _sv="Uppdatering"
+                                                  repeatId="3">
+                                                  <updatedBy _en="Updated by" _no="Oppdatert av"
+                                                  _sv="Uppdaterad av">
+                                                  <linkedRecordType>user</linkedRecordType>
+                                                  <linkedRecordId>151515</linkedRecordId>
+                                                  </updatedBy>
+                                                  <tsUpdated _en="Update time" _sv="Uppdateringstid"
+                                                  >2024-03-06T10:23:08.210212Z</tsUpdated>
+                                                  </updated>
+                                                  <updated _en="Update" _sv="Uppdatering"
+                                                  repeatId="4">
+                                                  <updatedBy _en="Updated by" _no="Oppdatert av"
+                                                  _sv="Uppdaterad av">
+                                                  <linkedRecordType>user</linkedRecordType>
+                                                  <linkedRecordId>151515</linkedRecordId>
+                                                  </updatedBy>
+                                                  <tsUpdated _en="Update time" _sv="Uppdateringstid"
+                                                  >2024-04-22T10:22:34.189533Z</tsUpdated>
+                                                  </updated>
+                                                  <createdBy _en="Text for:createdByLinkText"
+                                                  _sv="Text f&#246;r:createdByLinkText">
+                                                  <linkedRecordType>user</linkedRecordType>
+                                                  <linkedRecordId>151515</linkedRecordId>
+                                                  </createdBy>
+                                                  <tsCreated
+                                                  _en="Timestamp for when the record was created"
+                                                  _sv="Tidsst&#228;mpel f&#246;r n&#228;r posten skapades"
+                                                  >2024-01-15T13:57:11.800629Z</tsCreated>
+                                                </recordInfo>
+                                            </place>
+                                        </linkedRecord>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/alvin-place/679</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </place>
+                                    <country _en="Country" _no="Land" _sv="Land" _value_en="Sweden"
+                                        _value_no="Sverige" _value_sv="Sverige">sw</country>
+                                </address>
+                                <recordInfo _en="Record information" _no="Postinformasjon"
+                                    _sv="Postinformation">
+                                    <id _en="Id" _no="Id" _sv="Id">3</id>
+                                    <type _en="RecordType" _no="" _sv="Posttyp">
+                                        <linkedRecordType>recordType</linkedRecordType>
+                                        <linkedRecordId>alvin-location</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/recordType/alvin-location</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </type>
+                                    <validationType _en="Validation type" _sv="Valideringstyp">
+                                        <linkedRecordType>validationType</linkedRecordType>
+                                        <linkedRecordId>location</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/validationType/location</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </validationType>
+                                    <dataDivider _en="Data divider" _sv="Datadelare">
+                                        <linkedRecordType>system</linkedRecordType>
+                                        <linkedRecordId>alvinData</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/system/alvinData</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </dataDivider>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av"
+                                            _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid"
+                                            >2024-09-04T14:13:57.520556Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="1">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av"
+                                            _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>user:15433956012260219</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid"
+                                            >2024-09-06T06:34:09.185151Z</tsUpdated>
+                                    </updated>
+                                    <createdBy _en="Text for:createdByLinkText"
+                                        _sv="Text f&#246;r:createdByLinkText">
+                                        <linkedRecordType>user</linkedRecordType>
+                                        <linkedRecordId>151515</linkedRecordId>
+                                    </createdBy>
+                                    <tsCreated _en="Timestamp for when the record was created"
+                                        _sv="Tidsst&#228;mpel f&#246;r n&#228;r posten skapades"
+                                        >2024-09-04T14:13:57.520556Z</tsCreated>
+                                </recordInfo>
+                                <point _en="Geographical point" _no="Geografisk punkt"
+                                    _sv="Geografisk punkt">
+                                    <latitude _en="Latitude" _no="Latitude" _sv="Latitud"
+                                        >59.8549318</latitude>
+                                    <longitude _en="Longitude" _no="Longitude" _sv="Longitud"
+                                        >17.6307515</longitude>
+                                </point>
+                            </location>
+                        </linkedRecord>
+                        <actionLinks>
+                            <read>
+                                <requestMethod>GET</requestMethod>
+                                <rel>read</rel>
+                                <url>https://cora.alvin-portal.org/rest/record/alvin-location/3</url>
+                                <accept>application/vnd.cora.record+xml</accept>
+                            </read>
+                        </actionLinks>
+                    </location>
+                </heldBy>
+            </physicalLocation>
+            <agent _en="Person" _no="Person" _sv="Person" repeatId="0" type="person">
+                <person _en="Person" _no="Person" _sv="Person">
+                    <linkedRecordType>alvin-person</linkedRecordType>
+                    <linkedRecordId>12509</linkedRecordId>
+                    <linkedRecord>
+                        <person _en="Person (alvin-person)" _no="Person (alvin-person)"
+                            _sv="Person (alvin-person)">
+                            <authority _en="Authority" _no="Autoritet" _sv="Auktoritet" lang="swe"
+                                repeatId="0">
+                                <name _en="Name" _no="Navn" _sv="Namn" type="personal">
+                                    <namePart _en="Family name" _no="Etternavn" _sv="Efternamn"
+                                        type="family">Ludwig</namePart>
+                                    <namePart _en="Given name" _no="Fornavn" _sv="F&#246;rnamn"
+                                        type="given">Georg</namePart>
+                                </name>
+                            </authority>
+                            <personInfo _en="Dates, places, nationality, gender"
+                                _no="Datoer, steder, nasjonalitet, kj&#248;nn"
+                                _sv="Datum, platser, nationalitet, k&#246;n">
+                                <birthDate _en="Date of birth" _no="F&#248;dselsdato"
+                                    _sv="F&#246;delsedatum">
+                                    <date _en="Date" _no="Dato" _sv="Datum">
+                                        <year _en="Year" _no="&#197;r" _sv="&#197;r">1826</year>
+                                    </date>
+                                </birthDate>
+                                <deathDate _en="Date of death" _no="D&#248;dsdato"
+                                    _sv="D&#246;dsdatum">
+                                    <date _en="Date" _no="Dato" _sv="Datum">
+                                        <year _en="Year" _no="&#197;r" _sv="&#197;r">1910</year>
+                                    </date>
+                                </deathDate>
+                            </personInfo>
+                            <fieldOfEndeavor _en="Field of activity" _no="Aktivitetsfelt"
+                                _sv="Verksamhetsomr&#229;de" repeatId="1"
+                                >Psychiatrist</fieldOfEndeavor>
+                            <recordInfo _en="Record information" _no="Postinformasjon"
+                                _sv="Postinformation">
+                                <id _en="Id" _no="Id" _sv="Id">12509</id>
+                                <validationType _en="Validation type" _sv="Valideringstyp">
+                                    <linkedRecordType>validationType</linkedRecordType>
+                                    <linkedRecordId>person</linkedRecordId>
+                                    <actionLinks>
+                                        <read>
+                                            <requestMethod>GET</requestMethod>
+                                            <rel>read</rel>
+                                            <url>https://cora.alvin-portal.org/rest/record/validationType/person</url>
+                                            <accept>application/vnd.cora.record+xml</accept>
+                                        </read>
+                                    </actionLinks>
+                                </validationType>
+                                <dataDivider _en="Data divider" _no="" _sv="Datadelare">
+                                    <linkedRecordType>system</linkedRecordType>
+                                    <linkedRecordId>alvinData</linkedRecordId>
+                                    <actionLinks>
+                                        <read>
+                                            <requestMethod>GET</requestMethod>
+                                            <rel>read</rel>
+                                            <url>https://cora.alvin-portal.org/rest/record/system/alvinData</url>
+                                            <accept>application/vnd.cora.record+xml</accept>
+                                        </read>
+                                    </actionLinks>
+                                </dataDivider>
+                                <type _en="RecordType" _no="" _sv="Posttyp">
+                                    <linkedRecordType>recordType</linkedRecordType>
+                                    <linkedRecordId>alvin-person</linkedRecordId>
+                                    <actionLinks>
+                                        <read>
+                                            <requestMethod>GET</requestMethod>
+                                            <rel>read</rel>
+                                            <url>https://cora.alvin-portal.org/rest/record/recordType/alvin-person</url>
+                                            <accept>application/vnd.cora.record+xml</accept>
+                                        </read>
+                                    </actionLinks>
+                                </type>
+                                <createdBy _en="Text for:createdByLinkText"
+                                    _sv="Text f&#246;r:createdByLinkText">
+                                    <linkedRecordType>user</linkedRecordType>
+                                    <linkedRecordId>151515</linkedRecordId>
+                                </createdBy>
+                                <tsCreated _en="Timestamp for when the record was created"
+                                    _sv="Tidsst&#228;mpel f&#246;r n&#228;r posten skapades"
+                                    >2024-08-27T12:48:34.329383Z</tsCreated>
+                                <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                    <updatedBy _en="Updated by" _no="Oppdatert av"
+                                        _sv="Uppdaterad av">
+                                        <linkedRecordType>user</linkedRecordType>
+                                        <linkedRecordId>151515</linkedRecordId>
+                                    </updatedBy>
+                                    <tsUpdated _en="Update time" _sv="Uppdateringstid"
+                                        >2024-08-27T12:48:34.329383Z</tsUpdated>
+                                </updated>
+                            </recordInfo>
+                        </person>
+                    </linkedRecord>
+                    <actionLinks>
+                        <read>
+                            <requestMethod>GET</requestMethod>
+                            <rel>read</rel>
+                            <url>https://cora.alvin-portal.org/rest/record/alvin-person/12509</url>
+                            <accept>application/vnd.cora.record+xml</accept>
+                        </read>
+                    </actionLinks>
+                </person>
+                <role _en="Role" _no="Rolle" _sv="Roll" _value_en="Writer of added commentary"
+                    _value_no="Forfatter av tilf&#248;yd kommentar" _value_sv="Analys/kommentar"
+                    repeatId="0">wac</role>
+            </agent>
+            <recordInfo _en="Record information" _no="Postinformasjon" _sv="Postinformation">
+                <validationType _en="Validation type" _sv="Valideringstyp">
+                    <linkedRecordType>validationType</linkedRecordType>
+                    <linkedRecordId>recordStillImage</linkedRecordId>
+                    <actionLinks>
+                        <read>
+                            <requestMethod>GET</requestMethod>
+                            <rel>read</rel>
+                            <url>https://cora.alvin-portal.org/rest/record/validationType/recordStillImage</url>
+                            <accept>application/vnd.cora.record+xml</accept>
+                        </read>
+                    </actionLinks>
+                </validationType>
+                <dataDivider _en="Data divider" _no="" _sv="Datadelare">
+                    <linkedRecordType>system</linkedRecordType>
+                    <linkedRecordId>alvinData</linkedRecordId>
+                    <actionLinks>
+                        <read>
+                            <requestMethod>GET</requestMethod>
+                            <rel>read</rel>
+                            <url>https://cora.alvin-portal.org/rest/record/system/alvinData</url>
+                            <accept>application/vnd.cora.record+xml</accept>
+                        </read>
+                    </actionLinks>
+                </dataDivider>
+                <permissionUnit _en="Permission unit" _no="Rettighetsenhet"
+                    _sv="R&#228;ttighetsenhet">
+                    <linkedRecordType>permissionUnit</linkedRecordType>
+                    <linkedRecordId>3</linkedRecordId>
+                    <actionLinks>
+                        <read>
+                            <requestMethod>GET</requestMethod>
+                            <rel>read</rel>
+                            <url>https://cora.alvin-portal.org/rest/record/permissionUnit/3</url>
+                            <accept>application/vnd.cora.record+xml</accept>
+                        </read>
+                    </actionLinks>
+                </permissionUnit>
+                <visibility _en="Visibility of the record" _no="Postens synlighet"
+                    _sv="Postens synlighet" _value_en="Published" _value_no="Publisert"
+                    _value_sv="Publicerad">published</visibility>
+                <tsVisibility _en="Timestamp for visibility value update"
+                    _no="Tidsstempel for endring av synlighetsverdi"
+                    _sv="Tidsst&#228;mpel f&#246;r &#228;ndring av synlighetsv&#228;rde"
+                    >2025-09-26T15:16:58.755058Z</tsVisibility>
+                <id _en="Id" _no="Id" _sv="Id">12345678</id>
+                <type _en="RecordType" _no="" _sv="Posttyp">
+                    <linkedRecordType>recordType</linkedRecordType>
+                    <linkedRecordId>alvin-record</linkedRecordId>
+                    <actionLinks>
+                        <read>
+                            <requestMethod>GET</requestMethod>
+                            <rel>read</rel>
+                            <url>https://cora.alvin-portal.org/rest/record/recordType/alvin-record</url>
+                            <accept>application/vnd.cora.record+xml</accept>
+                        </read>
+                    </actionLinks>
+                </type>
+                <createdBy _en="Text for:createdByLinkText" _sv="Text f&#246;r:createdByLinkText">
+                    <linkedRecordType>user</linkedRecordType>
+                    <linkedRecordId>user:15434020931125281</linkedRecordId>
+                </createdBy>
+                <tsCreated _en="Timestamp for when the record was created"
+                    _sv="Tidsst&#228;mpel f&#246;r n&#228;r posten skapades"
+                    >2025-09-26T15:16:58.757896Z</tsCreated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid"
+                        >2025-09-29T06:25:34.144310Z</tsUpdated>
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>user:15434020931125281</linkedRecordId>
+                    </updatedBy>
+                </updated>
+                <urn _en="URN" _no="URN" _sv="URN">urn:nbn:se:alvin:portal:record-12345678</urn>
+            </recordInfo>
+            <language _en="Language" _no="Spr&#229;k" _sv="Spr&#229;k" _value_en="Abkhaz"
+                _value_no="Abkhasisk" _value_sv="Abchaziska" repeatId="1">abk</language>
+        </record>
+    </data>
+    <actionLinks>
+        <read>
+            <requestMethod>GET</requestMethod>
+            <rel>read</rel>
+            <url>https://cora.alvin-portal.org/rest/record/alvin-record/12345678</url>
+            <accept>application/vnd.cora.record+xml</accept>
+        </read>
+    </actionLinks>
+</record>

@@ -5,7 +5,7 @@ from django.conf import settings
 
 XML_HEADERS = {
     "Content-Type": "application/vnd.cora.record+xml",
-    "Accept": "application/vnd.cora.record+xml",
+    "Accept": "application/vnd.cora.record-decorated+xml",
 }
 
 @dataclass(frozen=True)

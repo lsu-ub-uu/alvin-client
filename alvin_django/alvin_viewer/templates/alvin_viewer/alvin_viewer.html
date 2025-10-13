@@ -57,7 +57,7 @@
               :class="{ 'bg-alvin-green': activeTab === 'all_metadata', 'bg-gray-300': activeTab != 'all_metadata' }">
               {% translate 'All metadata' %}
       </button>
-      {% if metadata.type_of_resource == 'col' %}
+      {% if metadata.type_of_resource.code == 'col' %}
         <button @click="activeTab = 'inventory'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
                 :class="{ 'bg-alvin-green': activeTab === 'inventory', 'bg-gray-300': activeTab != 'inventory' }">
                 {% translate 'Arkivförteckning' %}

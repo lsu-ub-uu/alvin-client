@@ -6,7 +6,6 @@ from lxml import etree
 def iiif_manifest(request, record_id: str):
     api = AlvinAPI()
     base_url = request.build_absolute_uri()
-    print(base_url)
 
     try:
         record_xml = api.get_record_xml("alvin-record", record_id)        

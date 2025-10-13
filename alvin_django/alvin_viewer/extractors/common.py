@@ -3,15 +3,15 @@ from typing import Dict, List
 from ..xmlutils.nodes import text, texts, elements
 
 def authority_names(root: etree._Element, name_parts: Dict[str, str]) -> Dict[str, Dict[str, str]]:
-    result = {}
-    for name in root.xpath("//authority"):
+    result: Dict[str, str] = {}
+    for name in elements(root, ".//authority"):
         lang = name.get("lang")
         result[lang] = {key: name.findtext(xpath) for key, xpath in name_parts.items()}
     return result
 
 def variant_names_list(root: etree._Element, mapping: Dict[str, str]) -> List[Dict[str, str]]:
     out: List[Dict[str, str]] = []
-    for node in root.xpath("//variant"):
+    for node in elements(root, "//variant"):
         d: Dict[str, str] = {}
         for key, xp in mapping.items():
             if xp.startswith("./@"):
@@ -21,19 +21,11 @@ def variant_names_list(root: etree._Element, mapping: Dict[str, str]) -> List[Di
         out.append(d)
     return out
 
-def electronic_locators(node: etree._Element):
+def electronic_locators(root: etree._Element):
     return [{
-        "url": loc.findtext("./url"),
-        "display_label": loc.findtext("./displayLabel"),
-    } for loc in node.xpath(".//electronicLocator")]
-
-def agents(node: etree._Element, path: str):
-    return [{
-        "type": f"alvin-{agent.get('type')}",
-        "id": agent.findtext(".//linkedRecordId"),
-        "role": texts(agent, "./role"),
-        "certainty": agent.findtext("./certainty"),
-    } for agent in node.xpath(path)]
+        "url": text(loc, "url"),
+        "display_label": text(loc, "displayLabel"),
+    } for loc in elements(root, "data/record/electronicLocator")]
 
 def origin_places(node: etree._Element):
     return [{
@@ -43,11 +35,11 @@ def origin_places(node: etree._Element):
         "certainty": op.findtext(".//certainty"),
     } for op in node.xpath(".//data/record/originPlace")]
 
-def related(node: etree._Element, typ: str):
+def related(node: etree._Element, reltype: str):
     return [{
         "id": r.findtext(".//linkedRecordId"),
         "url": r.findtext(".//url"),
-    } for r in node.xpath(f".//related[@type='{typ}']")]
+    } for r in node.xpath(f".//related[@type='{reltype}']")]
 
 def related_records(node: etree._Element, path: str):
     return [{
@@ -70,10 +62,10 @@ def components(nodes: List[etree._Element]):
                 "subtitle": comp.findtext("./title/subtitle"),
                 "orientation_code": comp.findtext("./title/orientationCode")
             },
-            "level": comp.findtext("./level"),
-            "unitid": comp.findtext("./unitid"),
-            "related_records": related_records(comp, "./relatedTo"),
-            "agents": agents(comp, "./agent"),
+            "level": text(comp, "level"),
+            "unitid": text(comp, "unitid"),
+            "related_records": related_records(comp, "relatedTo"),
+            "agents": agents(comp, "agent"),
             "start_date": get_dates("start", comp.find("./originDate")),
             "end_date": get_dates("end", comp.find("./originDate")),
             "place": comp.findtext("./place/linkedRecordId"),
@@ -94,9 +86,9 @@ def get_dates(kind: str, node: etree._Element) -> str:
     if node is None:
         return ""
     parts = list(filter(None, [
-        node.findtext(f".//{kind}Date//year"),
-        node.findtext(f".//{kind}Date//month"),
-        node.findtext(f".//{kind}Date//day"),
+        text(node, f".//{kind}Date//year"),
+        text(node, f".//{kind}Date//month"),
+        text(node, f".//{kind}Date//day"),
     ]))
     date_str = "-".join(parts)
     era = node.findtext(f".//{kind}Date//era")

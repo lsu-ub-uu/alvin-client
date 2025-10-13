@@ -3,9 +3,9 @@
 {% if value %}
 <div class="md-row">
     <dt class="md-label">
-        {% translate label %}
+        {{ label }}
         {% if extra_label %}
-            [{{ extra_label }}]
+            ({% trans extra_label %})
         {% endif %}
     </dt>
     <dd class="md-value">
@@ -17,10 +17,10 @@
             {{ value }}
         {% endif %}
         {% if extra_value %}
-            {% translate extra_value %}
+            {{ extra_value }}
         {% endif %}
         {% if attribute %}
-            ({% translate attribute %})
+            ({{ attribute }})
         {% endif %}
     </dd>
 </div>

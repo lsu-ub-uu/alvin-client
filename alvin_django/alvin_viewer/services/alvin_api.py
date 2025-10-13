@@ -12,7 +12,7 @@ XML_HEADERS = {
 class AlvinEndpoints:
     base: str
     paths: dict
-
+    
     @staticmethod
     def default():
         return AlvinEndpoints(

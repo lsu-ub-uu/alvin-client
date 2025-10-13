@@ -3,6 +3,7 @@ from django.utils.translation import get_language
 
 register = template.Library()
 
+@register.filter
 def select_current_language():
     lang_options = {
         'sv': 'swe',
@@ -11,6 +12,9 @@ def select_current_language():
         }
     
     return lang_options[get_language()]
+
+def _lang(metadata):
+    return select_current_language() if metadata.get(select_current_language()) else next(iter(metadata))
 
 @register.filter
 def alvin_title(metadata, record_type):
@@ -33,15 +37,15 @@ def alvin_title(metadata, record_type):
         raise ValueError("Record type is not valid")
     
     joiner, keys = mapping[record_type]
-    
+
     # Välj geographic som auktoriserat namn för alvin-place
     if record_type == "alvin-place":
-        lang = select_current_language() if title.get(select_current_language()) else next(iter(title))
+        lang = _lang(title)
         return title.get(lang, {}).get("geographic", "")
     
     # För alvin-person och alvin-organisation, join baserad på valt språk
     if record_type in {"alvin-person", "alvin-organisation"}:
-        lang = select_current_language() if title.get(select_current_language()) else next(iter(title))
+        lang = _lang(title)
         lang_data = title.get(lang, {})
         title_part = joiner.join(filter(None, (lang_data.get(key) for key in keys)))
         if record_type == "alvin-person":
@@ -68,6 +72,12 @@ def alvin_person_name(metadata):
 def alvin_organisation_name(metadata):
     keys = ["corporate_name", "subordinate_name", "terms_of_address"]
     return ". ".join(filter(None, (metadata.get(key) for key in keys)))
+
+@register.filter
+def agent_name(metadata):
+    lang = _lang(metadata)
+    name = metadata[lang]
+    return alvin_person_name(name) if name.get("family_name") else alvin_organisation_name(name)
 
 @register.filter
 def alvin_work_name(metadata):

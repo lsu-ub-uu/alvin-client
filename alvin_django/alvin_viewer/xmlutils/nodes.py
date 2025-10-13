@@ -11,7 +11,7 @@ def texts(node: etree._Element, xpath: str) -> List[str]:
 def attr(node: etree._Element, xpath_attr: str, default: Optional[str] = None) -> Optional[str]:
     # xpath_attr e.g. "./@lang"
     if not xpath_attr.startswith("./@"):
-        raise ValueError("attr() expects XPath like './@attrName'")
+        raise ValueError(f"attr() expects XPath like './@attrName' not {xpath_attr}")
     key = xpath_attr[3:]
     val = node.get(key)
     return val if val not in (None, "") else default

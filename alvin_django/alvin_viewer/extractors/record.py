@@ -2,39 +2,45 @@ from lxml import etree
 from .common import origin_places, electronic_locators, related_records, components, get_dates, get_date_other
 from django.utils import translation
 from ..xmlutils.nodes import text, texts, attr, elements, first
-from ..xmlutils.decorated import decorated_list, decorated_text, decorated_texts, decorated_texts_with_type, decorated_agents
+from ..xmlutils.decorated import decorated_list, decorated_text, decorated_texts, decorated_texts_with_type, decorated_agents, decorated_location, decorated_subject_authority, _get_label, _get_value
 from .cleaner import clean_empty
 
 BASE_XP = "data/record/"
 
 def _titles(root: etree._Element, xp: str):
     titles = [{
+        "label": _get_label(e),
         "type": attr(e, "./@variantType"),
-        "main_title": text(e, "./mainTitle"),
-        "subtitle": text(e, "./subtitle"),
-        "orientation_code": text(e, "./orientationCode"),
+        "main_title": text(e, "mainTitle"),
+        "subtitle": text(e, "subtitle"),
+        "orientation_code": text(e, "orientationCode"),
     } for e in elements(root, f"{BASE_XP}{xp}")]
     return titles or None
 
-def _subject_authority(root: etree._Element, authority_type: str):
-    md = decorated_agents(root, f"subject[@type = '{authority_type}']")
-    return md
-
 def _dimensions(root: etree._Element):
     return [{
-        "scope": text(e, "./scope"),
-        "height": text(e, "./height"),
-        "width": text(e, "./width"),
-        "depth": text(e, "./depth"),
-        "diameter": text(e, "./diameter"),
-        "unit": text(e, "./unit"),
+        "label": _get_label(e),
+        "scope": first(decorated_list(e, "scope", ignore_base_xp=True)["items"]),
+        "height": decorated_text(e, "height", ignore_base_xp=True),
+        "width": decorated_text(e, "width", ignore_base_xp=True),
+        "depth": decorated_text(e, "depth", ignore_base_xp=True),
+        "diameter": decorated_text(e, "diameter", ignore_base_xp=True),
+        "unit": first(decorated_list(e, "unit", ignore_base_xp=True)["items"]),
     } for e in elements(root, f"{BASE_XP}dimensions")]
 
-def _measure(root: etree._Element):
-    return [{
-        "weight": d.findtext("./weight"),
-        "unit": d.findtext("./unit"),
-    } for d in root.xpath("data/record/measure")]
+def _measure(root: etree._Element, xp: str):
+
+    e = root.find(f"{BASE_XP}{xp}")
+    if e is None:
+        return None
+
+    measure = {
+        "label": _get_label(e),
+        "weight": text(e, "weight"),
+        "unit": _get_value(e.find("unit"))
+    }
+
+    return measure or None
 
 def _notes(root: etree._Element):
     return [{"type": n.get("noteType"), "note": n.findtext(".")} for n in root.xpath("data/record/note")]
@@ -62,14 +68,12 @@ def extract(root: etree._Element) -> dict:
         "production_method": decorated_list(root, "productionMethod"),
         "main_title": _titles(root, "title"),
         "variant_titles": _titles(root, "variantTitle"),
-        "physical_location": {
-            "held_by": first(decorated_agents(root, "physicalLocation/heldBy/location")),
-            "sublocation": decorated_text(root, "physicalLocation/sublocation"),
-            "shelf_mark": decorated_text(root, "physicalLocation/shelfMark"),
-            "former_shelf_mark": decorated_texts(root, "physicalLocation/formerShelfMark"),
-            "subcollection": decorated_list(root, "physicalLocation/subcollection/*"),
-            "note": decorated_text(root, "physicalLocation/note[@noteType='general']"),
-        },
+        "location": decorated_location(root, "physicalLocation/heldBy/location"),
+        "sublocation": decorated_text(root, "physicalLocation/sublocation"),
+        "shelf_mark": decorated_text(root, "physicalLocation/shelfMark"),
+        "former_shelf_mark": decorated_texts(root, "physicalLocation/formerShelfMark"),
+        "subcollection": decorated_list(root, "physicalLocation/subcollection/*"),
+        "physcial_location_note": decorated_text(root, "physicalLocation/note[@noteType='general']"),
         "agents": decorated_agents(root, "agent"),
         "languages": decorated_list(root, "language"),
         "description_languages": decorated_list(root, "adminMetadata/descriptionLanguage"),
@@ -82,7 +86,7 @@ def extract(root: etree._Element) -> dict:
         "date_other": get_date_other(root),
         "extent": decorated_text(root, "extent"),
         "dimensions": _dimensions(root),
-        "measure": _measure(root),
+        "measure": _measure(root, "measure"),
         "physical_description_notes": decorated_texts_with_type(root, "physicalDescription", "note", "./@noteType"),
         "base_material": decorated_list(root, "baseMaterial"),
         "applied_material": decorated_list(root, "appliedMaterial"),
@@ -95,9 +99,9 @@ def extract(root: etree._Element) -> dict:
         "electronic_locators": electronic_locators(root),
         "genre_form": decorated_list(root, "genreForm"),
         "subjects": _subjects_misc(root),
-        "subject_person": _subject_authority(root, "person"),
-        "subject_organisation": _subject_authority(root, "organisation"),
-        "subject_place": _subject_authority(root, "place"),
+        "subject_person": decorated_subject_authority(root, "person"),
+        "subject_organisation": decorated_subject_authority(root, "organisation"),
+        "subject_place": decorated_subject_authority(root, "place"),
         "classifications": _classifications(root),
         "access_policy": decorated_text(root, "accessPolicy"),
         "binding_description": {
@@ -127,7 +131,7 @@ def _col(root: etree._Element) -> dict:
     "accruals": decorated_text(root, "accruals"),
     }
 
-def _ms(root: etree._Element) -> dict:
+def _ms_contents(root: etree._Element) -> dict:
     return {
     "locus": decorated_text(root, "locus"),
     "incipit": decorated_text(root, "incipit"),

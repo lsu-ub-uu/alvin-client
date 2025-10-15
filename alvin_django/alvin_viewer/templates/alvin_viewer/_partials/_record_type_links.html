@@ -3,13 +3,17 @@
 {% if record_type_links %}
 <div class="md-row">
     <dt class="md-label">
-        {% translate label %}
+        {{ label }}
     </dt>
     <dd class="md-value">
-        {% for record_type in record_type_links %}
+        {% for record_type in record_type_links.authorities %}
             {% url 'alvin_viewer' link_type record_type.id as record_type_url %}
                 <a href="{{ record_type_url }}">
-                    {{ record_type_url }}
+                    {% if link_type == 'alvin-place'%}
+                        {{record_type.name|alvin_place_name}}
+                    {% else %}
+                        {{ record_type.name|agent_name }}
+                    {% endif %}
                 </a>
                 {% if record_type.type %}
                     ({{ record_type.type }})

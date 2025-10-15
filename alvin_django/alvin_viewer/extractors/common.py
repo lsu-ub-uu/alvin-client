@@ -57,24 +57,25 @@ def components(nodes: List[etree._Element]):
     for comp in nodes:
         sub = components(comp.xpath("./*[contains(name(), 'component')]"))
         md = {
+            "level": text(comp, "level"),
+            "unitid": text(comp, "unitid"),
             "title": {
                 "main_title": comp.findtext("./title/mainTitle"),
                 "subtitle": comp.findtext("./title/subtitle"),
                 "orientation_code": comp.findtext("./title/orientationCode")
             },
-            "level": text(comp, "level"),
-            "unitid": text(comp, "unitid"),
+            #"agents": agents(comp, "agent"),
+            "place": comp.findtext("./place/linkedRecordId"),
             "related_records": related_records(comp, "relatedTo"),
-            "agents": agents(comp, "agent"),
             "start_date": get_dates("start", comp.find("./originDate")),
             "end_date": get_dates("end", comp.find("./originDate")),
-            "place": comp.findtext("./place/linkedRecordId"),
             "display_date": comp.findtext("./originDate/displayDate"),
             "extent": comp.findtext("./extent"),
-            "electronic_locators": electronic_locators(comp),
             "note": comp.findtext("./note"),
-            "access_policy": comp.findtext("./accessPolicy"),
-            "accession_numbers": [number.findtext(".") for number in comp.findall("./identifier[@type = 'accessionNumber']")]
+            "accession_numbers": [number.findtext(".") for number in comp.findall("./identifier[@type = 'accessionNumber']")],
+            "related": "",
+            "electronic_locators": electronic_locators(comp),
+            "access_policy": comp.findtext("./accessPolicy")
         }
         if sub:
             md["components"] = sub
@@ -91,8 +92,11 @@ def get_dates(kind: str, node: etree._Element) -> str:
         text(node, f".//{kind}Date//day"),
     ]))
     date_str = "-".join(parts)
-    era = node.findtext(f".//{kind}Date//era")
-    return f"{date_str} {era}" if era else date_str
+    era = text(node, f".//{kind}Date//era")
+    return {
+        "label": "",
+        "date": f"{date_str} {era}" if era else date_str
+    }
 
 def get_date_other(node: etree._Element):
     return [{

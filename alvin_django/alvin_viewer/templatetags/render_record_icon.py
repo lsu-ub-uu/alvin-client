@@ -33,7 +33,7 @@ def render_record_icon(metadata):
     elif metadata["type_of_resource"]["code"] == 'img':
         return {
             'icon_path': f'/img/recordTypes/image.svg',
-            'icon_alt': 'Bild',
+            'icon_alt': 'Färgpalett',
             'label': 'Bild',
         }
     elif metadata["type_of_resource"]["code"] == 'not':
@@ -45,13 +45,19 @@ def render_record_icon(metadata):
     elif metadata["type_of_resource"]["code"] == 'txt':
         return {
             'icon_path': f'/img/recordTypes/text.svg',
-            'icon_alt': 'Text',
+            'icon_alt': 'Dokument',
             'label': 'Text',
         }
     elif metadata["type_of_resource"]["code"] == 'col':
         return {
             'icon_path': f'/img/recordTypes/archive.svg',
-            'icon_alt': 'Arkiv',
+            'icon_alt': 'Arkivlåda',
             'label': 'Arkiv',
+        }
+    elif metadata["type_of_resource"]["code"] == 'art':
+                return {
+            'icon_path': f'/img/recordTypes/object.svg',
+            'icon_alt': 'Kub',
+            'label': 'Föremål',
         }
     return {}

@@ -48,23 +48,23 @@
     </div>
 
     <!-- Val av metadatavy -->
-    <nav class="flex flex-wrap justify-start w-full text-xl max-md:text-base">
+    <nav class="flex flex-wrap justify-start w-full text-xl max-md:text-base bg-gray-200">
       <button @click="activeTab = 'overview'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
-              :class="{ 'bg-alvin-green': activeTab === 'overview', 'bg-gray-300': activeTab != 'overview' }">
+              :class="{ 'bg-alvin-green': activeTab === 'overview', 'bg-gray-200': activeTab != 'overview' }">
               {% translate 'Översikt' %}
       </button>
       <button @click="activeTab = 'all_metadata'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
-              :class="{ 'bg-alvin-green': activeTab === 'all_metadata', 'bg-gray-300': activeTab != 'all_metadata' }">
+              :class="{ 'bg-alvin-green': activeTab === 'all_metadata', 'bg-gray-200': activeTab != 'all_metadata' }">
               {% translate 'All metadata' %}
       </button>
       {% if metadata.type_of_resource.code == 'col' %}
         <button @click="activeTab = 'inventory'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
-                :class="{ 'bg-alvin-green': activeTab === 'inventory', 'bg-gray-300': activeTab != 'inventory' }">
+                :class="{ 'bg-alvin-green': activeTab === 'inventory', 'bg-gray-200': activeTab != 'inventory' }">
                 {% translate 'Arkivförteckning' %}
         </button>
       {% endif %}
       <button @click="activeTab = 'related'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
-              :class="{ 'bg-alvin-green': activeTab === 'related', 'bg-gray-300': activeTab != 'related' }">
+              :class="{ 'bg-alvin-green': activeTab === 'related', 'bg-gray-200': activeTab != 'related' }">
               {% translate 'Relaterat' %}
       </button>
     </nav>

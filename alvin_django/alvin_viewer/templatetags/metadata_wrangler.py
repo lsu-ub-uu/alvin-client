@@ -109,9 +109,46 @@ def date_other_join(metadata):
     return ". ".join(filter(None, [joined_date, metadata.get("date_note")]))
 
 @register.filter
+def dimensions_label_join(metadata):
+    keys = ["label", "scope"]
+    return ", ".join(filter(None, (metadata.get(key) for key in keys))).capitalize()
+
+@register.filter
 def dimensions_join(metadata):
     keys = ["height", "width", "depth", "diameter"]
-    return "x".join(filter(None, (metadata.get(key) for key in keys)))
+
+    parts = []
+    labels = []
+
+    for key in keys:
+        item = (metadata or {}).get(key) or {}
+        text = item.get("text")
+        label = item.get("label")
+
+        if text not in (None, ""):
+            parts.append(str(text))
+
+            if label:
+                labels.append(str(label))
+
+    texts_str = " x ".join(filter(None,parts))
+    unit_str = metadata.get("unit")
+    dimensions_str = ' '.join(filter(None, (texts_str, unit_str)))
+    labels_str = f"({', '.join(labels)})"
+    
+    return " ".join(filter(None, (dimensions_str, labels_str))).lower()
+
+@register.filter
+def measure_join(metadata):
+    keys = ["weight", "unit"]
+
+    m = []
+
+    for key in keys:
+        item = (metadata or {}).get(key) or {}
+        m.append(item)
+    
+    return " ".join(filter(None, (m)))
 
 @register.filter
 def subjects_join(metadata):

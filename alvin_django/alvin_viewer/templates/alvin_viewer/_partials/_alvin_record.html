@@ -9,7 +9,7 @@
     {{metadata}}
     <div x-show="activeTab != 'related' && activeTab != 'inventory'">
         {% for title in metadata.variant_titles %}
-            {% include "./_metadata_row.html" with label="Alternativ titel" value=title|alvin_work_name attribute=title.type %}
+            {% include "./_metadata_row.html" with label=title.label value=title|alvin_work_name attribute=title.type %}
         {% endfor %}
         {% for agent in metadata.agents %}
             {% url 'alvin_viewer' agent.type agent.id as agent_url %}
@@ -31,34 +31,35 @@
             {% endfor %}
             {% include "./_metadata_row.html" with label=metadata.languages.label value=metadata.languages.items|join:"<br>"|safe %}
             {% include "./_metadata_row.html" with label=metadata.description_languages.label value=metadata.description_languages.items|join:"<br>"|safe %}
-            {% url 'alvin_viewer' 'alvin-location' metadata.physical_location.held_by.id as held_by_url %}
-            {% include "./_metadata_row.html" with label=metadata.physical_location.held_by.label value=metadata.physical_location.held_by.name|agent_name url=held_by_url %}
-            {% include "./_metadata_row.html" with label=metadata.physical_location.sublocation.label value=metadata.physical_location.sublocation.text %}
-            {% include "./_metadata_row.html" with label=metadata.physical_location.shelf_mark.label value=metadata.physical_location.shelf_mark.text %}
-            {% include "./_metadata_row.html" with label=metadata.physical_location.former_shelf_mark.label value=metadata.physical_location.former_shelf_mark.texts|join:"<br>" %}
-            {% include "./_metadata_row.html" with label=metadata.physical_location.subcollection.label value=metadata.physical_location.subcollection.items|join:"<br>" %}
-            {% include "./_metadata_row.html" with label=metadata.physical_location.note.label extra_label="Fysisk placering" value=metadata.physical_location.note|default:""|linebreaksbr %}
+            {% url 'alvin_viewer' 'alvin-location' metadata.location.id as location_url %}
+            {% include "./_metadata_row.html" with label=metadata.location.label url=location_url value=metadata.location.name|agent_name %}
+            {% include "./_metadata_row.html" with label=metadata.sublocation.label value=metadata.sublocation.text %}
+            {% include "./_metadata_row.html" with label=metadata.shelf_mark.label value=metadata.shelf_mark.text %}
+            {% include "./_metadata_row.html" with label=metadata.former_shelf_mark.label value=metadata.former_shelf_mark.texts|join:"<br>" %}
+            {% include "./_metadata_row.html" with label=metadata.subcollection.label value=metadata.subcollection.items|join:"<br>" %}
+            {% include "./_metadata_row.html" with label=metadata.physcial_location_note.label extra_label="Fysisk placering" value=metadata.note|linebreaksbr %}
             {% include "./_metadata_row.html" with label=metadata.base_material.label value=metadata.base_material.items|join:", " %}
             {% include "./_metadata_row.html" with label=metadata.applied_material.label value=metadata.applied_material.items|join:", " %}
-            {% include "./_metadata_row.html" with label=metadata.extent.label value=metadata.extent.text|default:""|linebreaksbr %}
+            {% include "./_metadata_row.html" with label=metadata.extent.label value=metadata.extent.text|linebreaksbr %}
             {% for dimension in metadata.dimensions %}
-                {% include "./_metadata_row.html" with label="Mått" extra_label=dimension.scope value=dimension|dimensions_join attribute=dimension.unit %}
+                {% include "./_metadata_row.html" with label=dimension|dimensions_label_join extra_label=dimension.scope.label value=dimension|dimensions_join %}
             {% endfor %}
-            {% include "./_metadata_row.html" with label=metadata.physical_description_notes.label value=metadata.physical_description_notes.texts|join:"<br>"|default:""|linebreaksbr %}
+            {% include "./_metadata_row.html" with label=metadata.measure.label value=metadata.measure|measure_join %}
+            {% include "./_metadata_row.html" with label=metadata.physical_description_notes.label value=metadata.physical_description_notes.texts|join:"<br>"|linebreaksbr %}
             {% for note in metadata.notes.texts %}
-                {% include "./_metadata_row.html" with label=note.type value=note.text|default:""|linebreaksbr %}
+                {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
             {% endfor %}
-            {% include "./_metadata_row.html" with label=metadata.summary.label value=metadata.summary.text|default:""|linebreaksbr %}
-            {% include "./_metadata_row.html" with label=metadata.transcription.label value=metadata.transcription.text|default:""|linebreaksbr %}
-            {% include "./_metadata_row.html" with label=metadata.table_of_contents.label value=metadata.table_of_contents.text|default:""|linebreaksbr %}
-            {% include "./_metadata_row.html" with label=metadata.literature.label value=metadata.literature.text|default:""|linebreaksbr %}
-            {% include "./_metadata_row.html" with label=metadata.access_policy.label value=metadata.access_policy.text|default:""|linebreaksbr %}
+            {% include "./_metadata_row.html" with label=metadata.summary.label value=metadata.summary.text|linebreaksbr %}
+            {% include "./_metadata_row.html" with label=metadata.transcription.label value=metadata.transcription.text|linebreaksbr %}
+            {% include "./_metadata_row.html" with label=metadata.table_of_contents.label value=metadata.table_of_contents.text|linebreaksbr %}
+            {% include "./_metadata_row.html" with label=metadata.literature.label value=metadata.literature.text|linebreaksbr %}
+            {% include "./_metadata_row.html" with label=metadata.access_policy.label value=metadata.access_policy.text|linebreaksbr %}
             {% for subject in metadata.subjects %}
                 {% include "./_metadata_row.html" with label="Ämnesord" extra_label=subject.type value=subject|subjects_join %}
             {% endfor %}
-            {% include "./_record_type_links.html" with label="Ämne, person" link_type="alvin-person" record_type_links=metadata.subject_person %}
-            {% include "./_record_type_links.html" with label="Ämne, organisation" link_type="alvin-organisation" record_type_links=metadata.subject_organisation %}
-            {% include "./_record_type_links.html" with label="Ämne, plats" link_type="alvin-place" record_type_links=metadata.subject_place %}
+            {% include "./_record_type_links.html" with label=metadata.subject_person.label link_type="alvin-person" record_type_links=metadata.subject_person %}
+            {% include "./_record_type_links.html" with label=metadata.subject_organisation.label link_type="alvin-organisation" record_type_links=metadata.subject_organisation %}
+            {% include "./_record_type_links.html" with label=metadata.subject_place.label link_type="alvin-place" record_type_links=metadata.subject_place %}
             {% include "./_metadata_row.html" with label=metadata.genre_form.label value=metadata.genre_form.items|join:"<br>"|safe %}
             {% for classification in metadata.classifications %}
                 {% include "./_metadata_row.html" with label="Klassifikation" extra_label=classification.type value=classification.classification %}

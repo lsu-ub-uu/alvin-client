@@ -8,9 +8,11 @@ from .mappings import place, organisation
 def _get_lang():
     return translation.get_language()
 
-def _get_value(element: etree._Element | None = None, xp: str = "") -> str:
-    if element is not None:
-        return element.get(f"_value_{_get_lang()}")
+def _get_value(node: etree._Element | None = None, xp: str = "") -> str:
+    if xp is not "":
+        node = element(node, xp)
+    if node is not None:
+        return node.get(f"_value_{_get_lang()}")
     
 def _get_label(element: etree._Element | None = None) -> str:
     if element is not None:
@@ -49,11 +51,12 @@ def variant_names_list(root: etree._Element, mapping: Dict[str, str]) -> List[Di
         out.append(d)
     return out
 
-def electronic_locators(root: etree._Element) -> List[Dict[str, str]]:
+def electronic_locators(root: etree._Element, xp: str) -> List[Dict[str, str]]:
     return [{
+        "label": _get_label(loc),
         "url": text(loc, "url"),
         "display_label": text(loc, "displayLabel"),
-    } for loc in elements(root, "data/record/electronicLocator")]
+    } for loc in elements(root, xp)]
 
 def origin_places(root: etree._Element) -> dict:
     return [{
@@ -73,7 +76,7 @@ def related(node: etree._Element, reltype: str) -> List[Dict[str, str]]:
 
 def related_records(node: etree._Element, xp: str) -> List[Dict[str, str]]:
     return {
-        "label": _get_label(element(node, _xp(xp))),
+        "label": _get_label(element(node, xp)),
         "records": [{
             "type": attr(e, "./@relatedToType"),
             "id": text(e, "record/linkedRecordId"),
@@ -83,7 +86,7 @@ def related_records(node: etree._Element, xp: str) -> List[Dict[str, str]]:
                 "number": text(part, "partNumber"),
                 "extent": text(part, "extent"),
             } for part in e],
-        } for e in elements(node, _xp(xp))]
+        } for e in elements(node, xp)]
     }
 
 def components(nodes: List[etree._Element]) -> Dict[str, str]:
@@ -91,24 +94,23 @@ def components(nodes: List[etree._Element]) -> Dict[str, str]:
     for comp in nodes:
         sub = components(comp.xpath("./*[contains(name(), 'component')]"))
         md = {
-            "level": text(comp, "level"),
+            # Arhchives
+            "level": decorated_list_item(comp, "level"),
             "unitid": text(comp, "unitid"),
-            "title": {
-                "main_title": comp.findtext("./title/mainTitle"),
-                "subtitle": comp.findtext("./title/subtitle"),
-                "orientation_code": comp.findtext("./title/orientationCode")
-            },
-            #"agents": agents(comp, "agent"),
-            "place": comp.findtext("./place/linkedRecordId"),
+            # Manuscripts
+            "locus": decorated_text(comp, "locus"),
+            # Common
+            "title": first(_titles(comp, "title")),
+            "agents": decorated_agents(comp, "agent"),
+            "place": decorated_authority(comp, "place", "place"),
             "related_records": related_records(comp, "relatedTo"),
-            "origin_date": dates(comp, "record", "originDate", "start", "end"),
-            "display_date": comp.findtext("./originDate/displayDate"),
-            "extent": comp.findtext("./extent"),
-            "note": comp.findtext("./note"),
-            "accession_numbers": [number.findtext(".") for number in comp.findall("./identifier[@type = 'accessionNumber']")],
-            "related": "",
-            "electronic_locators": electronic_locators(comp),
-            "access_policy": comp.findtext("./accessPolicy")
+            "origin_date": first(dates(comp, "originDate", "start", "end")),
+            "display_date": decorated_text(comp, "originDate/displayDate"),
+            "extent": decorated_text(comp, "extent"),
+            "note": decorated_text(comp, "note"),
+            "accession_numbers": decorated_texts(comp, "identifier[@type = 'accessionNumber']"),
+            "electronic_locators": electronic_locators(comp, "electronicLocator"),
+            "access_policy": decorated_text(comp, "accessPolicy")
         }
         if sub:
             md["components"] = sub
@@ -122,10 +124,11 @@ def a_date(node: etree._Element, kind: str) -> Dict:
         "year": text(node, f"{kind}Date/date/year"),
         "month": text(node, f"{kind}Date/date/month"),
         "day": text(node, f"{kind}Date/date/day"),
-        "era": decorated_list_item(node, f"{kind}Date/date/era")
+        #"era": text(node, f"{kind}Date/date/era"),
+        "era": _get_value(node, f"{kind}Date/date/era")
     }
 
-def dates(root: etree._Element, record_type: str, date_group: str, start: str, end: str) -> Dict:
+def dates(root: etree._Element, xp: str, start: str, end: str) -> Dict:
     return [{
         "label": _get_label(e),
         "type": attr(e, "./@type"),
@@ -135,7 +138,7 @@ def dates(root: etree._Element, record_type: str, date_group: str, start: str, e
             "date_note": text(e, "note")
         },
 
-    } for e in elements(root, f"data/{record_type}/{date_group}")]
+    } for e in elements(root, xp)]
 
 # Decorated
 def decorated_location(root: etree._Element, xp: str) -> Dict[str, str]:
@@ -157,7 +160,7 @@ def decorated_agents(node: etree._Element, xp: str) -> dict:
 
     agents = []
     
-    for agent in elements(node, _xp(xp)):
+    for agent in elements(node, xp):
         AN = person["AUTH_NAME"] if attr(agent, './@type') == 'person' else organisation["AUTH_NAME"]
         agents.append({
             "label": _get_label(agent),
@@ -169,6 +172,23 @@ def decorated_agents(node: etree._Element, xp: str) -> dict:
         })
 
     return agents
+
+def decorated_authority(root: etree._Element, xp: str, authority: str) -> dict:
+    AN = {
+        "person": person["AUTH_NAME"],
+        "organisation": organisation["AUTH_NAME"],
+        "place": place["AUTH_NAME"]
+    }
+    
+    label_element = element(root, xp)
+    if label_element is not None:
+        return {
+            "label": _get_label(label_element),
+            "records":[{
+                "id": text(label_element, f"linkedRecordId"),
+                "name": authority_names(label_element, AN[authority]),
+                }]
+        }
 
 def decorated_subject_authority(root: etree._Element, authority: str) -> dict:
     
@@ -195,8 +215,8 @@ def decorated_text(root: etree.Element, xp: str) -> dict:
 
 def decorated_texts(root: etree.Element, xp: str | None = None) -> dict:
     return {
-        "label": _get_label(root.find(_xp(xp))),
-        "texts": texts(root, _xp(xp))
+        "label": _get_label(root.find(xp)),
+        "texts": texts(root, xp)
     }
 
 def decorated_texts_with_type(root: etree.Element, xp: str, element: str, textType: str | None = None) -> dict:
@@ -206,7 +226,7 @@ def decorated_texts_with_type(root: etree.Element, xp: str, element: str, textTy
     }
 
 def decorated_list_item(node: etree._Element, xp: str = None) -> str:
-    return _get_value(node.find(xp))
+    return {"label": _get_label(element(node, xp)), "item": _get_value(node.find(xp))}
 
 def decorated_list(node: etree._Element, xp: str) -> dict:
     return {

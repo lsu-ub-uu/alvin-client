@@ -4,27 +4,26 @@
     {% if c.unitid %}
     <span class="text-sm p-1 mr-2 border-black border-2 border-dashed" itemprop="identifier">{{ c.unitid }}</span>
     {% endif %}
-    <h1>{{ c.title.main_title }}<span class="mx-2" x-text="open ? '▼' : '▶'"></span></h1>
+    <h1>{{ c.title|alvin_record_title }}<span class="mx-2" x-text="open ? '▼' : '▶'"></span></h1>
   </header>
 
   <dl x-show="open" x-cloak>
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.level.label value=c.level.item %}
     {% for agent in c.agents %}
         {% url 'alvin_viewer' agent.type agent.id as agent_url %}
-        {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.type url=agent_url value=agent_url attribute=agent.role|role_list  %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.label url=agent_url value=agent.name|agent_name attribute=agent.role|role_list  %}
     {% endfor %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label="Startdatum" value=c.start_date %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label="Slutdatum" value=c.end_date %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label="Årtal" value=c.display_date %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label="Omfång" value=c.extent|default:""|linebreaksbr %}
+    {% include "alvin_viewer/_partials/_record_type_links.html" with label=c.place.label link_type="alvin-place" record_type_links=c.place %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.origin_date.label value=c.origin_date.dates|dates_join %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.display_date.label value=c.display_date.text %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.extent.label value=c.extent.text|linebreaksbr %}
     {% for electronic_locator in c.electronic_locators %}
-      {% include "alvin_viewer/_partials/_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
     {% endfor %}
-    {% include "alvin_viewer/_partials/_record_type_links.html" with label="Relaterade poster" link_type="alvin-record" record_type_links=c.related_records %}
-    {% for accession_number in c.accession_numbers %}
-      {% include "alvin_viewer/_partials/_metadata_row.html" with label="Accessionsnummer" value=accession_number %}
-    {% endfor %}
-    {% include "./_metadata_row.html" with label="Anmärkning" value=c.note|default:""|linebreaksbr %}
-    {% include "./_metadata_row.html" with label="Villkor för användning och åtkomst" value=c.access_policy|default:""|linebreaksbr %}
+    {% include "alvin_viewer/_partials/_record_type_links.html" with label=c.related_records.label link_type="alvin-record" record_type_links=c.related_records %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.accession_numbers.label value=c.accession_numbers.texts|join:"<br>" %}
+    {% include "./_metadata_row.html" with label=c.note.label value=c.note.text|linebreaksbr %}
+    {% include "./_metadata_row.html" with label=c.access_policy.label value=c.access_policy.text|linebreaksbr %}
   </dl>
 
   {% if c %}

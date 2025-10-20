@@ -9,7 +9,7 @@
     {{metadata}}
     <div x-show="activeTab != 'related' && activeTab != 'inventory'">
         {% for title in metadata.variant_titles %}
-            {% include "./_metadata_row.html" with label=title.label value=title|alvin_work_name attribute=title.type %}
+            {% include "./_metadata_row.html" with label=title.label value=title|alvin_record_title attribute=title.type %}
         {% endfor %}
         {% for agent in metadata.agents %}
             {% url 'alvin_viewer' agent.type agent.id as agent_url %}
@@ -72,11 +72,23 @@
             {% for electronic_locator in metadata.electronic_locators %}
                 {% include "./_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}
             {% endfor %}
+            {% include "./_metadata_row.html" with label=metadata.level.label value=metadata.level.item %}
+            {% include "./_metadata_row.html" with label=metadata.shelf_metres.label value=metadata.shelf_metres.text %}
+            {% include "./_metadata_row.html" with label=metadata.archival_units.label value=metadata.archival_units.text %}
+            {% include "./_metadata_row.html" with label=metadata.other_findaid.label value=metadata.other_findaid.texts|join:"<br>" %}
+            {% include "./_metadata_row.html" with label=metadata.weeding.label value=metadata.weeding.texts|join:"<br>" %}
+            {% include "./_metadata_row.html" with label=metadata.related_material.label value=metadata.related_material.texts|join:"<br>" %}
+            {% include "./_metadata_row.html" with label=metadata.arrangement.label value=metadata.arrangement.texts|join:"<br>" %}
+            {% include "./_metadata_row.html" with label=metadata.accruals.label value=metadata.accruals.texts|join:"<br>" %}
+            {% include "./_metadata_row.html" with label=metadata.locus.label value=metadata.locus.text %}
+            {% include "./_metadata_row.html" with label=metadata.incipit.label value=metadata.incipit.text %}
+            {% include "./_metadata_row.html" with label=metadata.explicit.label value=metadata.explicit.text %}
+            {% include "./_metadata_row.html" with label=metadata.rubric.label value=metadata.rubric.text %}
+            {% include "./_metadata_row.html" with label=metadata.final_rubric.label value=metadata.final_rubric.text %}
             {% if metadata.longitude and metadata.latitude %}
                 {% include "./_metadata_row.html" with label="Longitud" value=metadata.longitude %}
                 {% include "./_metadata_row.html" with label="Latitud" value=metadata.latitude %}
             {% endif %}
-            {% include "./_metadata_row.html" with label="Incipit" value=metadata.incipit %}
             {% translate 'Post skapad' as ts_created %}
             {% include "./_metadata_row.html" with label=ts_created value=metadata.created %}
             {% translate 'Senast uppdaterad' as ts_updated %}

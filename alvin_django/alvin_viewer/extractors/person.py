@@ -1,32 +1,14 @@
 from lxml import etree
-from .common import authority_names, variant_names_list, electronic_locators, related, get_dates, get_date_other
-
-AUTH_NAME = {
-    "family_name": "./name/namePart[@type='family']",
-    "given_name": "./name/namePart[@type='given']",
-    "numeration": "./name/namePart[@type='numeration']",
-    "terms_of_address": "./name/namePart[@type='termsOfAddress']",
-    "orientation_code": "./name/orientationCode",
-    "variant_type": "variantType",
-}
-
-VARIANT = {
-    "language": "./@lang",
-    "family_name": "./name/namePart[@type='family']",
-    "given_name": "./name/namePart[@type='given']",
-    "numeration": "./name/namePart[@type='numeration']",
-    "terms_of_address": "./name/namePart[@type='termsOfAddress']",
-    "orientation_code": "./name/orientationCode",
-    "variant_type": "variantType",
-}
+from .common import authority_names, variant_names_list, electronic_locators, related, dates, a_date
+from .mappings import person
+from .cleaner import clean_empty
 
 def extract(root: etree._Element) -> dict:
-    return {
-        "authority_names": authority_names(root, AUTH_NAME),
-        "variant_names": variant_names_list(root, VARIANT),
-        "birth_date": get_dates("birth", root),
+    md = {
+        "authority_names": authority_names(root, person["AUTH_NAME"]),
+        "variant_names": variant_names_list(root, person["VARIANT"]),
+        "person_info": dates(root, "person", "personInfo", "birth", "death"),
         "birth_place": root.findtext(".//birthPlace//linkedRecordId"),
-        "death_date": get_dates("death", root),
         "death_place": root.findtext(".//deathPlace//linkedRecordId"),
         "display_date": root.findtext(".//displayDate"),
         "nationality": [n.findtext("./country") for n in root.xpath("//nationality")],
@@ -38,3 +20,5 @@ def extract(root: etree._Element) -> dict:
         "related_persons": related(root, "person"),
         "related_organisations": related(root, "organisation"),
     }
+    
+    return clean_empty(md)

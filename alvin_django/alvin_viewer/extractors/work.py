@@ -1,7 +1,7 @@
 from lxml import etree
-from .common import origin_places, electronic_locators, get_dates, get_date_other
+from .common import origin_places, electronic_locators, dates
 from ..xmlutils.nodes import text, attr, elements
-from ..xmlutils.decorated import decorated_text, decorated_agents
+from .common import decorated_text, decorated_agents
 
 def _titles(root: etree._Element, xp: str):
     return [{
@@ -16,11 +16,11 @@ def extract(root: etree._Element) -> dict:
         "form_of_work": text(root, ".//formOfWork"),
         "main_title": _titles(root, "//work/title"),
         "variant_titles": _titles(root, "//variantTitle"),
-        "start_date": get_dates("start", root),
-        "end_date": get_dates("end", root),
+        #"start_date": get_dates(root, "originDate", "start"),
+        #"end_date": get_dates(root, "originDate", "end"),
         "origin_places": origin_places(root),
         "display_date": text(root, ".//displayDate"),
-        "date_other": get_date_other(root),
+        "date_other": get_date_other(root, "dateOther"),
         "incipit": text(root, ".//incipit"),
         "literature": text(root, ".//work/listBibl"),
         "note": text(root, ".//work/note"),

@@ -1,22 +1,6 @@
 from lxml import etree
-from .common import authority_names, variant_names_list, electronic_locators, get_dates, get_date_other
-
-AUTH_NAME = {
-    "corporate_name": "./name/namePart[@type='corporateName']",
-    "subordinate_name": "./name/namePart[@type='subordinate']",
-    "terms_of_address": "./name/namePart[@type='termsOfAddress']",
-    "orientation_code": "./name/orientationCode",
-    "variant_type": "variantType",
-}
-
-VARIANT = {
-    "language": "./@lang",
-    "corporate_name": "./name/namePart[@type='corporateName']",
-    "subordinate_name": "./name/namePart[@type='subordinate']",
-    "terms_of_address": "./name/namePart[@type='termsOfAddress']",
-    "orientation_code": "./name/orientationCode",
-    "variant_type": "./@variantType",
-}
+from .common import authority_names, variant_names_list, electronic_locators, dates
+from .mappings import organisation
 
 def extract(root: etree._Element) -> dict:
     notes_map = {n.get("noteType"): n.findtext(".") for n in root.xpath("//note")}
@@ -36,10 +20,9 @@ def extract(root: etree._Element) -> dict:
     }
 
     return {
-        "authority_names": authority_names(root, AUTH_NAME),
-        "variant_names": variant_names_list(root, VARIANT),
-        "start_date": get_dates("start", root),
-        "end_date": get_dates("end", root),
+        "authority_names": authority_names(root, organisation["AUTH_NAME"]),
+        "variant_names": variant_names_list(root, organisation["VARIANT"]),
+        "organisation_info": dates(root, "organisation", "organisationInfo", "start", "end"),
         "display_date": root.findtext(".//displayDate"),
         "notes": notes_map,
         "identifiers": identifiers_map,

@@ -1,6 +1,34 @@
+from django.utils import translation
 from lxml import etree
 from typing import Dict, List
-from ..xmlutils.nodes import text, texts, elements
+from ..xmlutils.nodes import attr, element, elements, first, text, texts
+from .mappings import person
+from .mappings import place, organisation
+
+def _get_lang():
+    return translation.get_language()
+
+def _get_value(element: etree._Element | None = None, xp: str = "") -> str:
+    if element is not None:
+        return element.get(f"_value_{_get_lang()}")
+    
+def _get_label(element: etree._Element | None = None) -> str:
+    if element is not None:
+        return element.get(f"_{_get_lang()}")
+
+def _xp(path: str, absolute: bool = False) -> str:
+    base = "data/record/"
+    return path if absolute else f"{base}{path}"
+
+def _titles(node: etree._Element, xp: str):
+    titles = [{
+        "label": _get_label(e),
+        "type": attr(e, "./@variantType"),
+        "main_title": text(e, "mainTitle"),
+        "subtitle": text(e, "subtitle"),
+        "orientation_code": text(e, "orientationCode"),
+    } for e in elements(node, xp)]
+    return titles or None
 
 def authority_names(root: etree._Element, name_parts: Dict[str, str]) -> Dict[str, Dict[str, str]]:
     result: Dict[str, str] = {}
@@ -21,38 +49,44 @@ def variant_names_list(root: etree._Element, mapping: Dict[str, str]) -> List[Di
         out.append(d)
     return out
 
-def electronic_locators(root: etree._Element):
+def electronic_locators(root: etree._Element) -> List[Dict[str, str]]:
     return [{
         "url": text(loc, "url"),
         "display_label": text(loc, "displayLabel"),
     } for loc in elements(root, "data/record/electronicLocator")]
 
-def origin_places(node: etree._Element):
+def origin_places(root: etree._Element) -> dict:
     return [{
-        "id": op.findtext(".//linkedRecordId"),
-        "country": op.findtext(".//country"),
-        "historical_country": op.findtext(".//historicalCountry"),
-        "certainty": op.findtext(".//certainty"),
-    } for op in node.xpath(".//data/record/originPlace")]
+        "label": _get_label(e),
+        "id": text(e, "place/linkedRecordId"),
+        "name": authority_names(e, place["AUTH_NAME"]),
+        "country": decorated_list(e, "country"),
+        "historical_country": decorated_list(e, "historicalCountry"),
+        "certainty": text(e, "certainty"),
+    } for e in elements(root, _xp("originPlace"))]
 
-def related(node: etree._Element, reltype: str):
+def related(node: etree._Element, reltype: str) -> List[Dict[str, str]]:
     return [{
         "id": r.findtext(".//linkedRecordId"),
         "url": r.findtext(".//url"),
     } for r in node.xpath(f".//related[@type='{reltype}']")]
 
-def related_records(node: etree._Element, path: str):
-    return [{
-        "type": rec.get("relatedToType"),
-        "id": rec.findtext("./record/linkedRecordId"),
-        "parts": [{
-            "type": part.get("partType"),
-            "number": part.findtext("./partNumber"),
-            "extent": part.findtext("./extent"),
-        } for part in rec.xpath("./part")],
-    } for rec in node.xpath(path)]
+def related_records(node: etree._Element, xp: str) -> List[Dict[str, str]]:
+    return {
+        "label": _get_label(element(node, _xp(xp))),
+        "records": [{
+            "type": attr(e, "./@relatedToType"),
+            "id": text(e, "record/linkedRecordId"),
+            "title": first(_titles(e, "record/linkedRecord/record/title")),
+            "parts": [{
+                "type": attr(part, "./@partType"),
+                "number": text(part, "partNumber"),
+                "extent": text(part, "extent"),
+            } for part in e],
+        } for e in elements(node, _xp(xp))]
+    }
 
-def components(nodes: List[etree._Element]):
+def components(nodes: List[etree._Element]) -> Dict[str, str]:
     comps = []
     for comp in nodes:
         sub = components(comp.xpath("./*[contains(name(), 'component')]"))
@@ -67,8 +101,7 @@ def components(nodes: List[etree._Element]):
             #"agents": agents(comp, "agent"),
             "place": comp.findtext("./place/linkedRecordId"),
             "related_records": related_records(comp, "relatedTo"),
-            "start_date": get_dates("start", comp.find("./originDate")),
-            "end_date": get_dates("end", comp.find("./originDate")),
+            "origin_date": dates(comp, "record", "originDate", "start", "end"),
             "display_date": comp.findtext("./originDate/displayDate"),
             "extent": comp.findtext("./extent"),
             "note": comp.findtext("./note"),
@@ -83,25 +116,101 @@ def components(nodes: List[etree._Element]):
             comps.append(md)
     return comps
 
-def get_dates(kind: str, node: etree._Element) -> str:
-    if node is None:
-        return ""
-    parts = list(filter(None, [
-        text(node, f".//{kind}Date//year"),
-        text(node, f".//{kind}Date//month"),
-        text(node, f".//{kind}Date//day"),
-    ]))
-    date_str = "-".join(parts)
-    era = text(node, f".//{kind}Date//era")
+def a_date(node: etree._Element, kind: str) -> Dict:
+    
     return {
-        "label": "",
-        "date": f"{date_str} {era}" if era else date_str
+        "year": text(node, f"{kind}Date/date/year"),
+        "month": text(node, f"{kind}Date/date/month"),
+        "day": text(node, f"{kind}Date/date/day"),
+        "era": decorated_list_item(node, f"{kind}Date/date/era")
     }
 
-def get_date_other(node: etree._Element):
+def dates(root: etree._Element, record_type: str, date_group: str, start: str, end: str) -> Dict:
     return [{
-        "start_date": get_dates("start", date),
-        "end_date": get_dates("end", date),
-        "type": date.get("type"),
-        "date_note": date.findtext("./note"),
-    } for date in node.xpath(".//dateOther")]
+        "label": _get_label(e),
+        "type": attr(e, "./@type"),
+        "dates": {
+            "start_date": a_date(e, f"{start}"),
+            "end_date": a_date(e, f"{end}"),
+            "date_note": text(e, "note")
+        },
+
+    } for e in elements(root, f"data/{record_type}/{date_group}")]
+
+# Decorated
+def decorated_location(root: etree._Element, xp: str) -> Dict[str, str]:
+
+    loc = first(elements(root, _xp(xp)))
+    names = {}
+    
+    for e in elements(loc, "linkedRecord/location/authority"):
+        lang = attr(e, "./@lang")
+        names[lang] = {key: text(e, xpath) for key, xpath in organisation["AUTH_NAME"].items()}
+
+    return {
+        "label": _get_label(loc),
+        "id": text(loc, "linkedRecordId"),
+        "name": names,
+        }
+
+def decorated_agents(node: etree._Element, xp: str) -> dict:
+
+    agents = []
+    
+    for agent in elements(node, _xp(xp)):
+        AN = person["AUTH_NAME"] if attr(agent, './@type') == 'person' else organisation["AUTH_NAME"]
+        agents.append({
+            "label": _get_label(agent),
+            "type": None if attr(agent, './@type') is None else f"alvin-{attr(agent, './@type')}",
+            "id": text(agent, ".//linkedRecordId"),
+            "name": authority_names(agent, AN),
+            "role": [_get_value(e) for e in elements(agent, "role")],
+            "certainty": text(agent, "certainty"),
+        })
+
+    return agents
+
+def decorated_subject_authority(root: etree._Element, authority: str) -> dict:
+    
+    AN = {
+        "person": person["AUTH_NAME"],
+        "organisation": organisation["AUTH_NAME"],
+        "place": place["AUTH_NAME"]
+    }
+    
+    label_element = root.find(_xp(f"subject[@type = '{authority}']"))
+    return {
+        "label": _get_label(label_element),
+        "records": [{
+            "id": text(e, f"{authority}/linkedRecordId"),
+            "name": authority_names(e, AN[authority]),
+            } for e in elements(root, _xp(f"subject[@type = '{authority}']"))]
+        }
+
+def decorated_text(root: etree.Element, xp: str) -> dict:
+    return {
+        "label": _get_label(root.find(xp)),
+        "text": text(root, xp)
+    }
+
+def decorated_texts(root: etree.Element, xp: str | None = None) -> dict:
+    return {
+        "label": _get_label(root.find(_xp(xp))),
+        "texts": texts(root, _xp(xp))
+    }
+
+def decorated_texts_with_type(root: etree.Element, xp: str, element: str, textType: str | None = None) -> dict:
+    return {
+        "label": _get_label(root.find(_xp(xp))),
+        "texts": [{"type": attr(e, textType), "text": text(e, ".")} for e in elements(root, _xp(f"{xp}/{element}"))]
+    }
+
+def decorated_list_item(node: etree._Element, xp: str = None) -> str:
+    return _get_value(node.find(xp))
+
+def decorated_list(node: etree._Element, xp: str) -> dict:
+    return {
+            "label": _get_label(node.find(xp)),
+            "items": [_get_value(e) for e in elements(node, xp)],
+            "code": text(node, _xp(xp))
+    }

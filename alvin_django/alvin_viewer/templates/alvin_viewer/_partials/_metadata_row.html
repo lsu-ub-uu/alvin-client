@@ -10,14 +10,9 @@
     </dt>
     <dd class="md-value">
         {% if url %}
-            <a href="{{ url }}">
-                {{ value }}
-            </a>
+            <a href="{{ url }}">{{ value }}</a>{% if extra_value %}{{ extra_value }}{% endif %}
         {% else %}
-            {{ value }}
-        {% endif %}
-        {% if extra_value %}
-            {{ extra_value }}
+            {{ value }}{% if extra_value %}{{ extra_value }}{% endif %}
         {% endif %}
         {% if attribute %}
             ({{ attribute }})

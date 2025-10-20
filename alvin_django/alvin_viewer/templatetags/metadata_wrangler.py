@@ -19,14 +19,12 @@ def _lang(metadata):
 @register.filter
 def alvin_title(metadata, record_type):
     
-    # authority_names if place, person, or organisation otherwise main_title
     title = (metadata.get("authority_names")
              if record_type in {"alvin-place", "alvin-person", "alvin-organisation"}
              else metadata.get("main_title"))
     
-    # Maps record_type with (joiner, keys)
     mapping = {
-        "alvin-place": (None, None),  # Handled separately below
+        "alvin-place": (None, None),
         "alvin-person": (" ", ["given_name", "family_name", "numeration"]),
         "alvin-organisation": (". ", ["corporate_name", "subordinate_name"]),
         "alvin-work": (" : ", ["main_title", "subtitle"]),
@@ -38,7 +36,7 @@ def alvin_title(metadata, record_type):
     
     joiner, keys = mapping[record_type]
 
-    # Välj geographic som auktoriserat namn för alvin-place
+    # Geographic på valt språk
     if record_type == "alvin-place":
         lang = _lang(title)
         return title.get(lang, {}).get("geographic", "")
@@ -61,6 +59,11 @@ def alvin_title(metadata, record_type):
     return title_part
 
 @register.filter
+def alvin_record_title(metadata):
+    keys = ["main_title", "subtitle"]
+    return " : ".join(filter(None, (metadata.get(key) for key in keys)))
+
+@register.filter
 def alvin_person_name(metadata):
     keys = ["given_name", "family_name", "numeration"]
     name = " ".join(filter(None, (metadata.get(key) for key in keys)))
@@ -71,7 +74,14 @@ def alvin_person_name(metadata):
 @register.filter
 def alvin_organisation_name(metadata):
     keys = ["corporate_name", "subordinate_name", "terms_of_address"]
-    return ". ".join(filter(None, (metadata.get(key) for key in keys)))
+
+    lst = []
+
+    for key in keys:
+        item = (metadata or {}).get(key) or {}
+        lst.append(item)
+    
+    return ". ".join(filter(None, (lst)))
 
 @register.filter
 def agent_name(metadata):
@@ -81,10 +91,8 @@ def agent_name(metadata):
 
 @register.filter
 def alvin_work_name(metadata):
-    # Hantering av namn för listning
     if isinstance(metadata, list):
         metadata = metadata[0]
-    # Gemensam hantering av namn
     keys = ["main_title", "subtitle"]
     return " : ".join(filter(None, (metadata.get(key) for key in keys)))
 
@@ -100,13 +108,44 @@ def role_list(metadata):
 @register.filter
 def origin_countries(metadata):
     keys = ["country", "historical_country"]
-    return ", ".join(filter(None, (metadata.get(key) for key in keys)))
+    
+    oc = []
+
+    for key in keys:
+        oc += [item for item in metadata.get(key)["items"]] or None
+
+    oc_str = ', '.join(filter(None, (oc)))
+
+    return f", {oc_str}" if oc_str is not None else None 
 
 @register.filter
-def date_other_join(metadata):
-    keys = ["start_date", "end_date"]
-    joined_date = " -- ".join(filter(None, (metadata.get(key) for key in keys)))
-    return ". ".join(filter(None, [joined_date, metadata.get("date_note")]))
+def date_join(metadata):
+    keys = ["year", "month", "day"]
+
+    d = []
+
+    for key in keys:
+        item = (metadata or {}).get(key) or {}
+        d.append(item)
+    
+    date = "-".join(filter(None, (d)))
+    era = (metadata or {}).get("era")
+
+    return f"{date} {era}" if era is not None else date
+
+@register.filter
+def dates_join(metadata):
+    if not isinstance(metadata, dict):
+        return None
+
+    start_date = metadata.get("start_date") or {}
+    end_date = metadata.get("end_date") or {}
+
+    joined_start = date_join(start_date)
+    joined_end = date_join(end_date)
+
+    joined_date = " – ".join(filter(None, (joined_start, joined_end)))
+    return " ".join(filter(None, [joined_date, metadata.get("date_note")])) if joined_date.endswith(".") else " ".join(filter(None, [joined_date, metadata.get("date_note")])) 
 
 @register.filter
 def dimensions_label_join(metadata):
@@ -128,14 +167,13 @@ def dimensions_join(metadata):
         if text not in (None, ""):
             parts.append(str(text))
 
-            if label:
-                labels.append(str(label))
+        if label not in (None, ""):
+            labels.append(str(label))
 
     texts_str = " x ".join(filter(None,parts))
-    unit_str = metadata.get("unit")
+    unit_str = metadata.get("unit") or None
     dimensions_str = ' '.join(filter(None, (texts_str, unit_str)))
-    labels_str = f"({', '.join(labels)})"
-    
+    labels_str = f"({', '.join(filter(None, (labels)))})"
     return " ".join(filter(None, (dimensions_str, labels_str))).lower()
 
 @register.filter

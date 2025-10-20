@@ -17,12 +17,13 @@ EXTRACTORS = {
 
 def extract_metadata(root: etree._Element, record_type: str) -> dict:
     # Common metadata
+    rt = record_type.replace("alvin-", "")
     common = {
-        "id": text(root, f"data/{record_type.strip("alvin-")}/recordInfo/id"),
-        "created": text(root, f"data/{record_type.strip("alvin-")}/recordInfo/tsCreated"),
+        "id": text(root, f"data/{rt}/recordInfo/id"),
+        "created": text(root, f"data/{rt}/recordInfo/tsCreated"),
         "last_updated":
-            elements(root, f"data/{record_type.strip("alvin-")}/recordInfo//tsUpdated")[-1].findtext(".") if
-            elements(root, f"data/{record_type.strip("alvin-")}/recordInfo//tsUpdated") 
+            text(elements(root, f"data/{rt}/recordInfo/updated/tsUpdated")[-1], ".") if
+            elements(root, f"data/{rt}/recordInfo/updated/tsUpdated") is not None
             else None,
         "source_xml": text(root, "actionLinks/read/url"),
         "record_type": record_type,

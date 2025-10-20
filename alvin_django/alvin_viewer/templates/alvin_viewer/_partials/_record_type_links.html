@@ -6,10 +6,12 @@
         {{ label }}
     </dt>
     <dd class="md-value">
-        {% for record_type in record_type_links.authorities %}
+        {% for record_type in record_type_links.records %}
             {% url 'alvin_viewer' link_type record_type.id as record_type_url %}
                 <a href="{{ record_type_url }}">
-                    {% if link_type == 'alvin-place'%}
+                    {% if link_type == 'alvin-record' %}
+                        {{record_type.title|alvin_record_title }}
+                    {% elif link_type == 'alvin-place'%}
                         {{record_type.name|alvin_place_name}}
                     {% else %}
                         {{ record_type.name|agent_name }}

@@ -16,6 +16,9 @@ def attr(node: etree._Element, xpath_attr: str, default: Optional[str] = None) -
     val = node.get(key)
     return val if val not in (None, "") else default
 
+def element(node: etree._Element, xpath: str) -> etree._Element:
+    return node.find(xpath) if node is not None else None
+
 def elements(node: etree._Element, xpath: str) -> List[etree._Element]:
     return list(node.xpath(xpath))
 

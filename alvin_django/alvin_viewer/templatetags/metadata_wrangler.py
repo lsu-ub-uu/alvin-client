@@ -1,3 +1,5 @@
+
+from typing import Optional
 from django import template
 from django.utils.translation import get_language
 
@@ -61,7 +63,7 @@ def alvin_title(metadata, record_type):
 @register.filter
 def alvin_record_title(metadata):
     keys = ["main_title", "subtitle"]
-    return " : ".join(filter(None, (metadata.get(key) for key in keys)))
+    return " : ".join(filter(None, ((metadata or {}).get(key) for key in keys)))
 
 @register.filter
 def alvin_person_name(metadata):
@@ -94,7 +96,7 @@ def alvin_work_name(metadata):
     if isinstance(metadata, list):
         metadata = metadata[0]
     keys = ["main_title", "subtitle"]
-    return " : ".join(filter(None, (metadata.get(key) for key in keys)))
+    return " : ".join(filter(None, ((metadata or {}).get(key) for key in keys)))
 
 @register.filter
 def alvin_place_name(metadata):
@@ -145,12 +147,7 @@ def dates_join(metadata):
     joined_end = date_join(end_date)
 
     joined_date = " – ".join(filter(None, (joined_start, joined_end)))
-    return " ".join(filter(None, [joined_date, metadata.get("date_note")])) if joined_date.endswith(".") else " ".join(filter(None, [joined_date, metadata.get("date_note")])) 
-
-@register.filter
-def dimensions_label_join(metadata):
-    keys = ["label", "scope"]
-    return ", ".join(filter(None, (metadata.get(key) for key in keys))).capitalize()
+    return " ".join(filter(None, [joined_date, (metadata or {}).get("date_note")])) if joined_date.endswith(".") else " ".join(filter(None, [joined_date, (metadata or {}).get("date_note")])) 
 
 @register.filter
 def dimensions_join(metadata):
@@ -191,9 +188,37 @@ def measure_join(metadata):
 @register.filter
 def subjects_join(metadata):
     keys = ["topic", "genreForm", "geographicCoverage", "temporal", "occupation"]
-    return ", ".join(filter(None, (metadata.get(key) for key in keys)))
+    return ", ".join(filter(None, ((metadata or {}).get(key) for key in keys)))
 
 @register.filter
 def part_join(metadata):
+    if not isinstance(metadata, dict):
+        return ""
+    
     keys = ["number", "extent"]
-    return ", ".join(filter(None, (metadata.get(key) for key in keys)))
+    return ", ".join(filter(None, ((metadata or {}).get(key) for key in keys)))
+
+@register.filter
+def item_description_join(metadata):
+    keys = ["item", "text"]
+    return ". ".join(filter(None, ((metadata or {}).get(key) for key in keys)))
+
+@register.filter
+def label_join(metadata: Optional[dict], element: str) -> str:
+    if not isinstance(metadata, dict):
+        return ""
+
+    l = (metadata or {}).get("label")
+    sub = metadata.get(element)
+    el = sub.get("label") if isinstance(sub, dict) else sub
+
+    result = ", ".join(filter(None, (l, el)))
+    return result.capitalize() if result else ""
+
+@register.filter
+def appraisal_join(metadata: Optional[dict]):
+    if not isinstance(metadata, dict):
+        return ""
+    
+    keys = ["value", "currency"]
+    return " ".join(filter(None, ((metadata or {}).get(key) for key in keys)))

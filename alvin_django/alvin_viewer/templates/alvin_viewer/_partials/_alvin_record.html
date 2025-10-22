@@ -6,7 +6,6 @@
 
 <!-- Metadata -->
 <div class="flex flex-col">
-    {{metadata}}
     <div x-show="activeTab != 'related' && activeTab != 'inventory'">
         {% for title in metadata.variant_titles %}
             {% include "./_metadata_row.html" with label=title.label value=title|alvin_record_title attribute=title.type %}
@@ -41,7 +40,7 @@
             {% include "./_metadata_row.html" with label=metadata.applied_material.label value=metadata.applied_material.items|join:", " %}
             {% include "./_metadata_row.html" with label=metadata.extent.label value=metadata.extent.text|linebreaksbr %}
             {% for dimension in metadata.dimensions %}
-                {% include "./_metadata_row.html" with label=dimension|dimensions_label_join extra_label=dimension.scope.label value=dimension|dimensions_join %}
+                {% include "./_metadata_row.html" with label=dimension|label_join:"scope" value=dimension|dimensions_join %}
             {% endfor %}
             {% include "./_metadata_row.html" with label=metadata.measure.label value=metadata.measure|measure_join %}
             {% for note in metadata.physical_description_notes.texts %}
@@ -69,6 +68,7 @@
                 {% include "./_metadata_row.html" with label="Identifikator" extra_label=identifier.type value=identifier.identifier %}
             {% endfor %}
             {% include "./_record_type_links.html" with label=metadata.related_records.label link_type="alvin-record" record_type_links=metadata.related_records %}
+            {% include "./_record_type_links.html" with label=metadata.work.label link_type="alvin-work" record_type_links=metadata.work %}
             {% for electronic_locator in metadata.electronic_locators %}
                 {% include "./_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}
             {% endfor %}
@@ -85,10 +85,23 @@
             {% include "./_metadata_row.html" with label=metadata.explicit.label value=metadata.explicit.text %}
             {% include "./_metadata_row.html" with label=metadata.rubric.label value=metadata.rubric.text %}
             {% include "./_metadata_row.html" with label=metadata.final_rubric.label value=metadata.final_rubric.text %}
-            {% if metadata.longitude and metadata.latitude %}
-                {% include "./_metadata_row.html" with label="Longitud" value=metadata.longitude %}
-                {% include "./_metadata_row.html" with label="Latitud" value=metadata.latitude %}
-            {% endif %}
+            {% include "./_metadata_row.html" with label=metadata.music_key.label value=metadata.music_key.items|join:"<br>" %}
+            {% include "./_metadata_row.html" with label=metadata.music_key_other.label value=metadata.music_key_other.text %}
+            {% include "./_metadata_row.html" with label=metadata.music_medium.label value=metadata.music_medium.items|join:"<br>" %}
+            {% include "./_metadata_row.html" with label=metadata.music_medium_other.label value=metadata.music_medium_other.text %}
+            {% include "./_metadata_row.html" with label=metadata.music_notation.label value=metadata.music_notation.items|join:"<br>" %}
+            {% include "./_metadata_row.html" with label=metadata.scale.label value=metadata.scale.text %}
+            {% include "./_metadata_row.html" with label=metadata.projection.label value=metadata.projection.text %}
+            {% include "./_metadata_row.html" with label=metadata.coordinates.label value=metadata.coordinates.text %}
+            {% include "./_metadata_row.html" with label=metadata.appraisal.label value=metadata.appraisal|appraisal_join %}
+            {% include "./_metadata_row.html" with label=metadata.edge.label value=metadata.edge|item_description_join %}
+            {% include "./_metadata_row.html" with label=metadata.axis.label value=metadata.axis.item.item %}
+            {% include "./_metadata_row.html" with label=metadata.conservation_state.label value=metadata.conservation_state.items|join:"<br>" %}
+            {% include "./_metadata_row.html" with label=metadata.obverse|label_join:"description" value=metadata.obverse.description.text %}
+            {% include "./_metadata_row.html" with label=metadata.obverse|label_join:"legend" value=metadata.obverse.legend.text %}
+            {% include "./_metadata_row.html" with label=metadata.reverse|label_join:"description" value=metadata.reverse.description.text %}
+            {% include "./_metadata_row.html" with label=metadata.reverse|label_join:"legend" value=metadata.reverse.legend.text %}
+            {% include "./_metadata_row.html" with label=metadata.countermark.label value=metadata.countermark.texts|join:"<br>" %}
             {% translate 'Post skapad' as ts_created %}
             {% include "./_metadata_row.html" with label=ts_created value=metadata.created %}
             {% translate 'Senast uppdaterad' as ts_updated %}
@@ -99,7 +112,11 @@
         {% if metadata.components %}
             <div>
                 <h1 class="text-2xl mt-6">
-                    {% translate 'Arkivförteckning' %}
+                    {% if metadata.type_of_resource.code == 'col' %}
+                        {% translate 'Arkivförteckning' %}
+                    {% else %}
+                        {% translate 'Innehållsbeskrivning' %}
+                    {% endif %}
                 </h1>
                 <div class="flex flex-col">
                     {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
@@ -118,13 +135,11 @@
             {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
         </div>
     {% endif %}
-
 </div>
 
 <!-- Map -->
 {% if metadata.latitude and metadata.longitude %}
     <aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvin-orange border-4 mb-10" id="map" x-show="activeTab != 'related'" x-cloak></aside>
-
     {% block jsbody %}
         <script defer src="{% static 'js/map.js' %}" 
             data-latitude="{{ metadata.latitude }}"

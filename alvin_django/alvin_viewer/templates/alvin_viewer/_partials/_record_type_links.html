@@ -11,6 +11,8 @@
                 <a href="{{ record_type_url }}">
                     {% if link_type == 'alvin-record' %}
                         {{ record_type.title|alvin_record_title }}
+                    {% elif link_type == 'alvin-work' %}
+                        {{ record_type.title|alvin_record_title }}
                     {% elif link_type == 'alvin-place'%}
                         {{ record_type.name|alvin_place_name }}
                     {% else %}

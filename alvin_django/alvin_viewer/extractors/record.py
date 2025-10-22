@@ -1,7 +1,7 @@
 from lxml import etree
 from django.utils import translation
 from ..xmlutils.nodes import text, texts, attr, element, elements, first
-from .common import _get_label, _get_value, _xp, decorated_list, decorated_list_item, components, decorated_location, decorated_agents, decorated_subject_authority, decorated_text, decorated_texts, decorated_texts_with_type, dates, electronic_locators, related_records, origin_places, _titles
+from .common import _get_label, _get_value, _xp, decorated_list, decorated_list_item, decorated_list_item_with_text, components, decorated_location, decorated_agents, decorated_subject_authority, decorated_text, decorated_texts, decorated_texts_with_type, dates, electronic_locators, related_records, related_works, origin_places, _titles
 from .cleaner import clean_empty
 
 def _notes(root: etree._Element):
@@ -50,8 +50,8 @@ def _measure(root: etree._Element, xp: str):
 
 def extract(root: etree._Element) -> dict:
     data = {
-        "type_of_resource": decorated_list(root, "typeOfResource"),
-        "collection": decorated_list(root, "collection"),
+        "type_of_resource": decorated_list_item(root, _xp("typeOfResource")),
+        "collection": decorated_list_item(root, _xp("collection")),
         "production_method": decorated_list_item(root, _xp("productionMethod")),
         "main_title": _titles(root, _xp("title")),
         "variant_titles": _titles(root, _xp("variantTitle")),
@@ -65,7 +65,7 @@ def extract(root: etree._Element) -> dict:
         "languages": decorated_list(root, _xp("language")),
         "description_languages": decorated_list(root, _xp("adminMetadata/descriptionLanguage")),
         "edition_statement": decorated_text(root, "editionStatement"),
-        "origin_places": origin_places(root),
+        "origin_places": origin_places(root, _xp("originPlace")),
         "publications": decorated_texts(root, _xp("publication")),
         "origin_date": first(dates(root, _xp("originDate"), "start", "end")),
         "display_date": decorated_text(root, "originDate/displayDate"),
@@ -73,15 +73,15 @@ def extract(root: etree._Element) -> dict:
         "extent": decorated_text(root, "extent"),
         "dimensions": _dimensions(root),
         "measure": _measure(root, "measure"),
-        "physical_description_notes": decorated_texts_with_type(root, "physicalDescription", "note", "./@noteType"),
+        "physical_description_notes": decorated_texts_with_type(root, _xp("physicalDescription"), "note", "./@noteType"),
         "base_material": decorated_list(root, _xp("baseMaterial")),
         "applied_material": decorated_list(root, _xp("appliedMaterial")),
         "summary": decorated_text(root, "summary"),
         "transcription": decorated_text(root, "transcription"),
         "table_of_contents": decorated_text(root, "tableOfContents"),
         "literature": decorated_text(root, "listBibl"),
-        "notes": decorated_texts_with_type(root, "note", ".", "./@noteType"),
-        "related_records": related_records(root, _xp("relatedTo")),
+        "notes": decorated_texts_with_type(root, _xp("note"), ".", "./@noteType"),
+        "related_records": related_records(root, _xp("relatedTo"), "record"),
         "electronic_locators": electronic_locators(root, _xp("electronicLocator")),
         "genre_form": decorated_list(root, _xp("genreForm")),
         "subjects": _subjects_misc(root),
@@ -96,14 +96,20 @@ def extract(root: etree._Element) -> dict:
         },
         "deco_note": decorated_text(root, _xp("decoNote")),
         "identifiers": _identifiers(root),
-        "work": root.findall("data/record/work"),
+        "work": related_works(root, _xp("work")),
         "files": root.find("data/fileSection"),
     }
 
     if data["type_of_resource"]["code"] == 'col':
         data.update(_col(root))
-    if data["type_of_resource"]["code"] == 'txt' and data["production_method"]["item"] == 'Manuscript':
+    if element(root, _xp("productionMethod")) is not None and element(root, _xp("productionMethod")).text == 'manuscript':
         data.update(_ms(root))
+    if data["type_of_resource"]["code"] == 'not':
+        data.update(_not(root))
+    if data["type_of_resource"]["code"] == 'car':
+        data.update(_car(root))
+    if element(root, _xp("recordInfo/validationType/linkedRecordId")).text == 'recordArtifactNumismatic':
+        data.update(_coins(root))
 
     return clean_empty(data)
 
@@ -128,14 +134,74 @@ def _ms(root: etree._Element) -> dict:
     "explicit": decorated_text(root, _xp("explicit")),
     "rubric": decorated_text(root, _xp("rubric")),
     "final_rubric": decorated_text(root, _xp("finalRubric")),
-    "ms_description": components(elements(root, "//msContents/msItem01"))
+    "components": components(elements(root, "//msContents/msItem01"))
     }
 
 def _not(root: etree._Element) -> dict:
     return {
-    "music_key": decorated_texts(root, _xp("musicKey")),
-    "music_key_other": decorated_text(root, _xp("musicKey")),
-    "music_medium": decorated_texts(root, _xp("musicMedium")),
+    "music_key": decorated_list(root, _xp("musicKey")),
+    "music_key_other": decorated_text(root, _xp("musicKeyOther")),
+    "music_medium": decorated_list(root, _xp("musicMedium")),
     "music_medium_other": decorated_text(root, _xp("musicMediumOther")),
-    "music_notation": decorated_texts(root, _xp("musicNotation")),
+    "music_notation": decorated_list(root, _xp("musicNotation")),
     }
+
+def _car(root: etree._Element) -> dict:
+    return {
+        "scale": decorated_text(root, _xp("cartographicAttributes/scale")),
+        "projection": decorated_text(root, _xp("cartographicAttributes/projection")),
+        "coordinates": decorated_text(root, _xp("cartographicAttributes/coordinates"))
+    }
+
+def _coins(root: etree._Element) -> dict:
+    return {
+        "appraisal": {
+            "label": _get_label(element(root, _xp("appraisal"))),
+            "value": text(root, _xp("appraisal/value")),
+            "currency": text(root, _xp("appraisal/currency")),
+        },
+        "axis": {
+            "label": _get_label(element(root, _xp("axis"))),
+            "item": decorated_list_item(root, _xp("axis/clock")),
+        },
+        "edge": decorated_list_item_with_text(root, _xp("edge"), "description", "legend"),
+        "conservation_state": decorated_list(root, _xp("conservationState")),
+        "obverse": {
+            "label": _get_label(element(root, _xp("obverse"))),
+            "description": decorated_text(root, _xp("obverse/description")),
+            "legend": decorated_text(root, _xp("obverse/legend")),
+        },
+        "reverse": {
+            "label": _get_label(element(root, _xp("reverse"))),
+            "description": decorated_text(root, _xp("reverse/description")),
+            "legend": decorated_text(root, _xp("reverse/legend")),
+        },
+        "countermark": decorated_texts(root, _xp("countermark")),
+    }
+
+'''appraisal(group, 0-1, noConstraint)
+
+    value(textVariable, 1-1, noConstraint)
+    currency(textVariable, 0-1, noConstraint)
+
+edge(group, 0-1, noConstraint)
+
+    description(collectionVariable, 0-1, noConstraint)
+    legend(textVariable, 0-1, noConstraint)
+
+axis(group, 0-1, noConstraint)
+
+    clock(collectionVariable, 1-1, noConstraint)
+
+conservationState(collectionVariable, 0-X, noConstraint)
+obverse(group, 0-1, noConstraint)
+
+    description(textVariable, 0-1, noConstraint)
+    legend(textVariable, 0-1, noConstraint)
+
+reverse(group, 0-1, noConstraint)
+
+    description(textVariable, 0-1, noConstraint)
+    legend(textVariable, 0-1, noConstraint)
+
+countermark(textVariable, 0-X, noConstraint)'''

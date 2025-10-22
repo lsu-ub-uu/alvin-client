@@ -1,6 +1,6 @@
 {% load i18n static metadata_wrangler %}
 
-  <header class="flex items-baseline bg-linear-to-tr text-lg p-4 my-2 border-t-4 border-r-4 border-black bg-gray-300 hover:bg-alvin-green cursor-pointer" @click="open = !open">
+  <header class="flex items-baseline bg-linear-to-tr text-lg p-4 my-2 border-t-4 border-black bg-gray-200 hover:bg-alvin-green cursor-pointer" @click="open = !open">
     {% if c.unitid %}
     <span class="text-sm p-1 mr-2 border-black border-2 border-dashed" itemprop="identifier">{{ c.unitid }}</span>
     {% endif %}
@@ -9,12 +9,29 @@
 
   <dl x-show="open" x-cloak>
     {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.level.label value=c.level.item %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.locus.label value=c.locus.text %}
     {% for agent in c.agents %}
-        {% url 'alvin_viewer' agent.type agent.id as agent_url %}
-        {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.label url=agent_url value=agent.name|agent_name attribute=agent.role|role_list  %}
+      {% url 'alvin_viewer' agent.type agent.id as agent_url %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.label url=agent_url value=agent.name|agent_name attribute=agent.role|role_list  %}
+    {% endfor %}
+    {% include "./_metadata_row.html" with label=c.languages.label value=c.languages.items|join:"<br>"|safe %}
+    {% for place in c.origin_places %}
+      {% url 'alvin_viewer' 'alvin-place' place.id as place_url %}
+      {% include "./_metadata_row.html" with label=place.label url=place_url value=place.name|alvin_place_name extra_value=place|origin_countries %}
+      {% endfor %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.origin_date.label value=c.origin_date.dates|dates_join %}
+    {% for note in c.physical_description_notes.texts %}
+      {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
+    {% endfor %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.incipit.label value=c.incipit.text %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.explicit.label value=c.explicit.text %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.rubric.label value=c.rubric.text %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.final_rubric.label value=c.final_rubric.text %}
+    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.literature.label value=c.literature.text %}
+    {% for note in c.notes.texts %}
+      {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
     {% endfor %}
     {% include "alvin_viewer/_partials/_record_type_links.html" with label=c.place.label link_type="alvin-place" record_type_links=c.place %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.origin_date.label value=c.origin_date.dates|dates_join %}
     {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.display_date.label value=c.display_date.text %}
     {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.extent.label value=c.extent.text|linebreaksbr %}
     {% for electronic_locator in c.electronic_locators %}
@@ -22,7 +39,6 @@
     {% endfor %}
     {% include "alvin_viewer/_partials/_record_type_links.html" with label=c.related_records.label link_type="alvin-record" record_type_links=c.related_records %}
     {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.accession_numbers.label value=c.accession_numbers.texts|join:"<br>" %}
-    {% include "./_metadata_row.html" with label=c.note.label value=c.note.text|linebreaksbr %}
     {% include "./_metadata_row.html" with label=c.access_policy.label value=c.access_policy.text|linebreaksbr %}
   </dl>
 

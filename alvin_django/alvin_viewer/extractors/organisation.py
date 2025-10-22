@@ -22,11 +22,11 @@ def extract(root: etree._Element) -> dict:
     return {
         "authority_names": authority_names(root, organisation["AUTH_NAME"]),
         "variant_names": variant_names_list(root, organisation["VARIANT"]),
-        "organisation_info": dates(root, "organisation", "organisationInfo", "start", "end"),
+        "organisation_info": dates(root, "organisation/organisationInfo", "start", "end"),
         "display_date": root.findtext(".//displayDate"),
         "notes": notes_map,
         "identifiers": identifiers_map,
         "address": address,
-        "electronic_locators": electronic_locators(root),
+        "electronic_locators": electronic_locators(root, "electronicLocator"),
         "related_organisations": related_orgs,
     }

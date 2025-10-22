@@ -30,34 +30,13 @@ def render_record_icon(metadata):
             'extra_icon_alt': f'{metadata["form_of_work"]}',
             'label': f'Verk, {metadata["form_of_work"]}',
         }
-    elif metadata["type_of_resource"]["code"] == 'img':
+    else: 
+        type_of_resource = (metadata or {}).get("type_of_resource", {}).get("item")
+        resource_code = (metadata or {}).get("type_of_resource", {}).get("code")
+        production_method = (metadata or {}).get("production_method", {}).get("item") if (metadata or {}).get("production_method", {}).get("code") == 'manuscript' else None
+        
         return {
-            'icon_path': f'/img/recordTypes/image.svg',
-            'icon_alt': 'Färgpalett',
-            'label': 'Bild',
+            'icon_path': f'/img/recordTypes/{resource_code}.svg',
+            'icon_alt': type_of_resource,
+            'label': f"{', '.join(filter(None, (type_of_resource, production_method)))}".capitalize()
         }
-    elif metadata["type_of_resource"]["code"] == 'not':
-        return {
-            'icon_path': f'/img/recordTypes/music.svg',
-            'icon_alt': 'Not',
-            'label': 'Musik',
-        }
-    elif metadata["type_of_resource"]["code"] == 'txt':
-        return {
-            'icon_path': f'/img/recordTypes/text.svg',
-            'icon_alt': 'Dokument',
-            'label': 'Text',
-        }
-    elif metadata["type_of_resource"]["code"] == 'col':
-        return {
-            'icon_path': f'/img/recordTypes/archive.svg',
-            'icon_alt': 'Arkivlåda',
-            'label': 'Arkiv',
-        }
-    elif metadata["type_of_resource"]["code"] == 'art':
-                return {
-            'icon_path': f'/img/recordTypes/object.svg',
-            'icon_alt': 'Kub',
-            'label': 'Föremål',
-        }
-    return {}

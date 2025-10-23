@@ -9,5 +9,5 @@ def extract(root: etree._Element) -> dict:
         "country": root.findtext(".//country"),
         "latitude": root.findtext(".//point/latitude"),
         "longitude": root.findtext(".//point/longitude"),
-        "electronic_locators": electronic_locators(root),
+        "electronic_locators": electronic_locators(root, "electronicLocator"),
     }

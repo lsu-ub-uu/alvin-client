@@ -25,7 +25,7 @@
             {% include "./_metadata_row.html" with label=metadata.edition_statement.label value=metadata.edition_statement.text %}
             {% include "./_metadata_row.html" with label=metadata.publications.label value=metadata.publications.texts|join:"<br>" %}
             {% for date in metadata.date_other %}
-                {% include "./_metadata_row.html" with label=date.type value=date.dates|dates_join  %}
+                {% include "./_metadata_row.html" with label=date.dates.label value=date.dates|dates_join  %}
             {% endfor %}
             {% include "./_metadata_row.html" with label=metadata.languages.label value=metadata.languages.items|join:"<br>"|safe %}
             {% include "./_metadata_row.html" with label=metadata.description_languages.label value=metadata.description_languages.items|join:"<br>"|safe %}

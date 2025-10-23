@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.views.decorators.cache import cache_page
+from django.conf import settings
 from django.http import Http404
+from django.shortcuts import render
 from lxml import etree
 
 from ..services.alvin_api import AlvinAPI
-from ..extractors import person, place, organisation, work, record as record
+from ..extractors import person, place, organisation, work, record
 from ..xmlutils.nodes import text, elements
 
 # Select extractor based on record_type
@@ -17,18 +19,18 @@ EXTRACTORS = {
 
 def extract_metadata(root: etree._Element, record_type: str) -> dict:
     # Common metadata
-    rt = record_type.replace("alvin-", "")
+    rt = record_type.replace("alvin-", "", 1) if record_type.startswith("alvin-") else record_type
+    last_updated = elements(root, f"data/{rt}/recordInfo/updated/tsUpdated")
+    if elements(root, f"data/{rt}/recordInfo/updated/tsUpdated"):
+        last_updated = last_updated[-1]
     common = {
         "id": text(root, f"data/{rt}/recordInfo/id"),
         "created": text(root, f"data/{rt}/recordInfo/tsCreated"),
-        "last_updated":
-            text(elements(root, f"data/{rt}/recordInfo/updated/tsUpdated")[-1], ".") if
-            elements(root, f"data/{rt}/recordInfo/updated/tsUpdated") is not None
-            else None,
+        "last_updated": last_updated,
         "source_xml": text(root, "actionLinks/read/url"),
         "record_type": record_type,
     }
-
+    
     # Extraction of record specific metadata
     extractor = EXTRACTORS.get(record_type)
     if not extractor:
@@ -36,13 +38,13 @@ def extract_metadata(root: etree._Element, record_type: str) -> dict:
     data = extractor(root)
     return {**common, **data}
 
+@cache_page(60)
 def alvin_viewer(request, record_type: str, record_id: str):
     api = AlvinAPI()
     try:
         root = api.get_record_xml(record_type, record_id)
+        metadata = extract_metadata(root, record_type)
     except Exception as e:
         raise Http404(str(e))
-
-    metadata = extract_metadata(root, record_type)
-    context = {"metadata": metadata, "xml": etree.tostring(root)}
+    context = {"metadata": metadata}
     return render(request, "alvin_viewer/alvin_viewer.html", context)

@@ -9,7 +9,7 @@ def texts(node: etree._Element, xpath: str) -> List[str]:
     return [n.findtext(".") for n in node.xpath(xpath)]
 
 def attr(node: etree._Element, xpath_attr: str, default: Optional[str] = None) -> Optional[str]:
-    # xpath_attr e.g. "./@lang"
+    # xpath_attr e.g. "./@type"
     if not xpath_attr.startswith("./@"):
         raise ValueError(f"attr() expects XPath like './@attrName' not {xpath_attr}")
     key = xpath_attr[3:]

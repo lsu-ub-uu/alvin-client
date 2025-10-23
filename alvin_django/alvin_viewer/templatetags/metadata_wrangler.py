@@ -7,13 +7,7 @@ register = template.Library()
 
 @register.filter
 def select_current_language():
-    lang_options = {
-        'sv': 'swe',
-        'en': 'eng',
-        'no': 'nor'
-        }
-    
-    return lang_options[get_language()]
+    return {'sv':'swe','en':'eng','no':'nor'}.get(get_language(), 'swe')
 
 def _lang(metadata):
     return select_current_language() if metadata.get(select_current_language()) else next(iter(metadata))
@@ -207,11 +201,9 @@ def item_description_join(metadata):
 def label_join(metadata: Optional[dict], element: str) -> str:
     if not isinstance(metadata, dict):
         return ""
-
-    l = (metadata or {}).get("label")
+    l = metadata.get("label")
     sub = metadata.get(element)
-    el = sub.get("label") if isinstance(sub, dict) else sub
-
+    el = (sub.get("label") if isinstance(sub, dict) else sub) if sub else None
     result = ", ".join(filter(None, (l, el)))
     return result.capitalize() if result else ""
 
@@ -219,6 +211,5 @@ def label_join(metadata: Optional[dict], element: str) -> str:
 def appraisal_join(metadata: Optional[dict]):
     if not isinstance(metadata, dict):
         return ""
-    
     keys = ["value", "currency"]
     return " ".join(filter(None, ((metadata or {}).get(key) for key in keys)))

@@ -4,39 +4,40 @@ register = template.Library()
 
 @register.inclusion_tag('./alvin_viewer/_partials/_record_icon_name.html')
 def render_record_icon(metadata):
-    if metadata["record_type"] == 'alvin-place':
-        return {
-            'icon_path': '/img/authorityTypes/place.svg',
-            'icon_alt': 'Plats',
-            'label': 'Plats',
+    rt = (metadata or {}).get("record_type")
+
+    # authority
+    if rt in ('alvin-place','alvin-person','alvin-organisation'):
+        mapping = {
+            'alvin-place': ('/img/authorityTypes/place.svg', 'Plats', 'Plats'),
+            'alvin-person': ('/img/authorityTypes/person.svg', 'Person', 'Person'),
+            'alvin-organisation': ('/img/authorityTypes/organisation.svg', 'Organisation', 'Organisation'),
         }
-    elif metadata["record_type"] == 'alvin-person':
+        icon_path, alt, label = mapping[rt] 
+        return {'icon_path': icon_path, 'icon_alt': alt, 'label': label,}
+    
+    if rt == 'alvin-work':
+        form = (metadata or {}).get("form_of_work")
         return {
-            'icon_path': '/img/authorityTypes/person.svg',
-            'icon_alt': 'Person',
-            'label': 'Person'
-        }
-    elif metadata["record_type"] == 'alvin-organisation':
-        return {
-            'icon_path': '/img/authorityTypes/organisation.svg',
-            'icon_alt': 'Organisation',
-            'label': 'Organisation',
-        }
-    elif metadata["record_type"] == 'alvin-work':
-        return {
-            'icon_path': '/img/authorityTypes/work.svg',
+            'icon_path': '/img/recordTypes/work.svg',
             'icon_alt': 'Verk',
-            'extra_icon_path': f'/img/recordTypes/{metadata["form_of_work"]}.svg',
-            'extra_icon_alt': f'{metadata["form_of_work"]}',
-            'label': f'Verk, {metadata["form_of_work"]}',
+            'extra_icon_path': f'/img/recordTypes/{form}.svg' if form else None,
+            'extra_icon_alt': form or '',
+            'label': f"Verk{', ' + form if form else ''}",
         }
-    else: 
-        type_of_resource = (metadata or {}).get("type_of_resource", {}).get("item")
-        resource_code = (metadata or {}).get("type_of_resource", {}).get("code")
-        production_method = (metadata or {}).get("production_method", {}).get("item") if (metadata or {}).get("production_method", {}).get("code") == 'manuscript' else None
-        
-        return {
-            'icon_path': f'/img/recordTypes/{resource_code}.svg',
-            'icon_alt': type_of_resource,
-            'label': f"{', '.join(filter(None, (type_of_resource, production_method)))}".capitalize()
-        }
+    
+    # record
+    tor = (metadata or {}).get("type_of_resource", {})
+    pm = (metadata or {}).get("production_method", {})
+    resource_code  = tor.get("code")
+    type_of_resource = tor.get("item")
+    production_method = pm.get("code")
+    label_bits = [type_of_resource]
+    if production_method == "manuscript":
+        label_bits.append("manuscript")
+    
+    return {
+        'icon_path': f'/img/recordTypes/{resource_code}.svg' if resource_code else '/img/recordTypes/unknown.svg',
+        'icon_alt': type_of_resource or 'Okänd',
+        'label': ", ".join([b for b in label_bits if b]).capitalize()
+    }

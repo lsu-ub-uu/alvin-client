@@ -1,24 +1,30 @@
+from typing import Callable, Iterable, Optional, Any, Dict, List
 from lxml import etree
 from django.utils import translation
+
 from ..xmlutils.nodes import text, texts, attr, element, elements, first
-from .common import _get_label, _get_value, _xp, decorated_list, decorated_list_item, decorated_list_item_with_text, components, decorated_location, decorated_agents, decorated_subject_authority, decorated_text, decorated_texts, decorated_texts_with_type, dates, electronic_locators, related_records, related_works, origin_places, _titles
+from .common import _get_label, _get_value, _get_attribute_item, _xp, decorated_list, decorated_list_item, decorated_list_item_with_text, components, decorated_location, decorated_agents, decorated_subject_authority, decorated_text, decorated_texts, decorated_texts_with_type, dates, electronic_locators, related_records, related_works, origin_places, _titles
 from .cleaner import clean_empty
 
-def _notes(root: etree._Element):
-    return [{"type": n.get("noteType"), "note": n.findtext(".")} for n in root.xpath("data/record/note")]
+XP = {
+    "identifiers": etree.XPath("//record/identifier"),
+    "classifications": etree.XPath("//record/classification"),
+    "dimensions": etree.XPath(".//dimensions"),
+
+}
 
 def _identifiers(root: etree._Element):
     return [{"type": id.get("type"), "identifier": id.findtext(".")} for id in root.xpath("//record/identifier")]
 
 def _subjects_misc(root: etree._Element):
     return [{
-        "type": s.get("authority"),
-        "topic": s.findtext(".//topic"),
-        "genreForm": s.findtext(".//genreForm"),
-        "geographicCoverage": s.findtext(".//geographicCoverage"),
-        "temporal": s.findtext(".//temporal"),
-        "occupation": s.findtext(".//occupation"),
-    } for s in elements(root, "data/record/subject[not(@type = 'person' or @type = 'organisation' or @type = 'place')]")]
+        "type": attr(s, "./@authority").replace("_", " ") if attr(s, "./@authority") is not None else None,
+        "topic": text(s, ".//topic"),
+        "genreForm": text(s, ".//genreForm"),
+        "geographicCoverage": text(s, ".//geographicCoverage"),
+        "temporal": text(s, ".//temporal"),
+        "occupation": text(s, ".//occupation"),
+    } for s in elements(root, _xp("subject[not(@type = 'person' or @type = 'organisation' or @type = 'place')]"))]
 
 def _classifications(root: etree._Element):
     return [{"type": c.get("authority"), "classification": c.findtext(".")} for c in root.xpath("//record/classification")]
@@ -178,30 +184,3 @@ def _coins(root: etree._Element) -> dict:
         },
         "countermark": decorated_texts(root, _xp("countermark")),
     }
-
-'''appraisal(group, 0-1, noConstraint)
-
-    value(textVariable, 1-1, noConstraint)
-    currency(textVariable, 0-1, noConstraint)
-
-edge(group, 0-1, noConstraint)
-
-    description(collectionVariable, 0-1, noConstraint)
-    legend(textVariable, 0-1, noConstraint)
-
-axis(group, 0-1, noConstraint)
-
-    clock(collectionVariable, 1-1, noConstraint)
-
-conservationState(collectionVariable, 0-X, noConstraint)
-obverse(group, 0-1, noConstraint)
-
-    description(textVariable, 0-1, noConstraint)
-    legend(textVariable, 0-1, noConstraint)
-
-reverse(group, 0-1, noConstraint)
-
-    description(textVariable, 0-1, noConstraint)
-    legend(textVariable, 0-1, noConstraint)
-
-countermark(textVariable, 0-X, noConstraint)'''

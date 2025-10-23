@@ -23,10 +23,12 @@ def _xp(path: str, absolute: bool = False) -> str:
     base = "data/record/"
     return path if absolute else f"{base}{path}"
 
+def _get_attribute_item(item: str, suffix: str = "NoteItemText"):
 
     if item is None:
         return "Item not found"
     
+    xml_headers = {
     "Content-Type": "application/vnd.cora.record+xml",
     "Accept": "application/vnd.cora.record+xml",
     }

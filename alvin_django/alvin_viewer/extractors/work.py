@@ -1,7 +1,6 @@
 from lxml import etree
-from .common import _titles, origin_places, electronic_locators, dates
+from .common import _titles, origin_places, electronic_locators, dates, decorated_text, agents
 from ..xmlutils.nodes import text, attr, elements
-from .common import decorated_text, decorated_agents
 
 def extract(root: etree._Element) -> dict:
     return {

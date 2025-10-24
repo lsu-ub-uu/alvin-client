@@ -68,7 +68,7 @@ class AlvinAPI:
         if cache_key:
             cache.set(cache_key, content, ttl)
         return self._parse_xml(content)
-
+    
     def get_record_xml(self, record_type: str, record_id: str) -> etree._Element:
         path_tpl = self.endpoints.paths.get(record_type)
         if not path_tpl:

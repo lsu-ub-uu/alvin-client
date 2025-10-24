@@ -28,7 +28,7 @@ def alvin_title(metadata, record_type):
     }
     
     if record_type not in mapping:
-        raise ValueError("Record type is not valid")
+        raise ValueError(f"Record type is not valid: {record_type}")
     
     joiner, keys = mapping[record_type]
 

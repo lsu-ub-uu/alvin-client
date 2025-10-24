@@ -1,5 +1,5 @@
 from lxml import etree
-from .common import authority_names, variant_names_list, electronic_locators, related, dates, a_date
+from .common import authority_names, variant_names_list, electronic_locators, dates, a_date
 from .mappings import person
 from .cleaner import clean_empty
 
@@ -17,8 +17,8 @@ def extract(root: etree._Element) -> dict:
         "notes": {note.get("noteType"): note.findtext(".") for note in root.xpath("//note")},
         "identifiers": {i.get("type"): i.findtext(".") for i in root.xpath("//identifier")},
         "electronic_locators": electronic_locators(root, "electronicLocator"),
-        "related_persons": related(root, "person"),
-        "related_organisations": related(root, "organisation"),
+        #"related_persons": related(root, "person"),
+        #"related_organisations": related(root, "organisation"),
     }
     
     return clean_empty(md)

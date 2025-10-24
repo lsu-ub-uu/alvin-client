@@ -1,62 +1,86 @@
 from django.http import JsonResponse, Http404
-from django.views.decorators.cache import cache_page
-from django.utils.html import escape
+from urllib.parse import urljoin
+from django.utils.translation import gettext as _
 from ..services.alvin_api import AlvinAPI
-from lxml import etree
 
-@cache_page(120)
+def _to_int(value, default):
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return int(default)
+
 def iiif_manifest(request, record_id: str):
     api = AlvinAPI()
     try:
-        record_xml = api.get_record_xml("alvin-record", record_id)        
+        record_xml = api.get_record_xml("alvin-record", record_id)
     except Exception as e:
         raise Http404(str(e))
 
-    items = []
-    for i, f in enumerate(record_xml.xpath("//file"), start=1):
-        service_id = f.findtext(".//serviceIdentifier")
-        w = f.findtext(".//width")
-        h = f.findtext(".//height")
+    # Bas-URL som pekar på manifestets "directory" (slutar med '/')
+    manifest_base = request.build_absolute_uri(request.path)
+    if not manifest_base.endswith('/'):
+        manifest_base += '/'
 
-        if not service_id:
-            continue
+    canvases = []
+    idx = 0
+
+    for f in record_xml.xpath("data/record/fileSection/fileGroup/file"):
         try:
-            w = int(w) if w else None
-            h = int(h) if h else None
-        except ValueError:
-            w = h = None
+            file_xml = api.fetch_file_xml(f.findtext("fileLocation/actionLinks/read/url"))
+        except Exception:
+            continue
+        
+        h = _to_int(file_xml.findtext(".//height"), 1000)
+        w = _to_int(file_xml.findtext(".//width"), 1000)
 
-        image_id = f"https://iiif.example.org/iiif/{escape(service_id)}"
-        canvas_id = request.build_absolute_uri(f"#canvas-{i}")
+        server = file_xml.findtext(".//iiif/server")
+        ident = file_xml.findtext(".//iiif/identifier")
 
-        items.append({
+        if not server or not ident:
+            continue
+
+        image_service_id = f"{server.rstrip('/')}/{ident.strip('/')}"
+        idx += 1
+
+        canvas_id = urljoin(manifest_base, f"canvas/{idx}")
+        anno_page_id = urljoin(canvas_id + '/', "page")
+        anno_id = urljoin(anno_page_id + '/', "anno")
+
+        raster_url = f"{image_service_id}/full/max/0/default.jpg"
+
+        canvases.append({
             "id": canvas_id,
             "type": "Canvas",
-            "height": h or 1000,
-            "width": w or 1000,
+            "height": h,
+            "width": w,
             "items": [{
-                "id": f"{canvas_id}/page/1",
+                "id": anno_page_id,
                 "type": "AnnotationPage",
                 "items": [{
-                    "id": f"{canvas_id}/annotation/1",
+                    "id": anno_id,
                     "type": "Annotation",
                     "motivation": "painting",
-                    "target": canvas_id,
                     "body": {
-                        "id": f"{image_id}/full/max/0/default.jpg",
+                        "id": raster_url,
                         "type": "Image",
                         "format": "image/jpeg",
-                        "height": h or 1000,
-                        "width": w or 1000,
-                    },
-                }],
-            }],
+                        "height": h,
+                        "width": w,
+                        }
+                    }]
+                }]
+            # "rendering": [{"id": original_url, "type": "Image", "format": "image/jpeg", "label": {"none": ["Download original image"]}}]
         })
+
+    if not canvases:
+        raise Http404(_("No IIIF-capable files found on this record."))
 
     manifest = {
         "@context": "http://iiif.io/api/presentation/3/context.json",
-        "id": request.build_absolute_uri(),
+        "id": request.build_absolute_uri(),  # full URL till manifestet
         "type": "Manifest",
-        "items": items,
+        "label": {"none": [f"Record {record_id}"]},
+        "items": canvases,
     }
+
     return JsonResponse(manifest)

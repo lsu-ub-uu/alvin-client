@@ -24,8 +24,8 @@
             {% include "./_metadata_row.html" with label=date.dates.label value=date.dates|dates_join  %}
         {% endfor %}
         {% if metadata.longitude and metadata.latitude %}
-            {% include "./_metadata_row.html" with label="Longitud" value=metadata.longitude %}
-            {% include "./_metadata_row.html" with label="Latitud" value=metadata.latitude %}
+            {% include "./_metadata_row.html" with label=metadata.longitude.label value=metadata.longitude.text %}
+            {% include "./_metadata_row.html" with label=metadata.latitude.text value=metadata.latitude.text %}
         {% endif %}
         {% include "./_metadata_row.html" with label=metadata.incipit.label value=metadata.incipit.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.note.label value=metadata.note.text|linebreaksbr %}

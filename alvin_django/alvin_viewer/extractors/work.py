@@ -19,8 +19,8 @@ def extract(root: etree._Element) -> dict:
         "literature": decorated_text(root, _xp(rt, "listBibl")),
         "note": decorated_text(root, _xp(rt, "note")),
         "agents": agents(root, _xp(rt, "agent")),
-        "longitude": text(root, _xp(rt, "point/longitude")),
-        "latitude": text(root, _xp(rt, "point/latitude")),
+        "longitude": decorated_text(root, _xp(rt, "point/longitude")),
+        "latitude": decorated_text(root, _xp(rt, "point/latitude")),
         "electronic_locators": electronic_locators(root, _xp(rt, "electronicLocator")),
     })
 

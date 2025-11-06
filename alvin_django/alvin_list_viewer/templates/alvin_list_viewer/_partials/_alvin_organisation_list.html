@@ -9,7 +9,7 @@
                 <img class="w-7 h-full" src="{% static '/img/authorityTypes/organisation.svg' %}" alt="{% translate 'Kartnål' %}">
                  <!-- Huvudtitel -->
                 <div>   
-                    <h1 class="block w-full text-alvin-orange text-xl font-semibold">{{ organisation|alvin_title:record_type }}</h1>
+                    <h1 class="block w-full text-alvin-orange text-xl font-semibold">{{ organisation.authority_names|alvin_title:record_type }}</h1>
                     {% for name in organisation.variant_names %}
                         <h2 class="block w-full text-gray-600">{{ name|alvin_organisation_name }}</h2>
                     {% endfor %}

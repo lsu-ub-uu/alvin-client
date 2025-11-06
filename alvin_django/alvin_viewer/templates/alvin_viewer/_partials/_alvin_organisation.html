@@ -7,36 +7,38 @@
 <!-- Metadata -->
 <div class="flex flex-col" x-show="activeTab != 'related'">
     <div class="flex flex-col" x-show="activeTab === 'all_metadata'" x-cloak>
-        {% for lang, name in metadata.authority_names.items %}
-            {% include "./_metadata_row.html" with label="Namn" extra_label=lang value=name|alvin_organisation_name %}
-        {% endfor %}
-        {% for name in metadata.variant_names %}
-            {% include "./_metadata_row.html" with label="Alternativt namn" extra_label=name.language value=name|alvin_organisation_name attribute=name.variant_type %}
-        {% endfor %}
+        {% with metadata.authority_names.label as authority_label %}
+            {% for lang, name in metadata.authority_names.names.items %}
+                {% include "./_metadata_row.html" with label=authority_label extra_label=lang value=name|alvin_organisation_name %}
+            {% endfor %}
+        {% endwith %}
+        {% with metadata.variant_names.label as variant_label %}
+            {% for lang, name in metadata.variant_names.names.items %}
+                {% include "./_metadata_row.html" with label=variant_label extra_label=lang value=name|alvin_organisation_name attribute=name.variant_type %}
+            {% endfor %}
+        {% endwith %}
     </div>
-    {% include "./_metadata_row.html" with label="Startdatum" value=metadata.start_date %}
-    {% include "./_metadata_row.html" with label="Slutdatum" value=metadata.end_date %}
-    {% include "./_metadata_row.html" with label="Årtal" value=metadata.display_date %}
+    {% include "./_metadata_row.html" with label=metadata.organisation_info.label value=metadata.organisation_info.dates|dates_join %}
+    {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
     {% include "./_address.html" with place_id=metadata.address.place_id box=metadata.address.box street=metadata.address.street postcode=metadata.address.postcode country=metadata.address.country %}
     {% for electronic_locator in metadata.electronic_locators %}
         {% include "./_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}
     {% endfor %}
     <div class="flex flex-col" x-show="activeTab === 'all_metadata'" x-cloak>
-        {% for type, note in metadata.notes.items %}
-            {% include "./_metadata_row.html" with label="Anmärkning" extra_label=type value=note|linebreaksbr %}
+        {% for note in metadata.notes.texts %}
+            {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
         {% endfor %}
-        {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
-        {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
-        {% for type, id in metadata.identifiers.items %}
-            {% include "./_metadata_row.html" with label="Identifikator" extra_label=type value=id %}
+        {% for identifier in metadata.identifiers %}
+            {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type value=identifier.identifier %}
         {% endfor %}
-        {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
     </div>
-    {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
 </div>
-<div class="flex flex-col" x-show="activeTab === 'related'" x-cloak>
-    {% for related_organisation in metadata.related_organisations %}
-        {% url 'alvin_viewer' 'alvin-organisation' related_organisation.id as related_organisation_url %}
-        {% include "./_metadata_row.html" with label="Relaterade organisationer" extra_label=related_organisation.type url=related_organisation_url value=related_organisation.url %}
-    {% endfor %}
+<div class="flex flex-col" x-show="activeTab === 'related || activeTab === 'all_metadata'" x-cloak>
+    {% include "./_record_type_links.html" with label=metadata.related_organisations.label link_type="alvin-organisation" record_type_links=metadata.related_organisations %}
+</div>
+<div x-show="activeTab != 'related'">
+    {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
+    {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
+    {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
+    {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
 </div>

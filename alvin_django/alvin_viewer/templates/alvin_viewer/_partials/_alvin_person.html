@@ -1,50 +1,50 @@
 {% load i18n static metadata_wrangler %}
 
 {% block title %}
-<title>Alvin - {{ metadata|alvin_title:metadata.record_type }}</title>
+<title>Alvin - {{metadata|alvin_title:metadata.record_type}}</title>
 {% endblock %}
 
 <!-- Metadata -->
-<div class="flex flex-col" x-show="activeTab != 'related'">
-    <div class="flex flex-col" x-show="activeTab === 'all_metadata'" x-cloak>
-        {% for lang, name in metadata.authority_names.items %}
-            {% include "./_metadata_row.html" with label="Namn" extra_label=lang extra_label=lang value=name|alvin_person_name %}
-        {% endfor %}
-        {% for name in metadata.variant_names %}
-            {% include "./_metadata_row.html" with label="Alternativt namn" extra_label=name.language value=name|alvin_person_name attribute=name.variant_type %}
-        {% endfor %}
+<div class="flex flex-col">
+    <div class="flex flex-col" x-show="activeTab === 'all_metadata' && activeTab != 'related'" x-cloak>
+        {% with metadata.authority_names.label as authority_label %}
+            {% for lang, name in metadata.authority_names.names.items %}
+                {% include "./_metadata_row.html" with label=authority_label extra_label=lang value=name|alvin_person_name %}
+            {% endfor %}
+        {% endwith %}
+        {% with metadata.variant_names.label as variant_label %}
+            {% for lang, name in metadata.variant_names.names.items %}
+                {% include "./_metadata_row.html" with label=variant_label extra_label=lang value=name|alvin_person_name %}
+            {% endfor %}
+        {% endwith %}
     </div>
-    {% include "./_metadata_row.html" with label="Född" value=metadata.birth_date %}
-    {% url 'alvin_viewer' 'alvin-place' metadata.birth_place as birth_place_url %}
-    {% include "./_metadata_row.html" with label="Födelseort" url=birth_place_url value=metadata.birth_place %}
-    {% include "./_metadata_row.html" with label="Död" value=metadata.death_date %}
-    {% url 'alvin_viewer' 'alvin-place' metadata.death_place as death_place_url %}
-    {% include "./_metadata_row.html" with label="Dödsort" url=death_place_url value=metadata.death_place %}
-    {% include "./_metadata_row.html" with label="Nationalitet" value=metadata.nationality|join:"<br>"|safe %}
-    {% include "./_metadata_row.html" with label="Årtal" value=metadata.display_date %}
-    {% include "./_metadata_row.html" with label="Yrke" value=metadata.fields_of_endeavor|join:"<br>"|safe %}
-    {% include "./_metadata_row.html" with label="Kön" value=metadata.gender %}
+    {% include "./_metadata_row.html" with label=metadata.birth_date.label value=metadata.birth_date|date_join %}
+    {% url 'alvin_viewer' 'alvin-place' metadata.birth_place.id as birth_place_url %}
+    {% include "./_metadata_row.html" with label=metadata.birth_place.label url=birth_place_url value=metadata.birth_place.name|alvin_place_name %}
+    {% include "./_metadata_row.html" with label=metadata.death_date.label value=metadata.death_date|date_join %}
+    {% url 'alvin_viewer' 'alvin-place' metadata.death_place.id as death_place_url %}
+    {% include "./_metadata_row.html" with label=metadata.death_place.label url=death_place_url value=metadata.death_place.name|alvin_place_name %}
+    {% include "./_metadata_row.html" with label=metadata.nationality.label value=metadata.nationality.country.items|list_join %}
+    {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
+    {% include "./_metadata_row.html" with label=metadata.fields_of_endeavor.label value=metadata.fields_of_endeavor.texts|list_join %}
+    {% include "./_metadata_row.html" with label=metadata.gender.label value=metadata.gender.item %}
     <div class="flex flex-col" x-show="activeTab === 'all_metadata'" x-cloak>
-        {% for type, note in metadata.notes.items %}
-            {% include "./_metadata_row.html" with label="Anmärkning" extra_label=type value=note|linebreaksbr %}
+        {% for note in metadata.notes.texts %}
+            {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
         {% endfor %}
-        {% for type, id in metadata.identifiers.items %}
-            {% include "./_metadata_row.html" with label="Identifikator" extra_label=type value=id %}
+        {% for identifier in metadata.identifiers %}
+            {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type value=identifier.identifier %}
         {% endfor %}
         {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
         {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
         {% for electronic_locator in metadata.electronic_locators %}
             {% include "./_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}
         {% endfor %}
-        {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
     </div>
+    <div class="flex flex-col" x-show="activeTab === 'related' || activeTab === 'all_metadata'" x-cloak>
+        {% include "./_record_type_links.html" with label=metadata.related_persons.label link_type="alvin-person" record_type_links=metadata.related_persons %}
+        {% include "./_record_type_links.html" with label=metadata.related_organisations.label link_type="alvin-organisation" record_type_links=metadata.related_organisations %}
+    </div>
+    {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
     {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
-</div>
-<div class="flex flex-col" x-show="activeTab === 'related'" x-cloak>
-    {% for person in metadata.related_persons %}
-        {% include "./_metadata_row.html" with label="Relaterade personer" value=person %}
-    {% endfor %}
-    {% for organisation in metadata.related_organisations %}
-        {% include "./_metadata_row.html" with label="Relaterade organisationer" value=organisation %}
-    {% endfor %}
 </div>

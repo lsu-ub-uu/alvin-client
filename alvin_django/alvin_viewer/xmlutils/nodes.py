@@ -1,13 +1,6 @@
 from lxml import etree
 from typing import Iterable, Optional, List
 
-def text(node: etree._Element, xpath: str, default: Optional[str] = None) -> Optional[str]:
-    val = node.findtext(xpath)
-    return val if val not in (None, "") else default
-
-def texts(node: etree._Element, xpath: str) -> List[str]:
-    return [n.findtext(".") for n in node.xpath(xpath)]
-
 def attr(node: etree._Element, xpath_attr: str, default: Optional[str] = None) -> Optional[str]:
     if not xpath_attr.startswith("./@"):
         raise ValueError(f"attr() expects XPath like './@attrName' not {xpath_attr}")
@@ -25,3 +18,10 @@ def first(seq: Iterable):
     for x in seq:
         return x
     return None
+
+def text(node: etree._Element, xpath: str, default: Optional[str] = None) -> Optional[str]:
+    val = node.findtext(xpath)
+    return val if val is not None else default
+
+def texts(node: etree._Element, xpath: str) -> List[str]:
+    return [text(n, (".")) for n in elements(node, xpath)]

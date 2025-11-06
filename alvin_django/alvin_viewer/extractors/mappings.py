@@ -5,16 +5,13 @@ person = {
         "numeration": "./name/namePart[@type='numeration']",
         "terms_of_address": "./name/namePart[@type='termsOfAddress']",
         "orientation_code": "./name/orientationCode",
-        "variant_type": "variantType"
     },
     "VARIANT": {
-        "language": "./@lang",
         "family_name": "./name/namePart[@type='family']",
         "given_name": "./name/namePart[@type='given']",
         "numeration": "./name/namePart[@type='numeration']",
         "terms_of_address": "./name/namePart[@type='termsOfAddress']",
         "orientation_code": "./name/orientationCode",
-        "variant_type": "variantType"
     }
 }
 
@@ -24,7 +21,6 @@ place = {
         "orientation_code": "./orientationCode"
     },
     "VARIANT": {
-        "language": "./@lang",
         "geographic": "./geographic",
         "orientation_code": "./orientationCode"
     }
@@ -32,18 +28,16 @@ place = {
 
 organisation = {
     "AUTH_NAME": {
-        "corporate_name": "./name/namePart[@type='corporateName']",
-        "subordinate_name": "./name/namePart[@type='subordinate']",
-        "terms_of_address": "./name/namePart[@type='termsOfAddress']",
-        "orientation_code": "./name/orientationCode",
-        "variant_type": "variantType"
+        "corporate_name": "name/namePart[@type='corporateName']",
+        "subordinate_name": "name/namePart[@type='subordinate']",
+        "terms_of_address": "name/namePart[@type='termsOfAddress']",
+        "orientation_code": "name/orientationCode",
     },
     "VARIANT": {
-        "language": "./@lang",
-        "corporate_name": "./name/namePart[@type='corporateName']",
-        "subordinate_name": "./name/namePart[@type='subordinate']",
-        "terms_of_address": "./name/namePart[@type='termsOfAddress']",
-        "orientation_code": "./name/orientationCode",
-        "variant_type": "./@variantType"
+        "corporate_name": "name/namePart[@type='corporateName']",
+        "subordinate_name": "name/namePart[@type='subordinate']",
+        "terms_of_address": "name/namePart[@type='termsOfAddress']",
+        "orientation_code": "name/orientationCode",
+
     }
 }

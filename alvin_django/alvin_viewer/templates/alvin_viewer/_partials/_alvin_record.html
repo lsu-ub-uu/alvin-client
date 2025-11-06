@@ -6,13 +6,14 @@
 
 <!-- Metadata -->
 <div class="flex flex-col">
+    {{metadata}}
     <div x-show="activeTab != 'related' && activeTab != 'inventory'">
         {% for title in metadata.variant_titles %}
             {% include "./_metadata_row.html" with label=title.label value=title|alvin_record_title attribute=title.type %}
         {% endfor %}
         {% for agent in metadata.agents %}
             {% url 'alvin_viewer' agent.type agent.id as agent_url %}
-            {% include "./_metadata_row.html" with label=agent.label url=agent_url value=agent.name|agent_name attribute=agent.role|role_list %}
+            {% include "./_metadata_row.html" with label=agent.label url=agent_url value=agent.name.names|agent_name attribute=agent.role|role_join %}
         {% endfor %}
         {% for place in metadata.origin_places %}
             {% url 'alvin_viewer' 'alvin-place' place.id as place_url %}
@@ -65,9 +66,9 @@
                 {% include "./_metadata_row.html" with label="Klassifikation" extra_label=classification.type value=classification.classification %}
             {% endfor %}
             {% for identifier in metadata.identifiers %}
-                {% include "./_metadata_row.html" with label="Identifikator" extra_label=identifier.type value=identifier.identifier %}
+                {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type value=identifier.identifier %}
             {% endfor %}
-            {% include "./_record_type_links.html" with label=metadata.related_records.label link_type="alvin-record" record_type_links=metadata.related_records %}
+            {% include "alvin_viewer/_partials/_record_type_links.html" with label=metadata.related_records.label link_type="alvin-record" record_type_links=metadata.related_records %}
             {% include "./_record_type_links.html" with label=metadata.work.label link_type="alvin-work" record_type_links=metadata.work %}
             {% for electronic_locator in metadata.electronic_locators %}
                 {% include "./_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}

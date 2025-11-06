@@ -12,7 +12,7 @@
     {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.locus.label value=c.locus.text %}
     {% for agent in c.agents %}
       {% url 'alvin_viewer' agent.type agent.id as agent_url %}
-      {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.label url=agent_url value=agent.name|agent_name attribute=agent.role|role_list  %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.label url=agent_url value=agent.name.names|agent_name attribute=agent.role|role_join  %}
     {% endfor %}
     {% include "./_metadata_row.html" with label=c.languages.label value=c.languages.items|join:"<br>"|safe %}
     {% for place in c.origin_places %}

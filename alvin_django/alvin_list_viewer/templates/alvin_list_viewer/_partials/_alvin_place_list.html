@@ -16,7 +16,7 @@
                  <!-- Huvudtitel -->
                 <div>
 
-                    <h1 class="block w-full text-alvin-orange text-xl font-semibold">{{ place|alvin_title:record_type }}</h1>
+                    <h1 class="block w-full text-alvin-orange text-xl font-semibold">{{ place.authority_names|alvin_title:record_type }}</h1>
 
                     {% for name in place.variant_names %}
                         <h2 class="block w-full text-gray-600">{{ name.geographic }}</h2>

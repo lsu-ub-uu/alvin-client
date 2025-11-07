@@ -20,9 +20,9 @@
 {% endblock %}
 
 {% block content %}
-<main class="flex flex-col flex-wrap min-h-svh w-full bg-alvin-grey pb-10 pt-[60px] border-4 border-black"  x-data="{ activeTab: 'overview' }">
+<main class="min-h-svh w-full bg-alvin-grey pb-10 pt-[60px] border-4 border-black"  x-data="{ activeTab: 'overview' }">
+
   {% if metadata.files %}
-  
   <!-- Bildvisare TIFY -->
   <div id="tify" class="h-[80vh] w-full"></div>
   
@@ -37,35 +37,44 @@
   <div class="px-10">
     <div class="pt-8 pb-2">
       <!-- Titel -->
-      <h1 class="w-full text-5xl max-md:text-4xl break-words font-universalis font-bold">
+      <h1 class="w-full text-5xl max-md:text-4xl max-sm:text-3xl break-words font-universalis font-bold">
         {{ metadata|alvin_title:metadata.record_type }}
       </h1>
 
-      <!-- Ikon och namn för resurstyp -->
       <div class="flex w-full items-center mb-4 max-md:text-sm">
         {% render_record_icon metadata %}
       </div>
     </div>
 
-    <!-- Val av metadatavy -->
-    <nav class="flex flex-wrap justify-start w-full text-xl max-md:text-base bg-gray-200">
-      <button @click="activeTab = 'overview'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
+    <nav class="flex flex-wrap justify-start text-xl max-md:text-base">
+      <button @click="activeTab = 'overview'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
               :class="{ 'bg-alvin-green': activeTab === 'overview', 'bg-gray-200': activeTab != 'overview' }">
-              {% translate 'Översikt' %}
+              <img class="min-sm:pr-1 max-sm:visible" src="{% static 'img/nav/overview.svg' %}" />
+              <span class="max-sm:hidden">{% translate 'Översikt' %}</span>
       </button>
-      <button @click="activeTab = 'all_metadata'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
+      <button @click="activeTab = 'all_metadata'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
               :class="{ 'bg-alvin-green': activeTab === 'all_metadata', 'bg-gray-200': activeTab != 'all_metadata' }">
-              {% translate 'All metadata' %}
+              <img class="min-md:pr-1 min-sm:visible" src="{% static 'img/nav/allmetadata.svg' %}" />
+              <span class="max-sm:hidden">{% translate 'All metadata' %}</span>
       </button>
-      {% if metadata.type_of_resource.code == 'col' %}
-        <button @click="activeTab = 'inventory'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
-                :class="{ 'bg-alvin-green': activeTab === 'inventory', 'bg-gray-200': activeTab != 'inventory' }">
-                {% translate 'Arkivförteckning' %}
-        </button>
+      {% if metadata.components %}
+      <button @click="activeTab = 'inventory'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
+            :class="{ 'bg-alvin-green': activeTab === 'inventory', 'bg-gray-200': activeTab != 'inventory' }">
+            <img class="min-md:pr-1 min-sm:visible" src="{% static 'img/nav/inventory.svg' %}" />
+            <span class="max-sm:hidden">
+              {% if metadata.type_of_resource.code == 'col' %}
+                  {% translate 'Arkivförteckning' %}
+              {% else %}
+                  {% translate 'Innehållsbeskrivning' %}
+              {% endif %}
+            </span>
+      </button>
       {% endif %}
-      <button @click="activeTab = 'related'" class="h-full w-44 max-sm:w-full p-4 text-center hover:bg-alvin-green" 
+
+      <button @click="activeTab = 'related'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
               :class="{ 'bg-alvin-green': activeTab === 'related', 'bg-gray-200': activeTab != 'related' }">
-              {% translate 'Relaterat' %}
+              <img class="min-md:pr-1 max-sm:visible" src="{% static 'img/nav/related.svg' %}" />
+              <span class="max-sm:hidden">{% translate 'Relaterat' %}</span>
       </button>
     </nav>
 

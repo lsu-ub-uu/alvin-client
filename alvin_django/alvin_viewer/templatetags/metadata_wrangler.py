@@ -18,6 +18,9 @@ def alvin_title(metadata, record_type):
     if record_type in ("alvin-record", "alvin-work"):
         title = metadata.get("main_title")
         return alvin_record_title(title)
+    
+    if metadata in (None, ""):
+        return "Name not found"
 
     names = (metadata.get("authority_names") or {}).get("names") or metadata
     lang = _lang(names)
@@ -48,11 +51,12 @@ def alvin_person_name(metadata):
     keys = ["given_name", "family_name", "numeration"]
     def name_join(name):
         n = " ".join(filter(None, (name.get(key) for key in keys)))
-        if metadata.get("terms_of_address"):
+        if name.get("terms_of_address"):
             return f"{n}, {name['terms_of_address']}"
         return n
     
     if isinstance(metadata, list):
+        print(metadata)
         return " ; ".join(filter(None, ([name_join(name) for name in metadata])))
     return name_join(metadata)
 

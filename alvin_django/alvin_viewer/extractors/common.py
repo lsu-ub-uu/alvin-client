@@ -59,7 +59,11 @@ def common(root: etree._Element, record_type: str) -> Dict[str, Any]:
 
 # TITLES / NAMES ---
 
-def titles(root: etree._Element, xp: str) -> list[dict]:
+def titles(root: etree._Element, xp: str) -> list[dict] or dict:
+    target = element(root, xp)
+    if target is None:
+        return ""
+    
     if "variant" in xp:
         return collect(root, xp, lambda f: compact({
             "label": _get_label(f),
@@ -68,9 +72,7 @@ def titles(root: etree._Element, xp: str) -> list[dict]:
             "subtitle": text(f, "subtitle"),
             "orientation_code": text(f, "orientationCode"),
         }))
-    target = element(root, xp)
-    if target is None:
-        return ""
+    
     title = {
         "label": _get_label(target),
         "main_title": text(target, "mainTitle"),
@@ -304,7 +306,7 @@ def subject_authority(node: etree._Element, resource_type: str, authority: str) 
         "label": _get_label(target),
         "records": [{
             "id": text(e, f"{authority}/linkedRecordId"),
-            "name": authority_names(e, AN[authority]),
+            "name": names(e, f"{authority}/linkedRecord/{authority}/authority", AN[authority]),
             } for e in elements(node, _xp(resource_type, f"subject[@type = '{authority}']"))]
         }
 

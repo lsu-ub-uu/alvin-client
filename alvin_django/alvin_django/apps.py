@@ -21,11 +21,11 @@ class AlvinAppConfig(AppConfig):
             return
 
         def _init():
-            from alvin_viewer.services.text_collector import collect_texts, get_xml_tree
+            from alvin_viewer.services.text_collector import _process_xml, get_item_dict
             logger.info("XML init: starting background thread...")
             try:
-                collect_texts() 
-                get_xml_tree()
+                _process_xml()
+                get_item_dict()
                 logger.info("XML init: succeeded")
             except Exception:
                 logger.exception("XML init: failed")

@@ -27,7 +27,8 @@ def _person_date(root: etree._ElementTree, xp: str, kind: str):
     return a_date(target, kind)
 
 def extract(root: etree._Element) -> dict:
-    
+
+    print(cache.get("collection_item_cache_dict"))
     md = compact({
         "label": _get_label(element(root, "data/person")),
         "authority_names": names(root, _xp(rt, "authority"), person["AUTH_NAME"]),

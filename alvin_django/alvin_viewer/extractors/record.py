@@ -76,7 +76,7 @@ def _coins(root: etree._Element) -> dict:
 
 def _subjects_misc(root: etree._Element, xp: str):
     return collect(root, xp, lambda f: compact({
-        "type": attr(f, "./@authority").replace("_", " "),
+        "type": attr(f, "./@authority"),
         "topic": text(f, ".//topic"),
         "genreForm": text(f, ".//genreForm"),
         "geographicCoverage": text(f, ".//geographicCoverage"),

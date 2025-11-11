@@ -11,3 +11,5 @@ tzdata==2023.3
 urllib3==2.2.1
 django-tailwind-4
 #django-cors-headers
+pytest
+pytest-django

@@ -11,3 +11,4 @@ arrow = "*"
 
 [dev-packages]
 pytest = "*"
+pytest-django = "*"

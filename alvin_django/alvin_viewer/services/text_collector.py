@@ -6,43 +6,62 @@ from lxml import etree
 
 logger = logging.getLogger(__name__)
 
-CACHE_XML_KEY = "collection_item_cache"
-ITEM_TREE: Optional[etree._ElementTree] = None
+session = requests.Session()
 
-def _get_content_bytes() -> bytes:
+CACHE_DICT_KEY = "collection_item_cache_dict"
+ITEM_DICT: Optional[etree._ElementTree] = None
+
+def _get_xml_bytes() -> bytes:
     headers = {"Accept": "application/vnd.cora.recordList+xml"}
-    r = requests.get("https://cora.alvin-portal.org/rest/record/text/", headers=headers, timeout=15)
-    r.raise_for_status()
-    logger.info(f"Fetched XML: {len(r.content)} bytes")
-    return r.content
+    s = session.get("https://cora.alvin-portal.org/rest/record/metadata/", headers=headers, timeout=15)
+    s.raise_for_status()
+    logger.info(f"Fetched XML: {len(s.content)} bytes")
+    return s.content
 
-def collect_texts() -> None:
-    if cache.get(CACHE_XML_KEY) is None:
-        xml_bytes = _get_content_bytes()
-        cache.set(CACHE_XML_KEY, xml_bytes, timeout=60 * 60 * 6)
-        logger.info("XML stored in cache.")
+def _process_xml() -> dict:
+    if cache.get(CACHE_DICT_KEY) is not None:
+        logger.info("XML already in cache, skipping processing.")
+        return cache.get(CACHE_DICT_KEY) 
 
-def _parse_xml(xml_bytes: bytes) -> etree._ElementTree:
+    xml_bytes = _get_xml_bytes()
     root = etree.fromstring(xml_bytes)
-    return etree.ElementTree(root)
+    collection_items = root.xpath("//metadata[@type='collectionItem']")
+    logger.info(f"Found {len(collection_items)} collection items.")
 
-def _reload_tree() -> None:
-    global ITEM_TREE
-    xml_bytes = cache.get(CACHE_XML_KEY)
-    if not xml_bytes:
-        logger.warning("No XML found in cache.")
-        return
+    ci = {}
+
+    for item in collection_items:
+        name = item.findtext("nameInData")
+        text_url = item.findtext("textId/actionLinks/read/url")
+        s = session.get(text_url, timeout=15)
+        s.raise_for_status()
+
+        text_data = s.content
+        lang_data = etree.fromstring(text_data)
+
+        text_dict = {}
+        for data in lang_data.xpath(".//textPart"):
+            text_dict.update({data.get("lang"): data.findtext("text")})
+        
+        ci.update({name: text_dict})
+    
+    cache.set(CACHE_DICT_KEY, ci, timeout=60 * 60 * 6)
+    logger.info("XML stored in cache.")
+    logger.info("Processed XML and stored dictionary in cache.")
+
+def _reload_items() -> None:
+    global ITEM_DICT
     try:
-        ITEM_TREE = _parse_xml(xml_bytes)
-        logger.info("Parsed XML tree successfully.")
+        ITEM_DICT = _process_xml()
+        logger.info("Processed XML tree successfully.")
     except Exception:
-        logger.exception("Could not parse XML from cache.")
+        logger.exception("Could not process XML from cache.")
 
-def get_xml_tree() -> Optional[etree._ElementTree]:
-    global ITEM_TREE
-    if ITEM_TREE is None:
-        _reload_tree()
-    return ITEM_TREE
+def get_item_dict() -> Optional[etree._ElementTree]:
+    global ITEM_DICT
+    if ITEM_DICT is None:
+        _reload_items()
+    return ITEM_DICT
 
 def xpath_value(path: str) -> list[Any]:
     tree = get_xml_tree()

@@ -21,8 +21,8 @@ def _get_xml_bytes() -> bytes:
 def _process_xml() -> dict:
     if cache.get(CACHE_DICT_KEY) is not None:
         logger.info("XML already in cache, skipping processing.")
-        return cache.get(CACHE_DICT_KEY) 
-
+        return cache.get(CACHE_DICT_KEY)
+    
     xml_bytes = _get_xml_bytes()
     root = etree.fromstring(xml_bytes)
     collection_items = root.xpath("//metadata[@type='collectionItem']")
@@ -62,9 +62,3 @@ def get_item_dict() -> Optional[etree._ElementTree]:
     if ITEM_DICT is None:
         _reload_items()
     return ITEM_DICT
-
-def xpath_value(path: str) -> list[Any]:
-    tree = get_xml_tree()
-    if tree is None:
-        return []
-    return tree.xpath(path)

@@ -39,8 +39,15 @@ INSTALLED_APPS = [
     'search',
     'tailwind',
     'theme',
-    'django_browser_reload'
+    'django_browser_reload',
+    "alvin_django.apps.AlvinAppConfig",
 ]
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache"
+    }
+}
 
 TAILWIND_APP_NAME = 'theme'
 
@@ -60,7 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware"
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'alvin_django.urls'
@@ -163,3 +170,17 @@ LOCALE_PATHS = [
 
 # ENV variables
 API_HOST = os.getenv('API_HOST', 'https://cora.alvin-portal.org')
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"class": "logging.StreamHandler"},
+    },
+    "root": {"handlers": ["console"], "level": "INFO"},
+    "loggers": {
+        "alvin_django": {"level": "INFO", "propagate": True},
+        "alvin_viewer": {"level": "INFO", "propagate": True},
+        "django": {"level": "INFO", "propagate": True},
+    },
+}

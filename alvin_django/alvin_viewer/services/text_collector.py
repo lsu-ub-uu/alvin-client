@@ -25,7 +25,7 @@ session = _session()
 
 COLLECTIONS = [
     #common
-    "langAttributeCollection",
+    "languageCodeCollection",
 
     #alvin-record
     "variantTitleTypeCollection",
@@ -60,7 +60,6 @@ def _deco_process_collection(collection) -> dict:
     root = etree.fromstring(xml_bytes, parser=parser)
 
     collection_items = root.xpath("//metadata[@type='collectionItem']")
-    logger.info(f"Found {len(collection_items)} collection items in {collection}")
 
     result: Dict[str, Dict[str, str]] = {}
     for item in collection_items:
@@ -68,7 +67,7 @@ def _deco_process_collection(collection) -> dict:
         texts = {tp.get("lang"): tp.findtext("text") for tp in item.xpath("textId/linkedRecord/text/textPart")}
         result.update({name: texts})
 
-    logger.info("Collected %d items from %s.", len(result), collection)
+    logger.info(f"Found {len(collection_items)} collection items in {collection}, collected {len(result)} items.")
     return result
 
 def _deco_cache_collections(collections):
@@ -80,7 +79,7 @@ def _deco_cache_collections(collections):
     logger.info("Processed XML and stored dictionary in cache.")
 
 def _reload_items() -> None:
-    d = cache.get(CACHE_DICT_KEY) 
+    d = cache.get(CACHE_DICT_KEY)
     if d is not None:
         logger.info("Dicionary already cached successfully.")
         return d
@@ -92,7 +91,7 @@ def _reload_items() -> None:
         logger.exception("Could not process XML from cache.")
         return {}
 
-def get_item_dict() -> Optional[etree._ElementTree]:
+def get_item_dict() -> Optional[dict]:
     with _DICT_LOCK:
         d = cache.get(CACHE_DICT_KEY) 
         if d is None:

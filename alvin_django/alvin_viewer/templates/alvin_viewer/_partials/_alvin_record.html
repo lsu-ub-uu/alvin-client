@@ -6,6 +6,7 @@
 
 <!-- Metadata -->
 <div class="flex flex-col w-full">
+    {{metadata}}
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
         {% for title in metadata.variant_titles %}
             {% include "./_metadata_row.html" with label=title.label value=title|alvin_record_title attribute=title.type %}
@@ -17,7 +18,7 @@
     {% endfor %}
     {% for place in metadata.origin_places %}
         {% url 'alvin_viewer' 'alvin-place' place.id as place_url %}
-        {% include "./_metadata_row.html" with label=place.label url=place_url value=place.name|alvin_place_name extra_value=place|origin_countries %}
+        {% include "./_metadata_row.html" with label=place.label url=place_url value=place.name.names|alvin_title:"alvin-place" extra_value=place|origin_countries %}
     {% endfor %}
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
         {% include "./_metadata_row.html" with label=metadata.origin_date.label value=metadata.origin_date.dates|dates_join %}

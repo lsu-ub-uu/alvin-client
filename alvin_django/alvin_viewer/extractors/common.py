@@ -102,10 +102,11 @@ def names(node: etree._Element, xp: str, name_parts: Dict[str, str]) -> Dict[str
             el = element(target, xpath)
             d[key] = (el.text or "").strip() if el is not None else ""
 
-        lang = _get_attribute_item(attr(target, "./@lang"))
+        lang = attr(target, "./@lang")
+        label_lang = _get_attribute_item(attr(target, "./@lang"))
         variant_type = _get_attribute_item(attr(target, "./@variantType"))
 
-        entry = {**d, "variant_type": variant_type}
+        entry = {**d, "variant_type": variant_type, "label_lang": label_lang}
 
         if lang not in per_lang:
             per_lang[lang] = entry
@@ -166,7 +167,7 @@ def origin_places(node: etree._Element, xp: str) -> dict:
     return collect(node, xp, lambda f: compact({
         "label": _get_label(f),
         "id": text(f, "place/linkedRecordId"),
-        "name": authority_names(f, place["AUTH_NAME"]),
+        "name": names(f, "place/linkedRecord/place/authority", place["AUTH_NAME"]),
         "country": decorated_list(f, "country"),
         "historical_country": decorated_list(f, "historicalCountry"),
         "certainty": text(f, "certainty"),

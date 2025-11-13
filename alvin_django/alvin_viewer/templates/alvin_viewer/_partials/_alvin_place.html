@@ -13,15 +13,16 @@
 
 <!-- Metadata -->
 <div class="flex flex-col">
+    {{metadata}}
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
         {% with metadata.authority_names.label as authority_label %}
             {% for lang, name in metadata.authority_names.names.items %}
-                {% include "./_metadata_row.html" with label=authority_label extra_label=lang value=name|alvin_place_name extra_label=lang %}
+                {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name|alvin_place_name %}
             {% endfor %}
         {% endwith %}
         {% with metadata.authority_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
-                {% include "./_metadata_row.html" with label=variant_label extra_label=lang value=name|alvin_place_name %}
+                {% include "./_metadata_row.html" with label=variant_label extra_label=label_lang value=name|alvin_place_name %}
             {% endfor %}
         {% endwith %}
     </div>

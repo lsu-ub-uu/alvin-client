@@ -8,10 +8,11 @@ rt = _norm_rt("alvin-organisation")
 def extract(root: etree._Element) -> dict:
 
     address = {
+        "label": _get_label(element(root, _xp(rt, "address"))),
         "box": text(root, _xp(rt, "address/postOfficeBox")),
         "street": text(root, _xp(rt, "address/street")),
         "postcode": text(root, _xp(rt, "address/postcode")),
-        "place_id": related_authority(root, _xp(rt, "address/place"), "place"),
+        "place_id": related_authority(root, _xp(rt, "address"), "place"),
         "country": decorated_list_item(root, _xp(rt, "address/country"))
     }
 

@@ -1,64 +1,100 @@
 import logging
-from typing import Optional, Any
+from typing import Optional
 import requests
 from django.core.cache import cache
 from lxml import etree
+import threading
+from urllib3.util.retry import Retry
+from requests.adapters import HTTPAdapter
+
+MAX_WORKERS = 8
+REQUEST_TIMEOUT = 15
+CACHE_DICT_KEY = "collection_item_cache_dict"
+_DICT_LOCK = threading.RLock()
+
+def _session(max_workers: int = MAX_WORKERS) -> requests.Session:
+    s = requests.Session()
+    retry = Retry(total=5, connect=3, read=3, backoff_factor=0.5, status_forcelist=(429, 500, 502, 503, 504))
+    adapter = HTTPAdapter(max_retries=retry, pool_connections=max_workers, pool_maxsize=max_workers)
+    s.mount("http://", adapter)
+    s.mount("https://", adapter)
+    return s
 
 logger = logging.getLogger(__name__)
+session = _session()
 
-session = requests.Session()
+COLLECTIONS = [
+    #common
+    "langAttributeCollection",
 
-CACHE_DICT_KEY = "collection_item_cache_dict"
-ITEM_DICT: Optional[etree._ElementTree] = None
+    #alvin-record
+    "variantTitleTypeCollection",
+    "dateTypeCollection",
+    "noteTypeCollection",
+    "physicalDescriptionNoteTypeCollection",
+    "subjectHeadingSchemaCollection",
+    "relatedToTypeCollection",
 
-def _get_xml_bytes() -> bytes:
-    headers = {"Accept": "application/vnd.cora.recordList+xml"}
-    s = session.get("https://cora.alvin-portal.org/rest/record/metadata/", headers=headers, timeout=15)
-    s.raise_for_status()
-    logger.info(f"Fetched XML: {len(s.content)} bytes")
-    return s.content
+    #alvin-person
+    "variantPersonNameTypeCollection",
+    "noteTypeAuthorityCollection",
 
-def _process_xml() -> dict:
-    if cache.get(CACHE_DICT_KEY) is not None:
-        logger.info("XML already in cache, skipping processing.")
-        return cache.get(CACHE_DICT_KEY)
-    
-    xml_bytes = _get_xml_bytes()
-    root = etree.fromstring(xml_bytes)
+    #alvin-organisation
+    "variantOrganisationNameTypeCollection",
+    "relatedOrganisationTypeCollection"
+]
+
+def _deco_get_xml_bytes(collection) -> bytes:
+    headers = {"Accept": "application/vnd.cora.record-decorated+xml"}
+    resp = session.get(
+        f"https://cora.alvin-portal.org/rest/record/metadata/{collection}", 
+        headers=headers,
+        timeout=REQUEST_TIMEOUT
+        )
+    resp.raise_for_status()
+    return resp.content
+
+def _deco_process_collection(collection) -> dict:
+    xml_bytes = _deco_get_xml_bytes(collection)
+    parser = etree.XMLParser(remove_blank_text=True, recover=True, huge_tree=True)
+    root = etree.fromstring(xml_bytes, parser=parser)
+
     collection_items = root.xpath("//metadata[@type='collectionItem']")
-    logger.info(f"Found {len(collection_items)} collection items.")
+    logger.info(f"Found {len(collection_items)} collection items in {collection}")
 
-    ci = {}
-
+    result: Dict[str, Dict[str, str]] = {}
     for item in collection_items:
         name = item.findtext("nameInData")
-        text_url = item.findtext("textId/actionLinks/read/url")
-        s = session.get(text_url, timeout=15)
-        s.raise_for_status()
+        texts = {tp.get("lang"): tp.findtext("text") for tp in item.xpath("textId/linkedRecord/text/textPart")}
+        result.update({name: texts})
 
-        text_data = s.content
-        lang_data = etree.fromstring(text_data)
+    logger.info("Collected %d items from %s.", len(result), collection)
+    return result
 
-        text_dict = {}
-        for data in lang_data.xpath(".//textPart"):
-            text_dict.update({data.get("lang"): data.findtext("text")})
-        
-        ci.update({name: text_dict})
+def _deco_cache_collections(collections):
+    result: Dict[str, Dict[str, str]] = {}
+    for collection in collections:
+        result.update(_deco_process_collection(collection))
     
-    cache.set(CACHE_DICT_KEY, ci, timeout=60 * 60 * 6)
-    logger.info("XML stored in cache.")
+    cache.set(CACHE_DICT_KEY, result)
     logger.info("Processed XML and stored dictionary in cache.")
 
 def _reload_items() -> None:
-    global ITEM_DICT
+    d = cache.get(CACHE_DICT_KEY) 
+    if d is not None:
+        logger.info("Dicionary already cached successfully.")
+        return d
     try:
-        ITEM_DICT = _process_xml()
-        logger.info("Processed XML tree successfully.")
+        d = _deco_cache_collections(COLLECTIONS)
+        logger.info("Collections processed and cached successfully.")
+        return d
     except Exception:
         logger.exception("Could not process XML from cache.")
+        return {}
 
 def get_item_dict() -> Optional[etree._ElementTree]:
-    global ITEM_DICT
-    if ITEM_DICT is None:
-        _reload_items()
-    return ITEM_DICT
+    with _DICT_LOCK:
+        d = cache.get(CACHE_DICT_KEY) 
+        if d is None:
+            d = _reload_items()
+        return d or None

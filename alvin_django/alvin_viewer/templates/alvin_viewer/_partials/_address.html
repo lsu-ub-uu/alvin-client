@@ -3,7 +3,7 @@
 {% if box or street or postcode or place_id or country %}
 <div class="md-row">
     <dt class="md-label">
-        {% translate 'Adress' %}
+        {{label}}
     </dt>
     <dd class="md-value">
         <address>
@@ -16,7 +16,7 @@
             {% if postcode %}
                 <p>{{ postcode }}
                     {% if place_id %}
-                        <a href="{% url 'alvin_viewer' 'alvin-place' place_id %}">
+                        <a href="">
                             {{ place_id }}
                         </a>
                     {% endif %}

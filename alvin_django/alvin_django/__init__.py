@@ -1,0 +1,1 @@
+default_app_config = "alvin_django.apps.AlvinAppConfig"

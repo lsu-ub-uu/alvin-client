@@ -56,7 +56,6 @@ def alvin_person_name(metadata):
         return n
     
     if isinstance(metadata, list):
-        print(metadata)
         return " ; ".join(filter(None, ([name_join(name) for name in metadata])))
     return name_join(metadata)
 

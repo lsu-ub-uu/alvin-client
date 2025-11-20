@@ -1,5 +1,5 @@
 from lxml import etree
-from .common import _get_label, _norm_rt, _xp, compact, dates, first, decorated_list_item, decorated_text, decorated_texts_with_type, electronic_locators, element, identifiers, names, related_authority, text
+from .common import _get_label, _norm_rt, _xp, compact, dates, first, decorated_list_item, decorated_text, decorated_texts_with_type, electronic_locators, element, identifiers, names, origin_places, related_authority, text
 from .mappings import organisation
 from .cleaner import clean_empty
 
@@ -8,10 +8,11 @@ rt = _norm_rt("alvin-organisation")
 def extract(root: etree._Element) -> dict:
 
     address = {
-        "box": text(root, _xp(rt, "address/postOfficeBox")),
+        "label": _get_label(element(root, _xp(rt, "address"))),
+        "box": decorated_text(root, _xp(rt, "address/postOfficeBox")),
         "street": text(root, _xp(rt, "address/street")),
         "postcode": text(root, _xp(rt, "address/postcode")),
-        "place_id": related_authority(root, _xp(rt, "address/place"), "place"),
+        "place": first(origin_places(root, _xp(rt, "address"))),
         "country": decorated_list_item(root, _xp(rt, "address/country"))
     }
 

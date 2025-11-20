@@ -9,12 +9,12 @@
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
         {% with metadata.authority_names.label as authority_label %}
             {% for lang, name in metadata.authority_names.names.items %}
-                {% include "./_metadata_row.html" with label=authority_label extra_label=lang value=name|alvin_person_name %}
+                {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name|alvin_person_name %}
             {% endfor %}
         {% endwith %}
         {% with metadata.variant_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
-                {% include "./_metadata_row.html" with label=variant_label extra_label=lang value=name|alvin_person_name %}
+                {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name|alvin_person_name attribute=name.variant_type %}
             {% endfor %}
         {% endwith %}
         {% include "./_metadata_row.html" with label=metadata.birth_date.label value=metadata.birth_date|date_join %}

@@ -3,9 +3,11 @@ from lxml import etree
 from django.utils import translation
 
 from ..xmlutils.nodes import text, texts, attr, element, elements, first
-from .common import (_get_label, _get_value, _norm_rt, _xp)
+from .common import (_get_label, _get_value, _norm_rt, _xp, _get_attribute_item)
 from .common import *
 from .cleaner import clean_empty
+
+from django.core.cache import cache
 
 rt = _norm_rt("alvin-record")
 
@@ -76,7 +78,7 @@ def _coins(root: etree._Element) -> dict:
 
 def _subjects_misc(root: etree._Element, xp: str):
     return collect(root, xp, lambda f: compact({
-        "type": attr(f, "./@authority").replace("_", " "),
+        "type": _get_attribute_item(attr(f, "./@authority")),
         "topic": text(f, ".//topic"),
         "genreForm": text(f, ".//genreForm"),
         "geographicCoverage": text(f, ".//geographicCoverage"),
@@ -115,7 +117,7 @@ def _measure(root: etree._Element, xp: str):
     }
 
 def extract(root: etree._Element) -> Dict:
-
+    
     data = compact({
         "type_of_resource": decorated_list_item(root, _xp(rt, "typeOfResource")),
         "collection": decorated_list_item(root, _xp(rt, "collection")),
@@ -146,7 +148,7 @@ def extract(root: etree._Element) -> Dict:
         "summary": decorated_text(root, "summary"),
         "transcription": decorated_text(root, "transcription"),
         "table_of_contents": decorated_text(root, "tableOfContents"),
-        "literature": decorated_text(root, "listBibl"),
+        "literature": decorated_text(root, _xp(rt, "listBibl")),
         "notes": decorated_texts_with_type(root, _xp(rt, "note"), ".", "./@noteType"),
         "related_records": related_records(root, _xp(rt, "relatedTo"), "record"),
         "electronic_locators": electronic_locators(root, _xp(rt, "electronicLocator")),

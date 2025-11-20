@@ -5,6 +5,9 @@ from .common import (_get_label, _get_target, _norm_rt, _xp, a_date, compact,
                      related_authority)
 from .mappings import person
 from .cleaner import clean_empty
+from django.core.cache import cache
+from ..services.text_collector import get_item_dict
+
 
 rt = _norm_rt("alvin-person")
 
@@ -24,6 +27,7 @@ def _person_date(root: etree._ElementTree, xp: str, kind: str):
     return a_date(target, kind)
 
 def extract(root: etree._Element) -> dict:
+    
     md = compact({
         "label": _get_label(element(root, "data/person")),
         "authority_names": names(root, _xp(rt, "authority"), person["AUTH_NAME"]),

@@ -2,6 +2,7 @@ from lxml import etree
 from .common import _get_label, _get_value, _norm_rt, _xp, agents, compact, dates, decorated_text, decorated_list_item, electronic_locators, first, origin_places, titles
 from ..xmlutils.nodes import text, attr, element, elements
 from .cleaner import clean_empty
+from .record import _not, _car
 
 rt = _norm_rt("alvin-work")
 
@@ -23,5 +24,8 @@ def extract(root: etree._Element) -> dict:
         "latitude": decorated_text(root, _xp(rt, "point/latitude")),
         "electronic_locators": electronic_locators(root, _xp(rt, "electronicLocator")),
     })
+    
+    if data["form_of_work"]["code"] == 'music':
+        data.update(_not(root, rt))
 
     return clean_empty(data)

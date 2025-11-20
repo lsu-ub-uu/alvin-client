@@ -39,6 +39,13 @@ def alvin_title(metadata, record_type):
 def agent_name(metadata):
     lang = _lang(metadata)
     lang_data = metadata[lang]
+    
+    if isinstance(lang_data, list):
+        if lang_data and "family_name" in lang_data[0]:
+            return " ; ".join(filter(None, ([alvin_person_name(name) for name in lang_data]))) 
+        else: 
+            return " ; ".join(filter(None, ([alvin_organisation_name(name) for name in lang_data])))
+    
     return alvin_person_name(lang_data) if lang_data.get("family_name") else alvin_organisation_name(lang_data)
 
 @register.filter

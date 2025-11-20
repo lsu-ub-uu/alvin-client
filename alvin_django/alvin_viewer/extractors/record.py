@@ -34,7 +34,7 @@ def _ms(root: etree._Element) -> dict:
     "components": components(elements(root, "//msContents/msItem01"))
     })
 
-def _not(root: etree._Element) -> dict:
+def _not(root: etree._Element, rt) -> dict:
     return compact({
     "music_key": decorated_list(root, _xp(rt, "musicKey")),
     "music_key_other": decorated_text(root, _xp(rt, "musicKeyOther")),
@@ -43,7 +43,7 @@ def _not(root: etree._Element) -> dict:
     "music_notation": decorated_list(root, _xp(rt, "musicNotation")),
     })
 
-def _car(root: etree._Element) -> dict:
+def _car(root: etree._Element, rt) -> dict:
     return compact({
         "scale": decorated_text(root, _xp(rt, "cartographicAttributes/scale")),
         "projection": decorated_text(root, _xp(rt, "cartographicAttributes/projection")),
@@ -174,9 +174,9 @@ def extract(root: etree._Element) -> Dict:
     if element(root, _xp(rt, "productionMethod")) is not None and element(root, _xp(rt, "productionMethod")).text == 'manuscript':
         data.update(_ms(root))
     if data["type_of_resource"]["code"] == 'not':
-        data.update(_not(root))
+        data.update(_not(root, rt))
     if data["type_of_resource"]["code"] == 'car':
-        data.update(_car(root))
+        data.update(_car(root, rt))
     if element(root, _xp(rt, "recordInfo/validationType/linkedRecordId")).text == 'recordArtifactNumismatic':
         data.update(_coins(root))
 

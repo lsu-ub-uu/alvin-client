@@ -31,9 +31,14 @@
         {% endfor %}
         {% if metadata.longitude and metadata.latitude %}
             {% include "./_metadata_row.html" with label=metadata.longitude.label value=metadata.longitude.text %}
-            {% include "./_metadata_row.html" with label=metadata.latitude.text value=metadata.latitude.text %}
+            {% include "./_metadata_row.html" with label=metadata.latitude.label value=metadata.latitude.text %}
         {% endif %}
         {% include "./_metadata_row.html" with label=metadata.incipit.label value=metadata.incipit.text|linebreaksbr %}
+        {% include "./_metadata_row.html" with label=metadata.music_key.label value=metadata.music_key.items|join:"<br>" %}
+        {% include "./_metadata_row.html" with label=metadata.music_key_other.label value=metadata.music_key_other.text %}
+        {% include "./_metadata_row.html" with label=metadata.music_medium.label value=metadata.music_medium.items|join:"<br>" %}
+        {% include "./_metadata_row.html" with label=metadata.music_medium_other.label value=metadata.music_medium_other.text %}
+        {% include "./_metadata_row.html" with label=metadata.music_notation.label value=metadata.music_notation.items|join:"<br>" %}
         {% include "./_metadata_row.html" with label=metadata.note.label value=metadata.note.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.literature.label value=metadata.literature.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}

@@ -14,7 +14,9 @@
         {% endwith %}
         {% with metadata.variant_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
-                {% include "./_metadata_row.html" with label=variant_label extra_label=lang value=name|alvin_organisation_name attribute=name.variant_type %}
+                {% with first=name.0|default:name %}
+                        {% include "./_metadata_row.html" with label=variant_label extra_label=first.label_lang value=name|alvin_organisation_name %}
+                {% endwith %}
             {% endfor %}
         {% endwith %}
         {% include "./_metadata_row.html" with label=metadata.organisation_info.label value=metadata.organisation_info.dates|dates_join %}
@@ -39,12 +41,12 @@
     <div class="flex flex-col" x-show="activeTab === 'all_metadata || activeTab === 'related'" x-cloak>
         {% include "./_record_type_links.html" with label=metadata.related_organisations.label link_type="alvin-organisation" record_type_links=metadata.related_organisations %}
     </div>
-    <div x-show="activeTab != 'all_metadata'" x-cloak>
+    <div x-show="activeTab === 'all_metadata'" x-cloak>
         {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
         {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
         {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
     </div>
-    <div x-show="activeTab === overview || activeTab === 'all_metadata'" x-cloak>
+    <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
         {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
     </div>
 </div>

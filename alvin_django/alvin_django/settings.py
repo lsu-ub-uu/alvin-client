@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'alvin_list_viewer',
     'search',
     'tailwind',
-    'theme',
-    'django_browser_reload'
+    'theme'
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -59,8 +58,7 @@ MIDDLEWARE = [
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware"
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'alvin_django.urls'

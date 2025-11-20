@@ -261,9 +261,10 @@ def related_authority(node: etree._Element, xp: str, authority: str) -> dict:
         "records":[{
             "id": text(t, f"{authority}/linkedRecordId"),
             "type": attr(t, "./@type"),
-            "name": authority_names(t, AN[authority]),
+            "name": names(t, f"{authority}/linkedRecord/{authority}/authority", AN[authority]),
             } for t in targets]
     }
+    
     return compact(related)
 
 def subject_authority(node: etree._Element, resource_type: str, authority: str) -> dict:

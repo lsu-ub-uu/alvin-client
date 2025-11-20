@@ -1,4 +1,4 @@
-{% load i18n static %}
+{% load i18n static metadata_wrangler %}
 
 {% if box or street or postcode or place_id or country %}
 <div class="md-row">
@@ -8,22 +8,18 @@
     <dd class="md-value">
         <address>
             {% if box %}
-                <p>Box {{ box }}</p>
+                <p>{{ box.label }} {{ box.text }}</p>
             {% endif %}
             {% if street %}
                 <p>{{ street }}</p>
             {% endif %}
-            {% if postcode %}
-                <p>{{ postcode }}
-                    {% if place_id %}
-                        <a href="">
-                            {{ place_id }}
-                        </a>
-                    {% endif %}
-                {% endif %}
-                </p>
+            {% if postcode or place_id %}
+            <p>
+                {{ postcode }}{% if place %} <a href="{% url 'alvin_viewer' 'alvin-place' place_id  %}">{{ place|alvin_title:'alvin-place' }}</a>{% endif %}
+            {% endif %}
+            </p>
             {% if country %}
-                <p>{{ country }}</p>
+                <p>{{ country.item }}</p>
             {% endif %}
         </address>
     </dd>

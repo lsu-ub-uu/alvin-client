@@ -6,6 +6,7 @@ from lxml import etree
 import threading
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
+from django.conf import settings
 
 MAX_WORKERS = 8
 REQUEST_TIMEOUT = 15
@@ -47,7 +48,7 @@ COLLECTIONS = [
 def _deco_get_xml_bytes(collection) -> bytes:
     headers = {"Accept": "application/vnd.cora.record-decorated+xml"}
     resp = session.get(
-        f"https://cora.alvin-portal.org/rest/record/metadata/{collection}", 
+        f"{settings.API_HOST}/rest/record/metadata/{collection}",
         headers=headers,
         timeout=REQUEST_TIMEOUT
         )
@@ -70,11 +71,10 @@ def _deco_process_collection(collection) -> dict:
     logger.info(f"Found {len(collection_items)} collection items in {collection}, collected {len(result)} items.")
     return result
 
-def _deco_cache_collections(collections):
+def _deco_cache_collections(collections) -> None:
     result: Dict[str, Dict[str, str]] = {}
     for collection in collections:
         result.update(_deco_process_collection(collection))
-    
     cache.set(CACHE_DICT_KEY, result)
     logger.info("Processed XML and stored dictionary in cache.")
 
@@ -86,14 +86,14 @@ def _reload_items() -> None:
     try:
         d = _deco_cache_collections(COLLECTIONS)
         logger.info("Collections processed and cached successfully.")
-        return d
     except Exception:
         logger.exception("Could not process XML from cache.")
         return {}
 
 def get_item_dict() -> Optional[dict]:
     with _DICT_LOCK:
-        d = cache.get(CACHE_DICT_KEY) 
+        d = cache.get(CACHE_DICT_KEY)
         if d is None:
-            d = _reload_items()
+            _reload_items()
+            d = cache.get(CACHE_DICT_KEY)
         return d or None

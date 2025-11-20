@@ -103,9 +103,9 @@ def names(node: etree._Element, xp: str, name_parts: Dict[str, str]) -> Dict[str
             d[key] = (el.text or "").strip() if el is not None else ""
 
         lang = attr(target, "./@lang")
-        label_lang = _get_attribute_item(attr(target, "./@lang"))
-        variant_type = _get_attribute_item(attr(target, "./@variantType"))
-
+        label_lang = _get_attribute_item(attr(target, "./@lang")) or None
+        variant_type = _get_attribute_item(attr(target, "./@variantType")) or None
+        
         entry = {**d, "variant_type": variant_type, "label_lang": label_lang}
 
         if lang not in per_lang:

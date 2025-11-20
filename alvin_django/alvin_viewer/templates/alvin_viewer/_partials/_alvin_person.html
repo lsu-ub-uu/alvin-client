@@ -14,7 +14,9 @@
         {% endwith %}
         {% with metadata.variant_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
-                {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name|alvin_person_name attribute=name.variant_type %}
+                {% with first=name.0|default:name %}
+                        {% include "./_metadata_row.html" with label=variant_label extra_label=first.label_lang value=name|alvin_person_name %}
+                {% endwith %}
             {% endfor %}
         {% endwith %}
         {% include "./_metadata_row.html" with label=metadata.birth_date.label value=metadata.birth_date|date_join %}

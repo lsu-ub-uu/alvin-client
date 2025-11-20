@@ -107,7 +107,7 @@ def names(node: etree._Element, xp: str, name_parts: Dict[str, str]) -> Dict[str
         variant_type = _get_attribute_item(attr(target, "./@variantType")) or None
         
         entry = {**d, "variant_type": variant_type, "label_lang": label_lang}
-
+        
         if lang not in per_lang:
             per_lang[lang] = entry
         else:
@@ -116,7 +116,7 @@ def names(node: etree._Element, xp: str, name_parts: Dict[str, str]) -> Dict[str
                 existing.append(entry)
             else:
                 per_lang[lang] = [existing, entry]
-    
+
     result["names"] = per_lang
     return result
 
@@ -422,4 +422,4 @@ def decorated_list_item_with_text(node: etree._Element, xp: str, item: str, item
 # -------------------
 
 def _get_attribute_item(item: str) -> str:
-    return ITEMS_DICT.get(item, {}).get(_get_lang(), f"Item not found: {item}")
+    return ITEMS_DICT.get(item, {}).get(_get_lang(), None)

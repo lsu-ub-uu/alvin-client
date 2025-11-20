@@ -52,7 +52,9 @@ def alvin_person_name(metadata):
     def name_join(name):
         n = " ".join(filter(None, (name.get(key) for key in keys)))
         if name.get("terms_of_address"):
-            return f"{n}, {name['terms_of_address']}"
+            n += f", {name['terms_of_address']}"
+        if name.get("variant_type"):
+            n += f" ({name['variant_type']})"
         return n
     
     if isinstance(metadata, list):

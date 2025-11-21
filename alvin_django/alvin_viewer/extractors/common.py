@@ -40,10 +40,6 @@ def compact(d: Dict[str, Any]) -> Dict[str, Any]:
 
 # COMMON -----------
 
-def _last_updated(root, record_type):
-    last_updated = elements(root, _xp(record_type, "recordInfo/updated/tsUpdated"))
-    return text(last_updated[-1], ".") if text(last_updated[-1], ".") is not None else None
-
 def identifiers(root: etree._Element, xp: str):
     return collect(root, xp, lambda f: compact({
         "label": _get_label(f),
@@ -55,8 +51,8 @@ def common(root: etree._Element, record_type: str) -> Dict[str, Any]:
     rt = _norm_rt(record_type)
     return {
         "id": text(root, _xp(rt, "recordInfo/id")),
-        "created": text(root, _xp(rt, "recordInfo/tsCreated")),
-        "last_updated": _last_updated(root, rt),
+        "created": decorated_text(root, _xp(rt, "recordInfo/tsCreated")),
+        "last_updated": decorated_text(root, _xp(rt, "recordInfo/updated/tsUpdated[last()]")),
         "source_xml": text(root, "actionLinks/read/url"),
         "record_type": record_type,
     }
@@ -120,20 +116,12 @@ def names(node: etree._Element, xp: str, name_parts: Dict[str, str]) -> Dict[str
     result["names"] = per_lang
     return result
 
-def authority_names(node: etree._Element, name_parts: Dict[str, str]) -> Dict[str, Dict[str, str]]:
-    result: Dict[str, str] = {}
-    
-    for name in elements(node, ".//authority"):
-        lang = name.get("lang")
-        result[lang] = {key: name.findtext(xpath) for key, xpath in name_parts.items()}
-    return result
-
 # DATES ------------
 
 def a_date(node: etree._Element, kind: str) -> Dict:
     target = _get_target(node, f"{kind}Date")
     if target is None:
-        return None    
+        return {}    
     return compact({
         "label": _get_label(target),
         "year": text(target, "date/year"),
@@ -176,7 +164,7 @@ def origin_places(node: etree._Element, xp: str) -> dict:
 def related_records(node: etree._Element, xp: str, type: str) -> List[Dict[str, str]]:
     target = element(node, xp)
     if target is None:
-        return None
+        return {}
     return {
         "label": _get_label(target),
         "records": collect(node, xp, lambda f: compact({
@@ -195,7 +183,7 @@ def related_records(node: etree._Element, xp: str, type: str) -> List[Dict[str, 
 def related_works(node: etree._Element, xp: str) -> List[Dict[str, str]]:
     target = _get_target(node, xp)
     if target is None:
-        return None
+        return {}
     return {
         "label": _get_label(target),
         "records": collect(node, xp, lambda f: compact({
@@ -304,7 +292,7 @@ def components(nodes: List[etree._Element]) -> Dict[str, str]:
             "locus": decorated_text(comp, "locus"),
             "languages": decorated_list(comp, "language"),
             "origin_places": origin_places(comp, "originPlace"),
-            "physical_description_notes": decorated_texts_with_type(comp, "physicalDescription", "note", "./@noteType"),
+            "physical_description_notes": decorated_texts_with_type(comp, "physicalLocation", "note", "./@noteType"),
             "locus": decorated_text(comp, "locus"),
             "incipit": decorated_text(comp, "incipit"),
             "explicit": decorated_text(comp, "explicit"),
@@ -364,7 +352,7 @@ def _get_target(node, xp):
 def decorated_text(node: etree._Element | None, xp: str | None = None) -> dict:
     target = _get_target(node, xp)
     if target is None:
-        return None
+        return {}
     txt = {
         "label": _get_label(target),
         "text": text(node, xp)
@@ -374,7 +362,7 @@ def decorated_text(node: etree._Element | None, xp: str | None = None) -> dict:
 def decorated_texts(node: etree._Element | None, xp: str | None = None) -> dict:
     target = _get_target(node, xp)
     if target is None:
-        return None
+        return {}
     txt = {
         "label": _get_label(target),
         "texts": texts(node, xp)
@@ -384,7 +372,7 @@ def decorated_texts(node: etree._Element | None, xp: str | None = None) -> dict:
 def decorated_texts_with_type(node: etree.Element, xp: str, tag: str, textType: str | None = None) -> dict:
     target = _get_target(node, xp)
     if target is None:
-        return None
+        return {}
     return {
         "label": _get_label(target),
         "texts": [{"type": _get_attribute_item(attr(e, textType)), "text": text(e, ".")} for e in elements(node, f"{xp}/{tag}")]
@@ -393,7 +381,7 @@ def decorated_texts_with_type(node: etree.Element, xp: str, tag: str, textType: 
 def decorated_list(node: etree._Element, xp: str) -> dict:
     target = _get_target(node, xp)
     if target is None:
-        return None
+        return {}
     return {
             "label": _get_label(target),
             "items": [_get_value(e) for e in elements(node, xp)],
@@ -403,15 +391,15 @@ def decorated_list(node: etree._Element, xp: str) -> dict:
 def decorated_list_item(node: etree._Element, xp: str = None) -> str:
     target = _get_target(node, xp)
     if target is None:
-        return None
+        return ""
     return {"label": _get_label(target),
             "item": _get_value(node.find(xp)),
             "code": text(node, xp)}
 
-def decorated_list_item_with_text(node: etree._Element, xp: str, item: str, item_text: str) -> str:
+def decorated_list_item_with_text(node: etree._Element, xp: str, item: str, item_text: str) -> dict:
     target = _get_target(node, xp)
     if target is None:
-        return None
+        return {}
     return {"label": _get_label(target),
             "item": _get_value(element(node, f"{xp}/{item}")),
             "text": text(node, f"{xp}/{item_text}")

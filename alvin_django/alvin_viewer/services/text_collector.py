@@ -29,9 +29,12 @@ COLLECTIONS = [
     "languageCodeCollection",
 
     #alvin-record
+    "identifierTypeCollection",
+    "classificationSchemeCollection",
     "variantTitleTypeCollection",
     "dateTypeCollection",
     "noteTypeCollection",
+    "noteTypeInternalCollection",
     "physicalDescriptionNoteTypeCollection",
     "subjectHeadingSchemaCollection",
     "relatedToTypeCollection",

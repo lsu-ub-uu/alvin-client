@@ -1,7 +1,7 @@
 {% load i18n static metadata_wrangler %}
 
 {% block title %}
-<title>Alvin - {{metadata|alvin_title:metadata.record_type}}</title>
+<title>Alvin - {{ metadata|alvin_title:metadata.record_type }}</title>
 {% endblock %}
 
 <!-- Metadata -->
@@ -42,14 +42,14 @@
     </div>
     <div class="flex flex-col" x-show="activeTab === 'all_metadata' || activeTab === 'related'" x-cloak>
         {% for electronic_locator in metadata.electronic_locators %}
-            {% include "./_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}
+            {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
         {% endfor %}
         {% include "./_record_type_links.html" with label=metadata.related_persons.label link_type="alvin-person" record_type_links=metadata.related_persons %}
         {% include "./_record_type_links.html" with label=metadata.related_organisations.label link_type="alvin-organisation" record_type_links=metadata.related_organisations %}
     </div>
     <div x-show="activeTab === 'all_metadata'" x-cloak>
-        {% include "./_metadata_row.html" with label="Post skapad" value=metadata.created %}
-        {% include "./_metadata_row.html" with label="Senast uppdaterad" value=metadata.last_updated %}
+        {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
+        {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
         {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
     </div>
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>

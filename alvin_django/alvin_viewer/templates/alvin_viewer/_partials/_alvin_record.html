@@ -11,6 +11,7 @@
             {% include "./_metadata_row.html" with label=title.label value=title|alvin_record_title attribute=title.type %}
         {% endfor %}
     </div>
+    <div x-show="activeTab === 'overview' || activeTab === 'all_metadata' || activeTab  === 'related'" x-cloak>
     {% for agent in metadata.agents %}
         {% url 'alvin_viewer' agent.type agent.id as agent_url %}
         {% include "./_metadata_row.html" with label=agent.label url=agent_url value=agent.name.names|agent_name attribute=agent.role|role_join %}
@@ -19,6 +20,7 @@
         {% url 'alvin_viewer' 'alvin-place' place.id as place_url %}
         {% include "./_metadata_row.html" with label=place.label url=place_url value=place.name.names|alvin_title:"alvin-place" extra_value=place|origin_countries %}
     {% endfor %}
+    </div>
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
         {% include "./_metadata_row.html" with label=metadata.origin_date.label value=metadata.origin_date.dates|dates_join %}
         {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
@@ -41,7 +43,7 @@
         {% include "./_metadata_row.html" with label=metadata.shelf_mark.label value=metadata.shelf_mark.text %}
         {% include "./_metadata_row.html" with label=metadata.former_shelf_mark.label value=metadata.former_shelf_mark.texts|join:"<br>" %}
         {% include "./_metadata_row.html" with label=metadata.subcollection.label value=metadata.subcollection.items|join:"<br>" %}
-        {% include "./_metadata_row.html" with label=metadata.physcial_location_note.label extra_label="Fysisk placering" value=metadata.note|linebreaksbr %}
+        {% include "./_metadata_row.html" with label=metadata.physcial_location_note|label_join:"note" value=metadata.physcial_location_note.note.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.base_material.label value=metadata.base_material.items|join:", " %}
         {% include "./_metadata_row.html" with label=metadata.applied_material.label value=metadata.applied_material.items|join:", " %}
         {% include "./_metadata_row.html" with label=metadata.extent.label value=metadata.extent.text|linebreaksbr %}
@@ -61,7 +63,7 @@
         {% include "./_metadata_row.html" with label=metadata.literature.label value=metadata.literature.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.access_policy.label value=metadata.access_policy.text|linebreaksbr %}
         {% for subject in metadata.subjects %}
-            {% include "./_metadata_row.html" with label="Ämnesord" extra_label=subject.type value=subject|subjects_join %}
+            {% include "./_metadata_row.html" with label=subject.label extra_label=subject.type value=subject|subjects_join %}
         {% endfor %}
     </div>
     <div x-show="activeTab == 'all_metadata' || activeTab == 'related'" x-cloak>
@@ -72,7 +74,7 @@
     <div x-show="activeTab == 'all_metadata'" x-cloak>
         {% include "./_metadata_row.html" with label=metadata.genre_form.label value=metadata.genre_form.items|join:"<br>"|safe %}
         {% for classification in metadata.classifications %}
-            {% include "./_metadata_row.html" with label="Klassifikation" extra_label=classification.type value=classification.classification %}
+            {% include "./_metadata_row.html" with label=classification.label extra_label=classification.type value=classification.classification %}
         {% endfor %}
         {% for identifier in metadata.identifiers %}
             {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type value=identifier.identifier %}
@@ -82,7 +84,7 @@
         {% include "alvin_viewer/_partials/_record_type_links.html" with label=metadata.related_records.label link_type="alvin-record" record_type_links=metadata.related_records %}
         {% include "./_record_type_links.html" with label=metadata.work.label link_type="alvin-work" record_type_links=metadata.work %}
         {% for electronic_locator in metadata.electronic_locators %}
-            {% include "./_metadata_row.html" with label="Extern länk" url=electronic_locator.url value=electronic_locator.display_label %}
+            {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
         {% endfor %}
     </div>
     <div x-show="activeTab == 'all_metadata'" x-cloak>
@@ -116,18 +118,16 @@
         {% include "./_metadata_row.html" with label=metadata.reverse|label_join:"description" value=metadata.reverse.description.text %}
         {% include "./_metadata_row.html" with label=metadata.reverse|label_join:"legend" value=metadata.reverse.legend.text %}
         {% include "./_metadata_row.html" with label=metadata.countermark.label value=metadata.countermark.texts|join:"<br>" %}
-        {% translate 'Post skapad' as ts_created %}
-        {% include "./_metadata_row.html" with label=ts_created value=metadata.created %}
-        {% translate 'Senast uppdaterad' as ts_updated %}
-        {% include "./_metadata_row.html" with label=ts_updated value=metadata.last_updated %}
-        {% include "./_metadata_row.html" with label='Källdata' value=metadata.source_xml %}
+        {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
+        {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
+        {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
     </div>
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
         {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
     </div>
     {% if metadata.components %}
     <div x-show="activeTab == 'overview' || activeTab == 'all_metadata' || activeTab == 'inventory'" x-cloak>
-        <h1 class="text-2xl mt-6">
+        <h1 class="text-2xl mt-6" x-show="activeTab != 'inventory'">
             {% if metadata.type_of_resource.code == 'col' %}
                 {% translate 'Arkivförteckning' %}
             {% else %}

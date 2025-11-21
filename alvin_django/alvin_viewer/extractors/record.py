@@ -78,6 +78,7 @@ def _coins(root: etree._Element) -> dict:
 
 def _subjects_misc(root: etree._Element, xp: str):
     return collect(root, xp, lambda f: compact({
+        "label": _get_label(f),
         "type": _get_attribute_item(attr(f, "./@authority")),
         "topic": text(f, ".//topic"),
         "genreForm": text(f, ".//genreForm"),
@@ -89,7 +90,7 @@ def _subjects_misc(root: etree._Element, xp: str):
 def _classifications(root: etree._Element, xp):
     return collect(root, xp, lambda f: compact({
         "label": _get_label(f),
-        "type": attr(f, "./@authority"),
+        "type": _get_attribute_item(attr(f, "./@authority")),
         "classification": text(f, "."),
     }))
 
@@ -125,11 +126,14 @@ def extract(root: etree._Element) -> Dict:
         "main_title": titles(root, _xp(rt, "title")),
         "variant_titles": titles(root, _xp(rt, "variantTitle")),
         "location": location(root, rt, "physicalLocation/heldBy/location"),
-        "sublocation": decorated_text(root, "physicalLocation/sublocation"),
-        "shelf_mark": decorated_text(root, "physicalLocation/shelfMark"),
+        "sublocation": decorated_text(root, _xp(rt, "physicalLocation/sublocation")),
+        "shelf_mark": decorated_text(root, _xp(rt, "physicalLocation/shelfMark")),
         "former_shelf_mark": decorated_texts(root, _xp(rt, "physicalLocation/formerShelfMark")),
         "subcollection": decorated_list(root, _xp(rt, "physicalLocation/subcollection/*")),
-        "physcial_location_note": decorated_text(root, "physicalLocation/note[@noteType='general']"),
+        "physcial_location_note": {
+            "label": _get_label(element(root, _xp(rt, "physicalLocation"))),
+            "note": decorated_text(root, _xp(rt, "physicalLocation/note[@noteType='general']"))
+            },
         "agents": agents(root, _xp(rt, "agent")),
         "languages": decorated_list(root, _xp(rt, "language")),
         "description_languages": decorated_list(root, _xp(rt, "adminMetadata/descriptionLanguage")),

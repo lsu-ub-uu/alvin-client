@@ -59,7 +59,7 @@ def common(root: etree._Element, record_type: str) -> Dict[str, Any]:
 
 # TITLES / NAMES ---
 
-def titles(root: etree._Element, xp: str) -> list[dict] or dict:    
+def titles(root: etree._Element, xp: str) -> list[dict] | dict:
     if "variant" in xp:
         return collect(root, xp, lambda f: compact({
             "label": _get_label(f),

@@ -18,39 +18,40 @@ def get_connection() -> pika.BlockingConnection:
     )
     return pika.BlockingConnection(params)
 
-def handle_message(payload: dict) -> None:
+def handle_message() -> None:
     from . import services
     services.handle_metadata_change(payload)
 
 def on_message(channel: BlockingChannel, method, properties, body: bytes) -> None:
-    try:
-        payload = json.loads(body.decode("utf-8"))
-    except Exception:
-        logger.exception("Could not parse JSON from message")
-        channel.basic_ack(delivery_tag=method.delivery_tag)
-        return
+    headers = properties.headers
+    if headers and "type" in headers:
+        record_type = properties.headers["type"]
+        #record_id = properties.headers["id"]
+        #action = properties.headers["action"] # CREATE, UPDATE, DELETE
 
-    try:
-        handle_message(payload)
-        channel.basic_ack(delivery_tag=method.delivery_tag)
-    except Exception:
-        logger.exception("Error while handling message.")
-        channel.basic_ack(delivery_tag=method.delivery_tag)
+    if record_type in ["metadata", "text"]:
+        try:
+            handle_message()
+        except Exception:
+            logger.exception("Error while handling message.")
 
 def start_consumer() -> None:
-    queue_name = settings.RABBITMQ["QUEUE"]
+    exchange_name = settings.RABBITMQ["EXCHANGE"]
     
     while True:
         try:
             connection = get_connection()
             channel = connection.channel()
 
-            channel.queue_declare(queue=queue_name, durable=True)
+            #channel.exchange_declare(exchange=exchange_name, exchange_type="fanout", durable=True, passive=True)
+            channel.queue_declare(queue="alvinclient_reload", exclusive=True)
+            channel.queue_bind(queue="alvinclient_reload", exchange=exchange_name)
             channel.basic_qos(prefetch_count=1)
 
             channel.basic_consume(
-                queue=queue_name,
+                queue="alvinclient_reload",
                 on_message_callback=on_message,
+                auto_ack=True
             )
 
             logger.info("RabbitMQ-consumer started, waiting for message...")

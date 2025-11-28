@@ -187,6 +187,5 @@ RABBITMQ = {
     "HOST": "alvin-rabbitmq",
     "PORT": 5672,
     "VHOST": "/",
-    #"QUEUE": "",
     "EXCHANGE": "dataChangedExchange",
 }

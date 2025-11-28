@@ -39,7 +39,7 @@ def on_message(channel: BlockingChannel, method, properties, body: bytes) -> Non
 
 def start_consumer() -> None:
     queue_name = settings.RABBITMQ["QUEUE"]
-
+    
     while True:
         try:
             connection = get_connection()

@@ -5,9 +5,6 @@ from .common import (_get_label, _get_target, _norm_rt, _xp, a_date, compact,
                      related_authority)
 from .mappings import person
 from .cleaner import clean_empty
-from django.core.cache import cache
-from ..services.text_collector import get_item_dict
-
 
 rt = _norm_rt("alvin-person")
 

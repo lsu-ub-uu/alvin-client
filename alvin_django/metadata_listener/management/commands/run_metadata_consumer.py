@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
 from metadata_listener.consumer import start_consumer
-import logging
 
 class Command(BaseCommand):
     help = "Listens to metadata changes from RabbitMQ"

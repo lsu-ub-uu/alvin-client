@@ -71,7 +71,7 @@ def titles(root: etree._Element, xp: str) -> list[dict] | dict:
     
     target = element(root, xp)
     if target is None:
-        return ""
+        return {}
 
     title = {
         "label": _get_label(target),

@@ -65,7 +65,7 @@ def _deco_process_collection(collection) -> dict:
 
     collection_items = root.xpath("//metadata[@type='collectionItem']")
 
-    result: Dict[str, Dict[str, str]] = {}
+    result: dict[str, dict[str, str]] = {}
     for item in collection_items:
         name = item.findtext("nameInData")
         texts = {tp.get("lang"): tp.findtext("text") for tp in item.xpath("textId/linkedRecord/text/textPart")}
@@ -75,7 +75,7 @@ def _deco_process_collection(collection) -> dict:
     return result
 
 def _deco_cache_collections(collections) -> None:
-    result: Dict[str, Dict[str, str]] = {}
+    result: dict[str, dict[str, str]] = {}
     for collection in collections:
         result.update(_deco_process_collection(collection))
     cache.set(CACHE_DICT_KEY, result)

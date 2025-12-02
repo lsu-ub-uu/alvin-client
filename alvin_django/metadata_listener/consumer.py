@@ -9,6 +9,9 @@ from pika.adapters.blocking_connection import BlockingChannel
 logger = logging.getLogger(__name__)
 
 def get_connection() -> pika.BlockingConnection:
+    print(f"Connecting to host: {settings.RABBITMQ['HOST']}")
+    print(f"Connecting to port: {settings.RABBITMQ['PORT']}")
+    print(f"Connecting to vhost: {settings.RABBITMQ['VHOST']}")
     params = pika.ConnectionParameters(
         host=settings.RABBITMQ["HOST"],
         port=settings.RABBITMQ["PORT"],
@@ -36,18 +39,25 @@ def on_message(channel: BlockingChannel, method, properties, body: bytes) -> Non
             logger.exception("Error while handling message.")
 
 def start_consumer() -> None:
+    print(f"Connecting to exchange: {settings.RABBITMQ['EXCHANGE']}")
     exchange_name = settings.RABBITMQ["EXCHANGE"]
     
     while True:
         try:
+            logger.info("Trying to connect to RabbitMQ")
             connection = get_connection()
+            logger.info("Trying to create channel to RabbitMQ")
             channel = connection.channel()
 
             #channel.exchange_declare(exchange=exchange_name, exchange_type="fanout", durable=True, passive=True)
+            logger.info("Declaring queue")
             channel.queue_declare(queue="alvinclient_reload", exclusive=True)
+            logger.info("Binding queue")
             channel.queue_bind(queue="alvinclient_reload", exchange=exchange_name)
+            logger.info("Basic QoS")
             channel.basic_qos(prefetch_count=1)
 
+            logger.info("Basic consume")
             channel.basic_consume(
                 queue="alvinclient_reload",
                 on_message_callback=on_message,

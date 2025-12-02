@@ -30,7 +30,7 @@ https://tailwindcss.com/docs/theme
 @font-face {
   font-family: "Universalis";
   src:
-    url("/static/fonts/UniversalisADFStd-Bold.woff") format("woff");
+    url("static/fonts/UniversalisADFStd-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -39,7 +39,7 @@ https://tailwindcss.com/docs/theme
 @font-face {
   font-family: "NotoSans";
   src:
-    url("/static/fonts/NotoSans-Regular.ttf") format("truetype");
+    url("static/fonts/NotoSans-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;

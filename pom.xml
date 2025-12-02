@@ -28,7 +28,7 @@
     </parent>
 
     <artifactId>alvin-client</artifactId>
-    <version>1.10-SNAPSHOT</version>
+    <version>1.11-SNAPSHOT</version>
     <name>Alvin Client</name>
     <packaging>jar</packaging>
 

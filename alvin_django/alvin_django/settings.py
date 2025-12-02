@@ -13,7 +13,14 @@ SECRET_KEY =  os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "false").lower() == "true"
 
-
+if DEBUG:
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+    #CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
+    #CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
+else:
+    ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
+    #CSRF_TRUSTED_ORIGINS = os.environ["CSRF_TRUSTED_ORIGINS"].split(",")
+    #CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
 
 # Application definition
 ASGI_APPLICATION = "alvin_django.asgi.application"

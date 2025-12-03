@@ -1,0 +1,34 @@
+{% load i18n static %}
+
+<nav class="absolute top-14 left-0 w-full bg-[#fcfcfc] border-b-2 border-b-black -z-40 drop-shadow-2xl"
+x-show="showSearch" x-cloak x-translate>
+<search>
+    <form
+        action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
+        <input
+            class="w-full border-y-4 border-x-0 border-black focus:border-black focus:outline-none focus:ring-0"
+            name="query" type="text" id="alvinsearch" x-ref="alvinsearch" placeholder="{% trans 'Sök i Alvin...' %}">
+    </form>
+</search>
+<div class="flex flex-col">
+    <h1 class="pl-4 pt-2 border-b-2 border-black font-bold font-universalis text-xl lg:text-center bg-alvin-green ">{% trans 'Bläddra bland resurstyper' %}</h1>
+    <div class="flex lg:justify-center justify-start items-baseline overflow-x-auto scrollbar-alvin-x"
+    >                        
+        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/col.svg' label='Arkiv' %}
+        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/txt.svg' label='Text' %}
+        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/coins.svg' label='Mynt' %}
+        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/mix.svg' label='Blandat material' %}
+        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/img.svg' label='Bild' %}
+        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/car.svg' label='Karta' %}
+        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/mov.svg' label='Rörlig bild' %}
+        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/not.svg' label='Musikalier' %}
+        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/art.svg' label='Föremål' %}
+        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/mul.svg' label='Programvara' %}
+        {% include './_record_type_link.html' with record_type='alvin-record' icon_url='/img/recordTypes/aud.svg' label='Ljudinspelning' %}
+        {% include './_record_type_link.html' with record_type='alvin-person' icon_url='/img/authorityTypes/person.svg' label='Person' %}
+        {% include './_record_type_link.html' with record_type='alvin-organisation' icon_url='/img/authorityTypes/organisation.svg' label='Organisation' %}
+        {% include './_record_type_link.html' with record_type='alvin-place' icon_url='/img/authorityTypes/place.svg' label='Plats' %}
+        {% include './_record_type_link.html' with record_type='alvin-work' icon_url='/img/authorityTypes/work.svg' label='Verk' %}
+    </div>
+</div>
+</nav>

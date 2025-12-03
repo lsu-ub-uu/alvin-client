@@ -1,8 +1,4 @@
-<!-- LOCALIZATION -->
-{% load i18n %}
-
-<!-- STATIC -->
-{% load static %}
+{% load i18n static %}
 
 <div class="inline-block" x-data="{ showLanguageDropdown: false }">
     <figure>
@@ -13,7 +9,7 @@
         {% csrf_token %}
         <input name="next" type="hidden" value="{{ redirect_to }}">
         <div class="flex h-10">
-            <select class="bg-white border border-1 rounded cursor-pointer focus:border-alvinGreen focus:outline-none focus:ring-0" onchange="this.form.submit()" name="language">
+            <select class="bg-white border border-1 rounded cursor-pointer focus:border-alvin-green focus:outline-none focus:ring-0" onchange="this.form.submit()" name="language">
                 {% get_current_language as LANGUAGE_CODE %}
                 {% get_available_languages as LANGUAGES %}
                 {% get_language_info_list for LANGUAGES as languages %}
@@ -25,5 +21,4 @@
             </select>
         </div>
     </form>
-
 </div>

@@ -1,0 +1,20 @@
+{% load i18n static %}
+
+<nav class="sidenav fixed top-0 left-0 flex flex-col lg:w-2/6 max-lg:w-4/6 max-md:w-full h-screen  bg-white border-t-4 border-black border-4 z-50 " x-show="showSideNav" x-cloak> 
+    <button @click="showSideNav = !showSideNav" class="absolute top-0 left-0 p-2">
+        <img class="w-10" src="{% static '/img/nav/xmark.svg' %}">
+    </button>
+    
+    <div class="flex flex-col justify-stretch items-center gap-8 h-full py-40
+            overflow-y-auto scrollbar-alvin-x">
+        <a href="{% url 'about' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin-green">{% trans 'Om Alvin' %}</a>
+        <a href="{% url 'copyright' %}" class="font-universalis text-3xl text-black visited:text-black max-sm:text-3xl hover:text-alvin-green">{% trans 'Copyright' %}</a>
+        <h1 class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin-green">{% trans 'Medlemmar' %}</h1>
+        <hr class="w-20 bg-black border-alvin-green border-4 rounded-sm">
+        <h1 class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin-green">{% trans 'Avancerad sök' %}</h1>
+        <hr class="w-20 border-alvin-green border-4 rounded-sm">
+        <h1 class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin-orange">{% trans 'Hjälp' %}</h1>
+        <hr class="w-20 border-alvin-green border-4 rounded-sm">
+        <a href="{% url 'contact' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin-green">{% trans 'Kontakt' %}</a>
+    </div>  
+</nav>

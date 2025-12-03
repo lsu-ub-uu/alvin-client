@@ -15,141 +15,49 @@
         })
     "
     aria-label="{% trans 'Huvudmeny' %}">
-
-    <nav class="fixed top-0 flex justify-between w-full h-16 bg-white border-4 border-black z-40 select-none transition-transform" 
+    
+    <nav class="topnav fixed top-0 flex justify-between w-full h-16 bg-white border-4 border-black z-40 select-none transition-transform" 
         x-data="{ showSearch: false }" 
         :class="{'-translate-y-full': isScrollingDown, 'translate-y-0': !isScrollingDown}"
         >
 
         <nav class="flex flex-shrink-0 items-center h-full">
             
-            <!-- Hamburgermeny -->
-            <button @click="showSideNav = !showSideNav" class="w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvinGreen">
+            <!-- Hamburger menu -->
+            <button @click="showSideNav = !showSideNav" class="w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvin-green">
                 <img class="w-7" src="{% static '/img/nav/menu.svg' %}" alt="{% trans 'Mobilmeny' %}">
             </button>
 
-            <!-- Hem -->
-            <a class="h-full mt-6 text-center text-4xl mx-4 mt-4 font-universalis text-black hover:text-alvinGreen" href="{% url 'start' %}">
+            <!-- Start -->
+            <a class="h-full mt-6 text-center text-4xl mx-4 text-black" href="{% url 'start' %}">
                 ALVIN
             </a>
-
 
         </nav>
 
         <nav class="flex flex-shrink-0 justify-between items-center h-full border-black">
-
-            <button>
-                <a class="flex w-full h-full justify-between items-center mt-1 p-2 border-black font-universalis text-nowrap text-black hover:text-alvinGreen max-md:hidden">Copyright</a>
-            </button>
-            <button>
-                <a class="flex w-full h-full justify-between items-center mt-1 p-4 border-black font-universalis text-nowrap text-black hover:text-alvinGreen max-md:hidden">Om Alvin</a>
-            </button>
+            <a class="flex mt-1 p-2 border-black text-nowrap max-md:hidden">
+                Copyright
+            </a>
+            <a class="flex mt-1 p-4 border-black text-nowrap max-md:hidden">
+                Om Alvin
+            </a>
 
             <!-- Sök -->
-            <button @click="showSearch = !showSearch; $nextTick(() => { $refs.alvinsearch.focus(); });" class="flex w-full h-full justify-between items-center p-4 border-x-4 border-black hover:bg-alvinGreen"
-                    :class="{'bg-alvinGreen': showSearch}">
+            <button @click="showSearch = !showSearch; $nextTick(() => { $refs.alvinsearch.focus(); });" class="flex w-full h-full justify-between items-center p-4 border-x-4 border-black hover:bg-alvin-green"
+                    :class="{'bg-alvin-green': showSearch}">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Sök</p>
                 <img class="w-7 transition-all duration-300" src="{% static '/img/nav/binocular.svg' %}"
                     x-show="!showSearch">
                 <img class="w-7 transition-all duration-300" src="{% static '/img/nav/xmark.svg' %}"
                     x-show="showSearch" x-cloak>
             </button>
-
+            
             <!-- Sökmeny -->
-            <nav class="absolute top-14 left-0 w-full bg-[#fcfcfc] border-b-2 border-b-black -z-40 drop-shadow-2xl"
-                x-show="showSearch" x-cloak x-translate>
-                <search>
-                    <form
-                        action="https://www.alvin-portal.org/alvin/resultList.jsf?faces-redirect=true&amp;includeViewParams=true&amp;searchType=EXTENDED">
-                        <input
-                            class="w-full border-y-4 border-x-0 border-black focus:border-black focus:outline-none focus:ring-0"
-                            name="query" type="text" id="alvinsearch" x-ref="alvinsearch" placeholder="{% trans 'Sök i Alvin...' %}">
-                    </form>
-                </search>
-                <div class="flex flex-col">
-                    <h1 class="pl-4 pt-2 border-b-2 border-black font-bold font-universalis text-xl lg:text-center bg-alvinGreen ">{% trans 'Bläddra bland resurstyper' %}</h1>
-                    <div class="flex lg:justify-center justify-start items-baseline overflow-x-auto 
-                    [&::-webkit-scrollbar]:w-1
-                    [&::-webkit-scrollbar-track]:bg-alvinGrey
-                    [&::-webkit-scrollbar-thumb]:bg-alvinGreen
-                    [&::-webkit-scrollbar-thumb]:rounded-sm
-                    [&::-webkit-scrollbar-thumb]:border-black
-                    [&::-webkit-scrollbar-thumb]:border-8"
-                    >
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/archive.svg' %}">
-                            <span class="font-universalis">Arkiv</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/text.svg' %}">
-                            <span class="font-universalis">Text</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/coins.svg' %}">
-                            <span class="font-universalis">Mynt</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/combine.svg' %}">
-                            <span class="font-universalis">Blandat material</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/image.svg' %}">
-                            <span class="font-universalis">Bild</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/cartography.svg' %}">
-                            <span class="font-universalis">Karta</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/movingimage.svg' %}">
-                            <span class="font-universalis">Rörlig bild</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/music.svg' %}">
-                            <span class="font-universalis">Musikalier</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/object.svg' %}">
-                            <span class="font-universalis">Föremål</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/software.svg' %}">
-                            <span class="font-universalis">Programvara</span>
-                        </button>
-                        <button class="m-4 flex flex-col items-center justify-center">
-                            <img class="w-7" src="{% static '/img/recordTypes/soundrecording.svg' %}">
-                            <span class="font-universalis">Ljudinspelning</span>
-                        </button>
-                        <a href="{% url 'alvin_list_viewer' 'alvin-person' %}">
-                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="{% static '/img/authorityTypes/person.svg' %}">
-                                <span class="font-universalis">Person</span>
-                            </button>
-                        </a>
-                        <a href="{% url 'alvin_list_viewer' 'alvin-organisation' %}">
-                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="{% static '/img/authorityTypes/organisation.svg' %}">
-                                <span class="font-universalis">Organisation</span>
-                            </button>
-                        </a>
-                        <a href="{% url 'alvin_list_viewer' 'alvin-place' %}">
-                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="{% static '/img/authorityTypes/place.svg' %}">
-                                <span class="font-universalis">Plats</span>
-                            </button>
-                        </a>
-                        <a href="{% url 'alvin_list_viewer' 'alvin-work' %}">
-                            <button class="m-4 flex flex-col items-center justify-center text-black hover:text-alvinGreen">
-                                <img class="w-7" src="{% static '/img/authorityTypes/work.svg' %}">
-                                <span class="font-universalis">Verk</span>
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </nav>
+            {% include './_search_menu.html' %}
 
             <!-- Hjälp -->
-            <button class="flex w-full h-full justify-between items-center p-4 border-black hover:bg-alvinOrange">
+            <button class="flex w-full h-full justify-between items-center p-4 border-black hover:bg-alvin-orange">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Hjälp</p>
                 <img class="w-7" src="{% static '/img/nav/help-circle.svg' %}">
             </button>
@@ -158,30 +66,6 @@
     </nav>
 
     <!-- Sidomeny -->
-    <nav class="fixed top-0 left-0 flex flex-col lg:w-2/6 max-lg:w-4/6 max-md:w-full h-screen  bg-white border-t-4 border-black border-4 z-50 " x-show="showSideNav" x-cloak>
-        
-        <button @click="showSideNav = !showSideNav" class="absolute top-0 left-0 p-2">
-            <img class="w-10" src="{% static '/img/nav/xmark.svg' %}">
-        </button>
-        
-        <div class="flex flex-col justify-stretch items-center gap-8 h-full py-40
-                overflow-y-auto
-                [&::-webkit-scrollbar]:w-4
-                [&::-webkit-scrollbar-track]:bg-alvinGrey
-                [&::-webkit-scrollbar-thumb]:bg-alvinGreen
-                [&::-webkit-scrollbar-thumb]:rounded-sm
-                [&::-webkit-scrollbar-thumb]:border-black
-                [&::-webkit-scrollbar-thumb]:border-8"
-                >
-            <a href="{% url 'about' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvinGreen">{% trans 'Om Alvin' %}</a>
-            <a href="{% url 'copyright' %}" class="font-universalis text-3xl text-black visited:text-black max-sm:text-3xl hover:text-alvinGreen">{% trans 'Copyright' %}</a>
-            <h1 class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvinGreen">{% trans 'Medlemmar' %}</h1>
-            <hr class="w-20 bg-black border-alvinGreen border-4 rounded-sm">
-            <h1 class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvinGreen">{% trans 'Avancerad sök' %}</h1>
-            <hr class="w-20 border-alvinGreen border-4 rounded-sm">
-            <h1 class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvinOrange">{% trans 'Hjälp' %}</h1>
-            <hr class="w-20 border-alvinGreen border-4 rounded-sm">
-            <a href="{% url 'contact' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvinGreen">{% trans 'Kontakt' %}</a>
-        </div>  
-    </nav>
+    {% include './_side_nav.html' %}
+
 </header>

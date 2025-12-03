@@ -3,13 +3,23 @@
 {% if record_type_links %}
 <div class="md-row">
     <dt class="md-label">
-        {% translate label %}
+        {{ label }}
     </dt>
     <dd class="md-value">
-        {% for record_type in record_type_links %}
+        {% for record_type in record_type_links.records %}
             {% url 'alvin_viewer' link_type record_type.id as record_type_url %}
                 <a href="{{ record_type_url }}">
-                    {{ record_type_url }}
+                    {% if link_type == 'alvin-record' %}
+                        {{ record_type|alvin_title:link_type }}
+                    {% elif link_type == 'alvin-place'%}
+                        {{ record_type.name.names|alvin_title:link_type }}
+                    {% elif link_type == 'alvin-person'%}
+                        {{ record_type.name.names|alvin_title:link_type }}
+                    {% elif link_type == 'alvin-organisation'%}
+                        {{ record_type.name.names|alvin_title:link_type }}
+                    {% elif link_type == 'alvin-work' %}
+                        {{ record_type.title|alvin_record_title }}
+                    {% endif %}
                 </a>
                 {% if record_type.type %}
                     ({{ record_type.type }})

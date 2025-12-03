@@ -24,11 +24,11 @@
     <parent>
         <groupId>se.uu.ub.cora</groupId>
         <artifactId>cora-parent</artifactId>
-        <version>2.9.0</version>
+        <version>3.1.0</version>
     </parent>
 
     <artifactId>alvin-client</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.11-SNAPSHOT</version>
     <name>Alvin Client</name>
     <packaging>jar</packaging>
 

@@ -5,9 +5,9 @@ from django.core.paginator import Paginator
 import requests
 from lxml import etree
 from django.conf import settings
-
-from alvin_viewer.views import get_dates
 from alvin_viewer.templatetags import metadata_wrangler
+
+from alvin_viewer.extractors.common import _xp, _norm_rt, titles
 
 def get_authority_names(metadata, name_parts):
 
@@ -183,12 +183,12 @@ def extract_organisation_list_metadata(request, list_xml):
 def extract_work_list_metadata(request, list_xml):
 
     def get_titles(title_type, metadata):
-        return [{
-                "main_title": title.findtext(f"./{title_type}/mainTitle"),
-                "subtitle": title.findtext(f"./{title_type}/subtitle"),
-                "orientation_code": title.findtext(f"./{title_type}/orientationCode"),
-                } for title in metadata.xpath(".")
-        ]
+        return {
+                "main_title": metadata.findtext(f"./{title_type}/mainTitle"),
+                "subtitle": metadata.findtext(f"./{title_type}/subtitle"),
+                "orientation_code": metadata.findtext(f"./{title_type}/orientationCode"),
+                }
+        
 
     paginated_metadata = [
             {

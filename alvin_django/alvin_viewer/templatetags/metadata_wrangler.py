@@ -1,114 +1,222 @@
+
+from typing import Optional
 from django import template
 from django.utils.translation import get_language
 
 register = template.Library()
 
+@register.filter
 def select_current_language():
-    lang_options = {
-        'sv': 'swe',
-        'en': 'eng',
-        'no': 'nor'
-        }
-    
-    return lang_options[get_language()]
+    return {'sv':'swe','en':'eng','no':'nor'}.get(get_language(), 'swe')
+
+def _lang(metadata):
+    return select_current_language() if metadata.get(select_current_language()) else next(iter(metadata))
 
 @register.filter
 def alvin_title(metadata, record_type):
-    
-    # authority_names if place, person, or organisation otherwise main_title
-    title = (metadata.get("authority_names")
-             if record_type in {"alvin-place", "alvin-person", "alvin-organisation"}
-             else metadata.get("main_title"))
-    
-    # Maps record_type with (joiner, keys)
-    mapping = {
-        "alvin-place": (None, None),  # Handled separately below
-        "alvin-person": (" ", ["given_name", "family_name", "numeration"]),
-        "alvin-organisation": (". ", ["corporate_name", "subordinate_name"]),
-        "alvin-work": (" : ", ["main_title", "subtitle"]),
-        "alvin-record": (" : ", ["main_title", "subtitle"]),
-    }
-    
-    if record_type not in mapping:
-        raise ValueError("Record type is not valid")
-    
-    joiner, keys = mapping[record_type]
-    
-    # Välj geographic som auktoriserat namn för alvin-place
-    if record_type == "alvin-place":
-        lang = select_current_language() if title.get(select_current_language()) else next(iter(title))
-        return title.get(lang, {}).get("geographic", "")
-    
-    # För alvin-person och alvin-organisation, join baserad på valt språk
-    if record_type in {"alvin-person", "alvin-organisation"}:
-        lang = select_current_language() if title.get(select_current_language()) else next(iter(title))
-        lang_data = title.get(lang, {})
-        title_part = joiner.join(filter(None, (lang_data.get(key) for key in keys)))
-        if record_type == "alvin-person":
-            term = lang_data.get("terms_of_address")
-            # Om term exists, inkludera denna; annars returneras enbart title_part.
-            return f"{title_part}, {term}" if term and title_part else term or title_part
-        return title_part
 
-    # För alvin-work och resurstyper antas att title är en lista och det första elementet används
-    title_part = joiner.join(
-        filter(None, (title[0].get(key) for key in keys))
-    )
-    return title_part
+    if record_type in ("alvin-record", "alvin-work"):
+        title = metadata.get("main_title")
+        return alvin_record_title(title)
+    
+    if metadata in (None, ""):
+        return "Name not found"
+
+    names = (metadata.get("authority_names") or {}).get("names") or metadata
+    lang = _lang(names)
+    lang_data = names.get(lang, {})
+    
+    if record_type == "alvin-person":
+        return alvin_person_name(lang_data)
+    
+    if record_type == "alvin-place":
+        return alvin_place_name(lang_data)
+    
+    if record_type == "alvin-organisation":
+        return alvin_organisation_name(lang_data)
+    
+@register.filter
+def agent_name(metadata):
+    lang = _lang(metadata)
+    lang_data = metadata[lang]
+    
+    if isinstance(lang_data, list):
+        if lang_data and "family_name" in lang_data[0]:
+            return " ; ".join(filter(None, ([alvin_person_name(name) for name in lang_data]))) 
+        else: 
+            return " ; ".join(filter(None, ([alvin_organisation_name(name) for name in lang_data])))
+    
+    return alvin_person_name(lang_data) if lang_data.get("family_name") else alvin_organisation_name(lang_data)
+
+@register.filter
+def alvin_record_title(metadata):
+    keys = ["main_title", "subtitle"]
+    return " : ".join(filter(None, ((metadata or {}).get(key) for key in keys)))
 
 @register.filter
 def alvin_person_name(metadata):
     keys = ["given_name", "family_name", "numeration"]
-    name = " ".join(filter(None, (metadata.get(key) for key in keys)))
-    if metadata.get("terms_of_address"):
-        return f"{name}, {metadata['terms_of_address']}"
-    return name
-
-@register.filter
-def alvin_organisation_name(metadata):
-    keys = ["corporate_name", "subordinate_name", "terms_of_address"]
-    return ". ".join(filter(None, (metadata.get(key) for key in keys)))
-
-@register.filter
-def alvin_work_name(metadata):
-    # Hantering av namn för listning
+    def name_join(name):
+        n = " ".join(filter(None, (name.get(key) for key in keys)))
+        if name.get("terms_of_address"):
+            n += f", {name['terms_of_address']}"
+        if name.get("variant_type"):
+            n += f" ({name['variant_type']})"
+        return n
+    
     if isinstance(metadata, list):
-        metadata = metadata[0]
-    # Gemensam hantering av namn
-    keys = ["main_title", "subtitle"]
-    return " : ".join(filter(None, (metadata.get(key) for key in keys)))
+        return " ; ".join(filter(None, ([name_join(name) for name in metadata])))
+    return name_join(metadata)
 
 @register.filter
 def alvin_place_name(metadata):
-    lang = select_current_language() if metadata.get(select_current_language()) else next(iter(metadata))
-    return metadata.get(lang, {}).get("geographic", "")
+    if isinstance(metadata, list):
+        return " ; ".join(filter(None, ([name.get("geographic") for name in metadata])))
+    return (metadata or {}).get("geographic")
 
 @register.filter
-def role_list(metadata):
+def alvin_organisation_name(metadata):
+    keys = ["corporate_name", "subordinate_name"]
+    def name_join(name):
+        n = " ; ".join(filter(None, (name.get(key) for key in keys)))
+        if name.get("terms_of_address"):
+            return f"{n}, {name['terms_of_address']}"
+        return n
+    if isinstance(metadata, list):
+        return " ; ".join(filter(None, ([name_join(name) for name in metadata])))
+    return name_join(metadata)
+
+@register.filter
+def alvin_work_name(metadata):
+    keys = ["main_title", "subtitle"]
+    return " : ".join(filter(None, ((metadata or {}).get(key) for key in keys)))
+
+@register.filter
+def role_join(metadata):
     return ", ".join(filter(None, metadata))
 
 @register.filter
-def origin_countries(metadata):
-    keys = ["country", "historical_country"]
-    return ", ".join(filter(None, (metadata.get(key) for key in keys)))
+def list_join(metadata):
+    if not isinstance(metadata, list):
+        return None
+
+    return ', '.join(filter(None, (metadata)))
 
 @register.filter
-def date_other_join(metadata):
-    keys = ["start_date", "end_date"]
-    joined_date = " -- ".join(filter(None, (metadata.get(key) for key in keys)))
-    return ". ".join(filter(None, [joined_date, metadata.get("date_note")]))
+def origin_countries(metadata):
+    if not isinstance(metadata, dict):
+        return ""
+    
+    keys = ["country", "historical_country"]
+    oc = []
+
+    for key in keys:
+        cd = metadata.get(key) or {}
+        items = cd.get("items")
+
+        if not isinstance(items, list):
+            continue
+        
+        oc.extend(items)
+
+    oc_str = ', '.join(filter(None, (oc)))
+    if oc_str in (None, ""):
+        return ""
+    return f", {oc_str}"
+
+@register.filter
+def date_join(metadata):
+    if not isinstance(metadata, dict):
+        return ""
+    
+    keys = ["year", "month", "day"]
+    d = []
+
+    for key in keys:
+        item = (metadata or {}).get(key) or {}
+        d.append(item)
+    
+    date = "-".join(filter(None, (d)))
+    era = (metadata or {}).get("era")
+
+    return f"{date} {era}" if era is not None else date
+
+@register.filter
+def dates_join(metadata):
+    if not isinstance(metadata, dict):
+        return None
+
+    start_date = metadata.get("start_date") or {}
+    end_date = metadata.get("end_date") or {}
+
+    joined_start = date_join(start_date)
+    joined_end = date_join(end_date)
+
+    joined_date = " – ".join(filter(None, (joined_start, joined_end)))
+    return " ".join(filter(None, [joined_date, (metadata or {}).get("date_note")])) if joined_date.endswith(".") else " ".join(filter(None, [joined_date, (metadata or {}).get("date_note")])) 
 
 @register.filter
 def dimensions_join(metadata):
     keys = ["height", "width", "depth", "diameter"]
-    return "x".join(filter(None, (metadata.get(key) for key in keys)))
+
+    parts = []
+
+    for key in keys:
+        item = (metadata or {}).get(key) or {}
+        text = item.get("text")
+        label = item.get("label")
+
+        if text not in (None, "") and label not in (None, ""):
+            joined = f"{text} ({label})"
+            parts.append(str(joined))
+
+    parts_str = " x ".join(filter(None,parts))
+    unit_str = metadata.get("unit") or None
+    return " ".join(filter(None, (parts_str, unit_str))).lower()
+
+@register.filter
+def measure_join(metadata):
+    keys = ["weight", "unit"]
+
+    m = []
+
+    for key in keys:
+        item = (metadata or {}).get(key) or {}
+        m.append(item)
+    
+    return " ".join(filter(None, (m)))
 
 @register.filter
 def subjects_join(metadata):
     keys = ["topic", "genreForm", "geographicCoverage", "temporal", "occupation"]
-    return ", ".join(filter(None, (metadata.get(key) for key in keys)))
+    return ", ".join(filter(None, ((metadata or {}).get(key) for key in keys)))
 
 @register.filter
 def part_join(metadata):
+    if not isinstance(metadata, dict):
+        return ""
+    
     keys = ["number", "extent"]
-    return ", ".join(filter(None, (metadata.get(key) for key in keys)))
+    return ", ".join(filter(None, ((metadata or {}).get(key) for key in keys)))
+
+@register.filter
+def item_description_join(metadata):
+    keys = ["item", "text"]
+    return ". ".join(filter(None, ((metadata or {}).get(key) for key in keys)))
+
+@register.filter
+def label_join(metadata: Optional[dict], element: str) -> str:
+    if not isinstance(metadata, dict):
+        return ""
+    l = metadata.get("label")
+    sub = metadata.get(element)
+    el = (sub.get("label") if isinstance(sub, dict) else sub) if sub else None
+    result = ", ".join(filter(None, (l, el)))
+    return result.capitalize() if result else ""
+
+@register.filter
+def appraisal_join(metadata: Optional[dict]):
+    if not isinstance(metadata, dict):
+        return ""
+    keys = ["value", "currency"]
+    return " ".join(filter(None, ((metadata or {}).get(key) for key in keys)))

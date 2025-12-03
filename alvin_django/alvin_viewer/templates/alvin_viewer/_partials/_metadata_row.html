@@ -3,24 +3,19 @@
 {% if value %}
 <div class="md-row">
     <dt class="md-label">
-        {% translate label %}
+        {{ label }}
         {% if extra_label %}
-            [{{ extra_label }}]
+            ({{ extra_label }})
         {% endif %}
     </dt>
     <dd class="md-value">
         {% if url %}
-            <a href="{{ url }}">
-                {{ value }}
-            </a>
+            <a href="{{ url }}">{{ value }}</a>{% if extra_value %}{{ extra_value }}{% endif %}
         {% else %}
-            {{ value }}
-        {% endif %}
-        {% if extra_value %}
-            {% translate extra_value %}
+            {{ value }}{% if extra_value %}{{ extra_value }}{% endif %}
         {% endif %}
         {% if attribute %}
-            ({% translate attribute %})
+            ({{ attribute }})
         {% endif %}
     </dd>
 </div>

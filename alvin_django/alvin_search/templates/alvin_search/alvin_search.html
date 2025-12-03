@@ -1,0 +1,87 @@
+{% extends "alvin_info/master.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Alvin - {% translate 'RESULTAT FÖR' %} {% translate '{{searchType}}' %} {{query}}{% endblock %}
+
+{% block content %}
+<div class="flex-grow w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4">
+    <span id="main-content-marker"></span>
+    <main class="w-full md:w-3/4 pt-1 px-3">
+        <h1><span class="font-bold">{{completeListSize}} {% translate 'RESULTAT FÖR' %}</span>
+        {% if searchType == 'person' %} 
+           {% translate 'Person' %}: 
+        {% endif %}
+        {% if searchType == 'organisation' %} 
+           {% translate 'Organisation' %}: 
+        {% endif %}
+        {% if searchType == 'place' %} 
+           {% translate 'Plats' %}: 
+        {% endif %}
+        {% if searchType == 'work' %} 
+           {% translate 'Verk' %}: 
+        {% endif %}
+        {{query}}</h1>
+        {% for record in records %}
+            {% if searchType == 'person' %}    
+                {% include "alvin_search/partials/_alvin_person.html"  %}
+            {% endif %} 
+            {% if searchType == 'organisation' %}    
+                {% include "alvin_search/partials/_alvin_organisation.html"  %}
+            {% endif %} 
+            {% if searchType == 'place' %}    
+                {% include "alvin_search/partials/_alvin_place.html"  %}
+            {% endif %}          
+        {% endfor %}       
+        {% if completeListSize > 0 %}
+        <div class="py-4 pt-8 mx-auto flex flex-col md:flex-row justify-center">
+            <div class="flex flex-col md:flex-row">
+                <div class="flex justify-between items-center max-lg:justify-start max-md:justify-center max-sm:justify-center max-sm:pb-4">
+                {% if startnum > rowsnum %}
+                    <a class="flex" href="/search?searchType={{searchType}}&query={{query}}&start={{prevstartnum}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                           <title>Previous</title>
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                        </svg>
+                        <span class="pl-2">{% translate 'FÖREGÅENDE' %}</span>
+                     </a>                
+                 {% endif %}
+                 </div>            
+            </div>
+            <div class="flex flex-col md:flex-row justify-center">
+                <div class="font-bold px-2 flex justify-between content-center items-center max-lg:justify-start max-md:justify-center max-sm:justify-center max-sm:pb-4">
+                    {{startnum}} - {{cursor}} {% translate 'AV' %} {{completeListSize}}     		
+	        </div>  
+            </div>
+            <div class="flex flex-col md:flex-row">
+                <div class="flex justify-between content-center items-center max-lg:justify-start max-md:justify-center max-sm:justify-center max-sm:pb-4">
+                {% if nextstartnum < completeListSize %}
+                    <a class="flex" href="/search?searchType={{searchType}}&query={{query}}&start={{nextstartnum}}"><span class="pr-2">{% translate 'NÄSTA' %}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <title>Next</title>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                        </svg>
+                    </a>	
+                {% endif %}	
+	    </div>  
+        </div>
+    </div>
+    {% else %}
+    <h2 class="text-3xl md:text-4xl font-bold py-4 px-4 text-white bg-red-500">{% translate 'Din sökning gav inget resultat' %}</h2>
+    <div class="py-2 font-bold">{% translate 'Några söktips:' %}</div>
+    <div class="py-2">{% translate 'Kontrollera stavningen.' %}</div>
+    <div class="py-2">{% translate 'Ange färre sökord. Ange t.ex. bara ett eller ett par ord ur en titel istället för hela titeln.' %}</div>
+    {% endif %}
+  </main>
+   <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+        <div class="sticky top-0 p-4 bg-off-white rounded-xl w-full h-full">
+            <div class="flex flex-col justify-center">  
+                <h2 class="text-2xl font-bold pb-2">{% translate 'Sökfilter' %}</h2> 
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+

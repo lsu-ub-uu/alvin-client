@@ -1,0 +1,165 @@
+{% extends "vocabulary/darkmaster.html" %}
+{% load static %}
+{% block title %}Organisation{% endblock %}
+{% block content %}
+    <div class="maincontent">
+      <h1><a href="https://www.alvin-portal.org" class="logo">ALVIN</a> : Cataloguing</h1>
+      <div class="menu">
+        <a href="#organisation">Organisation</a>
+        <a href="#sections">Sections</a>
+        <a href="#authority">Authority information</a>
+	<a href="#organisationinfo">Dates</a>
+        <a href="#variant">Variant forms</a>
+        <a href="#other">Other information</a>
+	<a href="#related">Related information</a>
+     </div>
+
+     <div class="main">
+      <h2 class="cat" id="organisation">Organisation</h2>
+      <p>Authority records for organisations are used in Alvin for:</p>
+      <ul>
+        <li>Connecting the organisation as an agent via a role to an object or collection</li>
+        <li>Connecting the organisation as the subject of an object or collection</li>
+      </ul>
+      <p>Authority work means controlled and structured handling of name forms. Users should be able to search for name forms in a uniform way.</p>
+      <p>It means creating records as linked entities. This involves choosing a preferred name and, in some cases, distinctive additions to make the name unique. An important part of the work is to search for and check if an existing name form already exists as a linkable entity and, if so, link to it.</p>
+      <p>An organisation is defined as a corporation or group of persons and/or organisations that acts, or may act, as a unit.</p>
+      <p>Examples of organisations are associations, companies, nonprofit organisations, governments, state agencies, municipalities, projects, music groups, religious communities and conferences.</p>
+      <p>Temporary events such as sports competitions, exhibitions, expeditions, fairs and festivals, as well as vehicles, such as ships and spacecraft, are also considered organisations.</p>
+      <p>Text information in notes etc. can be in any language.</p>
+      <h2 id="sections">Sections in the registration form</h2>
+
+      <button class="accordion" id="authority">Authority information</button>
+      <div class="panel">
+	<p>At least one preferred name form of the organisation must be specified for the web pages in English, Swedish or Norwegian. This language specifies the language version of the web page rather than the language of the name form. If only one name form is specified, it will be displayed on all language versions of the web pages.</p>
+        <p>For foreign organisations that lack an accepted name form in any of the display languages, select the name form from the respective country together with the display language.</p>   
+        <p>Some names have a language-specific form. This applies, for example, to international organisations, older organisations and religious orders and communities.</p>     
+	<p>The preferred name is the name by which the organisation is best known. To determine it, use the following sources (in order of priority):</p>
+	<ol>
+	  <li>the preferred sources of information in items associated with the organisation, such as title pages</li>
+          <li>other formal statements appearing in items associated with the organisation</li>
+          <li>other sources (including reference sources such as VIAF or Wikipedia).</li>
+        </ol>	
+        <p>When an organisation changes its name and the name change can be considered important, create a new record for the new name. When an organisation appears under a changed name, there have probably also been changes within the organisation or its operations. If an organisation has undergone extensive reorganisation, merged with others, dissolved into several, or if the business has changed direction significantly, the organisation should be considered new.</p>
+        <p>Register in each record, old and new, a Related organisation of the type earlier/later, an historical note explaining the relations and start and end time if the information exists.</p>
+        <p>It is possible, but not mandatory, to specify the authorised form in all three display languages ​​in cases where they are different, eg. Jesuits/Jesuittordenen/Jesuitorden.</p>
+  	<p>The preferred name form must be in Latin script.</p>
+	<p>Do not enter more than one name for the same language.</p>      
+	<p>Do not enter alternative name forms in this section.</p>
+	<h3 class="cat">Authority</h3>
+        <p class="catlabelcode">Language code, display language:</p>
+	<p>Select the language corresponding to the name form, normally based on the location of your organisation.</p>
+	<p class="catlabeltext">Organisation name:</p>
+	<p>Enter the authoritative name form of the organisation corresponding to the selected language.</p>
+     	<p>Example: Archaeological Museum of Thessaloniki (in English). (Do not enter Αρχαιολογικό Μουσείο Θεσσαλονίκης).</p>
+	<p class="catlabeltext">Subordinate unit:</p>
+        <p>For example used for:<p>
+        <ul>
+          <li>an organisation with a name that includes words indicating that the organisation is part of another</li>
+          <li>an organisation with a name that includes words indicating administrative subordination</li>
+          <li>university faculty, department, laboratory, etc. with a name that only indicates a field of study</li>
+        </ul>
+	<p>Example: Department of English (subordinate unit of University of Kansas).</p>
+	<p>Subordinate and related organisations that do not belong to any of the types above are authorised under their own names if the names are independent.</p>
+	<p>Example: Uppsala University Library (own authority record and not subordinate to Uppsala University).</p>
+        <p class="catlabeltext">Addition:</p>
+        <p>Geographical names as additions to names are used, for example, to distinguish organisations with the same name or for names of local departments, branches and the like that represent the activities of a parent organisation in a particular location.</p>
+        <p>Example: London (for Riviere & Sons).</p>
+      </div>
+      <button class="accordion" id="organisationinfo">Dates</button>
+      <div class="panel">
+        <p class="catlabeltext">Start date:</p>
+        <p class="catlabeltext">End date:</p>
+	<p>Enter the operating time for the organisation in start date and end date.</p>
+        <p>All types of time data are specified according to the ISO 8601 standard according to the pattern yyyy (year), yyyy-mm (year and month) and yyyy-mm-dd (year, month and day).</p>
+	<p>Example: 1707 (year) 05 (month) 13 (day).</p>
+	<p>Example: 0470 (year).</p>
+	<p class="catlabeltext">Era (BC):</p>
+        <p>Enter BC for years before Christ. Otherwise leave unselected.</p>
+        <p>Example: 0470 (year) + BC (the year 470 BC).</p>
+        <p class="catlabeltext">Year/date displayed</p>
+        <p>Enter uncertain and approximate time information as free text. Where applicable, the year of birth/death can also be entered above for better searchability.</p>
+        <p>Example: 1717? (? is used for probable year).</p>
+	<p>Example: 1717 or 1718 (or is used for alternative and immediately following years).</p>
+	<p>Example: ca 1717 (ca is used for approximate year. Here the time is more fluid and can cover a time span of up to ten years).</p>
+        <p>Example: ca 1717-1767 (for approximate timespan).</p>
+	<p>In all these cases, 1717 can also be entered as a numerical year of birth above, which means that 1717 will also be searchable as a year.</p>
+	<p>Example: Between 510 and 323 BC (as a time period).</p>
+	<p>Do not use this element if the exact date is known.</p>
+      </div>
+      <button class="accordion" id="variant">Variant forms</button>
+      <div class="panel">
+	<p>A name that is not considered the authoritative form, e.g. alternative spellings, previous variants or other languages. Specifying alternative names makes the resource searchable using these. More than one alternative may be added.</p>
+	<h3 class="cat">Variant</h3>
+        <p class="catlabelcode">Language code:</p>
+	<p>Select the language corresponding to the name form. Any language can be specified. The 20 most common options are listed first. After these the others follow alphabetically.</p>
+	<p class="catlabelcode">Variant:</p>
+	<p>Select the type of variant form. Other is selected if none of the more specified ones are applicable.</p>	
+	<p class="catlabeltext">Organisation name:</p>
+	<p>Enter the variant name form of the organisation corresponding to the selected language.</p>
+     	<p>Example: Αρχαιολογικό Μουσείο Θεσσαλονίκης (translation in Greek).</p>
+        <p>Example: В.Ц.И.К (abbreviation in Russian for Всероссийский Центральный Исполнительный Комитет)</p>
+	<p class="catlabeltext">Subordinate unit:</p>
+	<p>Example: Swedish Department (subordinate unit of International exhibition 1862).</p>
+	 <p class="catlabeltext">Addition:</p>
+        <p>Geographical names as additions to names are used, for example, to distinguish organisations with the same name or for names of local departments, branches and the like that represent the activities of a parent organisation in a particular location.</p>
+        <p>Example: Melbourne (for William Heinemann Ltd).</p>
+	<p class="catlabeltext">Text direction:</p>
+	<p>Select Right-to-left only if the name should be displayed from right to left, e.g, names in Arabic or Hebrew. Otherwise leave it unselected.</p>
+      </div>
+      <button class="accordion" id="other">Other information</button>
+      <div class="panel">
+        <p class="catlabeltext">Note:</p>
+	<p class="catlabelcode">Type:</p>
+	<p>Select the type of note from the list. Enter only one note for each type (all information in one element).</p>
+	<ul>
+	  <li>General - General information for which a specialised note field has not been defined.</li>  
+	  <li>Biographical/historical - Biographical information about an individual or historical information about an institution.</li>
+	  <li>Source - Citation for a consulted source in which information is found related in some manner to the entity represented by the authority record or related entities, for example a bibliographic reference or a URL.</li>
+        </ul>
+	<p>Example: Swedish trading company that traded with East Asia, founded in Gothenburg in 1731 and formally dissolved in 1813. (historical).</p>
+        <p class="catlabeltext">Identifier:</p>
+	<p class="catlabelcode">Type:</p>
+	<p>Select the type of identifier from the list.</p>
+        <p>Example: 133471839 (VIAF for Ostindiska kompaniet).</p>
+        <p>Enter the number/code only, not the full URL. A link to the source will automatically be created on the web page.</p>
+        <h3 class="cat">Address</h3>
+
+
+
+
+      </div> 
+
+      <button class="accordion" id="related">Related information</button>
+      <div class="panel">
+	<h3 class="cat">Related organisation</h3>
+        <p class="catlabelcode">Type of relation:</p>
+	<p>Select the type of relation to another organisation record in Alvin.</p>
+        <p>Search for the authority record for the related organisation and link to the organisation described in the record. Create a new organisation record if needed.</p>   
+        <h3 class="cat">External electronic location (URL)</h3>
+        <p class="catlabeltext">URL:</p>
+	<p>An external link that is relevant to the record described.</p>
+        <p>Example: https://www.uu.se</p>
+	<p>The URL must be correctly encoded according to the RFC 3986 standard and start with http:// or https://.</p>
+        <p>Example: https://www.uu.se</p>
+	<p>It is recommended that all URLs used with the element are persistent.</p>
+        <p class="catlabeltext">Display label:</p>
+	<p>A descriptive label displayed on the web page.</p>
+        <p>Example: Uppsala University</p>
+      </div> 
+      <script src="/static/js/accordion.js"></script>
+    </div>
+    <div class="right">
+      <h2>Links</h2>
+      <p><a href="https://www.loc.gov/standards/mads/">MADS</a></p>
+      <p><a href="https://viaf.org/">VIAF</a></p>
+      <p><a href="https://id.loc.gov/authorities/names.html">Library of Congress Names</a></p>
+      <p><a href="https://data.cerl.org/thesaurus">CERL Thesaurus</a></p>
+      <p><a href="https://www.wikipedia.org/">Wikipedia</a></p>
+    </div>
+
+  </div>  
+  
+</div>
+{% endblock %}
+

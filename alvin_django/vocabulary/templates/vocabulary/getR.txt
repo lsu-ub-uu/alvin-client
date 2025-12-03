@@ -1,0 +1,9 @@
+En post är metadata uttryckta i ett enda format. En post returneras i en XML-kodad byteström som svar på en OAI-PMH-begäran om metadata från ett objekt. En post identifieras entydigt genom kombinationen av den unika identifieraren för det objekt från vilket posten är tillgänglig, metadataPrefix som identifierar postens metadataformat och postens datumstämpel. XML-kodningen av poster är organiserad i följande delar:
+
+header -- innehåller den unika identifieraren för objektet och egenskaper som krävs för selektiv insamling. Headern består av följande delar:
+
+unique identifier -- den unika identifieraren för ett objekt i ett arkiv;
+datestamp -- datumet för skapande, ändring eller borttagning av posten i syfte att selektiv insamling.
+noll eller fler setSpec-element -- set-medlemskapet för objektet i syfte att selektiv insamling.
+ett valfritt statusattribut med värdet deleted indikerar att tillgängligheten för det angivna metadataformatet för objektet återkallas, beroende på arkivets stöd för borttagningar.
+metadata -- en enda manifestation av metadata från ett objekt. OAI-PMH stöder objekt med flera manifestationer (format) av metadata. Som ett minimum måste arkiv kunna returnera poster med metadata uttryckta i Dublin Core-formatet, utan någon förbehåll. Ett arkiv kan också sprida andra format av metadata. Det specifika metadataformatet för den post som ska spridas anges med hjälp av ett argument -- metadataPrefix -- i GetRecord- eller ListRecords-begäran som producerar posten. ListMetadataFormats-begäran returnerar listan över alla metadataformat som är tillgängliga från ett arkiv, eller för ett specifikt objekt (vilket kan anges som ett argument till ListMetadataFormats-begäran).

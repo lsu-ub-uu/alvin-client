@@ -1,0 +1,93 @@
+{% extends "darkmaster.html" %}
+{% load static %}
+{% block title %}Place{% endblock %}
+{% block content %}
+    <div class="maincontent">
+      <h1><a href="https://www.alvin-portal.org" class="logo">ALVIN</a> : Cataloguing</h1>
+      <div class="menu">
+        <a href="#place">Place</a>
+        <a href="#sections">Sections</a>
+        <a href="#authority">Authority information</a>
+        <a href="#variant">Variant forms</a>
+        <a href="#other">Other information</a>
+     </div>
+
+     <div class="main">
+      <h2 class="cat" id="place">Place</h2>
+      <p>Authority records for places are used in Alvin for:</p>
+      <ul>
+        <li>Place of publication or manufacture of an object</li>
+        <li>Place of birth of a person</li>
+        <li>Place of death of a person</li>
+        <li>Place in a postal address of an organisation</li>
+      </ul>
+      <p>Authority work means creating records as linked entities. This involves choosing a preferred name and, in some cases, distinctive additions to make the name unique. An important part of the work is to search for and check if an existing name form already exists as a linkable entity and, if so, link to it.</p>
+      <p>The aim is to be able to unambiguously identify these places regardless of what they were called during different time periods or in different languages.</p>
+      <p>A country (e.g. Sweden) should not be specified as an authority record for a place. However, land areas (e.g. Skåne, Öland, England), farms, churches, etc. can be specified if relevant to the above.</p>
+      <p>Although the main purpose of authority records for places is the above context, such a record can also be used as a subject heading in the same way as authority records for persons and organisations. Since places are not always as easily identifiable as the latter, it is often better to use the property Subject, Geographic coverage (free text) which is more flexible. For example, you can enter very specific places such as Drottninggatan 1, Uppsala or countries/areas regardless of status, e.g. Sweden, the Roman Empire, the Soviet Union, etc.). Likewise, all other types such as lakes, bridges, ancient remains, etc.</p>
+     
+      <h2 id="sections">Sections in the registration form</h2>
+
+      <button class="accordion" id="authority">Authority information</button>
+      <div class="panel">
+	<p>At least one preferred name form of the place must be specified for the web pages in English, Swedish or Norwegian. This language specifies the language version of the web page rather than the language of the name form. If only one name form is specified, it will be displayed on all language versions of the web pages.</p>
+	<p>Find the current authoritative form in e.g. GeoNames or Wikipedia.</p>
+	<p>It is possible, but not mandatory, to specify the authorised form in all three display languages ​​in cases where they are different, e.g. Copenhagen/København/Köpenhamn.</p>
+  	<p>Do not enter more than one name for the same language.</p>      
+	<p>Do not enter alternative name forms in this section.</p>
+	<h3 class="cat">Authority</h3>
+        <p class="catlabelcode">Language code, display language:</p>
+	<p>Select the language corresponding to the name form, normally based on the location of your organisation.</p>
+	<p class="catlabeltext">Place:</p>
+	<p>Enter the authoritative name form of the place corresponding to the selected language.</p>
+     	<p>Example: Oslo. (Do not enter Christiania).</p>
+	</div>
+
+      <button class="accordion" id="variant">Variant forms</button>
+      <div class="panel">
+	<p>A name that is not considered the authoritative form, e.g. alternative spellings, previous variants or other languages. Specifying alternative names makes the resource searchable using these.</p>
+	<h3 class="cat">Variant</h3>
+        <p class="catlabelcode">Language code:</p>
+	<p>Select the language corresponding to the name form. Any language can be specified. The 20 most common options are listed first. After these the others follow alphabetically.</p>
+	<p class="catlabeltext">Place:</p>
+	<p>Enter the alternative name form of the place corresponding to the selected language.</p>
+	<p>Multiple name forms can be entered for the same language.</p>
+	<p>Example: Christiania. (Alternative form for Oslo in Norwegian).</p>
+	<p>Example: Kristiania. (Another alternative form for Oslo in Norwegian).</p>
+	<p>Example: Asloa. (Oslo in Latin).</p>
+	<p class="catlabeltext">Text direction:</p>
+	<p>Select Right-to-left only if the name should be displayed from right to left, e.g, names in Arabic or Hebrew. Otherwise leave it unselected.</p>
+      </div>
+
+      <button class="accordion" id="other">Other information</button>
+      <div class="panel">
+        <p class="catlabeltext">Country:</p>
+	<p>Select the country where the described place is currently located. The 20 most common options are listed first. After these the others follow alphabetically.</p>
+	<p>Countries and kingdoms that no longer exist as independent states cannot be specified here.</p>
+        <p class="catlabeltext">Latitude:</p>
+	<p>Enter the latitude of the place in WGS84 format (as compressed degrees with decimals, numbers only).</p>
+	<p>Example: 59.916667</p>
+	<p class="catlabeltext">Longitude:</p>
+	<p>Enter the longitude of the place in WGS84 format (as compressed degrees with decimals, numbers only).</p>
+	<p>Example: 10.75</p>
+	<p>Find the latitude and longitude in e.g. GeoNames or Wikipedia.</p>
+	<p>It is also possible to click on a point in the map in the registratation form to select the position. Selected values must be first deleted in order to select new ones from the map.</p>
+	<p>Example: image of map in the form:</p>
+	<img alt="Map" src="/static/img/mapJSClient.png"/>
+    </div> 
+      <script src="/static/js/accordion.js"></script>
+    </div>
+
+    <div class="right">
+      <h2>Links</h2>
+      <p><a href="https://www.loc.gov/standards/mads/">MADS</a></p>
+      <p><a href="https://www.geonames.org/">GeoNames</a></p>
+      <p><a href="https://data.cerl.org/thesaurus">CERL Thesaurus</a></p>
+      <p><a href="https://www.wikipedia.org/">Wikipedia</a></p>
+    </div>
+
+  </div>  
+  
+</div>
+{% endblock %}
+

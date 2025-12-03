@@ -1,0 +1,151 @@
+{% extends "vocabulary/userguidemaster.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Alvin - {% translate 'Vokabulär' %}{% endblock %}
+{% block content %}
+<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+  <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="md:flex flex-col md:flex-row">
+      <div class="flex flex-col w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0">
+        <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+          <div class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+                <!-- Mobile menu button-->
+                <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+                    <span class="absolute -inset-0.5"></span>
+                    <span class="sr-only">Open main menu</span>
+                    <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <title>Mobile-menu is not open</title>
+                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <title>Mobile-menu is open</title>
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+	    </div>
+            <nav class="hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#basevocabulary">{% translate 'Basvokabulär' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#coreclasses">{% translate 'Kärnklasser' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#subclasses">{% translate 'Subklasser och egenskaper' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#linkeddata">{% translate 'Länkad data' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#object">{% translate 'Objekt' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#collection">{% translate 'Samling' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#digital">{% translate 'Digitala reproduktioner' %}</a>         
+            </nav> 
+
+	    <!-- Mobile menu -->
+
+            <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4">
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#basevocabulary">{% translate 'Basvokabulär' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#coreclasses">{% translate 'Kärnklasser' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#subclasses">{% translate 'Subklasser och egenskaper' %}</a>              
+	        <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#linkeddata">{% translate 'Länkad data' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#object">{% translate 'Objekt' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#collection">{% translate 'Samling' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#digital">{% translate 'Digitala reproduktioner' %}</a>   
+	    </div>
+        </div>
+    </div>
+  </div>
+  <span id="main-content-marker"></span>
+  <main class="w-full md:w-2/4 flex-grow pt-1 px-3">
+    <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">Alvin {% translate 'vokabulär' %}</h1>
+    <p class="py-2 font-bold">{% translate 'Alvins datamodell är specifikt utformad för beskrivningar av material i kulturarvssamlingar på bibliotek, museer och arkiv.' %}</p>
+    <p class="py-2 flex"><span class="font-bold">URI:</span><span class="pl-1" id="uri">http://127.0.0.1:8000/vocabulary/</span><button class="btn flex items-right flex justify-end" data-clipboard-action="copy" data-clipboard-target="#uri"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 float-right"><title>Copy</title><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"></path></svg></button></p>
+    <p class="py-2"><span class="font-bold">{% translate 'Licens' %}:</span> <a class="text-blue-800 underline" href="https://creativecommons.org/public-domain/cc0/">Creative Commons CC0</a>.</p>
+<h2 id="basevocabulary" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Basvokabulär' %}</h2>
+    <p class="py-2">{% translate 'För att kunna hantera olika typer av resurser i ett och samma system bygger den på en kombination av koncept från olika internationella standarder för bibliotek och arkiv:' %}</p>
+
+<dl>
+<dt>BIBFRAME (Bibliographic Framework Initiative)</dt>
+<dd class="pl-4">{% translate 'Grundläggande vokabulär för allmänna egenskaper som titel, språk och ursprungsinformation.' %}</dd>
+<dt>MODS (Metadata Object Description Schema)</dt>
+<dt>MARC (MAchine-Readable Cataloging) 21 Format for Bibliographic Data</dt>
+<dd class="pl-4">{% translate 'För mer specifika bibliografiska egenskaper som saknas i BIBFRAME.' %}</dd>
+<dt>EAD (Encoded Archival Description)</dt>
+<dd class="pl-4">{% translate 'För arkivbeskrivningar.' %}</dd>
+<dt>TEI (Text Encoding Initiative, Manuscript Description)</dt>
+<dd class="pl-4">{% translate 'För mer specifika egenskaper för handskrifter.' %}</dd>
+<dt>NUDS (Numismatic Description Schema)</dt>
+<dd class="pl-4">{% translate 'För specifika egenskaper inom numismatik.' %}</dd>
+<dt>MADS (Metadata Authority Description Schema)</dt>
+<dd class="pl-4">{% translate 'För auktoritetposter för person, organisation och plats.' %}</dd>
+<dt>METS (Metadata Encoding and Transmission Standard)</dt>
+<dd class="pl-4">{% translate 'För beskrivningar av en posts relaterade digitala filer.' %}</dd>
+<dt>WGS 84 (World Geodetic System 1984)</dt>
+<dd class="pl-4">{% translate 'För att ange geografiska koordinater (latitud och longitud).' %}</dd>
+<dt>ISO 8601</dt>
+<dd class="pl-4">{% translate 'För att ange datum och tid.' %}</dd>
+</dl>
+   <h2 id="coreclasses" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Kärnklasser' %}</h2>
+   <p class="py-2">{% translate 'Modellen är uppbyggd kring fem grundläggande kärnklasser <span class="italic">(core classes)</span>:' %}</p>
+   <ul class="py-2 list-disc list-inside">
+     <li><span class="italic"><a class="text-blue-800 underline" href="/vocabulary/recordGroup">record</a></span> - {% translate 'en bibliografisk post som beskriver ett enskilt objekt eller en samling av objekt.' %}</li>
+     <li><span class="italic"><a class="text-blue-800 underline" href="/vocabulary/personGroup">person</a></span> - {% translate 'en auktoritetspost för en person.' %}</li>
+     <li><span class="italic"><a class="text-blue-800 underline" href="/vocabulary/organisationGroup">organisation</a></span> - {% translate 'en auktoritetspost för en organisation.' %}</li>
+     <li><span class="italic"><a class="text-blue-800 underline" href="/vocabulary/placeGroup">place</a></span> - {% translate 'en auktoritetspost för en plats.' %}</li>
+     <li><span class="italic"><a class="text-blue-800 underline" href="/vocabulary/workGroup">work</a></span> - {% translate 'en auktoritetspost för ett verk.' %}</li>  
+   </ul>
+   <p class="py-2">{% translate 'Samt förutom dessa även:' %}</p>
+ <ul class="py-2 list-disc list-inside">
+  <li><span class="italic"><a class="text-blue-800 underline" href="/vocabulary/locationGroup">location</a></span> - {% translate 'en särskild organisationspost som beskriver den arkivinstitution som innehar föremålet eller från vilken det är tillgängligt.' %}</li>           
+</ul>
+ 
+   <h2 id="subclasses" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Subklasser och egenskaper' %}</h2>
+   <p class="py-2">{% translate 'Kärnklasserna innehåller i sin tur olika uppsättningar av:' %}</p>
+   <ul class="py-2 list-disc list-inside">
+     <li><span class="italic">subclass</span> - {% translate 'en grupp som samlar en eller flera klasser eller egenskaper, till exempel <span class="italic">title</span> som har egenskaperna <span class="italic">mainTitle</span> och <span class="italic">subtitle</span>.' %}</li>
+     <li><span class="italic">property (text)</span> - {% translate 'ett värde som har skrivits in, till exempel en titel.' %}</li>
+     <li><span class="italic">property (code)</span> - {% translate 'ett värde valt från en kontrollerad lista i Alvin, till exempel språk.' %}</li>
+     <li><span class="italic">property (link)</span> - {% translate 'en länk till en post från en kärnklass, till exempel från en bibliografisk post till en auktoritetspost för en person.' %}</li> 
+   </ul>
+   <h2 id="linkeddata" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Länkad data' %}</h2>
+   <p class="py-2">{% translate 'Modellen är baserad på länkad data och beskrivningen av relationer mellan olika poster. Länkningen kan vara hierarkisk (värd/del), parallell (olika versioner eller format) eller till en annan relaterad post.' %}</p>
+   <p class="py-2">{% translate 'Bibliografiska poster och auktoritetsposter är länkade genom en typ av relation (roll) för så kallade agenter (personer eller organisationer). En bok kan länkas till en person genom rollen "författare". Ett arkiv kan länkas till en person genom rollen "arkivbildare".' %}</p>
+   <p class="py-2">{% translate 'En bibliografisk post i Alvin beskriver antingen en enskild resurs (bok, bild, karta etc.) eller en samling resurser (t.ex. ett arkiv).' %}</p>
+   <div class="justify-center"> 
+     <figure>
+       <img class="object-contain md:object-cover mx-auto" alt="{% translate 'Länkad data, exempel' %}" src="/static/img/linkeddata.png">
+       <figcaption class="py-2 text-sm italic">{% translate 'Exempel: Länkad data för Uppsala universitetsbiblioteks exemplar av Röda rummet av August Strindberg.' %}</figcaption>
+   </figure>
+   </div>  
+   <h2 id="object" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Objekt' %}</h2>
+   <p class="py-2">{% translate 'Det vanligaste fallet är att ett fysiskt objekt beskrivs. Det kan till exempel vara en målning, en karta, ett manuskript eller en tryckt bok. Posten i Alvin baseras på det fysiska exemplar som beskrivs. För tryckt eller annat material som reproduceras i utgåvor beskrivs fortfarande det fysiska exemplaret i Alvin till skillnad från till exempel bibliotekskataloger. Om man har olika exemplar av en bok från samma utgåva finns det en post per exemplar. Proveniens, förvärv, signaturer etc. gäller för just detta exemplar i Alvin.' %}</p>
+   <h2 id="collection" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Samling' %}</h2>
+   <p class="py-2">{% translate 'I Alvin kan, förutom konkreta objekt, även abstrakta resurser beskrivas. Exempel på detta är främst samlingar eller andra översiktliga beskrivningar. Dessa är ofta, men inte alltid, endast abstrakta konstruktioner som i sin tur innehåller konkreta objekt som ibland beskrivs separat som ovan och ibland inte. Emellertid kan en samlingspost också betraktas som en heltäckande beskrivning av det konkreta innehållet. Alvin tillåter att digitalt material även länkas till abstrakta poster. Man kan välja att ladda upp alla bilder i en bildsamling till huvud-/samlingsposten utan att beskriva de olika delarna individuellt.' %}</p>
+   <h2 id="digital" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Digitala reproduktioner' %}</h2>
+   <p class="py-2">{% translate 'Normalfallet i Alvin är också att göra en digital reproduktion av det fysiska objektet, t.ex. digitalisera en handskrift eller en bok. I dessa fall beskriver metadataposten fortfarande det fysiska objektet (inte den digitala reproduktionen). De digitala filerna är kopior av just detta exemplar som beskrivs i posten.' %}</p> 
+  </main>
+  <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="sticky top-0 p-4 bg-off-white rounded-xl w-full h-full">
+      <div class="flex flex-col justify-center">  
+        <h2 class="text-2xl md:text-3xl font-bold pb-2">{% translate 'Standarder' %}</h2>  
+        <p class="py-2"><a class="text-blue-800 underline" href="https://www.loc.gov/bibframe/">BIBFRAME</a></p>
+        <p class="py-2"><a class="text-blue-800 underline" href="https://www.loc.gov/standards/mods/">MODS</a></p>
+     	<p class="py-2"><a class="text-blue-800 underline" href="https://www.loc.gov/marc/">MARC</a></p>
+        <p class="py-2"><a class="text-blue-800 underline" href="https://www.loc.gov/ead/">EAD</a></p>
+        <p class="py-2"><a class="text-blue-800 underline" href="https://tei-c.org/release/doc/tei-p5-doc/en/html/MS.html">TEI-MS</a></p>
+        <p class="py-2"><a class="text-blue-800 underline" href="https://nomisma.org/nuds">NUDS</a></p>
+        <p class="py-2"><a class="text-blue-800 underline" href="https://www.loc.gov/standards/mads/">MADS</a></p>
+        <p class="py-2"><a class="text-blue-800 underline" href="https://www.loc.gov/standards/mets/">METS</a></p>
+      </div>
+    </div>    
+  </div>
+</div>
+ <script src="/static/js/clipboard.js-master/dist/clipboard.min.js"></script>
+    <script>
+      var clipboard = new ClipboardJS('.btn');
+
+      clipboard.on('success', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+      });
+
+      clipboard.on('error', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+      });
+    </script>
+{% endblock %}

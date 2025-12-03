@@ -1,0 +1,106 @@
+
+
+
+
+
+
+            set = request.GET.get('set', '*')
+  
+            metadata_prefix = request.GET.get('metadataPrefix')
+  
+            start = request.GET.get('start', 1)
+
+            rows = request.GET.get('rows', 100)
+
+            list_url = f'https://cora.alvin-portal.org/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"permissionUnitSearchTerm","value":"permissionUnit_{set}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
+            response = requests.get(list_url, headers=xml_headers_list)
+
+            xml_list = etree.fromstring(response.content)
+
+            pages = {
+                "fromNo":xml_list.findtext(".//fromNo"),
+                "toNo":xml_list.findtext(".//toNo"),
+                "totalNo":xml_list.findtext(".//totalNo"),
+                }
+
+            completeListSize = pages.get("totalNo")
+
+            headers = {
+                "completeListSize": completeListSize,
+                "set_spec": set,
+                "metadata_prefix": metadata_prefix,
+                }
+
+            header_list = list(headers.items())
+
+            if completeListSize != "0":
+            
+                with urlopen('http://127.0.0.1:8000/static/xsl/metadata-oai_dc.xsl') as f:
+                    xslt_tree = etree.parse(f, parser)
+
+                transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
+                metadataoai_dc = transform(xml_list)	# Transform source XML tree
+
+            if "resumptionToken" in params:
+                (
+                    paginator,
+                    headers,
+                    resumption_token,
+                    set_spec,
+                    metadata_prefix,
+                    from_timestamp,
+                    until_timestamp,
+                ) = _do_resumption_token(params, errors, header_list)
+
+            elif "metadataPrefix" in params:
+                metadata_prefix = params.pop("metadataPrefix")
+                if len(metadata_prefix) == 1:
+                    metadata_prefix = metadata_prefix[0]
+                    prefix_url = f'https://cora.alvin-portal.org/rest/record/metadata/{metadata_prefix}Item'
+                    response = requests.get(prefix_url)
+                    if response.status_code != 200:
+                        errors.append(
+                             _error("cannotDisseminateFormat", metadata_prefix)
+                        )
+
+                    else:
+                        header_list = header_list
+                       
+                        if "set" in params:
+
+                            set_url = f'https://cora.alvin-portal.org/rest/record/alvin-location/{set}'
+                            response = requests.get(set_url)
+
+                            set_spec = params.pop("set")[-1]  
+                            header_list = header_list  
+
+                            if response.status_code != 200:
+                                errors.append(_error("badArgument_set"))                     
+
+                        from_timestamp, until_timestamp = _check_timestamps(
+                            params, errors
+                        )
+                        if from_timestamp:
+                            header_list = header_list.filter(
+                                timestamp__gte=from_timestamp
+                            )
+                        if until_timestamp:
+                            header_list = header_list.filter(
+                                timestamp__lte=until_timestamp
+                            )
+
+                        if completeListSize == "0" and not errors:
+                            errors.append(_error("noRecordsMatch"))
+
+                        else:
+                           paginator = Paginator(header_list, NUM_PER_PAGE)
+                           headers = paginator.page(1)
+                else:
+                    errors.append(
+                        _error("badArgument_single", ";".join(metadata_prefix))
+                    )
+                    metadata_prefix = None
+            else:
+                errors.append(_error("badArgument", "metadataPrefix"))
+
+            _check_bad_arguments(params, errors)

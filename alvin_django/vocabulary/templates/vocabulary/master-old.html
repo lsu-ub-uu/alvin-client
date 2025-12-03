@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Alvin - {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="index, follow">
+    <meta name="DC.Publisher" content="Uppsala university library">
+    <meta name="keywords" content="Alvin, cultural heritage, digital collections, databases, libraries, archives">
+    <meta name="description" content="Alvin - Nordic platform for preserving and making digitised cultural heritage available">
+    <link href="{% static 'css/userguide.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto%20Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}"> 
+    <script src="{% static 'js/sorttable.js' %}/"></script>
+  </head>
+  <body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+    <script src="{% static 'js/topbtn.js' %}/"></script>
+    <div class="topnav" id="myTopnav">
+      <a href="/" class="active">User Guide</a>
+      <div class="dropdown">
+        <button class="dropbtn">APIs
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="#">REST API</a>
+          <a href="#">OAI-PMH</a>
+          <a href="#">IIIF Image API</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">Vocabulary
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="/vocabulary/">Data Model</a>
+          <a href="/vocabulary/recordGroup">Record</a>
+          <a href="/vocabulary/personGroup">Person</a>
+          <a href="/vocabulary/organisationGroup">Organisation</a>
+          <a href="/vocabulary/placeGroup">Place</a>
+          <a href="/vocabulary/workGroup">Work</a>                   
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">Cataloguing
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="/cataloguing/">Overview</a>
+	  <a href="/cataloguing/client">Client</a>
+          <a href="/cataloguing/record">Record</a>
+          <a href="/cataloguing/person">Person</a>
+          <a href="/cataloguing/organisation">Organisation</a>
+          <a href="/cataloguing/place">Place</a>
+          <a href="/cataloguing/work">Work</a>
+        </div>
+      </div>
+      <a href="javascript:void(0);" class="icon" onclick="topNavFunction()">&#9776;</a>
+      <script src="{% static 'js/topnav.js' %}"></script>
+    </div> 	
+          {% block content %}
+          {% endblock %}    
+    <div class="footer">
+      <a href="mailto:alvin-support@ub.uu.se">alvin-support@ub.uu.se</a>
+    </div>
+  </body>
+</html>

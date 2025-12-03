@@ -1,0 +1,290 @@
+{% load i18n %}
+<nav data-xdata="{ mobileMenuIsOpen: false }" data-xon.click.away="mobileMenuIsOpen = false" class="relative bg-gray-800 border-b-4 border-gray-900">
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="relative flex h-16 items-center justify-between">
+            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                <!-- Mobile menu button-->
+                <button data-xon.click="mobileMenuIsOpen = !mobileMenuIsOpen" data-xbind.aria-expanded="mobileMenuIsOpen" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">
+                    <span class="absolute -inset-0.5"></span>
+                    <span class="sr-only">Open main menu</span>
+                    <svg data-xcloak data-xshow="!mobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6">
+                        <title>Mobile-menu is not open</title>
+                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <svg data-xcloak data-xshow="mobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6">
+                        <title>Mobile-menu is open</title>
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div class="flex shrink-0 items-center font-[Universalis] text-white text-3xl border-b-4 border-alvin"><a href="/" class="focus:outline-2 focus:outline-offset-2 focus:outline-blue-800">ALVIN</a></div>
+                <div class="hidden sm:ml-6 sm:block">
+                    <div class="flex space-x-4">
+                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
+                        <a href="/userguide" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-base font-normal text-white">{% translate 'För medlemmar' %}</a>
+ 			<!-- APIs -->
+  			<div class="flex justify-center">
+                            <div data-xdata="{ expanded: false }" class="relative">
+ 				<!-- Button -->
+                                <button
+				    data-xon.click="expanded = ! expanded"
+                                    class="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                                    <span>{% translate 'API:er' %}</span>
+                                    <!-- Heroicon: micro chevron-down -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                        <title>Open menu</title>
+                                        <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <!-- Panel -->
+                                <div
+        		    	    data-xshow="expanded"
+        		    	   
+        		            data-xon.click.away="expanded = false"
+        		            data-xon.keydown.window.escape="expanded = false"
+                                    class="absolute left-0 min-w-48 shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 border border-gray-200 rounded-md shadow-lg outline outline-black/5">
+                                    <a href="/api" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'API:er' %}
+                                    </a>
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'REST-API' %}
+                                    </a>
+                                    <a href="/api/oai-pmh" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'OAI-PMH' %}
+                                    </a>
+                                    <a href="/api/iiif" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'IIIF' %}
+                                    </a>
+                                </div>               
+			    </div>
+    		    	</div>
+			<!-- Vocabulary -->
+  			<div class="flex justify-center">
+                            <div data-xdata="{ expanded: false }" class="relative">
+ 				<!-- Button -->
+                                <button
+				    data-xon.click="expanded = ! expanded"
+                                    class="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                                    <span>{% translate 'Vokabulär' %}</span>
+                                    <!-- Heroicon: micro chevron-down -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                        <title>Open menu</title>
+                                        <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <!-- Panel -->
+                                <div
+        		    	    data-xshow="expanded"
+        		    	    
+        		            data-xon.click.away="expanded = false"
+        		            data-xon.keydown.window.escape="expanded = false"
+                                    class="absolute left-0 min-w-48 shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 border border-gray-200 rounded-md shadow-lg outline outline-black/5">
+            	                    <a href="/vocabulary" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    Alvin {% translate 'vokabulär' %}
+                                    </a>                     
+				    <a href="/vocabulary/recordGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Post' %}
+                                    </a>
+                                    <a href="/vocabulary/personGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Person' %}
+                                    </a>
+                                    <a href="/vocabulary/organisationGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Organisation' %}
+                                    </a>
+                                    <a href="/vocabulary/placeGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Plats' %}
+                                    </a>
+                                    <a href="/vocabulary/workGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Verk' %}
+                                    </a>
+                                    <a href="/vocabulary/locationGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Arkivinstitution' %}
+                                    </a>
+                                </div>               
+			    </div>
+    		    	</div>
+			<!-- Cataloguing -->
+  			<div class="flex justify-center">
+                            <div data-xdata="{ expanded: false }" class="relative">
+ 				<!-- Button -->
+                                <button
+				    data-xon.click="expanded = ! expanded"
+                                    class="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                                    <span>{% translate 'Katalogisering' %}</span>
+                                    <!-- Heroicon: micro chevron-down -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                        <title>Open menu</title>
+                                        <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <!-- Panel -->
+                                <div
+        		    	    data-xshow="expanded"
+        		    	    
+        		            data-xon.click.away="expanded = false"
+        		            data-xon.keydown.window.escape="expanded = false"
+                                    class="absolute left-0 min-w-48 shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 border border-gray-200 rounded-md shadow-lg outline outline-black/5">
+              	                    <a href="/cataloguing" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Katalogisering' %}
+                                    </a>  
+              	                    <a href="/cataloguing" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Katalogiseringsklient' %}
+                                    </a>                     
+				    <a href="/cataloguing/record" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Post' %}
+                                    </a>
+                                    <a href="/cataloguing/person" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Person' %}
+                                    </a>
+                                    <a href="/cataloguing/organisation" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Organisation' %}
+                                    </a>
+                                    <a href="/cataloguing/place" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Plats' %}
+                                    </a>
+                                    <a href="/cataloguing/work" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Verk' %}
+                                    </a>
+                                </div>               
+			    </div>
+    		    	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div data-xcloak data-xshow="mobileMenuIsOpen" id="mobileMenu" class="block sm:hidden flex-grow px-4 pb-4">
+            <div class="space-y-1 px-2 pt-2 pb-3">
+                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
+                <a href="/userguide" aria-current="page" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-normal text-white">{% translate 'För medlemmar' %}</a>
+		<!-- APIs -->
+		<div class="block">
+                    <div data-xdata="{ expanded: false }" class="relative">
+ 			<!-- Button -->
+                      	<button
+			data-xon.click="expanded = ! expanded"
+                        class="w-full block relative flex items-center whitespace-nowrap gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                            <span>{% translate 'API:er' %}</span>
+                            <!-- Heroicon: micro chevron-down -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <title>Open menu</title>
+                                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                            </svg>
+                     	 </button>
+                         <!-- Panel -->
+                         <div
+        		 data-xshow="expanded"
+        		 
+        		 data-xon.click.away="expanded = false"
+        		 data-xon.keydown.window.escape="expanded = false"
+                         class="block absolute left-0 w-full min-w-48 shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 border border-gray-200 rounded-md shadow-lg outline outline-black/5">
+                            <a href="/api" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'API:er' %}
+                            </a>
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                           	{% translate 'REST-API' %}
+                            </a>
+                            <a href="/api/oai-pmh" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'OAI-PMH' %}
+                            </a>
+                            <a href="/api/iiif" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'IIIF' %}
+                            </a>
+                        </div>               
+		    </div>
+                </div>
+		<!-- Vocabulary -->
+		<div class="block">
+                    <div data-xdata="{ expanded: false }" class="relative">
+ 			<!-- Button -->
+                      	<button
+			data-xon.click="expanded = ! expanded"
+                        class="w-full block relative flex items-center whitespace-nowrap gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                            <span>{% translate 'Vokabulär' %}</span>
+                            <!-- Heroicon: micro chevron-down -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <title>Open menu</title>
+                                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                            </svg>
+                     	 </button>
+                         <!-- Panel -->
+                         <div
+        		 data-xshow="expanded"
+        		
+        		 data-xon.click.away="expanded = false"
+        		 data-xon.keydown.window.escape="expanded = false"
+                         class="block absolute left-0 w-full min-w-48 shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 border border-gray-200 rounded-md shadow-lg outline outline-black/5">
+                            <a href="/vocabulary" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                Alvin {% translate 'vokabulär' %}
+                            </a>
+                            <a href="/vocabulary/recordGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'Post' %}
+                            </a>
+                            <a href="/vocabulary/personGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                           	{% translate 'Person' %}
+                            </a>
+                            <a href="/vocabulary/organisationGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'Organisation' %}
+                            </a>
+                            <a href="/vocabulary/placeGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'Plats' %}
+                            </a>
+                            <a href="/vocabulary/workGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'Verk' %}
+                            </a>
+                            <a href="/vocabulary/locationGroup" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'Arkivinstitution' %}
+                            </a>
+                        </div>               
+		    </div>
+                </div>
+		<!-- Katalogisering -->
+		<div class="block">
+                    <div data-xdata="{ expanded: false }" class="relative">
+ 			<!-- Button -->
+                      	<button
+			data-xon.click="expanded = ! expanded"
+                        class="w-full block relative flex items-center whitespace-nowrap gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                            <span>{% translate 'Katalogisering' %}</span>
+                            <!-- Heroicon: micro chevron-down -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <title>Open menu</title>
+                                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                            </svg>
+                     	 </button>
+                         <!-- Panel -->
+                         <div
+        		 data-xshow="expanded"
+        		
+        		 data-xon.click.away="expanded = false"
+        		 data-xon.keydown.window.escape="expanded = false"
+                         class="block absolute left-0 w-full min-w-48 shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 border border-gray-200 rounded-md shadow-lg outline outline-black/5">
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                           	{% translate 'Katalogisering' %}
+                            </a>
+                            <a href="/cataloguing" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'Katalogiseringsklient' %}
+                            </a>
+                            <a href="/cataloguing" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'Post' %}
+                            </a>
+                            <a href="/cataloguing/person" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                           	{% translate 'Person' %}
+                            </a>
+                            <a href="/cataloguing/organisation" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'Organisation' %}
+                            </a>
+                            <a href="/cataloguing/place" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'Plats' %}
+                            </a>
+                            <a href="/cataloguing/work" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                {% translate 'Verk' %}
+                            </a>
+                        </div>               
+		    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

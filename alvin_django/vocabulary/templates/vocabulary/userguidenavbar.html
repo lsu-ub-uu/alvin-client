@@ -1,0 +1,428 @@
+{% load i18n %}
+<nav x-data="{ mobileMenuIsOpen: false }" x-on:click.away="mobileMenuIsOpen = false" class="relative bg-gray-800 border-b-4 border-gray-900">
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="relative flex h-16 items-center justify-between">
+            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                <!-- Mobile menu button-->
+                <button x-on:click="mobileMenuIsOpen = !mobileMenuIsOpen" x-bind:aria-expanded="mobileMenuIsOpen" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">
+                    <span class="absolute -inset-0.5"></span>
+                    <span class="sr-only">Open main menu</span>
+                    <svg x-cloak x-show="!mobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6">
+                        <title>Mobile-menu is not open</title>
+                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <svg x-cloak x-show="mobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6">
+                        <title>Mobile-menu is open</title>
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div class="flex shrink-0 items-center font-[Universalis] text-white text-3xl border-b-4 border-alvin"><a href="/" class="focus:outline-2 focus:outline-offset-2 focus:outline-blue-800">ALVIN</a></div>
+                <div class="hidden sm:ml-6 sm:block">
+                    <div class="flex space-x-4">
+                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
+                        <a href="/userguide" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-base font-normal text-white">{% translate 'För medlemmar' %}</a>
+                        <div class="flex justify-center">
+                            <div
+                                x-data="{
+                                open: false,
+                                toggle() {
+                                if (this.open) {
+                                return this.close()
+                                }
+                                this.$refs.button.focus()
+                                this.open = true
+                                },
+                                close(focusAfter) {
+                                if (! this.open) return
+                                this.open = false
+                                focusAfter && focusAfter.focus()
+                                }
+                                }"
+                                x-on:keydown.escape.prevent.stop="close($refs.button)"
+                                x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                                x-id="['dropdown-button']"
+                                class="relative"
+                                >
+                                <!-- Button -->
+                                <button
+                                    x-ref="button"
+                                    x-on:click="toggle()"
+                                    :aria-expanded="open"
+                                    :aria-controls="$id('dropdown-button')"
+                                    type="button"
+                                    class="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                                    <span>{% translate 'API:er' %}</span>
+                                    <!-- Heroicon: micro chevron-down -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                        <title>Open menu</title>
+                                        <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <!-- Panel -->
+                                <div
+                                    x-ref="panel"
+                                    x-show="open"
+                                    x-transition.origin.top.left
+                                    x-on:click.outside="close($refs.button)"
+                                    :id="$id('dropdown-button')"
+                                    x-cloak
+                                    class="absolute left-0 min-w-48 shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 outline-none border border-gray-200">
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'REST-API' %}
+                                    </a>
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'OAI-PMH' %}
+                                    </a>
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'IIIF Image API' %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-center">
+                            <div
+                                x-data="{
+                                open: false,
+                                toggle() {
+                                if (this.open) {
+                                return this.close()
+                                }
+                                this.$refs.button.focus()
+                                this.open = true
+                                },
+                                close(focusAfter) {
+                                if (! this.open) return
+                                this.open = false
+                                focusAfter && focusAfter.focus()
+                                }
+                                }"
+                                x-on:keydown.escape.prevent.stop="close($refs.button)"
+                                x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                                x-id="['dropdown-button']"
+                                class="relative"
+                                >
+                                <!-- Button -->
+                                <button
+                                    x-ref="button"
+                                    x-on:click="toggle()"
+                                    :aria-expanded="open"
+                                    :aria-controls="$id('dropdown-button')"
+                                    type="button"
+                                    class="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                                    <span>{% translate 'Vokabulär' %}</span>
+                                    <!-- Heroicon: micro chevron-down -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                        <title>Open menu</title>
+                                        <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <!-- Panel -->
+                                <div
+                                    x-ref="panel"
+                                    x-show="open"
+                                    x-transition.origin.top.left
+                                    x-on:click.outside="close($refs.button)"
+                                    :id="$id('dropdown-button')"
+                                    x-cloak
+                                    class="absolute left-0 min-w-48 shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 outline-none border border-gray-200">
+              	                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Datamodell' %}
+                                    </a>                     
+				    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Post' %}
+                                    </a>
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Person' %}
+                                    </a>
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Organisation' %}
+                                    </a>
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Plats' %}
+                                    </a>
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Verk' %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-center">
+                            <div
+                                x-data="{
+                                open: false,
+                                toggle() {
+                                if (this.open) {
+                                return this.close()
+                                }
+                                this.$refs.button.focus()
+                                this.open = true
+                                },
+                                close(focusAfter) {
+                                if (! this.open) return
+                                this.open = false
+                                focusAfter && focusAfter.focus()
+                                }
+                                }"
+                                x-on:keydown.escape.prevent.stop="close($refs.button)"
+                                x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                                x-id="['dropdown-button']"
+                                class="relative"
+                                >
+                                <!-- Button -->
+                                <button
+                                    x-ref="button"
+                                    x-on:click="toggle()"
+                                    :aria-expanded="open"
+                                    :aria-controls="$id('dropdown-button')"
+                                    type="button"
+                                    class="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                                    <span>{% translate 'Katalogisering' %}</span>
+                                    <!-- Heroicon: micro chevron-down -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                        <title>Open menu</title>
+                                        <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <!-- Panel -->
+                                <div
+                                    x-ref="panel"
+                                    x-show="open"
+                                    x-transition.origin.top.left
+                                    x-on:click.outside="close($refs.button)"
+                                    :id="$id('dropdown-button')"
+                                    x-cloak
+                                    class="absolute left-0 min-w-48 shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 outline-none border border-gray-200">
+              	                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Översikt' %}
+                                    </a>  
+              	                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Katalogiseringsklient' %}
+                                    </a>                     
+				    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Post' %}
+                                    </a>
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Person' %}
+                                    </a>
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Organisation' %}
+                                    </a>
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Plats' %}
+                                    </a>
+                                    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {% translate 'Verk' %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div x-cloak x-show="mobileMenuIsOpen" id="mobileMenu" class="block sm:hidden flex-grow px-4 pb-4">
+            <div class="space-y-1 px-2 pt-2 pb-3">
+                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
+                <a href="/userguide" aria-current="page" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-normal text-white">For members</a>
+                <div class="block">
+                    <div
+                        x-data="{
+                        open: false,
+                        toggle() {
+                        if (this.open) {
+                        return this.close()
+                        }
+                        this.$refs.button.focus()
+                        this.open = true
+                        },
+                        close(focusAfter) {
+                        if (! this.open) return
+                        this.open = false
+                        focusAfter && focusAfter.focus()
+                        }
+                        }"
+                        x-on:keydown.escape.prevent.stop="close($refs.button)"
+                        x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                        x-id="['dropdown-button']"
+                        class="relative"
+                        >
+                        <!-- Button -->
+                        <button
+                            x-ref="button"
+                            x-on:click="toggle()"
+                            :aria-expanded="open"
+                            :aria-controls="$id('dropdown-button')"
+                            type="button"
+                            class="w-full block relative flex items-center whitespace-nowrap gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                            <span>APIs</span>
+                            <!-- Heroicon: micro chevron-down -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <title>Open menu</title>
+                                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <!-- Panel -->
+                        <div
+                            x-ref="panel"
+                            x-show="open"
+                            x-transition.origin.top.left
+                            x-on:click.outside="close($refs.button)"
+                            :id="$id('dropdown-button')"
+                            x-cloak
+                            class="block absolute left-0 w-full shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 outline-none border border-gray-200">
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            REST-API
+                            </a>           
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            OAI-PMH
+                            </a>           
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            IIIF Image API
+                            </a>           
+                        </div>
+                    </div>
+                </div>
+                <div class="block">
+                    <div
+                        x-data="{
+                        open: false,
+                        toggle() {
+                        if (this.open) {
+                        return this.close()
+                        }
+                        this.$refs.button.focus()
+                        this.open = true
+                        },
+                        close(focusAfter) {
+                        if (! this.open) return
+                        this.open = false
+                        focusAfter && focusAfter.focus()
+                        }
+                        }"
+                        x-on:keydown.escape.prevent.stop="close($refs.button)"
+                        x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                        x-id="['dropdown-button']"
+                        class="relative"
+                        >
+                        <!-- Button -->
+                        <button
+                            x-ref="button"
+                            x-on:click="toggle()"
+                            :aria-expanded="open"
+                            :aria-controls="$id('dropdown-button')"
+                            type="button"
+                            class="w-full block relative flex items-center whitespace-nowrap gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                            <span>Vocabulary</span>
+                            <!-- Heroicon: micro chevron-down -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <title>Open menu</title>
+                                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <!-- Panel -->
+                        <div
+                            x-ref="panel"
+                            x-show="open"
+                            x-transition.origin.top.left
+                            x-on:click.outside="close($refs.button)"
+                            :id="$id('dropdown-button')"
+                            x-cloak
+                            class="block absolute left-0 w-full shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 outline-none border border-gray-200">
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Data model
+                            </a>                   
+			    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Record
+                            </a>           
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Person
+                            </a>           
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Organisation
+                            </a>   
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Place
+                            </a>           
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Work
+                            </a>             
+                        </div>
+                    </div>
+                </div>
+                <div class="block">
+                    <div
+                        x-data="{
+                        open: false,
+                        toggle() {
+                        if (this.open) {
+                        return this.close()
+                        }
+                        this.$refs.button.focus()
+                        this.open = true
+                        },
+                        close(focusAfter) {
+                        if (! this.open) return
+                        this.open = false
+                        focusAfter && focusAfter.focus()
+                        }
+                        }"
+                        x-on:keydown.escape.prevent.stop="close($refs.button)"
+                        x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                        x-id="['dropdown-button']"
+                        class="relative"
+                        >
+                        <!-- Button -->
+                        <button
+                            x-ref="button"
+                            x-on:click="toggle()"
+                            :aria-expanded="open"
+                            :aria-controls="$id('dropdown-button')"
+                            type="button"
+                            class="w-full block relative flex items-center whitespace-nowrap gap-2 py-2 rounded-md px-3 py-2 text-base font-normal text-gray-300 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">
+                            <span>Cataloguing</span>
+                            <!-- Heroicon: micro chevron-down -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <title>Open menu</title>
+                                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <!-- Panel -->
+                        <div
+                            x-ref="panel"
+                            x-show="open"
+                            x-transition.origin.top.left
+                            x-on:click.outside="close($refs.button)"
+                            :id="$id('dropdown-button')"
+                            x-cloak
+                            class="block absolute left-0 w-full shadow-sm mt-2 z-10 origin-top-left bg-gray-100 p-1.5 outline-none border border-gray-200">
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Overview
+                            </a>           
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Client
+                            </a>         
+			    <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Record
+                            </a>           
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Person
+                            </a>           
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Organisation
+                            </a>   
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Place
+                            </a>           
+                            <a href="#new" class="block px-2 py-2 w-full flex items-center text-base text-gray-700 bg-gray-100 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            Work
+                            </a>                  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

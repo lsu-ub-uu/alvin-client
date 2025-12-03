@@ -1,0 +1,10 @@
+{% extends "darkmaster.html" %}
+{% load static %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+    <div class="maincontent">
+      <h1><a href="https://www.alvin-portal.org" class="logo">ALVIN</a> : Vocabulary</h1>
+      {{ metadata|safe }}
+    </div>
+{% endblock %}
+

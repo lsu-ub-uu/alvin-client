@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>AlpineJS</title>
+    <!-- Alpine Plugins -->
+    <script
+      defer
+      src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- Alpine Core -->
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- tailwindcss -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="flex bg-gray-100 mb-2">
+      <a class="p-1 px-3 border-b-4 border-red-500" href="/">Simple</a>
+      <a class="p-1 px-3" href="/complex.html">Complex</a>
+    </div>
+
+    <div data-xdata="{ expanded: false }">
+      <button
+        data-xon.click="expanded = ! expanded"
+        class="p-1 border rounded-lg m-2"
+      >
+        Toggle Content
+      </button>
+
+      <p
+        data-xshow="expanded"
+        data-xcollapse.duration.600ms
+        data-xon.click.away="expanded = false"
+        data-xon.keydown.window.escape="expanded = false"
+      >
+        Reprehenderit eu excepteur ullamco esse cillum reprehenderit
+        exercitation labore non. Dolore dolore ea dolore veniam sint in sint ex
+        Lorem ipsum. Sint laborum deserunt deserunt amet voluptate cillum
+        deserunt. Amet nisi pariatur sit ut id. Ipsum est minim est commodo id
+        dolor sint id quis sint Lorem.
+      </p>
+    </div>
+
+    <div data-xdata="{ expanded: false }">
+      <button
+        data-xon.click="expanded = ! expanded"
+        class="p-1 border rounded-lg m-2"
+      >
+        Toggle Content
+      </button>
+
+      <div
+        data-xshow="expanded"
+        data-xcollapse.duration.600ms
+        data-xon.click.away="expanded = false"
+        data-xon.keydown.window.escape="expanded = false"
+      >
+        Reprehenderit eu excepteur ullamco esse cillum reprehenderit
+        exercitation labore non. Dolore dolore ea dolore veniam sint in sint ex
+        Lorem ipsum. Sint laborum deserunt deserunt amet voluptate cillum
+        deserunt. Amet nisi pariatur sit ut id. Ipsum est minim est commodo id
+        dolor sint id quis sint Lorem.
+      </div>
+    </div>
+
+
+    <script>
+      const startingWith =
+        (subject, replacement) =>
+        ({ name, value }) => {
+          if (name.startsWith(subject)) {
+            name = name.replace(subject, replacement);
+          }
+          return { name, value };
+        };
+
+      document.addEventListener("alpine:init", () => {
+        Alpine.prefix("data-x");
+        Alpine.mapAttributes(startingWith("data-xon.", Alpine.prefixed("on:")));
+        Alpine.mapAttributes(
+          startingWith("data-xbind.", Alpine.prefixed("bind:"))
+        );
+      });
+    </script>
+  </body>
+</html>

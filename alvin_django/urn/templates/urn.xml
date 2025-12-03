@@ -1,0 +1,15 @@
+{% block content %}<records xmlns="urn:nbn:se:uu:ub:epc-schema:rs-location-mapping">
+   <protocol-version>3.0</protocol-version>
+    {% for record in records %}<record>
+       <header>
+           <identifier>{{record.urn}}</identifier>
+            <destinations>
+                <destination status="activated">
+                    <url>{{record.base}}{{record.id}}</url>
+                </destination>
+            </destinations>
+        </header>
+    </record>
+    {% endfor %}
+</records>
+{% endblock %}

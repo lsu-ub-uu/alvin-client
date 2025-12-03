@@ -1,0 +1,16 @@
+{% extends "django_oai_pmh/base.xml" %}
+{% load oai_pmh %}
+
+
+{% block content %}
+<ListIdentifiers>    
+    {% for record in records %}
+        {% include "django_oai_pmh/partials/_header.xml"  %}
+    {% endfor %}
+    {% autoescape on %}   
+    {% if cursor < completeListSize %}
+    <resumptionToken completeListSize="{{completeListSize}}" cursor="{{cursor}}">{{resumptionToken}}</resumptionToken>
+    {% endif %}
+    {% endautoescape %}
+</ListIdentifiers>
+{% endblock %}

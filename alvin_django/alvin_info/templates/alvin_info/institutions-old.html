@@ -1,0 +1,72 @@
+{% extends "alvin_info/master.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Alvin - {% translate 'Institutioner' %}{% endblock %}
+{% block content %}
+<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+  <div class=" data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="md:flex flex-col md:flex-row">
+      <div class="flex flex-col w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0">
+        <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+          <div class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+                     <!-- Mobile menu button-->
+                    <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+                        <span class="absolute -inset-0.5"></span>
+                        <span class="sr-only">Open main menu</span>
+                        <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <title>Mobile-menu is not open</title>
+                            <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <title>Mobile-menu is open</title>
+                            <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+          </div>
+         <nav class="hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
+          <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-gray-100 rounded-lg hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#consortium">{% translate 'Alvinkonsortiet' %}</a>
+          <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-gray-100 rounded-lg hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#members">{% translate 'Övriga medlemmar' %}</a>
+          <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-gray-100 rounded-lg hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#other">{% translate 'Andra institutioner' %}</a>
+        </nav>  
+                  
+                <!-- Mobile menu -->
+                
+                <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4">
+                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-gray-100 rounded-lg hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#digital">{% translate 'Digitala verk' %}</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-gray-100 rounded-lg hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#metadata">{% translate 'Metadata' %}</a>               
+                </div>      
+      </div>
+    </div>
+  </div>
+  <span id="main-content-marker"></span>
+  <main class="w-full md:w-2/4 flex-grow pt-1 px-3">
+    <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">{% translate 'Institutioner' %}</h1>
+    <p class="py-2 font-bold">{% translate 'Alvin är ett samarbete mellan många olika organisationer inom den nordiska arkiv-, biblioteks- och museisektorn. Detta är de enheter som innehar originalföremålet eller från vilka det är tillgängligt.' %}</p>
+    <p class="py2">{% translate 'Det finns' %} <span class="font-bold">{{ metadata.totalNo }}</span> {% translate 'arkivinstitutioner i Alvin.' %}</p>
+    {{ member }}
+  </main>
+  <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="sticky top-0 p-4 bg-gray-100 rounded-xl w-full h-full">
+
+      <div class="flex justify-center py-4"> 
+        <a class="text-center" href="https://www.uu.se/">
+         <img class="w-48 object-center" alt="Uppsala universitet" src="/static/img/UU_logo_4f_42-e1619707029600.png">
+	</a>
+      </div>
+      <div class="py-2 text-center font-bold">{% translate 'I samarbete med:' %}</div>
+      <div class="flex justify-center py-4">
+        <a href="https://www.lu.se">
+         <img class="w-48 object-center" alt="Lunds universitet" src="/static/img/Lunds_universitet_C2r_RGB.png">
+ 	</a>     
+      </div>
+      <div class="py-2 text-center font-bold">{% translate 'och' %}</div>
+      <div class="flex justify-center py-4"> 
+        <a href="https://www.gu.se">
+         <img class="w-48 object-center" alt="Göteborgs universitet" src="/static/img/GU-logga.png">
+        </a>
+	</div>
+       <div class="min-w-10 max-w-10"></div>
+    </div>    
+  </div>
+</div>
+{% endblock %}

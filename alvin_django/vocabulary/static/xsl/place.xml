@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ul class="py-2 list-disc list-inside">
+    <li>
+        <a class="text-blue-800 underline" href="/vocabulary/authorityPlaceGroup">authority</a>
+        <span> (subclass)</span>
+        <ul class="py-2 list-disc list-inside pl-4">
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/geographicPlaceTextVar">geographic</a>
+                <span> (property: text)</span>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a class="text-blue-800 underline" href="/vocabulary/variantPlaceGroup">variant</a>
+        <span> (subclass)</span>
+        <ul class="py-2 list-disc list-inside pl-4">
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/geographicPlaceTextVar">geographic</a>
+                <span> (property: text)</span>
+            </li>
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/orientationCodeCollectionVar">orientationCode</a>
+                <span>
+                    <span> (property: code)</span>
+                </span>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a class="text-blue-800 underline" href="/vocabulary/countryCodeCollectionVar">country</a>
+        <span>
+            <span> (property: code)</span>
+        </span>
+    </li>
+    <li>
+        <a class="text-blue-800 underline" href="/vocabulary/pointGroup">point</a>
+        <span> (subclass)</span>
+        <ul class="py-2 list-disc list-inside pl-4">
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/latitudeTextVar">latitude</a>
+                <span> (property: text)</span>
+            </li>
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/longitudeTextVar">longitude</a>
+                <span> (property: text)</span>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a class="text-blue-800 underline" href="/vocabulary/recordInfoAlvinPlaceGroup">recordInfo</a>
+        <span> (subclass)</span>
+        <ul class="py-2 list-disc list-inside pl-4">
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/idAlvinTextVar">id</a>
+                <span> (property: text)</span>
+            </li>
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/recordTypeLink">type</a>
+                <span> (property: link)</span>
+            </li>
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/validationTypeLink">validationType</a>
+                <span> (property: link)</span>
+            </li>
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/dataDividerAlvinDataLink">dataDivider</a>
+                <span> (property: link)</span>
+            </li>
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/createdByLink">createdBy</a>
+                <span> (property: link)</span>
+            </li>
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/tsCreatedTextVar">tsCreated</a>
+                <span> (property: text)</span>
+            </li>
+            <li>
+                <a class="text-blue-800 underline" href="/vocabulary/updatedGroup">updated</a>
+                <span> (subclass)</span>
+                <ul class="py-2 list-disc list-inside pl-4">
+                    <li>
+                        <a class="text-blue-800 underline" href="/vocabulary/updatedByLink">updatedBy</a>
+                        <span> (property: link)</span>
+                    </li>
+                    <li>
+                        <a class="text-blue-800 underline" href="/vocabulary/tsUpdatedTextVar">tsUpdated</a>
+                        <span> (property: text)</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>

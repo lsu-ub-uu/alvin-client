@@ -1,0 +1,1411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record>
+    <data>
+        <metadata _en="Metadata" _sv="Metadata" type="group">
+            <recordInfo _en="Record info" _sv="Postinformation">
+                <validationType _en="Validation type" _sv="Valideringstyp">
+                    <linkedRecordType>validationType</linkedRecordType>
+                    <linkedRecordId>metadataGroup</linkedRecordId>
+                    <actionLinks>
+                        <read>
+                            <requestMethod>GET</requestMethod>
+                            <rel>read</rel>
+                            <url>https://cora.alvin-portal.org/rest/record/validationType/metadataGroup</url>
+                            <accept>application/vnd.cora.record+xml</accept>
+                        </read>
+                    </actionLinks>
+                </validationType>
+                <dataDivider _en="Data divider" _sv="Datadelare">
+                    <linkedRecordType>system</linkedRecordType>
+                    <linkedRecordId>alvin</linkedRecordId>
+                    <actionLinks>
+                        <read>
+                            <requestMethod>GET</requestMethod>
+                            <rel>read</rel>
+                            <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                            <accept>application/vnd.cora.record+xml</accept>
+                        </read>
+                    </actionLinks>
+                </dataDivider>
+                <id _en="Id" _no="Id" _sv="Id">titleGroup</id>
+                <type _en="RecordType" _no="" _sv="Posttyp">
+                    <linkedRecordType>recordType</linkedRecordType>
+                    <linkedRecordId>metadata</linkedRecordId>
+                    <actionLinks>
+                        <read>
+                            <requestMethod>GET</requestMethod>
+                            <rel>read</rel>
+                            <url>https://cora.alvin-portal.org/rest/record/recordType/metadata</url>
+                            <accept>application/vnd.cora.record+xml</accept>
+                        </read>
+                    </actionLinks>
+                </type>
+                <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                    <linkedRecordType>user</linkedRecordType>
+                    <linkedRecordId>151515</linkedRecordId>
+                </createdBy>
+                <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2023-10-11T07:00:36.859655Z</tsCreated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T07:00:36.859655Z</tsUpdated>
+                </updated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="1">
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T13:22:13.007205Z</tsUpdated>
+                </updated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="2">
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-12T08:51:46.831701Z</tsUpdated>
+                </updated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="3">
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-01-12T07:43:09.863669Z</tsUpdated>
+                </updated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="4">
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-02-26T07:23:39.564743Z</tsUpdated>
+                </updated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="5">
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-09-18T13:13:07.284956Z</tsUpdated>
+                </updated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="6">
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-09-18T13:13:36.338507Z</tsUpdated>
+                </updated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="7">
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-11-05T10:48:21.301145Z</tsUpdated>
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                </updated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="8">
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-11-05T10:49:11.534633Z</tsUpdated>
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                </updated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="9">
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-11-14T12:46:30.174068Z</tsUpdated>
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                </updated>
+                <updated _en="Update" _sv="Uppdatering" repeatId="10">
+                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-11-14T12:47:01.714911Z</tsUpdated>
+                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                        <linkedRecordType>user</linkedRecordType>
+                        <linkedRecordId>151515</linkedRecordId>
+                    </updatedBy>
+                </updated>
+            </recordInfo>
+            <nameInData _en="Name in data format" _sv="Namn i dataformatet">title</nameInData>
+            <textId _en="Text for name" _sv="Text för namn">
+                <linkedRecordType>text</linkedRecordType>
+                <linkedRecordId>titleGroupText</linkedRecordId>
+                <linkedRecord>
+                    <text _en="Text" _no="Text" _sv="Text">
+                        <recordInfo _en="Record info" _sv="Postinformation">
+                            <id _en="Text id" _no="" _sv="Textid">titleGroupText</id>
+                            <type _en="RecordType" _no="" _sv="Posttyp">
+                                <linkedRecordType>recordType</linkedRecordType>
+                                <linkedRecordId>text</linkedRecordId>
+                                <actionLinks>
+                                    <read>
+                                        <requestMethod>GET</requestMethod>
+                                        <rel>read</rel>
+                                        <url>https://cora.alvin-portal.org/rest/record/recordType/text</url>
+                                        <accept>application/vnd.cora.record+xml</accept>
+                                    </read>
+                                </actionLinks>
+                            </type>
+                            <dataDivider _en="Data divider" _sv="Datadelare">
+                                <linkedRecordType>system</linkedRecordType>
+                                <linkedRecordId>alvin</linkedRecordId>
+                                <actionLinks>
+                                    <read>
+                                        <requestMethod>GET</requestMethod>
+                                        <rel>read</rel>
+                                        <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                        <accept>application/vnd.cora.record+xml</accept>
+                                    </read>
+                                </actionLinks>
+                            </dataDivider>
+                            <validationType _en="Validation type" _sv="Valideringstyp">
+                                <linkedRecordType>validationType</linkedRecordType>
+                                <linkedRecordId>alvinText</linkedRecordId>
+                                <actionLinks>
+                                    <read>
+                                        <requestMethod>GET</requestMethod>
+                                        <rel>read</rel>
+                                        <url>https://cora.alvin-portal.org/rest/record/validationType/alvinText</url>
+                                        <accept>application/vnd.cora.record+xml</accept>
+                                    </read>
+                                </actionLinks>
+                            </validationType>
+                            <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                    <linkedRecordType>user</linkedRecordType>
+                                    <linkedRecordId>151515</linkedRecordId>
+                                </updatedBy>
+                                <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T07:00:36.196756Z</tsUpdated>
+                            </updated>
+                            <updated _en="Update" _sv="Uppdatering" repeatId="1">
+                                <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                    <linkedRecordType>user</linkedRecordType>
+                                    <linkedRecordId>151515</linkedRecordId>
+                                </updatedBy>
+                                <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T07:01:15.785976Z</tsUpdated>
+                            </updated>
+                            <updated _en="Update" _sv="Uppdatering" repeatId="2">
+                                <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                    <linkedRecordType>user</linkedRecordType>
+                                    <linkedRecordId>151515</linkedRecordId>
+                                </updatedBy>
+                                <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T07:02:21.089335Z</tsUpdated>
+                            </updated>
+                            <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                <linkedRecordType>user</linkedRecordType>
+                                <linkedRecordId>151515</linkedRecordId>
+                            </createdBy>
+                            <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2023-10-11T07:00:36.196756Z</tsCreated>
+                        </recordInfo>
+                        <textPart _en="Text part group" _sv="Text part group" lang="sv" type="default">
+                            <text _en="Text" _no="" _sv="Text">Titel</text>
+                        </textPart>
+                        <textPart _en="Text part group" _sv="Text part group" lang="en" type="alternative">
+                            <text _en="Text" _no="" _sv="Text">Title</text>
+                        </textPart>
+                        <textPart _en="Text part group" _sv="Text part group" lang="no" type="alternative">
+                            <text _en="Text" _no="" _sv="Text">Tittel</text>
+                        </textPart>
+                    </text>
+                </linkedRecord>
+                <actionLinks>
+                    <read>
+                        <requestMethod>GET</requestMethod>
+                        <rel>read</rel>
+                        <url>https://cora.alvin-portal.org/rest/record/text/titleGroupText</url>
+                        <accept>application/vnd.cora.record+xml</accept>
+                    </read>
+                </actionLinks>
+            </textId>
+            <defTextId _en="Text for definition" _sv="Text för definition">
+                <linkedRecordType>text</linkedRecordType>
+                <linkedRecordId>titleGroupDefText</linkedRecordId>
+                <linkedRecord>
+                    <text _en="Text" _no="Text" _sv="Text">
+                        <recordInfo _en="Record info" _sv="Postinformation">
+                            <id _en="Text id" _no="" _sv="Textid">titleGroupDefText</id>
+                            <type _en="RecordType" _no="" _sv="Posttyp">
+                                <linkedRecordType>recordType</linkedRecordType>
+                                <linkedRecordId>text</linkedRecordId>
+                                <actionLinks>
+                                    <read>
+                                        <requestMethod>GET</requestMethod>
+                                        <rel>read</rel>
+                                        <url>https://cora.alvin-portal.org/rest/record/recordType/text</url>
+                                        <accept>application/vnd.cora.record+xml</accept>
+                                    </read>
+                                </actionLinks>
+                            </type>
+                            <dataDivider _en="Data divider" _sv="Datadelare">
+                                <linkedRecordType>system</linkedRecordType>
+                                <linkedRecordId>alvin</linkedRecordId>
+                                <actionLinks>
+                                    <read>
+                                        <requestMethod>GET</requestMethod>
+                                        <rel>read</rel>
+                                        <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                        <accept>application/vnd.cora.record+xml</accept>
+                                    </read>
+                                </actionLinks>
+                            </dataDivider>
+                            <validationType _en="Validation type" _sv="Valideringstyp">
+                                <linkedRecordType>validationType</linkedRecordType>
+                                <linkedRecordId>alvinText</linkedRecordId>
+                                <actionLinks>
+                                    <read>
+                                        <requestMethod>GET</requestMethod>
+                                        <rel>read</rel>
+                                        <url>https://cora.alvin-portal.org/rest/record/validationType/alvinText</url>
+                                        <accept>application/vnd.cora.record+xml</accept>
+                                    </read>
+                                </actionLinks>
+                            </validationType>
+                            <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                    <linkedRecordType>user</linkedRecordType>
+                                    <linkedRecordId>151515</linkedRecordId>
+                                </updatedBy>
+                                <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T07:00:36.512066Z</tsUpdated>
+                            </updated>
+                            <updated _en="Update" _sv="Uppdatering" repeatId="1">
+                                <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                    <linkedRecordType>user</linkedRecordType>
+                                    <linkedRecordId>151515</linkedRecordId>
+                                </updatedBy>
+                                <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T07:03:41.794308Z</tsUpdated>
+                            </updated>
+                            <updated _en="Update" _sv="Uppdatering" repeatId="2">
+                                <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                    <linkedRecordType>user</linkedRecordType>
+                                    <linkedRecordId>151515</linkedRecordId>
+                                </updatedBy>
+                                <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T07:03:57.878626Z</tsUpdated>
+                            </updated>
+                            <updated _en="Update" _sv="Uppdatering" repeatId="3">
+                                <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                    <linkedRecordType>user</linkedRecordType>
+                                    <linkedRecordId>151515</linkedRecordId>
+                                </updatedBy>
+                                <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T07:04:13.616188Z</tsUpdated>
+                            </updated>
+                            <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                <linkedRecordType>user</linkedRecordType>
+                                <linkedRecordId>151515</linkedRecordId>
+                            </createdBy>
+                            <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2023-10-11T07:00:36.512066Z</tsCreated>
+                        </recordInfo>
+                        <textPart _en="Text part group" _sv="Text part group" lang="sv" type="default">
+                            <text _en="Text" _no="" _sv="Text">Namnet på en resurs. BIBFRAME - title</text>
+                        </textPart>
+                        <textPart _en="Text part group" _sv="Text part group" lang="en" type="alternative">
+                            <text _en="Text" _no="" _sv="Text">Name given to a resource. BIBFRAME - title</text>
+                        </textPart>
+                        <textPart _en="Text part group" _sv="Text part group" lang="no" type="alternative">
+                            <text _en="Text" _no="" _sv="Text">Navn gitt til en ressurs. BIBFRAME - title</text>
+                        </textPart>
+                    </text>
+                </linkedRecord>
+                <actionLinks>
+                    <read>
+                        <requestMethod>GET</requestMethod>
+                        <rel>read</rel>
+                        <url>https://cora.alvin-portal.org/rest/record/text/titleGroupDefText</url>
+                        <accept>application/vnd.cora.record+xml</accept>
+                    </read>
+                </actionLinks>
+            </defTextId>
+            <childReferences _en="Child references" _sv="Barnreferenser">
+                <childReference _en="Child reference" _sv="Barnreferens" repeatId="0">
+                    <repeatMin _en="Min" _sv="Min antal">1</repeatMin>
+                    <repeatMax _en="Max number" _no="" _sv="Max antal">1</repeatMax>
+                    <ref _en="Metadata link" _sv="Länk till metadata">
+                        <linkedRecordType>metadata</linkedRecordType>
+                        <linkedRecordId>mainTitleTextVar</linkedRecordId>
+                        <linkedRecord>
+                            <metadata _en="Metadata" _sv="Metadata" type="textVariable">
+                                <recordInfo _en="Record info" _sv="Postinformation">
+                                    <validationType _en="Validation type" _sv="Valideringstyp">
+                                        <linkedRecordType>validationType</linkedRecordType>
+                                        <linkedRecordId>metadataTextVariable</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/validationType/metadataTextVariable</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </validationType>
+                                    <dataDivider _en="Data divider" _sv="Datadelare">
+                                        <linkedRecordType>system</linkedRecordType>
+                                        <linkedRecordId>alvin</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </dataDivider>
+                                    <id _en="Id" _no="Id" _sv="Id">mainTitleTextVar</id>
+                                    <type _en="RecordType" _no="" _sv="Posttyp">
+                                        <linkedRecordType>recordType</linkedRecordType>
+                                        <linkedRecordId>metadata</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/recordType/metadata</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </type>
+                                    <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                        <linkedRecordType>user</linkedRecordType>
+                                        <linkedRecordId>141414</linkedRecordId>
+                                    </createdBy>
+                                    <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2017-10-01T00:00:00.000000Z</tsCreated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>141414</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2017-11-01T17:54:13.000000Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="1">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>141414</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-07-30T11:09:19.904000Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="2">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>141414</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-09-04T11:50:38.863000Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="3">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>141414</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-09-04T11:52:32.173000Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="4">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>141414</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-09-04T11:53:19.648000Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="5">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>141414</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-09-04T11:53:43.184000Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="6">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>141414</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-09-04T11:58:50.570000Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="7">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>141414</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-09-04T11:59:21.673000Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="8">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>141414</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-11-08T08:42:32.961000Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="9">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>141414</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-11-08T08:42:37.404000Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="10">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>141414</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-03-03T15:05:24.217155Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="11">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T06:15:38.831157Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="12">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-12T14:23:33.231646Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="13">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-13T05:36:39.485885Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="14">
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2025-01-10T06:24:45.207757Z</tsUpdated>
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                    </updated>
+                                </recordInfo>
+                                <nameInData _en="Name in data format" _sv="Namn i dataformatet">mainTitle</nameInData>
+                                <textId _en="Text for name" _sv="Text för namn">
+                                    <linkedRecordType>text</linkedRecordType>
+                                    <linkedRecordId>mainTitleTextVarText</linkedRecordId>
+                                    <linkedRecord>
+                                        <text _en="Text" _no="Text" _sv="Text">
+                                            <recordInfo _en="Record info" _sv="Postinformation">
+                                                <id _en="Text id" _no="" _sv="Textid">mainTitleTextVarText</id>
+                                                <type _en="RecordType" _no="" _sv="Posttyp">
+                                                    <linkedRecordType>recordType</linkedRecordType>
+                                                    <linkedRecordId>text</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/recordType/text</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </type>
+                                                <dataDivider _en="Data divider" _sv="Datadelare">
+                                                    <linkedRecordType>system</linkedRecordType>
+                                                    <linkedRecordId>alvin</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </dataDivider>
+                                                <validationType _en="Validation type" _sv="Valideringstyp">
+                                                    <linkedRecordType>validationType</linkedRecordType>
+                                                    <linkedRecordId>alvinText</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/validationType/alvinText</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </validationType>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>141414</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2017-11-01T17:37:36.000000Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="2">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>141414</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-07-11T09:40:02.075000Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="3">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>141414</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-07-11T09:42:37.038000Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="4">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>141414</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-11-08T07:20:44.439000Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="5">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>141414</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-11-08T07:20:49.581000Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="6">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>141414</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-03-03T15:06:11.426799Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="7">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T06:17:30.287608Z</tsUpdated>
+                                                </updated>
+                                                <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                                    <linkedRecordType>user</linkedRecordType>
+                                                    <linkedRecordId>141414</linkedRecordId>
+                                                </createdBy>
+                                                <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2017-10-01T00:00:00.000000Z</tsCreated>
+                                            </recordInfo>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="sv" type="default">
+                                                <text _en="Text" _no="" _sv="Text">Huvudtitel</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="en" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Main title</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="no" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Hovedtittel</text>
+                                            </textPart>
+                                        </text>
+                                    </linkedRecord>
+                                    <actionLinks>
+                                        <read>
+                                            <requestMethod>GET</requestMethod>
+                                            <rel>read</rel>
+                                            <url>https://cora.alvin-portal.org/rest/record/text/mainTitleTextVarText</url>
+                                            <accept>application/vnd.cora.record+xml</accept>
+                                        </read>
+                                    </actionLinks>
+                                </textId>
+                                <defTextId _en="Text for definition" _sv="Text för definition">
+                                    <linkedRecordType>text</linkedRecordType>
+                                    <linkedRecordId>mainTitleTextVarDefText</linkedRecordId>
+                                    <linkedRecord>
+                                        <text _en="Text" _no="Text" _sv="Text">
+                                            <recordInfo _en="Record info" _sv="Postinformation">
+                                                <id _en="Text id" _no="" _sv="Textid">mainTitleTextVarDefText</id>
+                                                <type _en="RecordType" _no="" _sv="Posttyp">
+                                                    <linkedRecordType>recordType</linkedRecordType>
+                                                    <linkedRecordId>text</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/recordType/text</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </type>
+                                                <dataDivider _en="Data divider" _sv="Datadelare">
+                                                    <linkedRecordType>system</linkedRecordType>
+                                                    <linkedRecordId>alvin</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </dataDivider>
+                                                <validationType _en="Validation type" _sv="Valideringstyp">
+                                                    <linkedRecordType>validationType</linkedRecordType>
+                                                    <linkedRecordId>alvinText</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/validationType/alvinText</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </validationType>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>141414</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2017-11-01T17:37:36.000000Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="1">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>141414</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-11-08T07:46:31.715000Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="2">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>141414</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2018-11-08T07:46:36.728000Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="3">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>141414</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-03-03T14:57:51.263780Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="4">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T06:55:06.465402Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="5">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T06:55:52.535078Z</tsUpdated>
+                                                </updated>
+                                                <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                                    <linkedRecordType>user</linkedRecordType>
+                                                    <linkedRecordId>141414</linkedRecordId>
+                                                </createdBy>
+                                                <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2017-10-01T00:00:00.000000Z</tsCreated>
+                                            </recordInfo>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="sv" type="default">
+                                                <text _en="Text" _no="" _sv="Text">Titel som används. Ett ord, en fras, ett tecken eller en grupp av tecken som utgör huvudtiteln på en resurs, det vill säga den titel som normalt används när resursen citeras. BIBFRAME - mainTitle</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="en" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Title being addressed. A word, phrase, character, or group of characters that constitutes the chief title of a resource, i.e., the title normally used when citing the resource. BIBFRAME - mainTitle</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="no" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Tittel som brukes. Et ord, en frase, et tegn eller en gruppe av tegn som utgjør hovedtittelen til en ressurs, dvs. tittelen som vanligvis brukes når ressursen siteres. BIBFRAME - mainTitle</text>
+                                            </textPart>
+                                        </text>
+                                    </linkedRecord>
+                                    <actionLinks>
+                                        <read>
+                                            <requestMethod>GET</requestMethod>
+                                            <rel>read</rel>
+                                            <url>https://cora.alvin-portal.org/rest/record/text/mainTitleTextVarDefText</url>
+                                            <accept>application/vnd.cora.record+xml</accept>
+                                        </read>
+                                    </actionLinks>
+                                </defTextId>
+                                <regEx _en="Regular expression" _sv="Reguljärt uttryck ">^[\s\S]+$</regEx>
+                            </metadata>
+                        </linkedRecord>
+                        <actionLinks>
+                            <read>
+                                <requestMethod>GET</requestMethod>
+                                <rel>read</rel>
+                                <url>https://cora.alvin-portal.org/rest/record/metadata/mainTitleTextVar</url>
+                                <accept>application/vnd.cora.record+xml</accept>
+                            </read>
+                        </actionLinks>
+                    </ref>
+                    <childRefCollectTerm _en="Use to index" _sv="Indexera med" repeatId="0" type="index">
+                        <linkedRecordType>collectTerm</linkedRecordType>
+                        <linkedRecordId>workCollectIndexTerm</linkedRecordId>
+                    </childRefCollectTerm>
+                    <childRefCollectTerm _en="Use to index" _sv="Indexera med" repeatId="1" type="index">
+                        <linkedRecordType>collectTerm</linkedRecordType>
+                        <linkedRecordId>workTitleCollectIndexTerm</linkedRecordId>
+                    </childRefCollectTerm>
+                    <childRefCollectTerm _en="Use to index" _sv="Indexera med" repeatId="3" type="index">
+                        <linkedRecordType>collectTerm</linkedRecordType>
+                        <linkedRecordId>alvinRecordCollectIndexTerm</linkedRecordId>
+                    </childRefCollectTerm>
+                    <childRefCollectTerm _en="Use to index" _sv="Indexera med" repeatId="2" type="index">
+                        <linkedRecordType>collectTerm</linkedRecordType>
+                        <linkedRecordId>alvinRecordTitleCollectIndexTerm</linkedRecordId>
+                    </childRefCollectTerm>
+                </childReference>
+                <childReference _en="Child reference" _sv="Barnreferens" repeatId="1">
+                    <repeatMin _en="Min" _sv="Min antal">0</repeatMin>
+                    <repeatMax _en="Max number" _no="" _sv="Max antal">1</repeatMax>
+                    <ref _en="Metadata link" _sv="Länk till metadata">
+                        <linkedRecordType>metadata</linkedRecordType>
+                        <linkedRecordId>subtitleTextVar</linkedRecordId>
+                        <linkedRecord>
+                            <metadata _en="Metadata" _sv="Metadata" type="textVariable">
+                                <recordInfo _en="Record info" _sv="Postinformation">
+                                    <validationType _en="Validation type" _sv="Valideringstyp">
+                                        <linkedRecordType>validationType</linkedRecordType>
+                                        <linkedRecordId>metadataTextVariable</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/validationType/metadataTextVariable</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </validationType>
+                                    <dataDivider _en="Data divider" _sv="Datadelare">
+                                        <linkedRecordType>system</linkedRecordType>
+                                        <linkedRecordId>alvin</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </dataDivider>
+                                    <id _en="Id" _no="Id" _sv="Id">subtitleTextVar</id>
+                                    <type _en="RecordType" _no="" _sv="Posttyp">
+                                        <linkedRecordType>recordType</linkedRecordType>
+                                        <linkedRecordId>metadata</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/recordType/metadata</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </type>
+                                    <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                        <linkedRecordType>user</linkedRecordType>
+                                        <linkedRecordId>151515</linkedRecordId>
+                                    </createdBy>
+                                    <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2023-10-11T13:17:00.684211Z</tsCreated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T13:17:00.684211Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="1">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-13T05:39:41.936202Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="2">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-13T05:40:17.838114Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="3">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-13T05:49:32.872441Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="4">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-13T05:50:16.625489Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="5">
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2025-01-10T06:25:10.251516Z</tsUpdated>
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                    </updated>
+                                </recordInfo>
+                                <nameInData _en="Name in data format" _sv="Namn i dataformatet">subtitle</nameInData>
+                                <textId _en="Text for name" _sv="Text för namn">
+                                    <linkedRecordType>text</linkedRecordType>
+                                    <linkedRecordId>subtitleTextVarText</linkedRecordId>
+                                    <linkedRecord>
+                                        <text _en="Text" _no="Text" _sv="Text">
+                                            <recordInfo _en="Record info" _sv="Postinformation">
+                                                <id _en="Text id" _no="" _sv="Textid">subtitleTextVarText</id>
+                                                <type _en="RecordType" _no="" _sv="Posttyp">
+                                                    <linkedRecordType>recordType</linkedRecordType>
+                                                    <linkedRecordId>text</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/recordType/text</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </type>
+                                                <dataDivider _en="Data divider" _sv="Datadelare">
+                                                    <linkedRecordType>system</linkedRecordType>
+                                                    <linkedRecordId>alvin</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </dataDivider>
+                                                <validationType _en="Validation type" _sv="Valideringstyp">
+                                                    <linkedRecordType>validationType</linkedRecordType>
+                                                    <linkedRecordId>alvinText</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/validationType/alvinText</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </validationType>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T13:17:00.132097Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="1">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T13:19:13.766427Z</tsUpdated>
+                                                </updated>
+                                                <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                                    <linkedRecordType>user</linkedRecordType>
+                                                    <linkedRecordId>151515</linkedRecordId>
+                                                </createdBy>
+                                                <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2023-10-11T13:17:00.132097Z</tsCreated>
+                                            </recordInfo>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="sv" type="default">
+                                                <text _en="Text" _no="" _sv="Text">Undertitel</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="en" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Subtitle</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="no" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Undertittel</text>
+                                            </textPart>
+                                        </text>
+                                    </linkedRecord>
+                                    <actionLinks>
+                                        <read>
+                                            <requestMethod>GET</requestMethod>
+                                            <rel>read</rel>
+                                            <url>https://cora.alvin-portal.org/rest/record/text/subtitleTextVarText</url>
+                                            <accept>application/vnd.cora.record+xml</accept>
+                                        </read>
+                                    </actionLinks>
+                                </textId>
+                                <defTextId _en="Text for definition" _sv="Text för definition">
+                                    <linkedRecordType>text</linkedRecordType>
+                                    <linkedRecordId>subtitleTextVarDefText</linkedRecordId>
+                                    <linkedRecord>
+                                        <text _en="Text" _no="Text" _sv="Text">
+                                            <recordInfo _en="Record info" _sv="Postinformation">
+                                                <id _en="Text id" _no="" _sv="Textid">subtitleTextVarDefText</id>
+                                                <type _en="RecordType" _no="" _sv="Posttyp">
+                                                    <linkedRecordType>recordType</linkedRecordType>
+                                                    <linkedRecordId>text</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/recordType/text</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </type>
+                                                <dataDivider _en="Data divider" _sv="Datadelare">
+                                                    <linkedRecordType>system</linkedRecordType>
+                                                    <linkedRecordId>alvin</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </dataDivider>
+                                                <validationType _en="Validation type" _sv="Valideringstyp">
+                                                    <linkedRecordType>validationType</linkedRecordType>
+                                                    <linkedRecordId>alvinText</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/validationType/alvinText</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </validationType>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T13:17:00.454067Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="1">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-11T13:21:24.849215Z</tsUpdated>
+                                                </updated>
+                                                <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                                    <linkedRecordType>user</linkedRecordType>
+                                                    <linkedRecordId>151515</linkedRecordId>
+                                                </createdBy>
+                                                <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2023-10-11T13:17:00.454067Z</tsCreated>
+                                            </recordInfo>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="sv" type="default">
+                                                <text _en="Text" _no="" _sv="Text">Ord, tecken eller grupp av ord och/eller tecken som innehåller resten av titeln efter huvudtiteln. BIBFRAME - subtitle</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="en" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Word, character, or group of words and/or characters that contains the remainder of the title after the main title. BIBFRAME - subtitle</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="no" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Ord, tegn eller gruppe med ord og/eller tegn som inneholder resten av tittelen etter hovedtittelen. BIBFRAME - subtitle</text>
+                                            </textPart>
+                                        </text>
+                                    </linkedRecord>
+                                    <actionLinks>
+                                        <read>
+                                            <requestMethod>GET</requestMethod>
+                                            <rel>read</rel>
+                                            <url>https://cora.alvin-portal.org/rest/record/text/subtitleTextVarDefText</url>
+                                            <accept>application/vnd.cora.record+xml</accept>
+                                        </read>
+                                    </actionLinks>
+                                </defTextId>
+                                <regEx _en="Regular expression" _sv="Reguljärt uttryck ">^[\s\S]+$</regEx>
+                            </metadata>
+                        </linkedRecord>
+                        <actionLinks>
+                            <read>
+                                <requestMethod>GET</requestMethod>
+                                <rel>read</rel>
+                                <url>https://cora.alvin-portal.org/rest/record/metadata/subtitleTextVar</url>
+                                <accept>application/vnd.cora.record+xml</accept>
+                            </read>
+                        </actionLinks>
+                    </ref>
+                    <childRefCollectTerm _en="Use to index" _sv="Indexera med" repeatId="0" type="index">
+                        <linkedRecordType>collectTerm</linkedRecordType>
+                        <linkedRecordId>workCollectIndexTerm</linkedRecordId>
+                    </childRefCollectTerm>
+                    <childRefCollectTerm _en="Use to index" _sv="Indexera med" repeatId="1" type="index">
+                        <linkedRecordType>collectTerm</linkedRecordType>
+                        <linkedRecordId>workTitleCollectIndexTerm</linkedRecordId>
+                    </childRefCollectTerm>
+                    <childRefCollectTerm _en="Use to index" _sv="Indexera med" repeatId="3" type="index">
+                        <linkedRecordType>collectTerm</linkedRecordType>
+                        <linkedRecordId>alvinRecordCollectIndexTerm</linkedRecordId>
+                    </childRefCollectTerm>
+                    <childRefCollectTerm _en="Use to index" _sv="Indexera med" repeatId="2" type="index">
+                        <linkedRecordType>collectTerm</linkedRecordType>
+                        <linkedRecordId>alvinRecordTitleCollectIndexTerm</linkedRecordId>
+                    </childRefCollectTerm>
+                </childReference>
+                <childReference _en="Child reference" _sv="Barnreferens" repeatId="2">
+                    <repeatMin _en="Min" _sv="Min antal">0</repeatMin>
+                    <repeatMax _en="Max number" _no="" _sv="Max antal">1</repeatMax>
+                    <ref _en="Metadata link" _sv="Länk till metadata">
+                        <linkedRecordType>metadata</linkedRecordType>
+                        <linkedRecordId>orientationCodeCollectionVar</linkedRecordId>
+                        <linkedRecord>
+                            <metadata _en="Metadata" _sv="Metadata" type="collectionVariable">
+                                <recordInfo _en="Record info" _sv="Postinformation">
+                                    <id _en="Id" _no="Id" _sv="Id">orientationCodeCollectionVar</id>
+                                    <type _en="RecordType" _no="" _sv="Posttyp">
+                                        <linkedRecordType>recordType</linkedRecordType>
+                                        <linkedRecordId>metadata</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/recordType/metadata</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </type>
+                                    <validationType _en="Validation type" _sv="Valideringstyp">
+                                        <linkedRecordType>validationType</linkedRecordType>
+                                        <linkedRecordId>metadataCollectionVariable</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/validationType/metadataCollectionVariable</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </validationType>
+                                    <dataDivider _en="Data divider" _sv="Datadelare">
+                                        <linkedRecordType>system</linkedRecordType>
+                                        <linkedRecordId>alvin</linkedRecordId>
+                                        <actionLinks>
+                                            <read>
+                                                <requestMethod>GET</requestMethod>
+                                                <rel>read</rel>
+                                                <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                                <accept>application/vnd.cora.record+xml</accept>
+                                            </read>
+                                        </actionLinks>
+                                    </dataDivider>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2023-10-12T08:44:41.492825Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="1">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-02-26T07:37:43.811453Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="2">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-02-26T07:39:37.285208Z</tsUpdated>
+                                    </updated>
+                                    <updated _en="Update" _sv="Uppdatering" repeatId="3">
+                                        <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                            <linkedRecordType>user</linkedRecordType>
+                                            <linkedRecordId>151515</linkedRecordId>
+                                        </updatedBy>
+                                        <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-02-26T07:40:19.863610Z</tsUpdated>
+                                    </updated>
+                                    <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                        <linkedRecordType>user</linkedRecordType>
+                                        <linkedRecordId>151515</linkedRecordId>
+                                    </createdBy>
+                                    <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2023-10-12T08:44:41.492825Z</tsCreated>
+                                </recordInfo>
+                                <nameInData _en="Name in data format" _sv="Namn i dataformatet">orientationCode</nameInData>
+                                <textId _en="Text for name" _sv="Text för namn">
+                                    <linkedRecordType>text</linkedRecordType>
+                                    <linkedRecordId>orientationCodeCollectionText</linkedRecordId>
+                                    <linkedRecord>
+                                        <text _en="Text" _no="Text" _sv="Text">
+                                            <recordInfo _en="Record info" _sv="Postinformation">
+                                                <id _en="Text id" _no="" _sv="Textid">orientationCodeCollectionText</id>
+                                                <dataDivider _en="Data divider" _sv="Datadelare">
+                                                    <linkedRecordType>system</linkedRecordType>
+                                                    <linkedRecordId>alvin</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </dataDivider>
+                                                <validationType _en="Validation type" _sv="Valideringstyp">
+                                                    <linkedRecordType>validationType</linkedRecordType>
+                                                    <linkedRecordId>alvinText</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/validationType/alvinText</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </validationType>
+                                                <type _en="RecordType" _no="" _sv="Posttyp">
+                                                    <linkedRecordType>recordType</linkedRecordType>
+                                                    <linkedRecordId>text</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/recordType/text</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </type>
+                                                <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                                    <linkedRecordType>user</linkedRecordType>
+                                                    <linkedRecordId>151515</linkedRecordId>
+                                                </createdBy>
+                                                <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2024-02-26T07:36:02.436542Z</tsCreated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-02-26T07:36:02.436542Z</tsUpdated>
+                                                </updated>
+                                            </recordInfo>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="sv" type="default">
+                                                <text _en="Text" _no="" _sv="Text">Textriktning</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="en" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Text direction</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="no" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Tekstretning</text>
+                                            </textPart>
+                                        </text>
+                                    </linkedRecord>
+                                    <actionLinks>
+                                        <read>
+                                            <requestMethod>GET</requestMethod>
+                                            <rel>read</rel>
+                                            <url>https://cora.alvin-portal.org/rest/record/text/orientationCodeCollectionText</url>
+                                            <accept>application/vnd.cora.record+xml</accept>
+                                        </read>
+                                    </actionLinks>
+                                </textId>
+                                <defTextId _en="Text for definition" _sv="Text för definition">
+                                    <linkedRecordType>text</linkedRecordType>
+                                    <linkedRecordId>orientationCodeCollectionDefText</linkedRecordId>
+                                    <linkedRecord>
+                                        <text _en="Text" _no="Text" _sv="Text">
+                                            <recordInfo _en="Record info" _sv="Postinformation">
+                                                <id _en="Text id" _no="" _sv="Textid">orientationCodeCollectionDefText</id>
+                                                <dataDivider _en="Data divider" _sv="Datadelare">
+                                                    <linkedRecordType>system</linkedRecordType>
+                                                    <linkedRecordId>alvin</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </dataDivider>
+                                                <validationType _en="Validation type" _sv="Valideringstyp">
+                                                    <linkedRecordType>validationType</linkedRecordType>
+                                                    <linkedRecordId>alvinText</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/validationType/alvinText</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </validationType>
+                                                <type _en="RecordType" _no="" _sv="Posttyp">
+                                                    <linkedRecordType>recordType</linkedRecordType>
+                                                    <linkedRecordId>text</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/recordType/text</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </type>
+                                                <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                                    <linkedRecordType>user</linkedRecordType>
+                                                    <linkedRecordId>151515</linkedRecordId>
+                                                </createdBy>
+                                                <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2024-02-26T07:31:28.954381Z</tsCreated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-02-26T07:31:28.954381Z</tsUpdated>
+                                                </updated>
+                                            </recordInfo>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="sv" type="default">
+                                                <text _en="Text" _no="" _sv="Text">Anges när titeln innehåller text som har en riktning från höger till vänster. MARC21 - Control Subfields</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="en" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Set when the title contains text that has a right-to-left orientation. MARC21 - Control Subfields</text>
+                                            </textPart>
+                                            <textPart _en="Text part group" _sv="Text part group" lang="no" type="alternative">
+                                                <text _en="Text" _no="" _sv="Text">Angis når tittelen inneholder tekst som har retning fra høyre til venstre. MARC21 - Control Subfields</text>
+                                            </textPart>
+                                        </text>
+                                    </linkedRecord>
+                                    <actionLinks>
+                                        <read>
+                                            <requestMethod>GET</requestMethod>
+                                            <rel>read</rel>
+                                            <url>https://cora.alvin-portal.org/rest/record/text/orientationCodeCollectionDefText</url>
+                                            <accept>application/vnd.cora.record+xml</accept>
+                                        </read>
+                                    </actionLinks>
+                                </defTextId>
+                                <refCollection _en="Item collection" _sv="ItemCollection">
+                                    <linkedRecordType>metadata</linkedRecordType>
+                                    <linkedRecordId>orientationCodeCollection</linkedRecordId>
+                                    <linkedRecord>
+                                        <metadata _en="Metadata" _sv="Metadata" type="itemCollection">
+                                            <recordInfo _en="Record info" _sv="Postinformation">
+                                                <id _en="Id" _no="Id" _sv="Id">orientationCodeCollection</id>
+                                                <type _en="RecordType" _no="" _sv="Posttyp">
+                                                    <linkedRecordType>recordType</linkedRecordType>
+                                                    <linkedRecordId>metadata</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/recordType/metadata</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </type>
+                                                <validationType _en="Validation type" _sv="Valideringstyp">
+                                                    <linkedRecordType>validationType</linkedRecordType>
+                                                    <linkedRecordId>metadataItemCollection</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/validationType/metadataItemCollection</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </validationType>
+                                                <dataDivider _en="Data divider" _sv="Datadelare">
+                                                    <linkedRecordType>system</linkedRecordType>
+                                                    <linkedRecordId>alvin</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/system/alvin</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </dataDivider>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="0">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-02-26T07:21:55.198022Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="1">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-02-26T07:30:00.345084Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="2">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-02-26T07:35:09.973226Z</tsUpdated>
+                                                </updated>
+                                                <updated _en="Update" _sv="Uppdatering" repeatId="3">
+                                                    <updatedBy _en="Updated by" _no="Oppdatert av" _sv="Uppdaterad av">
+                                                        <linkedRecordType>user</linkedRecordType>
+                                                        <linkedRecordId>151515</linkedRecordId>
+                                                    </updatedBy>
+                                                    <tsUpdated _en="Update time" _sv="Uppdateringstid">2024-02-26T07:36:19.485561Z</tsUpdated>
+                                                </updated>
+                                                <createdBy _en="Text for:createdByLinkText" _sv="Text för:createdByLinkText">
+                                                    <linkedRecordType>user</linkedRecordType>
+                                                    <linkedRecordId>151515</linkedRecordId>
+                                                </createdBy>
+                                                <tsCreated _en="Timestamp for when the record was created" _sv="Tidsstämpel för när posten skapades">2024-02-26T07:21:55.198022Z</tsCreated>
+                                            </recordInfo>
+                                            <nameInData _en="Name in data format" _sv="Namn i dataformatet">orientationCode</nameInData>
+                                            <textId _en="Text for name" _sv="Text för namn">
+                                                <linkedRecordType>text</linkedRecordType>
+                                                <linkedRecordId>orientationCodeCollectionText</linkedRecordId>
+                                                <actionLinks>
+                                                    <read>
+                                                        <requestMethod>GET</requestMethod>
+                                                        <rel>read</rel>
+                                                        <url>https://cora.alvin-portal.org/rest/record/text/orientationCodeCollectionText</url>
+                                                        <accept>application/vnd.cora.record+xml</accept>
+                                                    </read>
+                                                </actionLinks>
+                                            </textId>
+                                            <defTextId _en="Text for definition" _sv="Text för definition">
+                                                <linkedRecordType>text</linkedRecordType>
+                                                <linkedRecordId>orientationCodeCollectionDefText</linkedRecordId>
+                                                <actionLinks>
+                                                    <read>
+                                                        <requestMethod>GET</requestMethod>
+                                                        <rel>read</rel>
+                                                        <url>https://cora.alvin-portal.org/rest/record/text/orientationCodeCollectionDefText</url>
+                                                        <accept>application/vnd.cora.record+xml</accept>
+                                                    </read>
+                                                </actionLinks>
+                                            </defTextId>
+                                            <collectionItemReferences _en="Collection items that are included" _sv="Collection items som ingår">
+                                                <ref _en="Collection item" _sv="Collection item" repeatId="0">
+                                                    <linkedRecordType>metadata</linkedRecordType>
+                                                    <linkedRecordId>rightToLeftItem</linkedRecordId>
+                                                    <actionLinks>
+                                                        <read>
+                                                            <requestMethod>GET</requestMethod>
+                                                            <rel>read</rel>
+                                                            <url>https://cora.alvin-portal.org/rest/record/metadata/rightToLeftItem</url>
+                                                            <accept>application/vnd.cora.record+xml</accept>
+                                                        </read>
+                                                    </actionLinks>
+                                                </ref>
+                                            </collectionItemReferences>
+                                        </metadata>
+                                    </linkedRecord>
+                                    <actionLinks>
+                                        <read>
+                                            <requestMethod>GET</requestMethod>
+                                            <rel>read</rel>
+                                            <url>https://cora.alvin-portal.org/rest/record/metadata/orientationCodeCollection</url>
+                                            <accept>application/vnd.cora.record+xml</accept>
+                                        </read>
+                                    </actionLinks>
+                                </refCollection>
+                            </metadata>
+                        </linkedRecord>
+                        <actionLinks>
+                            <read>
+                                <requestMethod>GET</requestMethod>
+                                <rel>read</rel>
+                                <url>https://cora.alvin-portal.org/rest/record/metadata/orientationCodeCollectionVar</url>
+                                <accept>application/vnd.cora.record+xml</accept>
+                            </read>
+                        </actionLinks>
+                    </ref>
+                </childReference>
+            </childReferences>
+        </metadata>
+    </data>
+    <actionLinks>
+        <read>
+            <requestMethod>GET</requestMethod>
+            <rel>read</rel>
+            <url>https://cora.alvin-portal.org/rest/record/metadata/titleGroup</url>
+            <accept>application/vnd.cora.record+xml</accept>
+        </read>
+        <read_incoming_links>
+            <requestMethod>GET</requestMethod>
+            <rel>read_incoming_links</rel>
+            <url>https://cora.alvin-portal.org/rest/record/metadata/titleGroup/incomingLinks</url>
+            <accept>application/vnd.cora.recordList+xml</accept>
+        </read_incoming_links>
+    </actionLinks>
+</record>
+

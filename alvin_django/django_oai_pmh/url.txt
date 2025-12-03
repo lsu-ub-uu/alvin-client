@@ -1,0 +1,500 @@
+https://cora.alvin-portal.org/rest/record/searchResult/alvinRecordSearch?searchData=%7B%22name%22%3A%22alvinRecordSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22permissionUnitSearchTerm%22%2C%22value%22%3A%22permissionUnit_*%22%7D%5D%7D%5D%7D%5D%7D
+
+
+https://cora.alvin-portal.org/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"permissionUnitSearchTerm","value":"permissionUnit_*"}}]}}]}]}}
+
+
+https://cora.alvin-portal.org/rest/record/searchResult/alvinRecordSearch?searchData=%7B%22name%22%3A%22alvinRecordSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22permissionUnitSearchTerm%22%2C%22value%22%3A%22permissionUnit_3%22%7D%5D%7D%5D%7D%2C%7B%22name%22%3A%22start%22%2C%22value%22%3A%222%22%7D%2C%7B%22name%22%3A%22rows%22%2C%22value%22%3A%2210%22%7D%5D%7D
+
+https://cora.alvin-portal.org/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"permissionUnitSearchTerm","value":"permissionUnit_*"}}]}}]}},{"name":"start","value":"{start}"}},{"name":"rows","value":"{rows}"}}]}}
+
+https://cora.alvin-portal.org/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"alvinRecordSearchTerm","value":"{search}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}
+            headers = []
+            headers.append({'identifier': 77777, 'datestamp': '2021-04-14T16:07:52Z', 'setSpec': 3
+                })
+
+
+To handle multiple items from an XML file in Django, you can parse the XML data and process it to create or update objects in your Django models. Here's a concise guide:
+
+Steps to Process Multiple Items from XML in Django
+
+
+Parse the XML File:
+Use Python's built-in xml.etree.ElementTree module or a library like lxml to parse the XML file.
+
+
+Iterate Through Items:
+Extract the relevant data from the XML structure and loop through the items.
+
+
+Save Data to Django Models:
+Use Django's ORM to create or update objects in your database.
+
+
+
+Example Code
+Here’s an example of processing an XML file containing multiple items:
+XML Example
+Xml<items>
+    <item>
+        <name>Item 1</name>
+        <price>100</price>
+    </item>
+    <item>
+        <name>Item 2</name>
+        <price>200</price>
+    </item>
+</items>
+
+Django Model
+Pythonfrom django.db import models
+
+class Item(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+Parsing and Saving Data
+Pythonimport xml.etree.ElementTree as ET
+from myapp.models import Item
+
+def process_xml(file_path):
+    tree = ET.parse(file_path)
+    root = tree.getroot()
+
+    for item in root.findall('item'):
+        name = item.find('name').text
+        price = item.find('price').text
+
+        # Create or update the item in the database
+        Item.objects.update_or_create(
+            name=name,
+            defaults={'price': price}
+        )
+
+
+Usage
+
+Save the XML file locally or upload it via a form.
+Call the process_xml() function with the file path or file object.
+
+
+Tips
+
+Use update_or_create to avoid duplicates.
+Validate and sanitize the XML data to prevent errors or security issues.
+If the XML file is large, consider using Django's bulk operations like bulk_create for better performance.
+
+This approach ensures your XML data is efficiently processed and stored in your Django application. Let me know if you'd like further assistance! 😊
+
+To create a dictionary from XML in Django, you can use Python's built-in xml.etree.ElementTree module or a library like xmltodict. Here's how you can achieve this:
+
+Using xml.etree.ElementTree
+This method is built into Python and doesn't require additional libraries.
+Pythonimport xml.etree.ElementTree as ET
+
+def xml_to_dict(xml_string):
+    def parse_element(element):
+        # Convert XML element to dictionary
+        return {
+            element.tag: {
+                "attributes": element.attrib,
+                "text": element.text.strip() if element.text else None,
+                "children": [parse_element(child) for child in element]
+            }
+        }
+
+    root = ET.fromstring(xml_string)
+    return parse_element(root)
+
+# Example usage
+xml_data = """
+<root>
+    <item id="1">First Item</item>
+    <item id="2">Second Item</item>
+</root>
+"""
+result = xml_to_dict(xml_data)
+print(result)
+
+
+Using xmltodict
+This library simplifies XML-to-dictionary conversion.
+
+
+Install the library:
+Bashpip install xmltodict
+
+
+
+Code example:
+Pythonimport xmltodict
+
+def xml_to_dict(xml_string):
+    return xmltodict.parse(xml_string)
+
+# Example usage
+xml_data = """
+<root>
+    <item id="1">First Item</item>
+    <item id="2">Second Item</item>
+</root>
+"""
+result = xml_to_dict(xml_data)
+print(result)
+
+Output:
+Python{'root': {'item': [{'@id': '1', '#text': 'First Item'}, {'@id': '2', '#text': 'Second Item'}]}}
+
+
+
+
+Integrating with Django
+Once you have the dictionary, you can use it to populate Django models:
+Pythonfrom myapp.models import MyModel
+
+def save_to_model(data):
+    for item in data['root']['item']:
+        MyModel.objects.create(
+            item_id=item['@id'],
+            name=item['#text']
+        )
+
+This approach ensures you can easily parse XML and save its data into your Django models.
+
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import YourModel
+from .pagination import ResumptionTokenPagination
+
+class YourModelListView(APIView):
+    pagination_class = ResumptionTokenPagination
+
+    def get(self, request, *args, **kwargs):
+        queryset = YourModel.objects.all().order_by('id')
+        paginator = self.pagination_class()
+        paginated_queryset = paginator.paginate_queryset(queryset, request, view=self)
+        if paginated_queryset is not None:
+            return paginator.get_paginated_response([obj.to_dict() for obj in paginated_queryset])
+        return Response({'results': []})
+
+
+
+To implement a resumption token-based pagination in Django for XML responses, you can create a custom paginator. This approach is often used in APIs that need to handle large datasets efficiently, such as OAI-PMH (Open Archives Initiative Protocol for Metadata Harvesting).
+
+Here’s a concise guide to achieve this:
+
+1. Create a Custom Paginator
+
+You can define a custom paginator class that generates and processes resumption tokens. A resumption token typically encodes the current state (e.g., offset, limit, or other metadata).
+
+import base64
+import json
+from django.core.paginator import Paginator, EmptyPage
+
+class ResumptionTokenPaginator:
+    def __init__(self, queryset, page_size):
+        self.queryset = queryset
+        self.page_size = page_size
+
+    def get_page(self, token=None):
+        try:
+            # Decode the token if provided
+            if token:
+                decoded = json.loads(base64.urlsafe_b64decode(token).decode())
+                offset = decoded.get("offset", 0)
+            else:
+                offset = 0
+
+            # Paginate the queryset
+            paginator = Paginator(self.queryset, self.page_size)
+            page_number = (offset // self.page_size) + 1
+            page = paginator.page(page_number)
+
+            # Generate the next resumption token
+            next_offset = offset + self.page_size
+            next_token = None
+            if next_offset < paginator.count:
+                next_token = base64.urlsafe_b64encode(
+                    json.dumps({"offset": next_offset}).encode()
+                ).decode()
+
+            return {
+                "results": page.object_list,
+                "resumption_token": next_token,
+            }
+        except EmptyPage:
+            return {"results": [], "resumption_token": None}
+
+2. Use the Paginator in Your View
+
+In your Django view, use the custom paginator to handle the query and return XML responses.
+
+from django.http import HttpResponse
+from django.utils.xmlutils import SimplerXMLGenerator
+from .paginators import ResumptionTokenPaginator
+from .models import YourModel
+
+def xml_paginated_view(request):
+    # Get the resumption token from the request
+    token = request.GET.get("resumptionToken", None)
+
+    # Query your data and paginate
+    queryset = YourModel.objects.all()
+    paginator = ResumptionTokenPaginator(queryset, page_size=10)
+    paginated_data = paginator.get_page(token)
+
+    # Generate XML response
+    response = HttpResponse(content_type="application/xml")
+    xml = SimplerXMLGenerator(response, "utf-8")
+    xml.startDocument()
+    xml.startElement("response", {})
+
+    # Add results
+    xml.startElement("results", {})
+    for obj in paginated_data["results"]:
+        xml.startElement("item", {})
+        xml.characters(str(obj))  # Customize based on your model
+        xml.endElement("item")
+    xml.endElement("results")
+
+    # Add resumption token
+    if paginated_data["resumption_token"]:
+        xml.startElement("resumptionToken", {})
+        xml.characters(paginated_data["resumption_token"])
+        xml.endElement("resumptionToken")
+
+    xml.endElement("response")
+    xml.endDocument()
+
+    return response
+
+3. Example XML Output
+
+When a client requests the endpoint, the response might look like this:
+
+<response>
+    <results>
+        <item>Object 1</item>
+        <item>Object 2</item>
+        <!-- More items -->
+    </results>
+    <resumptionToken>eyJvZmZzZXQiOjEwfQ==</resumptionToken>
+</response>
+
+Key Notes
+Token Encoding: The resumption token is encoded using Base64 to ensure safe transmission.
+State Management: The token stores the offset or any other state required to resume pagination.
+Error Handling: Ensure proper handling of invalid or expired tokens.
+
+This approach is flexible and can be adapted to your specific requirements for XML-based APIs.
+
+
+To implement a resumptionToken-based paginator in Django for handling XML input, you can create a custom pagination class. This is particularly useful for APIs that follow protocols like OAI-PMH, where a resumptionToken is used to fetch paginated data.
+
+Here’s an example of how you can achieve this:
+
+Custom ResumptionToken Paginator
+from rest_framework.pagination import BasePagination
+from rest_framework.exceptions import NotFound
+from django.utils.encoding import force_str
+
+class ResumptionTokenPaginator(BasePagination):
+    def paginate_queryset(self, queryset, request, view=None):
+        # Extract the resumptionToken from the query parameters
+        token = request.query_params.get('resumptionToken', None)
+        page_size = 10  # Define your page size
+
+        if token:
+            try:
+                # Decode the token to get the offset
+                offset = int(force_str(token))
+            except ValueError:
+                raise NotFound("Invalid resumptionToken")
+        else:
+            offset = 0
+
+        # Paginate the queryset
+        self.offset = offset
+        self.limit = page_size
+        self.count = queryset.count()
+        self.queryset = queryset[offset:offset + page_size]
+
+        return self.queryset
+
+    def get_paginated_response(self, data):
+        # Generate the next resumptionToken if there are more results
+        next_offset = self.offset + self.limit
+        next_token = str(next_offset) if next_offset < self.count else None
+
+        return {
+            'data': data,
+            'resumptionToken': next_token,
+            'count': self.count,
+        }
+
+Usage in a View
+
+You can integrate this paginator into a Django REST Framework (DRF) view:
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .pagination import ResumptionTokenPaginator
+from .models import YourModel
+
+class YourModelListView(APIView):
+    pagination_class = ResumptionTokenPaginator
+
+    def get(self, request, *args, **kwargs):
+        queryset = YourModel.objects.all()
+        paginator = self.pagination_class()
+        paginated_queryset = paginator.paginate_queryset(queryset, request, view=self)
+
+        # Serialize the data (assuming you have a serializer)
+        serializer = YourModelSerializer(paginated_queryset, many=True)
+        return Response(paginator.get_paginated_response(serializer.data))
+
+XML Response
+
+If you need to return the response in XML format, you can use Django's xml.etree.ElementTree or a library like dicttoxml to convert the response dictionary into XML:
+
+from dicttoxml import dicttoxml
+from django.http import HttpResponse
+
+class YourModelListView(APIView):
+    pagination_class = ResumptionTokenPaginator
+
+    def get(self, request, *args, **kwargs):
+        queryset = YourModel.objects.all()
+        paginator = self.pagination_class()
+        paginated_queryset = paginator.paginate_queryset(queryset, request, view=self)
+
+        serializer = YourModelSerializer(paginated_queryset, many=True)
+        response_data = paginator.get_paginated_response(serializer.data)
+
+        # Convert to XML
+        xml_data = dicttoxml(response_data, custom_root='response', attr_type=False)
+        return HttpResponse(xml_data, content_type='application/xml')
+
+Key Notes
+ResumptionToken: The token is typically a base64-encoded or plain offset value. You can enhance it to include additional metadata if needed.
+XML Input: If your input is XML, you can parse it using libraries like xml.etree.ElementTree or lxml before processing.
+Error Handling: Ensure proper validation of the resumptionToken to avoid invalid or malicious requests.
+
+This setup provides a flexible way to handle resumptionToken-based pagination with XML responses in Django.
+
+To implement resumptionToken-based pagination in Django, particularly for XML input/output, you can follow these steps. This approach is commonly used in APIs like OAI-PMH, where a resumptionToken is used to fetch subsequent pages of data.
+
+1. Define the Pagination Logic
+
+Create a custom pagination class that uses a resumptionToken to track the current page and offset.
+
+from rest_framework.pagination import BasePagination
+from rest_framework.exceptions import NotFound
+
+class ResumptionTokenPagination(BasePagination):
+    page_size = 10  # Number of items per page
+
+    def paginate_queryset(self, queryset, request, view=None):
+        token = request.query_params.get('resumptionToken', None)
+        if token:
+            try:
+                offset = int(token)
+            except ValueError:
+                raise NotFound("Invalid resumptionToken")
+        else:
+            offset = 0
+
+        self.offset = offset
+        self.queryset = queryset[offset:offset + self.page_size]
+        return self.queryset
+
+    def get_paginated_response(self, data):
+        next_offset = self.offset + self.page_size
+        if next_offset >= len(self.queryset):
+            next_token = None
+        else:
+            next_token = str(next_offset)
+
+        return {
+            'results': data,
+            'resumptionToken': next_token
+        }
+
+2. Integrate the Pagination in Your View
+
+Use the custom pagination class in your Django REST Framework (DRF) view.
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .pagination import ResumptionTokenPagination
+from .models import YourModel
+from .serializers import YourModelSerializer
+
+class YourModelListView(APIView):
+    pagination_class = ResumptionTokenPagination()
+
+    def get(self, request, *args, **kwargs):
+        queryset = YourModel.objects.all()
+        paginator = self.pagination_class()
+        paginated_queryset = paginator.paginate_queryset(queryset, request)
+        serializer = YourModelSerializer(paginated_queryset, many=True)
+        return Response(paginator.get_paginated_response(serializer.data))
+
+3. Handle XML Input/Output
+
+If your API needs to handle XML, you can use Django REST Framework's support for custom renderers.
+
+Add an XML Renderer:
+from rest_framework_xml.renderers import XMLRenderer
+from rest_framework_xml.parsers import XMLParser
+
+class YourModelXMLView(YourModelListView):
+    renderer_classes = [XMLRenderer]
+    parser_classes = [XMLParser]
+
+Example XML Response:
+<response>
+    <results>
+        <item>
+            <id>1</id>
+            <name>Example</name>
+        </item>
+        <!-- More items -->
+    </results>
+    <resumptionToken>10</resumptionToken>
+</response>
+
+4. Example Query
+First Request: /api/yourmodel/ (No resumptionToken → Fetches first page)
+Next Request: /api/yourmodel/?resumptionToken=10 (Fetches next page)
+
+This setup ensures that your API supports resumptionToken-based pagination with XML input/output, making it suitable for systems requiring this type of pagination.
+
+
+headers
+
+https://www.alvin-portal.org/oai/oai?verb=ListIdentifiers&metadataPrefix=oai_dc&set=3
+
+I reg-formuläret och på postsidan (presentation) vore det snyggt och enkelt om det bara stod:
+
+Antal sidor
+286
+
+Övrig fysisk beskrivning
+1 bordduk etc.
+
+
+
+
+The six verbs in the
+OAI-PMH (Open Archives Initiative Protocol for Metadata Harvesting) are GetRecord, Identify, ListIdentifiers, ListMetadataFormats, ListRecords, and ListSets. These verbs define the services used to expose and harvest metadata records between repositories, with each verb corresponding to a specific request to retrieve information or records from a repository. 
+Verb 
+	Description
+Identify	Retrieves basic information about the repository, such as its name and version.
+ListMetadataFormats	Returns a list of the metadata formats that the repository can provide.
+ListIdentifiers	Retrieves only the "headers" (identifiers and datestamps) of the records, rather than the full records.
+ListRecords	Retrieves full metadata records from the repository.
+GetRecord	Retrieves a single, individual metadata record identified by its unique identifier.
+ListSets	Retrieves the set structure of the repository, which allows for grouping records into sets.

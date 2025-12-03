@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@source "../../../alvin_info/templates/";
+@source "../../../alvin_viewer/templates/alvin_viewer";
+@source "../../../alvin_viewer/templates/alvin_viewer/_partials";
+@source "../../../vocabulary/templates/vocabulary";
+@source "../../../alvin_search/templates/alvin_search";
+
+@font-face {
+    font-family: 'Universalis';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Universalis ADF Std Regular'), url('UniversalisADFStd-Bold.woff') format('woff');
+}
+
+@theme { 
+    --color-alvin: #7fbfa7;
+    --color-dark-alvin: #355F51;
+    --color-light-alvin: #cce0d6;
+    --color-off-white: #faf9f6;
+}

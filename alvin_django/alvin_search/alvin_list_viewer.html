@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load i18n static %}
+
+{% block content %}
+<main class="flex min-h-screen bg-alvinGrey pt-20 px-10 border-4 border-black">
+        
+    <section class="w-full " x-data="{showFilter: false}">
+        
+        <aside class="flex pb-4 justify-between">
+            <p><strong>{% translate 'Totalt antal träffar:' %} {{ metadata.totalNo }}</strong></p>
+            <button @click="showFilter = !showFilter" class="flex gap-1">
+                <p class="font-universalis" x-show="!showFilter" x-cloak>Filter</p>
+                <img src="{% static '/img/nav/filter-solid.svg' %}" x-show="!showFilter" x-cloak>
+                <img src="{% static '/img/nav/xmark.svg' %}" x-show="showFilter" x-cloak>
+            </button>
+        </aside>
+
+        <!-- Resultatlista  -->
+        <section class="flex gap-5">
+        
+            <!-- Listning -->
+            <ol class="w-full border-y-4 border-black space-y-1">
+                {% if record_type == 'alvin-place' %}
+                    {% include './_partials/_alvin_place_list.html' %}
+                {% elif record_type == 'alvin-organisation' %}
+                    {% include './_partials/_alvin_organisation_list.html' %}
+                {% elif record_type == 'alvin-person' %}
+                    {% include './_partials/_alvin_person_list.html' %}
+                {% elif record_type == 'alvin-work' %}
+                    {% include './_partials/_alvin_work_list.html' %}
+                {% endif %}
+            </ol>
+
+            {% include '../_partials/_filters.html' %}
+
+        </section>
+
+        {% include './_partials/_pagination.html' %}
+
+    </section>
+
+</main>
+{% endblock %}

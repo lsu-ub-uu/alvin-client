@@ -1,0 +1,27 @@
+def urncurrent(request):
+  xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
+   
+  start = request.GET.get('start', 1)
+
+  rows = request.GET.get('rows', 1000)
+  
+  search = '**'
+  
+  list_url = f'https://cora.alvin-portal.org/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"alvinRecordSearchTerm","value":"{search}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
+  response = requests.get(list_url, headers=xml_headers_list)
+
+  if response.status_code != 200:
+        raise Http404("Record list not found")
+
+  list_xml = etree.fromstring(response.content)
+
+
+  with urlopen('http://127.0.0.1:8000/static/xsl/urnnbn.xsl') as f:
+    xslt_tree = etree.parse(f, parser)
+
+  transform = etree.XSLT(xslt_tree)     # Create the XSLT transformer
+  urnnbn = transform(list_xml)		# Transform source XML tree
+    
+    
+  return render (request, 'urn.xml', {'urnnbn': urnnbn}, content_type='text/xml')
+

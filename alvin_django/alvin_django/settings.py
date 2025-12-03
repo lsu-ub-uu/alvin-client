@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'search',
     'tailwind',
     'theme',
+    'vocabulary',
+    'urn',
+    'django_oai_pmh',
+    'alvin_search',
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -158,6 +162,9 @@ LANGUAGES = (
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
+
+# Control whether the default language should have a URL prefix
+PREFIX_DEFAULT_LANGUAGE = True
 
 # ENV variables
 API_HOST = os.getenv('API_HOST', 'https://cora.alvin-portal.org')

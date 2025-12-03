@@ -9,7 +9,10 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns (
     path('', include('alvin_info.urls')),
+    path('', include('vocabulary.urls')),
     path('', include('alvin_viewer.urls')),
     path('', include('alvin_list_viewer.urls')),
-    path('search/', include('search.urls')),
+    path('', include('alvin_search.urls')),
+    path('alvin/', include('urn.urls')),
+    path('oai/', include('django_oai_pmh.urls')),
 )

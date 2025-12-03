@@ -1,0 +1,150 @@
+{% extends "vocabulary/userguidemaster.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Alvin - {% translate 'Plats' %}{% endblock %}
+{% block content %}
+<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+  <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="md:flex flex-col md:flex-row">
+      <div class="flex flex-col w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0">
+        <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+          <div class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+                <!-- Mobile menu button-->
+                <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+                    <span class="absolute -inset-0.5"></span>
+                    <span class="sr-only">Open main menu</span>
+                    <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <title>Mobile-menu is not open</title>
+                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <title>Mobile-menu is open</title>
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+	    </div>
+            <nav class="hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#sections">{% translate 'Sektioner i formuläret' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#authority">{% translate 'Auktoritetsinformation' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#variant">{% translate 'Variantformer' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#other">{% translate 'Övrig information' %}</a>       
+            </nav> 
+
+	    <!-- Mobile menu -->
+
+            <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4">
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#sections">{% translate 'Sektioner i formuläret' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#authority">{% translate 'Auktoritetsinformation' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#variant">{% translate 'Variantformer' %}</a>              
+	        <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#other">{% translate 'Övrig information' %}</a>
+	    </div>
+        </div>
+    </div>
+  </div>
+  <span id="main-content-marker"></span>
+  <main class="w-full md:w-2/4 flex-grow pt-1 px-3">
+    <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">{% translate 'Plats' %}</h1>
+    <p class="py-2 font-bold">{% translate 'Auktoritetsposter för platser används i Alvin för:' %}</p>
+   <ul class="py-2 font-bold list-disc list-inside">
+     <li>{% translate 'Plats för publicering eller tillverkning av ett objekt' %}</li>
+     <li>{% translate 'En persons födelseort' %}</li>
+     <li>{% translate 'En persons dödsort' %}</li>
+     <li>{% translate 'Ort i en organisations postadress' %}</li>
+   </ul>
+   <p class="py-2">{% translate 'Auktoritetsarbete innebär att skapa poster som länkade enheter. Detta betyder att välja ett föredraget namn och, i vissa fall, distinkta tillägg för att göra namnet unikt. En viktig del av arbetet är att söka efter och kontrollera om en befintlig namnform redan finns som en länkbar enhet och i så fall länka till den.' %}</p>
+   <p class="py-2">{% translate 'Syftet är att entydigt kunna identifiera dessa platser oavsett vad de kallades under olika tidsperioder eller på olika språk.' %}</p>
+   <p class="py-2">{% translate 'Ett land (t.ex. Sverige) skall inte anges som en auktoritetspost för en plats. Däremot kan landområden (t.ex. Skåne, Öland, England), gårdar, kyrkor etc. anges om det är relevant för ovanstående.' %}</p>
+   <p class="py-2">{% translate 'Även om huvudsyftet med auktoritetsposter för platser är ovanstående sammanhang, kan en sådan post också användas som ämnesord på samma sätt som auktoritetspost för personer och organisationer. Eftersom platser inte alltid är lika lätt identifierbara som de senare är det ofta bättre att använda egenskapen Ämne, Geografisk täckning (fritext) som är mer flexibel. Till exempel kan man ange mycket specifika platser som Drottninggatan 1, Uppsala eller länder/områden oavsett status, t.ex. Sverige, Romarriket, Sovjetunionen etc.). Likaså alla andra typer som sjöar, broar, fornlämningar etc.' %}</p>
+   <h2 id="sections" class="text-3xl md:text-4xl font-bold pt-4 pb-4">{% translate 'Sektioner i formuläret' %}</h2>
+ 
+        <details id="authority" class="group pb-4">
+            <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+                <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg"
+                    width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
+                    </path>
+                </svg>
+                <span class="text-2xl">{% translate 'Auktoritetsinformation' %}</span>
+            </summary>
+
+            <div class="px-4 pb-4 pt-2 border-l border-r border-b">
+<p class="py-2">{% translate 'Minst en föredragen namnform för platsen måste anges för webbsidorna på engelska, svenska eller norska. Detta språk anger språkversionen av webbsidan snarare än språket för namnformen. Om endast en namnform anges kommer den att visas på alla språkversioner av webbsidorna.' %}</p>
+<p class="py-2">{% translate 'Hitta den aktuella auktoriserade formen i t.ex. GeoNames eller Wikipedia.' %}</p>
+<p class="py-2">{% translate 'Det är möjligt, men inte obligatoriskt, att ange den auktoriserade formen på alla tre visningsspråk i de fall de är olika, t.ex. Copenhagen/København/Köpenhamn. De olika formerna kommer då att visas beroende på valt visningsspråk.' %}</p>
+<p class="py-2">{% translate 'Ange inte mer än ett namn för samma språk.' %}</p>
+<p class="py-2">{% translate 'Ange inte alternativa namnformer i det här avsnittet.' %}</p>
+<h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Auktoritet' %}</h3>
+<p class="italic">{% translate 'Visningsspråk' %}:</p>
+<p class="py-2">{% translate 'Välj det språk som motsvarar namnformen, normalt baserat på organisationens plats.' %}</p>
+<p class="font-bold">{% translate 'Plats' %}:</p>
+<p class="py-2">{% translate 'Ange den auktoriserade namnformen för platsen som motsvarar det valda språket.' %}</p>
+<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Oslo. (Ange inte Christiania).' %}</p>
+            </div>
+        </details>
+         <details id="variant" class="group pb-4">
+            <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+                <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg"
+                    width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
+                    </path>
+                </svg>
+                <span class="text-2xl">{% translate 'Variantformer' %}</span>
+            </summary>
+
+            <div class="px-4 pb-4 pt-2 border-l border-r border-b">
+<p class="py-2">{% translate 'Ett namn som inte anses vara den auktoriserade formen, t.ex. alternativa stavningar, tidigare varianter eller andra språk. Genom att ange alternativa namn blir resursen sökbar med hjälp av dessa.' %}</p>
+<h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Variant' %}</h3>
+<p class="italic">{% translate 'Språkkod' %}:</p>
+<p class="py-2">{% translate 'Välj det språk som motsvarar namnformen. Vilket språk som helst kan anges. De 20 vanligaste alternativen listas först. Efter dessa följer de andra i alfabetisk ordning.' %}</p>
+<p class="font-bold">{% translate 'Plats' %}:</p>
+<p class="py-2">{% translate 'Ange den alternativa namnformen för platsen som motsvarar det valda språket.' %}</p>
+<p class="py-2">{% translate 'Flera namnformer kan anges för samma språk.' %}</p>
+<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Christiania. (Alternativ form för Oslo på norska).' %}</p>
+<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Kristiania. (En annan alternativ form för Oslo på norska).' %}</p>
+<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Asloa. (Oslo på latin).' %}</p>
+<p class="font-bold">{% translate 'Textriktning' %}:</p>
+<p class="py-2">{% translate 'Välj Höger till vänster endast om namnet ska visas från höger till vänster, t.ex. namn på arabiska eller hebreiska. Annars lämnas det omarkerat.' %}</p>
+            </div>
+        </details>
+         <details id="other" class="group pb-4">
+            <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+                <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg"
+                    width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
+                    </path>
+                </svg>
+                <span class="text-2xl">{% translate 'Övrig information' %}</span>
+            </summary>
+
+             <div class="px-4 pb-4 pt-2 border-l border-r border-b">
+<p class="font-bold">{% translate 'Land' %}:</p>
+<p class="py-2">{% translate 'Välj det land där den beskrivna platsen för närvarande ligger. De 20 vanligaste alternativen listas först. Efter dessa följer de andra alfabetiskt.' %}</p>
+<p class="py-2">{% translate 'Länder och kungadömen som inte längre existerar som självständiga stater kan inte anges här.' %}</p>
+<p class="font-bold">{% translate 'Latitud' %}:</p>
+<p class="py-2">{% translate 'Ange platsens latitud i WGS84-format (som komprimerade grader med decimaler, endast siffror).' %}</p>
+<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '59.916667' %}</p>
+<p class="font-bold">{% translate 'Longitud' %}:</p>
+<p class="py-2">{% translate 'Ange platsens longitud i WGS84-format (som komprimerade grader med decimaler, endast siffror).' %}</p>
+<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '10.75' %}</p>
+<p class="py-2">{% translate 'Hitta latitud och longitud i t.ex. GeoNames eller Wikipedia.' %}</p>
+<p class="py-2">{% translate 'Det är också möjligt att klicka på en punkt i kartan i registreringsformuläret för att välja position. Valda värden måste först raderas för att kunna välja nya från kartan.' %}</p>
+            </div>
+        </details>
+
+  </main>
+  <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="sticky top-0 p-4 bg-gray-100 rounded-xl w-full h-full">
+      <div class="flex flex-col justify-center">  
+        <h2 class="text-2xl md:text-3xl font-bold pb-2">{% translate 'Länkar' %}</h2>  
+        <p class="py-2"><a class="text-blue-800 underline" href="https://www.loc.gov/standards/mads/">MADS</a></p>
+        <p class="py-2"><a class="text-blue-800 underline" href="https://www.geonames.org/">GeoNames</a></p>
+        <p class="py-2"><a class="text-blue-800 underline" href="https://data.cerl.org/thesaurus">CERL Thesaurus</a></p>
+        <p class="py-2"><a class="text-blue-800 underline" href="https://www.wikipedia.org/">Wikipedia</a></p>
+      </div>
+    </div>    
+  </div>
+</div>
+{% endblock %}

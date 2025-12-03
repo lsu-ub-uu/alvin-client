@@ -1,23 +1,69 @@
-{% extends 'base.html' %}
-
-<!-- LOCALIZATION -->
-{% load i18n static %}
-
-<!-- HEAD ELEMENT -->
-{% block head %}
-<title>Alvin - Copyright</title>
-{% endblock %}
-
-<!-- CONTENT -->
+{% extends "alvin_info/master.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Alvin - {% translate 'Upphovsrätt' %}{% endblock %}
 {% block content %}
-<main class="bg-alvinGrey flex flex-col gap-y-8 min-h-screen p-4 border-x-4 border-x-black border-b-8 border-b-alvinGreen justify-center">
-    <section>
-        <h1></h1>
-    </section>
-</main>
-<footer class="relative bg-black h-screen p-8">
-    <p class="text-white font-universalis">{% translate 'Om Alvin:' %}</p>
-    <p class="text-white">{% translate 'Alvin är en plattform för publicering och långsiktigt bevarande av digitaliserat kulturarvsmaterial från biblioteks-, arkiv- och museisamlingar i Sverige och Norge.' %}</p>
-    <a class="text-alvinOrange pt-9 pb-1" href="">{% translate 'Webbplatskarta' %}</a>
-</footer>
+<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+    <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+        <div class="md:flex flex-col md:flex-row">
+            <div class="flex flex-col w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0">
+                <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+                    <div class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+                    <!-- Mobile menu button-->
+                    <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+                        <span class="absolute -inset-0.5"></span>
+                        <span class="sr-only">Open main menu</span>
+                        <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <title>Mobile-menu is not open</title>
+                            <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <title>Mobile-menu is open</title>
+                            <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <nav class="hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
+                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#digital">{% translate 'Digitala verk' %}</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#metadata">{% translate 'Metadata' %}</a>
+                </nav> 
+                
+                <!-- Mobile menu -->
+                
+                <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4">
+                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#digital">{% translate 'Digitala verk' %}</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#metadata">{% translate 'Metadata' %}</a>               
+                </div>     
+            </div>
+        </div>
+    </div>
+    <span id="main-content-marker"></span>
+    <main class="w-full md:w-2/4 flex-grow pt-1 px-3">
+        <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">{% translate 'Upphovsrätt' %}</h1>
+        <p class="py-2 font-bold">{% translate 'Nästan allt digitalt material som du hittar i Alvin får användas helt fritt. Var dock uppmärksam på att en del modernare material kan vara upphovsrättsskyddat. Rättighetsmärkningen i varje post talar om vad som gäller.' %}</p>
+        <h2 id="digital" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Licensiering av digitala verk i Alvin' %}</h2>
+        <ul class="py-2 list-disc list-inside">
+            <li>{% translate 'Merparten av det digitala materialet i Alvin saknar upphovsrätt och görs tillgängligt enligt' %} <a class="text-blue-800 underline" href="https://creativecommons.org/public-domain/pdm/">Public Domain Mark</a>.</li>
+            <li>{% translate 'För material med upphovsrätt kan upphovsmannen välja licens för publicering enligt' %} <a class="text-blue-800 underline" href="https://creativecommons.org/about/cclicenses/">Creative Commons</a>.</li>
+            <li>{% translate 'Material med upphovsrätt som saknar licens publiceras som' %}  <a class="text-blue-800 underline" href="http://rightsstatements.org/page/InC/1.0/?language=en">In Copyright</a>.</li>
+        </ul>
+        <p class="py-2">{% translate 'Varje deltagande medlem i Alvin ansvarar för korrekt uppmärkning och publicering av eget material.' %} </p>
+        <h2 id="metadata" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Metadata i Alvin' %}</h2>
+        <p class="py-2">{% translate 'Metadataposter från Alvin är fritt tillgängliga enligt' %} <a class="text-blue-800 underline" href="https://creativecommons.org/public-domain/cc0/">Creative Commons CC0</a>. {% translate 'Vem som helst kan sedan använda uppgifterna på vilket sätt som helst och för vilket syfte som helst, inklusive kommersiella ändamål.' %}</p>
+    </main>
+    <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+        <div class="sticky top-0 p-4 bg-off-white rounded-xl w-full h-full">
+            <div class="flex justify-center py-4"> 
+                <a href="https://creativecommons.org/">
+                    <img class="w-48 object-center" alt="Creative Commons" src="/static/img/cc.logo.svg">
+                </a>
+            </div>
+            <div class="flex justify-center py-4"> 
+                <a href="https://rightsstatements.org/en/">
+                    <img class="w-48 object-center" alt="RightsStatements.org" src="/static/img/Logo_RightsStatements.org.svg">
+                </a>
+            </div>    
+        </div>    
+    </div>
+</div>
 {% endblock %}

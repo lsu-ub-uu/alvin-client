@@ -141,15 +141,3 @@
     </div>
     {% endif %}
 </div>
-
-<!-- Map -->
-{% if metadata.latitude and metadata.longitude %}
-    <aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvin-orange border-4 mb-10" id="map" x-show="activeTab != 'related'" x-cloak></aside>
-    {% block jsbody %}
-        <script defer src="{% static 'js/map.js' %}" 
-            data-latitude="{{ metadata.latitude }}"
-            data-longitude="{{ metadata.longitude }}">
-        </script>
-    {% endblock %}
-{% endif %}
-

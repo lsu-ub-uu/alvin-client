@@ -1,5 +1,6 @@
 from lxml import etree
-from .common import (_get_label, _get_target, _norm_rt, _xp, a_date, compact, 
+from ..xmlutils.nodes import attr
+from .common import (_get_label, _get_target, _get_attribute_item, _norm_rt, _xp, a_date, compact, 
                      decorated_list_item, electronic_locators, element, decorated_list, 
                      decorated_text, decorated_texts, decorated_texts_with_type, first, identifiers, names, origin_places, 
                      related_authority)

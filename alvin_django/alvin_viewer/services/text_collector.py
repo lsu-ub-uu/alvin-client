@@ -38,7 +38,7 @@ COLLECTIONS = [
     "physicalDescriptionNoteTypeCollection",
     "subjectHeadingSchemaCollection",
     "relatedToTypeCollection",
-
+    
     #alvin-person
     "variantPersonNameTypeCollection",
     "noteTypeAuthorityCollection",

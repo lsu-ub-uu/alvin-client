@@ -18,7 +18,6 @@ def iiif_manifest(request, record_id: str):
     except Exception as e:
         raise Http404(str(e))
 
-    # Bas-URL som pekar på manifestets "directory" (slutar med '/')
     manifest_base = request.build_absolute_uri(request.path)
     if not manifest_base.endswith("/"):
         manifest_base += "/"
@@ -32,7 +31,6 @@ def iiif_manifest(request, record_id: str):
                 f.findtext("fileLocation/actionLinks/read/url")
             )
         except Exception:
-            # hoppa över filer som inte går att hämta
             continue
 
         h = _to_int(file_xml.findtext(".//height"), 1000)
@@ -44,7 +42,6 @@ def iiif_manifest(request, record_id: str):
         if not server or not ident:
             continue
 
-        # Bas-URL till IIIF Image Service (utan /full/... osv)
         image_service_id = f"{server.rstrip('/')}/{ident.strip('/')}"
 
         idx += 1
@@ -53,9 +50,9 @@ def iiif_manifest(request, record_id: str):
         anno_page_id = urljoin(canvas_id + "/", "page")
         anno_id = urljoin(anno_page_id + "/", "anno")
 
-        # En konkret raster-URL (går att justera om du vill ha annan region/size)
         raster_url = f"{image_service_id}/full/max/0/default.jpg"
-
+        original_url = f.findtext("fileLocation/linkedRecord/binary/master/master/actionLinks/read/url")
+        
         body = {
             "id": raster_url,
             "type": "Image",
@@ -85,6 +82,14 @@ def iiif_manifest(request, record_id: str):
                     ],
                 }
             ],
+            "rendering": [
+                {
+                    "id": original_url,
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "label": {"none": ["Download original"]},
+                }
+            ] if original_url else [],
         }
 
         canvases.append(canvas)
@@ -94,7 +99,7 @@ def iiif_manifest(request, record_id: str):
 
     manifest = {
         "@context": "http://iiif.io/api/presentation/3/context.json",
-        "id": request.build_absolute_uri(),  # full URL till manifestet
+        "id": request.build_absolute_uri(),
         "type": "Manifest",
         "label": {"none": [f"Record {record_id}"]},
         "items": canvases,

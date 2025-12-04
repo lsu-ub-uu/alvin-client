@@ -8,11 +8,9 @@ from urllib3.util.retry import Retry
 XML_HEADERS = {
     "Content-Type": "application/vnd.cora.record+xml",
     "Accept": "application/vnd.cora.record-decorated+xml",
-    "Accept-Encoding": "gzip, deflate",
 }
 
 SAFE_XML_PARSER = etree.XMLParser(resolve_entities=False, no_network=True, huge_tree=False)
-
 
 @dataclass(frozen=True)
 class AlvinEndpoints:

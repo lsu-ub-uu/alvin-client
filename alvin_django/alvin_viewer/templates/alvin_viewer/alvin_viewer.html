@@ -22,16 +22,19 @@
 {% block content %}
 <main class="min-h-svh w-full bg-alvin-grey pb-10 pt-[60px] border-4 border-black"  x-data="{ activeTab: 'overview' }">
 
+
+
   {% if metadata.files %}
-  <!-- Bildvisare TIFY -->
-  <div id="tify" class="h-[80vh] w-full"></div>
-  
+  <div
+    id="clover-root"
+    class="alvin-viewer-wrapper w-full h-screen relative"
+  ></div>
+
   <script>
-    new Tify({
-      container: '#tify',
-      manifestUrl: "{% url 'iiif_manifest' metadata.id %}"
-    })
+    window.CLOVER_MANIFEST_URL = "https://api.dc.library.northwestern.edu/api/v2/works/f4871805-3b52-4197-b9ce-a25e7fe15792?as=iiif"
   </script>
+
+  <script src="{% static 'js/clover.js' %}"></script>
   {% endif %}
 
   <div class="px-10">

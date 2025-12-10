@@ -8,7 +8,6 @@
 {% block head %}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-    <link rel="stylesheet" href="{% static 'tify/tify.css' %}">
 {% endblock %}
 
 {% block jshead %}
@@ -16,7 +15,6 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
     crossorigin="">
   </script>
-  <script src="{% static 'tify/tify.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -35,15 +33,13 @@
     </div>
 
     {% if metadata.files %}
-      <div
-        id="clover-root"
-        class="alvin-viewer-wrapper w-full h-2/4"
-      ></div>
-      <script>
-        window.CLOVER_MANIFEST_URL = "http://127.0.0.1:8000/sv/iiif/manifest/1234567890/"
-      </script>
+    <div
+      id="tify-viewer"
+      style="height: 80vh;"
+      data-manifest-url="{% url 'iiif_manifest' metadata.id %}"
+    ></div>
 
-      <script src="{% static 'js/clover.js' %}"></script>
+    <script type="module" src="{% static 'js/tify.js' %}"></script>
     {% endif %}
 
     <nav class="flex flex-wrap justify-start text-xl max-md:text-base">

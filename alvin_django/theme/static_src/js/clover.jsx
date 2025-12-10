@@ -7,7 +7,7 @@ const CloverApp = () => {
 
   const options = {
     credentials: "omit",
-    canvasHeight: "70vh",
+    canvasHeight: "50vh",
     language: {
       enabled: true,
       defaultLanguages: ["sv", "no", "en"],
@@ -19,10 +19,9 @@ const CloverApp = () => {
     showTitle: false,
     openSeadragon: {
         gestureSettingsMouse: {
-            scrollToZoom: true;
+            scrollToZoom: true
         }
     },
-    
   };
 
   // const customDisplays = [...]

@@ -29,8 +29,7 @@ https://tailwindcss.com/docs/theme
 
 @font-face {
   font-family: "Universalis";
-  src:
-    url("static/fonts/UniversalisADFStd-Bold.woff") format("woff");
+  src: url("/static/fonts/UniversalisADFStd-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -38,8 +37,7 @@ https://tailwindcss.com/docs/theme
 
 @font-face {
   font-family: "NotoSans";
-  src:
-    url("static/fonts/NotoSans-Regular.ttf") format("truetype");
+  src: url("/static/fonts/NotoSans-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -72,6 +70,31 @@ html { @apply font-sans; }
 
 .md-value {
   @apply w-full md:w-[55%];
+}
+
+@layer components {
+
+  .alvin-viewer-wrapper {
+  }
+
+  .clover-viewer {
+    @apply flex flex-col;
+  }
+
+  .clover-viewer-header {
+    @apply hidden;
+  }
+
+  .clover-viewer-content {
+   
+  }
+
+  .clover-viewer-painting {
+     @apply border-y-4 border-black;
+  }
+
+  .clover-viewer-media-wrapper {
+  }
 }
 
 a { 

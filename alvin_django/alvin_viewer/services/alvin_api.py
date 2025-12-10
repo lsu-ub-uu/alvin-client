@@ -53,7 +53,7 @@ class AlvinAPI:
         except etree.XMLSyntaxError as e:
             raise ValueError(f"Invalid XML: {e}") from e
 
-    def fetch_xml(self, url: str, *, cache_key: str | None = None, ttl: int = 60) -> etree._Element:
+    def fetch_xml(self, url: str, *,  cache_key: str| None = None, ttl: int = 60) -> etree._Element:
     
         resp = self.session.get(url, timeout=(3, 15), allow_redirects=False)
         resp.raise_for_status()

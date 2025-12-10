@@ -167,7 +167,7 @@ LOCALE_PATHS = [
 ]
 
 # ENV variables
-API_HOST = os.getenv('API_HOST', 'https://cora.alvin-portal.org')
+API_HOST = os.getenv('API_HOST', 'https://preview.alvin.cora.epc.ub.uu.se')
 
 LOGGING = {
     "version": 1,

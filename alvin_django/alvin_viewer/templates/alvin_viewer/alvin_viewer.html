@@ -22,21 +22,6 @@
 {% block content %}
 <main class="min-h-svh w-full bg-alvin-grey pb-10 pt-[60px] border-4 border-black"  x-data="{ activeTab: 'overview' }">
 
-
-
-  {% if metadata.files %}
-  <div
-    id="clover-root"
-    class="alvin-viewer-wrapper w-full h-screen relative"
-  ></div>
-
-  <script>
-    window.CLOVER_MANIFEST_URL = "http://127.0.0.1:8000/sv/iiif/manifest/1/"
-  </script>
-
-  <script src="{% static 'js/clover.js' %}"></script>
-  {% endif %}
-
   <div class="px-10">
     <div class="pt-8 pb-2">
       <!-- Titel -->
@@ -48,6 +33,18 @@
         {% render_record_icon metadata %}
       </div>
     </div>
+
+    {% if metadata.files %}
+      <div
+        id="clover-root"
+        class="alvin-viewer-wrapper w-full h-2/4"
+      ></div>
+      <script>
+        window.CLOVER_MANIFEST_URL = "http://127.0.0.1:8000/sv/iiif/manifest/1234567890/"
+      </script>
+
+      <script src="{% static 'js/clover.js' %}"></script>
+    {% endif %}
 
     <nav class="flex flex-wrap justify-start text-xl max-md:text-base">
       <button @click="activeTab = 'overview'" class="flex h-full p-4 text-center hover:bg-alvin-green" 

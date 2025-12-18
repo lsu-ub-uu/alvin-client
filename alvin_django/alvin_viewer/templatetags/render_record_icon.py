@@ -5,14 +5,14 @@ register = template.Library()
 
 @register.inclusion_tag('./alvin_viewer/_partials/_record_icon_name.html')
 def render_record_icon(metadata):
-    rt = (metadata or {}).get("record_type")
+    rt = metadata.record_type
 
     # authority
     if rt in ('alvin-place','alvin-person','alvin-organisation'):
         mapping = {
-            'alvin-place': ('/img/authorityTypes/place.svg', metadata.get("label"), metadata.get("label")),
-            'alvin-person': ('/img/authorityTypes/person.svg', metadata.get("label"), metadata.get("label")),
-            'alvin-organisation': ('/img/authorityTypes/organisation.svg', metadata.get("label"), metadata.get("label")),
+            'alvin-place': ('/img/authorityTypes/place.svg', metadata.label, metadata.label),
+            'alvin-person': ('/img/authorityTypes/person.svg', metadata.label, metadata.label),
+            'alvin-organisation': ('/img/authorityTypes/organisation.svg', metadata.label, metadata.label),
         }
         icon_path, alt, label = mapping[rt] 
         return {'icon_path': icon_path, 'icon_alt': alt, 'label': label,}

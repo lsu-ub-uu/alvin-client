@@ -7,29 +7,28 @@
     </dt>
     <dd class="md-value">
         {% for record_type in record_type_links.records %}
-            {% url 'alvin_viewer' link_type record_type.id as record_type_url %}
-                <a href="{{ record_type_url }}">
-                    {% if link_type == 'alvin-record' %}
-                        {{ record_type|alvin_title:link_type }}
-                    {% elif link_type == 'alvin-place'%}
-                        {{ record_type.name.names|alvin_title:link_type }}
-                    {% elif link_type == 'alvin-person'%}
-                        {{ record_type.name.names|alvin_title:link_type }}
-                    {% elif link_type == 'alvin-organisation'%}
-                        {{ record_type.name.names|alvin_title:link_type }}
-                    {% elif link_type == 'alvin-work' %}
-                        {{ record_type.title|alvin_record_title }}
-                    {% endif %}
-                </a>
-                {% if record_type.type %}
-                    ({{ record_type.type }})
+            <a href="{{ record_type.url }}">
+                {% if link_type == 'alvin-record' %}
+                    {{ record_type }}
+                {% elif link_type == 'alvin-place'%}
+                    {{ record_type.name.title }}
+                {% elif link_type == 'alvin-person'%}
+                    {{ record_type.name.title }}
+                {% elif link_type == 'alvin-organisation'%}
+                    {{ record_type.name.title }}
+                {% elif link_type == 'alvin-work' %}
+                    {{ record_type }}
                 {% endif %}
-                {% for part in record_type.parts %}
-                    <strong>{{ part.type }}</strong>: {{ part|part_join }}{% if not forloop.last %} ; {% endif %}
-                {% endfor %}
-                {% if not forloop.last %}
-                    <br>
-                {% endif %}
+            </a>
+            {% if record_type.type %}
+                ({{ record_type.type }})
+            {% endif %}
+            {% for part in record_type.parts %}
+                <strong>{{ part.type }}</strong>: {{ part|part_join }}{% if not forloop.last %} ; {% endif %}
+            {% endfor %}
+            {% if not forloop.last %}
+                <br>
+            {% endif %}
         {% endfor %}
     </dd>
 </div>

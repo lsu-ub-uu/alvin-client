@@ -27,6 +27,7 @@ session = _session()
 COLLECTIONS = [
     #common
     "languageCodeCollection",
+    "identifierTypeAuthorityCollection",
 
     #alvin-record
     "identifierTypeCollection",

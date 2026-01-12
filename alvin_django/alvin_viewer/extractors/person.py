@@ -1,13 +1,14 @@
 from lxml import etree
 
+from .metadata import DateEntry
+
 from .records import AlvinPerson
 from ..xmlutils.nodes import attr, text
-from .common import (_get_label, _get_target, _get_attribute_item, _norm_rt, _xp, a_date, compact, 
+from .common import (_get_label, _get_target, _norm_rt, _xp, a_date, 
                      decorated_list_item, electronic_locators, element, decorated_list, 
-                     decorated_text, decorated_texts, decorated_texts_with_type, first, identifiers, names, origin_place, 
+                     decorated_text, decorated_texts, decorated_texts_with_type, identifiers, names, origin_place, 
                      related_authority)
 from .mappings import person
-from .cleaner import clean_empty
 
 rt = _norm_rt("alvin-person")
 
@@ -20,13 +21,13 @@ def _nationality(root: etree._ElementTree, xp: str) -> dict:
         "country": decorated_list(root, f"{xp}/country")
     }
 
-def _person_date(root: etree._ElementTree, xp: str, kind: str):
+def _person_date(root: etree._ElementTree, xp: str, kind: str) -> DateEntry:
     target = _get_target(root, xp)
     if target is None:
         return None
     return a_date(target, kind)
 
-def extract(root: etree._Element) -> dict:
+def extract(root: etree._Element) -> AlvinPerson:
     
     return AlvinPerson(
         id=text(root, _xp(rt, "recordInfo/id")),
@@ -50,9 +51,3 @@ def extract(root: etree._Element) -> dict:
         related_persons = related_authority(root, _xp(rt, "related[person]"), "person"),
         related_organisations = related_authority(root, _xp(rt, "related[organisation]"), "organisation"),
     )
-
-''' 
-        
-    })
-    
-    return clean_empty(md)'''

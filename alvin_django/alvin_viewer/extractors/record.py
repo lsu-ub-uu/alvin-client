@@ -2,12 +2,11 @@ from typing import Callable, Iterable, Optional, Any, Dict, List
 from lxml import etree
 from django.utils import translation
 
-from ..xmlutils.nodes import text, texts, attr, element, elements, first
+from ..xmlutils.nodes import text, attr, element, elements, first
 from .common import (_get_label, _get_value, _norm_rt, _xp, _get_attribute_item)
 from .common import *
 from .cleaner import clean_empty
-
-from django.core.cache import cache
+from .records import AlvinRecord
 
 rt = _norm_rt("alvin-record")
 
@@ -119,13 +118,19 @@ def _measure(root: etree._Element, xp: str):
 
 def extract(root: etree._Element) -> Dict:
     
-    data = compact({
-        "type_of_resource": decorated_list_item(root, _xp(rt, "typeOfResource")),
-        "collection": decorated_list_item(root, _xp(rt, "collection")),
-        "production_method": decorated_list_item(root, _xp(rt, "productionMethod")),
-        "main_title": titles(root, _xp(rt, "title")),
-        "variant_titles": titles(root, _xp(rt, "variantTitle")),
-        "location": location(root, rt, "physicalLocation/heldBy/location"),
+    return AlvinRecord(
+        id = text(root, _xp(rt, "recordInfo/id")),
+        record_type = "alvin-record",
+        type_of_resource = decorated_list_item(root, _xp(rt, "typeOfResource")),
+        collection = decorated_list_item(root, _xp(rt, "collection")),
+        production_method = decorated_list_item(root, _xp(rt, "productionMethod")),
+        main_title = titles(root, _xp(rt, "title")),
+        variant_titles = titles(root, _xp(rt, "variantTitle")),
+        
+    )
+
+    '''
+    "location": location(root, rt, "physicalLocation/heldBy/location"),
         "sublocation": decorated_text(root, _xp(rt, "physicalLocation/sublocation")),
         "shelf_mark": decorated_text(root, _xp(rt, "physicalLocation/shelfMark")),
         "former_shelf_mark": decorated_texts(root, _xp(rt, "physicalLocation/formerShelfMark")),
@@ -140,7 +145,7 @@ def extract(root: etree._Element) -> Dict:
         "edition_statement": decorated_text(root, "editionStatement"),
         "origin_places": origin_places(root, _xp(rt, "originPlace")),
         "publications": decorated_texts(root, _xp(rt, "publication")),
-        "origin_date": first(dates(root, _xp(rt, "originDate"), "start", "end")),
+        "origin_date": dates(root, _xp(rt, "originDate"), "start", "end")),
         "display_date": decorated_text(root, "originDate/displayDate"),
         "date_other": dates(root, _xp(rt, "dateOther"), "start", "end"),
         "extent": decorated_text(root, "extent"),
@@ -171,7 +176,7 @@ def extract(root: etree._Element) -> Dict:
         "identifiers": identifiers(root, _xp(rt, "identifier")),
         "work": related_works(root, _xp(rt, "work")),
         "files": element(root, _xp(rt, "fileSection")),
-    })
+    '''
 
     if data["type_of_resource"]["code"] == 'col':
         data.update(_col(root))

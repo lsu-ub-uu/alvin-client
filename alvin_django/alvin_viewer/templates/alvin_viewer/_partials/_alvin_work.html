@@ -1,48 +1,48 @@
 {% load i18n static metadata_wrangler %}
 
 {% block title %}
-<title>Alvin - {{ metadata|alvin_title:metadata.record_type }}</title>
+<title>Alvin - {{ metadata.main_title.display }}</title>
 {% endblock %}
 
 <!-- Metadata -->
  <div class="flex flex-col w-full">
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'">
-        {% for title in metadata.variant_titles %}
-            {% include "./_metadata_row.html" with label=title.label value=title|alvin_work_name attribute=title.type %}
+        {% for title in metadata.variant_titles.titles %}
+            {% include "./_metadata_row.html" with label=metadata.variant_titles.label extra_label=title.type value=title.display %}
         {% endfor %}
     </div>
     <div>
         {% for agent in metadata.agents %}
-            {% url 'alvin_viewer' agent.type agent.id as agent_url %}
-            {% include "./_metadata_row.html" with label=agent.label url=agent_url value=agent.name.names|agent_name attribute=agent.role|role_join %}
+            {% include "./_metadata_row.html" with label=agent.label url=agent.url value=agent.names.title attribute=agent.role %}
         {% endfor %}
     </div>
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'">
-        {% include "./_metadata_row.html" with label=metadata.origin_date.label value=metadata.origin_date.dates|dates_join %}
-        {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date %}
+        {% include "./_metadata_row.html" with label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
     </div>
     <div>
-        {% for place in metadata.origin_places %}
-            {% url 'alvin_viewer' 'alvin-place' place.id as place_url %}
-            {% include "./_metadata_row.html" with label=place.label url=place_url value=place.name|alvin_place_name extra_value=place|origin_countries %}
+        {% for place in metadata.origin_places.places %}
+            {% include "./_metadata_row.html" with label=metadata.origin_places.label url=place.url value=place.display extra_value=place.display_countries %}
         {% endfor %}
     </div>
     <div class="flex flex-col" x-show="activeTab == 'all_metadata'" x-cloak>
         {% for date in metadata.date_other %}
-            {% include "./_metadata_row.html" with label=date.dates.label value=date.dates|dates_join  %}
+            {% include "./_metadata_row.html" with label=date.type value=date.dates.display  %}
         {% endfor %}
         {% if metadata.longitude and metadata.latitude %}
             {% include "./_metadata_row.html" with label=metadata.longitude.label value=metadata.longitude.text %}
             {% include "./_metadata_row.html" with label=metadata.latitude.label value=metadata.latitude.text %}
         {% endif %}
         {% include "./_metadata_row.html" with label=metadata.incipit.label value=metadata.incipit.text|linebreaksbr %}
-        {% include "./_metadata_row.html" with label=metadata.music_key.label value=metadata.music_key.items|join:"<br>" %}
+        {% include "./_metadata_row.html" with label=metadata.music_key.label value=metadata.music_key.display %}
         {% include "./_metadata_row.html" with label=metadata.music_key_other.label value=metadata.music_key_other.text %}
-        {% include "./_metadata_row.html" with label=metadata.music_medium.label value=metadata.music_medium.items|join:"<br>" %}
+        {% include "./_metadata_row.html" with label=metadata.music_medium.label value=metadata.music_medium.display %}
         {% include "./_metadata_row.html" with label=metadata.music_medium_other.label value=metadata.music_medium_other.text %}
-        {% include "./_metadata_row.html" with label=metadata.music_notation.label value=metadata.music_notation.items|join:"<br>" %}
+        {% include "./_metadata_row.html" with label=metadata.genre_form.label value=metadata.genre_form.display %}
         {% include "./_metadata_row.html" with label=metadata.note.label value=metadata.note.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.literature.label value=metadata.literature.text|linebreaksbr %}
+        {% include "./_metadata_row.html" with label=metadata.serial_number.label value=metadata.serial_number.text %}
+        {% include "./_metadata_row.html" with label=metadata.opus_number.label value=metadata.opus_number.text %}
+        {% include "./_metadata_row.html" with label=metadata.thematic_number.label value=metadata.thematic_number.text %}
         {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
         {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
         {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
@@ -51,8 +51,3 @@
         {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
     </div>
 </div>
-
-<!-- Karta -->
-{% if metadata.latitude and metadata.longitude %}
-    <aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvin-orange border-4 mb-10" id="map" x-show="activeTab != 'related'" x-cloak></aside>
-{% endif %}

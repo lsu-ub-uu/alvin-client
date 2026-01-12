@@ -12,6 +12,18 @@ from .mappings import person, organisation
 # ------------------
 
 @dataclass(slots=True)
+class Address:
+    label: Optional[str] = None
+    box: Optional[DecoratedText] = None
+    street: Optional[str] = None
+    postcode: Optional[str] = None
+    place: Optional[OriginPlace] = None
+    country: Optional[DecoratedListItem] = None
+
+    def is_empty(self) -> bool:
+        return not (self.label or self.box or self.street or self.postcode or self.place or self.country)
+
+@dataclass(slots=True)
 class CommonMetadata:
     id: str
     record_type: str
@@ -20,7 +32,7 @@ class CommonMetadata:
     last_updated: Optional[DecoratedText] = None
     source_xml: Optional[str] = None
 
-@dataclass(slots=True, kw_only=True)
+@dataclass(slots=True)
 class DecoratedText:
     label: Optional[str] = None
     text: Optional[str] = None
@@ -41,9 +53,17 @@ class DecoratedTexts:
         return ", ".join(self.texts) if self.texts else ""
 
 @dataclass(slots=True)
+class DecoratedTextWithType:
+    type: Optional[str] = None
+    text: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not self.text
+
+@dataclass(slots=True)
 class DecoratedTextsWithType:
     label: Optional[str] = None
-    texts: List[Dict[str, str]] = None
+    texts: List[DecoratedTextWithType] = None
 
     def is_empty(self) -> bool:
         return not self.texts
@@ -89,6 +109,7 @@ class Identifier:
 class RelatedAuthorityEntry:
     id: Optional[str] = None
     record_type: Optional[str] = None
+    type: Optional[str] = None
     label: Optional[str] = None
     name: List[Dict[str, Any]] = None
 
@@ -98,7 +119,7 @@ class RelatedAuthorityEntry:
     @property
     def url(self) -> Optional[str]:
         if self.id:
-            return reverse("alvin_viewer", args=[f"alvin-{self.record_type}", self.id])
+            return reverse("alvin_viewer", args=[self.record_type, self.id])
         return None
     
 @dataclass
@@ -110,7 +131,7 @@ class RelatedAuthoritiesBlock:
         return not self.records
 
 # ------------------
-# NAMES BLOCKS 
+# NAMES AND TITLES BLOCKS 
 # ------------------
 
 @dataclass(slots=True)
@@ -131,7 +152,6 @@ class NameEntry:
         if self.geographic:
             return self.geographic
         
-
         for part in self.parts.keys():
             if part in ["given_name", "family_name", "numeration"]:
                 keys = ["given_name", "family_name", "numeration"]
@@ -141,7 +161,7 @@ class NameEntry:
                 keys = ["corporate_name", "subordinate_name"]
                 joiner = ": "
                 break
-
+                
         n = joiner.join(filter(None, (self.parts.get(key) for key in keys)))
         if self.parts.get("terms_of_address"):
             n += f", {self.parts.get('terms_of_address')}"
@@ -169,8 +189,6 @@ class NameValue:
     def display(self) -> str:
         return " ; ".join(e.display for e in self.entries if e.display)
 
-NamesPerLang = Dict[str, Union[NameEntry, List[NameEntry]]]
-
 @dataclass(slots=True)
 class NamesBlock:
     label: Optional[str] = None
@@ -195,6 +213,29 @@ class NamesBlock:
 
         first = next(iter(self.names.values()), None)
         return first.display if first else ""
+
+@dataclass(slots=True)
+class TitleEntry:
+    label: Optional[str] = None
+    type: Optional[str] = None
+    main_title: Optional[str] = None
+    subtitle: Optional[str] = None
+    orientation_code: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not self.text
+    
+    @property
+    def display(self) -> str:
+        return " : ".join(filter(None, (self.main_title, self.subtitle)))
+
+@dataclass(slots=True)
+class TitlesBlock:
+    label: Optional[str] = None
+    titles: List[TitleEntry] = None
+
+    def is_empty(self) -> bool:
+        return not self.titles
     
 # ------------------
 # DATES BLOCKS
@@ -216,16 +257,58 @@ class DateEntry:
         return date_str
 
 @dataclass(slots=True)
-class DatesBlock:
-    label: Optional[str] = None
-    entries: List[DateEntry] = None
+class DatesValue:
+    type: Optional[str] = None
+    start_date: Optional[DateEntry] = None
+    end_date: Optional[DateEntry] = None
+    date_note: Optional[str] = None
+    display_date: Optional[str] = None
 
     def is_empty(self) -> bool:
-        return not self.entries
+        return not self.start_date and not self.end_date
+    
+    @property
+    def display(self) -> str:
+        if self.display_date:
+            date_str = self.display_date
+        else:
+            start = self.start_date.display if self.start_date else None
+            end = self.end_date.display if self.end_date else None
+            date_str = " – ".join(s for s in (start, end) if s)
+        if self.date_note:
+            date_str += f": {self.date_note}"
+        return date_str
+
+@dataclass(slots=True)
+class DatesBlock:
+    label: Optional[str] = None
+    type: Optional[str] = None
+    dates: List[DatesValue] = None
+
+    def is_empty(self) -> bool:
+        return not self.dates
     
 # ------------------
 # LINKED RECORDS
 # ------------------
+
+@dataclass(slots=True)
+class Agent:
+    roles: List[str]
+    label: Optional[str] = None
+    type: Optional[str] = None
+    id: Optional[str] = None
+    names: NamesBlock = None
+    certainty: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not self.names
+    
+    @property
+    def url(self) -> Optional[str]:
+        if self.id:
+            return reverse("alvin_viewer", args=[self.type, self.id])
+        return None
 
 @dataclass(slots=True)
 class OriginPlace:
@@ -240,14 +323,27 @@ class OriginPlace:
         return not self.places
     
     @property
-    def display(self) -> str:
+    def display(self) -> Optional[str]:
         title = self.name.title()
         if self.certainty == "uncertain":
             title += "?"
         return title
     
     @property
+    def display_countries(self) -> Optional[str]:
+        items = (self.country.items if self.country else []) + (self.historical_country.items if self.historical_country else [])
+        return f", {', '.join(filter(None, (items)))}" if items else None
+    
+    @property
     def url(self) -> Optional[str]:
         if self.id:
             return reverse("alvin_viewer", args=["alvin-place", self.id])
         return None
+    
+@dataclass(slots=True)
+class OriginPlaceBlock:
+    label: Optional[str] = None
+    places: List[OriginPlace] = None
+
+    def is_empty(self) -> bool:
+        return not self.places

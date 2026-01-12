@@ -1,20 +1,19 @@
 {% load i18n static metadata_wrangler %}
 
 {% block title %}
-<title>Alvin - {{ metadata|alvin_title:metadata.record_type }}</title>
+<title>Alvin - {{ metadata.main_title.display }}</title>
 {% endblock %}
 
 <!-- Metadata -->
 <div class="flex flex-col w-full">
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
-        {% for title in metadata.variant_titles %}
-            {% include "./_metadata_row.html" with label=title.label value=title|alvin_record_title attribute=title.type %}
+        {% for title in metadata.variant_titles.titles %}
+            {% include "./_metadata_row.html" with label=metadata.variant_titles.label extra_label=title.type value=title.display %}
         {% endfor %}
     </div>
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata' || activeTab  === 'related'" x-cloak>
     {% for agent in metadata.agents %}
-        {% url 'alvin_viewer' agent.type agent.id as agent_url %}
-        {% include "./_metadata_row.html" with label=agent.label url=agent_url value=agent.name.names|agent_name attribute=agent.role|role_join %}
+        {% include "./_metadata_row.html" with label=agent.label url=agent.url value=agent.names.title attribute=agent.role|role_join %}
     {% endfor %}
     {% for place in metadata.origin_places %}
         {% url 'alvin_viewer' 'alvin-place' place.id as place_url %}
@@ -34,10 +33,12 @@
         {% include "./_metadata_row.html" with label=metadata.languages.label value=metadata.languages.items|join:"<br>"|safe %}
         {% include "./_metadata_row.html" with label=metadata.description_languages.label value=metadata.description_languages.items|join:"<br>"|safe %}
     </div>
+    <!--
     <div x-show="activeTab == 'all_metadata' || activeTab == 'related'" x-cloak>
         {% url 'alvin_viewer' 'alvin-location' metadata.location.id as location_url %}
-        {% include "./_metadata_row.html" with label=metadata.location.label url=location_url value=metadata.location.name|agent_name %}
+        {% include "./_metadata_row.html" with label=metadata.location.label url=location_url value=metadata.location.name %}
     </div>
+    -->
     <div x-show="activeTab == 'all_metadata'" x-cloak>
         {% include "./_metadata_row.html" with label=metadata.sublocation.label value=metadata.sublocation.text %}
         {% include "./_metadata_row.html" with label=metadata.shelf_mark.label value=metadata.shelf_mark.text %}

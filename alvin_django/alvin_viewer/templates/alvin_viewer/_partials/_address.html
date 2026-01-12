@@ -15,7 +15,7 @@
             {% endif %}
             {% if postcode or place_id %}
             <p>
-                {{ postcode }}{% if place %} <a href="{% url 'alvin_viewer' 'alvin-place' place_id  %}">{{ place|alvin_title:'alvin-place' }}</a>{% endif %}
+                {{ postcode }}{% if place %} <a href="{% url 'alvin_viewer' 'alvin-place' place_id  %}">{{ place }}</a>{% endif %}
             {% endif %}
             </p>
             {% if country %}

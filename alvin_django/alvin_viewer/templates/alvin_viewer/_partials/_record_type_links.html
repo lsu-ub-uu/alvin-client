@@ -6,30 +6,25 @@
         {{ label }}
     </dt>
     <dd class="md-value">
+        <ul class="list-decimal list-inside">
         {% for record_type in record_type_links.records %}
+            <li>
             <a href="{{ record_type.url }}">
-                {% if link_type == 'alvin-record' %}
-                    {{ record_type }}
-                {% elif link_type == 'alvin-place'%}
-                    {{ record_type.name.title }}
-                {% elif link_type == 'alvin-person'%}
-                    {{ record_type.name.title }}
-                {% elif link_type == 'alvin-organisation'%}
-                    {{ record_type.name.title }}
-                {% elif link_type == 'alvin-work' %}
-                    {{ record_type }}
-                {% endif %}
+                {{ record_type.main_title.display }}
             </a>
             {% if record_type.type %}
                 ({{ record_type.type }})
             {% endif %}
-            {% for part in record_type.parts %}
-                <strong>{{ part.type }}</strong>: {{ part|part_join }}{% if not forloop.last %} ; {% endif %}
-            {% endfor %}
-            {% if not forloop.last %}
-                <br>
+            {% if record_type.parts %}
+            <ul class="pb-1 list-inside">
+                {% for part in record_type.parts %}
+                    <li><strong>{{ part.type }}: </strong>{{ part.display}}</p>
+                {% endfor %}
+            </ul>
             {% endif %}
+            </li>
         {% endfor %}
+        </ul>
     </dd>
 </div>
 {% endif %}

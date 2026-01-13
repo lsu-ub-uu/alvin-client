@@ -1,0 +1,23 @@
+{% load i18n static metadata_wrangler %}
+
+{% if authority_links %}
+<div class="md-row">
+    <dt class="md-label">
+        {{ label }}
+    </dt>
+    <dd class="md-value">
+        <ul class="list-inside">
+        {% for authority in authority_links.records %}
+            <li>
+                <a href="{{ authority.url }}">
+                    {{ authority.name.title }}
+                </a>
+                {% if authority.type %}
+                    ({{ authority.type }})
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </dd>
+</div>
+{% endif %}

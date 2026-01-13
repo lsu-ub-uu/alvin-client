@@ -11,10 +11,11 @@ from ..services.text_collector import get_item_dict
 from .metadata import (Agent, CommonMetadata, DateEntry, DatesBlock, 
                        DatesValue, DecoratedList, DecoratedText, 
                        DecoratedListItem, DecoratedTextWithType, DecoratedTexts, 
-                       DecoratedTextsWithType, ElectronicLocator, Identifier,
+                       DecoratedTextsWithType, ElectronicLocator, Identifier, Location,
                        NameEntry, NameValue, NamesBlock,
-                       OriginPlace, OriginPlaceBlock, RelatedAuthoritiesBlock, 
-                       RelatedAuthorityEntry, TitlesBlock, TitleEntry)
+                       OriginPlace, OriginPlaceBlock, RelatedAuthoritiesBlock,
+                       RelatedAuthorityEntry, RelatedRecordsBlock, RelatedRecordEntry, 
+                       RelatedRecordPart, TitlesBlock, TitleEntry)
 
 
 # ------------------
@@ -217,24 +218,26 @@ def origin_places(node: etree._Element, xp: str) -> OriginPlaceBlock:
     
     return block
 
-def related_records(node: etree._Element, xp: str, type: str) -> dict | None:
+def related_records(node: etree._Element, xp: str) -> dict | None:
     target = element(node, xp)
     if target is None:
-        return {}
-    return {
-        "label": _get_label(target),
-        "records": collect(node, xp, lambda f: compact({
-            "type": _get_attribute_item(attr(f, "./@relatedToType")),
-            "id": text(f, f"{type}/linkedRecordId"),
-            "main_title": titles(f, f"{type}/linkedRecord/{type}/title"),
-            "parts": [{
-                "type": _get_attribute_item(attr(part, "./@partType")),
-                "typeattr": attr(part, "./@partType"),
-                "number": text(part, "partNumber"),
-                "extent": text(part, "extent"),
-            } for part in elements(f, "part")],
-        }))
-    }
+        return None
+    
+    rrb = RelatedRecordsBlock(
+        label = _get_label(target),
+        records = [RelatedRecordEntry(
+            type = _get_attribute_item(attr(t, "./@relatedToType")),
+            id = text(t, f"record/linkedRecordId"),
+            main_title = titles(t, f"record/linkedRecord/record/title"),
+            parts = [RelatedRecordPart(
+                type = _get_attribute_item(attr(part, "./@partType")),
+                typeattr = attr(part, "./@partType"),
+                number = text(part, "partNumber"),
+                extent = text(part, "extent"),
+            ) for part in elements(t, "part")],
+        ) for t in elements(node, xp)]
+    )
+    return rrb
 
 def related_works(node: etree._Element, xp: str) -> List[Dict[str, str]]:
     target = _get_target(node, xp)
@@ -250,22 +253,17 @@ def related_works(node: etree._Element, xp: str) -> List[Dict[str, str]]:
     }
 
 
-def location(node: etree._Element, resource_type: str, xp: str) -> Dict[str, str]:
+def location(node: etree._Element, xp: str) -> Location | None:
     if node is None:
-        return {}
+        return None
 
-    loc = first(elements(node, _xp(resource_type, xp)))
-    names = {}
+    loc = element(node, _xp("record", xp))
     
-    for e in elements(loc, "linkedRecord/location/authority"):
-        lang = attr(e, "./@lang")
-        names[lang] = {key: text(e, xpath) for key, xpath in organisation["AUTH_NAME"].items()}
-
-    return {
-        "label": _get_label(loc),
-        "id": text(loc, "linkedRecordId"),
-        "name": names,
-        }
+    return Location(
+        label = _get_label(loc),
+        id = text(loc, "linkedRecordId"),
+        names = names(loc, ".//authority", organisation["AUTH_NAME"]),
+        )
 
 def agents(node: etree._Element, xp: str) -> NamesBlock:
     target = element(node, xp)
@@ -277,7 +275,7 @@ def agents(node: etree._Element, xp: str) -> NamesBlock:
         type = None if attr(agent, './@type') is None else f"alvin-{attr(agent, './@type')}",
         id = text(agent, ".//linkedRecordId"),
         names = names(agent, ".//authority", person["AUTH_NAME"] if attr(agent, './@type') == 'person' else organisation["AUTH_NAME"]),
-        roles = [_get_value(e) for e in elements(agent, "role")],
+        roles = decorated_list(agent, "role"),
         certainty = text(agent, "certainty"),
         ) for agent in elements(node, xp)]
 
@@ -308,9 +306,10 @@ def related_authority(node: etree._Element, xp: str, authority: str) -> RelatedA
     
     return None if related.is_empty() else related
 
-def subject_authority(node: etree._Element, resource_type: str, authority: str) -> dict:
-    if node is None:
-        return {}
+def subject_authority(node: etree._Element, resource_type: str, authority: str) -> RelatedAuthoritiesBlock | None:
+    target = element(node, _xp(resource_type, f"subject[@type = '{authority}']"))
+    if target is None:
+        return None
     
     AN = {
         "person": person["AUTH_NAME"],
@@ -318,17 +317,14 @@ def subject_authority(node: etree._Element, resource_type: str, authority: str) 
         "place": place["AUTH_NAME"]
     }
     
-    target = element(node, _xp(resource_type, f"subject[@type = '{authority}']"))
-    if target is None:
-        return {}
-    
-    return {
-        "label": _get_label(target),
-        "records": [{
-            "id": text(e, f"{authority}/linkedRecordId"),
-            "name": names(e, f"{authority}/linkedRecord/{authority}/authority", AN[authority]),
-            } for e in elements(node, _xp(resource_type, f"subject[@type = '{authority}']"))]
-        }
+    return RelatedAuthoritiesBlock(
+        label = _get_label(target),
+        records = [RelatedAuthorityEntry(
+            id = text(e, f"{authority}/linkedRecordId"),
+            record_type = text(e, (f"{authority}/linkedRecordType")),
+            name = names(e, f"{authority}/linkedRecord/{authority}/authority", AN[authority]),
+            ) for e in elements(node, _xp(resource_type, f"subject[@type = '{authority}']"))]
+        )
 
 # COMPONENTS -------
 
@@ -402,18 +398,20 @@ def _get_target(node, xp):
     target = element(node, xp)
     return target
 
-def decorated_text(node: etree._Element | None, xp: str | None = None) -> DecoratedText | None:
+def decorated_text(node: etree._Element | None, xp: str | None, parent_xp: str | None = None) -> DecoratedText | None:
     target = _get_target(node, xp)
     if target is None:
         return None
     
     dt = DecoratedText(
         label=_get_label(target),
+        parent_label = _get_label(element(node, parent_xp)) if parent_xp else None,
         text=text(node, xp),
     )
 
     if dt.is_empty():
         return None
+    
     return dt
 
 
@@ -421,16 +419,22 @@ def decorated_texts(node: etree._Element | None, xp: str | None = None) -> Decor
     target = _get_target(node, xp)
     if target is None:
         return None
-    return DecoratedTexts(
+    
+    dts = DecoratedTexts(
         label = _get_label(target),
         texts = texts(node, xp)
     )
+
+    if dts.is_empty():
+        return None
+    return dts
 
 def decorated_texts_with_type(node: etree.Element, xp: str, tag: str, textType: str | None = None) -> DecoratedTextsWithType | None:
     target = _get_target(node, xp)
     if target is None:
         return None
-    return DecoratedTextsWithType(
+    
+    dtwt = DecoratedTextsWithType(
         label = _get_label(target),
         texts = [DecoratedTextWithType(
             type = _get_attribute_item(attr(e, textType)),
@@ -438,15 +442,24 @@ def decorated_texts_with_type(node: etree.Element, xp: str, tag: str, textType: 
             ) for e in elements(node, f"{xp}/{tag}")]
     )
 
+    if dtwt.is_empty():
+        return None
+    return dtwt
+
 def decorated_list(node: etree._Element, xp: str) -> DecoratedList | None:
     target = _get_target(node, xp)
     if target is None:
         return None
-    return DecoratedList(
+    
+    dl = DecoratedList(
             label = _get_label(target),
             items = [_get_value(e) for e in elements(node, xp)],
             code = text(node, xp),
     )
+
+    if dl.is_empty():
+        return None
+    return dl
 
 def decorated_list_item(node: etree._Element, xp: str = None) -> DecoratedListItem | None:
     target = _get_target(node, xp)

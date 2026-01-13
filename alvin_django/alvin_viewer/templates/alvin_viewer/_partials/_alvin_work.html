@@ -6,6 +6,7 @@
 
 <!-- Metadata -->
  <div class="flex flex-col w-full">
+    {{metadata}}
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'">
         {% for title in metadata.variant_titles.titles %}
             {% include "./_metadata_row.html" with label=metadata.variant_titles.label extra_label=title.type value=title.display %}
@@ -13,7 +14,7 @@
     </div>
     <div>
         {% for agent in metadata.agents %}
-            {% include "./_metadata_row.html" with label=agent.label url=agent.url value=agent.names.title attribute=agent.role %}
+            {% include "./_metadata_row.html" with label=agent.label url=agent.url value=agent.display attribute=agent.display_roles %}
         {% endfor %}
     </div>
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'">
@@ -26,7 +27,7 @@
     </div>
     <div class="flex flex-col" x-show="activeTab == 'all_metadata'" x-cloak>
         {% for date in metadata.date_other %}
-            {% include "./_metadata_row.html" with label=date.type value=date.dates.display  %}
+            {% include "./_metadata_row.html" with label=date.type value=date.dates.display|linebreaksbr %}
         {% endfor %}
         {% if metadata.longitude and metadata.latitude %}
             {% include "./_metadata_row.html" with label=metadata.longitude.label value=metadata.longitude.text %}

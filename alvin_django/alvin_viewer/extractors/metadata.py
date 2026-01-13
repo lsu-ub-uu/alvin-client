@@ -1,5 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
+from importlib.metadata import metadata
 from typing import Any, Dict, List, Optional, Union
 
 from django.utils.translation import get_language
@@ -24,6 +25,15 @@ class Address:
         return not (self.label or self.box or self.street or self.postcode or self.place or self.country)
 
 @dataclass(slots=True)
+class Classification:
+    label: Optional[str] = None
+    type: Optional[str] = None
+    text: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not self.text
+
+@dataclass(slots=True)
 class CommonMetadata:
     id: str
     record_type: str
@@ -35,11 +45,16 @@ class CommonMetadata:
 @dataclass(slots=True)
 class DecoratedText:
     label: Optional[str] = None
+    parent_label: Optional[str] = None
     text: Optional[str] = None
 
     def is_empty(self) -> bool:
         return not (self.label or self.text)
     
+    @property
+    def combined_label(self):
+        return f"{self.parent_label}, {self.label}".capitalize() if self.parent_label is not None else self.label
+
 @dataclass(slots=True)
 class DecoratedTexts:
     label: Optional[str] = None
@@ -89,6 +104,38 @@ class DecoratedListItem:
 
     def is_empty(self) -> bool:
         return not (self.label or self.items or self.code)
+    
+@dataclass(slots=True)
+class Dimension(Dict):
+    label: Optional[str] = None
+    scope: Optional[str] = None
+    height: Optional[DecoratedText] = None
+    width: Optional[DecoratedText] = None
+    depth: Optional[DecoratedText] = None
+    diameter: Optional[DecoratedText] = None
+    unit: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not (self.height or self.width or self.depth or self.diameter)
+
+    @property
+    def display(self) -> str:
+        dimensions = [d for d in [self.height, self.width, self.depth, self.diameter] if d is not None]
+
+        parts = []
+
+        for d in dimensions:
+            text, label = d.text, d.label
+            joined = f"{text} ({label})"
+            parts.append(str(joined))
+
+        parts_str = " x ".join(filter(None,parts))
+        unit_str = self.unit or None
+        return " ".join(filter(None, (parts_str, unit_str))).lower()
+    
+    @property
+    def combined_label(self):
+        return f"{self.label}, {self.scope}".capitalize() if self.scope is not None else self.label
 
 @dataclass(slots=True)
 class ElectronicLocator:
@@ -104,6 +151,37 @@ class Identifier:
     label: Optional[str] = None
     type: Optional[str] = None
     identifier: Optional[str] = None
+
+@dataclass(slots=True)
+class Location:
+    label: Optional[str] = None
+    id: Optional[str] = None
+    names: NamesBlock = None
+
+    @property
+    def display(self) -> Optional[str]:
+        return self.names.title() if self.names else None
+    
+    @property
+    def url(self) -> Optional[str]:
+        if self.id:
+            return reverse("alvin_viewer", args=["alvin-location", self.id])
+        return None
+
+@dataclass(slots=True)
+class Measure:
+    label: Optional[str] = None
+    weight: Optional[str] = None
+    unit: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not self.weight
+
+    @property
+    def display(self) -> Optional[str]:
+        if self.weight:
+            return f"{self.weight} {self.unit}" if self.unit else self.weight
+        return None
 
 @dataclass(slots=True)
 class RelatedAuthorityEntry:
@@ -129,6 +207,59 @@ class RelatedAuthoritiesBlock:
 
     def is_empty(self) -> bool:
         return not self.records
+    
+@dataclass
+class RelatedRecordPart:
+    type: Optional[str] = None
+    typeattr: Optional[str] = None
+    number: Optional[str] = None
+    extent: Optional[str] = None
+
+    @property
+    def display(self) -> str:
+        parts = [p for p in [self.number, self.extent] if p is not None]
+        return ", ".join(filter(None, parts))
+
+@dataclass 
+class RelatedRecordEntry:
+    type: Optional[str] = None
+    id: Optional[str] = None
+    main_title: TitlesBlock = None
+    parts: List[RelatedRecordPart] = None
+
+    @property
+    def url(self) -> Optional[str]:
+        if self.id:
+            return reverse("alvin_viewer", args=["alvin-record", self.id])
+        return None
+    
+    @property
+    def display_parts(self) -> str:
+        if self.parts is None:
+            return None
+        return " ; ".join(filter(None, [f"{part.type}: {part.display}" for part in self.parts]))
+
+@dataclass 
+class RelatedRecordsBlock:
+    label: Optional[str] = None
+    records: List[RelatedRecordEntry] = None
+
+@dataclass
+class SubjectMiscEntry:
+    label: Optional[str] = None
+    topic: Optional[str] = None
+    genre_form: Optional[str] = None
+    geographic_coverage: Optional[str] = None
+    temporal: Optional[str] = None
+    occupation: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not (self.topic or self.genre_form or self.geographic_coverage or self.temporal or self.occupation)
+    
+    @property
+    def display(self) -> str:
+        parts = [p for p in [self.topic, self.genre_form, self.geographic_coverage, self.temporal, self.occupation] if p is not None]
+        return ", ".join(filter(None, parts))
 
 # ------------------
 # NAMES AND TITLES BLOCKS 
@@ -276,7 +407,7 @@ class DatesValue:
             end = self.end_date.display if self.end_date else None
             date_str = " – ".join(s for s in (start, end) if s)
         if self.date_note:
-            date_str += f": {self.date_note}"
+            date_str += f":\n{self.date_note}"
         return date_str
 
 @dataclass(slots=True)
@@ -294,7 +425,7 @@ class DatesBlock:
 
 @dataclass(slots=True)
 class Agent:
-    roles: List[str]
+    roles: DecoratedList
     label: Optional[str] = None
     type: Optional[str] = None
     id: Optional[str] = None
@@ -305,7 +436,18 @@ class Agent:
         return not self.names
     
     @property
-    def url(self) -> Optional[str]:
+    def display(self) -> str | None:
+        title = self.names.title()
+        if self.certainty == "uncertain":
+            title += "?"
+        return title
+    
+    @property
+    def display_roles(self) -> str | None:
+        return ", ".join(self.roles.items) if self.roles.items else None
+    
+    @property
+    def url(self) -> Optional[str] | None:
         if self.id:
             return reverse("alvin_viewer", args=[self.type, self.id])
         return None

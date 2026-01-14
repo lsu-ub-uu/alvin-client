@@ -8,14 +8,14 @@ from django.core.cache import cache
 from ..xmlutils.nodes import attr, element, elements, first, text, texts
 from .mappings import person, place, organisation
 from ..services.text_collector import get_item_dict
-from .metadata import (Agent, CommonMetadata, DateEntry, DatesBlock, 
+from .metadata import (Agent, Component, CommonMetadata, DateEntry, DatesBlock, 
                        DatesValue, DecoratedList, DecoratedText, 
                        DecoratedListItem, DecoratedTextWithType, DecoratedTexts, 
-                       DecoratedTextsWithType, ElectronicLocator, Identifier, Location,
+                       DecoratedTextsWithType, Edge, ElectronicLocator, Identifier, Location,
                        NameEntry, NameValue, NamesBlock,
                        OriginPlace, OriginPlaceBlock, RelatedAuthoritiesBlock,
                        RelatedAuthorityEntry, RelatedRecordsBlock, RelatedRecordEntry, 
-                       RelatedRecordPart, TitlesBlock, TitleEntry)
+                       RelatedRecordPart, RelatedWorksBlock, RelatedWorkEntry, TitlesBlock, TitleEntry)
 
 
 # ------------------
@@ -243,14 +243,19 @@ def related_works(node: etree._Element, xp: str) -> List[Dict[str, str]]:
     target = _get_target(node, xp)
     if target is None:
         return {}
-    return {
-        "label": _get_label(target),
-        "records": collect(node, xp, lambda f: compact({
-            "type": _get_value(f, "linkedRecord/work/formOfWork"),
-            "id": text(f, "linkedRecordId"),
-            "title": first(titles(f, "linkedRecord/work/title")),
-        }))
-    }
+    
+    rws = RelatedWorksBlock(
+        label = _get_label(target),
+        records = [RelatedWorkEntry(
+            type = _get_value(e, "linkedRecord/work/formOfWork"),
+            id = text(e, "linkedRecordId"),
+            main_title = titles(e, "linkedRecord/work/title"),
+            ) for e in elements(node, xp)]
+    )
+
+    if all(rw.is_empty() for rw in rws.records):
+        return None
+    return rws
 
 
 def location(node: etree._Element, xp: str) -> Location | None:
@@ -270,7 +275,7 @@ def agents(node: etree._Element, xp: str) -> NamesBlock:
     if target is None:
         return None
     
-    return [Agent(
+    agents = [Agent(
         label = _get_label(agent),
         type = None if attr(agent, './@type') is None else f"alvin-{attr(agent, './@type')}",
         id = text(agent, ".//linkedRecordId"),
@@ -278,9 +283,14 @@ def agents(node: etree._Element, xp: str) -> NamesBlock:
         roles = decorated_list(agent, "role"),
         certainty = text(agent, "certainty"),
         ) for agent in elements(node, xp)]
+    
+    if all(a.is_empty() for a in agents):
+        return None
+    return agents
 
-def related_authority(node: etree._Element, xp: str, authority: str) -> RelatedAuthoritiesBlock | None:
-    if node is None:
+def related_authority(node: etree._Element, xp: str, authority: str, alternative_label_xp: str = None) -> RelatedAuthoritiesBlock | None:
+    target = element(node, xp)
+    if target is None:
         return None
     
     AN = {
@@ -289,22 +299,22 @@ def related_authority(node: etree._Element, xp: str, authority: str) -> RelatedA
         "place": place["AUTH_NAME"]
     }
     
-    targets = elements(node, xp)
-    if targets is None:
-        return None
-    
+    label_node = element(node, alternative_label_xp) if alternative_label_xp else target
+
     related = RelatedAuthoritiesBlock(
-        label = _get_label(first(targets)),
+        label = _get_label(label_node),
         records = [RelatedAuthorityEntry(
-            id = text(t, f"{authority}/linkedRecordId"),
-            record_type = text(t, (f"{authority}/linkedRecordType")),
-            type = _get_attribute_item(attr(t, "./@type")) if attr(t, "./@type") not in ("person", "organisation", "place") else None,
-            name = names(t, f"{authority}/linkedRecord/{authority}/authority", AN[authority]),
+            id = text(e, f"{authority}/linkedRecordId"),
+            record_type = text(e, (f"{authority}/linkedRecordType")),
+            type = _get_attribute_item(attr(e, "./@type")) if attr(e, "./@type") not in ("person", "organisation", "place") else None,
+            name = names(e, f"{authority}/linkedRecord/{authority}/authority", AN[authority]),
             )
-            for t in targets]
+            for e in elements(node, xp)]
     )
     
-    return None if related.is_empty() else related
+    if all(r.is_empty() for r in related.records):
+        return None
+    return related
 
 def subject_authority(node: etree._Element, resource_type: str, authority: str) -> RelatedAuthoritiesBlock | None:
     target = element(node, _xp(resource_type, f"subject[@type = '{authority}']"))
@@ -328,46 +338,42 @@ def subject_authority(node: etree._Element, resource_type: str, authority: str) 
 
 # COMPONENTS -------
 
-def components(nodes: List[etree._Element]) -> Dict[str, str]:
+def components(nodes: List[etree._Element]) -> List[Component] | None:
     comps = []
     for comp in nodes:
-        sub = components(comp.xpath("./*[contains(name(), 'component')]|./*[contains(name(), 'msItem')]"))
-        md = {
+        sub = components(comp.xpath("./*[contains(name(), 'component')]|./*[contains(name(), 'msItem')]")) or None
+        md = Component(
             # Archives
-            "level": decorated_list_item(comp, "level"),
-            "unitid": text(comp, "unitid"),
+            level = decorated_list_item(comp, "level"),
+            unitid = text(comp, "unitid"),
 
             # Manuscripts
-            "locus": decorated_text(comp, "locus"),
-            "languages": decorated_list(comp, "language"),
-            "origin_places": origin_places(comp, "originPlace"),
-            "physical_description_notes": decorated_texts_with_type(comp, "physicalLocation", "note", "./@noteType"),
-            "locus": decorated_text(comp, "locus"),
-            "incipit": decorated_text(comp, "incipit"),
-            "explicit": decorated_text(comp, "explicit"),
-            "rubric": decorated_text(comp, "rubric"),
-            "final_rubric": decorated_text(comp, "finalRubric"),
-            "literature": decorated_text(comp, "listBibl"),
-            "literature": decorated_text(comp, "listBibl"),
-            "notes": decorated_texts_with_type(comp, "note", ".", "./@noteType"),
+            languages = decorated_list(comp, "language"),
+            origin_places = origin_places(comp, "originPlace"),
+            physical_description_notes = decorated_texts_with_type(comp, "physicalLocation", "note", "./@noteType"),
+            locus = decorated_text(comp, "locus"),
+            incipit = decorated_text(comp, "incipit"),
+            explicit = decorated_text(comp, "explicit"),
+            rubric = decorated_text(comp, "rubric"),
+            final_rubric = decorated_text(comp, "finalRubric"),
+            literature = decorated_text(comp, "listBibl"),
+            notes = decorated_texts_with_type(comp, "note", ".", "./@noteType"),
 
             # Common
-            "title": titles(comp, "title"),
-            "agents": agents(comp, "agent"),
-            "place":  related_authority(comp, "place", "place"),
-            "related_records": related_records(comp, "relatedTo", "record"),
-            "origin_date": first(dates(comp, "originDate", "start", "end")),
-            "display_date": decorated_text(comp, "originDate/displayDate"),
-            "extent": decorated_text(comp, "extent"),
-            "note": decorated_text(comp, "note"),
-            "accession_numbers": decorated_texts(comp, "identifier[@type = 'accessionNumber']"),
-            "electronic_locators": electronic_locators(comp, "electronicLocator"),
-            "access_policy": decorated_text(comp, "accessPolicy")
-        }
-        if sub:
-            md["components"] = sub
-        if any(v for v in md.values() if v):
-            comps.append(md)
+            title = titles(comp, "title"),
+            agents = agents(comp, "agent"),
+            place =  related_authority(comp, ".", "place", "place"),
+            related_records = related_records(comp, "relatedTo"),
+            origin_date = dates(comp, "originDate", "start", "end"),
+            extent = decorated_text(comp, "extent"),
+            note = decorated_text(comp, "note"),
+            accession_numbers = decorated_texts(comp, "identifier[@type = 'accessionNumber']"),
+            electronic_locators = electronic_locators(comp, "electronicLocator"),
+            access_policy = decorated_text(comp, "accessPolicy"),
+            components = sub
+        )
+        comps.append(md)
+    
     return comps
 
 # ------------------
@@ -476,14 +482,20 @@ def decorated_list_item(node: etree._Element, xp: str = None) -> DecoratedListIt
         return None
     return li
 
-def decorated_list_item_with_text(node: etree._Element, xp: str, item: str, item_text: str) -> dict:
+def edge(node: etree._Element, xp: str, item: str, item_text: str) -> Edge:
     target = _get_target(node, xp)
     if target is None:
-        return {}
-    return {"label": _get_label(target),
-            "item": _get_value(element(node, f"{xp}/{item}")),
-            "text": text(node, f"{xp}/{item_text}")
-        }
+        return None
+    
+    li = Edge(
+        label = _get_label(target),
+        item = _get_value(element(node, f"{xp}/{item}")),
+        text = text(node, f"{xp}/{item_text}")
+    )
+
+    if li.is_empty():
+        return None
+    return li
 
 # -------------------
 # ATTRIBUTE COLLECTION ITEMS

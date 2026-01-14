@@ -6,7 +6,6 @@
 
 <!-- Metadata -->
 <div class="flex flex-col w-full">
-    {{metadata}}
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
         {% for title in metadata.variant_titles.titles %}
             {% include "./_metadata_row.html" with label=metadata.variant_titles.label extra_label=title.type value=title.display %}
@@ -82,14 +81,14 @@
     </div>
     <div x-show="activeTab == 'all_metadata' || activeTab == 'related'" x-cloak>
         {% include "alvin_viewer/_partials/_record_type_links.html" with label=metadata.related_records.label link_type="alvin-record" record_type_links=metadata.related_records %}
-        {% include "./_record_type_links.html" with label=metadata.work.label link_type="alvin-work" record_type_links=metadata.work %}
+        {% include "./_authority_links.html" with label=metadata.work.label link_type="alvin-work" authority_links=metadata.work %}
         {% for electronic_locator in metadata.electronic_locators %}
             {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
         {% endfor %}
     </div>
     <div x-show="activeTab == 'all_metadata'" x-cloak>
         {% include "./_metadata_row.html" with label=metadata.level.label value=metadata.level.item %}
-        {% include "./_metadata_row.html" with label=metadata.shelf_metres.label value=metadata.shelf_metres.text %}
+        {% include "./_metadata_row.html" with label=metadata.shelf_metres.label value=metadata.shelf_metres.item %}
         {% include "./_metadata_row.html" with label=metadata.archival_units.label value=metadata.archival_units.text %}
         {% include "./_metadata_row.html" with label=metadata.other_findaid.label value=metadata.other_findaid.texts|join:"<br>" %}
         {% include "./_metadata_row.html" with label=metadata.weeding.label value=metadata.weeding.texts|join:"<br>" %}
@@ -109,14 +108,14 @@
         {% include "./_metadata_row.html" with label=metadata.scale.label value=metadata.scale.text %}
         {% include "./_metadata_row.html" with label=metadata.projection.label value=metadata.projection.text %}
         {% include "./_metadata_row.html" with label=metadata.coordinates.label value=metadata.coordinates.text %}
-        {% include "./_metadata_row.html" with label=metadata.appraisal.label value=metadata.appraisal|appraisal_join %}
-        {% include "./_metadata_row.html" with label=metadata.edge.label value=metadata.edge|item_description_join %}
-        {% include "./_metadata_row.html" with label=metadata.axis.label value=metadata.axis.item.item %}
+        {% include "./_metadata_row.html" with label=metadata.appraisal.label value=metadata.appraisal.display %}
+        {% include "./_metadata_row.html" with label=metadata.edge.label value=metadata.edge.display %}
+        {% include "./_metadata_row.html" with label=metadata.axis.label value=metadata.axis.clock.item %}
         {% include "./_metadata_row.html" with label=metadata.conservation_state.label value=metadata.conservation_state.items|join:"<br>" %}
-        {% include "./_metadata_row.html" with label=metadata.obverse|label_join:"description" value=metadata.obverse.description.text %}
-        {% include "./_metadata_row.html" with label=metadata.obverse|label_join:"legend" value=metadata.obverse.legend.text %}
-        {% include "./_metadata_row.html" with label=metadata.reverse|label_join:"description" value=metadata.reverse.description.text %}
-        {% include "./_metadata_row.html" with label=metadata.reverse|label_join:"legend" value=metadata.reverse.legend.text %}
+        {% include "./_metadata_row.html" with label=metadata.obverse.description_label value=metadata.obverse.description.text %}
+        {% include "./_metadata_row.html" with label=metadata.obverse.legend_label value=metadata.obverse.legend.text %}
+        {% include "./_metadata_row.html" with label=metadata.reverse.description_label value=metadata.reverse.description.text %}
+        {% include "./_metadata_row.html" with label=metadata.reverse.legend_label value=metadata.reverse.legend.text %}
         {% include "./_metadata_row.html" with label=metadata.countermark.label value=metadata.countermark.texts|join:"<br>" %}
         {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
         {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}

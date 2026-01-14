@@ -6,10 +6,8 @@ from typing import Any, Dict, List, Optional, Union
 from django.utils.translation import get_language
 from django.urls import reverse
 
-from .mappings import person, organisation
-
 # ------------------
-# COMMON AND HELPERS
+# COMMON
 # ------------------
 
 @dataclass(slots=True)
@@ -25,6 +23,27 @@ class Address:
         return not (self.label or self.box or self.street or self.postcode or self.place or self.country)
 
 @dataclass(slots=True)
+class Appraisal:
+    label: Optional[str] = None
+    value: Optional[str] = None
+    currency: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not(self.value or self.currency)
+    
+    @property
+    def display(self) -> str:
+        return " ".join(filter(None, ([self.value, self.currency])))
+    
+@dataclass
+class Axis:
+    label: Optional[str] = None
+    clock: DecoratedListItem = None
+
+    def is_empty(self) -> bool:
+        return not self.clock.item
+
+@dataclass(slots=True)
 class Classification:
     label: Optional[str] = None
     type: Optional[str] = None
@@ -34,13 +53,57 @@ class Classification:
         return not self.text
 
 @dataclass(slots=True)
+class Coin:
+    label: Optional[str]
+    description: DecoratedText = None
+    legend: DecoratedText = None
+    
+    @property
+    def description_label(self):
+        return f"{self.label}, {self.description.label}".capitalize()
+    
+    @property
+    def legend_label(self):
+        return f"{self.label}, {self.legend.label}".capitalize()
+
+@dataclass(slots=True)
 class CommonMetadata:
     id: str
     record_type: str
-    source_xml: str
     created: Optional[DecoratedText] = None
     last_updated: Optional[DecoratedText] = None
     source_xml: Optional[str] = None
+
+@dataclass
+class Component:
+    # Archives
+    level: DecoratedListItem = None
+    unitid: Optional[str] = None
+    
+    # Manuscripts
+    languages: DecoratedList = None
+    origin_places: OriginPlaceBlock = None
+    physical_description_notes: DecoratedTextsWithType = None
+    locus: DecoratedText = None
+    incipit: DecoratedText = None
+    explicit: DecoratedText = None
+    rubric: DecoratedText = None
+    final_rubric: DecoratedText = None
+    literature: DecoratedText = None
+    notes: DecoratedTextsWithType = None
+
+    # Common
+    title: TitlesBlock = None
+    agents: List[Agent] = None
+    place: RelatedAuthoritiesBlock = None
+    related_records: RelatedRecordsBlock = None
+    origin_date: DatesBlock = None
+    extent: DecoratedText = None
+    note: DecoratedText = None
+    accession_numbers: DecoratedTexts = None
+    electronic_locators: List[ElectronicLocator] = None
+    access_policy: DecoratedText = None
+    components: List[Component] = None
 
 @dataclass(slots=True)
 class DecoratedText:
@@ -49,7 +112,7 @@ class DecoratedText:
     text: Optional[str] = None
 
     def is_empty(self) -> bool:
-        return not (self.label or self.text)
+        return not self.text
     
     @property
     def combined_label(self):
@@ -103,8 +166,21 @@ class DecoratedListItem:
     code: Optional[str] = None
 
     def is_empty(self) -> bool:
-        return not (self.label or self.items or self.code)
+        return not (self.label or self.item or self.code)
+
+@dataclass(slots=True)
+class Edge:
+    label: Optional[str]
+    item: Optional[str]
+    text: Optional[str]
+
+    def is_empty(self) -> bool:
+        return not (self.item or self.text)
     
+    @property
+    def display(self) -> str:
+        return ". ".join(filter(None, [self.item, self.text]))
+
 @dataclass(slots=True)
 class Dimension(Dict):
     label: Optional[str] = None
@@ -182,67 +258,6 @@ class Measure:
         if self.weight:
             return f"{self.weight} {self.unit}" if self.unit else self.weight
         return None
-
-@dataclass(slots=True)
-class RelatedAuthorityEntry:
-    id: Optional[str] = None
-    record_type: Optional[str] = None
-    type: Optional[str] = None
-    label: Optional[str] = None
-    name: List[Dict[str, Any]] = None
-
-    def is_empty(self) -> bool:
-        return not (self.label or self.records)
-    
-    @property
-    def url(self) -> Optional[str]:
-        if self.id:
-            return reverse("alvin_viewer", args=[self.record_type, self.id])
-        return None
-    
-@dataclass
-class RelatedAuthoritiesBlock:
-    label: Optional[str] = None
-    records: List[RelatedAuthorityEntry] = None
-
-    def is_empty(self) -> bool:
-        return not self.records
-    
-@dataclass
-class RelatedRecordPart:
-    type: Optional[str] = None
-    typeattr: Optional[str] = None
-    number: Optional[str] = None
-    extent: Optional[str] = None
-
-    @property
-    def display(self) -> str:
-        parts = [p for p in [self.number, self.extent] if p is not None]
-        return ", ".join(filter(None, parts))
-
-@dataclass 
-class RelatedRecordEntry:
-    type: Optional[str] = None
-    id: Optional[str] = None
-    main_title: TitlesBlock = None
-    parts: List[RelatedRecordPart] = None
-
-    @property
-    def url(self) -> Optional[str]:
-        if self.id:
-            return reverse("alvin_viewer", args=["alvin-record", self.id])
-        return None
-    
-    @property
-    def display_parts(self) -> str:
-        if self.parts is None:
-            return None
-        return " ; ".join(filter(None, [f"{part.type}: {part.display}" for part in self.parts]))
-
-@dataclass 
-class RelatedRecordsBlock:
-    label: Optional[str] = None
-    records: List[RelatedRecordEntry] = None
 
 @dataclass
 class SubjectMiscEntry:
@@ -462,7 +477,7 @@ class OriginPlace:
     certainty: Optional[str] = None
 
     def is_empty(self) -> bool:
-        return not self.places
+        return not self.name
     
     @property
     def display(self) -> Optional[str]:
@@ -489,3 +504,84 @@ class OriginPlaceBlock:
 
     def is_empty(self) -> bool:
         return not self.places
+    
+@dataclass(slots=True)
+class RelatedAuthorityEntry:
+    id: Optional[str] = None
+    record_type: Optional[str] = None
+    type: Optional[str] = None
+    label: Optional[str] = None
+    name: List[Dict[str, Any]] = None
+
+    def is_empty(self) -> bool:
+        return not self.name
+    
+    @property
+    def url(self) -> Optional[str]:
+        if self.id:
+            return reverse("alvin_viewer", args=[self.record_type, self.id])
+        return None
+    
+@dataclass
+class RelatedAuthoritiesBlock:
+    label: Optional[str] = None
+    records: List[RelatedAuthorityEntry] = None
+
+    def is_empty(self) -> bool:
+        return not self.records
+    
+@dataclass
+class RelatedRecordPart:
+    type: Optional[str] = None
+    typeattr: Optional[str] = None
+    number: Optional[str] = None
+    extent: Optional[str] = None
+
+    @property
+    def display(self) -> str:
+        parts = [p for p in [self.number, self.extent] if p is not None]
+        return ", ".join(filter(None, parts))
+
+@dataclass 
+class RelatedRecordEntry:
+    type: Optional[str] = None
+    id: Optional[str] = None
+    main_title: TitlesBlock = None
+    parts: List[RelatedRecordPart] = None
+
+    @property
+    def url(self) -> Optional[str]:
+        if self.id:
+            return reverse("alvin_viewer", args=["alvin-record", self.id])
+        return None
+    
+    @property
+    def display_parts(self) -> str:
+        if self.parts is None:
+            return None
+        return " ; ".join(filter(None, [f"{part.type}: {part.display}" for part in self.parts]))
+
+@dataclass 
+class RelatedRecordsBlock:
+    label: Optional[str] = None
+    records: List[RelatedRecordEntry] = None
+
+@dataclass(slots=True)
+class RelatedWorkEntry:
+    type: Optional[str] = None
+    id: Optional[str] = None
+    main_title: TitlesBlock = None
+
+    def is_empty(self) -> bool:
+        return not (self.type or self.id or self.main_title)
+
+    @property
+    def url(self) -> Optional[str]:
+        if self.id:
+            return reverse("alvin_viewer", args=["alvin-work", self.id])
+        return None 
+
+@dataclass 
+class RelatedWorksBlock:
+    label: Optional[str] = None
+    records: List[RelatedRecordEntry] = None

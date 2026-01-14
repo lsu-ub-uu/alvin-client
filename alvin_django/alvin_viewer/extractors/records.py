@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Optional
 
-from .metadata import Address, Agent, Classification, CommonMetadata, DateEntry, DatesBlock, DecoratedList, DecoratedListItem, DecoratedText, DecoratedTexts, DecoratedTextsWithType, Dimension, ElectronicLocator, Identifier, Location, Measure, NamesBlock, OriginPlace, RelatedAuthoritiesBlock, RelatedRecordsBlock, TitlesBlock
+from .metadata import Address, Agent, Appraisal, Axis, Classification, Coin, CommonMetadata, Component, DateEntry, DatesBlock, DecoratedList, DecoratedListItem, Edge, DecoratedText, DecoratedTexts, DecoratedTextsWithType, Dimension, ElectronicLocator, Identifier, Location, Measure, NamesBlock, OriginPlace, RelatedAuthoritiesBlock, RelatedRecordsBlock, SubjectMiscEntry, TitlesBlock
 
 @dataclass(slots=True)
 class AlvinPlace(CommonMetadata):
@@ -106,24 +106,53 @@ class AlvinRecord(CommonMetadata):
     related_records: RelatedRecordsBlock = None
     electronic_locators: List[ElectronicLocator] = None
     genre_form: DecoratedList = None
-    subjects: SubjectsMiscBlock = None
+    subjects: List[SubjectMiscEntry] = None
     subject_person: RelatedAuthoritiesBlock = None
     subject_organisation: RelatedAuthoritiesBlock = None
     subject_place: RelatedAuthoritiesBlock = None
     classifications: List[Classification] = None
     deco_note: DecoratedText = None
-    binding: DecoratedText = None,
-    binding_deco_note: DecoratedText = None,
+    binding: DecoratedText = None
+    binding_deco_note: DecoratedText = None
     identifiers: List[Identifier] = None
-    #work = related_works(root, _xp(rt, "work")),
+    work: RelatedAuthoritiesBlock = None
+    components: List[Component] = None
     files: Optional[etree._Element] = None
 
+    # Archives
+    level: DecoratedListItem = None
+    shelf_metres: DecoratedText = None
+    archival_units: DecoratedText = None
+    other_findaid: DecoratedTexts = None
+    weeding: DecoratedTexts = None
+    related_material: DecoratedTexts = None
+    arrangement: DecoratedTexts = None
+    accruals: DecoratedTexts = None
+
+    # Manuscripts
+    locus: DecoratedText = None
     incipit: DecoratedText = None
-    longitude: DecoratedText = None
-    latitude: DecoratedText = None
-    electronic_locators: List[ElectronicLocator] = None
+    explicit: DecoratedText = None
+    rubric: DecoratedText = None
+    final_rubric: DecoratedText = None
+
+    # Musical notation
     music_key: DecoratedList = None
     music_key_other: DecoratedText = None
     music_medium: DecoratedList = None
     music_medium_other: DecoratedText = None
-    genre_form: DecoratedList = None
+    music_notation: DecoratedList = None
+
+    # Cartographic
+    scale: DecoratedText = None
+    projection: DecoratedText = None
+    coordinates: DecoratedText = None
+
+    #Numismatic
+    appraisal: Appraisal = None
+    axis: Axis = None
+    edge: Edge = None
+    conservation_state: DecoratedList = None
+    obverse: Coin = None
+    reverse: Coin = None
+    countermark: DecoratedTexts = None

@@ -3,7 +3,6 @@ from .common import _get_label, _get_value, _norm_rt, _xp, agents, compact, date
 from .records import AlvinWork
 from ..xmlutils.nodes import text, attr, element, elements
 from .cleaner import clean_empty
-from .record import _not, _car
 
 rt = _norm_rt("alvin-work")
 
@@ -37,18 +36,3 @@ def extract(root: etree._Element) -> AlvinWork:
         opus_number = decorated_text(root, _xp(rt, "numericDesignationOfMusicalWork/musicOpusNumber")),
         thematic_number = decorated_text(root, _xp(rt, "numericDesignationOfMusicalWork/musicThematicNumber")),
     )
-
-    data = {
-        "incipit": decorated_text(root, _xp(rt, "incipit")),
-        "literature": decorated_text(root, _xp(rt, "listBibl")),
-        "note": decorated_text(root, _xp(rt, "note")),
-        "agents": agents(root, _xp(rt, "agent")),
-        "longitude": decorated_text(root, _xp(rt, "point/longitude")),
-        "latitude": decorated_text(root, _xp(rt, "point/latitude")),
-        "electronic_locators": electronic_locators(root, _xp(rt, "electronicLocator"))
-    }
-    
-    if data["form_of_work"]["code"] == 'music':
-        data.update(_not(root, rt))
-
-    return clean_empty(data)

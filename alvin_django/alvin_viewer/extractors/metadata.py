@@ -1,5 +1,5 @@
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 from importlib.metadata import metadata
 from typing import Any, Dict, List, Optional, Union
 
@@ -229,22 +229,6 @@ class Identifier:
     identifier: Optional[str] = None
 
 @dataclass(slots=True)
-class Location:
-    label: Optional[str] = None
-    id: Optional[str] = None
-    names: NamesBlock = None
-
-    @property
-    def display(self) -> Optional[str]:
-        return self.names.title() if self.names else None
-    
-    @property
-    def url(self) -> Optional[str]:
-        if self.id:
-            return reverse("alvin_viewer", args=["alvin-location", self.id])
-        return None
-
-@dataclass(slots=True)
 class Measure:
     label: Optional[str] = None
     weight: Optional[str] = None
@@ -438,8 +422,26 @@ class DatesBlock:
 # LINKED RECORDS
 # ------------------
 
+class URL:
+    record_type_field: str = "record_type"
+    fixed_record_type: Optional[str] = None
+    id_field: str = "id"
+
+    @property
+    def url(self) -> Optional[str]:
+        id_ = getattr(self, self.id_field, None)
+        if not id_:
+            return None
+
+        record_type = self.fixed_record_type or getattr(self, self.record_type_field, None)
+        if not record_type:
+            return None
+
+        return reverse("alvin_viewer", args=[record_type, id_])
+
 @dataclass(slots=True)
-class Agent:
+class Agent(URL):
+    record_type_field = "type"
     roles: DecoratedList
     label: Optional[str] = None
     type: Optional[str] = None
@@ -460,15 +462,21 @@ class Agent:
     @property
     def display_roles(self) -> str | None:
         return ", ".join(self.roles.items) if self.roles.items else None
-    
-    @property
-    def url(self) -> Optional[str] | None:
-        if self.id:
-            return reverse("alvin_viewer", args=[self.type, self.id])
-        return None
 
 @dataclass(slots=True)
-class OriginPlace:
+class Location(URL):
+    fixed_record_type = "alvin-location"
+    label: Optional[str] = None
+    id: Optional[str] = None
+    names: NamesBlock = None
+
+    @property
+    def display(self) -> Optional[str]:
+        return self.names.title() if self.names else None
+
+@dataclass(slots=True)
+class OriginPlace(URL):
+    fixed_record_type = "alvin-place"
     label: Optional[str] = None
     id: Optional[str] = None
     name: NamesBlock = None
@@ -491,12 +499,6 @@ class OriginPlace:
         items = (self.country.items if self.country else []) + (self.historical_country.items if self.historical_country else [])
         return f", {', '.join(filter(None, (items)))}" if items else None
     
-    @property
-    def url(self) -> Optional[str]:
-        if self.id:
-            return reverse("alvin_viewer", args=["alvin-place", self.id])
-        return None
-    
 @dataclass(slots=True)
 class OriginPlaceBlock:
     label: Optional[str] = None
@@ -506,7 +508,7 @@ class OriginPlaceBlock:
         return not self.places
     
 @dataclass(slots=True)
-class RelatedAuthorityEntry:
+class RelatedAuthorityEntry(URL):
     id: Optional[str] = None
     record_type: Optional[str] = None
     type: Optional[str] = None
@@ -515,12 +517,6 @@ class RelatedAuthorityEntry:
 
     def is_empty(self) -> bool:
         return not self.name
-    
-    @property
-    def url(self) -> Optional[str]:
-        if self.id:
-            return reverse("alvin_viewer", args=[self.record_type, self.id])
-        return None
     
 @dataclass
 class RelatedAuthoritiesBlock:
@@ -543,43 +539,33 @@ class RelatedRecordPart:
         return ", ".join(filter(None, parts))
 
 @dataclass 
-class RelatedRecordEntry:
+class RelatedRecordEntry(URL):
+    fixed_record_type = "alvin-record"
     type: Optional[str] = None
     id: Optional[str] = None
     main_title: TitlesBlock = None
     parts: List[RelatedRecordPart] = None
 
     @property
-    def url(self) -> Optional[str]:
-        if self.id:
-            return reverse("alvin_viewer", args=["alvin-record", self.id])
-        return None
-    
-    @property
     def display_parts(self) -> str:
         if self.parts is None:
             return None
         return " ; ".join(filter(None, [f"{part.type}: {part.display}" for part in self.parts]))
-
+    
 @dataclass 
 class RelatedRecordsBlock:
     label: Optional[str] = None
     records: List[RelatedRecordEntry] = None
 
 @dataclass(slots=True)
-class RelatedWorkEntry:
+class RelatedWorkEntry(URL):
+    fixed_record_type = "alvin-work"
     type: Optional[str] = None
     id: Optional[str] = None
     main_title: TitlesBlock = None
 
     def is_empty(self) -> bool:
         return not (self.type or self.id or self.main_title)
-
-    @property
-    def url(self) -> Optional[str]:
-        if self.id:
-            return reverse("alvin_viewer", args=["alvin-work", self.id])
-        return None 
 
 @dataclass 
 class RelatedWorksBlock:

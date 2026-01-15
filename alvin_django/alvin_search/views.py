@@ -6,7 +6,7 @@ import requests
 from lxml import etree
 from django.conf import settings
 
-from alvin_viewer.views import get_dates
+from alvin_viewer.extractors.common import dates
 from alvin_viewer.templatetags import metadata_wrangler
 
 from django.shortcuts import render
@@ -15,8 +15,9 @@ from django.http import HttpResponse
 from django.utils.http import urlencode
 from urllib.parse import quote
 
-def members(request):
-    return HttpResponse("Hello world!")
+import urllib.request
+from urllib.request import urlopen
+parser = etree.XMLParser()
 
 def get_authority_names(metadata, name_parts):
 
@@ -55,16 +56,29 @@ def alvin_search(request):
     xml_headers_list = {'Content-Type':'application/vnd.cora.recordList-decorated+xml','Accept':'application/vnd.cora.recordList-decorated+xml'}
 
     searchType = request.GET.get('searchType', 'alvinRecord')
-    query = request.GET.get('query', '**')        
-    start = request.GET.get('start', 1)         
-    rows = request.GET.get('rows', 20)
+    query = request.GET.get('query', '**')  
+    if query == '':
+        query = '**'      
+    start = request.GET.get('start', 1)
+    if start == '':
+        start = 1         
+    rows = request.GET.get('rows', 4)
     startnum = int(start)
     rowsnum = int(rows)
     newstart = startnum + rowsnum
     newstartnum = int(newstart)
-    
+    view = request.GET.get('view', 'list') 
+    params = request.GET.copy()  # make a mutable copy
+    params.pop('view', None)  # remove the parameter if it exists
+    params.pop('start', None)  # remove the parameter if it exists
+    view_url = f"{request.path}?{params.urlencode()}" if params else request.path
 
-    list_url = f'https://cora.alvin-portal.org/rest/record/searchResult/{searchType}Search?searchData={{"name":"{searchType}Search","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"{searchType}SearchTerm","value":"{query}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
+
+
+ 
+
+ 
+    list_url = f'https://preview.alvin.cora.epc.ub.uu.se/rest/record/searchResult/{searchType}Search?searchData={{"name":"{searchType}Search","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"{searchType}SearchTerm","value":"{query}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}&view={view}'
 
     #list_url = f'{api_host}/rest/record/searchResult/{search_type}Search?searchData={{"name":"{search_type}Search","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"{search_type}SearchTerm","value":"{q}"}}]}}]}}]}}'
 
@@ -77,8 +91,25 @@ def alvin_search(request):
             for record in xml_list.findall('data/record/data/record'):
                 records.append({
                     'identifier': record.findtext('./recordInfo/id'),
-                     'datestamp': record.findtext('./recordInfo/updated/tsUpdated[last()]'),
-         	     'setSpec': record.findtext('./physicalLocation/heldBy/location/linkedRecordId'),
+                    'title': record.findtext('./title/mainTitle'),
+                    'subtitle': record.findtext('./title/subtitle'),
+                    'namefamily': record.findtext('.agent/person[1]/linkedRecord/person/authority[1]/name/namePart[@type = "family"]'),
+                    'namegiven': record.findtext('.agent/person[1]/linkedRecord/person/authority[1]/name/namePart[@type = "given"]'),
+                    'namenumeration': record.findtext('.agent/person[1]/linkedRecord/person/authority[1]/name/namePart[@type = "numeration"]'),
+                    'nametermsOfAddress': record.findtext('.agent/person[1]/linkedRecord/person/authority[1]/name/namePart[@type = "termsOfAddress"]'),
+                    'familyName': record.findtext('.agent/person[1]/linkedRecord/person/authority[1]/name/familyName'),
+                    'namefamilytwo': record.findtext('.agent[2]/person[1]/linkedRecord/person/authority[1]/name/namePart[@type = "family"]'),
+                    'locationsv': record.findtext('./physicalLocation/heldBy/location/linkedRecord/location/authority[@lang = "swe"]/name/namePart'),
+                    'locationen': record.findtext('./physicalLocation/heldBy/location/linkedRecord/location/authority[@lang = "eng"]/name/namePart'),
+                    'locationno': record.findtext('./physicalLocation/heldBy/location/linkedRecord/location/authority[@lang = "nor"]/name/namePart'),
+                    'shelfmark': record.findtext('./physicalLocation/shelfMark'),
+                    'yearone': record.findtext('./originDate/startDate/date/year'),
+                    'yeartwo': record.findtext('./originDate/endDate/date/year'),
+                    'displaydate': record.findtext('./originDate/displayDate'),
+                    'typeofresource': record.findtext('./typeOfResource'),
+                    'rights': record.findtext('./fileSection/rights'),
+                    'file_count': len(record.findall('.//file')),
+                    'file': record.findtext('./fileSection/fileGroup[1]/file[1]/fileLocation/linkedRecordId'),            
                  })
 
         elif searchType == 'person':
@@ -92,11 +123,7 @@ def alvin_search(request):
                     'familyName': record.findtext('./authority[1]/name/familyName'),
                     'birthyear': record.findtext('./personInfo/birthDate/date/year'),
                     'deathyear': record.findtext('./personInfo/deathDate/date/year'),
-                    'displaydate': record.findtext('./personInfo/displayDate'),
-
-
-
-
+                    'displaydate': record.findtext('./personInfo/displayDate')
                  })
 
         elif searchType == 'organisation':
@@ -120,31 +147,51 @@ def alvin_search(request):
                     'namethree': record.findtext('./authority[3]/geographic'),
                  })
 
+        elif searchType == 'work':
+            for record in xml_list.findall('data/record/data/work'):
+                records.append({
+                    'identifier': record.findtext('./recordInfo/id'),
+                    'title': record.findtext('./title/mainTitle'),
+                    'subtitle': record.findtext('./title/subtitle'),
+                 })
+
+
         pages = {
             "fromNo":xml_list.findtext(".//fromNo"),
             "toNo":xml_list.findtext(".//toNo"),
             "totalNo":xml_list.findtext(".//totalNo"),
             }
+
         totalNo = pages.get("totalNo")          
         completeListSize = int(totalNo)
         toNo = pages.get("toNo")          
-        cursor = int(toNo) 
-        if cursor < completeListSize: 
-            startnum = int(start)
-            rowsnum = int(rows)
-            newstart = startnum + rowsnum
-            nextstartnum = int(newstart)   
+        cursor = int(toNo)        
+        startnum = int(start)
+        rowsnum = int(rows)
+        newstart = startnum + rowsnum
+        nextstartnum = int(newstart) 
+        prevstart = startnum - rowsnum
+        prevstartnum = int(prevstart)
 
-        if startnum > rowsnum:
-            startnum = int(start)
-            newstart = startnum + rowsnum
-            nextstartnum = int(newstart)  
-            rowsnum = int(rows)
-            prevstart = startnum - rows
-            prevstartnum = int(prevstart)   
+        link = request.get_full_path()
+        encoded_link = quote(link, safe='')
   
-    return render(request, 'alvin_search/alvin_search.html', locals())
+    context = {
+        "searchType":searchType,
+        "query":query,
+        "records":records,
+        "completeListSize":completeListSize,
+        "startnum":startnum,
+        "rowsnum":rowsnum,
+        "nextstartnum":nextstartnum,
+        "prevstartnum":prevstartnum,
+        "cursor":cursor,
+        "encoded_link":encoded_link,
+        "view":view,
+        "view_url":view_url,    
+        }
 
+    return render(request, 'alvin_search/alvin_search.html', context)
 
 def alvin_search_old(request, record_type):
     
@@ -304,3 +351,4 @@ def extract_work_list_metadata(request, list_xml):
         ]
 
     return paginator(request, paginated_metadata)
+

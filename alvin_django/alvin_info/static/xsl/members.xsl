@@ -165,7 +165,7 @@
             <xsl:for-each select="authority[1]">
                 <li class="flex py-1">
                     <xsl:call-template name="flag"/>
-                    <a class="text-blue-800 underline">
+                    <a class="text-blue-800 dark:text-blue-200 underline">
                         <xsl:attribute name="href">
                             <xsl:text>/alvin-location/</xsl:text>
                             <xsl:value-of select="../recordInfo/id"/>
@@ -181,7 +181,7 @@
                     <xsl:for-each select="authority[@lang = 'eng']">
                         <li class="flex py-1">
                             <xsl:call-template name="flag"/>
-                            <a class="text-blue-800 underline">
+                            <a class="text-blue-800 dark:text-blue-200 underline">
                                 <xsl:attribute name="href">
                                     <xsl:text>/alvin-location/</xsl:text>
                                     <xsl:value-of select="../recordInfo/id"/>
@@ -195,7 +195,7 @@
                     <xsl:for-each select="authority[1]">
                         <li class="flex py-1">
                             <xsl:call-template name="flag"/>
-                            <a class="text-blue-800 underline">
+                            <a class="text-blue-800 dark:text-blue-200 underline">
                                 <xsl:attribute name="href">
                                     <xsl:text>/alvin-location/</xsl:text>
                                     <xsl:value-of select="../recordInfo/id"/>
@@ -213,7 +213,7 @@
                     <xsl:for-each select="authority[@lang = 'nor']">
                         <li class="flex py-1">
                             <xsl:call-template name="flag"/>
-                            <a class="text-blue-800 underline">
+                            <a class="text-blue-800 dark:text-blue-200 underline">
                                 <xsl:attribute name="href">
                                     <xsl:text>/alvin-location/</xsl:text>
                                     <xsl:value-of select="../recordInfo/id"/>
@@ -227,7 +227,7 @@
                     <xsl:for-each select="authority[1]">
                         <li class="flex py-1">
                             <xsl:call-template name="flag"/>
-                            <a class="text-blue-800 underline">
+                            <a class="text-blue-800 dark:text-blue-200 underline">
                                 <xsl:attribute name="href">
                                     <xsl:text>/alvin-location/</xsl:text>
                                     <xsl:value-of select="../recordInfo/id"/>

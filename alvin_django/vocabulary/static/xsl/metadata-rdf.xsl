@@ -49,38 +49,43 @@
                             <xsl:with-param name="uri" select="$uri"/>
                         </xsl:call-template>
                     </owl:Class>
-
-                    <!--
-                    <xsl:for-each select="childReferences/childReference/ref">
+                </xsl:when>
+                <xsl:when test="@type = 'recordLink'">
+                    <owl:Class>
+                        <xsl:call-template name="rdf">
+                            <xsl:with-param name="uri" select="$uri"/>
+                        </xsl:call-template>
+                    </owl:Class>
+                </xsl:when>
+                <xsl:when test="@type = 'itemCollection'">
+                    <xsl:variable name="list">
+                        <xsl:value-of select="recordInfo/id"/>
+                    </xsl:variable>
+                    <owl:Class>
+                        <xsl:call-template name="rdf">
+                            <xsl:with-param name="uri" select="$uri"/>
+                        </xsl:call-template>
+                    </owl:Class>
+                    <xsl:for-each select="collectionItemReferences/ref">
+                        <xsl:sort select="linkedRecord/metadata/textId/linkedRecord/text/textPart[@lang = 'sv']/text"/>
                         <xsl:variable name="uriref">
                             <xsl:value-of select="$baseURL"/>
                             <xsl:value-of select="linkedRecordId"/>
                         </xsl:variable>
-                        <xsl:choose>
-                            <xsl:when test="linkedRecord/metadata/recordInfo/validationType/linkedRecordId = 'metadataGroup'">
-                                <owl:Class>
-                                    <xsl:call-template name="rdf">
-                                        <xsl:with-param name="uri" select="$uriref"/>
-                                    </xsl:call-template>
-                                </owl:Class>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <owl:DatatypeProperty>
-                                    <xsl:call-template name="rdf">
-                                        <xsl:with-param name="uri" select="$uriref"/>
-                                    </xsl:call-template>
-                                </owl:DatatypeProperty>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                        <owl:DatatypeProperty>
+                            <xsl:call-template name="rdfitem">
+                                <xsl:with-param name="uri" select="$uriref"/>
+                                <xsl:with-param name="sub" select="$list"/>
+                            </xsl:call-template>
+                        </owl:DatatypeProperty>
                     </xsl:for-each>
-                    
-                    -->
                 </xsl:when>
                 <xsl:otherwise>
                     <owl:DatatypeProperty>
                         <xsl:call-template name="rdf">
                             <xsl:with-param name="uri" select="$uri"/>
                         </xsl:call-template>
+                        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
                     </owl:DatatypeProperty>
                 </xsl:otherwise>
             </xsl:choose>
@@ -89,28 +94,30 @@
     <xsl:template name="sub">
         <xsl:param name="baseURL" select="$baseURL"/>
         <xsl:param name="sub" select="$sub"/>
-        <xsl:if test="not(contains($sub, 'New'))">
-            <xsl:if test="not(contains($sub, 'Update'))">
-                <xsl:if test="not(contains($sub, 'Search'))">
-                    <xsl:if test="not(contains($sub, 'Update'))">
-                        <xsl:choose>
-                            <xsl:when test="contains(recordInfo/id,'Group')">
-                                <rdfs:subClassOf>
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$baseURL"/>
-                                        <xsl:value-of select="$sub"/>
-                                    </xsl:attribute>
-                                </rdfs:subClassOf>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <rdfs:domain>
-                                    <xsl:attribute name="rdf:resource">
-                                        <xsl:value-of select="$baseURL"/>
-                                        <xsl:value-of select="$sub"/>
-                                    </xsl:attribute>
-                                </rdfs:domain>
-                            </xsl:otherwise>
-                        </xsl:choose>
+        <xsl:if test="not(@type = 'itemCollection')">
+            <xsl:if test="not(contains($sub, 'New'))">
+                <xsl:if test="not(contains($sub, 'Update'))">
+                    <xsl:if test="not(contains($sub, 'Search'))">
+                        <xsl:if test="not(contains($sub, 'Update'))">
+                            <xsl:choose>
+                                <xsl:when test="contains(recordInfo/id,'Group')">
+                                    <rdfs:subClassOf>
+                                        <xsl:attribute name="rdf:resource">
+                                            <xsl:value-of select="$baseURL"/>
+                                            <xsl:value-of select="$sub"/>
+                                        </xsl:attribute>
+                                    </rdfs:subClassOf>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <rdfs:domain>
+                                        <xsl:attribute name="rdf:resource">
+                                            <xsl:value-of select="$baseURL"/>
+                                            <xsl:value-of select="$sub"/>
+                                        </xsl:attribute>
+                                    </rdfs:domain>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:if>
                     </xsl:if>
                 </xsl:if>
             </xsl:if>
@@ -142,6 +149,7 @@
                 </rdfs:label>
             </xsl:if>
         </xsl:for-each>
+
         <xsl:if test="not(@type = 'itemCollection')">
             <xsl:if test="not(contains($sub, 'New'))">
                 <xsl:if test="not(contains($sub, 'Update'))">
@@ -320,9 +328,6 @@
                 </xsl:if>
             </xsl:if>
         </xsl:if>
-        <xsl:if test="linkedRecord/metadata/recordInfo/validationType/linkedRecordId!= 'metadataGroup' or @type!= 'group'">
-            <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-        </xsl:if>
         <xsl:for-each select="defTextId/linkedRecord/text/textPart[@lang = 'en'] | linkedRecord/metadata/defTextId/linkedRecord/text/textPart[@lang = 'en']">
             <xsl:if test="string-length(.) &gt; 0">
                 <skos:definition xml:lang="en">
@@ -349,5 +354,71 @@
                 <xsl:value-of select="substring-before(.,'T')"/>
             </dcterms:modified>
         </xsl:for-each>
+    </xsl:template>
+    <xsl:template name="rdfitem">
+        <xsl:param name="uri"/>
+        <xsl:param name="sub"/>
+        <xsl:attribute name="rdf:about">
+            <xsl:value-of select="$uri"/>
+        </xsl:attribute>
+        <xsl:for-each select="textId/linkedRecord/text/textPart[@lang = 'en'] | linkedRecord/metadata/textId/linkedRecord/text/textPart[@lang = 'en']">
+            <xsl:if test="string-length(.) &gt; 0">
+                <rdfs:label xml:lang="en">
+                    <xsl:value-of select="text"/>
+                </rdfs:label>
+            </xsl:if>
+        </xsl:for-each>
+        <xsl:for-each select="textId/linkedRecord/text/textPart[@lang = 'no'] | linkedRecord/metadata/textId/linkedRecord/text/textPart[@lang = 'no']">
+            <xsl:if test="string-length(.) &gt; 0">
+                <rdfs:label xml:lang="no">
+                    <xsl:value-of select="text"/>
+                </rdfs:label>
+            </xsl:if>
+        </xsl:for-each>
+        <xsl:for-each select="textId/linkedRecord/text/textPart[@lang = 'sv'] | linkedRecord/metadata/textId/linkedRecord/text/textPart[@lang = 'sv']">
+            <xsl:if test="string-length(.) &gt; 0">
+                <rdfs:label xml:lang="sv">
+                    <xsl:value-of select="text"/>
+                </rdfs:label>
+            </xsl:if>
+        </xsl:for-each>
+        <xsl:for-each select="linkedRecord/metadata/nameInData">
+            <skos:notation>
+                <xsl:value-of select="."/>
+            </skos:notation>
+        </xsl:for-each>
+        <rdfs:domain>
+            <xsl:attribute name="rdf:resource">
+                <xsl:value-of select="$baseURL"/>
+                <xsl:value-of select="$sub"/>
+            </xsl:attribute>
+        </rdfs:domain>
+        <xsl:for-each select="defTextId/linkedRecord/text/textPart[@lang = 'en'] | linkedRecord/metadata/defTextId/linkedRecord/text/textPart[@lang = 'en']">
+            <xsl:if test="string-length(.) &gt; 0">
+                <skos:definition xml:lang="en">
+                    <xsl:value-of select="text"/>
+                </skos:definition>
+            </xsl:if>
+        </xsl:for-each>
+        <xsl:for-each select="defTextId/linkedRecord/text/textPart[@lang = 'no'] | linkedRecord/metadata/defTextId/linkedRecord/text/textPart[@lang = 'no']">
+            <xsl:if test="string-length(.) &gt; 0">
+                <skos:definition xml:lang="no">
+                    <xsl:value-of select="text"/>
+                </skos:definition>
+            </xsl:if>
+        </xsl:for-each>
+        <xsl:for-each select="defTextId/linkedRecord/text/textPart[@lang = 'sv'] | linkedRecord/metadata/defTextId/linkedRecord/text/textPart[@lang = 'sv']">
+            <xsl:if test="string-length(.) &gt; 0">
+                <skos:definition xml:lang="sv">
+                    <xsl:value-of select="text"/>
+                </skos:definition>
+            </xsl:if>
+        </xsl:for-each>
+        <xsl:for-each select="recordInfo/updated[last()]/tsUpdated  | linkedRecord/metadata/recordInfo/updated[last()]/tsUpdated">
+            <dcterms:modified>
+                <xsl:value-of select="substring-before(.,'T')"/>
+            </dcterms:modified>
+        </xsl:for-each>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
     </xsl:template>
 </xsl:stylesheet>

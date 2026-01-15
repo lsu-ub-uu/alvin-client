@@ -4,6 +4,9 @@
 <GetRecord>   
     {% if metadataprefix == oai_dc %}
         {{metadataoai_dc|safe }}
+   {% endif %}
+{% if metadataprefix == alvin_xml %}
+        {{metadataalvin_xml|safe }}
     {% endif %}
 </GetRecord>
 {% endblock %}

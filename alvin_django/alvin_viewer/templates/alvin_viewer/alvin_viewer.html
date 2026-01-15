@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'alvin_info/master.html' %}
 
 {% load i18n static metadata_wrangler render_record_icon %}
 
-{% block title %}
+{% block title %}Alvin - {{ metadata|alvin_title:metadata.record_type }}
 {% endblock %}
 
 {% block head %}
@@ -20,7 +20,9 @@
 {% endblock %}
 
 {% block content %}
-<main class="min-h-svh w-full bg-alvin-grey pb-10 pt-[60px] border-4 border-black"  x-data="{ activeTab: 'overview' }">
+<div class="bg-white dark:bg-gray-800 dark:text-white flex-grow w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4">
+  <span id="main-content-marker"></span>
+  <main class="bg-white dark:bg-gray-800 dark:text-white mb-8 w-full md:w-3/4 pt-1 px-3" data-xdata="{ activeTab: 'overview' }">
 
   {% if metadata.files %}
   <!-- Bildvisare TIFY -->
@@ -33,34 +35,46 @@
     })
   </script>
   {% endif %}
-
-  <div class="px-10">
-    <div class="pt-8 pb-2">
-      <!-- Titel -->
-      <h1 class="w-full text-5xl max-md:text-4xl max-sm:text-3xl break-words font-universalis font-bold">
-        {{ metadata|alvin_title:metadata.record_type }}
-      </h1>
-
-      <div class="flex w-full items-center mb-4 max-md:text-sm">
-        {% render_record_icon metadata %}
-      </div>
+  {% if value != None %}
+    <a class="flex w-fit pb-2" href="{{ value }}">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <title>{% translate 'Tillbaka till sökresultatet' %}</title>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+      </svg>
+      <span class="pl-2 uppercase">{% translate 'Tillbaka till sökresultatet' %}</span>
+    </a>  
+  {% endif %} 
+ <h1 class="text-2xl md:text-3xl font-bold pb-2">{{ metadata|alvin_title:metadata.record_type }}</h1>
+    <div class="flex w-full items-center mb-4 max-md:text-sm">
+      {% render_record_icon metadata %}
     </div>
-
-    <nav class="flex flex-wrap justify-start text-xl max-md:text-base">
-      <button @click="activeTab = 'overview'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
-              :class="{ 'bg-alvin-green': activeTab === 'overview', 'bg-gray-200': activeTab != 'overview' }">
-              <img class="min-sm:pr-1 max-sm:visible" src="{% static 'img/nav/overview.svg' %}" />
-              <span class="max-sm:hidden">{% translate 'Översikt' %}</span>
-      </button>
-      <button @click="activeTab = 'all_metadata'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
-              :class="{ 'bg-alvin-green': activeTab === 'all_metadata', 'bg-gray-200': activeTab != 'all_metadata' }">
-              <img class="min-md:pr-1 min-sm:visible" src="{% static 'img/nav/allmetadata.svg' %}" />
-              <span class="max-sm:hidden">{% translate 'All metadata' %}</span>
-      </button>
+    <nav class="flex flex-wrap justify-start text-md max-md:text-base" data-xdata="{ activeTab: overview }">
+      <div class="flex flex-col border-r-4 border-white dark:border-gray-800">
+        <button data-xon.click="activeTab = 'overview'" class="dark:text-gray-900 cursor-pointer flex h-full p-2 text-center bg-light-alvin hover:bg-gray-700 hover:text-white">
+          <svg class="w-6 h-6 min-sm:visible" stroke="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <title>{% translate 'Översikt' %}</title>
+            <path stroke="currentColor" stroke-width="1.5" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+            <path stroke="currentColor" stroke-width="1.5" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+          </svg>
+          <span class="pl-1 max-sm:hidden">{% translate 'Översikt' %}</span>
+        </button>
+        <div data-xcloak data-xshow="activeTab === 'overview'" class="px-2 border-b-4 border-blue-500"></div>
+        <div data-xcloak data-xshow="activeTab != 'overview'" class="pr-4 border-b-4 border-white dark:border-gray-800"></div>
+      </div>
+      <div class="flex flex-col border-r-4 border-white dark:border-gray-800">
+        <button data-xon.click="activeTab = 'all_metadata'" class="dark:text-gray-900 cursor-pointer flex h-full p-2 text-center bg-light-alvin hover:bg-gray-700 hover:text-white">            
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <title>{% translate 'All metadata' %}</title>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+          </svg>
+          <span class="pl-1 max-sm:hidden">{% translate 'All metadata' %}</span>
+        </button>
+        <div data-xcloak data-xshow="activeTab === 'all_metadata'" class="px-2 border-b-4 border-blue-500"></div>
+        <div data-xcloak data-xshow="activeTab != 'all_metadata'" class="pr-4 border-b-4 border-white dark:border-gray-800"></div>
+      </div>
       {% if metadata.components %}
-      <button @click="activeTab = 'inventory'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
-            :class="{ 'bg-alvin-green': activeTab === 'inventory', 'bg-gray-200': activeTab != 'inventory' }">
-            <img class="min-md:pr-1 min-sm:visible" src="{% static 'img/nav/inventory.svg' %}" />
+      <button data-xon.click="activeTab = 'inventory'" class="dark:text-gray-900 cursor-pointer flex h-full p-2 text-center hover:bg-light-alvin">
+            <img class="min-md:pr-1 min-sm:visible" src="{% static 'img/nav/inventory.svg' %}">
             <span class="max-sm:hidden">
               {% if metadata.type_of_resource.code == 'col' %}
                   {% translate 'Arkivförteckning' %}
@@ -70,30 +84,87 @@
             </span>
       </button>
       {% endif %}
-
-      <button @click="activeTab = 'related'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
-              :class="{ 'bg-alvin-green': activeTab === 'related', 'bg-gray-200': activeTab != 'related' }">
-              <img class="min-md:pr-1 max-sm:visible" src="{% static 'img/nav/related.svg' %}" />
-              <span class="max-sm:hidden">{% translate 'Relaterat' %}</span>
-      </button>
+      <div class="flex flex-col border-r-4 border-white dark:border-gray-800">
+        <button data-xon.click="activeTab = 'related'" class="dark:text-gray-900 cursor-pointer flex h-full p-2 text-center bg-light-alvin hover:bg-gray-700 hover:text-white">
+          <svg class="w-6 h-6" stroke="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <title>{% translate 'Relaterat' %}</title>
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.213 9.787a3.391 3.391 0 0 0-4.795 0l-3.425 3.426a3.39 3.39 0 0 0 4.795 4.794l.321-.304m-.321-4.49a3.39 3.39 0 0 0 4.795 0l3.424-3.426a3.39 3.39 0 0 0-4.794-4.795l-1.028.961"/>
+          </svg>
+          <span class="max-sm:hidden">{% translate 'Relaterat' %}</span>
+        </button>   
+        <div data-xcloak data-xshow="activeTab === 'related'" class="px-2 border-b-4 border-blue-500"></div>
+        <div data-xcloak data-xshow="activeTab != 'related'" class="pr-4 border-b-4 border-white dark:border-gray-800"></div>
+      </div>
     </nav>
-
     <!-- Metadata -->
-    <section class="block w-full border-t-4 border-black">
-      <dl>
-        {% if metadata.record_type == 'alvin-place' %}
-          {% include './_partials/_alvin_place.html' %}
-        {% elif metadata.record_type == 'alvin-person' %}
-          {% include './_partials/_alvin_person.html' %}
-        {% elif metadata.record_type == 'alvin-organisation' %}
-          {% include './_partials/_alvin_organisation.html' %}
-        {% elif metadata.record_type == 'alvin-work' %}
-          {% include './_partials/_alvin_work.html' %}
-        {% elif metadata.record_type == 'alvin-record' %}
-          {% include './_partials/_alvin_record.html' %}
-        {% endif %}
-      </dl>
-    </section>
+    <div class="block w-full border-t border-black">
+      {% if metadata.record_type == 'alvin-place' %}
+        {% include './_partials/_alvin_place.html' %}
+      {% elif metadata.record_type == 'alvin-person' %}
+        {% include './_partials/_alvin_person.html' %}
+      {% elif metadata.record_type == 'alvin-organisation' %}
+        {% include './_partials/_alvin_organisation.html' %}
+      {% elif metadata.record_type == 'alvin-work' %}
+        {% include './_partials/_alvin_work.html' %}
+      {% elif metadata.record_type == 'alvin-record' %}
+        {% include './_partials/_alvin_record.html' %}
+      {% endif %}
+      <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
+        <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+          <div class="w-full md:w-1/4 flex-grow font-bold pl-2">Alvin-id</div>
+          <div class="w-full md:w-3/4 flex flex-grow pl-2">
+           {{ metadata.record_type }}:{{ metadata.id }}
+           </div>
+         </div>
+       </div>
+       <div data-xshow="activeTab === 'overview'" data-xcloak>
+         <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+          <div class="w-full md:w-1/4 flex-grow font-bold pl-2">URI</div>
+          <div class="w-full md:w-3/4 flex flex-grow pl-2" id="uri">
+            {{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}<button class="btn flex items-right flex justify-end" data-clipboard-action="copy" data-clipboard-target="#uri">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 float-right">
+                <title>Copy</title>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"/>
+              </svg>
+             </button>
+           </div>
+         </div>
+      </div>
+    </div>
+  </main>
+  <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+     <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
+       <div class="flex flex-col justify-center">  
+         <div class="flex justify-center py-4"> 
+            <a href="" class="flex flex-row bg-orange-600 hover:bg-orange-700 focus:bg-blue-800 text-white font-semibold py-2 px-4 rounded-full">{% translate 'Sök länkade poster' %}</a>
+         </div>
+         <div class="flex justify-center"> 
+          <h2 class="text-xl md:text-2xl font-bold pt-4">{% translate 'Exportera' %}</h2>
+        </div>
+        <div class="flex justify-center py-4">             
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+          </svg>          
+          <a class="text-blue-800 dark:text-blue-200 underline pl-1" href="/record/{{ metadata.record_type }}/{{ metadata.id }}?format=xml">XML</a>
+        </div>
+      </div>
+    </div>
   </div>
-</main>
+</div>
+ <script src="/static/js/clipboard.js-master/dist/clipboard.min.js"></script>
+    <script>
+      var clipboard = new ClipboardJS('.btn');
+
+      clipboard.on('success', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+      });
+
+      clipboard.on('error', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+      });
+    </script>
 {% endblock %}

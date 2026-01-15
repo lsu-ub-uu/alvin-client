@@ -8,8 +8,8 @@
     label: namn på resursen
 {% endcomment %}
 
-<img src="{% static icon_path %}" alt="{{ icon_alt }}" class="w-6 h-6 {% if extra_icon_path %}mr-0{% else %}mr-2{% endif %}">
+<img src="{% static icon_path %}" alt="{{ icon_alt }}" class="w-6 h-6 fill-current bg-white dark:bg-off-white" {% if extra_icon_path %}mr-0{% else %}mr-2{% endif %}">
 {% if extra_icon_path %}
     <img src="{% static extra_icon_path %}" alt="{{ extra_icon_alt }}" class="w-6 h-6 mr-2">
 {% endif %}
-<p class="w-full font-semibold">{{ label }}</p>
+<p class="w-full font-semibold pl-2">{{ label }}</p>

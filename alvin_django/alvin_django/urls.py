@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 
 urlpatterns = [
     path('i18n/', include("django.conf.urls.i18n")),
+    path('', include('urn.urls')),
+    path('oai/', include('django_oai_pmh.urls')),
 ]
 
 urlpatterns += i18n_patterns (
@@ -13,6 +15,6 @@ urlpatterns += i18n_patterns (
     path('', include('alvin_viewer.urls')),
     path('', include('alvin_list_viewer.urls')),
     path('', include('alvin_search.urls')),
-    path('alvin/', include('urn.urls')),
-    path('oai/', include('django_oai_pmh.urls')),
 )
+
+

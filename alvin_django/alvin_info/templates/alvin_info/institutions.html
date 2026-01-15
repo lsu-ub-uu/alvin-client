@@ -3,12 +3,12 @@
 {% load i18n %}
 {% block title %}Alvin - {% translate 'Institutioner' %}{% endblock %}
 {% block content %}
-<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+<div class="bg-white dark:bg-gray-800 dark:text-white w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
     <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
         <div class="md:flex flex-col md:flex-row">
-            <div class="flex flex-col w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0">
+            <div class="flex flex-col w-full flex-shrink-0">
                 <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
-                    <div class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+                    <div class="text-lg font-semibold tracking-widest text-gray-900 dark:text-gray-100 uppercase rounded-lg focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
                     <!-- Mobile menu button-->
                     <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
                         <span class="absolute -inset-0.5"></span>
@@ -17,7 +17,7 @@
                             <title>Mobile-menu is not open</title>
                             <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-                        <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
                             <title>Mobile-menu is open</title>
                             <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
@@ -47,21 +47,21 @@
         {{ member }}
     </main>
     <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
-        <div class="sticky top-0 p-4 bg-off-white rounded-xl w-full h-full">
+        <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
             
-            <div class="flex justify-center py-4"> 
+            <div class="flex justify-center py-4 dark:bg-off-white"> 
                 <a class="text-center" href="https://www.uu.se/">
                     <img class="w-48 object-center" alt="Uppsala universitet" src="/static/img/UU_logo_4f_42-e1619707029600.png">
                 </a>
             </div>
             <div class="py-2 text-center font-bold">{% translate 'I samarbete med:' %}</div>
-            <div class="flex justify-center py-4">
+            <div class="flex justify-center py-4 dark:bg-off-white">
                 <a href="https://www.lu.se">
                     <img class="w-48 object-center" alt="Lunds universitet" src="/static/img/Lunds_universitet_C2r_RGB.png">
                 </a>     
             </div>
             <div class="py-2 text-center font-bold">{% translate 'och' %}</div>
-            <div class="flex justify-center py-4"> 
+            <div class="flex justify-center py-4 dark:bg-off-white"> 
                 <a href="https://www.gu.se">
                     <img class="w-48 object-center" alt="Göteborgs universitet" src="/static/img/gu-white.png">
                 </a>

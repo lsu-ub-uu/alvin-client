@@ -31,12 +31,11 @@ import urllib.request
 from urllib.request import urlopen
 parser = etree.XMLParser()
 
-import base64
-import json
-from django.http import HttpResponse
-from django.utils.encoding import force_bytes, force_str
+#import base64
+#import json
+#from django.http import HttpResponse
+#from django.utils.encoding import force_bytes, force_str
 
-from urllib.parse import unquote
 
 @csrf_exempt
 def oai2(request):
@@ -55,6 +54,9 @@ def oai2(request):
     until_timestamp = None
     resumption_token = None
 
+    # API host
+    api_host = 'https://preview.alvin.cora.epc.ub.uu.se'
+
     if "verb" in params:
         verb = params.pop("verb")[-1]
         if verb == "GetRecord":
@@ -64,7 +66,7 @@ def oai2(request):
                 metadata_prefix = params.pop("metadataPrefix")
                 if len(metadata_prefix) == 1:
                     metadata_prefix = metadata_prefix[0]
-                    prefix_url = f'https://cora.alvin-portal.org/rest/record/metadata/{metadata_prefix}Item'
+                    prefix_url = f'{api_host}/rest/record/metadata/{metadata_prefix}Item'
                     response = requests.get(prefix_url)
                     if response.status_code != 200:
                         errors.append(
@@ -75,16 +77,32 @@ def oai2(request):
                         recordId = identifier.split("org:")
                         record = str(recordId[1])
                         if record.isdigit():
-                            record_url =f'https://cora.alvin-portal.org/rest/record/alvin-record/{record}'
-                            response = requests.get(record_url, headers=xml_headers_list)
+                            record_url =f'{api_host}/rest/record/alvin-record/{record}'
+                            if metadata_prefix == 'alvin_xml':
+                                response = requests.get(record_url)
+                            else:
+                                response = requests.get(record_url, headers=xml_headers_list)
                         else:
                             errors.append(_error("idDoesNotExist", identifier))                                                 
                         if response.status_code == 200:
                             xml_record = etree.fromstring(response.content) 
-                            with urlopen('http://127.0.0.1:8000/static/xsl/metadata-oai_dc.xsl') as f:
-                              xslt_tree = etree.parse(f, parser)
-                            transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
-                            metadataoai_dc = transform(xml_record)	# Transform source XML tree
+                            
+                            if metadata_prefix == 'alvin_xml':
+
+                                with urlopen('http://127.0.0.1:8000/static/xsl/metadata-alvin_xml.xsl') as f:
+                                  xslt_tree = etree.parse(f, parser)
+                                  transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
+                                  metadataalvin_xml = transform(xml_record)	# Transform source XML tree
+
+                            
+                            else:
+
+                                with urlopen('http://127.0.0.1:8000/static/xsl/metadata-oai_dc.xsl') as f:
+                                  xslt_tree = etree.parse(f, parser)
+                                  transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
+                                  metadataoai_dc = transform(xml_record)	# Transform source XML tree
+
+
                         if response.status_code != 200:
                             errors.append(_error("idDoesNotExist", identifier))
                     else:
@@ -142,7 +160,7 @@ def oai2(request):
                 else:
                     resumptionToken = "//"  
                     errors.append(_error("badResumptionToken_resumptionToken"))                                
-            list_url = f'https://cora.alvin-portal.org/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"permissionUnitSearchTerm","value":"permissionUnit_{set}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
+            list_url = f'{api_host}/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"permissionUnitSearchTerm","value":"permissionUnit_{set}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
             response = requests.get(list_url)
             if response.status_code == 200:
                 xml_list = etree.fromstring(response.content)         
@@ -177,7 +195,7 @@ def oai2(request):
                 metadata_prefix = params.pop("metadataPrefix")
                 if len(metadata_prefix) == 1:
                     metadata_prefix = metadata_prefix[0]
-                    prefix_url = f'https://cora.alvin-portal.org/rest/record/metadata/{metadata_prefix}Item'
+                    prefix_url = f'{api_host}/rest/record/metadata/{metadata_prefix}Item'
                     response = requests.get(prefix_url)
                     if response.status_code != 200:
                         errors.append(
@@ -185,7 +203,7 @@ def oai2(request):
                         )
                     else:                      
                         if "set" in params:
-                            set_url = f'https://cora.alvin-portal.org/rest/record/alvin-location/{set}'
+                            set_url = f'{api_host}/rest/record/alvin-location/{set}'
                             response = requests.get(set_url)
                             set_spec = params.pop("set")[-1]
                             if response.status_code != 200:
@@ -216,7 +234,7 @@ def oai2(request):
 
             xml_headers_list = {'Content-Type':'application/vnd.cora.record-decorated+xml','Accept':'application/vnd.cora.record-decorated+xml'}
 
-            list_url = f'https://cora.alvin-portal.org/rest/record/metadata/metadataFormatCollection'
+            list_url = f'{api_host}/rest/record/metadata/metadataFormatCollection'
             response = requests.get(list_url, headers=xml_headers_list)
 
             if response.status_code == 200:
@@ -233,7 +251,7 @@ def oai2(request):
             if "identifier" in params:
                 identifier = params.pop("identifier")[-1]
                 recordId = identifier.split("org:")
-                record_url =f'https://cora.alvin-portal.org/rest/record/alvin-record/{recordId[1]}'
+                record_url =f'{api_host}/rest/record/alvin-record/{recordId[1]}'
                 response = requests.get(record_url)
                 if response.status_code != 200:
                     errors.append(_error("idDoesNotExist", identifier))
@@ -251,7 +269,7 @@ def oai2(request):
             metadata_prefix = request.GET.get('metadataPrefix')
             metadataprefix = metadata_prefix
             start = request.GET.get('start', 1)         
-            rows = request.GET.get('rows', 1)
+            rows = request.GET.get('rows', 100)
             newstart = start + rows
             if "resumptionToken" in params:  
                 resumption_token = request.GET.get('resumptionToken')                   
@@ -287,8 +305,16 @@ def oai2(request):
                 else:
                     resumptionToken = "//"  
                     errors.append(_error("badResumptionToken_resumptionToken"))                                
-            list_url = f'https://cora.alvin-portal.org/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"permissionUnitSearchTerm","value":"permissionUnit_{set}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
-            response = requests.get(list_url, headers=xml_headers_list)
+            list_url = f'{api_host}/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"permissionUnitSearchTerm","value":"permissionUnit_{set}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
+            #response = requests.get(list_url, headers=xml_headers_list)
+
+            if metadata_prefix == 'alvin_xml':
+                response = requests.get(list_url)
+            else:
+                response = requests.get(list_url, headers=xml_headers_list)
+
+
+
             if response.status_code == 200:
                 xml_list = etree.fromstring(response.content)         
                 records = []
@@ -298,11 +324,29 @@ def oai2(request):
                       'datestamp': record.findtext('./recordInfo/updated/tsUpdated[last()]'),
          	      'setSpec': record.findtext('./physicalLocation/heldBy/location/linkedRecordId'),
                        })
-                with urlopen('http://127.0.0.1:8000/static/xsl/metadata-oai_dc.xsl') as f:
-                    xslt_tree = etree.parse(f, parser)
 
-                transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
-                metadataoai_dc = transform(xml_list)	# Transform source XML tree
+                if metadata_prefix == 'alvin_xml':
+
+                    with urlopen('http://127.0.0.1:8000/static/xsl/metadata-alvin_xml.xsl') as f:
+                        xslt_tree = etree.parse(f, parser)
+                        transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
+                        metadataalvin_xml = transform(xml_list)	# Transform source XML tree
+
+                            
+                else:
+
+                    with urlopen('http://127.0.0.1:8000/static/xsl/metadata-oai_dc.xsl') as f:
+                        xslt_tree = etree.parse(f, parser)
+                        transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
+                        metadataoai_dc = transform(xml_list)	# Transform source XML tree
+
+
+
+               # with urlopen('http://127.0.0.1:8000/static/xsl/metadata-oai_dc.xsl') as f:
+               #    xslt_tree = etree.parse(f, parser)
+
+                #transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
+                #metadataoai_dc = transform(xml_list)	# Transform source XML tree
 
                 pages = {
                     "fromNo":xml_list.findtext(".//fromNo"),
@@ -331,7 +375,7 @@ def oai2(request):
                 metadata_prefix = params.pop("metadataPrefix")
                 if len(metadata_prefix) == 1:
                     metadata_prefix = metadata_prefix[0]
-                    prefix_url = f'https://cora.alvin-portal.org/rest/record/metadata/{metadata_prefix}Item'
+                    prefix_url = f'{api_host}/rest/record/metadata/{metadata_prefix}Item'
                     response = requests.get(prefix_url)
                     if response.status_code != 200:
                         errors.append(
@@ -339,7 +383,7 @@ def oai2(request):
                         )
                     else:                      
                         if "set" in params:
-                            set_url = f'https://cora.alvin-portal.org/rest/record/alvin-location/{set}'
+                            set_url = f'{api_host}/rest/record/alvin-location/{set}'
                             response = requests.get(set_url)
                             set_spec = params.pop("set")[-1]
                             if response.status_code != 200:
@@ -368,7 +412,7 @@ def oai2(request):
         elif verb == "ListSets":
             template = "django_oai_pmh/listsets.xml"
 
-            list_url = f'https://cora.alvin-portal.org/rest/record/searchResult/locationSearch?searchData={{"name":"locationSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"locationSearchTerm","value":"**"}}]}}]}}]}}'
+            list_url = f'{api_host}/rest/record/searchResult/locationSearch?searchData={{"name":"locationSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"locationSearchTerm","value":"**"}}]}}]}}]}}'
             response = requests.get(list_url)
 
             if response.status_code == 200:
@@ -382,8 +426,12 @@ def oai2(request):
          	       'description': set.findtext('./authority[1]/name/namePart[1]', default='N/A'),
                     })
 
+            if not sets:
+                errors.append(_error("noSetHierarchy"))
+
             if response.status_code != 200:
                 errors.append(_error("noSetHierarchy"))
+
         else:
             errors.append(_error("badVerb", verb))
     else:

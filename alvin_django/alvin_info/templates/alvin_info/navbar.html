@@ -1,38 +1,38 @@
 {% load i18n %}
-<nav data-xdata="{ mobileMenuIsOpen: false }" data-xon.click.away="mobileMenuIsOpen = false" class="relative bg-white border-b-4 border-gray-900">
+
+<nav data-xdata="{ mobileMenuIsOpen: false }" data-xon.click.away="mobileMenuIsOpen = false" class="relative bg-white dark:bg-gray-800 border-b-4 border-gray-900">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 <!-- Mobile menu button-->
-                <button data-xon.click="mobileMenuIsOpen = !mobileMenuIsOpen" data-xbind.aria-expanded="mobileMenuIsOpen" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+                <button data-xon.click="mobileMenuIsOpen = !mobileMenuIsOpen" data-xbind.aria-expanded="mobileMenuIsOpen" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
                     <span class="absolute -inset-0.5"></span>
                     <span class="sr-only">Open main menu</span>
                     <svg data-xcloak data-xshow="!mobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <title>Mobile-menu is not open</title>
                         <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    <svg data-xcloak data-xshow="mobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <svg data-xcloak data-xshow="mobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
                         <title>Mobile-menu is open</title>
                         <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button>
             </div>
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div class="flex shrink-0 items-center font-[Universalis] text-3xl border-b-4 border-alvin"><a href="/" class="focus:outline-2 focus:outline-offset-2 focus:outline-blue-800">ALVIN</a></div>
+                <div class="flex shrink-0 items-center font-[Universalis] text-3xl border-b-4 dark:text-white border-alvin"><a href="/" class="focus:outline-2 focus:outline-offset-2 focus:outline-blue-800">ALVIN</a></div>
                 <div class="hidden sm:ml-6 sm:block">
-                    <div class="flex space-x-4">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
+                    <div class="flex space-x-4">       
                         <a href="/userguide" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-base font-normal text-white">{% translate 'För medlemmar' %}</a>
-                        <a href="/about" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Om Alvin' %}</a>
-                        <a href="/institutions" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Institutioner' %}</a>
-                        <a href="/copyright" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Upphovsrätt' %}</a>
+                        <a href="/about" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 dark:text-gray-100 {% if '/about' in request.get_full_path %}bg-blue-800 text-white{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white dark:text-gray-300">{% translate 'Om Alvin' %}</a>
+                        <a href="/institutions" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 dark:text-gray-100 {% if '/institutions' in request.get_full_path %}bg-blue-800 text-white{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white dark:text-gray-300">{% translate 'Institutioner' %}</a>
+                        <a href="/copyright" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 dark:text-gray-100 {% if '/copyright' in request.get_full_path %}bg-blue-800 text-white{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white dark:text-gray-300">{% translate 'Upphovsrätt' %}</a>
                     </div>
                 </div>
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">  
                 <!-- Search -->   
                 <button type="button" 
-                    class="relative rounded-full text-gray-700 focus:outline-2 focus:outline-offset-2 focus:outline-blue-800" onclick="togglePanel('myPanel')">                  
+                    class="relative rounded-full text-gray-700 dark:text-gray-300 focus:outline-2 focus:outline-offset-2 focus:outline-blue-800" onclick="togglePanel('myPanel')">                  
                     <span class="absolute -inset-1.5"></span>
                     <span class="sr-only">Open search</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -73,9 +73,9 @@
             <div class="space-y-1 px-2 pt-2 pb-3">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
                 <a href="/userguide" aria-current="page" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-normal text-white">{% translate 'För medlemmar' %}</a>
-                <a href="/about" class="block rounded-md px-3 py-2 text-base font-normal text-white bg-gray-700 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Om Alvin' %}</a>
-                <a href="/institutions" class="block rounded-md px-3 py-2 text-base font-normal text-white bg-gray-700 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Institutioner' %}</a>
-                <a href="/copyright" class="block rounded-md px-3 py-2 text-base font-normal text-white bg-gray-700 hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Upphovsrätt' %}</a>
+                <a href="/about" class="block rounded-md px-3 py-2 text-base font-normal text-white {% if '/about' in request.get_full_path %}bg-blue-800{% else %} bg-gray-700{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Om Alvin' %}</a>
+                <a href="/institutions" class="block rounded-md px-3 py-2 text-base font-normal text-white {% if '/institutions' in request.get_full_path %}bg-blue-800{% else %} bg-gray-700{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Institutioner' %}</a>
+                <a href="/copyright" class="block rounded-md px-3 py-2 text-base font-normal text-white {% if '/copyright' in request.get_full_path %}bg-blue-800{% else %} bg-gray-700{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Upphovsrätt' %}</a>
             </div>
         </div>
     </div>

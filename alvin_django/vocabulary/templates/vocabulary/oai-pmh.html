@@ -3,21 +3,21 @@
 {% load i18n %}
 {% block title %}Alvin - OAI-PMH{% endblock %}
 {% block content %}
-<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+<div class="bg-white dark:bg-gray-800 dark:text-white w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
   <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
     <div class="md:flex flex-col md:flex-row">
-      <div class="flex flex-col w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0">
+      <div class="flex flex-col w-full flex-shrink-0">
         <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
-          <div class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+          <div class="text-lg font-semibold tracking-widest text-gray-900 dark:text-gray-100 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
                 <!-- Mobile menu button-->
-                <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+                <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
                     <span class="absolute -inset-0.5"></span>
                     <span class="sr-only">Open main menu</span>
                     <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                         <title>Mobile-menu is not open</title>
                         <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
                         <title>Mobile-menu is open</title>
                         <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
@@ -52,15 +52,15 @@
      {% if LANGUAGE_CODE != "sv" %}
          <p class="py-2 text-sm italic">{% translate 'AI-genererad översättning' %}
      {% endif %}
-     <p class="py-2 font-bold">{% translate 'Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH) är ett protokoll som utvecklats för att samla in metadatabeskrivningar av poster i ett arkiv så att tjänster kan byggas med hjälp av metadata från flera arkiv. Metadataposter från Alvin kan hämtas via protokollet' %} <a class="text-blue-800 underline" href="https://www.openarchives.org/OAI/openarchivesprotocol.html">OAI-PMH, Version 2</a>.
-     <p class="py-2">{% translate 'Metadataposter från Alvin är fritt tillgängliga enligt' %} <a class="text-blue-800 underline" href="https://creativecommons.org/public-domain/cc0/">Creative Commons CC0</a>.
+     <p class="py-2 font-bold">{% translate 'Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH) är ett protokoll som utvecklats för att samla in metadatabeskrivningar av poster i ett arkiv så att tjänster kan byggas med hjälp av metadata från flera arkiv. Metadataposter från Alvin kan hämtas via protokollet' %} <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.openarchives.org/OAI/openarchivesprotocol.html">OAI-PMH, Version 2</a>.
+     <p class="py-2">{% translate 'Metadataposter från Alvin är fritt tillgängliga enligt' %} <a class="text-blue-800 dark:text-blue-200 underline" href="https://creativecommons.org/public-domain/cc0/">Creative Commons CC0</a>.
      <p class="py-2">{% translate 'Protokollet består av sex olika typer av förfrågningar <span class="italic">(verb)</span> som anger vilken tjänst som anropas:' %}</p>
      <h2 id="List" class="text-3xl md:text-4xl font-bold pt-4 pb-4">{% translate 'Lista över förfrågningar' %}</h2>
      <h3 id="Identify" class="text-2xl md:text-3xl font-bold pt-4">Identify</h3>
-     <p class="py-2"><a class="text-blue-800 underline" href="/oai/oai?verb=Identify">https://www.alvin-portal.org/oai/oai?verb=Identify</a></p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=Identify">https://www.alvin-portal.org/oai/oai?verb=Identify</a></p>
      <p class="py-2">{% translate 'Hämtar grundläggande information om arkivet, som dess namn, URL och protokoll-version.' %}</p>
      <h3 id="ListMetadataFormats" class="text-2xl md:text-3xl font-bold pt-4">ListMetadataFormats</h3>
-     <p class="py-2"><a class="text-blue-800 underline" href="/oai/oai?verb=ListMetadataFormats">https://www.alvin-portal.org/oai/oai?verb=ListMetadataFormats</a></p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=ListMetadataFormats">https://www.alvin-portal.org/oai/oai?verb=ListMetadataFormats</a></p>
      <p class="py-2">{% translate 'Returnerar en lista över de metadataformat som arkivet kan tillhandahålla. Poster från Alvin kan hämtas i grundformatet oai_dc (se specifikation av mappning nedan).' %}</p>
      <p class="py-2 font-bold">{% translate 'Dublin Core-mappning mot Alvins format' %}</p>
      <p class="py-2"><span class="font-semibold">&lt;dc:title&gt; {% translate 'Titel' %}</span><br>
@@ -81,7 +81,7 @@
      {% translate 'Anges som i posterna, om specifika årtal YYYY-YYYY, annars som fritext "Visas som".' %}</p>
      <p class="py-2"><span class="font-semibold">&lt;dc:type&gt; {% translate 'Resurstyp' %}</span><br>
      {% translate 'Fasta värden på engelska enligt Library of Congress Resource Types Scheme.' %}<br>
-     <a class="text-blue-800 underline" href="/vocabulary/typeOfResourceCollection">{% translate 'Lista' %}</a>
+     <a class="text-blue-800 dark:text-blue-200 underline" href="/vocabulary/typeOfResourceCollection">{% translate 'Lista' %}</a>
      <p class="py-2"><span class="font-semibold">&lt;dc:identifier&gt; {% translate 'Identifikator' %}</span><br>
      <ol class="py-2 list-decimal list-inside">
          <li>{% translate 'Permanent länk, urn:nbn anges som url:' %} http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-1</li>
@@ -96,14 +96,14 @@
      </ol>
      <p class="py-2"><span class="font-semibold">&lt;dc:rights&gt; {% translate 'Rättigheter' %}</span><br>
      {% translate 'Gäller digitalt innehåll (filer). Anges på engelska enligt alternativen för Rättigheter.' %}<br>
-     <a class="text-blue-800 underline" href="/vocabulary/rightsCollection">{% translate 'Lista' %}</a>
+     <a class="text-blue-800 dark:text-blue-200 underline" href="/vocabulary/rightsCollection">{% translate 'Lista' %}</a>
      <h3 id="ListSets" class="text-2xl md:text-3xl font-bold pt-4">ListSets</h3>
-     <p class="py-2"><a class="text-blue-800 underline" href="/oai/oai?verb=ListSets">https://www.alvin-portal.org/oai/oai?verb=ListSets</a></p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=ListSets">https://www.alvin-portal.org/oai/oai?verb=ListSets</a></p>
      <p class="py-2">{% translate 'Hämtar arkivets set-struktur som möjliggör gruppering av poster i delmängder. Poster från Alvin kan hämtas i begränsade set utifrån ägande institution.' %}</p>
      <p class="py-2">{% translate 'Id för setSpec motsvarar en arkivinstitutions id i Alvin. ' %}</p>
      <p class="py-2">{% translate '<span class="font-semibold">Exempel:</span> setSpec 3 innehåller alla poster från Uppsala universitetsbibliotek' %} (alvin-location:3).</p>
      <h3 id="GetRecord" class="text-2xl md:text-3xl font-bold pt-4">GetRecord</h3>
-     <p class="py-2"><a class="text-blue-800 underline" href="/oai/oai?verb=GetRecord&identifier=oai%3AALVIN.org%3A1&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=GetRecord&identifier=oai:ALVIN.org:1&metadataPrefix=oai_dc</a></p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=GetRecord&identifier=oai%3AALVIN.org%3A1&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=GetRecord&identifier=oai:ALVIN.org:1&metadataPrefix=oai_dc</a></p>
      <p class="py-2">{% translate 'Hämtar en enskild, individuell metadatapost. Obligatoriska parametrar anger identifikatorn (identifier) och formatet (metadataPrefix) för de metadata som ska inkluderas i posten.' %}</p>
      <p class="py-2">{% translate 'En post <span class="italic">(record)</span> är metadata uttryckta i ett enda format. Den identifieras entydigt genom kombinationen av den unika identifikatorn för det objekt från vilket posten är tillgänglig, metadataprefixet som identifierar postens metadataformat samt postens datumstämpel. XML-kodningen av poster är organiserad i följande delar: ' %}
      <ol class="py-2 list-decimal list-inside">
@@ -117,26 +117,24 @@
          <li><span class="italic">metadata</span> -  {% translate 'en enda manifestation av metadata från ett objekt. Den innehåller ett enda rotelement, til exempel oai_dc:dc, med underelement som tillhör motsvarande metadataformat.' %}</li>
      </ol>
      <h3 id="ListRecords" class="text-2xl md:text-3xl font-bold pt-4">ListRecords</h3>
-     <p class="py-2"><a class="text-blue-800 underline" href="/oai/oai?verb=ListRecords&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=ListRecords&metadataPrefix=oai_dc</a></p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=ListRecords&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=ListRecords&metadataPrefix=oai_dc</a></p>
      <p class="py-2">{% translate 'Hämtar fullständiga metadataposter från arkivet. Om antalet hämtade poster överstiger 100 returneras en lista över de första 100 posterna + ett resumptionToken-element i slutet av svaret som används för att fortsätta hämtningen av den kompletta listan. Inga andra parametrar kan då användas. Om resumptionToken saknas är metadataPrefix en obligatorisk parameter.' %}</p>
      <h3 id="ListIdentifiers" class="text-2xl md:text-3xl font-bold pt-4">ListIdentifiers</h3>
-     <p class="py-2"><a class="text-blue-800 underline" href="/oai/oai?verb=ListIdentifiers&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=ListIdentifiers&metadataPrefix=oai_dc</a></p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=ListIdentifiers&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=ListIdentifiers&metadataPrefix=oai_dc</a></p>
      <p class="py-2">{% translate 'Som ListRecords men hämtar endast <span class="italic">headers</span> (identifikator, set och datumstämpel), inte de fullständiga metadataposterna.' %}</p>
   </main>
   <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
-    <div class="sticky top-0 p-4 bg-off-white rounded-xl w-full h-full">
-        <div class="sticky top-0 p-4 bg-off-white rounded-xl w-full h-full">
-            <div class="flex justify-center py-4"> 
-                <a href="https://www.openarchives.org/">
-                    <img class="w-48 object-center" alt="Open Archives Initiative" src="/static/img/OA200.gif">
-                </a>
-            </div>
-            <div class="flex justify-center py-4"> 
-                <a href="https://creativecommons.org/">
-                    <img class="w-48 object-center" alt="Creative Commons" src="/static/img/cc.logo.svg">
-                </a>
-            </div>
-      </div>
+     <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
+        <div class="flex justify-center py-4"> 
+            <a href="https://www.openarchives.org/">
+                <img class="w-48 object-center" alt="Open Archives Initiative" src="/static/img/OA200.gif">
+            </a>
+        </div>
+        <div class="flex justify-center py-4"> 
+            <a class="bg-off-white dark:bg-gray-100 p-4 rounded-md" href="https://creativecommons.org/">
+                <img class="w-48 object-center" alt="Creative Commons" src="/static/img/cc.logo.svg">
+            </a>
+        </div>
     </div>    
   </div>
 </div>

@@ -12,6 +12,10 @@
     <meta name="keywords" content="Alvin, cultural heritage, digital collections, databases, libraries, archives">
     <meta name="description" content="Alvin - Nordic platform for preserving and making digitised cultural heritage available">
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <link rel="alternate" href="{{ request.get_host }}/en{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="en">
+    <link rel="alternate" href="{{ request.get_host }}/no{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="no">
+    <link rel="alternate" href="{{ request.get_host }}/sv{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="sv">
+    <link rel="alternate" href="{{ request.get_host }}{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="x-default">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
@@ -21,6 +25,9 @@
     <script src="{% static 'js/alpine-validation.js' %}"></script>  
     <style>
         [x-cloak] {
+            display: none !important; /* Important to override any default */
+        }
+        [data-xcloak] {
             display: none !important; /* Important to override any default */
         }
     </style> 

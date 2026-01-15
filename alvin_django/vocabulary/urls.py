@@ -9,7 +9,6 @@ urlpatterns = [
     path('api/iiif', views.iiif, name='iiif'),
     path('vocabulary/', views.vocabulary, name='vocabulary'),
     path('vocabulary/<str:id>', views.metadata, name='metadata'),
-    path('vocabulary/rdf/<str:id>/', views.metadatardf, name='metadatardf'),
     path('cataloguing/', views.cataloguing, name='cataloguing'),
     path('cataloguing/place/', views.place, name='place'),
     path('cataloguing/person/', views.person, name='person'),

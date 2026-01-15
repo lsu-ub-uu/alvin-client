@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="https://www.alvin-portal.org/vocabulary"
+    xmlns="https://www.alvin-portal.org/vocabulary"
+    elementFormDefault="qualified">    
+    <!-- Root element definition -->
+    <xs:element name="record" type="xs:string" minOccurs="0" nillable="true"/>    
+</xs:schema>
+
+        
+        
+

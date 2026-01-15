@@ -1,5 +1,5 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-    <xsl:output method="html" encoding="UTF-8" indent="yes" omit-xml-declaration="yes"/>
+    <xsl:output method="html" encoding="UTF-8" indent="no" omit-xml-declaration="yes"/>
     <xsl:param name="lang"/>
     <xsl:variable name="baseURL">
         <xsl:text>http://127.0.0.1:8000/vocabulary/</xsl:text>
@@ -79,6 +79,10 @@
                         <xsl:text>)</xsl:text>
                     </xsl:if>
                 </xsl:when>
+                <xsl:when test="@type = 'recordLink'">
+                    <xsl:text>Subclass (link): </xsl:text>
+                    <xsl:value-of select="nameInData"/>
+                </xsl:when>
                 <xsl:when test="@type = 'textVariable'">
                     <xsl:text>Property (text): </xsl:text>
                     <xsl:value-of select="nameInData"/>
@@ -93,7 +97,17 @@
                     <xsl:value-of select="nameInData"/>
                 </xsl:when>
                 <xsl:when test="@type = 'itemCollection'">
-                    <xsl:text>Controlled list: </xsl:text>
+                    <xsl:choose>
+                        <xsl:when test="$lang = 'en'">
+                            <xsl:text>Controlled list: </xsl:text>
+                        </xsl:when>
+                        <xsl:when test="$lang = 'no'">
+                            <xsl:text>Kontrollert liste: </xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text>Kontrollerad lista: </xsl:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <xsl:value-of select="textId/linkedRecord/text/textPart[@lang = 'en']/text"/>
                 </xsl:when>
                 <xsl:when test="@type = 'collectionItem'">
@@ -103,13 +117,9 @@
                     <xsl:value-of select="textId/linkedRecord/text/textPart[@lang = 'en']/text"/>
                     <xsl:text>)</xsl:text>
                 </xsl:when>
-                <xsl:when test="@type = 'recordLink'">
-                    <xsl:text>Property (link): </xsl:text>
-                    <xsl:value-of select="nameInData"/>
-                </xsl:when>
             </xsl:choose>
         </xsl:variable>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-100 [&amp;>*:nth-child(even)]:bg-white pb-4">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-t border-alvin">
                 <div class="w-full md:w-1/4 flex-grow font-bold pl-2">
                     <xsl:text>URI</xsl:text>
@@ -373,10 +383,20 @@
             <xsl:for-each select="refCollection">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <div class="w-full md:w-1/4 flex-grow font-bold pl-2">
-                        <xsl:text>Controlled list</xsl:text>
+                        <xsl:choose>
+                            <xsl:when test="$lang = 'en'">
+                                <xsl:text>Controlled list: </xsl:text>
+                            </xsl:when>
+                            <xsl:when test="$lang = 'no'">
+                                <xsl:text>Kontrollert liste: </xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>Kontrollerad lista: </xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </div>
                     <div class="w-full md:w-3/4 flex-grow pl-2">
-                        <a class="text-blue-800 underline">
+                        <a class="text-blue-800 dark:text-blue-200 underline">
                             <xsl:attribute name="href">
                                 <xsl:value-of select="$baseURL"/>
                                 <xsl:value-of select="linkedRecordId"/>
@@ -394,7 +414,7 @@
                             <xsl:text>Subclass</xsl:text>
                         </div>
                         <div class="w-full md:w-3/4 flex-grow pl-2">
-                            <a class="text-blue-800 underline">
+                            <a class="text-blue-800 dark:text-blue-200 underline">
                                 <xsl:attribute name="href">
                                     <xsl:value-of select="$baseURL"/>
                                     <xsl:value-of select="ref/linkedRecordId"/>
@@ -417,7 +437,7 @@
                             <xsl:text>Property (text)</xsl:text>
                         </div>
                         <div class="w-full md:w-3/4 flex-grow pl-2">
-                            <a class="text-blue-800 underline">
+                            <a class="text-blue-800 dark:text-blue-200 underline">
                                 <xsl:attribute name="href">
                                     <xsl:value-of select="$baseURL"/>
                                     <xsl:value-of select="ref/linkedRecordId"/>
@@ -439,7 +459,7 @@
                             <xsl:text>Property (code)</xsl:text>
                         </div>
                         <div class="w-full md:w-3/4 flex-grow pl-2">
-                            <a class="text-blue-800 underline">
+                            <a class="text-blue-800 dark:text-blue-200 underline">
                                 <xsl:attribute name="href">
                                     <xsl:value-of select="$baseURL"/>
                                     <xsl:value-of select="ref/linkedRecordId"/>
@@ -453,10 +473,10 @@
                 <xsl:if test="ref/linkedRecord/metadata/recordInfo/validationType/linkedRecordId = 'metadataRecordLink'">
                     <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                         <div class="w-full md:w-1/4 flex-grow font-bold pl-2">
-                            <xsl:text>Property (link)</xsl:text>
+                            <xsl:text>Subclass (link):</xsl:text>
                         </div>
                         <div class="w-full md:w-3/4 flex-grow pl-2">
-                            <a class="text-blue-800 underline">
+                            <a class="text-blue-800 dark:text-blue-200 underline">
                                 <xsl:attribute name="href">
                                     <xsl:value-of select="$baseURL"/>
                                     <xsl:value-of select="ref/linkedRecordId"/>
@@ -481,7 +501,7 @@
                                 <xsl:value-of select="finalValue"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <a class="text-blue-800 underline">
+                                <a class="text-blue-800 dark:text-blue-200 underline">
                                     <xsl:attribute name="href">
                                         <xsl:value-of select="$baseURL"/>
                                         <xsl:value-of select="../../linkedRecordId"/>
@@ -515,16 +535,16 @@
                 </div>
             </xsl:for-each>
         </div>
-        <xsl:if test="not(@type = 'itemCollection')">
+      
             <div class="flex justify-end py-4">
-                <a>
+                <a class="flex flex-row bg-orange-600 hover:bg-orange-700 focus:bg-blue-800 text-white font-semibold py-2 px-4 rounded-full">
                     <xsl:attribute name="href">
                         <xsl:value-of select="$urirdf"/>
                     </xsl:attribute>
-                    <button class="flex flex-row bg-orange-600 hover:bg-gray-700 focus:bg-blue-800 text-white font-semibold py-2 px-4 rounded-full"> RDF/XML </button>
+                    <xsl:text>RDF/XML </xsl:text>
                 </a>
             </div>
-        </xsl:if>
+        
         <xsl:if test="@type = 'itemCollection'">
             <p class="pb-2">
                 <xsl:choose>
@@ -561,12 +581,12 @@
                             <th class="bg-dark-alvin text-white p-2">Svenska</th>
                         </tr>
                     </thead>
-                    <tbody class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white">
+                    <tbody class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
                         <xsl:for-each select="collectionItemReferences/ref">
                             <xsl:sort select="linkedRecord/metadata/textId/linkedRecord/text/textPart[@lang = 'sv']/text"/>
                             <tr class="border-b border-alvin">
                                 <td class="p-2 text-sm">
-                                    <a class="text-blue-800 underline">
+                                    <a class="text-blue-800 dark:text-blue-200 underline">
                                         <xsl:attribute name="href">
                                             <xsl:value-of select="linkedRecordId"/>
                                         </xsl:attribute>
@@ -588,1312 +608,58 @@
                 </table>
             </div>
         </xsl:if>
-
+        <!--
         <xsl:choose>
             <xsl:when test="recordInfo/id = 'recordGroup'">
                 <xsl:call-template name="overview"/>
-                <ul class="py-2 list-disc list-inside">
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/typeOfResourceCollectionVar">typeOfResource</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/collectionTypeOfResourceCollectionVar">collection</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/productionMethodCollectionVar">productionMethod</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/titleGroup">title</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/mainTitleTextVar">mainTitle</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/subtitleTextVar">subtitle</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/orientationCodeCollectionVar">orientationCode</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/variantTitleGroup">variantTitle</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/mainTitleTextVar">mainTitle</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/subtitleTextVar">subtitle</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/orientationCodeCollectionVar">orientationCode</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/physicalLocationGroup">physicalLocation</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/heldByGroup">heldBy</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/locationLink">location</a> (property: link)</li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/sublocationTextVar">sublocation</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/subcollectionGroup">subcollection</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/subcollectionArbogaCollectionVar">arboga</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/subcollectionDigitalCollectionVar">digital</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/subcollectionFauppsalaCollectionVar">fauppsala</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/subcollectionKiCollectionVar">ki</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/subcollectionKvaCollectionVar">kva</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/subcollectionLinkopingCollectionVar">linkoping</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/subcollectionLuCollectionVar">lu</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/subcollectionMusikverketCollectionVar">musikverket</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/subcollectionOruCollectionVar">oru</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/subcollectionUioCollectionVar">uio</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/subcollectionUuCollectionVar">uu</a> (property: code)</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/shelfMarkTextVar">shelfMark</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/formerShelfMarkTextVar">formerShelfMark</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/noteFieldGeneralTextVar">note</a> {general} (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/noteFieldInternalTextVar">note</a> {internal} (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/agentPersonGroup">agent</a> {person} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/personLink">person</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/relatorCodeCollectionVar">role</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/agentOrganisationGroup">agent</a> {organisation} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/organisationLink">organisation</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/relatorCodeCollectionVar">role</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/languageCollectionVar">language</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/adminMetadataGroup">adminMetadata</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/descriptionLanguageCollectionVar">descriptionLanguage</a> (property: code)</li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/editionStatementTextVar">editionStatement</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/originPlaceGroup">originPlace</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/placeLink">place</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/countryCodeCollectionVar">country</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/historicalCountryCollectionVar">historicalCountry</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/publicationTextVar">publication</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/originDateGroup">originDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/startDateGroup">startDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/endDateGroup">endDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/displayDateTextVar">displayDate</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/dateOtherGroup">dateOther</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/startDateGroup">startDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/endDateGroup">endDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/noteFieldGeneralTextVar">note</a> {general} (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/extentTextVar">extent</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/dimensionsGroup">dimensions</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/heightTextVar">height</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/widthTextVar">width</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/depthTextVar">depth</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/diameterTextVar">diameter</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/dimensionUnitCollectionVar">unit</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/scopeCollectionVar">scope</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/measureGroup">measure</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/weightTextVar">weight</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/weightUnitCollectionVar">unit</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/physicalDescriptionGroup">physicalDescription</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/noteFieldPhysicalDescriptionTextVar">note</a> (property: text)</li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/baseMaterialCollectionVar">baseMaterial</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/appliedMaterialCollectionVar">appliedMaterial</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/summaryTextVar">summary</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/sourceDocTextVar">transcription</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/tableOfContentsTextVar">tableOfContents</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/listBiblTextVar">listBibl</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/noteFieldTextVar">note</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/noteFieldInternalTextVar">note</a> {internal} (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/relatedToGroup">relatedTo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/recordLink">record</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/partGroup">part</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/partNumberTextVar">partNumber</a> (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/extentTextVar">extent</a> (property: text)</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/electronicLocatorGroup">electronicLocator</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/externalLinkURLTextVar">url</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/displayLabelTextVar">displayLabel</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/genreFormCollectionVar">genreForm</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/subjectGroup">subject</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/topicTextVar">topic</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/genreFormTextVar">genreForm</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/geographicCoverageTextVar">geographicCoverage</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/temporalTextVar">temporal</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/occupationTextVar">occupation</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/subjectPersonGroup">subject</a> {person} (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/personLink">person</a> (property: link)</li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/subjectOrganisationGroup">subject</a> {organisation} (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/organisationLink">organisation</a> (property: link)</li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/subjectPlaceGroup">subject</a> {place} (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/placeLink">place</a> (property: link)</li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/classificationTextVar">classification</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/accessPolicyTextVar">accessPolicy</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/bindingDescGroup">bindingDesc</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/bindingTextVar">binding</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/decoNoteTextVar">decoNote</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/decoNoteTextVar">decoNote</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/identifierTextVar">identifier</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/workLink">work</a> (property: link)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/levelCollectionCollectionVar">level</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/extentUnitShelfMetresTextVar">extent</a> {shelfMetres} (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/extentUnitArchivalUnitsTextVar">extent</a> {archivalUnits} (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/otherfindaidTextVar">otherfindaid</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/appraisalTextVar">weeding</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/relatedmaterialTextVar">relatedmaterial</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/arrangementTextVar">arrangement</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/accrualsTextVar">accruals</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/locusTextVar">locus</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/incipitTextVar">incipit</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/explicitTextVar">explicit</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/rubricTextVar">rubric</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/finalRubricTextVar">finalRubric</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/musicKeyCollectionVar">musicKey</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/musicKeyOtherTextVar">musicKeyOther</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/musicMediumCollectionVar">musicMedium</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/musicMediumOtherTextVar">musicMediumOther</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/musicNotationCollectionVar">musicNotation</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/cartographicAttributesGroup">cartographicAttributes</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/scaleTextVar">scale</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/projectionTextVar">projection</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/coordinatesTextVar">coordinates</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/appraisalGroup">appraisal</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/appraisalValueTextVar">value</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/appraisalCurrencyTextVar">currency</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/edgeGroup">edge</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/edgeDescriptionCollectionVar">description</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/legendTextVar">legend</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/axisGroup">axis</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/clockCollectionVar">clock</a> (property: code)</li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/conservationStateCollectionVar">conservationState</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/obverseGroup">obverse</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/nudsDescriptionTextVar">description</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/legendTextVar">legend</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/reverseGroup">reverse</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/nudsDescriptionTextVar">description</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/legendTextVar">legend</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/countermarkTextVar">countermark</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/msContentsGroup">msContents</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/msItem01Group">msItem01</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/locusTextVar">locus</a> (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/titleGroup">title</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/mainTitleTextVar">mainTitle</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/subtitleTextVar">subtitle</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/orientationCodeCollectionVar">orientationCode</a> (property: code)</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/agentPersonGroup">agent</a> {person} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/personLink">person</a> (property: link)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/relatorCodeCollectionVar">role</a> (property: code)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/languageCollectionVar">language</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/originPlaceGroup">originPlace</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/placeLink">place</a> (property: link)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/countryCodeCollectionVar">country</a> (property: code)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/historicalCountryCollectionVar">historicalCountry</a> (property: code)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/originDateGroup">originDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/startDateGroup">startDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                                        </ul>
-                                                    </li></ul>
-                                            </li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/endDateGroup">endDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                                        </ul>
-                                                    </li></ul>
-                                            </li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/displayDateTextVar">displayDate</a> (property: text)</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/physicalDescriptionGroup">physicalDescription</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                                <a href="/vocabulary/noteFieldPhysicalDescriptionTextVar">note</a> (property: text)</li></ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/incipitTextVar">incipit</a> (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/explicitTextVar">explicit</a> (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/rubricTextVar">rubric</a> (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/finalRubricTextVar">finalRubric</a> (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/listBiblTextVar">listBibl</a> (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/noteFieldTextVar">note</a> (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/relatedToGroup">relatedTo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/recordLink">record</a> (property: link)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/partGroup">part</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                    <li>
-                                                        <a class="text-blue-800 underline" href="/vocabulary/partNumberTextVar">partNumber</a> (property: text)</li>
-                                                    <li>
-                                                        <a class="text-blue-800 underline" href="/vocabulary/extentTextVar">extent</a> (property: text)</li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/msItem02Group">msItem02</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/msItem03Group">msItem03</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                    <li>
-                                                        <a class="text-blue-800 underline" href="/vocabulary/msItem04Group">msItem04</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/msItem05Group">msItem05</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                                    <li>
-                                                                        <a class="text-blue-800 underline" href="/vocabulary/msItem06Group">msItem06</a> (subclass) </li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/descriptionOfSubordinateComponentsGroup">descriptionOfSubordinateComponents</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/component01Group">component01</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/levelCollectionComponentCollectionVar">level</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/unitidTextVar">unitid</a> (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/titleGroup">title</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/mainTitleTextVar">mainTitle</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/subtitleTextVar">subtitle</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/orientationCodeCollectionVar">orientationCode</a> (property: code)</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/agentPersonGroup">agent</a> {person} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/personLink">person</a> (property: link)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/relatorCodeCollectionVar">role</a> (property: code)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/agentOrganisationGroup">agent</a> {organisation} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/organisationLink">organisation</a> (property: link)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/relatorCodeCollectionVar">role</a> (property: code)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/placeLink">place</a> (property: link)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/originDateGroup">originDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/startDateGroup">startDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                                        </ul>
-                                                    </li></ul>
-                                            </li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/endDateGroup">endDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                                        </ul>
-                                                    </li></ul>
-                                            </li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/displayDateTextVar">displayDate</a> (property: text)</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/extentTextVar">extent</a> (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/noteFieldGeneralTextVar">note</a> {general} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/identifierAccessionNumberTextVar">identifier</a> {accessionNumber} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/relatedToGroup">relatedTo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/recordLink">record</a> (property: link)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/partGroup">part</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                    <li>
-                                                        <a class="text-blue-800 underline" href="/vocabulary/partNumberTextVar">partNumber</a> (property: text)</li>
-                                                    <li>
-                                                        <a class="text-blue-800 underline" href="/vocabulary/extentTextVar">extent</a> (property: text)</li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/electronicLocatorGroup">electronicLocator</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/externalLinkURLTextVar">url</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/displayLabelTextVar">displayLabel</a> (property: text)</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/accessPolicyTextVar">accessPolicy</a> (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/component02Group">component02</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/component03Group">component03</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                    <li>
-                                                        <a class="text-blue-800 underline" href="/vocabulary/component04Group">component04</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                            <li>
-                                                                <a class="text-blue-800 underline" href="/vocabulary/component05Group">component05</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                                                    <li>
-                                                                        <a class="text-blue-800 underline" href="/vocabulary/component06Group">component06</a> (subclass) </li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/recordInfoAlvinRecordGroup">recordInfo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/idAlvinTextVar">id</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/urnAlvinTextVar">urn</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/recordTypeAlvinLink">type</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/validationTypeAlvinLink">validationType</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/dataDividerAlvinDataLink">dataDivider</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/permissionUnitLink">permissionUnit</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/visibilityCollectionVar">visibility</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/tsVisibilityTextVar">tsVisibility</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/createdByAlvinLink">createdBy</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/tsCreatedAlvinTextVar">tsCreated</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/updatedAlvinGroup">updated</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/updatedByAlvinLink">updatedBy</a> (property: link)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/tsUpdatedAlvinTextVar">tsUpdated</a> (property: text)</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/fileSectionGroup">fileSection</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/rightsCollectionVar">rights</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/digitalOriginCollectionVar">digitalOrigin</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/fileGroupGroup">fileGroup</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/internetMediaTypeCollectionVar">internetMediaType</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/fileGroupTypeCollectionVar">type</a> (property: code)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/fileGroup">file</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/fileTypeCollectionVar">type</a> (property: code)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/labelTextVar">label</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/fileLocationLink">fileLocation</a> (property: link)</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                <ul class="list-disc list-inside">
+                    <xsl:for-each select="document('https://cora.alvin-portal.org/rest/record/metadata/recordGroup')/record/data/metadata/childReferences">
+                        <xsl:call-template name="childReference"/>
+                    </xsl:for-each>
                 </ul>
             </xsl:when>
             <xsl:when test="recordInfo/id = 'personGroup'">
                 <xsl:call-template name="overview"/>
-                <ul class="py-2 list-disc list-inside">
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/authorityPersonGroup">authority</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/namePersonGroup">name</a> {personal} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartFamilyTextVar">namePart</a> {family} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartGivenTextVar">namePart</a> {given} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartNumerationTextVar">namePart</a> {numeration} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartTermsOfAddressTextVar">namePart</a> {termsOfAddress} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/familyNameCollectionVar">familyName</a> (property: code)</li>
-                                </ul>
-                            </li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/personInfoGroup">personInfo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/birthDateGroup">birthDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/deathDateGroup">deathDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/displayDateTextVar">displayDate</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/birthPlaceGroup">birthPlace</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/placeLink">place</a> (property: link)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/deathPlaceGroup">deathPlace</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/placeLink">place</a> (property: link)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/nationalityGroup">nationality</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/countryCodeCollectionVar">country</a> (property: code)</li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/genderCollectionVar">gender</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/variantPersonGroup">variant</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/nameVariantPersonGroup">name</a> {personal} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartFamilyTextVar">namePart</a> {family} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartGivenTextVar">namePart</a> {given} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartNumerationTextVar">namePart</a> {numeration} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/nameParttermsOfAddressTextVar">namePart</a> {termsOfAddress} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/orientationCodeCollectionVar">orientationCode</a> (property: code)</li>
-                                </ul>
-                            </li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/fieldOfEndeavorTextVar">fieldOfEndeavor</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/noteFieldAuthorityTextVar">note</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/electronicLocatorGroup">electronicLocator</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/externalLinkURLTextVar">url</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/displayLabelTextVar">displayLabel</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/identifierAuthorityTextVar">identifier</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/relatedPersonGroup">related</a> {person} (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/personLink">person</a> (property: link)</li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/relatedOrganisationGroup">related</a> {organisation} (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/organisationLink">organisation</a> (property: link)</li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/recordInfoAlvinGroup">recordInfo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/idAlvinTextVar">id</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/recordTypeAlvinLink">type</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/validationTypeAlvinLink">validationType</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/dataDividerAlvinDataLink">dataDivider</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/createdByAlvinLink">createdBy</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/tsCreatedAlvinTextVar">tsCreated</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/updatedAlvinGroup">updated</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/updatedByAlvinLink">updatedBy</a> (property: link)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/tsUpdatedAlvinTextVar">tsUpdated</a> (property: text)</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                <ul class="list-disc list-inside">
+                    <xsl:for-each select="document('https://cora.alvin-portal.org/rest/record/metadata/personGroup')/record/data/metadata/childReferences">
+                        <xsl:call-template name="childReference"/>
+                    </xsl:for-each>
                 </ul>
             </xsl:when>
             <xsl:when test="recordInfo/id = 'organisationGroup'">
                 <xsl:call-template name="overview"/>
-                <ul class="py-2 list-disc list-inside">
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/authorityOrganisationGroup">authority</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/nameOrganisationGroup">name</a> {corporate} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartOrganisationTextVar">namePart</a> {corporateName} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartSubordinateTextVar">namePart</a> {subordinate} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartTermsOfAddressTextVar">namePart</a> {termsOfAddress} (property: text)</li>
-                                </ul>
-                            </li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/organisationInfoGroup">organisationInfo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/startDateGroup">startDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/endDateGroup">endDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/displayDateTextVar">displayDate</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/variantOrganisationGroup">variant</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/nameVariantOrganisationGroup">name</a> {corporate} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartOrganisationTextVar">namePart</a> {corporateName} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartSubordinateTextVar">namePart</a> {subordinate} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartTermsOfAddressTextVar">namePart</a> {termsOfAddress} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/orientationCodeCollectionVar">orientationCode</a> (property: code)</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/noteFieldAuthorityTextVar">note</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/electronicLocatorGroup">electronicLocator</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/externalLinkURLTextVar">url</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/displayLabelTextVar">displayLabel</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/identifierAuthorityTextVar">identifier</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/addressGroup">address</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/addressPostOfficeBoxTextVar">postOfficeBox</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/addressStreetTextVar">street</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/addressPostcodeBoxTextVar">postcode</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/placeLink">place</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/countryCodeCollectionVar">country</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/relatedOrganisationTypeGroup">related</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/organisationLink">organisation</a> (property: link)</li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/recordInfoAlvinGroup">recordInfo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/idAlvinTextVar">id</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/recordTypeAlvinLink">type</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/validationTypeAlvinLink">validationType</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/dataDividerAlvinDataLink">dataDivider</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/createdByAlvinLink">createdBy</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/tsCreatedAlvinTextVar">tsCreated</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/updatedAlvinGroup">updated</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/updatedByAlvinLink">updatedBy</a> (property: link)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/tsUpdatedAlvinTextVar">tsUpdated</a> (property: text)</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                <ul class="list-disc list-inside">
+                    <xsl:for-each select="document('https://cora.alvin-portal.org/rest/record/metadata/organisationGroup')/record/data/metadata/childReferences">
+                        <xsl:call-template name="childReference"/>
+                    </xsl:for-each>
                 </ul>
             </xsl:when>
             <xsl:when test="recordInfo/id = 'placeGroup'">
                 <xsl:call-template name="overview"/>
-                <ul class="py-2 list-disc list-inside">
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/authorityPlaceGroup">authority</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/geographicPlaceTextVar">geographic</a> (property: text)</li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/variantPlaceGroup">variant</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/geographicPlaceTextVar">geographic</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/orientationCodeCollectionVar">orientationCode</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/countryCodeCollectionVar">country</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/pointGroup">point</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/latitudeTextVar">latitude</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/longitudeTextVar">longitude</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/recordInfoAlvinGroup">recordInfo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/idAlvinTextVar">id</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/recordTypeAlvinLink">type</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/validationTypeAlvinLink">validationType</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/dataDividerAlvinDataLink">dataDivider</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/createdByAlvinLink">createdBy</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/tsCreatedAlvinTextVar">tsCreated</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/updatedAlvinGroup">updated</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/updatedByAlvinLink">updatedBy</a> (property: link)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/tsUpdatedAlvinTextVar">tsUpdated</a> (property: text)</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                <ul class="list-disc list-inside">
+                    <xsl:for-each select="document('https://cora.alvin-portal.org/rest/record/metadata/placeGroup')/record/data/metadata/childReferences">
+                        <xsl:call-template name="childReference"/>
+                    </xsl:for-each>
                 </ul>
             </xsl:when>
             <xsl:when test="recordInfo/id = 'workGroup'">
                 <xsl:call-template name="overview"/>
-                <ul class="py-2 list-disc list-inside">
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/titleGroup">title</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/mainTitleTextVar">mainTitle</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/subtitleTextVar">subtitle</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/orientationCodeCollectionVar">orientationCode</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/variantTitleGroup">variantTitle</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/mainTitleTextVar">mainTitle</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/subtitleTextVar">subtitle</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/orientationCodeCollectionVar">orientationCode</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/incipitTextVar">incipit</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/formOfWorkCollectionVar">formOfWork</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/agentPersonGroup">agent</a> {person} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/personLink">person</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/relatorCodeCollectionVar">role</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/agentOrganisationGroup">agent</a> {organisation} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/organisationLink">organisation</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/relatorCodeCollectionVar">role</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/originDateGroup">originDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/startDateGroup">startDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/endDateGroup">endDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/displayDateTextVar">displayDate</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/dateOtherGroup">dateOther</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/startDateGroup">startDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/endDateGroup">endDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/noteFieldGeneralTextVar">note</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/originPlaceGroup">originPlace</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/placeLink">place</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/countryCodeCollectionVar">country</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/historicalCountryCollectionVar">historicalCountry</a> (property: code)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/certaintyCollectionVar">certainty</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/musicMediumCollectionVar">musicMedium</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/musicMediumOtherTextVar">musicMediumOther</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/numericDesignationOfMusicalWorkGroup">numericDesignationOfMusicalWork</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/musicSerialNumberTextVar">musicSerialNumber</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/musicOpusNumberTextVar">musicOpusNumber</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/musicThematicNumberTextVar">musicThematicNumber</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/musicKeyCollectionVar">musicKey</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/musicKeyOtherTextVar">musicKeyOther</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/noteFieldGeneralTextVar">note</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/listBiblTextVar">listBibl</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/genreFormMusicCollectionVar">genreForm</a> (property: code)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/pointGroup">point</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/latitudeTextVar">latitude</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/longitudeTextVar">longitude</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/noteFieldThesisTextVar">note</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/recordInfoAlvinGroup">recordInfo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/idAlvinTextVar">id</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/recordTypeAlvinLink">type</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/validationTypeAlvinLink">validationType</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/dataDividerAlvinDataLink">dataDivider</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/createdByAlvinLink">createdBy</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/tsCreatedAlvinTextVar">tsCreated</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/updatedAlvinGroup">updated</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/updatedByAlvinLink">updatedBy</a> (property: link)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/tsUpdatedAlvinTextVar">tsUpdated</a> (property: text)</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                <ul class="list-disc list-inside">
+                    <xsl:for-each select="document('https://cora.alvin-portal.org/rest/record/metadata/workGroup')/record/data/metadata/childReferences">
+                        <xsl:call-template name="childReference"/>
+                    </xsl:for-each>
                 </ul>
             </xsl:when>
             <xsl:when test="recordInfo/id = 'locationGroup'">
                 <xsl:call-template name="overview"/>
-                <ul class="py-2 list-disc list-inside">
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/authorityOrganisationGroup">authority</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                <a class="text-blue-800 underline" href="/vocabulary/nameOrganisationGroup">name</a> {corporate} (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartOrganisationTextVar">namePart</a> {corporateName} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartSubordinateTextVar">namePart</a> {subordinate} (property: text)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/namePartTermsOfAddressTextVar">namePart</a> {termsOfAddress} (property: text)</li>
-                                </ul>
-                            </li></ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/organisationInfoGroup">organisationInfo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/startDateGroup">startDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/endDateGroup">endDate</a> (subclass)<ul class="py-2 list-disc list-inside pl-4"><li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/dateGroup">date</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/yearTextVar">year</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/monthTextVar">month</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/dayTextVar">day</a> (property: text)</li>
-                                            <li>
-                                                <a class="text-blue-800 underline" href="/vocabulary/eraCollectionVar">era</a> (property: code)</li>
-                                        </ul>
-                                    </li></ul>
-                            </li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/displayDateTextVar">displayDate</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/descriptorCollectionVar">descriptor</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/summaryWithLangTextVar">summary</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/electronicLocatorGroup">electronicLocator</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/externalLinkURLTextVar">url</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/displayLabelTextVar">displayLabel</a> (property: text)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/identifierLocationTextVar">identifier</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/emailAddressTextVar">email</a> (property: text)</li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/addressGroup">address</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/addressPostOfficeBoxTextVar">postOfficeBox</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/addressStreetTextVar">street</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/addressPostcodeBoxTextVar">postcode</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/placeLink">place</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/countryCodeCollectionVar">country</a> (property: code)</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/pointGroup">point</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/latitudeTextVar">latitude</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/longitudeTextVar">longitude</a> (property: text)</li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a class="text-blue-800 underline" href="/vocabulary/recordInfoAlvinGroup">recordInfo</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/idAlvinTextVar">id</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/recordTypeAlvinLink">type</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/validationTypeAlvinLink">validationType</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/dataDividerAlvinDataLink">dataDivider</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/createdByAlvinLink">createdBy</a> (property: link)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/tsCreatedAlvinTextVar">tsCreated</a> (property: text)</li>
-                            <li>
-                                <a class="text-blue-800 underline" href="/vocabulary/updatedAlvinGroup">updated</a> (subclass)<ul class="py-2 list-disc list-inside pl-4">
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/updatedByAlvinLink">updatedBy</a> (property: link)</li>
-                                    <li>
-                                        <a class="text-blue-800 underline" href="/vocabulary/tsUpdatedAlvinTextVar">tsUpdated</a> (property: text)</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                <ul class="list-disc list-inside">
+                    <xsl:for-each select="document('https://cora.alvin-portal.org/rest/record/metadata/locationGroup')/record/data/metadata/childReferences">
+                        <xsl:call-template name="childReference"/>
+                    </xsl:for-each>
                 </ul>
             </xsl:when>
         </xsl:choose>
+        -->
     </xsl:template>
     <xsl:template name="repeat">
         <xsl:choose>
@@ -1977,13 +743,16 @@
                                     <xsl:when test="contains(recordInfo/id,'Group')">
                                         <xsl:text>Subclass Of</xsl:text>
                                     </xsl:when>
+                                    <xsl:when test="contains(recordInfo/id,'Link')">
+                                        <xsl:text>Subclass Of</xsl:text>
+                                    </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:text>Property Of</xsl:text>
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </div>
                             <div class="w-full md:w-3/4 flex-grow pl-2">
-                                <a class="text-blue-800 underline">
+                                <a class="text-blue-800 dark:text-blue-200 underline">
                                     <xsl:attribute name="href">
                                         <xsl:value-of select="$baseURL"/>
                                         <xsl:value-of select="$sub"/>
@@ -1997,5 +766,80 @@
                 </xsl:if>
             </xsl:if>
         </xsl:if>
+    </xsl:template>
+    <xsl:template name="childReference">
+        <xsl:for-each select="childReference">
+            <xsl:variable name="url">
+                <xsl:value-of select="ref/actionLinks/read/url"/>
+            </xsl:variable>
+            <xsl:for-each select="document($url)/record/data/metadata">
+                <xsl:variable name="nameInData">
+                    <xsl:value-of select="nameInData"/>
+                </xsl:variable>
+                <li>
+                    <a class="text-blue-800 dark:text-blue-200 underline">
+                        <xsl:attribute name="href">
+                            <xsl:value-of select="recordInfo/id"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="$nameInData"/>
+                    </a>
+                    <ul class="list-disc list-inside pl-4">
+                        <xsl:for-each select="childReferences/childReference">
+                            <xsl:variable name="url1">
+                                <xsl:value-of select="ref/actionLinks/read/url"/>
+                            </xsl:variable>
+                            <li>
+                                <a class="text-blue-800 dark:text-blue-200 underline">
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of select="ref/linkedRecordId"/>
+                                    </xsl:attribute>
+                                    <xsl:value-of select="document($url1)/record/data/metadata/nameInData"/>
+                                </a>
+                                <ul class="list-disc list-inside pl-4">
+                                    <xsl:for-each select="document($url1)/record/data/metadata/childReferences/childReference">
+                                        <xsl:variable name="url2">
+                                            <xsl:value-of select="ref/actionLinks/read/url"/>
+                                        </xsl:variable>
+                                        <xsl:choose>
+                                            <xsl:when test="document($url2)/record/data/metadata/nameInData = 'msItem02'">
+                                                <li>msItem02 -- msItem06</li>
+                                            </xsl:when>
+                                            <xsl:when test="document($url2)/record/data/metadata/nameInData = 'component02'">
+                                                <li>component02 -- component06</li>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <li>
+                                                    <a class="text-blue-800 dark:text-blue-200 underline">
+                                                        <xsl:attribute name="href">
+                                                            <xsl:value-of select="ref/linkedRecordId"/>
+                                                        </xsl:attribute>
+                                                        <xsl:value-of select="document($url2)/record/data/metadata/nameInData"/>
+                                                    </a>
+                                                    <ul class="list-disc list-inside pl-4">
+                                                        <xsl:for-each select="document($url2)/record/data/metadata/childReferences/childReference">
+                                                            <xsl:variable name="url3">
+                                                                <xsl:value-of select="ref/actionLinks/read/url"/>
+                                                            </xsl:variable>
+                                                            <li>
+                                                                <a class="text-blue-800 dark:text-blue-200 underline">
+                                                                    <xsl:attribute name="href">
+                                                                        <xsl:value-of select="ref/linkedRecordId"/>
+                                                                    </xsl:attribute>
+                                                                    <xsl:value-of select="document($url3)/record/data/metadata/nameInData"/>
+                                                                </a>
+                                                            </li>
+                                                        </xsl:for-each>
+                                                    </ul>
+                                                </li>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:for-each>
+                                </ul>
+                            </li>
+                        </xsl:for-each>
+                    </ul>
+                </li>
+            </xsl:for-each>
+        </xsl:for-each>
     </xsl:template>
 </xsl:stylesheet>

@@ -7,13 +7,7 @@
                 {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name|alvin_person_name %}
             {% endfor %}
         {% endwith %}
-        {% with metadata.variant_names.label as variant_label %}
-            {% for lang, name in metadata.variant_names.names.items %}
-                {% with first=name.0|default:name %}
-                        {% include "./_metadata_row.html" with label=variant_label extra_label=first.label_lang value=name|alvin_person_name %}
-                {% endwith %}
-            {% endfor %}
-        {% endwith %}
+
         {% include "./_metadata_row.html" with label=metadata.birth_date.label value=metadata.birth_date|date_join %}
         {% include "./_metadata_row.html" with label=metadata.death_date.label value=metadata.death_date|date_join %}
     </div>
@@ -24,6 +18,13 @@
         {% include "./_metadata_row.html" with label=metadata.death_place.label url=death_place_url value=metadata.death_place.name|alvin_place_name %}
     </div>
     <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
+        {% with metadata.variant_names.label as variant_label %}
+            {% for lang, name in metadata.variant_names.names.items %}
+                {% with first=name.0|default:name %}
+                        {% include "./_metadata_row.html" with label=variant_label extra_label=first.label_lang value=name|alvin_person_name %}
+                {% endwith %}
+            {% endfor %}
+        {% endwith %}
         {% include "./_metadata_row.html" with label=metadata.nationality.label value=metadata.nationality.country.items|list_join %}
         {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
         {% include "./_metadata_row.html" with label=metadata.fields_of_endeavor.label value=metadata.fields_of_endeavor.texts|list_join %}

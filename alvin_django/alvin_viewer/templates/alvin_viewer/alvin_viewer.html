@@ -20,9 +20,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="bg-white dark:bg-gray-800 dark:text-white flex-grow w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4">
-  <span id="main-content-marker"></span>
-  <main class="bg-white dark:bg-gray-800 dark:text-white mb-8 w-full md:w-3/4 pt-1 px-3" data-xdata="{ activeTab: 'overview' }">
+
 
   {% if metadata.files %}
   <!-- Bildvisare TIFY -->
@@ -35,6 +33,15 @@
     })
   </script>
   {% endif %}
+
+<div class="bg-white dark:bg-gray-800 dark:text-white flex-grow w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4">
+  <span id="main-content-marker"></span>
+
+
+
+  <main class="bg-white dark:bg-gray-800 dark:text-white mb-8 w-full md:w-3/4 pt-1 px-3" data-xdata="{ activeTab: 'overview' }">
+
+
   {% if value != None %}
     <a class="flex w-fit pb-2" href="{{ value }}">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -116,9 +123,9 @@
            {{ metadata.record_type }}:{{ metadata.id }}
            </div>
          </div>
-       </div>
-       <div data-xshow="activeTab === 'overview'" data-xcloak>
-         <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+      </div>
+      <div data-xshow="activeTab === 'overview'" data-xcloak>
+        <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
           <div class="w-full md:w-1/4 flex-grow font-bold pl-2">URI</div>
           <div class="w-full md:w-3/4 flex flex-grow pl-2" id="uri">
             {{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}<button class="btn flex items-right flex justify-end" data-clipboard-action="copy" data-clipboard-target="#uri">
@@ -128,16 +135,29 @@
               </svg>
              </button>
            </div>
-         </div>
-      </div>
+        </div>
+       <!-- Map -->
+       {% if metadata.latitude and metadata.longitude %}
+         <aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvin-orange border-4 mb-10" id="map"></aside>
+       {% endif %}
+
+       {% block jsbody %}
+       <script defer src="{% static 'js/map.js' %}" 
+         data-latitude="{{ metadata.latitude.text }}"
+         data-longitude="{{ metadata.longitude.text }}">
+       </script>
+       {% endblock %}
+       </div>
     </div>
   </main>
   <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
      <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
-       <div class="flex flex-col justify-center">  
+       <div class="flex flex-col justify-center"> 
+         {% if metadata.record_type != 'alvin-record' %}
          <div class="flex justify-center py-4"> 
             <a href="" class="flex flex-row bg-orange-600 hover:bg-orange-700 focus:bg-blue-800 text-white font-semibold py-2 px-4 rounded-full">{% translate 'Sök länkade poster' %}</a>
          </div>
+         {% endif %} 
          <div class="flex justify-center"> 
           <h2 class="text-xl md:text-2xl font-bold pt-4">{% translate 'Exportera' %}</h2>
         </div>

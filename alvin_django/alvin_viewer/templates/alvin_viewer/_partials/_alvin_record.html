@@ -6,12 +6,13 @@
 
 <!-- Metadata -->
 <div class="flex flex-col w-full">
-    <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
+       <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
         {% for title in metadata.variant_titles %}
             {% include "./_metadata_row.html" with label=title.label value=title|alvin_record_title attribute=title.type %}
         {% endfor %}
     </div>
-    <div x-show="activeTab === 'overview' || activeTab === 'all_metadata' || activeTab  === 'related'" x-cloak>
+    <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata' || activeTab  === 'related'" data-xcloak>
+
     {% for agent in metadata.agents %}
         {% url 'alvin_viewer' agent.type agent.id as agent_url %}
         {% include "./_metadata_row.html" with label=agent.label url=agent_url value=agent.name.names|agent_name attribute=agent.role|role_join %}
@@ -21,11 +22,11 @@
         {% include "./_metadata_row.html" with label=place.label url=place_url value=place.name.names|alvin_title:"alvin-place" extra_value=place|origin_countries %}
     {% endfor %}
     </div>
-    <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
+    <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
         {% include "./_metadata_row.html" with label=metadata.origin_date.label value=metadata.origin_date.dates|dates_join %}
         {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
     </div>
-    <div x-show="activeTab == 'all_metadata'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% include "./_metadata_row.html" with label=metadata.edition_statement.label value=metadata.edition_statement.text %}
         {% include "./_metadata_row.html" with label=metadata.publications.label value=metadata.publications.texts|join:"<br>" %}
         {% for date in metadata.date_other %}
@@ -34,11 +35,11 @@
         {% include "./_metadata_row.html" with label=metadata.languages.label value=metadata.languages.items|join:"<br>"|safe %}
         {% include "./_metadata_row.html" with label=metadata.description_languages.label value=metadata.description_languages.items|join:"<br>"|safe %}
     </div>
-    <div x-show="activeTab == 'all_metadata' || activeTab == 'related'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata' || activeTab === 'related'" data-xcloak>
         {% url 'alvin_viewer' 'alvin-location' metadata.location.id as location_url %}
         {% include "./_metadata_row.html" with label=metadata.location.label url=location_url value=metadata.location.name|agent_name %}
     </div>
-    <div x-show="activeTab == 'all_metadata'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% include "./_metadata_row.html" with label=metadata.sublocation.label value=metadata.sublocation.text %}
         {% include "./_metadata_row.html" with label=metadata.shelf_mark.label value=metadata.shelf_mark.text %}
         {% include "./_metadata_row.html" with label=metadata.former_shelf_mark.label value=metadata.former_shelf_mark.texts|join:"<br>" %}
@@ -66,12 +67,12 @@
             {% include "./_metadata_row.html" with label=subject.label extra_label=subject.type value=subject|subjects_join %}
         {% endfor %}
     </div>
-    <div x-show="activeTab == 'all_metadata' || activeTab == 'related'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata' || activeTab === 'related'" data-xcloak>
         {% include "./_record_type_links.html" with label=metadata.subject_person.label link_type="alvin-person" record_type_links=metadata.subject_person %}
         {% include "./_record_type_links.html" with label=metadata.subject_organisation.label link_type="alvin-organisation" record_type_links=metadata.subject_organisation %}
         {% include "./_record_type_links.html" with label=metadata.subject_place.label link_type="alvin-place" record_type_links=metadata.subject_place %}
     </div>
-    <div x-show="activeTab == 'all_metadata'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% include "./_metadata_row.html" with label=metadata.genre_form.label value=metadata.genre_form.items|join:"<br>"|safe %}
         {% for classification in metadata.classifications %}
             {% include "./_metadata_row.html" with label=classification.label extra_label=classification.type value=classification.classification %}
@@ -80,14 +81,14 @@
             {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type value=identifier.identifier %}
         {% endfor %}
     </div>
-    <div x-show="activeTab == 'all_metadata' || activeTab == 'related'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata' || activeTab === 'related'" data-xcloak>
         {% include "alvin_viewer/_partials/_record_type_links.html" with label=metadata.related_records.label link_type="alvin-record" record_type_links=metadata.related_records %}
         {% include "./_record_type_links.html" with label=metadata.work.label link_type="alvin-work" record_type_links=metadata.work %}
         {% for electronic_locator in metadata.electronic_locators %}
             {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
         {% endfor %}
     </div>
-    <div x-show="activeTab == 'all_metadata'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% include "./_metadata_row.html" with label=metadata.level.label value=metadata.level.item %}
         {% include "./_metadata_row.html" with label=metadata.shelf_metres.label value=metadata.shelf_metres.text %}
         {% include "./_metadata_row.html" with label=metadata.archival_units.label value=metadata.archival_units.text %}
@@ -120,10 +121,6 @@
         {% include "./_metadata_row.html" with label=metadata.countermark.label value=metadata.countermark.texts|join:"<br>" %}
         {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
         {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
-        {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
-    </div>
-    <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
-        {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
     </div>
     {% if metadata.components %}
     <div x-show="activeTab == 'overview' || activeTab == 'all_metadata' || activeTab == 'inventory'" x-cloak>

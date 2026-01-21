@@ -17,12 +17,13 @@
 """OAI-PMH Django app views."""
 
 from datetime import datetime
-from django.core.paginator import Paginator, EmptyPage
+#from django.core.paginator import Paginator, EmptyPage
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
-#from .models import ResumptionToken
+from django.conf import settings
+
 from .settings import NUM_PER_PAGE
 
 import requests
@@ -30,12 +31,6 @@ from lxml import etree
 import urllib.request
 from urllib.request import urlopen
 parser = etree.XMLParser()
-
-#import base64
-#import json
-#from django.http import HttpResponse
-#from django.utils.encoding import force_bytes, force_str
-
 
 @csrf_exempt
 def oai2(request):
@@ -55,7 +50,7 @@ def oai2(request):
     resumption_token = None
 
     # API host
-    api_host = 'https://preview.alvin.cora.epc.ub.uu.se'
+    api_host = settings.API_HOST
 
     if "verb" in params:
         verb = params.pop("verb")[-1]
@@ -304,16 +299,14 @@ def oai2(request):
                         errors.append(_error("badResumptionToken_resumptionToken"))                             
                 else:
                     resumptionToken = "//"  
-                    errors.append(_error("badResumptionToken_resumptionToken"))                                
+                    errors.append(_error("badResumptionToken_resumptionToken"))  
+                              
             list_url = f'{api_host}/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"permissionUnitSearchTerm","value":"permissionUnit_{set}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
-            #response = requests.get(list_url, headers=xml_headers_list)
 
-            if metadata_prefix == 'alvin_xml':
+            if metadataprefix == 'alvin_xml':
                 response = requests.get(list_url)
             else:
                 response = requests.get(list_url, headers=xml_headers_list)
-
-
 
             if response.status_code == 200:
                 xml_list = etree.fromstring(response.content)         
@@ -325,13 +318,12 @@ def oai2(request):
          	      'setSpec': record.findtext('./physicalLocation/heldBy/location/linkedRecordId'),
                        })
 
-                if metadata_prefix == 'alvin_xml':
+                if metadataprefix == 'alvin_xml':
 
                     with urlopen('http://127.0.0.1:8000/static/xsl/metadata-alvin_xml.xsl') as f:
                         xslt_tree = etree.parse(f, parser)
                         transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
                         metadataalvin_xml = transform(xml_list)	# Transform source XML tree
-
                             
                 else:
 
@@ -339,14 +331,6 @@ def oai2(request):
                         xslt_tree = etree.parse(f, parser)
                         transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
                         metadataoai_dc = transform(xml_list)	# Transform source XML tree
-
-
-
-               # with urlopen('http://127.0.0.1:8000/static/xsl/metadata-oai_dc.xsl') as f:
-               #    xslt_tree = etree.parse(f, parser)
-
-                #transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
-                #metadataoai_dc = transform(xml_list)	# Transform source XML tree
 
                 pages = {
                     "fromNo":xml_list.findtext(".//fromNo"),
@@ -476,62 +460,6 @@ def _check_timestamps(params, errors):
             errors.append(_error("badArgument_granularity"))
     return from_timestamp, until_timestamp
 
-
-def _do_resumption_token(params, errors, objs):
-    set_spec = None
-    metadata_prefix = None
-    from_timestamp = None
-    until_timestamp = None
-    resumption_token = None
-    if "resumptionToken" in params:
-        resumption_token = params.pop("resumptionToken")[-1]
-        try:
-            rt = ResumptionToken(token=resumption_token)
-            if timezone.now():
-                errors.append(_error("badResumptionToken_expired.", resumption_token))
-            else:
-                if rt.set_spec:
-                    objs = objs.filter(sets=rt.set_spec)
-                    set_spec = rt.set_spec.spec
-                if rt.metadata_prefix:
-                    objs = objs.filter(metadata_formats=rt.metadata_prefix)
-                    metadata_prefix = rt.metadata_prefix.prefix
-                if rt.from_timestamp:
-                    objs = objs.filter(timestamp__gte=rt.from_timestamp)
-                    from_timestamp = rt.from_timestamp
-                if rt.until_timestamp:
-                    objs = objs.filter(timestamp__gte=rt.until_timestamp)
-                    until_timestamp = rt.until_timestamp
-
-                paginator = Paginator(objs, NUM_PER_PAGE)
-                try:
-                    page = paginator.page(rt.cursor / NUM_PER_PAGE + 1)
-                except EmptyPage:
-                    errors.append(_error("badResumptionToken", resumption_token))
-        except ResumptionToken.DoesNotExist:
-            paginator = Paginator(objs, NUM_PER_PAGE)
-            page = paginator.page(1)
-            errors.append(_error("badResumptionToken", resumption_token))
-        _check_bad_arguments(
-            params,
-            errors,
-            msg="The usage of resumptionToken allows no other arguments.",
-        )
-    else:
-        paginator = Paginator(objs, NUM_PER_PAGE)
-        page = paginator.page(1)
-
-    return (
-        paginator,
-        page,
-        resumption_token,
-        set_spec,
-        metadata_prefix,
-        from_timestamp,
-        until_timestamp,
-    )
-
-
 def _error(code, *args):
     if code == "badArgument":
         return {
@@ -614,15 +542,3 @@ def _error(code, *args):
             "code": "noSetHierarchy",
             "msg": "This repository does not support sets.",
         }
-
-def generate_resumption_token(newstart):
-    state = f"newstart={newstart}"
-    token_bytes = state.encode("utf-8")
-    return base64.urlsafe_b64encode(token_bytes).decode("utf-8")
-
-def decode_token(token: str) -> dict:
-    try:
-        json_str = base64.urlsafe_b64decode(token.encode()).decode()
-        return json.loads(json_str)
-    except Exception:
-        return {}

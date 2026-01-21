@@ -1,11 +1,11 @@
 {% load i18n static %}
-<a class="border-2 border-blue-200 shadow-md shadow-blue-200/70 hover:shadow-lg/100 mt-4 p-4 bg-white dark:bg-gray-800 rounded block px-4 py-2 text-sm font-normal text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" href="/alvin-record/{{record.identifier}}">
+<a class="border-2 border-blue-200 shadow-md shadow-blue-200/70 hover:shadow-lg/100 mt-4 p-4 bg-white dark:bg-gray-800 rounded block px-4 py-2 text-sm font-normal text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" href="/alvin-record/{{record.identifier}}?data={{ encoded_link }}">
 {% if view == 'grid' %}
   <div class="flex flex-col w-full bg-gray-700 md:w-48">
     <div class="min-h-48">
       {% if record.file != None %}
         <img alt="{{record.title}}"
-           class="w-48 h-48 object-contain mx-auto" src="https://preview.alvin.cora.epc.ub.uu.se/iiif/{{record.file}}/full/300,/0/default.jpg">
+           class="w-48 h-48 object-contain mx-auto" src="https://cora.alvin-portal.org/iiif/{{record.file}}/full/300,/0/default.jpg">
              {% else %}
         <img 
            alt="{{record.title}}"
@@ -148,7 +148,7 @@
             {% if record.file != None %}
                 <img 
                     alt="{{record.title}}"
-                    class="w-36 h-36 object-contain mx-auto" src="https://preview.alvin.cora.epc.ub.uu.se/iiif/{{record.file}}/full/300,/0/default.jpg">           
+                    class="w-36 h-36 object-contain mx-auto" src="https://cora.alvin-portal.org/iiif/{{record.file}}/full/300,/0/default.jpg">           
             {% else %}
                 <img 
                     alt="{{record.title}}"

@@ -4,7 +4,7 @@
         <xsl:apply-templates select="record/data"/>
     </xsl:template>
     <xsl:template match="data">
-        <xsl:apply-templates select="person"></xsl:apply-templates>
+        <xsl:apply-templates select="record | person | organisation | place | work | location"></xsl:apply-templates>
     </xsl:template>   
     <!-- Copy all text nodes, elements and attributes -->   
     <xsl:template match="@*|node()">

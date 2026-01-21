@@ -1,8 +1,6 @@
 {% load i18n static metadata_wrangler %}
 
-{% block title %}
-<title>Alvin - {{ metadata|alvin_title:metadata.record_type }}</title>
-{% endblock %}
+
 
 {% block jshead %}
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -12,13 +10,15 @@
 {% endblock %}
 
 <!-- Metadata -->
-<div class="flex flex-col mb-10">
+<div class="flex flex-col">
     <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.authority_names.label as authority_label %}
             {% for lang, name in metadata.authority_names.names.items %}
                 {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name|alvin_place_name %}
             {% endfor %}
         {% endwith %}
+    </div>
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.variant_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
                 {% with first=name.0|default:name %}
@@ -26,34 +26,16 @@
                 {% endwith %}
             {% endfor %}
         {% endwith %}
-    </div>
-    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% include "./_metadata_row.html" with label=metadata.country.label value=metadata.country.item %}
         {% if metadata.longitude and metadata.latitude %}
             {% include "./_metadata_row.html" with label=metadata.longitude.label value=metadata.longitude.text %}
             {% include "./_metadata_row.html" with label=metadata.latitude.label value=metadata.latitude.text %}
-            {% include "./_metadata_row.html" with label="Vägbeskrivning"  url="https://maps.google.com/?q=" value="Google maps" %}
         {% endif %}
         {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
         {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
-        {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
-    </div>
-    <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
-        {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
     </div>
     <div data-xshow="activeTab === 'related'" data-xcloak>
         <!-- Incoming links -->
     </div>
 </div>
 
-<!-- Map -->
-{% if metadata.latitude and metadata.longitude %}
-    <aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvin-orange border-4 mb-10" id="map" data-xshow="activeTab != 'related'" data-xcloak></aside>
-{% endif %}
-
-{% block jsbody %}
-<script defer src="{% static 'js/map.js' %}" 
-  data-latitude="{{ metadata.latitude.text }}"
-  data-longitude="{{ metadata.longitude.text }}">
-</script>
-{% endblock %}

@@ -10,7 +10,7 @@
     </div>
     <div class="w-full md:w-3/4 flex-grow pl-2">
         {% if url %}
-            <a href="{{ url }}">{{ value }}</a>{% if extra_value %}{{ extra_value }}{% endif %}
+            <a class="text-blue-800 dark:text-blue-200 underline" href="{{ url }}">{{ value }}</a>{% if extra_value %}{{ extra_value }}{% endif %}
         {% else %}
             {{ value }}{% if extra_value %}{{ extra_value }}{% endif %}
         {% endif %}

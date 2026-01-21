@@ -1,22 +1,5 @@
 from lxml import etree
 
-class SafeHTTPResolver(etree.Resolver):
-    def resolve(self, url, pubid, context):
-        # Allow only HTTP/HTTPS URLs from trusted domains
-        if url.startswith("http://") or url.startswith("https://"):
-            # Example: restrict to example.com
-            if "cora.alvin-portal.org" not in url:
-                raise ValueError(f"Blocked external URL: {url}")
-            
-            # Fetch the content
-            resp = requests.get(url, timeout=5)
-            resp.raise_for_status()
-            return self.resolve_string(resp.text, context)
-        
-        # Fallback to default resolution
-        return None
-
-
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from django.http import HttpResponse
@@ -27,18 +10,12 @@ import requests
 import urllib.request
 from urllib.request import urlopen
 parser = etree.XMLParser()
-parser.resolvers.add(SafeHTTPResolver())
-
-def accordion(request):
-  template = loader.get_template('vocabulary/accordion.html')
-  return HttpResponse(template.render())
 
 def userguide(request):
   return render(request, 'vocabulary/userguide.html', {})
 
 def api(request):
   return render(request, 'vocabulary/api.html', {})
-
 
 def oai_pmh(request):
   return render(request, 'vocabulary/oai-pmh.html', {})

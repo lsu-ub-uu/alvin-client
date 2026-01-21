@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('accordion/', views.accordion, name='accordion'),
     path('userguide/', views.userguide, name='userguide'),
     path('api/', views.api, name='api'),
     path('api/oai-pmh', views.oai_pmh, name='oai-pmh'),

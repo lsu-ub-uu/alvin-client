@@ -27,7 +27,7 @@ def institutions(request):
   xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
     
   # API host
-  api_host = 'https://preview.alvin.cora.epc.ub.uu.se'
+  api_host = 'https://cora.alvin-portal.org'
 
   list_url = f'{api_host}/rest/record/alvin-location'
 
@@ -72,7 +72,7 @@ def institutions(request):
 def location(request, id):
   xml_headers_list = {'Content-Type':'application/vnd.cora.record-decorated+xml','Accept':'application/vnd.cora.record-decorated+xml'}
   # API host
-  api_host = 'https://preview.alvin.cora.epc.ub.uu.se'
+  api_host = 'https://cora.alvin-portal.org'
 
   list_url = f'{api_host}/rest/record/alvin-location/{id}'
 

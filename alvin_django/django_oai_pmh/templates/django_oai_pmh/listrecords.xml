@@ -7,7 +7,7 @@
         {{metadataoai_dc|safe }}
     {% endif %}
     {% if metadataprefix == 'alvin_xml' %}
-    {{metadataalvin_xml|safe }}
+        {{metadataalvin_xml|safe }}
     {% endif %}
     {% autoescape on %}   
     {% if cursor < completeListSize %}

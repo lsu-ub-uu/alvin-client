@@ -1,0 +1,37 @@
+{% extends "django_oai_pmh/base.xml" %}
+{% load oai_pmh %}
+
+
+{% block content %}
+<Identify>
+    <repositoryName>{% repository_name %}</repositoryName>
+    <baseURL>{% base_url %}</baseURL>
+    <protocolVersion>2.0</protocolVersion>
+    <adminEmail>alvin-support@ub.uu.se</adminEmail>
+    <earliestDatestamp>2014-01-01T00:00:00Z</earliestDatestamp>
+    <deletedRecord>no</deletedRecord>
+    <granularity>YYYY-MM-DDThh:mm:ssZ</granularity>
+    <description>
+        <oai-identifier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+            <scheme>oai</scheme>
+            <repositoryIdentifier>ALVIN.org</repositoryIdentifier>
+            <delimiter>:</delimiter>
+            <sampleIdentifier>oai:ALVIN.org:1</sampleIdentifier>
+        </oai-identifier>
+     </description>
+     <description>
+        <eprints xmlns="http://www.openarchives.org/OAI/1.1/eprints"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.openarchives.org/OAI/1.1/eprints http://www.openarchives.org/OAI/1.1/eprints.xsd">
+            <content>
+                <URL>https://www.alvin-portal.org</URL>
+                <text>{% repository_name %}</text>
+            </content>
+            <metadataPolicy>Metadata records are freely available under Creative Commons CC0. See: https://creativecommons.org/public-domain/cc0/.</metadataPolicy>
+            <dataPolicy>Almost all of the digital resources you find in Alvin can be used and shared without restrictions. However, be aware that some of the more modern materials may be copyrighted. The licensing label of each record states the rights that apply if it contains digital content. See: https://www.alvin-portal.org/copyright/.</dataPolicy>
+        </eprints>
+     </description>
+</Identify>
+{% endblock %}

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="urn:nbn:se:uu:ub:epc-schema:rs-location-mapping" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:nbn:se:uu:ub:epc-schema:rs-location-mapping" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xs:element name="records">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This XML schema defines a data transmission protocol between a local archive/repository and the Resolution Service. An instance of this schema is called a source. The source contains information about document records but is primarly intended for holding mappings between identifiers and URLs. To enrich the description further any metadata format can be added to each record. This element is the root element and is required.</xs:documentation>
+			<xs:documentation xml:lang="sv">Detta XML-schema definierar ett dataöverföringsformat mellan lokala arkiv/depåer och Resolution Service. Varje XML-fil som uppfyller denna formatspecifikation är en så kallad källa (source på engelska). En källa innehåller metadata om dokumentposter. Det som i huvudsak används av Resolution Service är uppgifter om identifikatorer och URL:er men det finns också möjlighet att lägga till valfri metadata i annat format till varje post. Detta elementet är rotelementet och är obligatoriskt.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="protocol-version">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Protocol version. The latest protocol version is 3.0. This element is required.</xs:documentation>
+						<xs:documentation xml:lang="sv">Protokollversion. Senaste versionnummer är 3.0. Obligatoriskt element.</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:token">
+							<xs:enumeration value="3.0"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="datestamp" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">This datestamp element contains the date when the file was last changed. With the help of this information Resolution Service can check if any of the records have been changed since last read. If no records have been changed or added the server do not need to read the file and this reduces the server load. The ISO standard 8601 is used. The element is optional (if it is missing the Resolution Service reads the file each time). The XML attribute "type" is required and should have the value "modified".</xs:documentation>
+						<xs:documentation xml:lang="sv">Detta elementet innehåller datum och tid när denna XML-fil senast ändrades. Med hjälp av denna uppgift kan Resolution Service kontrollera om någon av posterna ändrats sedan senaste inläsningen. Om inga poster ändrats behöver filen inte läsas in av servern, vilket minskar belastningen på servern. Datumet skrivs enligt standarden ISO 8601. Elementet är valfritt (om elementet inte används läses filen alltid in av Resolution Service). XML-attributet "type" är obligatoriskt och måste ha värdet "modified".</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:token">
+								<xs:attribute name="type" use="required">
+									<xs:simpleType>
+										<xs:restriction base="xs:NMTOKEN">
+											<xs:enumeration value="modified"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="record" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A record. Zero or more records are allowed.</xs:documentation>
+						<xs:documentation xml:lang="sv">En post (record på engelska). Noll eller flera poster kan finnas.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="header">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Each record consists of a required part named "header". This part is used by the Resolution Service core application.</xs:documentation>
+									<xs:documentation xml:lang="sv">Varje post består av en obligatorisk del som kallas "header", denna del används internt av Resolution Service-programmet.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="datestamp" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">The datestamp contains the date when a record was last changed. With the help if this information Resolution Service can check if the current record has changed since last read. Records that have not been changed or added since last read do not have to be read. This reduces the server load. The ISO standard 8601 is used. The element is optional (if it is missing the Resolution Service reads the record each time). The xml attribute "type" is required and should have the value "modified".</xs:documentation>
+												<xs:documentation xml:lang="sv">Detta elementet innehåller datum och tid när denna post senast ändrats. Med hjälp av denna uppgift kan Resolution Service kontrollera om en post har ändrats sedan senaste inläsningen. Poster som inte ändrats behöver inte läsas in av Resolution Service, vilket minskar belastningen på servern. Datumet skrivs enligt standarden ISO 8601. Elementet är valfritt (om elementet inte används läses posten alltid in av Resolution Service). Attributet type är obligatoriskt och måste ha värdet "modified".</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:token">
+														<xs:attribute name="type" use="required">
+															<xs:simpleType>
+																<xs:restriction base="xs:NMTOKEN">
+																	<xs:enumeration value="modified"/>
+																</xs:restriction>
+															</xs:simpleType>
+														</xs:attribute>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="identifier" type="xs:token">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">The identifier of the document (eg urn:nbn). The value of this element is the primary key of the resolving mechanism in the Resolution Service. The element is required.</xs:documentation>
+												<xs:documentation xml:lang="sv">Identifikatorn (ex urn:nbn) specificeras här. Denna uppgift används som den primära nyckeln när Resolution Service-programmet försöker slå upp en adress till ett dokument. Obligatoriskt element.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="destinations">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Resolution Service should forward/redirect the user to one of the specified destinations. The element is required.</xs:documentation>
+												<xs:documentation xml:lang="sv">Destinationer som Resolution Service ska vidarebefordra användaren till. Obligatoriskt element.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="destination" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">A destination has a status: "activated" (must work) or "inactivated" (do not need to work because the resource has moved to another location or will soon be moved to another location). The mandatory XML attribute "status" must have a value of either "activated" or "inactivated". At least one activated destination must be defined.</xs:documentation>
+															<xs:documentation xml:lang="sv">Varje destination har ett av följande tillstånd: "activated" (dessa måste fungera) eller "inactivated" (behöver inte fungera med betydelsen "har tagits ur bruk" eller "kommer inom en snar framtid att tas ur bruk"). XML-attributet "status" måste ha värdet "activated" eller "inactived". Minst en destination med tillståndet "activated" måste finnas.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="datestamp" minOccurs="0" maxOccurs="2">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">The destination element may have a datestamp element that tells the system from and to which date/time an address (URL) is active. If the parent destination element is inactivated the datestamp specified in this element is not processed because the whole destination is inactivated. The element is optional. The XML attribute "type" is required and must have either the value "activated" or "inactivated".</xs:documentation>
+																		<xs:documentation xml:lang="sv">Innehållet i detta element talar om när länken gjordes aktiv eller inaktiv. Om destination elementet har tillståndet "inactivated" kommer denna uppgift inte att påverka när länken blir tillgänglig eller otillgänglig i Resolution Service. Elementet är valfritt. XML-attributet "type" är obligatoriskt och beskriver elementets tillstånd. Giltiga värden på attributet "type" är "activated" eller "inactivated".</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:simpleContent>
+																			<xs:extension base="xs:token">
+																				<xs:attribute name="type" use="required">
+																					<xs:simpleType>
+																						<xs:restriction base="xs:NMTOKEN">
+																							<xs:enumeration value="activated"/>
+																							<xs:enumeration value="inactivated"/>
+																						</xs:restriction>
+																					</xs:simpleType>
+																				</xs:attribute>
+																			</xs:extension>
+																		</xs:simpleContent>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="url" type="xs:token">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">An address or location to the document (URL). The address should point to an overview page or directly to the document file. This element is required.</xs:documentation>
+																		<xs:documentation xml:lang="sv">Adress till dokumentet (URL). Adressen bör peka på en beskrivning av dokumentet eller direkt till dokumentet. Obligatoriskt element.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="status" use="required">
+																<xs:simpleType>
+																	<xs:restriction base="xs:NMTOKEN">
+																		<xs:enumeration value="activated"/>
+																		<xs:enumeration value="inactivated"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="metadata" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">This element can contain a document description in an optional metadata format. Its contents are not used by the Resolution Service by default, but its contents can be extracted from methods defined in the Resolution Service. The element must have the XML attribute "format" with a value that is unique and preferably equals the name of the metadata format. This metadata element should normally contain a XML document (with one root element). If there are more than one root elements present (eg dublin core uses more than one) the function in the Resolution Service that returns the metadata automatically encapsulates all data into a new root element called "record". The reason that the data is encapsulated is that the function in the Resolution Service must return a valid XML document which by definition only has a single root element.</xs:documentation>
+									<xs:documentation xml:lang="sv">Här kan dokumentet beskrivas i andra metadataformat. Denna delen är valfri och innehållet används inte av Resolution Service-programmet, däremot kan innehållet extraheras (hämtas ut) med hjälp av metoder som finns definierade i applikationen. Detta element måste ha XML-attributet "format" och värdet på detta attribut ska vara unikt och helst ange namnet på metadataformatet som används. Detta element kan innehålla ett XML-dokument (med ett rotelement) men också en struktur med fler rotelement (dublin core är ett exempel på ett format har flera rotelement eller om man så vill saknar ett rotelement). I fallet med ett rotelement returnerar funktionen i Resolution Service-applikationen en XML-sträng med just rotelementet som toppelement. När rotelementen är fler till antalet bildar funktionen automatiskt ett rotelement som heter "record" så att en giltig XML-sträng kan returneras.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:any maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Metadata in any XML based metadata format. All data must be put into XML elements. At least one element should be put into the metadata element.</xs:documentation>
+												<xs:documentation xml:lang="sv">Innehåller metadata i valfritt XML-baserat metadataformat. All information som anges måste omges av XML-element. Åtminstone ett element måste finnas under metadataelementet.</xs:documentation>
+											</xs:annotation>
+										</xs:any>
+									</xs:sequence>
+									<xs:attribute name="format" type="xs:NMTOKEN" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,13 @@
+{% load oai_pmh %}
+<record>
+    {% include "django_oai_pmh/partials/_header.xml"  %}
+    {% if not header.deleted %}
+        <metadata>
+        {% if metadataprefix == oai_dc %}
+            {% autoescape off %}{{metadataoai_dc}}{% endautoescape %}
+        {% endif %}
+        </metadata>
+    {% endif %}
+</record>
+
+

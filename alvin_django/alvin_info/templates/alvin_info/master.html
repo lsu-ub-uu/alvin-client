@@ -1,0 +1,79 @@
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>       
+    <title>{% block title %}Alvin - {% translate 'Startsida' %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="index, follow">
+    <meta name="DC.Publisher" content="Uppsala University Library">
+    <meta name="keywords" content="Alvin, cultural heritage, digital collections, databases, libraries, archives">
+    <meta name="description" content="Alvin - Nordic platform for digitised cultural heritage">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}"> 
+    <link rel="alternate" href="{{ request.get_host }}/en{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="en">
+    <link rel="alternate" href="{{ request.get_host }}/no{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="no">
+    <link rel="alternate" href="{{ request.get_host }}/sv{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="sv">
+    <link rel="alternate" href="{{ request.get_host }}{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="x-default">
+    <!-- AlpineJS --> 
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="{% static 'js/alpine-validation.js' %}"></script>  
+    <style>
+        [x-cloak] {
+            display: none !important; /* Important to override any default */
+        }
+        [data-xcloak] {
+            display: none !important; /* Important to override any default */
+        }
+    </style>   
+    {% block head %}
+    {% endblock %}
+
+    {% block jshead %}
+    {% endblock %}
+  </head>
+  <body class="min-h-screen flex flex-col"> 
+    <span class="sr-only">
+      <a class="skip-to-content" href="#main-content-marker">Skip to content</a>
+    </span>
+      {% include "alvin_info/navbar.html" %}
+    
+    <!-- The Panel with Search Form-->
+      <div id="myPanel" class="bg-white dark:bg-gray-800 overflow-hidden transition-all duration-300 ease-in-out max-h-0">
+        {% include "alvin_info/extended_search.html" %}
+      </div>
+
+      <script src="{% static 'js/panel.js' %}"></script>	
+      {% block content %}
+      {% endblock %}    
+      {% include "alvin_info/footer.html" %}
+      <!-- Back to top button -->
+  <button
+    type="button"
+    data-twe-ripple-init
+    data-twe-ripple-color="light"
+    class="!fixed bottom-5 end-5 hidden rounded-full bg-orange-600 p-3 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-orange-700 hover:shadow-lg focus:bg-orange-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-orange-800 active:shadow-lg"
+    id="btn-back-to-top">
+    <span class="[&>svg]:w-4">
+        <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="3"
+      stroke="currentColor">
+      <title>Back-to-top button</title>
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+        </svg>
+      </span>
+    </button>
+    <script src="{% static 'js/btn-back-to-top.js' %}"></script>
+  </body>
+</html>

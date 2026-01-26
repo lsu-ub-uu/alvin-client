@@ -1,0 +1,87 @@
+{% extends 'master.html' %}
+
+{% load i18n static metadata_wrangler render_record_icon %}
+
+{% block title %}Alvin - {{ metadata|alvin_title:metadata.record_type }}{% endblock %} 
+
+
+{% block head %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <link rel="stylesheet" href="{% static 'tify/tify.css' %}">
+{% endblock %}
+
+{% block jshead %}
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+    crossorigin="">
+  </script>
+  <script src="{% static 'tify/tify.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+{% if metadata.files %}
+  
+  <!-- Bildvisare TIFY -->
+  <div id="tify" class="h-[80vh] w-full"></div>
+  
+  <script>
+    new Tify({
+      container: '#tify',
+      manifestUrl: "{% url 'iiif_manifest' metadata.id %}"
+    })
+  </script>
+
+  {% endif %}
+
+  <div class="flex-grow w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4">
+    <div class="w-fixed w-full md:w-1/6 flex-shrink flex-grow-0 px-4">
+    </div>
+    <span id="main-content-marker"></span>
+    <main class="w-full md:w-4/6 pt-1 px-3" x-data="{ activeTab: 'overview' }">
+      <h1 class="text-2xl md:text-3xl font-bold">{{ metadata|alvin_title:metadata.record_type }}</h1>
+        <div class="py-2 flex w-full items-center mb-2 max-md:text-sm">
+          {% render_record_icon metadata %}
+        </div>
+        <nav class="tabs flex flex-wrap md:flex-row border-b border-gray-700 bg-gray-100">
+          <button @click="activeTab = 'overview'" class="tab py-2 px-4 text-gray-700 hover:text-white hover:bg-dark-alvin"
+          :class="{ 'bg-gray-700 text-white': activeTab === 'overview', 'bg-gray-100': activeTab != 'overview' }">
+            {% translate 'Översikt' %}
+          </button>
+          <button @click="activeTab = 'all_metadata'" class="tab py-2 px-4 text-gray-700 hover:text-white hover:bg-dark-alvin"
+          :class="{ 'bg-gray-700 text-white': activeTab === 'all_metadata', 'bg-gray-100': activeTab != 'all_metadata' }">
+            All metadata
+          </button>
+          <button @click="activeTab = 'related'" class="tab py-2 px-4 text-gray-700 hover:text-white hover:bg-dark-alvin"
+         :class="{ 'bg-gray-700 text-white': activeTab === 'related', 'bg-gray-100': activeTab != 'related' }">
+           Relaterat
+          </button>
+        </nav>
+
+        {% if metadata.record_type == 'alvin-place' %}
+          {% include './_partials/_alvin_place.html' %}
+        {% elif metadata.record_type == 'alvin-person' %}
+          {% include './_partials/_alvin_person.html' %}
+        {% elif metadata.record_type == 'alvin-organisation' %}
+          {% include './_partials/_alvin_organisation.html' %}
+        {% elif metadata.record_type == 'alvin-location' %}
+          {% include './_partials/_alvin_location_new.html' %}
+        {% elif metadata.record_type == 'alvin-work' %}
+          {% include './_partials/_alvin_work.html' %}
+        {% elif metadata.record_type == 'alvin-record' %}
+          {% include './_partials/_alvin_record.html' %}
+        {% endif %}
+    </main>
+    <div class="w-fixed w-full md:w-1/6 flex-shrink flex-grow-0 px-4">
+      <div class="sticky top-0 p-4 bg-white rounded-xl w-full h-full">
+        <div class="flex flex-row justify-center">  
+          <button class="flex flex-row bg-orange-600 hover:bg-dark-alvin focus:bg-blue-800 text-white font-semibold py-2 px-4 rounded-full">
+ 	    Search records
+	  </button>
+        </div>
+      </div>    
+    </div>
+  </div>
+
+{% endblock %}

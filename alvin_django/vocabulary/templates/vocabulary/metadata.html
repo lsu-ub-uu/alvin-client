@@ -1,0 +1,45 @@
+{% extends "vocabulary/userguidemaster.html" %}
+{% load static %}
+{% load i18n %}
+<title>{% block title %}Alvin - {{title}}{% endblock %}</title>
+{% block content %}
+<div class="bg-white dark:bg-gray-800 dark:text-white flex-grow w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4">
+
+    <span id="main-content-marker"></span>
+    <main class="w-full md:w-3/4 pt-1 px-3">
+        <h1 class="text-2xl md:text-3xl font-bold pb-4">{{ title }}</h1>
+	{{ metadata|safe }}
+    </main>
+    <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+        <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
+            <div class="flex flex-col justify-center">  
+                <h2 class="text-2xl font-bold pb-2">{% translate 'Standarder' %}</h2>  
+                <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/bibframe/">BIBFRAME</a></p>
+                <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/standards/mods/">MODS</a></p>
+     		<p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/marc/">MARC</a></p>
+                <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/ead/">EAD</a></p>
+                <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://tei-c.org/release/doc/tei-p5-doc/en/html/MS.html">TEI-MS</a></p>
+                <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://nomisma.org/nuds">NUDS</a></p>
+                <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/standards/mads/">MADS</a></p>
+                <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/standards/mets/">METS</a></p>
+            </div>
+	</div>
+    </div>
+</div>
+ <script src="/static/js/clipboard.js-master/dist/clipboard.min.js"></script>
+    <script>
+      var clipboard = new ClipboardJS('.btn');
+
+      clipboard.on('success', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+      });
+
+      clipboard.on('error', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+      });
+    </script>
+{% endblock %}

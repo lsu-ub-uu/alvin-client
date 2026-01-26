@@ -1,0 +1,90 @@
+{% extends "darkmaster.html" %}
+{% load static %}
+{% block title %}Vocabulary{% endblock %}
+{% block content %}
+    <div class="maincontent">
+      <h1><a href="https://www.alvin-portal.org" class="logo">ALVIN</a> : Vocabulary</h1>
+
+  <div class="menu">
+    <a href="#Data">Data Model</a>
+    <a href="#Core">Core Classes</a>
+    <a href="#Classes">Classes and Properties</a>
+    <a href="#Linked">Linked Data</a>
+    <a href="#Object">Object</a>
+    <a href="#Collection">Collection</a>
+    <a href="#Digital">Digital Reproduction</a>
+  </div>
+
+  <div class="main">
+    <h2 id="Data">Data Model</h2>
+<p>Alvin's data model is specifically designed for descriptions of materials in cultural heritage collections in libraries, museums and archives. In order to be able to handle different types of resources in one and the same system, it is based on a combination of concepts from different international standards for libraries and archives:</p>
+<dl>
+<dt>BIBFRAME (Bibliographic Framework Initiative)</dt>
+<dd>Basic vocabulary for general properties such as title, language and publication information. </dd>
+<dt>MODS (Metadata Object Description Schema)</dt>
+<dt>MARC (MAchine-Readable Cataloging) 21 Format for Bibliographic Data</dt>
+<dd>For more specific bibliographic properties that are missing from BIBFRAME.</dd>
+<dt>EAD (Encoded Archival Description)</dt>
+<dd>For archive descriptions.</dd>
+<dt>TEI (Text Encoding Initiative, Manuscript Description)</dt>
+<dd>For more specific properties for manuscripts.</dd>
+<dt>NUDS (Numismatic Description Schema)</dt>
+<dd>For specific properties in numismatics.</dd>
+<dt>MADS (Metadata Authority Description Schema)</dt>
+<dd>For authority records for person, organisation and place</dd>
+<dt>METS (Metadata Encoding and Transmission Standard)</dt>
+<dd>For descriptions of a record's related digital files.</dd>
+</dl>
+<h2 id="Core">Core Classes</h2>
+<p>The model is built around five basic core classes:</p>
+<ul>
+<li>record - A bibliographic record that describes a single item or a collection of items. </li>
+<li>person - An authority record for a person.</li>
+<li>organisation - An authority record for an organisation.</li>
+<li>place - An authority record for a place.</li>
+<li>work - An authority record for a work.</li>
+</ul>
+<p>And, in addition:</p>
+<ul>
+<li>location - a special organisational record that describes the archival institution that holds the object or from which it is available. </li>
+</ul>
+<h2 id="Classes">Classes and Properties</h2>
+<p>The core classes in turn contain different sets of:</p>
+<ul>
+<li>Class - a group that collects one or more classes or properties, for example the title class which has the properties mainTitle and subtitle.</li>
+<li>Property (text) - a value that has been entered, for example a title.</li>
+<li>Property (code) - a value selected from a controlled list in Alvin, for example language.</li>
+<li>Property (link) - a link to a record from a core class, for example from a bibliographic record to an authority record for a person.</li>
+</ul>
+<h2 id="Linked">Linked Data</h2>
+The model is based on linked data and the description of relationships between different records. The linking can be hierarchical (host/part), parallel (different version or format) or to another related record.
+Bibliographic records and authority records are linked through a type of relationship (role) for so-called agents (persons or organisations). A book can be linked to a person through the role "author". An archive can be linked to a person through the role "collector".
+A bibliographic record in Alvin describes either a single resource (book, image, map, etc.) or a collection of resources (e.g. an archive).
+<img alt="Linked data example" src="/static/img/linkeddata.png">
+<figcaption>Example: Linked data for Uppsala University Library's copy of Röda rummet by August Strindberg.</figcaption>
+<h2 id="Object">Object</h2>
+<p>The most common case is that a physical object is described. For example, it may be a painting, a map, a manuscript or a printed book. The record in Alvin is based on the physical copy that is being described. For printed or other material that is reproduced in editions, the physical copy is still described in Alvin unlike, for example, library catalogs. If you have different copies of a book from the same edition, there is one record per copy. Provenance, acquisition, signatures, etc. apply to this particular copy in Alvin.</p>
+<h2 id="Collection">Collection</h2>
+<p>In Alvin, in addition to concrete objects, abstract resources can be described. Examples of this are primarily collections or other comprehensive descriptions. These are often, but not always, only abstract constructions that in turn contain concrete objects that are sometimes described separately as above and sometimes not. However, a collection record can also be considered a comprehensive description of the concrete content. Alvin allows digital material to be linked to abstract records as well. You can choose to upload all images in an image collection to the main/collection record without describing the different parts individually. </p>
+<h2 id="Digital">Digital Reproduction</h2>
+<p>The normal case in Alvin is also to make a digital reproduction of the physical object, e.g. digitising a manuscript or book. In these cases, the metadata record still describes the physical object (not the digital reproduction). The digital files are copies of this particular copy that is described in the record.</p>
+  </div>
+
+  <div class="right">
+    <h2>Standards</h2>
+    <p><a href="https://www.loc.gov/bibframe/">BIBFRAME</a></p>
+    <p><a href="https://www.loc.gov/standards/mods/">MODS</a></p>
+    <p><a href="https://www.loc.gov/marc/">MARC</a></p>
+    <p><a href="https://www.loc.gov/ead/">EAD</a></p>
+    <p><a href="https://tei-c.org/release/doc/tei-p5-doc/en/html/MS.html">TEI</a></p>
+    <p><a href="https://nomisma.org/nuds">NUDS</a></p>
+    <p><a href="https://www.loc.gov/standards/mads/">MADS</a></p>
+    <p><a href="https://www.loc.gov/standards/mets/">METS</a></p>
+  </div>
+</div>
+
+
+      
+    </div>
+{% endblock %}
+

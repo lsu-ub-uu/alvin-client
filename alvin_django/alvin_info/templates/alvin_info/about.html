@@ -1,23 +1,149 @@
-{% extends 'base.html' %}
-
-<!-- LOCALIZATION -->
-{% load i18n static %}
-
-<!-- HEAD ELEMENT -->
-{% block head %}
-<title>Alvin - {% translate 'Om Alvin' %}</title>
-{% endblock %}
-
-<!-- CONTENT -->
+{% extends "alvin_info/master.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Alvin - {% translate 'Om Alvin' %}{% endblock %}
 {% block content %}
-<main class="bg-alvin-grey flex flex-col gap-y-8 min-h-screen p-4 border-x-4 border-x-black border-b-8 border-b-alvin-green justify-center">
-    <section>
-        <h1></h1>
-    </section>
-</main>
-<footer class="relative bg-black h-screen p-8">
-    <p class="text-white">{% translate 'Om Alvin' %}</p>
-    <p class="text-white">{% translate 'Alvin är en plattform för publicering och långsiktigt bevarande av digitaliserat kulturarvsmaterial från biblioteks-, arkiv- och museisamlingar i Sverige och Norge.' %}</p>
-    <a class="text-alvin-orange pt-9 pb-1" href="">{% translate 'Webbplatskarta' %}</a>
-</footer>
+<div class="bg-white dark:bg-gray-800 dark:text-white w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+  <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="md:flex flex-col md:flex-row">
+      <div class="flex flex-col w-full flex-shrink-0">
+        <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+          <div class="text-lg font-semibold tracking-widest text-gray-900 dark:text-gray-100 uppercase rounded-lg focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+                <!-- Mobile menu button-->
+                <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+                    <span class="absolute -inset-0.5"></span>
+                    <span class="sr-only">Open main menu</span>
+                    <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <title>Mobile-menu is not open</title>
+                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
+                        <title>Mobile-menu is open</title>
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+	    </div>
+            <nav class="hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#background">{% translate 'Bakgrund och historik' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#reference">{% translate 'Referensmodell' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#metadata">{% translate 'Metadata' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#accessibility">{% translate 'Tillgänglighet' %}</a>     
+            </nav> 
+
+	    <!-- Mobile menu -->
+
+            <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4">
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#background">{% translate 'Bakgrund och historik' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#reference">{% translate 'Referensmodell' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#metadata">{% translate 'Metadata' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#accessibility">{% translate 'Tillgänglighet' %}</a>                
+	    </div>
+        </div>
+    </div>
+  </div>
+  <span id="main-content-marker"></span>
+  <main class="w-full md:w-2/4 flex-grow pt-1 px-3">
+    <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">{% translate 'Om Alvin' %}</h1>
+    <p class="py-2 font-bold">{% translate 'Alvin är en plattform för tillgängliggörande och långsiktigt bevarande av digitaliserat kulturarvsmaterial från biblioteks-, arkiv- och museisamlingar i Sverige och Norge.' %}</p>
+    <p class="py-2">{% translate 'Systemet utvecklades vid Uppsala universitetsbibliotek och har varit i drift sedan 2014. Det leds av ett konsortium bestående av universitetsbiblioteken i Uppsala, Lund och Göteborg. Utöver dessa finns ett tjugotal medlemmar och ytterligare ett tjugotal institutioner som publicerat material i Alvin.' %}</p>
+    <p class="py-2">{% translate 'Förutom institutionernas egna samlingar fungerar Alvin som ett digitalt arkiv för att bevara resultaten från ett antal externt finansierade forsknings- och digitaliseringsprojekt tillgängliga i ett långsiktigt perspektiv.' %}</p>
+    <p class="py-2">{% translate 'Portalen innehåller arkiv, böcker, manuskript, bilder, kartor, föremål, noterad musik, video, ljudfiler och en del annat material. Det mesta av det digitala innehållet är öppet tillgängligt i högupplöst form och fritt från kända upphovsrättsbegränsningar under Public Domain Mark. Metadataposter är fritt tillgängliga under Creative Commons CC0.' %}</p>
+    <h2 id="background" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Bakgrund och historik' %}</h2>
+    <p class="py-2">{% translate 'Alvin utvecklades ursprungligen för att befintliga bibliotekssystem inte tillräckligt bra hanterade:' %}</p>
+    <ul class="py-2 list-disc list-inside">
+      <li>{% translate 'katalogisering av material som inte är böcker' %}</li>
+      <li>{% translate 'länkad data' %}</li>
+      <li>{% translate 'exemplarspecifik information' %}</li>
+      <li>{% translate 'lagring/visning av digitalt material' %}</li>
+      <li>{% translate 'sökmotorvänlighet (Google etc.)' %}</li>
+   </ul>
+   <p class="py-2">{% translate 'Dessutom eftersträvades en enhetlig lösning för olika typer av material istället för specifika system för olika resurstyper, samlingar eller projekt.' %}</p>
+   <p class="py-2">{% translate 'Alvin har sin grund i ett antal olika projekt som genom åren drivits vid enheten för digital publicering och senare enheten för bibliotekssystem vid Uppsala universitetsbibliotek.' %}</p>
+   <p class="py-2">{% translate 'Några exempel är egenutvecklade databaslösningar för Erik Wallers omfattande autografsamling samt kart- och bildsamlingarna vid Uppsala universitetsbibliotek liksom samarbetsprojekten ProBok (bokband och provenienser) och Ediffah (personarkiv).' %}</p>
+   <p class="py-2">{% translate 'Till dessa kom ett antal mindre projekt eller system som utvecklats för biblioteket av andra parter.' %}</p>
+   <p class="py-2">{% translate 'Efterhand stod det klart att förvaltning, drift och vidareutveckling av en sådan vildvuxen flora av disparata system och tekniker, som måste handhas dels av IT-ansvariga dels av respektive användare, var uppenbart personberoende och ohållbar i längden.' %}</p>
+   <p class="py-2">{% translate 'Systemen var inte heller konstruerade för att kommunicera med varandra. De olika bakomliggande utvecklingsprojekten hade heller inte samordnas i någon form utan drivits helt separat från varandra.' %}</p>
+   <h3 class="text-2xl md:text-3xl font-bold pt-4">LUPP</h3>
+   <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="http://urn.kb.se/resolve?urn=urn:nbn:se:uu:diva-328092">{% translate 'Slutrapporten' %}</a> {% translate '(2011) till projektet LUPP (Digitaliseringssamarbete mellan Stiftsbiblioteket vid Linköpings stadsbibliotek och Uppsala universitetsbibliotek) konstaterade att om ingen radikal förändring görs är det högst sannolikt att alla dessa tjänster tynar bort i takt med att personal försvinner eller tekniska plattformar blir omoderna och måste bytas ut/läggas ner.' %}</p>
+   <p class="py-2">{% translate 'I LUPP-rapporten lanserades därför för första gången Alvin som koncept. Tanken var alltså att istället för att använda tio olika databasprogramvaror eller skriptspråk skall samma programvara liksom metod för att generera webbsidor utnyttjas för samtliga applikationer. Endast på det sättet kan de underhållas i ett längre perspektiv. Den tekniska utvecklingen går snabbt, även om behoven av den inte ändras i samma takt, vilket gör att system som inte ständigt vidareutvecklas eller förnyas inte kan finnas kvar på sikt. En gemensam plattform betyder att hela komponenter, som en sökmotor eller databasprogramvara, kan bytas ut i takt med teknikutvecklingen av dessa. Den innebär också att personberoendet minskar eftersom flera utvecklare arbetar med samma lösningar.' %}</p>
+   <h3 class="text-2xl md:text-3xl font-bold pt-4">ArkA-D</h3>
+   <p class="py-2">{% translate 'Den tekniska utvecklingen av Alvin som ett verktyg för digitalisering av forskningsbibliotekens arkivsamlingar grundades i projektet' %} <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.rj.se/bidrag/2011/arka-d---ett-verktyg-for-digitalisering-av-forskningsbibliotekens-arkivsamlingar/">ArkA-D</a>, {% translate 'ett tvåårigt infrastrukturprojekt som genomfördes mellan 2012 och 2014.' %}</p>
+   <p class="py-2">{% translate 'Som slutpunkt i projektet lanserades Alvin på konferensen Digitalisera - men sen då? på Nordiska museet den 28 november 2014.' %}</p>
+   <div class="justify-center"> 
+     <figure>
+       <img class="object-contain md:object-cover mx-auto" alt="{% translate 'Alvin startsida 2014' %}" src="/static/img/alvin-2014.png">
+       <figcaption class="py-2 text-sm italic">{% translate 'Alvin startsida 2014' %}</figcaption>
+     </figure>
+   </div>
+   <h3 class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Förvaltning' %}</h3>
+   <p class="py-2">{% translate 'Eftersom en digital plattform som Alvin säkert skulle väcka intresse bland andra kulturarvsinstitutioner arbetade ArkA-D-projektet fram en konsortiemodell som skulle kunna bära kostnaderna för systemet även efter projektets avslutande. Den byggde delvis på erfarenheter från publiceringsplattformen' %} <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.diva-portal.org">DiVA</a>.</p>
+   <p class="py-2">{% translate 'Under 2015 började konsortiet ta form med Linköpings stadsbibliotek (den ursprungliga partnern från LUPP) som första medlem i Alvin efter Uppsala universitetsbibliotek.' %}</p>
+   <p class="py-2">{% translate 'Från och med halvårsskiftet 2017 övergick Alvin från tidigare projektstadium till ett system i full förvaltning, nu med ett antal nya medlemmar och övriga organisationer med material i systemet. Drift och support av systemet finansieras därmed genom årliga medlemsavgifter.' %}</p>
+   <h2 id="reference" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Referensmodell' %}</h2>
+   <p class="py-2">{% translate 'Konceptuellt bygger systemet på OAIS-modellen (Open Archival Information System).' %}</p>
+   <p class="py-2">{% translate 'Ett OAIS-uppbyggt digitalt arkiv är byggt på sex funktionella beståndsdelar:' %}</p>
+   <ol class="py-2 list-decimal list-inside">
+     <li><span class="italic">Ingest</span> {% translate 'tillhandahåller funktioner och tjänster för att ta emot informationspaket från arkivbildare samt att förbereda dem för lagring och hantering i arkivet.' %}</li>
+     <li><span class="italic">Archival Storage</span> {% translate 'tillhandahåller tjänster och funktioner för lagring.' %}</li>
+     <li><span class="italic">Data Management</span> {% translate 'tillhandahåller tjänster och funktioner som att kunna skapa, underhålla och inhämta beskrivande information som lagrats i arkivet. Syftet är att den digitala informationen ska kunna vara tillgänglig under en längre tid.' %}</li>
+     <li><span class="italic">Administration</span> {% translate 'tillhandahåller tjänster och funktioner för det övergripande underhållet av arkivet.' %}</li>
+     <li><span class="italic">Access</span> {% translate 'tillhandahåller tjänster och funktioner som hjälper användaren att hitta informationen som lagrats arkivet.' %}</li>
+     <li><span class="italic">Preservation planning</span> {% translate 'tillhandahåller tjänster och funktioner som har till uppgift att övervaka arkivets externa miljö och ge rekommendationer för att säkerställa att informationen inte förloras över tiden.' %}</li>           
+   </ol>
+   <div class="justify-center"> 
+     <figure>
+       <img class="bg-white object-contain md:object-cover mx-auto" alt="OAIS reference model" src="/static/img/OAIS.png">
+       <figcaption class="py-2 text-sm italic">OAIS reference model.</figcaption>
+     </figure>
+   </div>  
+   <h2 id="metadata" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Metadata' %}</h2>
+   <p class="py-2">{% translate 'Alvins datamodell är specifikt utformad för beskrivningar av material i kulturarvssamlingar på bibliotek, museer och arkiv. För att kunna hantera olika typer av resurser i ett och samma system bygger den på en kombination av koncept från olika internationella standarder för bibliotek och arkiv, inklusive' %} 
+    <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/bibframe/">BIBFRAME</a>, 
+    <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/standards/mods/">MODS</a>, 
+    <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/marc/">MARC</a>, 
+    <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/ead/">EAD</a>, 
+    <a class="text-blue-800 dark:text-blue-200 underline" href="https://tei-c.org/release/doc/tei-p5-doc/en/html/MS.html">TEI</a>, 
+    <a class="text-blue-800 dark:text-blue-200 underline" href="https://nomisma.org/nuds">NUDS</a>, 
+    <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/standards/mads/">MADS</a> {% translate 'och' %}
+    <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/standards/mets/">METS</a>.
+   </p>
+   <h3 class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Länkad data' %}</h3>
+   <p class="py-2">{% translate 'Modellen är baserad på länkad data och beskrivningen av relationer mellan olika poster. Länkningen kan vara hierarkisk (värd/del), parallell (olika versioner eller format) eller till en annan relaterad post.' %}</p>
+   <p class="py-2">{% translate 'Bibliografiska poster och auktoritetsposter är länkade genom en typ av relation (roll) för så kallade agenter (personer eller organisationer). En bok kan länkas till en person genom rollen "författare". Ett arkiv kan länkas till en person genom rollen "arkivbildare".' %}</p>
+   <p class="py-2">{% translate 'En bibliografisk post i Alvin beskriver antingen en enskild resurs (bok, bild, karta etc.) eller en samling resurser (t.ex. ett arkiv).' %}</p>
+   <div class="justify-center"> 
+     <figure>
+       <img class="object-contain md:object-cover mx-auto" alt="{% translate 'Länkad data, exempel' %}" src="/static/img/linkeddata.png">
+       <figcaption class="py-2 text-sm italic">{% translate 'Exempel: Länkad data för Uppsala universitetsbiblioteks exemplar av Röda rummet av August Strindberg.' %}</figcaption>
+   </figure>
+   </div>  
+   <h3 class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Beständig identifikator' %} - URN:NBN</h3>
+   <p class="py-2">{% translate 'URN är en unik och beständig identifikator som tilldelas elektroniska resurser på internet. I Alvin används' %} <a class="text-blue-800 dark:text-blue-200 underline" href="https://datatracker.ietf.org/doc/html/rfc8458">URN:NBN</a> {% translate 'som tilldelas av Kungliga biblioteket' %}.</p>  
+   <h2 id="accessibility" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Tillgänglighet' %}</h2>
+   <p class="py-2">{% translate 'Innehållet i Alvin består av reproduktioner av föremål från kulturarvssamlingar. I' %} 
+       <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.riksdagen.se/sv/dokument-lagar/dokument/svensk-forfattningssamling/lag-20181937-om-tillganglighet-till-digital_sfs-2018-1937">{% translate 'Lag (2018:1937) om tillgänglighet till digital offentlig service' %}Act (2018: 1937)</a>
+       {% translate 'är enligt 9§ stycke 4 "reproduktioner av föremål från kulturarvssamlingar som inte kan göras fullständigt tillgängliga utan betydande hinder" undantagna från lagens tillämpningsområde.' %}</p>
+   <p class="py-2">{% translate 'Med föremål från kulturarvssamlingar avses (enligt 7§) privat eller offentligt ägda föremål av historiskt, konstnärligt, arkeologiskt, estetiskt, vetenskapligt eller tekniskt intresse som ingår i samlingar som förvaltas av kulturinstitutioner.' %}</p>
+  </main>
+  <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
+      <figure>
+        <div class="justify-center"> 
+          <a href="http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-95718">
+            <img class="object-contain md:object-cover" alt="Carolina Rediviva, Uppsala" src="/static/img/carolina.png">
+          </a>
+        </div>
+        <figcaption class="py-2 text-sm italic">Carolina Rediviva, Uppsala.</figcaption>
+      </figure>
+      <figure>
+        <div class="justify-center pt-4"> 
+          <a href="http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-467598">
+            <img class="object-contain md:object-cover mx-auto" alt="UB Lund" src="/static/img/ub.png">
+          </a>
+        </div>
+        <figcaption class="py-2 text-sm italic">UB Lund.</figcaption>
+      </figure>
+    </div>    
+  </div>
+</div>
 {% endblock %}

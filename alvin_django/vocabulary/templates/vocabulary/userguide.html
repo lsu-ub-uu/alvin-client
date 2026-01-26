@@ -1,0 +1,24 @@
+{% extends "vocabulary/userguidemaster.html" %}
+{% load static %}
+{% load i18n %}
+<title>{% block title %}Alvin - {% translate 'Användarhandbok' %}{% endblock %}</title>
+{% block content %}
+<span id="main-content-marker"></span>
+<section class="relative flex flex-grow">
+    <div class="w-full bg-[url(/static/img/cartamarina.webp)] bg-dark-alvin bg-cover bg-no-repeat bg-center flex flex-col justify-center items-center ">
+        <div>
+            <h1 class="text-white text-center text-3xl md:4xl xl:text-5xl lg:text-4xl font-semibold p-2 bg-opacity-40 rounded-sm">{% translate 'Handbok för katalogisatörer och API-användare i Alvin' %}</h1>
+            <h2 class="text-white text-center text-2xl md:3xl xl:text-4xl lg:text-3xl font-semibold p-2 bg-opacity-40 rounded-sm">{% translate 'Medlemskap krävs för att skapa och ändra poster' %}</h2>
+	    <a href="http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-88495">
+		<div class="absolute flex flex-row text-xs bottom-0 left-0 py-4 pl-2 text-white">
+		    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="flex" height="16px" width="16px">
+  		        <title>Info Carta Marina</title>
+			<path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z" clip-rule="evenodd" />
+		    </svg>
+		    Carta Marina
+	        </div>
+	    </a>	
+    	</div> 
+    </div>
+</section>
+{% endblock %}

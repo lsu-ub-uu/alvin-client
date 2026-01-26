@@ -1,0 +1,137 @@
+{% extends "alvin_info/master.html" %}
+{% load i18n static %}
+{% block title %}Alvin -         
+  {% if searchType == 'person' %} 
+    {% translate 'Person' %}: 
+  {% endif %}
+  {% if searchType == 'organisation' %} 
+    {% translate 'Organisation' %}: 
+  {% endif %}
+  {% if searchType == 'place' %} 
+    {% translate 'Plats' %}: 
+  {% endif %}
+  {% if searchType == 'work' %} 
+    {% translate 'Verk' %}: 
+  {% endif %}
+    {{query}}
+{% endblock %}
+
+{% block content %}
+<div class="bg-white dark:bg-gray-800 dark:text-white flex-grow w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4">
+  <span id="main-content-marker"></span>
+  <main class="w-full md:w-3/4 pt-1 px-3">
+    <div class="flex flex-row">
+      <h1><span class="font-bold">{{completeListSize}} {% translate 'RESULTAT FÖR' %}</span>
+        {% if searchType == 'person' %} 
+           {% translate 'Person' %}: 
+        {% endif %}
+        {% if searchType == 'organisation' %} 
+           {% translate 'Organisation' %}: 
+        {% endif %}
+        {% if searchType == 'place' %} 
+           {% translate 'Plats' %}: 
+        {% endif %}
+        {% if searchType == 'work' %} 
+           {% translate 'Verk' %}: 
+        {% endif %}
+           {{query}}
+      </h1>
+      <div class="flex flex-row pr-2 ml-auto"> 
+        {% if completeListSize > 0 %}
+          <div class="pl-2">
+            <a href="{{ view_url|safe }}&view=list">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.5" fill="currentColor" class="size-6 w-6 h-6 text-gray-800 dark:text-white">
+                <path class="st0" d="M12.56,87.39c6.93,0,12.56,5.62,12.56,12.56c0,6.93-5.62,12.56-12.56,12.56C5.62,112.5,0,106.88,0,99.95 C0,93.01,5.62,87.39,12.56,87.39L12.56,87.39z M35.07,88.24h86.38c0.79,0,1.43,0.64,1.43,1.43v19.93c0,0.79-0.64,1.43-1.43,1.43 H35.07c-0.79,0-1.43-0.64-1.43-1.43V89.67C33.64,88.88,34.29,88.24,35.07,88.24L35.07,88.24z M35.07,44.7h86.38 c0.79,0,1.43,0.64,1.43,1.43v19.93c0,0.79-0.64,1.43-1.43,1.43H35.07c-0.79,0-1.43-0.64-1.43-1.43V46.13 C33.64,45.34,34.29,44.7,35.07,44.7L35.07,44.7z M35.07,1.16h86.38c0.79,0,1.43,0.64,1.43,1.43v19.93c0,0.79-0.64,1.43-1.43,1.43 H35.07c-0.79,0-1.43-0.64-1.43-1.43V2.59C33.64,1.8,34.29,1.16,35.07,1.16L35.07,1.16z M12.56,43.69c6.93,0,12.56,5.62,12.56,12.56 c0,6.93-5.62,12.56-12.56,12.56C5.62,68.81,0,63.19,0,56.25C0,49.32,5.62,43.69,12.56,43.69L12.56,43.69z M12.56,0 c6.93,0,12.56,5.62,12.56,12.56c0,6.93-5.62,12.56-12.56,12.56C5.62,25.11,0,19.49,0,12.56C0,5.62,5.62,0,12.56,0L12.56,0z"/>
+              </svg>
+            </a>
+          </div> 
+          <div class="pl-2">
+            <a href="{{ view_url|safe }}&view=grid">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 121.74" fill="currentColor" class="size-6 w-6 h-6 text-gray-800 dark:text-white">
+                <title>Grid</title>
+                <path d="M5,0H49.39a5,5,0,0,1,3.53,1.47A5,5,0,0,1,54.4,5V49.19a5,5,0,0,1-5,5H5a5,5,0,0,1-3.55-1.47l-.09-.11A5,5,0,0,1,0,49.19V5A5,5,0,0,1,5,0ZM73.49,67.53h44.37a5.05,5.05,0,0,1,5,5v44.17a5,5,0,0,1-5,5H73.49A5,5,0,0,1,70,120.27l-.09-.11a4.94,4.94,0,0,1-1.38-3.44V72.55A5,5,0,0,1,70,69l.1-.1a5,5,0,0,1,3.44-1.38ZM5,67.53H49.39A5,5,0,0,1,52.92,69a4.94,4.94,0,0,1,1.48,3.54v44.17a5,5,0,0,1-5,5H5a5,5,0,0,1-3.55-1.47l-.09-.11A5,5,0,0,1,0,116.72V72.55a5,5,0,0,1,5-5ZM73.49,0h44.37a5,5,0,0,1,5,5V49.19a5,5,0,0,1-5,5H73.49a5,5,0,0,1-5-5V5A5,5,0,0,1,70,1.47l.1-.09A5,5,0,0,1,73.49,0Z"/>
+              </svg>   
+             </a> 
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="flex {% if view == 'grid' %}flex-col md:flex-row flex-wrap gap-4 md:justify-between{% else %}flex-col gap-4{% endif %}">
+    {% for record in records %}
+      {% if searchType == 'person' %}    
+        {% include "alvin_search/partials/_alvin_person_search.html"  %}
+      {% endif %} 
+      {% if searchType == 'organisation' %}    
+         {% include "alvin_search/partials/_alvin_organisation_search.html"  %}
+       {% endif %} 
+       {% if searchType == 'place' %}    
+          {% include "alvin_search/partials/_alvin_place_search.html"  %}
+        {% endif %}  
+        {% if searchType == 'work' %}    
+          {% include "alvin_search/partials/_alvin_work_search.html"  %}
+        {% endif %}  
+        {% if searchType == 'alvinRecord' %}    
+          {% include "alvin_search/partials/_alvin_record_search.html"  %}
+        {% endif %}         
+      {% endfor %} 
+    </div>      
+    {% if completeListSize > 0 %}
+      <div class="py-4 pt-8 mx-auto flex flex-col md:flex-row justify-center">
+        <div class="flex flex-col md:flex-row">
+          <div class="flex justify-between items-center max-lg:justify-start max-md:justify-center max-sm:justify-center max-sm:pb-4">
+            {% if startnum > rowsnum %}
+              {% if startnum <= completeListSize %}
+                <a class="flex" href="{{view_url|safe}}&start={{prevstartnum}}&view={{view}}">
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                     <title>{% translate 'FÖREGÅENDE' %}</title>
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                   </svg>
+                   <span class="pl-2">{% translate 'FÖREGÅENDE' %}</span>
+                 </a>                
+               {% endif %}
+             {% endif %}
+           </div>           
+        </div>
+        <div class="flex flex-col md:flex-row justify-center">
+          <div class="font-bold px-2 flex justify-between content-center items-center max-lg:justify-start max-md:justify-center max-sm:justify-center max-sm:pb-4">
+          {% if startnum > completeListSize %}
+            {% translate 'Fel startnummer' %}
+          {% else %}                   
+            {{startnum}} - {{cursor}} {% translate 'AV' %} {{completeListSize}}
+          {% endif %}    		
+	  </div>  
+        </div>
+        <div class="flex flex-col md:flex-row">
+          <div class="flex justify-between content-center items-center max-lg:justify-start max-md:justify-center max-sm:justify-center max-sm:pb-4">
+          {% if nextstartnum <= completeListSize %}
+            <a class="flex" href="{{view_url|safe}}&start={{nextstartnum}}&view={{view}}"><span class="pr-2">{% translate 'NÄSTA' %}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <title>{% translate 'NÄSTA' %}</title>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </a>	
+           {% endif %}	
+	  </div>  
+        </div>
+    </div>
+    {% else %}
+    <div class="py-2">
+      <h2 class="text-3xl md:text-4xl font-bold py-4 px-4 text-white bg-red-500">{% translate 'Din sökning gav inget resultat' %}</h2>
+      <div class="py-2 font-bold">{% translate 'Några söktips:' %}</div>
+      <div class="py-2">{% translate 'Kontrollera stavningen.' %}</div>
+      <div class="py-2">{% translate 'Ange färre sökord. Ange t.ex. bara ett eller ett par ord ur en titel istället för hela titeln.' %}</div>
+    </div>
+   {% endif %}
+  </main>
+   <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+        <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
+            <div class="flex flex-col justify-center">  
+                <h2 class="text-2xl font-bold pb-2">{% translate 'Sökfilter' %}</h2> 
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+

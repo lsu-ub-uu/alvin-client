@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-01 10:21+0200\n"
+"POT-Creation-Date: 2025-12-22 15:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +18,68 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\alvin_info\templates\alvin_info\about.html:8
-#: .\alvin_info\templates\alvin_info\about.html:19
+#: .\alvin_info\templates\alvin_info\about.html:4
+#: .\alvin_info\templates\alvin_info\about.html:46
+#: .\alvin_info\templates\alvin_info\navbar-old.html:26
+#: .\alvin_info\templates\alvin_info\navbar-old.html:71
+#: .\alvin_info\templates\alvin_info\navbar.html:27
+#: .\alvin_info\templates\alvin_info\navbar.html:77
 #: .\templates\_partials\_side_nav.html:10
-#, fuzzy
-#| msgid "Om Alvin:"
 msgid "Om Alvin"
-msgstr "About Alvin:"
+msgstr "About"
 
-#: .\alvin_info\templates\alvin_info\about.html:20
-#: .\alvin_info\templates\alvin_info\copyright.html:20
-#: .\alvin_info\templates\alvin_info\start.html:46
+#: .\alvin_info\templates\alvin_info\about.html:11
+#: .\alvin_info\templates\alvin_info\copyright.html:11
+#: .\alvin_info\templates\alvin_info\help.html:11
+#: .\alvin_info\templates\alvin_info\institutions-old.html:11
+#: .\alvin_info\templates\alvin_info\institutions.html:11
+#: .\vocabulary\templates\vocabulary\api.html:11
+#: .\vocabulary\templates\vocabulary\iiif.html:11
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:11
+#: .\vocabulary\templates\vocabulary\place.html:11
+#: .\vocabulary\templates\vocabulary\vocabulary.html:11
+msgid "På den här sidan"
+msgstr "On this page"
+
+#: .\alvin_info\templates\alvin_info\about.html:27
+#: .\alvin_info\templates\alvin_info\about.html:36
+#: .\alvin_info\templates\alvin_info\about.html:51
+#: .\alvin_info\templates\alvin_info\ny.html:2
+#: .\alvin_info\templates\alvin_info\ny.html:11
+msgid "Bakgrund och historik"
+msgstr "Background and history"
+
+#: .\alvin_info\templates\alvin_info\about.html:28
+#: .\alvin_info\templates\alvin_info\about.html:37
+#: .\alvin_info\templates\alvin_info\about.html:82
+#: .\alvin_info\templates\alvin_info\ny.html:3
+#: .\alvin_info\templates\alvin_info\ny.html:12
+msgid "Referensmodell"
+msgstr "Reference model"
+
+#: .\alvin_info\templates\alvin_info\about.html:29
+#: .\alvin_info\templates\alvin_info\about.html:38
+#: .\alvin_info\templates\alvin_info\about.html:99
+#: .\alvin_info\templates\alvin_info\copyright.html:28
+#: .\alvin_info\templates\alvin_info\copyright.html:35
+#: .\alvin_info\templates\alvin_info\institutions-old.html:36
+#: .\alvin_info\templates\alvin_info\ny.html:4
+#: .\alvin_info\templates\alvin_info\ny.html:13
+msgid "Metadata"
+msgstr "Metadata"
+
+#: .\alvin_info\templates\alvin_info\about.html:30
+#: .\alvin_info\templates\alvin_info\about.html:39
+#: .\alvin_info\templates\alvin_info\about.html:122
+#: .\alvin_info\templates\alvin_info\ny.html:5
+#: .\alvin_info\templates\alvin_info\ny.html:14
+msgid "Tillgänglighet"
+msgstr "Accessibility"
+
+# #| msgid ""
+#: .\alvin_info\templates\alvin_info\about.html:47
 msgid ""
-"Alvin är en plattform för publicering och långsiktigt bevarande av "
+"Alvin är en plattform för tillgängliggörande och långsiktigt bevarande av "
 "digitaliserat kulturarvsmaterial från biblioteks-, arkiv- och museisamlingar "
 "i Sverige och Norge."
 msgstr ""
@@ -38,23 +87,1051 @@ msgstr ""
 "cultural heritage material from library, archive and museum collections in "
 "Sweden and Norway."
 
-#: .\alvin_info\templates\alvin_info\about.html:21
-#: .\alvin_info\templates\alvin_info\copyright.html:21
-#: .\alvin_info\templates\alvin_info\start.html:47
-msgid "Webbplatskarta"
-msgstr "Sitemap"
+#: .\alvin_info\templates\alvin_info\about.html:48
+msgid ""
+"Systemet utvecklades vid Uppsala universitetsbibliotek och har varit i drift "
+"sedan 2014. Det leds av ett konsortium bestående av universitetsbiblioteken "
+"i Uppsala, Lund och Göteborg. Utöver dessa finns ett tjugotal medlemmar och "
+"ytterligare ett tjugotal institutioner som publicerat material i Alvin."
+msgstr ""
+"The system was developed at Uppsala University Library and has been in "
+"operation since 2014. It is led by a consortium consisting of the university "
+"libraries in Uppsala, Lund and Gothenburg. In addition to these, there are "
+"about twenty members and another twenty institutions that have published "
+"material in Alvin."
 
-#: .\alvin_info\templates\alvin_info\contact.html:6
-msgid "Alvin - Kontakt"
-msgstr "Alvin - Contact"
+#: .\alvin_info\templates\alvin_info\about.html:49
+msgid ""
+"Förutom institutionernas egna samlingar fungerar Alvin som ett digitalt "
+"arkiv för att bevara resultaten från ett antal externt finansierade "
+"forsknings- och digitaliseringsprojekt tillgängliga i ett långsiktigt "
+"perspektiv."
+msgstr ""
+"In addition to the institutions' own collections, Alvin functions as a "
+"digital archive to keep the results from a number of externally funded "
+"research and digitisation projects available in a long-term perspective."
 
-#: .\alvin_info\templates\alvin_info\contact.html:13
+#: .\alvin_info\templates\alvin_info\about.html:50
+msgid ""
+"Portalen innehåller arkiv, böcker, manuskript, bilder, kartor, föremål, "
+"noterad musik, video, ljudfiler och en del annat material. Det mesta av det "
+"digitala innehållet är öppet tillgängligt i högupplöst form och fritt från "
+"kända upphovsrättsbegränsningar under Public Domain Mark. Metadataposter är "
+"fritt tillgängliga under Creative Commons CC0."
+msgstr ""
+"The portal contains archives, books, manuscripts, images, maps, objects, "
+"notated music, video, audio files and some other material. Most of the "
+"digital content is openly available in high definition form and free of "
+"known copyright restrictions under the Public Domain Mark. Metadata records "
+"are freely available under Creative Commons CC0."
+
+#: .\alvin_info\templates\alvin_info\about.html:52
+msgid ""
+"Alvin utvecklades ursprungligen för att befintliga bibliotekssystem inte "
+"tillräckligt bra hanterade:"
+msgstr ""
+"Alvin was originally developed because existing library systems did not "
+"adequately handle:"
+
+#: .\alvin_info\templates\alvin_info\about.html:54
+msgid "katalogisering av material som inte är böcker"
+msgstr "cataloguing of non-book materials"
+
+#: .\alvin_info\templates\alvin_info\about.html:55
+msgid "länkad data"
+msgstr "linked data"
+
+#: .\alvin_info\templates\alvin_info\about.html:56
+msgid "exemplarspecifik information"
+msgstr "item-specific information"
+
+#: .\alvin_info\templates\alvin_info\about.html:57
+msgid "lagring/visning av digitalt material"
+msgstr "storage/display of digital material"
+
+#: .\alvin_info\templates\alvin_info\about.html:58
+msgid "sökmotorvänlighet (Google etc.)"
+msgstr "search engine friendliness (Google etc.)"
+
+#: .\alvin_info\templates\alvin_info\about.html:60
+msgid ""
+"Dessutom eftersträvades en enhetlig lösning för olika typer av material "
+"istället för specifika system för olika resurstyper, samlingar eller projekt."
+msgstr ""
+"In addition, a uniform solution was sought for different types of material "
+"instead of specific systems for different resource types, collections or "
+"projects."
+
+#: .\alvin_info\templates\alvin_info\about.html:61
+msgid ""
+"Alvin har sin grund i ett antal olika projekt som genom åren drivits vid "
+"enheten för digital publicering och senare enheten för bibliotekssystem vid "
+"Uppsala universitetsbibliotek."
+msgstr ""
+"Alvin has the foundation in a number of different projects that have been "
+"run over the years at the Electronic Publishing Centre and later the Unit "
+"for Library Systems at Uppsala University Library."
+
+#: .\alvin_info\templates\alvin_info\about.html:62
+msgid ""
+"Några exempel är egenutvecklade databaslösningar för Erik Wallers omfattande "
+"autografsamling samt kart- och bildsamlingarna vid Uppsala "
+"universitetsbibliotek liksom samarbetsprojekten ProBok (bokband och "
+"provenienser) och Ediffah (personarkiv)."
+msgstr ""
+"Some examples are self-developed database solutions for Erik Waller's "
+"extensive autograph collection as well as the map and image collections at "
+"Uppsala University Library, and the collaborative projects ProBok (book "
+"bindings and provenances) and Ediffah (personal archives)."
+
+#: .\alvin_info\templates\alvin_info\about.html:63
+msgid ""
+"Till dessa kom ett antal mindre projekt eller system som utvecklats för "
+"biblioteket av andra parter."
+msgstr ""
+"Added to these were a number of smaller projects or systems developed for "
+"the library by other parties."
+
+#: .\alvin_info\templates\alvin_info\about.html:64
+msgid ""
+"Efterhand stod det klart att förvaltning, drift och vidareutveckling av en "
+"sådan vildvuxen flora av disparata system och tekniker, som måste handhas "
+"dels av IT-ansvariga dels av respektive användare, var uppenbart "
+"personberoende och ohållbar i längden."
+msgstr ""
+"Over time, it became clear that the management, operation and further "
+"development of such a wild flora of disparate systems and technologies, "
+"which had to be managed by IT managers as well as the respective users, was "
+"clearly unsustainable in the long run."
+
+#: .\alvin_info\templates\alvin_info\about.html:65
+msgid ""
+"Systemen var inte heller konstruerade för att kommunicera med varandra. De "
+"olika bakomliggande utvecklingsprojekten hade heller inte samordnas i någon "
+"form utan drivits helt separat från varandra."
+msgstr ""
+"The systems were also not designed to communicate with each other. Neither "
+"had the various underlying development projects been coordinated in any way, "
+"but had been run completely separately from each other."
+
+#: .\alvin_info\templates\alvin_info\about.html:67
+msgid "Slutrapporten"
+msgstr "The final report"
+
+#: .\alvin_info\templates\alvin_info\about.html:67
+msgid ""
+"(2011) till projektet LUPP (Digitaliseringssamarbete mellan "
+"Stiftsbiblioteket vid Linköpings stadsbibliotek och Uppsala "
+"universitetsbibliotek) konstaterade att om ingen radikal förändring görs är "
+"det högst sannolikt att alla dessa tjänster tynar bort i takt med att "
+"personal försvinner eller tekniska plattformar blir omoderna och måste bytas "
+"ut/läggas ner."
+msgstr ""
+"(2011) to the LUPP project (Digitalisation collaboration between the "
+"Diocesan Library at Linköping City Library and Uppsala University Library) "
+"found that if no radical change is made, it is highly likely that all these "
+"services will fade away as staff disappear or technical platforms become "
+"outdated and have to be replaced/shut down."
+
+#: .\alvin_info\templates\alvin_info\about.html:68
+msgid ""
+"I LUPP-rapporten lanserades därför för första gången Alvin som koncept. "
+"Tanken var alltså att istället för att använda tio olika databasprogramvaror "
+"eller skriptspråk skall samma programvara liksom metod för att generera "
+"webbsidor utnyttjas för samtliga applikationer. Endast på det sättet kan de "
+"underhållas i ett längre perspektiv. Den tekniska utvecklingen går snabbt, "
+"även om behoven av den inte ändras i samma takt, vilket gör att system som "
+"inte ständigt vidareutvecklas eller förnyas inte kan finnas kvar på sikt. En "
+"gemensam plattform betyder att hela komponenter, som en sökmotor eller "
+"databasprogramvara, kan bytas ut i takt med teknikutvecklingen av dessa. Den "
+"innebär också att personberoendet minskar eftersom flera utvecklare arbetar "
+"med samma lösningar."
+msgstr ""
+"In the LUPP report, Alvin was therefore launched as a concept for the first "
+"time. The idea was that instead of using ten different database software or "
+"scripting languages, the same software and method for generating web pages "
+"should be used for all applications. Only in that way can they be maintained "
+"in a longer perspective. Technological development is fast, even if the "
+"needs for it do not change at the same pace, which means that systems that "
+"are not constantly further developed or renewed cannot survive in the long "
+"term. A common platform means that entire components, such as a search "
+"engine or database software, can be replaced in step with the technological "
+"development of these. It also means that personal dependence is reduced "
+"because several developers work with the same solutions. "
+
+#: .\alvin_info\templates\alvin_info\about.html:70
+msgid ""
+"Den tekniska utvecklingen av Alvin som ett verktyg för digitalisering av "
+"forskningsbibliotekens arkivsamlingar grundades i projektet"
+msgstr ""
+"The technical development of Alvin as a tool for digitising the research "
+"libraries' archive collections was founded in the project"
+
+#: .\alvin_info\templates\alvin_info\about.html:70
+msgid "ett tvåårigt infrastrukturprojekt som genomfördes mellan 2012 och 2014."
+msgstr ""
+"a two-year infrastructure project that was carried out between 2012 and 2014."
+
+#: .\alvin_info\templates\alvin_info\about.html:71
+msgid ""
+"Som slutpunkt i projektet lanserades Alvin på konferensen Digitalisera - men "
+"sen då? på Nordiska museet den 28 november 2014."
+msgstr ""
+"As the end point of the project, Alvin was launched at the conference "
+"Digitalisera - men sen då? at the Nordic Museum on 28 November 2014."
+
+#: .\alvin_info\templates\alvin_info\about.html:74
+#: .\alvin_info\templates\alvin_info\about.html:75
+msgid "Alvin startsida 2014"
+msgstr "Alvin start page 2014"
+
+#: .\alvin_info\templates\alvin_info\about.html:78
+msgid "Förvaltning"
+msgstr "Management"
+
+#: .\alvin_info\templates\alvin_info\about.html:79
+msgid ""
+"Eftersom en digital plattform som Alvin säkert skulle väcka intresse bland "
+"andra kulturarvsinstitutioner arbetade ArkA-D-projektet fram en "
+"konsortiemodell som skulle kunna bära kostnaderna för systemet även efter "
+"projektets avslutande. Den byggde delvis på erfarenheter från "
+"publiceringsplattformen"
+msgstr ""
+"Since a digital platform like Alvin would certainly attract interest among "
+"other cultural heritage institutions, the ArkA-D project worked out a "
+"consortium model that would be able to bear the costs of the system even "
+"after the end of the project. It was partly based on experiences from the "
+"publishing platform"
+
+#: .\alvin_info\templates\alvin_info\about.html:80
+msgid ""
+"Under 2015 började konsortiet ta form med Linköpings stadsbibliotek (den "
+"ursprungliga partnern från LUPP) som första medlem i Alvin efter Uppsala "
+"universitetsbibliotek."
+msgstr ""
+"In 2015, the consortium began to take shape with Linköping City Library (the "
+"original partner from LUPP) as the first member of Alvin after Uppsala "
+"University Library."
+
+#: .\alvin_info\templates\alvin_info\about.html:81
+msgid ""
+"Från och med halvårsskiftet 2017 övergick Alvin från tidigare projektstadium "
+"till ett system i full förvaltning, nu med ett antal nya medlemmar och "
+"övriga organisationer med material i systemet. Drift och support av systemet "
+"finansieras därmed genom årliga medlemsavgifter."
+msgstr ""
+"As of mid-year 2017, Alvin transitioned from the previous project stage to a "
+"system in full production, now with a number of new members and other "
+"organisations with material in the system. Operation and support of the "
+"system is thus financed through annual membership fees."
+
+#: .\alvin_info\templates\alvin_info\about.html:83
+msgid ""
+"Konceptuellt bygger systemet på OAIS-modellen (Open Archival Information "
+"System)."
+msgstr ""
+"Conceptually, the system is based on the OAIS model (Open Archival "
+"Information System)."
+
+#: .\alvin_info\templates\alvin_info\about.html:84
+msgid ""
+"Ett OAIS-uppbyggt digitalt arkiv är byggt på sex funktionella beståndsdelar:"
+msgstr "An OAIS-built digital archive is built on six functional components:"
+
+#: .\alvin_info\templates\alvin_info\about.html:86
+msgid ""
+"tillhandahåller funktioner och tjänster för att ta emot informationspaket "
+"från arkivbildare samt att förbereda dem för lagring och hantering i arkivet."
+msgstr ""
+"provides functions and services to receive information packages and to "
+"prepare them for storage and handling in the archive."
+
+#: .\alvin_info\templates\alvin_info\about.html:87
+msgid "tillhandahåller tjänster och funktioner för lagring."
+msgstr "provides services and functions for storage."
+
+#: .\alvin_info\templates\alvin_info\about.html:88
+msgid ""
+"tillhandahåller tjänster och funktioner som att kunna skapa, underhålla och "
+"inhämta beskrivande information som lagrats i arkivet. Syftet är att den "
+"digitala informationen ska kunna vara tillgänglig under en längre tid."
+msgstr ""
+"provides services and functions such as being able to create, maintain and "
+"retrieve descriptive information stored in the archive. The aim is for the "
+"digital information to be available for a longer period of time."
+
+#: .\alvin_info\templates\alvin_info\about.html:89
+msgid ""
+"tillhandahåller tjänster och funktioner för det övergripande underhållet av "
+"arkivet."
+msgstr ""
+"provides services and functions for the overall maintenance of the archive."
+
+#: .\alvin_info\templates\alvin_info\about.html:90
+msgid ""
+"tillhandahåller tjänster och funktioner som hjälper användaren att hitta "
+"informationen som lagrats arkivet."
+msgstr ""
+"provides services and functions that help the user find the information "
+"stored in the archive."
+
+#: .\alvin_info\templates\alvin_info\about.html:91
+msgid ""
+"tillhandahåller tjänster och funktioner som har till uppgift att övervaka "
+"arkivets externa miljö och ge rekommendationer för att säkerställa att "
+"informationen inte förloras över tiden."
+msgstr ""
+"provides services and functions that are tasked with monitoring the "
+"archive's external environment and making recommendations to ensure that the "
+"information is not lost over time."
+
+#: .\alvin_info\templates\alvin_info\about.html:100
+msgid ""
+"Alvins datamodell är specifikt utformad för beskrivningar av material i "
+"kulturarvssamlingar på bibliotek, museer och arkiv. För att kunna hantera "
+"olika typer av resurser i ett och samma system bygger den på en kombination "
+"av koncept från olika internationella standarder för bibliotek och arkiv, "
+"inklusive"
+msgstr "The Alvin data model is specifically designed for descriptions of materials in cultural heritage collections in libraries, museums and archives. In order to be able to handle different types of resources in one and the same system, it is based on a combination of concepts from various international standards for libraries and archives, including"
+
+#: .\alvin_info\templates\alvin_info\about.html:107
+#: .\alvin_info\templates\alvin_info\institutions-old.html:62
+#: .\alvin_info\templates\alvin_info\institutions.html:63
+msgid "och"
+msgstr "and"
+
+#: .\alvin_info\templates\alvin_info\about.html:110
+#: .\vocabulary\templates\vocabulary\vocabulary.html:30
+#: .\vocabulary\templates\vocabulary\vocabulary.html:42
+#: .\vocabulary\templates\vocabulary\vocabulary.html:101
+msgid "Länkad data"
+msgstr "Linked data"
+
+#: .\alvin_info\templates\alvin_info\about.html:111
+#: .\vocabulary\templates\vocabulary\vocabulary.html:102
+msgid ""
+"Modellen är baserad på länkad data och beskrivningen av relationer mellan "
+"olika poster. Länkningen kan vara hierarkisk (värd/del), parallell (olika "
+"versioner eller format) eller till en annan relaterad post."
+msgstr ""
+"The model is based on linked data and the description of relationships "
+"between different records. The linking can be hierarchical (host/part), "
+"parallel (different version or format) or to another related record."
+
+#: .\alvin_info\templates\alvin_info\about.html:112
+#: .\vocabulary\templates\vocabulary\vocabulary.html:103
+msgid ""
+"Bibliografiska poster och auktoritetsposter är länkade genom en typ av "
+"relation (roll) för så kallade agenter (personer eller organisationer). En "
+"bok kan länkas till en person genom rollen \"författare\". Ett arkiv kan "
+"länkas till en person genom rollen \"arkivbildare\"."
+msgstr ""
+"Bibliographic records and authority records are linked through a type of "
+"relationship (role) for so-called agents (persons or organisations). A book "
+"can be linked to a person through the role \"author\". An archive can be "
+"linked to a person through the role \"collector\"."
+
+#: .\alvin_info\templates\alvin_info\about.html:113
+#: .\vocabulary\templates\vocabulary\vocabulary.html:104
+msgid ""
+"En bibliografisk post i Alvin beskriver antingen en enskild resurs (bok, "
+"bild, karta etc.) eller en samling resurser (t.ex. ett arkiv)."
+msgstr ""
+"A bibliographic record in Alvin describes either a single resource (book, "
+"image, map, etc.) or a collection of resources (e.g. an archive)."
+
+#: .\alvin_info\templates\alvin_info\about.html:116
+#: .\vocabulary\templates\vocabulary\vocabulary.html:107
+msgid "Länkad data, exempel"
+msgstr "Linked data, example"
+
+#: .\alvin_info\templates\alvin_info\about.html:117
+#: .\vocabulary\templates\vocabulary\vocabulary.html:108
+msgid ""
+"Exempel: Länkad data för Uppsala universitetsbiblioteks exemplar av Röda "
+"rummet av August Strindberg."
+msgstr ""
+"Example: Linked data for Uppsala University Library's copy of Röda rummet by "
+"August Strindberg. "
+
+#: .\alvin_info\templates\alvin_info\about.html:120
+msgid "Beständig identifikator"
+msgstr "Permanent identifier"
+
+#: .\alvin_info\templates\alvin_info\about.html:121
+msgid ""
+"URN är en unik och beständig identifikator som tilldelas elektroniska "
+"resurser på internet. I Alvin används"
+msgstr ""
+"A URN is a unique and permanent identifier for electronic resources on the "
+"Internet. In Alvin, "
+
+#: .\alvin_info\templates\alvin_info\about.html:121
+msgid "som tilldelas av Kungliga biblioteket"
+msgstr "is used which is available through the National Library"
+
+#: .\alvin_info\templates\alvin_info\about.html:123
+msgid ""
+"Innehållet i Alvin består av reproduktioner av föremål från "
+"kulturarvssamlingar. I"
+msgstr ""
+"The content of Alvin consists of reproductions of objects from cultural "
+"heritage collections. In "
+
+#: .\alvin_info\templates\alvin_info\about.html:124
+msgid "Lag (2018:1937) om tillgänglighet till digital offentlig service"
+msgstr "Act (2018: 1937) on access to digital public service"
+
+#: .\alvin_info\templates\alvin_info\about.html:125
+msgid ""
+"är enligt 9§ stycke 4 \"reproduktioner av föremål från kulturarvssamlingar "
+"som inte kan göras fullständigt tillgängliga utan betydande hinder\" "
+"undantagna från lagens tillämpningsområde."
+msgstr ""
+"according to § 9, section 4 \"reproductions of objects from cultural "
+"heritage collections that cannot be made fully accessible without "
+"significant obstacles\" are excluded from the scope of the Act."
+
+#: .\alvin_info\templates\alvin_info\about.html:126
+msgid ""
+"Med föremål från kulturarvssamlingar avses (enligt 7§) privat eller "
+"offentligt ägda föremål av historiskt, konstnärligt, arkeologiskt, "
+"estetiskt, vetenskapligt eller tekniskt intresse som ingår i samlingar som "
+"förvaltas av kulturinstitutioner."
+msgstr ""
+"By objects from cultural heritage collections (according to § 7) are meant "
+"private or publicly owned objects of historical, artistic, archaeological, "
+"aesthetic, scientific or technical interest that are included in collections "
+"managed by cultural institutions."
+
+#: .\alvin_info\templates\alvin_info\alvin-location.html:66
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:102
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:237
+msgid "Arkivinstitution"
+msgstr "Archival institution"
+
+#: .\alvin_info\templates\alvin_info\alvin-location.html:72
+#: .\alvin_info\templates\alvin_info\alvin-location.html:76
+#: .\alvin_search\templates\alvin_search\alvin_viewer.html:59
+#: .\alvin_search\templates\alvin_search\alvin_viewer.html:63
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:59
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:63
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.txt:61
+#: .\vocabulary\templates\vocabulary\alvin_viewer_new.html:50
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:198
+msgid "Översikt"
+msgstr "Overview"
+
+#: .\alvin_info\templates\alvin_info\alvin-location.html:84
+#: .\alvin_info\templates\alvin_info\alvin-location.html:87
+#: .\alvin_search\templates\alvin_search\alvin_viewer.html:71
+#: .\alvin_search\templates\alvin_search\alvin_viewer.html:74
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:71
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:74
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.txt:66
+msgid "All metadata"
+msgstr "All metadata"
+
+#: .\alvin_info\templates\alvin_info\alvin-location.html:96
+#: .\alvin_info\templates\alvin_info\alvin-location.html:99
+#: .\alvin_search\templates\alvin_search\alvin_viewer.html:94
+#: .\alvin_search\templates\alvin_search\alvin_viewer.html:97
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:94
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:97
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.txt:85
+msgid "Relaterat"
+msgstr "Related"
+
+#: .\alvin_info\templates\alvin_info\alvin-location.html:156
+#: .\alvin_search\templates\alvin_search\alvin_viewer.html:141
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:141
+msgid "Sök länkade poster"
+msgstr "Search linked records"
+
+#: .\alvin_info\templates\alvin_info\alvin-location.html:159
+#: .\alvin_search\templates\alvin_search\alvin_viewer.html:144
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:144
+msgid "Exportera"
+msgstr "Export"
+
+#: .\alvin_info\templates\alvin_info\copyright.html:4
+#: .\alvin_info\templates\alvin_info\copyright.html:42
+#: .\alvin_info\templates\alvin_info\navbar-old.html:28
+#: .\alvin_info\templates\alvin_info\navbar-old.html:73
+#: .\alvin_info\templates\alvin_info\navbar.html:29
+#: .\alvin_info\templates\alvin_info\navbar.html:79
+msgid "Upphovsrätt"
+msgstr "Copyright"
+
+#: .\alvin_info\templates\alvin_info\copyright.html:27
+#: .\alvin_info\templates\alvin_info\copyright.html:34
+#: .\alvin_info\templates\alvin_info\institutions-old.html:35
+msgid "Digitala verk"
+msgstr "Digital works"
+
+#: .\alvin_info\templates\alvin_info\copyright.html:43
+#: .\vocabulary\templates\vocabulary\api.html:47
+#: .\vocabulary\templates\vocabulary\iiif.html:47
+msgid ""
+"Nästan allt digitalt material som du hittar i Alvin får användas helt fritt. "
+"Var dock uppmärksam på att en del modernare material kan vara "
+"upphovsrättsskyddat. Rättighetsmärkningen i varje post talar om vad som "
+"gäller."
+msgstr ""
+"Almost all of the digital resources you find in Alvin can be used and shared "
+"without restrictions. However, be aware that some of the more modern "
+"materials may be copyrighted. The licensing label of each record states the "
+"rights that apply."
+
+#: .\alvin_info\templates\alvin_info\copyright.html:44
+msgid "Licensiering av digitala verk i Alvin"
+msgstr "The licensing of digital works in Alvin"
+
+#: .\alvin_info\templates\alvin_info\copyright.html:46
+msgid ""
+"Merparten av det digitala materialet i Alvin saknar upphovsrätt och görs "
+"tillgängligt enligt"
+msgstr ""
+"Most of the digital materials in Alvin are not copyrighted and are "
+"accessible in accordance with"
+
+#: .\alvin_info\templates\alvin_info\copyright.html:47
+msgid ""
+"För material med upphovsrätt kan upphovsmannen välja licens för publicering "
+"enligt"
+msgstr ""
+"The author of copyrighted material can choose a licence for publication in "
+"accordance with"
+
+#: .\alvin_info\templates\alvin_info\copyright.html:48
+msgid "Material med upphovsrätt som saknar licens publiceras som"
+msgstr "Copyrighted material that has no licence is published as"
+
+#: .\alvin_info\templates\alvin_info\copyright.html:50
+msgid ""
+"Varje deltagande medlem i Alvin ansvarar för korrekt uppmärkning och "
+"publicering av eget material."
+msgstr ""
+"All Alvin members/participants are responsible for the correct labelling and "
+"publishing of their own materials."
+
+#: .\alvin_info\templates\alvin_info\copyright.html:51
+msgid "Metadata i Alvin"
+msgstr "Metadata in Alvin"
+
+#: .\alvin_info\templates\alvin_info\copyright.html:52
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:56
+msgid "Metadataposter från Alvin är fritt tillgängliga enligt"
+msgstr "Alvin's metadata records are freely available under"
+
+#: .\alvin_info\templates\alvin_info\copyright.html:52
+msgid ""
+"Vem som helst kan sedan använda uppgifterna på vilket sätt som helst och för "
+"vilket syfte som helst, inklusive kommersiella ändamål."
+msgstr ""
+"Anyone can then use the data in any way and for any purpose, including "
+"commercial purposes."
+
+#: .\alvin_info\templates\alvin_info\extended_search.html:6
+#: .\alvin_info\templates\alvin_info\simple_search.html:7
+#: .\alvin_info\templates\alvin_info\start_search.html:6
+msgid "Sök över en halv miljon objekt"
+msgstr "Search half a million+ items"
+
+#: .\alvin_info\templates\alvin_info\extended_search.html:24
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:134
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:204
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:87
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:135
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:222
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:270
+msgid "Post"
+msgstr "Record"
+
+#: .\alvin_info\templates\alvin_info\extended_search.html:30
+#: .\alvin_search\templates\alvin_search\alvin_search.html:5
+#: .\alvin_search\templates\alvin_search\alvin_search.html:28
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:137
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:207
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:90
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:138
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:225
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:273
+msgid "Person"
+msgstr "Person"
+
+#: .\alvin_info\templates\alvin_info\extended_search.html:36
+#: .\alvin_search\templates\alvin_search\alvin_search.html:8
+#: .\alvin_search\templates\alvin_search\alvin_search.html:31
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:140
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:210
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:93
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:141
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:228
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:276
+msgid "Organisation"
+msgstr "Organisation"
+
+#: .\alvin_info\templates\alvin_info\extended_search.html:42
+#: .\alvin_search\templates\alvin_search\alvin_search.html:11
+#: .\alvin_search\templates\alvin_search\alvin_search.html:34
+#: .\vocabulary\templates\vocabulary\place.html:4
+#: .\vocabulary\templates\vocabulary\place.html:46
+#: .\vocabulary\templates\vocabulary\place.html:80
+#: .\vocabulary\templates\vocabulary\place.html:101
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:143
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:213
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:96
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:144
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:231
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:279
+msgid "Plats"
+msgstr "Place"
+
+#: .\alvin_info\templates\alvin_info\extended_search.html:48
+#: .\alvin_search\templates\alvin_search\alvin_search.html:14
+#: .\alvin_search\templates\alvin_search\alvin_search.html:37
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:146
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:216
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:99
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:147
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:234
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:282
+msgid "Verk"
+msgstr "Work"
+
+#: .\alvin_info\templates\alvin_info\footer.html:29
+msgid "Byt språk"
+msgstr "Change language"
+
+#: .\alvin_info\templates\alvin_info\help.html:4
+#: .\alvin_info\templates\alvin_info\help.html:46
+#: .\templates\_partials\_side_nav.html:16
+msgid "Hjälp"
+msgstr "Help"
+
+#: .\alvin_info\templates\alvin_info\help.html:27
+#: .\alvin_info\templates\alvin_info\help.html:36
+#: .\alvin_info\templates\alvin_info\help.html:47
+#: .\alvin_info\templates\alvin_info\navbar-old.html:57
+#: .\alvin_info\templates\alvin_info\navbar.html:63
+msgid "Sök"
+msgstr "Search"
+
+#: .\alvin_info\templates\alvin_info\help.html:28
+#: .\alvin_info\templates\alvin_info\help.html:37
+#: .\alvin_info\templates\alvin_info\help.html:48
+#: .\alvin_info\templates\alvin_info\navbar-old.html:58
+#: .\alvin_info\templates\alvin_info\navbar.html:64
+msgid "Ladda ner"
+msgstr "Download"
+
+#: .\alvin_info\templates\alvin_info\help.html:29
+#: .\alvin_info\templates\alvin_info\help.html:38
+#: .\alvin_info\templates\alvin_info\help.html:49
+#: .\alvin_info\templates\alvin_info\navbar-old.html:59
+#: .\alvin_info\templates\alvin_info\navbar.html:65
+msgid "Bildvisare"
+msgstr "Image viewer"
+
+#: .\alvin_info\templates\alvin_info\help.html:30
+#: .\alvin_info\templates\alvin_info\help.html:39
+#: .\alvin_info\templates\alvin_info\help.html:50
+#: .\alvin_info\templates\alvin_info\navbar-old.html:60
+#: .\alvin_info\templates\alvin_info\navbar.html:66
+msgid "API"
+msgstr "APIs"
+
+#: .\alvin_info\templates\alvin_info\help.html:54
+#: .\vocabulary\templates\vocabulary\api.html:191
+#: .\vocabulary\templates\vocabulary\place.html:141
+msgid "Länkar"
+msgstr "Links"
+
+#: .\alvin_info\templates\alvin_info\institutions-old.html:4
+#: .\alvin_info\templates\alvin_info\institutions-old.html:43
+#: .\alvin_info\templates\alvin_info\institutions.html:4
+#: .\alvin_info\templates\alvin_info\institutions.html:44
+#: .\alvin_info\templates\alvin_info\navbar-old.html:27
+#: .\alvin_info\templates\alvin_info\navbar-old.html:72
+#: .\alvin_info\templates\alvin_info\navbar.html:28
+#: .\alvin_info\templates\alvin_info\navbar.html:78
+msgid "Institutioner"
+msgstr "Institutions"
+
+#: .\alvin_info\templates\alvin_info\institutions-old.html:27
+#: .\alvin_info\templates\alvin_info\institutions.html:27
+#: .\alvin_info\templates\alvin_info\institutions.html:35
+msgid "Alvinkonsortiet"
+msgstr "The Alvin consortium"
+
+#: .\alvin_info\templates\alvin_info\institutions-old.html:28
+#: .\alvin_info\templates\alvin_info\institutions.html:28
+#: .\alvin_info\templates\alvin_info\institutions.html:36
+msgid "Övriga medlemmar"
+msgstr "Other members"
+
+#: .\alvin_info\templates\alvin_info\institutions-old.html:29
+#: .\alvin_info\templates\alvin_info\institutions.html:29
+#: .\alvin_info\templates\alvin_info\institutions.html:37
+msgid "Andra institutioner"
+msgstr "Other institutions"
+
+#: .\alvin_info\templates\alvin_info\institutions-old.html:44
+#: .\alvin_info\templates\alvin_info\institutions.html:45
+msgid ""
+"Alvin är ett samarbete mellan många olika organisationer inom den nordiska "
+"arkiv-, biblioteks- och museisektorn. Detta är de enheter som innehar "
+"originalföremålet eller från vilka det är tillgängligt."
+msgstr ""
+"Alvin is a collaboration between several different cultural heritage "
+"organisations within the GLAM (galleries, libraries, archives, and museums) "
+"sector in the Nordic countries. These are the entities holding the original "
+"item or from which it is available."
+
+#: .\alvin_info\templates\alvin_info\institutions-old.html:45
+#: .\alvin_info\templates\alvin_info\institutions.html:46
+msgid "Det finns"
+msgstr "There are"
+
+#: .\alvin_info\templates\alvin_info\institutions-old.html:45
+#: .\alvin_info\templates\alvin_info\institutions.html:46
+msgid "arkivinstitutioner i Alvin."
+msgstr "archival institutions in Alvin."
+
+#: .\alvin_info\templates\alvin_info\institutions-old.html:56
+#: .\alvin_info\templates\alvin_info\institutions.html:57
+msgid "I samarbete med:"
+msgstr "In cooperation with:"
+
+#: .\alvin_info\templates\alvin_info\master.html:7
+#: .\alvin_info\templates\alvin_info\start.html:4
+msgid "Startsida"
+msgstr "Start page"
+
+#: .\alvin_info\templates\alvin_info\navbar-old.html:25
+#: .\alvin_info\templates\alvin_info\navbar-old.html:70
+#: .\alvin_info\templates\alvin_info\navbar.html:26
+#: .\alvin_info\templates\alvin_info\navbar.html:76
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:25
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:25
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:160
+msgid "För medlemmar"
+msgstr "For members"
+
+#: .\alvin_info\templates\alvin_info\navbar-old.html:56
+#: .\alvin_info\templates\alvin_info\navbar.html:62
+msgid "HJÄLP"
+msgstr "HELP"
+
+#: .\alvin_info\templates\alvin_info\start.html:10
+msgid "nordisk plattform för digitaliserat kulturarv"
+msgstr "Nordic platform for digitised cultural heritage"
+
+#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_organisation_list.html:9
+#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_place_list.html:15
+#: .\alvin_search\_partials\_alvin_organisation_list.html:9
+#: .\alvin_search\_partials\_alvin_place_list.html:15
+#: .\alvin_search\templates\alvin_search\partials\_alvin_organisation_list.html:9
+#: .\alvin_search\templates\alvin_search\partials\_alvin_place_list.html:15
+msgid "Kartnål"
+msgstr "Map pin"
+
+#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_person_list.html:9
+#: .\alvin_search\_partials\_alvin_person_list.html:9
+#: .\alvin_search\templates\alvin_search\partials\_alvin_person_list.html:9
+msgid "Konturer av person"
+msgstr "Group of persons"
+
+#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_work_list.html:9
+#: .\alvin_search\_partials\_alvin_work_list.html:9
+#: .\alvin_search\templates\alvin_search\partials\_alvin_work_list.html:9
+msgid "Verksymbol"
+msgstr "Work symbol"
+
+#: .\alvin_list_viewer\templates\alvin_list_viewer\alvin_list_viewer.html:11
+#: .\alvin_search\alvin_list_viewer.html:11
+msgid "Totalt antal träffar:"
+msgstr ""
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:26
+msgid "RESULTAT FÖR"
+msgstr "RESULTS FOR"
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:90
+#: .\alvin_search\templates\alvin_search\alvin_search.html:93
+msgid "FÖREGÅENDE"
+msgstr "PREVIOUS"
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:102
+msgid "Fel startnummer"
+msgstr "Wrong start number"
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:104
+msgid "AV"
+msgstr "OF"
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:111
+#: .\alvin_search\templates\alvin_search\alvin_search.html:113
+msgid "NÄSTA"
+msgstr "NEXT"
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:123
+msgid "Din sökning gav inget resultat"
+msgstr "Your search returned no results."
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:124
+msgid "Några söktips:"
+msgstr "Some search tips:"
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:125
+msgid "Kontrollera stavningen."
+msgstr "Check the spelling."
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:126
+msgid ""
+"Ange färre sökord. Ange t.ex. bara ett eller ett par ord ur en titel "
+"istället för hela titeln."
+msgstr ""
+"Enter fewer search terms. For example, enter just one or a couple of words "
+"from a title instead of the entire title."
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:133
+msgid "Sökfilter"
+msgstr "Search filters"
+
+#: .\alvin_search\templates\alvin_search\alvin_viewer.html:84
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_alvin_record.html:132
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:84
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.txt:74
+msgid "Arkivförteckning"
+msgstr ""
+
+#: .\alvin_search\templates\alvin_search\alvin_viewer.html:86
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_alvin_record.html:134
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:86
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.txt:76
+#, fuzzy
+#| msgid "Beskrivning"
+msgid "Innehållsbeskrivning"
+msgstr "Description"
+
+#: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:70
+msgid "fil"
+msgstr "file"
+
+#: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:72
+msgid "filer"
+msgstr "files"
+
+#: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:78
+msgid "Arkiv"
+msgstr "Archive"
+
+#: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:81
+msgid "Bild"
+msgstr "Still image"
+
+#: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:84
+msgid "Blandat innehåll"
+msgstr "Mixed material"
+
+#: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:87
+msgid "Föremål"
+msgstr "Artifact"
+
+#: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:93
+msgid "Ljud"
+msgstr "Audio"
+
+#: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:96
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:99
+msgid "Noterad musik"
+msgstr "Notated music"
+
+#: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:102
+msgid "Text"
+msgstr "Text"
+
+#: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:105
+msgid "Video"
+msgstr "Video"
+
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:42
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:45
+msgid "Tillbaka till sökresultatet"
+msgstr "Back to search results"
+
+#: .\alvin_viewer\views\iiif.py:76
+msgid "No IIIF-capable files found on this record."
+msgstr ""
+
+#: .\django_oai_pmh\admin.py:101 .\django_oai_pmh\models.py:47
+#, fuzzy
+#| msgid "Metadata"
+msgid "Metadata formats"
+msgstr "Metadata"
+
+#: .\django_oai_pmh\admin.py:102 .\django_oai_pmh\models.py:69
+msgid "Sets"
+msgstr ""
+
+#: .\django_oai_pmh\admin.py:151
+msgid "Optinal"
+msgstr ""
+
+#: .\django_oai_pmh\admin.py:178 .\django_oai_pmh\models.py:58
+msgid "Description"
+msgstr ""
+
+#: .\django_oai_pmh\admin.py:194
+#, fuzzy
+#| msgid "Metadata"
+msgid "XML metadata"
+msgstr "Metadata"
+
+#: .\django_oai_pmh\apps.py:28 .\django_oai_pmh\apps.py:29
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:76
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:54
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:189
+msgid "OAI-PMH"
+msgstr "OAI-PMH"
+
+#: .\django_oai_pmh\models.py:31 .\django_oai_pmh\models.py:53
+#: .\django_oai_pmh\models.py:75 .\django_oai_pmh\models.py:109
+#: .\django_oai_pmh\models.py:164 .\django_oai_pmh\models.py:224
+msgid "Created at"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:32 .\django_oai_pmh\models.py:54
+#: .\django_oai_pmh\models.py:76 .\django_oai_pmh\models.py:110
+#: .\django_oai_pmh\models.py:165 .\django_oai_pmh\models.py:225
+msgid "Updated at"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:34
+msgid "Prefix"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:35
+msgid "Schema"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:36
+msgid "Namespace"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:46 .\django_oai_pmh\models.py:85
+#, fuzzy
+#| msgid "Metadata"
+msgid "Metadata format"
+msgstr "Metadata"
+
+#: .\django_oai_pmh\models.py:56
+msgid "Spec"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:57
+msgid "Name"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:68 .\django_oai_pmh\models.py:91
+msgid "Set"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:78
+msgid "Identifier"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:79
+msgid "Timestamp"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:80
+msgid "Deleted"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:102 .\django_oai_pmh\models.py:172
+#: .\django_oai_pmh\models.py:228
+msgid "Header"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:103
+msgid "Headers"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:113
+msgid "Expiration date"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:117
+msgid "Complete list size"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:119
+msgid "Cursor"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:120
+msgid "Token"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:125
+msgid "From timestamp"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:130
+msgid "Until timestamp"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:137 .\django_oai_pmh\models.py:234
+#, fuzzy
+#| msgid "Metadata"
+msgid "Metadata prefix"
+msgstr "Metadata"
+
+#: .\django_oai_pmh\models.py:144
+msgid "Set spec"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:155
+msgid "Resumption token"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:156
+msgid "Resumption tokens"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:217
+msgid "Dublin Core record"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:218
+msgid "Dublin Core records"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:236
+#, fuzzy
+#| msgid "Metadata"
+msgid "XML metadta"
+msgstr "Metadata"
+
+#: .\django_oai_pmh\models.py:251
+msgid "XML record"
+msgstr ""
+
+#: .\django_oai_pmh\models.py:252
+msgid "XML records"
+msgstr ""
+
 #: .\templates\_partials\_contact.html:4
 #: .\templates\_partials\_side_nav.html:18
 msgid "Kontakt"
 msgstr "Contact"
 
-#: .\alvin_info\templates\alvin_info\contact.html:16
 #: .\templates\_partials\_contact.html:7
 msgid ""
 "Har du frågor kring materialet som är publicerat i Alvin eller önskar "
@@ -63,24 +1140,19 @@ msgstr ""
 "If you have questions on the materials published in Alvin, or would like to "
 "request digitisation, please contact"
 
-#: .\alvin_info\templates\alvin_info\contact.html:17
 #: .\templates\_partials\_contact.html:8
 msgid "respektive ägande institution"
 msgstr "the institution holding the materials"
 
-#: .\alvin_info\templates\alvin_info\contact.html:18
 #: .\templates\_partials\_contact.html:9
 msgid "Frågor som rör registrering eller annan teknisk support i Alvin"
 msgstr "Questions regarding registration or other technical support in Alvin"
 
-#: .\alvin_info\templates\alvin_info\contact.html:19
-#: .\alvin_info\templates\alvin_info\contact.html:24
 #: .\templates\_partials\_contact.html:10
 #: .\templates\_partials\_contact.html:15
 msgid "E-post"
 msgstr "Email"
 
-#: .\alvin_info\templates\alvin_info\contact.html:22
 #: .\templates\_partials\_contact.html:13
 msgid ""
 "För andra frågor om Alvin, konsortiet eller publicering av ett digitalt "
@@ -89,79 +1161,20 @@ msgstr ""
 "For other questions about Alvin, the consortium or the publishing of "
 "cultural heritage materials, contact Uppsala University Library through"
 
-#: .\alvin_info\templates\alvin_info\copyright.html:19
-#: .\alvin_info\templates\alvin_info\start.html:45
-msgid "Om Alvin:"
-msgstr "About Alvin:"
-
-#: .\alvin_info\templates\alvin_info\start.html:21
-msgid "Bakgrundskarta"
-msgstr ""
-
-#: .\alvin_info\templates\alvin_info\start.html:30
-#, fuzzy
-#| msgid "från nordiska kulturarvsinstitutioner"
-msgid "Digitaliserade samlingar från nordiska kulturarvs&shy;institutioner"
-msgstr "from nordic cultural heritage institutions"
-
-#: .\alvin_info\templates\alvin_info\start.html:36
-#: .\templates\_partials\_search_menu.html:10
-#, fuzzy
-#| msgid "Sök i Alvin"
-msgid "Sök i Alvin..."
-msgstr "Search Alvin"
-
-#: .\alvin_info\templates\alvin_info\start.html:38
-msgid "Sök"
-msgstr "Search"
-
-#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_organisation_list.html:9
-#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_place_list.html:15
-msgid "Kartnål"
-msgstr "Map pin"
-
-#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_person_list.html:9
-#, fuzzy
-#| msgid "Grupp av personer"
-msgid "Konturer av person"
-msgstr "Group of persons"
-
-#: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_work_list.html:9
-msgid "Verksymbol"
-msgstr "Work symbol"
-
-#: .\alvin_list_viewer\templates\alvin_list_viewer\alvin_list_viewer.html:11
-msgid "Totalt antal träffar:"
-msgstr ""
-
-#: .\alvin_viewer\templates\alvin_viewer\_partials\_address.html:6
-msgid "Adress"
-msgstr ""
-
-#: .\alvin_viewer\templates\alvin_viewer\_partials\_alvin_record.html:92
-#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:64
-msgid "Arkivförteckning"
-msgstr ""
-
-#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:55
-msgid "Översikt"
-msgstr "Overview"
-
-#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:59
-msgid "All metadata"
-msgstr ""
-
-#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:69
-msgid "Relaterat"
-msgstr "Related"
-
 #: .\templates\_partials\_filters.html:7
+#: .\vocabulary\templates\vocabulary\place.html:123
 msgid "Land"
 msgstr "Country"
 
 #: .\templates\_partials\_filters.html:9
 msgid "Alla"
 msgstr "All"
+
+#: .\templates\_partials\_search_menu.html:10
+#, fuzzy
+#| msgid "Sök i Alvin"
+msgid "Sök i Alvin..."
+msgstr "Search Alvin"
 
 #: .\templates\_partials\_search_menu.html:14
 msgid "Bläddra bland resurstyper"
@@ -179,10 +1192,6 @@ msgstr "Members"
 msgid "Avancerad sök"
 msgstr ""
 
-#: .\templates\_partials\_side_nav.html:16
-msgid "Hjälp"
-msgstr ""
-
 #: .\templates\_partials\_top_nav.html:17
 msgid "Huvudmeny"
 msgstr "Main menu"
@@ -191,26 +1200,934 @@ msgstr "Main menu"
 msgid "Mobilmeny"
 msgstr "Mobile menu"
 
-#: .\templates\base.html:10
+#: .\templates\base.html:10 .\templates\base.txt:10
 msgid "Uppsala universitet"
 msgstr ""
 
-#: .\templates\base.html:11
+#: .\templates\base.html:11 .\templates\base.txt:11
 msgid "Alvin, kulturarv, digitala samlingar, databaser, bibliotek"
 msgstr "Alvin, cultural heritage, digital collections, databases, libraries"
 
-#: .\templates\base.html:12
+#: .\templates\base.html:12 .\templates\base.txt:12
 msgid ""
 "Alvin - nordisk plattform för bevarande och tillgängliggörande av "
 "digitaliserat kulturarv"
 msgstr ""
-"Alvin - nordic platform for preservation and dissemination of digitised "
+"Alvin - Nordic platform for preservation and dissemination of digitised "
 "cultural heritage"
 
+#: .\vocabulary\templates\vocabulary\api.html:4
+#: .\vocabulary\templates\vocabulary\api.html:42
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:56
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:33
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:48
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:168
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:183
+msgid "API:er"
+msgstr "APIs"
+
+#: .\vocabulary\templates\vocabulary\api.html:27
+#: .\vocabulary\templates\vocabulary\api.html:34
+#: .\vocabulary\templates\vocabulary\iiif.html:27
+#: .\vocabulary\templates\vocabulary\iiif.html:34
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:79
+msgid "IIIF Image API"
+msgstr "IIIF Image API"
+
+#: .\vocabulary\templates\vocabulary\api.html:28
+#: .\vocabulary\templates\vocabulary\api.html:35
+#: .\vocabulary\templates\vocabulary\iiif.html:28
+#: .\vocabulary\templates\vocabulary\iiif.html:35
+msgid "IIIF Manifest"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\api.html:44
+#: .\vocabulary\templates\vocabulary\iiif.html:44
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:53
+msgid "AI-genererad översättning"
+msgstr "AI-generated translation"
+
+#: .\vocabulary\templates\vocabulary\api.html:46
+#: .\vocabulary\templates\vocabulary\iiif.html:46
+msgid ""
+"International Image Interoperability Framework (IIIF) definierar universella "
+"standarder för att beskriva och leverera bilder över webben."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\metadata.html:16
+#: .\vocabulary\templates\vocabulary\vocabulary.html:121
+msgid "Standarder"
+msgstr "Standards"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:27
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:39
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:58
+msgid "Lista över förfrågningar"
+msgstr "List of requests"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:55
+msgid ""
+"Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH) är ett "
+"protokoll som utvecklats för att samla in metadatabeskrivningar av poster i "
+"ett arkiv så att tjänster kan byggas med hjälp av metadata från flera arkiv. "
+"Metadataposter från Alvin kan hämtas via protokollet"
+msgstr ""
+"The Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH) is a "
+"protocol developed to collect metadata descriptions of records in an archive "
+"so that services can be built using metadata from multiple archives. "
+"Metadata records from Alvin can be retrieved via the protocol"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:57
+msgid ""
+"Protokollet består av sex olika typer av förfrågningar <span "
+"class=\"italic\">(verb)</span> som anger vilken tjänst som anropas:"
+msgstr ""
+"The protocol consists of six different types of requests <span "
+"class=\"italic\">(verbs)</span> that specify which service is being called:"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:61
+msgid ""
+"Hämtar grundläggande information om arkivet, som dess namn, URL och "
+"protokoll-version."
+msgstr ""
+"Retrieves basic information about the archive, such as its name, URL, and "
+"protocol version"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:64
+msgid ""
+"Returnerar en lista över de metadataformat som arkivet kan tillhandahålla. "
+"Poster från Alvin kan hämtas i grundformatet oai_dc (se specifikation av "
+"mappning nedan)."
+msgstr ""
+"Returns a list of the metadata formats that the archive can provide. Records "
+"from Alvin can be retrieved in the basic format oai_dc (see mapping "
+"specification below)"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:65
+msgid "Dublin Core-mappning mot Alvins format"
+msgstr "Dublin Core mapping to the Alvin format"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:66
+msgid "Titel"
+msgstr "Title"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:67
+msgid ""
+"Anges som Huvudtitel : undertitel om undertitel finns. Alternativa titlar "
+"anges ej"
+msgstr ""
+"Stated as Main title : subtitle if subtitle exists. Alternative titles are "
+"not stated"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:68
+msgid "Upphovsman"
+msgstr "Creator"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:69
+msgid ""
+"Om person eller organisation har rollen Författare. Anges som: Efternamn, "
+"Förnamn Nummer, Tillägg, Årtal eller Organisation. Underorganisation."
+msgstr ""
+"If a person or organisation has the role Author. Stated as: Last name, First "
+"name Number, Addition, Years or Organisation. Subunit."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:70
+msgid "Ämnesord"
+msgstr "Subject"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:71
+msgid ""
+"Alla typer av ämnesord i detta element utom geografiska eller platser "
+"(auktoritetsposter)."
+msgstr ""
+"All types of subjects in this element except geographic or place names "
+"(authority records)."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:72
+msgid "Platsnamn"
+msgstr "Place name"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:73
+msgid "Auktoritetspost för plats som ämnesord eller geografiska ämnesord."
+msgstr ""
+"Authority record for place as a subject word or geographic subject word."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:74
+msgid "Beskrivning"
+msgstr "Description"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:75
+msgid "Beskrivning/sammanfattning."
+msgstr "Description/summary"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:76
+msgid "Förlag"
+msgstr "Publisher"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:77
+msgid "Förlag (impressum för äldre tryck)."
+msgstr "Publisher (imprint for early printed books)."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:78
+msgid "Bidragsgivare"
+msgstr "Contributor"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:79
+msgid ""
+"Om person eller organisation har annan roll än Författare. Anges som: "
+"Efternamn, Förnamn Nummer, Tillägg, Årtal eller Organisation. "
+"Underorganisation."
+msgstr ""
+"If a person or organisation has a role other than Author. Stated as: Last "
+"name, First name Number, Addition, Years or Organisation. Subunit."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:80
+msgid "Tillkomstår/utgivningsår"
+msgstr "Year of creation/publication"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:81
+msgid ""
+"Anges som i posterna, om specifika årtal YYYY-YYYY, annars som fritext "
+"\"Visas som\"."
+msgstr ""
+"Stated as in the records, if specific years YYYY-YYYY, otherwise as free "
+"text \"Displayed as\"."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:82
+msgid "Resurstyp"
+msgstr "Resource type"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:83
+msgid ""
+"Fasta värden på engelska enligt Library of Congress Resource Types Scheme."
+msgstr ""
+"Fixed values ​​in English according to the Library of Congress Resource Types "
+"Scheme."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:84
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:99
+msgid "Lista"
+msgstr "List"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:85
+msgid "Identifikator"
+msgstr "Identifier"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:87
+msgid "Permanent länk, urn:nbn anges som url:"
+msgstr "Permanent link, urn:nbn stated as url:"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:88
+msgid ""
+"Arkivinst. + samling, placering, signum. Saknas placering och signum endast "
+"namn. Ex. Uppsala universitetsbibliotek, Waller Ms se-00004."
+msgstr ""
+"Archival institution + subcollection, sublocation, shelf mark. If "
+"sublocation and shelf mark are missing only name. Example: Uppsala "
+"University Library, Waller Ms se-00004."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:90
+msgid "Språk"
+msgstr "Language"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:91
+msgid "Språk, visas som text på engelska, ex. English."
+msgstr "Language, displayed as text in English, e.g. English."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:92
+msgid "Fysisk beskrivning"
+msgstr "Physical description."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:94
+msgid "Fälten Omfång och Storlek anges som i posterna."
+msgstr "The fields Extent and Measure stated as in the records."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:95
+msgid ""
+"Digital version + typ på engelska, ex. Digital, reformatted digital. Enbart "
+"om det finns Digitalt format, kan användas för att identifiera vilka "
+"resurser som är publicerade digitalt."
+msgstr ""
+"Digital version + type in English, e.g. Digital, reformatted digital. Only "
+"if Digital format exists, can be used to identify which resources are "
+"published digitally."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:97
+msgid "Rättigheter"
+msgstr "Rights"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:98
+msgid ""
+"Gäller digitalt innehåll (filer). Anges på engelska enligt alternativen för "
+"Rättigheter."
+msgstr ""
+"Applies to digital content (files). Stated in English according to the "
+"options for Rights."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:102
+msgid ""
+"Hämtar arkivets set-struktur som möjliggör gruppering av poster i "
+"delmängder. Poster från Alvin kan hämtas i begränsade set utifrån ägande "
+"institution."
+msgstr ""
+"Retrieves the set structure of the archive that enables grouping of records "
+"into subsets. Records from Alvin can be retrieved in limited sets based on "
+"the owning institution."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:103
+msgid "Id för setSpec motsvarar en arkivinstitutions id i Alvin. "
+msgstr ""
+"Id for setSpec corresponds to the id of an archival institution in Alvin"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:104
+msgid ""
+"<span class=\"font-semibold\">Exempel:</span> setSpec 3 innehåller alla "
+"poster från Uppsala universitetsbibliotek"
+msgstr ""
+"<span class=\"font-semibold\">Example:</span> setSpec 3 contains all records "
+"from Uppsala University Library"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:107
+msgid ""
+"Hämtar en enskild, individuell metadatapost. Obligatoriska parametrar anger "
+"identifikatorn (identifier) och formatet (metadataPrefix) för de metadata "
+"som ska inkluderas i posten."
+msgstr ""
+"Retrieves a single, individual metadata record. Required parameters specify "
+"the identifier (identifier) ​​and format (metadataPrefix) of the metadata to "
+"be included in the record."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:108
+msgid ""
+"En post <span class=\"italic\">(record)</span> är metadata uttryckta i ett "
+"enda format. Den identifieras entydigt genom kombinationen av den unika "
+"identifikatorn för det objekt från vilket posten är tillgänglig, "
+"metadataprefixet som identifierar postens metadataformat samt postens "
+"datumstämpel. XML-kodningen av poster är organiserad i följande delar: "
+msgstr ""
+"A record <span class=\"italic\">(record)</span> is metadata expressed in a "
+"single format. It is uniquely identified by the combination of the unique "
+"identifier of the object from which the record is accessed, the metadata "
+"prefix that identifies the metadata format of the record, and the datestamp. "
+"The XML encoding of records is organised into the following parts:"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:110
+msgid ""
+"innehåller den unika identifikatorn för objektet samt egenskaper som krävs "
+"för selektiv hämtning. Den består av följande delar:"
+msgstr ""
+"contains the unique identifier of the object as well as properties required "
+"for selective harvesting. It consists of the following parts:"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:112
+msgid "den unika identifikatorn för ett objekt i ett arkiv"
+msgstr "the unique identifier of an object in an archive"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:113
+msgid ""
+"datumet för skapande eller ändring av posten, att användas för selektiv "
+"hämtning."
+msgstr ""
+"the date of creation or modification of the record, to be used for selective "
+"harvesting"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:114
+msgid "set som posten ingår i, att användas för selektiv hämtning."
+msgstr "sets that the record is part of, to be used for selective harvesting"
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:117
+msgid ""
+"en enda manifestation av metadata från ett objekt. Den innehåller ett enda "
+"rotelement, til exempel oai_dc:dc, med underelement som tillhör motsvarande "
+"metadataformat."
+msgstr ""
+"a single manifestation of metadata from an object. It contains a single root "
+"element, for example oai_dc:dc, with subelements belonging to the "
+"corresponding metadata format."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:121
+msgid ""
+"Hämtar fullständiga metadataposter från arkivet. Om antalet hämtade poster "
+"överstiger 100 returneras en lista över de första 100 posterna + ett "
+"resumptionToken-element i slutet av svaret som används för att fortsätta "
+"hämtningen av den kompletta listan. Inga andra parametrar kan då användas. "
+"Om resumptionToken saknas är metadataPrefix en obligatorisk parameter."
+msgstr ""
+"Retrieves complete metadata records from the archive. If the number of "
+"records retrieved exceeds 100, a list of the first 100 records is returned + "
+"a resumptionToken element at the end of the response which is used to "
+"continue harvesting of the complete list. No other parameters can then be "
+"used. If resumptionToken is missing, metadataPrefix is ​​a required parameter."
+
+#: .\vocabulary\templates\vocabulary\oai-pmh.html:124
+msgid ""
+"Som ListRecords men hämtar endast <span class=\"italic\">headers</span> "
+"(identifikator, set och datumstämpel), inte de fullständiga metadataposterna."
+msgstr ""
+"As ListRecords but only retrieves <span class=\"italic\">headers</span> "
+"(identifier, set, and datestamp), not the full metadata records."
+
+#: .\vocabulary\templates\vocabulary\place.html:27
+#: .\vocabulary\templates\vocabulary\place.html:36
+#: .\vocabulary\templates\vocabulary\place.html:58
+msgid "Sektioner i formuläret"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:28
+#: .\vocabulary\templates\vocabulary\place.html:37
+#: .\vocabulary\templates\vocabulary\place.html:68
+msgid "Auktoritetsinformation"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:29
+#: .\vocabulary\templates\vocabulary\place.html:38
+#: .\vocabulary\templates\vocabulary\place.html:93
+msgid "Variantformer"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:30
+#: .\vocabulary\templates\vocabulary\place.html:39
+#: .\vocabulary\templates\vocabulary\place.html:119
 #, fuzzy
-#~| msgid "Platser"
-#~ msgid "Plats"
-#~ msgstr "Places"
+#| msgid "exemplarspecifik information"
+msgid "Övrig information"
+msgstr "item-specific information"
+
+#: .\vocabulary\templates\vocabulary\place.html:47
+msgid "Auktoritetsposter för platser används i Alvin för:"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:49
+msgid "Plats för publicering eller tillverkning av ett objekt"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:50
+msgid "En persons födelseort"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:51
+msgid "En persons dödsort"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:52
+msgid "Ort i en organisations postadress"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:54
+msgid ""
+"Auktoritetsarbete innebär att skapa poster som länkade enheter. Detta "
+"betyder att välja ett föredraget namn och, i vissa fall, distinkta tillägg "
+"för att göra namnet unikt. En viktig del av arbetet är att söka efter och "
+"kontrollera om en befintlig namnform redan finns som en länkbar enhet och i "
+"så fall länka till den."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:55
+msgid ""
+"Syftet är att entydigt kunna identifiera dessa platser oavsett vad de "
+"kallades under olika tidsperioder eller på olika språk."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:56
+msgid ""
+"Ett land (t.ex. Sverige) skall inte anges som en auktoritetspost för en "
+"plats. Däremot kan landområden (t.ex. Skåne, Öland, England), gårdar, kyrkor "
+"etc. anges om det är relevant för ovanstående."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:57
+msgid ""
+"Även om huvudsyftet med auktoritetsposter för platser är ovanstående "
+"sammanhang, kan en sådan post också användas som ämnesord på samma sätt som "
+"auktoritetspost för personer och organisationer. Eftersom platser inte "
+"alltid är lika lätt identifierbara som de senare är det ofta bättre att "
+"använda egenskapen Ämne, Geografisk täckning (fritext) som är mer flexibel. "
+"Till exempel kan man ange mycket specifika platser som Drottninggatan 1, "
+"Uppsala eller länder/områden oavsett status, t.ex. Sverige, Romarriket, "
+"Sovjetunionen etc.). Likaså alla andra typer som sjöar, broar, fornlämningar "
+"etc."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:72
+msgid ""
+"Minst en föredragen namnform för platsen måste anges för webbsidorna på "
+"engelska, svenska eller norska. Detta språk anger språkversionen av "
+"webbsidan snarare än språket för namnformen. Om endast en namnform anges "
+"kommer den att visas på alla språkversioner av webbsidorna."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:73
+msgid ""
+"Hitta den aktuella auktoriserade formen i t.ex. GeoNames eller Wikipedia."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:74
+msgid ""
+"Det är möjligt, men inte obligatoriskt, att ange den auktoriserade formen på "
+"alla tre visningsspråk i de fall de är olika, t.ex. Copenhagen/København/"
+"Köpenhamn. De olika formerna kommer då att visas beroende på valt "
+"visningsspråk."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:75
+msgid "Ange inte mer än ett namn för samma språk."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:76
+msgid "Ange inte alternativa namnformer i det här avsnittet."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:77
+msgid "Auktoritet"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:78
+msgid "Visningsspråk"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:79
+msgid ""
+"Välj det språk som motsvarar namnformen, normalt baserat på organisationens "
+"plats."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:81
+msgid ""
+"Ange den auktoriserade namnformen för platsen som motsvarar det valda "
+"språket."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:82
+#: .\vocabulary\templates\vocabulary\place.html:104
+#: .\vocabulary\templates\vocabulary\place.html:105
+#: .\vocabulary\templates\vocabulary\place.html:106
+#: .\vocabulary\templates\vocabulary\place.html:128
+#: .\vocabulary\templates\vocabulary\place.html:131
+msgid "Exempel"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:82
+msgid "Oslo. (Ange inte Christiania)."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:97
+msgid ""
+"Ett namn som inte anses vara den auktoriserade formen, t.ex. alternativa "
+"stavningar, tidigare varianter eller andra språk. Genom att ange alternativa "
+"namn blir resursen sökbar med hjälp av dessa."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:98
+msgid "Variant"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:99
+msgid "Språkkod"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:100
+msgid ""
+"Välj det språk som motsvarar namnformen. Vilket språk som helst kan anges. "
+"De 20 vanligaste alternativen listas först. Efter dessa följer de andra i "
+"alfabetisk ordning."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:102
+msgid ""
+"Ange den alternativa namnformen för platsen som motsvarar det valda språket."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:103
+msgid "Flera namnformer kan anges för samma språk."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:104
+msgid "Christiania. (Alternativ form för Oslo på norska)."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:105
+msgid "Kristiania. (En annan alternativ form för Oslo på norska)."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:106
+msgid "Asloa. (Oslo på latin)."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:107
+msgid "Textriktning"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:108
+msgid ""
+"Välj Höger till vänster endast om namnet ska visas från höger till vänster, "
+"t.ex. namn på arabiska eller hebreiska. Annars lämnas det omarkerat."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:124
+msgid ""
+"Välj det land där den beskrivna platsen för närvarande ligger. De 20 "
+"vanligaste alternativen listas först. Efter dessa följer de andra "
+"alfabetiskt."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:125
+msgid ""
+"Länder och kungadömen som inte längre existerar som självständiga stater kan "
+"inte anges här."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:126
+msgid "Latitud"
+msgstr "Latitude"
+
+#: .\vocabulary\templates\vocabulary\place.html:127
+msgid ""
+"Ange platsens latitud i WGS84-format (som komprimerade grader med decimaler, "
+"endast siffror)."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:128
+msgid "59.916667"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:129
+msgid "Longitud"
+msgstr "Longitude"
+
+#: .\vocabulary\templates\vocabulary\place.html:130
+msgid ""
+"Ange platsens longitud i WGS84-format (som komprimerade grader med "
+"decimaler, endast siffror)."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:131
+msgid "10.75"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:132
+msgid "Hitta latitud och longitud i t.ex. GeoNames eller Wikipedia."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\place.html:133
+msgid ""
+"Det är också möjligt att klicka på en punkt i kartan i "
+"registreringsformuläret för att välja position. Valda värden måste först "
+"raderas för att kunna välja nya från kartan."
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\userguide.html:4
+#: .\vocabulary\templates\vocabulary\userguidemaster.html:7
+msgid "Användarhandbok"
+msgstr "User guide"
+
+#: .\vocabulary\templates\vocabulary\userguide.html:10
+msgid "Handbok för katalogisatörer och API-användare i Alvin"
+msgstr "Guide for cataloguers and API users in Alvin"
+
+#: .\vocabulary\templates\vocabulary\userguide.html:11
+msgid "Medlemskap krävs för att skapa och ändra poster"
+msgstr "Membership is required to create and modify records"
+
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:73
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:51
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:186
+msgid "REST-API"
+msgstr "REST-API"
+
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:114
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:69
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:204
+#: .\vocabulary\templates\vocabulary\vocabulary.html:4
+msgid "Vokabulär"
+msgstr "Vocabulary"
+
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:131
+msgid "Datamodell"
+msgstr "Data model"
+
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:181
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:114
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:129
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:249
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:264
+msgid "Katalogisering"
+msgstr "Cataloguing"
+
+#: .\vocabulary\templates\vocabulary\userguidenavbar.html:201
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:132
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:267
+msgid "Katalogiseringsklient"
+msgstr "Cataloguing client"
+
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:57
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:192
+msgid "IIIF"
+msgstr ""
+
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:84
+#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:219
+#: .\vocabulary\templates\vocabulary\vocabulary.html:52
+msgid "vokabulär"
+msgstr "vocabulary"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:27
+#: .\vocabulary\templates\vocabulary\vocabulary.html:39
+#: .\vocabulary\templates\vocabulary\vocabulary.html:56
+msgid "Basvokabulär"
+msgstr "Core vocabulary"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:28
+#: .\vocabulary\templates\vocabulary\vocabulary.html:40
+#: .\vocabulary\templates\vocabulary\vocabulary.html:80
+msgid "Kärnklasser"
+msgstr "Core classes"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:29
+#: .\vocabulary\templates\vocabulary\vocabulary.html:41
+#: .\vocabulary\templates\vocabulary\vocabulary.html:94
+msgid "Subklasser och egenskaper"
+msgstr "Subclasses and properties"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:31
+#: .\vocabulary\templates\vocabulary\vocabulary.html:43
+#: .\vocabulary\templates\vocabulary\vocabulary.html:111
+msgid "Objekt"
+msgstr "Object"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:32
+#: .\vocabulary\templates\vocabulary\vocabulary.html:44
+#: .\vocabulary\templates\vocabulary\vocabulary.html:113
+msgid "Samling"
+msgstr "Collection"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:33
+#: .\vocabulary\templates\vocabulary\vocabulary.html:45
+#: .\vocabulary\templates\vocabulary\vocabulary.html:115
+msgid "Digitala reproduktioner"
+msgstr "Digital reproductions"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:53
+msgid ""
+"Alvins datamodell är specifikt utformad för beskrivningar av material i "
+"kulturarvssamlingar på bibliotek, museer och arkiv."
+msgstr ""
+"Alvin's data model is specifically designed for descriptions of materials in "
+"cultural heritage collections in libraries, museums and archives."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:55
+msgid "Licens"
+msgstr "License"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:57
+msgid ""
+"För att kunna hantera olika typer av resurser i ett och samma system bygger "
+"den på en kombination av koncept från olika internationella standarder för "
+"bibliotek och arkiv:"
+msgstr ""
+"In order to be able to handle different types of resources in one and the "
+"same system, it is based on a combination of concepts from different "
+"international standards for libraries and archives including "
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:61
+msgid ""
+"Grundläggande vokabulär för allmänna egenskaper som titel, språk och "
+"ursprungsinformation."
+msgstr ""
+"Basic vocabulary for general properties such as title, language and "
+"publication information."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:64
+msgid "För mer specifika bibliografiska egenskaper som saknas i BIBFRAME."
+msgstr ""
+"For more specific bibliographic properties that are missing from BIBFRAME."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:66
+msgid "För arkivbeskrivningar."
+msgstr "For archive descriptions."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:68
+msgid "För mer specifika egenskaper för handskrifter."
+msgstr "For more specific properties for manuscripts."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:70
+msgid "För specifika egenskaper inom numismatik."
+msgstr "For specific properties in numismatics."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:72
+msgid "För auktoritetposter för person, organisation och plats."
+msgstr "For authority records for person, organisation and place"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:74
+msgid "För beskrivningar av en posts relaterade digitala filer."
+msgstr "For descriptions of a record's related digital files."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:76
+msgid "För att ange geografiska koordinater (latitud och longitud)."
+msgstr "To enter geographical coordinates (latitude and longitude)."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:78
+msgid "För att ange datum och tid."
+msgstr "To set the date and time."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:81
+msgid ""
+"Modellen är uppbyggd kring fem grundläggande kärnklasser <span "
+"class=\"italic\">(core classes)</span>:"
+msgstr "The model is built around five basic core classes:"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:83
+msgid ""
+"en bibliografisk post som beskriver ett enskilt objekt eller en samling av "
+"objekt."
+msgstr ""
+"a bibliographic record that describes a single item or a collection of items."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:84
+msgid "en auktoritetspost för en person."
+msgstr "an authority record for a person."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:85
+msgid "en auktoritetspost för en organisation."
+msgstr "an authority record for an organisation."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:86
+msgid "en auktoritetspost för en plats."
+msgstr "an authority record for a place."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:87
+msgid "en auktoritetspost för ett verk."
+msgstr "an authority record for a work."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:89
+msgid "Samt förutom dessa även:"
+msgstr "And, in addition:"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:91
+msgid ""
+"en särskild organisationspost som beskriver den arkivinstitution som innehar "
+"föremålet eller från vilken det är tillgängligt."
+msgstr ""
+"a special organisational record that describes the archival institution that "
+"holds the object or from which it is available."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:95
+msgid "Kärnklasserna innehåller i sin tur olika uppsättningar av:"
+msgstr "The core classes in turn contain different sets of:"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:97
+msgid ""
+"en grupp som samlar en eller flera klasser eller egenskaper, till exempel "
+"<span class=\"italic\">title</span> som har egenskaperna <span "
+"class=\"italic\">mainTitle</span> och <span class=\"italic\">subtitle</span>."
+msgstr ""
+"a group that collects one or more classes or properties, for example the "
+"title class which has the properties mainTitle and subtitle."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:98
+msgid "ett värde som har skrivits in, till exempel en titel."
+msgstr "a value that has been entered, for example a title."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:99
+#, fuzzy
+#| msgid ""
+#| "ett värde valt från en kontrollerad lista i Alvin, till exempel språk.."
+msgid "ett värde valt från en kontrollerad lista i Alvin, till exempel språk."
+msgstr ""
+"a value selected from a controlled list in Alvin, for example language."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:112
+msgid ""
+"Det vanligaste fallet är att ett fysiskt objekt beskrivs. Det kan till "
+"exempel vara en målning, en karta, ett manuskript eller en tryckt bok. "
+"Posten i Alvin baseras på det fysiska exemplar som beskrivs. För tryckt "
+"eller annat material som reproduceras i utgåvor beskrivs fortfarande det "
+"fysiska exemplaret i Alvin till skillnad från till exempel "
+"bibliotekskataloger. Om man har olika exemplar av en bok från samma utgåva "
+"finns det en post per exemplar. Proveniens, förvärv, signaturer etc. gäller "
+"för just detta exemplar i Alvin."
+msgstr ""
+"The most common case is that a physical object is described. For example, it "
+"may be a painting, a map, a manuscript or a printed book. The record in "
+"Alvin is based on the physical copy that is being described. For printed or "
+"other material that is reproduced in editions, the physical copy is still "
+"described in Alvin unlike, for example, library catalogs. If you have "
+"different copies of a book from the same edition, there is one record per "
+"copy. Provenance, acquisition, signatures, etc. apply to this particular "
+"copy in Alvin."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:114
+msgid ""
+"I Alvin kan, förutom konkreta objekt, även abstrakta resurser beskrivas. "
+"Exempel på detta är främst samlingar eller andra översiktliga beskrivningar. "
+"Dessa är ofta, men inte alltid, endast abstrakta konstruktioner som i sin "
+"tur innehåller konkreta objekt som ibland beskrivs separat som ovan och "
+"ibland inte. Emellertid kan en samlingspost också betraktas som en "
+"heltäckande beskrivning av det konkreta innehållet. Alvin tillåter att "
+"digitalt material även länkas till abstrakta poster. Man kan välja att ladda "
+"upp alla bilder i en bildsamling till huvud-/samlingsposten utan att "
+"beskriva de olika delarna individuellt."
+msgstr ""
+"In Alvin, in addition to concrete objects, abstract resources can be "
+"described. Examples of this are primarily collections or other comprehensive "
+"descriptions. These are often, but not always, only abstract constructions "
+"that in turn contain concrete objects that are sometimes described "
+"separately as above and sometimes not. However, a collection record can also "
+"be considered a comprehensive description of the concrete content. Alvin "
+"allows digital material to be linked to abstract records as well. You can "
+"choose to upload all images in an image collection to the main/collection "
+"record without describing the different parts individually."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:116
+msgid ""
+"Normalfallet i Alvin är också att göra en digital reproduktion av det "
+"fysiska objektet, t.ex. digitalisera en handskrift eller en bok. I dessa "
+"fall beskriver metadataposten fortfarande det fysiska objektet (inte den "
+"digitala reproduktionen). De digitala filerna är kopior av just detta "
+"exemplar som beskrivs i posten."
+msgstr ""
+"The normal case in Alvin is also to make a digital reproduction of the "
+"physical object, e.g. digitising a manuscript or book. In these cases, the "
+"metadata record still describes the physical object (not the digital "
+"reproduction). The digital files are copies of this particular copy that is "
+"described in the record."
+
+#, fuzzy
+#~| msgid ""
+#~| "en länk till en post från en basklass, till exempel från en "
+#~| "bibliografisk post till en auktoritetspost för en person."
+#~ msgid ""
+#~ "en länk till en post från en kärnklass, till exempel från en "
+#~ "bibliografisk post till en auktoritetspost för en person."
+#~ msgstr ""
+#~ "a link to a record from a core class, for example from a bibliographic "
+#~ "record to an authority record for a person."
+
+#~ msgid "Alvins ursprungliga medlemmar och styrgrupp"
+#~ msgstr "The founding members and steering group of Alvin"
+
+#~ msgid "Övriga medlemmar i Alvin"
+#~ msgstr "Other members of Alvin"
+
+#~ msgid "Institutioner som använder Alvin regelbundet"
+#~ msgstr "Institutions using Alvin on a regular basis"
+
+#~ msgid ""
+#~ "Underordnade enheter till medlemmar eller institutioner med material "
+#~ "relaterat till projekt"
+#~ msgstr ""
+#~ "Subordinate units to members or institutions with material related to "
+#~ "projects"
+
+#~ msgid "Webbplatskarta"
+#~ msgstr "Sitemap"
+
+#~ msgid "Om Alvin:"
+#~ msgstr "About Alvin:"
+
+#, fuzzy
+#~| msgid "från nordiska kulturarvsinstitutioner"
+#~ msgid "Digitaliserade samlingar från nordiska kulturarvs&shy;institutioner"
+#~ msgstr "from nordic cultural heritage institutions"
 
 #~ msgid "Alternativa namnformer"
 #~ msgstr "Variant names"
@@ -254,15 +2171,6 @@ msgstr ""
 
 #~ msgid "Källdata"
 #~ msgstr "Source data"
-
-#~ msgid "Latitud"
-#~ msgstr "Latitude"
-
-#~ msgid "Longitud"
-#~ msgstr "Longitude"
-
-#~ msgid "Verk"
-#~ msgstr "Work"
 
 #~ msgid "Sök i Alvin"
 #~ msgstr "Search Alvin"

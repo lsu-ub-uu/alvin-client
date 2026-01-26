@@ -1,0 +1,13 @@
+{% load i18n static %}
+<a class="flex items-center border-2 border-blue-200 shadow-md shadow-blue-200/70 hover:shadow-lg/100 mt-4 p-4 bg-white dark:bg-gray-800 rounded block px-4 py-2 mt-2 text-sm font-normal text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" href="/alvin-organisation/{{record.identifier}}?data={{ encoded_link }}">
+    <img class="fill-current bg-white dark:bg-off-white w-6 h-6" alt="{% translate 'Organisation' %}" src="/static/img/authorityTypes/organisation.svg">
+    <div class="py-2 px-2 font-semibold text-blue-800 dark:text-blue-200 underline text-base {% if view == 'grid' %}md:w-42 md:text-sm{% endif %}">
+        {{record.nameone}}{% if record.subnameone != None %}. {{record.subnameone}} {% endif %}
+        {% if record.nametwo != None %}
+            ; {{record.nametwo}}{% if record.subnametwo != None %}. {{record.subnametwo}} {% endif %}
+        {% endif %}
+        {% if record.namethree != None %}
+            ; {{record.namethree}}{% if record.subnamethree != None %}. {{record.subnamethree}} {% endif %}
+        {% endif %}
+    </div>
+</a>

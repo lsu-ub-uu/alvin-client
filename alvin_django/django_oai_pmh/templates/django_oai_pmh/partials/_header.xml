@@ -1,0 +1,8 @@
+<header {% if header.deleted %}status="deleted"{% endif %}>
+    <identifier>oai:ALVIN.org:{{record.identifier}}</identifier>
+    <datestamp>{{record.datestamp|slice:"0:10"}}T{{record.datestamp|slice:"11:19"}}Z</datestamp>
+    <setSpec>{{record.setSpec}}</setSpec>
+</header>
+
+
+

@@ -1,0 +1,11 @@
+{% block content %}
+<ListMetadataFormats>
+    {% for metadataformat in metadataformats %}
+        <metadataFormat>
+            <metadataPrefix>{{metadataformat.prefix}}</metadataPrefix>
+            <schema>{{ metadataformat.schema }}</schema>
+            <metadataNamespace>{{ metadataformat.namespace }}</metadataNamespace>
+        </metadataFormat>
+    {% endfor %}
+</ListMetadataFormats>
+{% endblock %}

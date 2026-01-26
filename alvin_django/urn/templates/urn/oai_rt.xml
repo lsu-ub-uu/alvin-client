@@ -1,0 +1,13 @@
+{% block content %}
+<ListRecords>
+
+cursor {{cursor}}
+state {{state}}
+page-SIZE {{page_size}}
+metadataPrefix{{metadataPrefix}}
+total_records {{total_records}}
+set {{set}}
+start {{start}}
+    <resumptionToken completeListSize="{{total_records}}" cursor="{{cursor}}">{{token_value}}</resumptionToken>
+</ListRecords>
+{% endblock %}

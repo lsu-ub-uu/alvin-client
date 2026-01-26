@@ -1,0 +1,63 @@
+
+<nav class="pagination my-8">
+    <ol class="flex items-center justify-center space-x-2">
+        {% if page_obj.has_previous %}
+            <!-- First Page Button -->
+            <li>
+                <a href="?page=1{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black bg-white hover:bg-gray-100 hover:text-gray-700"
+                aria-label="First page">
+                &laquo;
+                </a>
+            </li>
+            <!-- Previous Page Button -->
+            <li>
+                <a href="?page={{ page_obj.previous_page_number }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black bg-white hover:bg-gray-100 hover:text-gray-700"
+                aria-label="Previous page">
+                &lsaquo;
+                </a>
+            </li>
+        {% endif %}
+
+        <!-- Page Numbers -->
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <!-- Current Page -->
+                <li>
+                    <span class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black text-white bg-alvinGreen">
+                        {{ num }}
+                    </span>
+                </li>
+            {% else %}
+                <!-- Other Pages -->
+                <li>
+                    <a href="?page={{ num }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                    class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black bg-white hover:bg-gray-100 hover:text-gray-700"
+                    aria-label="Page {{ num }}">
+                    {{ num }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <!-- Next Page Button -->
+            <li>
+                <a href="?page={{ page_obj.next_page_number }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black bg-white hover:bg-gray-100 hover:text-gray-700"
+                aria-label="Next page">
+                &rsaquo;
+                </a>
+            </li>
+            <!-- Last Page Button -->
+            <li>
+                <a href="?page={{ page_obj.paginator.num_pages }}{% if selected_country %}&country={{ selected_country }}{% endif %}"
+                class="font-universalis text-xl inline-flex items-center px-3 py-1 border-4 border-black bg-white hover:bg-gray-100 hover:text-gray-700"
+                aria-label="Last page">
+                &raquo;
+                </a>
+            </li>
+        {% endif %}
+    </ol>
+</nav>

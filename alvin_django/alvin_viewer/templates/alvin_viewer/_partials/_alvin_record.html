@@ -11,7 +11,8 @@
             {% include "./_metadata_row.html" with label=metadata.variant_titles.label extra_label=title.type value=title.display %}
         {% endfor %}
     </div>
-    <div x-show="activeTab === 'overview' || activeTab === 'all_metadata' || activeTab  === 'related'" x-cloak>
+    <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata' || activeTab  === 'related'" data-xcloak>
+
     {% for agent in metadata.agents %}
         {% include "./_metadata_row.html" with label=agent.label url=agent.url value=agent.display attribute=agent.display_roles %}
     {% endfor %}
@@ -22,7 +23,7 @@
     <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
         {% include "./_metadata_row.html" with label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
     </div>
-    <div x-show="activeTab == 'all_metadata'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% include "./_metadata_row.html" with label=metadata.edition_statement.label value=metadata.edition_statement.text %}
         {% include "./_metadata_row.html" with label=metadata.publications.label value=metadata.publications.texts|join:"<br>" %}
         {% for date in metadata.date_other %}
@@ -33,7 +34,7 @@
     <div x-show="activeTab == 'all_metadata' || activeTab == 'related'" x-cloak>
         {% include "./_metadata_row.html" with label=metadata.location.label url=metadata.location.url value=metadata.location.names.title %}
     </div>
-    <div x-show="activeTab == 'all_metadata'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% include "./_metadata_row.html" with label=metadata.sublocation.label value=metadata.sublocation.text %}
         {% include "./_metadata_row.html" with label=metadata.shelf_mark.label value=metadata.shelf_mark.text %}
         {% include "./_metadata_row.html" with label=metadata.former_shelf_mark.label value=metadata.former_shelf_mark.texts|join:"<br>" %}
@@ -66,7 +67,7 @@
         {% include "./_authority_links.html" with label=metadata.subject_organisation.label link_type="alvin-organisation" authority_links=metadata.subject_organisation %}
         {% include "./_authority_links.html" with label=metadata.subject_place.label link_type="alvin-place" authority_links=metadata.subject_place %}
     </div>
-    <div x-show="activeTab == 'all_metadata'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% include "./_metadata_row.html" with label=metadata.genre_form.label value=metadata.genre_form.items|join:"<br>"|safe %}
         {% for classification in metadata.classifications %}
             {% include "./_metadata_row.html" with label=classification.label extra_label=classification.type value=classification.text %}
@@ -79,14 +80,14 @@
         {% include "./_metadata_row.html" with label=metadata.binding_deco_note.combined_label value=metadata.binding_deco_note.text|linebreaksbr %}
 
     </div>
-    <div x-show="activeTab == 'all_metadata' || activeTab == 'related'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata' || activeTab === 'related'" data-xcloak>
         {% include "alvin_viewer/_partials/_record_type_links.html" with label=metadata.related_records.label link_type="alvin-record" record_type_links=metadata.related_records %}
         {% include "./_authority_links.html" with label=metadata.work.label link_type="alvin-work" authority_links=metadata.work %}
         {% for electronic_locator in metadata.electronic_locators %}
             {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
         {% endfor %}
     </div>
-    <div x-show="activeTab == 'all_metadata'" x-cloak>
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% include "./_metadata_row.html" with label=metadata.level.label value=metadata.level.item %}
         {% include "./_metadata_row.html" with label=metadata.shelf_metres.label value=metadata.shelf_metres.item %}
         {% include "./_metadata_row.html" with label=metadata.archival_units.label value=metadata.archival_units.text %}
@@ -119,10 +120,6 @@
         {% include "./_metadata_row.html" with label=metadata.countermark.label value=metadata.countermark.texts|join:"<br>" %}
         {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
         {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
-        {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
-    </div>
-    <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'" x-cloak>
-        {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
     </div>
     {% if metadata.components %}
     <div x-show="activeTab == 'overview' || activeTab == 'all_metadata' || activeTab == 'inventory'" x-cloak>

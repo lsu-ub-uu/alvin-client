@@ -16,11 +16,11 @@ DEBUG = os.getenv("DEBUG", "false").lower() == "true"
 if DEBUG:
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
     #CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
-    #CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
+#    CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
 else:
     ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
     #CSRF_TRUSTED_ORIGINS = os.environ["CSRF_TRUSTED_ORIGINS"].split(",")
-    #CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
+#    CORS_ALLOWED_ORIGINS = os.environ["CORS_ALLOWED_ORIGINS"].split(",")
 
 # Application definition
 ASGI_APPLICATION = "alvin_django.asgi.application"
@@ -39,14 +39,11 @@ INSTALLED_APPS = [
     'search',
     'tailwind',
     'theme',
-    'metadata_listener'
+    'vocabulary',
+    'urn',
+    'django_oai_pmh',
+    'alvin_search',
 ]
-
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache"
-    }
-}
 
 TAILWIND_APP_NAME = 'theme'
 
@@ -59,13 +56,13 @@ NPM_BIN_PATH = 'C:/Program Files/nodejs/npm.cmd'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware', # Localization
+    #'corsheaders.middleware.CorsMiddleware', # If api gets restrictive in allowed origin access, reenable
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    #'corsheaders.middleware.CorsMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware', # only needed if login,post,put,delete,patch is used
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'alvin_django.urls'
@@ -166,26 +163,8 @@ LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
 
+# Control whether the default language should have a URL prefix
+PREFIX_DEFAULT_LANGUAGE = True
+
 # ENV variables
 API_HOST = os.getenv('API_HOST', 'https://cora.alvin-portal.org')
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {"class": "logging.StreamHandler"},
-    },
-    "root": {"handlers": ["console"], "level": "INFO"},
-    "loggers": {
-        "alvin_django": {"level": "INFO", "propagate": True},
-        "alvin_viewer": {"level": "INFO", "propagate": True},
-        "django": {"level": "INFO", "propagate": True},
-    },
-}
-
-RABBITMQ = {
-    "HOST": "alvin-rabbitmq",
-    "PORT": 5672,
-    "VHOST": "/",
-    "EXCHANGE": "dataChangedExchange",
-}

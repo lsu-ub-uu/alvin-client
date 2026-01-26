@@ -1,0 +1,192 @@
+{% extends "vocabulary/darkmaster.html" %}
+{% load static %}
+{% block title %}Person{% endblock %}
+{% block content %}
+    <div class="maincontent">
+      <h1><a href="https://www.alvin-portal.org" class="logo">ALVIN</a> : Cataloguing</h1>
+      <div class="menu">
+        <a href="#person">Person</a>
+        <a href="#sections">Sections</a>
+        <a href="#authority">Authority information</a>
+	<a href="#personinfo">Dates, places, nationality, gender</a>
+        <a href="#variant">Variant forms</a>
+        <a href="#other">Other information</a>
+	<a href="#related">Related information</a>
+     </div>
+
+     <div class="main">
+      <h2 class="cat" id="person">Person</h2>
+      <p>Authority records for persons are used in Alvin for:</p>
+      <ul>
+        <li>Connecting the person as an agent via a role to an object or collection</li>
+        <li>Connecting the person as the subject of an object or collection</li>
+      </ul>
+      <p>Authority work means controlled and structured handling of name forms. Users should be able to search for name forms in a uniform way. When persons change their name or act under a pseudonym, the user should be able to find the correct one from different name forms.</p>
+      <p>It means creating records as linked entities. This involves choosing a preferred name and, in some cases, distinctive additions to make the name unique. An important part of the work is to search for and check if an existing name form already exists as a linkable entity and, if so, link to it.</p>
+      <p>A person is defined as an individual or identity established by an individual (either alone or in collaboration with one or more other individuals). The term also includes people in sacred scriptures, fictional characters, and non-human entities, such as animal actors. It is also possible to register a record for an entire family. Associations of persons, such as legal entities and musical groups, are treated as Organisations.</p>
+      <p>Text information in notes etc. can be in any language.</p>
+      <p>To supplement the linked entities information about contributors as it appears on the item can be added in bibliographical records in free text as a note of the type Statement of responsibility.</p> 
+      <p>Example: Kevin Wicker ; with a foreword by David Pritchard ; illustrated by Karel Feuerstein.</p>
+     
+      <h2 id="sections">Sections in the registration form</h2>
+
+      <button class="accordion" id="authority">Authority information</button>
+      <div class="panel">
+       <p>At least one preferred name form of the person must be specified for the web pages in English, Swedish or Norwegian. This language specifies the language version of the web page rather than the language of the name form. If only one name form is specified, it will be displayed on all language versions of the web pages.</p>
+        <p>Some names have a language-specific form. This applies, for example, to saints, royalty, popes, bishops, etc., classical Greek, Roman and Byzantine persons, and people active before the year 1400.</p>
+        <p>The preferred name is the name by which the person is best known. To determine it, use the following sources (in order of priority):</p>
+	<ol>
+	  <li>the preferred sources of information in items associated with the person, such as title pages</li>
+          <li>other formal statements appearing in items associated with the person</li>
+          <li>other sources (including reference sources such as VIAF or Wikipedia).</li>
+        </ol>	
+	<p>For people who change their name, the most recent name is generally chosen as the preferred name.</p>
+        <p>A person can have more than one identity, in which case multiple records are created as linked entities.</p>
+        <p>It is possible, but not mandatory, to specify the authorised form in all three display languages ​​in cases where they are different, eg. Chekhov, Anton/Tsjekhov, Anton/Tjechov, Anton.</p>
+  	<p>The preferred name form must be in Latin script.</p>
+	<p>Do not enter more than one name for the same language.</p>      
+	<p>Do not enter alternative name forms in this section.</p>
+	<h3 class="cat">Authority</h3>
+        <p class="catlabelcode">Language code, display language:</p>
+	<p>At least one preferred name form of the person must be specified for the web pages in English, Swedish or Norwegian. This language specifies the language version of the web page rather than the language of the name form. If only one name form is specified, it will be displayed on all language versions of the web pages.</p>
+	<p class="catlabeltext">Family name:</p>
+	<p>Enter the authoritative family name form of the person corresponding to the selected language.</p>
+     	<p>Example: Chekhov (in English). (Do not enter Чехов).</p>
+	<p>Leave empty for persons without a family name, eg. royalty or popes.</p>
+	<p class="catlabeltext">Given name:</p>
+	<p>Enter the authoritative given name form of the person corresponding to the selected language.</p>
+     	<p>Example: Anton (in English). (Do not enter Антон).</p>
+        <p>Example: Charles (for Charles II, King of England, no family name).</p>
+	<p>Example: Socrates (classical Greek, no family name).</p>
+	<p class="catlabeltext">Numeration:</p>
+	<p>Enter ordinal numbers for royalty, popes, and bishops using Roman numerals.</p>
+        <p>Example: II (for Charles II, King of England).</p>
+        <p>Example: II Adolf (for Gustav II Adolf, King of Sweden).</p>
+	<p class="catlabeltext">Addition:</p>
+        <p>For royal titles, titles of nobility, titles denoting ecclesiastical rank, and religious titles. All other titles are only added if they are needed to distinguish one person from another with the same name.</p>
+	<p>Enter the title of royalty or nobility and the name of the state or people over whom the person rules or has ruled in the corresponding selected language.</p>        
+        <p>Example: King of England (for Charles II, King of England).</p>
+        <p>Add titles for popes, bishops, other religious professions and saints in the corresponding selected language.</p>
+        <p>Example: Pope.</p>
+        <p>Add words etc. indicating relationship.</p>
+        <p>Example: Jr.</p>
+	<p>Do not enter a profession or occupation unless it is needed to distinguish people with the same name. Add such information in Field of Endeavour below instead.</p>
+        <p class="catlabeltext">Family:</p>
+	<p>Select Yes only if the record describes an entire family. Otherwise leave it unselected.</p>
+	<p>Enter the name of the family in the Family name field. Given name must be left empty.</p>
+      </div>
+      <button class="accordion" id="personinfo">Dates, places, nationality, gender</button>
+      <div class="panel">
+        <p class="catlabeltext">Date of birth:</p>
+        <p class="catlabeltext">Date of death:</p>
+	<p>Enter date of birth and/or date of death.</p>
+        <p>All types of time data are specified according to the ISO 8601 standard according to the pattern yyyy (year), yyyy-mm (year and month) and yyyy-mm-dd (year, month and day).</p>
+	<p>Example: 1707 (year) 05 (month) 13 (day).</p>
+	<p>Example: 0470 (year).</p>
+	<p class="catlabeltext">Era (BC):</p>
+        <p>Enter BC for years before Christ. Otherwise leave unselected.</p>
+        <p>Example: 0470 (year) + BC (the year 470 BC).</p>
+        <p class="catlabeltext">Year/date displayed</p>
+        <p>Enter uncertain and approximate time information as free text. Where applicable, the year of birth/death can also be entered above for better searchability.</p>
+        <p>Example: 1717? (? is used for probable year).</p>
+	<p>Example: 1717 or 1718 (or is used for alternative and immediately following years).</p>
+	<p>Example: ca 1717 (ca is used for approximate year. Here the time is more fluid and can cover a time span of up to ten years).</p>
+        <p>Example: ca 1717-1767 (for approximate lifetime).</p>
+	<p>In all these cases, 1717 can also be entered as a numerical year of birth above, which means that 1717 will also be searchable as a year.</p>
+	<p>Example: Between 510 and 323 BC (as a time period).</p>
+	<p>Do not use this element if the exact date is known.</p>
+        <p class="catlabeltext">Place of birth:</p>
+        <p class="catlabeltext">Place of death:</p>    
+	<p>Search for the authority record for the place of birth and/or death and link to the person. Create a new place record if needed.</p>   
+        <p class="catlabeltext">Uncertain information:</p> 
+        <p>Enter Uncertain information if the information is probable but not verfied. Otherwise leave unselected.</p>
+        <p class="catlabeltext">Nationality:</p> 
+        <p>From the list, select nationality (country) or country of operation associated with the person. The 20 most common options are listed first. After these the others follow alphabetically.</p>
+	<p>Countries and kingdoms that no longer exist as independent states cannot be specified here.</p>
+        <p>More than one country may be selected.</p>
+        <p class="catlabeltext">Gender:</p>        
+        <p>Select the person's gender from the list. If more than one, the most recent one is chosen.</p>
+      </div>
+      <button class="accordion" id="variant">Variant forms</button>
+      <div class="panel">
+	<p>A name that is not considered the authoritative form, e.g. alternative spellings, previous variants or other languages. Specifying alternative names makes the resource searchable using these. More than one alternative may be added.</p>
+	<h3 class="cat">Variant</h3>
+        <p class="catlabelcode">Language code:</p>
+	<p>Select the language corresponding to the name form. Any language can be specified. The 20 most common options are listed first. After these the others follow alphabetically.</p>
+	<p class="catlabelcode">Variant:</p>
+	<p>Select the type of variant form. Alternative name is selected if none of the more specified ones are applicable.</p>	
+	<p class="catlabeltext">Family name:</p>
+	<p>Enter the variant family name form of the person corresponding to the selected language.</p>
+     	<p>Example: Чехов (in Russian, Cyrillic script).</p>
+	<p class="catlabeltext">Given name:</p>
+	<p>Enter the variant given name form of the person corresponding to the selected language.</p>
+     	<p>Example: Антон (in Russian, Cyrillic script).</p>
+	<p class="catlabeltext">Numeration:</p>
+	<p>Enter ordinal numbers for royalty, popes, and bishops using Roman numerals.</p>
+        <p>Example: II (for Oscar II, roi de Suède et de Norvège, in French).</p>
+	<p class="catlabeltext">Addition:</p>
+        <p>Enter the title of royalty or nobility and the name of the state or people over whom the person rules or has ruled in the corresponding selected language.</p>        
+	<p>Example: roi de Suède et de Norvège (for Oscar II, roi de Suède et de Norvège, in French)</p>
+        <p>Add words etc. indicating relationship.</p>
+        <p>Example: Jr.</p>
+	<p class="catlabeltext">Text direction:</p>
+	<p>Select Right-to-left only if the name should be displayed from right to left, e.g, names in Arabic or Hebrew. Otherwise leave it unselected.</p>
+      </div>
+      <button class="accordion" id="other">Other information</button>
+      <div class="panel">
+        <p class="catlabeltext">Field of activity:</p>
+	<p>Words or phrases that describe a person's profession or occupation. They do not have to be related to professional practice.</p>
+	<p>Example: poet</p>
+	<p>Example: amateur archaeologist</p>
+	<p>Example: artist</p>
+        <p class="catlabeltext">Note:</p>
+	<p class="catlabelcode">Type:</p>
+	<p>Select the type of note from the list. Enter only one note for each type (all information in one element).</p>
+	<ul>
+	  <li>General - General information for which a specialised note field has not been defined.</li>  
+	  <li>Biographical/historical - Biographical information about an individual or historical information about an institution.</li>
+	  <li>Source - Citation for a consulted source in which information is found related in some manner to the entity represented by the authority record or related entities, for example a bibliographic reference or a URL.</li>
+        </ul>
+	<p>Example: Born in Skogs socken, Hälsingland, the son of chaplain Pehr Ahl and Elisabeth Grönlund. Doctor of medicine 1789, town physician in Sala from 1796 (biographical).</p>
+        <p class="catlabeltext">Identifier:</p>
+	<p class="catlabelcode">Type:</p>
+	<p>Select the type of identifier from the list.</p>
+        <p>Example: 34594730 (VIAF for Carl von Linné).</p>
+        <p>Enter the number/code only, not the full URL. A link to the source will automatically be created on the web page.</p>
+      </div> 
+
+      <button class="accordion" id="related">Related information</button>
+      <div class="panel">
+	<h3 class="cat">Related person</h3>
+        <p>Search for the authority record for the related person and link to the person described in the record. Create a new person record if needed.</p>   
+        <p>Type of relation cannot be specified here but can be added as a general note, for example Married to Ingeborg Abbott (b. Stephens) (as a note).</p>
+	<h3 class="cat">Related organisation</h3>
+        <p>Search for the authority record for the related organisation and link to the person described in the record. Create a new organisation record if needed.</p>   
+        <p>Type of relation cannot be specified here but can be added as a general note, for example Doctor of history and political science at Uppsala. Librarian at the university library. (Uppsala university).</p>
+        <h3 class="cat">External electronic location (URL)</h3>
+        <p class="catlabeltext">URL:</p>
+	<p>An external link that is relevant to the record described.</p>        
+	<p>The URL must be correctly encoded according to the RFC 3986 standard and start with http:// or https://.</p>
+        <p>Example: https://en.wikipedia.org/wiki/Carl_Linnaeus</p>
+        <p>It is recommended that all URLs used with the element are persistent.</p>
+        <p class="catlabeltext">Display label:</p>
+	<p>A descriptive label displayed on the web page.</p>
+        <p>Example: Wikipedia</p>
+      </div> 
+      <script src="/static/js/accordion.js"></script>
+    </div>
+    <div class="right">
+      <h2>Links</h2>
+      <p><a href="https://www.loc.gov/standards/mads/">MADS</a></p>
+      <p><a href="https://www.ifla.org/g/cataloguing/names-of-persons/">Names of Persons</a></p>
+      <p><a href="https://viaf.org/">VIAF</a></p>
+      <p><a href="https://id.loc.gov/authorities/names.html">Library of Congress Names</a></p>
+      <p><a href="https://data.cerl.org/thesaurus">CERL Thesaurus</a></p>
+      <p><a href="https://www.wikipedia.org/">Wikipedia</a></p>
+    </div>
+
+  </div>  
+  
+</div>
+{% endblock %}
+

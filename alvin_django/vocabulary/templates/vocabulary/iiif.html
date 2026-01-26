@@ -1,0 +1,198 @@
+{% extends "vocabulary/userguidemaster.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Alvin - IIIF{% endblock %}
+{% block content %}
+<div class="bg-white dark:bg-gray-800 dark:text-white w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+  <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="md:flex flex-col md:flex-row">
+      <div class="flex flex-col w-full flex-shrink-0">
+        <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+          <div class="text-lg font-semibold tracking-widest text-gray-900 dark:text-gray-100 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+                <!-- Mobile menu button-->
+                <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+                    <span class="absolute -inset-0.5"></span>
+                    <span class="sr-only">Open main menu</span>
+                    <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <title>Mobile-menu is not open</title>
+                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
+                        <title>Mobile-menu is open</title>
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+	    </div>
+            <nav class="hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#imageapi">{% translate 'IIIF Image API' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#iiifmanifest">{% translate 'IIIF Manifest' %}</a>
+            </nav> 
+
+	    <!-- Mobile menu -->
+
+            <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4">
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#imageapi">{% translate 'IIIF Image API' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#iiifmanifest">{% translate 'IIIF Manifest' %}</a>
+            </div>
+        </div>
+    </div>
+  </div>
+  <span id="main-content-marker"></span>
+  <main class="w-full md:w-2/4 flex-grow pt-1 px-3 mb-10">
+     <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">IIIF</h1>
+     {% if LANGUAGE_CODE != "sv" %}
+         <p class="py-2 text-sm italic">{% translate 'AI-genererad översättning' %}
+     {% endif %}
+     <p class="py-2 font-bold">{% translate 'International Image Interoperability Framework (IIIF) definierar universella standarder för att beskriva och leverera bilder över webben.' %}</p> 
+     <p class="py-2">{% translate 'Nästan allt digitalt material som du hittar i Alvin får användas helt fritt. Var dock uppmärksam på att en del modernare material kan vara upphovsrättsskyddat. Rättighetsmärkningen i varje post talar om vad som gäller.' %}</p>
+     <h2 id="imageapi" class="text-3xl md:text-4xl font-bold pt-4">IIIF Image API</h2> 
+     <p class="py-2">IIIF Image API specificerar en webbtjänst som returnerar en bild som svar på en vanlig HTTP- eller HTTPS-förfrågan. URI:n kan specificera region, storlek, rotation, kvalitet och format för den begärda bilden. Detta API skapades för att underlätta systematisk återanvändning av bildresurser i digitala bildarkiv som underhålls av kulturarvsorganisationer.</p> 
+     <p class="py-2">Alvin stödjer <a class="text-blue-800 dark:text-blue-200 underline" href="https://iiif.io/api/image/3.0/">IIIF Image Api, version 3.0</a>.</p> 
+     <h3 id="demo" class="text-2xl md:text-3xl font-bold pt-4">Demo</h3>
+  <p class="py-2">Välj, Region, Size, Rotation, Quality och Format nedan för att skapa en URL med dessa parametrar och se resultatet från Alvin:</p>
+  <form id="urlForm">
+
+    <div class="[&>*:nth-child(odd)]:bg-off-white [&>*:nth-child(even)]:bg-white pb-4 dark:[&>*:nth-child(odd)]:bg-gray-700 dark:[&>*:nth-child(even)]:bg-gray-800">
+        <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-t border-alvin">
+            <div class="w-full md:w-1/4 flex-grow font-bold pl-2">Server</div>
+            <div class="w-full md:w-3/4 flex flex-grow pl-2" id="uri">https://cora.alvin-portal.org</div>
+        </div>
+        <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+            <div class="w-full md:w-1/4 flex-grow font-bold pl-2">Prefix</div>
+            <div class="w-full md:w-3/4 flex-grow pl-2">iiif</div>
+        </div>
+        <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+            <div class="w-full md:w-1/4 flex-grow font-bold pl-2">Identifier</div>
+            <div class="w-full md:w-3/4 flex-grow pl-2">binary:1306702059522961</div>
+        </div>
+        <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+            <div class="w-full md:w-1/4 flex-grow font-bold pl-2">
+                <label for="region">Region</label>
+            </div>
+            <div class="w-full md:w-3/4 flex-grow pl-2">
+                <select id="region" name="region">
+                    <option value="full">full</option>
+                    <option value="square">square</option>
+                    <option value="100,100,100,100">100,100,100,100</option>
+                </select>
+            </div>
+        </div>
+        <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+            <div class="w-full md:w-1/4 flex-grow font-bold pl-2">
+		<label for="size">Size</label>
+	    </div>
+            <div class="w-full md:w-3/4 flex-grow pl-2">
+                    <select id="size" name="size">
+                        <option value="max">max</option>
+                        <option value="100,">width 100</option>
+                        <option value="250,">width 250</option>
+                        <option value="300," selected="selected">width 300</option>
+                        <option value="pct:75">75 %</option>
+                    </select>
+            </div>
+        </div>
+        <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+            <div class="w-full md:w-1/4 flex-grow font-bold pl-2">
+	        <label for="rotation">Rotation</label>
+	    </div>
+            <div class="w-full md:w-3/4 flex-grow pl-2">
+                    <select id="rotation" name="rotation">
+                        <option value="0">0</option>
+                        <option value="90">90</option>
+                        <option value="180">180</option>
+                        <option value="270">270</option>
+                        <option value="!0">mirror 0</option>
+                        <option value="!180">mirror 180</option>
+                    </select>
+	     </div>
+        </div>
+        <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+            <div class="w-full md:w-1/4 flex-grow font-bold pl-2">
+		<label for="quality">Quality</label>
+	    </div>
+            <div class="w-full md:w-3/4 flex-grow pl-2">
+                    <select id="quality" name="quality">
+                        <option value="default">default</option>
+                        <option value="color">color</option>
+                        <option value="gray">gray</option>
+                        <option value="bitonal">bitonal</option>
+                    </select>
+            </div>
+        </div>
+        <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+            <div class="w-full md:w-1/4 flex-grow font-bold pl-2">
+		<label for="format">Format</label>
+	    </div>
+            <div class="w-full md:w-3/4 flex-grow pl-2">
+                <select id="format" name="format">
+                    <option value=".jpg">.jpg</option>
+                    <option value=".png">.png</option>
+                    <option value=".webp">.webp</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-end py-4">
+        <button type="submit" class="flex flex-row bg-orange-600 hover:bg-orange-700 focus:bg-blue-800 text-white font-semibold py-2 px-4 rounded-full">Skapa URL</button>
+    </div>
+  </form>
+
+
+  <div class="flex flex-col justify-center" id="result"></div>
+
+ <script>
+ document.getElementById('urlForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent form from reloading the page
+
+    const region = document.getElementById('region').value.trim();
+    const size = document.getElementById('size').value.trim();
+    const rotation = document.getElementById('rotation').value.trim();
+    const quality = document.getElementById('quality').value.trim();
+    const format = document.getElementById('format').value.trim();
+
+    // Basic validation
+
+    // Encode to make it URL-safe
+    const encodedRegion = encodeURIComponent(region);
+
+    // Encode to make it URL-safe
+    const encodedSize = encodeURIComponent(size);
+
+    // Encode to make it URL-safe
+    const encodedRotation = encodeURIComponent(rotation);
+
+    // Encode to make it URL-safe
+    const encodedQuality = encodeURIComponent(quality);
+
+  // Encode to make it URL-safe
+    const encodedFormat = encodeURIComponent(format);
+
+    // Example: create a profile URL
+    const generatedUrl = `https://cora.alvin-portal.org/iiif/binary:1306702059522961/${encodedRegion}/${size}/${encodedRotation}/${encodedQuality}${encodedFormat}`;
+
+    // Display clickable link
+    document.getElementById('result').innerHTML =
+        `<div><a class="text-blue-800 dark:text-blue-200 underline" href="${generatedUrl}">${generatedUrl}</a></div>
+         <div class="flex justify-center pt-4"> <img src="${generatedUrl}" alt="binary:1306702059522961"></div>
+         <div><p class="py-2"><span class="font-semibold">Bildinformation:</span> <a class="text-blue-800 dark:text-blue-200 underline" href="https://cora.alvin-portal.org/iiif/binary:1306702059522961/info.json">https://cora.alvin-portal.org/iiif/binary:1306702059522961/info.json</a></p></div>`;
+
+ });
+ </script>
+ 
+
+
+ <h2 id="iiifmanifest" class="text-3xl md:text-4xl font-bold pt-4">IIIF Manifest</h2> 
+ <p class="py-2">Ett IIIF-manifest är det paket som innehåller all information relaterad till ett visst digitalt objekt, inklusive själva bilden och metadata.</p>
+
+ </main>
+  <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+        <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
+            <div class="flex justify-center py-4"> 
+                <a href="https://iiif.io/">
+                    <img class="w-48 object-center" alt="International Image Interoperability Framework (IIIF)" src="/static/img/International_Image_Interoperability_Framework_logo.png">
+                </a>
+            </div>
+      </div>   
+  </div>
+</div>
+{% endblock %}

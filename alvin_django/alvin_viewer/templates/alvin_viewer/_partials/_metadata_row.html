@@ -1,22 +1,22 @@
 {% load i18n static %}
 
 {% if value %}
-<div class="md-row">
-    <dt class="md-label">
+<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+    <div class="w-full md:w-1/4 flex-grow font-bold pl-2">
         {{ label }}
         {% if extra_label %}
             ({{ extra_label }})
         {% endif %}
-    </dt>
-    <dd class="md-value">
+    </div>
+    <div class="w-full md:w-3/4 flex-grow pl-2">
         {% if url %}
-            <a href="{{ url }}">{{ value }}</a>{% if extra_value %}{{ extra_value }}{% endif %}
+            <a class="text-blue-800 dark:text-blue-200 underline" href="{{ url }}">{{ value }}</a>{% if extra_value %}{{ extra_value }}{% endif %}
         {% else %}
             {{ value }}{% if extra_value %}{{ extra_value }}{% endif %}
         {% endif %}
         {% if attribute %}
             ({{ attribute }})
         {% endif %}
-    </dd>
+    </div>
 </div>
 {% endif %}

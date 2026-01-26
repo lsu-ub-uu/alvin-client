@@ -8,7 +8,6 @@ from lxml import etree
 from urllib.request import urlopen
 parser = etree.XMLParser()
 from alvin_viewer.extractors.common import dates
-from alvin_viewer.templatetags import metadata_wrangler
 
 
 def start(request):

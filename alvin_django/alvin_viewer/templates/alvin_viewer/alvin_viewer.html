@@ -92,7 +92,7 @@
       </div>
     </nav>
     <!-- Metadata -->
-    <div class="block w-full border-t border-black">
+    <dl class="block w-full border-t border-black">
       {% if metadata.record_type == 'alvin-place' %}
         {% include './_partials/_alvin_place.html' %}
       {% elif metadata.record_type == 'alvin-person' %}
@@ -104,14 +104,15 @@
       {% elif metadata.record_type == 'alvin-record' %}
         {% include './_partials/_alvin_record.html' %}
       {% endif %}
-      <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
-        <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
-          <div class="w-full md:w-1/4 flex-grow font-bold pl-2">Alvin-id</div>
-          <div class="w-full md:w-3/4 flex flex-grow pl-2">
-           {{ metadata.record_type }}:{{ metadata.id }}
-           </div>
-         </div>
-      </div>
+    </dl>
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
+      <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+        <div class="w-full md:w-1/4 flex-grow font-bold pl-2">Alvin-id</div>
+        <div class="w-full md:w-3/4 flex flex-grow pl-2">
+          {{ metadata.record_type }}:{{ metadata.id }}
+          </div>
+        </div>
+    </div>
       <div data-xshow="activeTab === 'overview'" data-xcloak>
         <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
           <div class="w-full md:w-1/4 flex-grow font-bold pl-2">URI</div>
@@ -124,6 +125,7 @@
              </button>
            </div>
         </div>
+      </div>
        <!-- Map -->
        {% if metadata.latitude and metadata.longitude %}
          <aside class="w-full h-[600px] max-sm:h-[400px] z-0 border-alvin-orange border-4 mb-10" id="map"></aside>

@@ -13,14 +13,14 @@
             {% endfor %}
         {% endwith %}
 
-        {% include "./_metadata_row.html" with label=metadata.birth_date.label value=metadata.birth_date|date_join %}
-        {% include "./_metadata_row.html" with label=metadata.death_date.label value=metadata.death_date|date_join %}
+        {% include "./_metadata_row.html" with label=metadata.birth_date.label value=metadata.birth_date.display %}
+        {% include "./_metadata_row.html" with label=metadata.death_date.label value=metadata.death_date.display %}
     </div>
     <div data-xshow="activeTab === 'all_metadata' || activeTab === 'related'" data-xcloak>
         {% url 'alvin_viewer' 'alvin-place' metadata.birth_place.id as birth_place_url %}
-        {% include "./_metadata_row.html" with label=metadata.birth_place.label url=birth_place_url value=metadata.birth_place.name|alvin_place_name %}
+        {% include "./_metadata_row.html" with label=metadata.birth_place.label url=birth_place_url value=metadata.birth_place.name.title %}
         {% url 'alvin_viewer' 'alvin-place' metadata.death_place.id as death_place_url %}
-        {% include "./_metadata_row.html" with label=metadata.death_place.label url=death_place_url value=metadata.death_place.name|alvin_place_name %}
+        {% include "./_metadata_row.html" with label=metadata.death_place.label url=death_place_url value=metadata.death_place.name.title %}
     </div>
     <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.variant_names.label as variant_label %}

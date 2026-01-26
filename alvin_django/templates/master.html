@@ -1,9 +1,9 @@
-{% load static %}
-{% load i18n %}
+{% load static i18n tailwind_tags %}
+
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
-  <head>       
+  <head>
     <title>{% block title %}Alvin - {% translate 'Startsida' %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -11,15 +11,16 @@
     <meta name="DC.Publisher" content="Uppsala University Library">
     <meta name="keywords" content="Alvin, cultural heritage, digital collections, databases, libraries, archives">
     <meta name="description" content="Alvin - Nordic platform for digitised cultural heritage">
-    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    
+    {% tailwind_css %}
+
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
-    <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
-    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}"> 
     <link rel="alternate" href="{{ request.get_host }}/en{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="en">
     <link rel="alternate" href="{{ request.get_host }}/no{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="no">
     <link rel="alternate" href="{{ request.get_host }}/sv{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="sv">
     <link rel="alternate" href="{{ request.get_host }}{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="x-default">
+    
     <!-- AlpineJS --> 
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="{% static 'js/alpine-validation.js' %}"></script>  
@@ -30,18 +31,20 @@
         [data-xcloak] {
             display: none !important; /* Important to override any default */
         }
-    </style>   
+    </style>
+
     {% block head %}
     {% endblock %}
 
     {% block jshead %}
     {% endblock %}
+
   </head>
   <body class="min-h-screen flex flex-col"> 
     <span class="sr-only">
       <a class="skip-to-content" href="#main-content-marker">Skip to content</a>
     </span>
-      {% include "alvin_info/navbar.html" %}
+    {% include "_partials/_navbar.html" %}
     
     <!-- The Panel with Search Form-->
       <div id="myPanel" class="bg-white dark:bg-gray-800 overflow-hidden transition-all duration-300 ease-in-out max-h-0">
@@ -51,7 +54,6 @@
       <script src="{% static 'js/panel.js' %}"></script>	
       {% block content %}
       {% endblock %}    
-      {% include "alvin_info/footer.html" %}
       <!-- Back to top button -->
   <button
     type="button"
@@ -76,4 +78,5 @@
     </button>
     <script src="{% static 'js/btn-back-to-top.js' %}"></script>
   </body>
+  {% include "_partials/_footer.html" %}
 </html>

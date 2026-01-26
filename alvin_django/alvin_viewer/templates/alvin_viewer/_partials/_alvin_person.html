@@ -1,10 +1,15 @@
-{% load i18n static metadata_wrangler %}
+{% load i18n static %}
+
+{% block title %}
+<title>Alvin - {{ metadata.authority_names.title }}</title>
+{% endblock %}
+
 <!-- Metadata -->
 <div class="flex flex-col">
     <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.authority_names.label as authority_label %}
             {% for lang, name in metadata.authority_names.names.items %}
-                {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name|alvin_person_name %}
+                {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
 
@@ -20,14 +25,20 @@
     <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.variant_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
-                {% with first=name.0|default:name %}
-                        {% include "./_metadata_row.html" with label=variant_label extra_label=first.label_lang value=name|alvin_person_name %}
-                {% endwith %}
+                {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
-        {% include "./_metadata_row.html" with label=metadata.nationality.label value=metadata.nationality.country.items|list_join %}
+        {% include "./_metadata_row.html" with label=metadata.birth_date.label value=metadata.birth_date.display %}
+        {% include "./_metadata_row.html" with label=metadata.death_date.label value=metadata.death_date.display %}
+    </div>
+    <div x-show="activeTab === 'all_metadata' || activeTab === 'related'" x-cloak>
+        {% include "./_metadata_row.html" with label=metadata.birth_place.label url=metadata.birth_place.url value=metadata.birth_place.display %}
+        {% include "./_metadata_row.html" with label=metadata.death_place.label url=metadata.death_place.url value=metadata.death_place.display %}
+    </div>
+    <div x-show="activeTab === 'all_metadata'" x-cloak>
+        {% include "./_metadata_row.html" with label=metadata.nationality.label value=metadata.nationality.country.display %}
         {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
-        {% include "./_metadata_row.html" with label=metadata.fields_of_endeavor.label value=metadata.fields_of_endeavor.texts|list_join %}
+        {% include "./_metadata_row.html" with label=metadata.fields_of_endeavor.label value=metadata.fields_of_endeavor.display %}
         {% include "./_metadata_row.html" with label=metadata.gender.label value=metadata.gender.item %}
         {% for note in metadata.notes.texts %}
             {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}

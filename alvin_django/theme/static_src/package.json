@@ -4,26 +4,33 @@
   "description": "",
   "scripts": {
     "start": "npm run dev",
-    "build": "npm run build:clean && npm run build:tailwind",
+    "build": "npm run build:clean && npm run build:tailwind && npm run build:js",
     "build:clean": "rimraf ../static/css/dist",
     "build:tailwind": "cross-env NODE_ENV=production tailwindcss --postcss -i ./src/styles.css -o ../static/css/dist/styles.css --minify",
     "dev": "cross-env NODE_ENV=development tailwindcss --postcss -i ./src/styles.css -o ../static/css/dist/styles.css -w",
-    "tailwindcss": "node ./node_modules/tailwindcss/lib/cli.js"
+    "tailwindcss": "node ./node_modules/tailwindcss/lib/cli.js",
+
+    "build:js": "esbuild ./src/tify.js --bundle --outfile=../static/js/tify.js --format=esm --minify",
+    "dev:js": "esbuild ./src/tify.js --bundle --outfile=../static/js/tify.js --format=esm --watch"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/cli": "^4.0.0",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.16",
     "cross-env": "^7.0.3",
+    "esbuild": "^0.27.1",
     "postcss": "^8.5.1",
     "postcss-import": "^16.1.0",
     "postcss-nested": "^7.0.2",
     "postcss-simple-vars": "^7.0.1",
     "rimraf": "^6.0.1",
-    "tailwindcss": "^4.0.0",
-    "@tailwindcss/cli": "^4.0.0"
+    "tailwindcss": "^4.0.0"
+  },
+  "dependencies": {
+    "tify": "^0.34.5"
   }
 }

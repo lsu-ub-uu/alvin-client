@@ -5,22 +5,22 @@ register = template.Library()
 
 @register.inclusion_tag('./alvin_viewer/_partials/_record_icon_name.html')
 def render_record_icon(metadata):
-    rt = (metadata or {}).get("record_type")
+    rt = metadata.record_type
 
     # authority
     if rt in ('alvin-place','alvin-person','alvin-organisation'):
         mapping = {
-            'alvin-place': ('/img/authorityTypes/place.svg', metadata.get("label"), metadata.get("label")),
-            'alvin-person': ('/img/authorityTypes/person.svg', metadata.get("label"), metadata.get("label")),
-            'alvin-organisation': ('/img/authorityTypes/organisation.svg', metadata.get("label"), metadata.get("label")),
+            'alvin-place': ('/img/authorityTypes/place.svg', metadata.label, metadata.label),
+            'alvin-person': ('/img/authorityTypes/person.svg', metadata.label, metadata.label),
+            'alvin-organisation': ('/img/authorityTypes/organisation.svg', metadata.label, metadata.label),
         }
         icon_path, alt, label = mapping[rt] 
         return {'icon_path': icon_path, 'icon_alt': alt, 'label': label,}
     
     if rt == 'alvin-work':
 
-        label = metadata.get("label")
-        form_code = metadata.get("form_of_work")["code"]
+        label = metadata.label
+        form_code = metadata.form_of_work.code
 
         icon_paths = {
             "music": "not",
@@ -36,11 +36,11 @@ def render_record_icon(metadata):
         }
     
     # record
-    tor = (metadata or {}).get("type_of_resource", {})
-    pm = (metadata or {}).get("production_method", {})
-    resource_code  = tor.get("code")
-    type_of_resource = tor.get("item")
-    production_method = pm.get("code")
+    tor = metadata.type_of_resource
+    pm = metadata.production_method
+    resource_code  = tor.code if tor else None
+    type_of_resource = tor.item if tor else None
+    production_method = pm.code if pm else None
     label_bits = [type_of_resource]
     if production_method == "manuscript":
         label_bits.append("manuscript")

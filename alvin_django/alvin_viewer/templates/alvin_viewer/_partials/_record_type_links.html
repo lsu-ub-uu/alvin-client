@@ -1,37 +1,31 @@
-{% load i18n static metadata_wrangler %}
+{% load i18n static %}
 
 {% if record_type_links %}
 
 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
     <div class="w-full md:w-1/4 flex-grow font-bold pl-2">
         {{ label }}
-    </div>
-    <div class="w-full md:w-3/4 flex-grow pl-2">
+    </dt>
+    <dd class="md-value">
+        <ul class="list-decimal list-inside">
         {% for record_type in record_type_links.records %}
-            {% url 'alvin_viewer' link_type record_type.id as record_type_url %}
-                <a class="text-blue-800 dark:text-blue-200 underline" href="{{ record_type_url }}">
-                    {% if link_type == 'alvin-record' %}
-                        {{ record_type|alvin_title:link_type }}
-                    {% elif link_type == 'alvin-place'%}
-                        {{ record_type.name.names|alvin_title:link_type }}
-                    {% elif link_type == 'alvin-person'%}
-                        {{ record_type.name.names|alvin_title:link_type }}
-                    {% elif link_type == 'alvin-organisation'%}
-                        {{ record_type.name.names|alvin_title:link_type }}
-                    {% elif link_type == 'alvin-work' %}
-                        {{ record_type.title|alvin_record_title }}
-                    {% endif %}
-                </a>
-                {% if record_type.type %}
-                    ({{ record_type.type }})
-                {% endif %}
+            <li>
+            <a href="{{ record_type.url }}">
+                {{ record_type.main_title.display }}
+            </a>
+            {% if record_type.type %}
+                ({{ record_type.type }})
+            {% endif %}
+            {% if record_type.parts %}
+            <ul class="pb-1 list-inside">
                 {% for part in record_type.parts %}
-                    <strong>{{ part.type }}</strong>: {{ part|part_join }}{% if not forloop.last %} ; {% endif %}
+                    <li><strong>{{ part.type }}: </strong>{{ part.display}}</p>
                 {% endfor %}
-                {% if not forloop.last %}
-                    <br>
-                {% endif %}
+            </ul>
+            {% endif %}
+            </li>
         {% endfor %}
-    </div>
+        </ul>
+    </dd>
 </div>
 {% endif %}

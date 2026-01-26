@@ -21,9 +21,7 @@ def extract_metadata(root: etree._Element, record_type: str) -> dict:
     extractor = EXTRACTORS.get(record_type)
     if not extractor:
         raise Http404("Invalid record type")
-    common_data = common(root, record_type)
-    data = extractor(root)
-    return {**common_data, **data}
+    return extractor(root)
 
 def alvin_viewer(request, record_type: str, record_id: str):
     value = request.GET.get("data", None)

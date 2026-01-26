@@ -27,6 +27,7 @@ session = _session()
 COLLECTIONS = [
     #common
     "languageCodeCollection",
+    "identifierTypeAuthorityCollection",
 
     #alvin-record
     "identifierTypeCollection",
@@ -35,10 +36,11 @@ COLLECTIONS = [
     "dateTypeCollection",
     "noteTypeCollection",
     "noteTypeInternalCollection",
+    "partTypeCollection",
     "physicalDescriptionNoteTypeCollection",
-    "subjectHeadingSchemaCollection",
     "relatedToTypeCollection",
-
+    "subjectHeadingSchemaCollection",
+    
     #alvin-person
     "variantPersonNameTypeCollection",
     "noteTypeAuthorityCollection",

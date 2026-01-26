@@ -1,6 +1,6 @@
 {% extends 'alvin_info/master.html' %}
 
-{% load i18n static metadata_wrangler render_record_icon %}
+{% load i18n static render_record_icon %}
 
 {% block title %}Alvin - {{ metadata|alvin_title:metadata.record_type }}
 {% endblock %}
@@ -8,7 +8,6 @@
 {% block head %}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-    <link rel="stylesheet" href="{% static 'tify/tify.css' %}">
 {% endblock %}
 
 {% block jshead %}
@@ -16,28 +15,17 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
     crossorigin="">
   </script>
-  <script src="{% static 'tify/tify.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
 
-  {% if metadata.files %}
-  <!-- Bildvisare TIFY -->
-  <div id="tify" class="h-[80vh] w-full"></div>
-  
-  <script>
-    new Tify({
-      container: '#tify',
-      manifestUrl: "{% url 'iiif_manifest' metadata.id %}"
-    })
-  </script>
-  {% endif %}
-
-<div class="bg-white dark:bg-gray-800 dark:text-white flex-grow w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4">
-  <span id="main-content-marker"></span>
-
-
+  <div class="px-10">
+    <div class="pt-8 pb-2">
+      <!-- Titel -->
+      <h1 class="w-full text-5xl max-md:text-4xl max-sm:text-3xl break-words font-universalis font-bold">
+        {{ metadata.authority_names.title}}{{metadata.main_title.display }}
+      </h1>
 
   <main class="bg-white dark:bg-gray-800 dark:text-white mb-8 w-full md:w-3/4 pt-1 px-3" data-xdata="{ activeTab: 'overview' }">
 
@@ -55,30 +43,28 @@
     <div class="flex w-full items-center mb-4 max-md:text-sm">
       {% render_record_icon metadata %}
     </div>
-    <nav class="flex flex-wrap justify-start text-md max-md:text-base" data-xdata="{ activeTab: overview }">
-      <div class="flex flex-col border-r-4 border-white dark:border-gray-800">
-        <button data-xon.click="activeTab = 'overview'" class="dark:text-gray-900 cursor-pointer flex h-full p-2 text-center bg-light-alvin hover:bg-gray-700 hover:text-white">
-          <svg class="w-6 h-6 min-sm:visible" stroke="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <title>{% translate 'Översikt' %}</title>
-            <path stroke="currentColor" stroke-width="1.5" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
-            <path stroke="currentColor" stroke-width="1.5" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-          </svg>
-          <span class="pl-1 max-sm:hidden">{% translate 'Översikt' %}</span>
-        </button>
-        <div data-xcloak data-xshow="activeTab === 'overview'" class="px-2 border-b-4 border-blue-500"></div>
-        <div data-xcloak data-xshow="activeTab != 'overview'" class="pr-4 border-b-4 border-white dark:border-gray-800"></div>
-      </div>
-      <div class="flex flex-col border-r-4 border-white dark:border-gray-800">
-        <button data-xon.click="activeTab = 'all_metadata'" class="dark:text-gray-900 cursor-pointer flex h-full p-2 text-center bg-light-alvin hover:bg-gray-700 hover:text-white">            
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <title>{% translate 'All metadata' %}</title>
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-          </svg>
-          <span class="pl-1 max-sm:hidden">{% translate 'All metadata' %}</span>
-        </button>
-        <div data-xcloak data-xshow="activeTab === 'all_metadata'" class="px-2 border-b-4 border-blue-500"></div>
-        <div data-xcloak data-xshow="activeTab != 'all_metadata'" class="pr-4 border-b-4 border-white dark:border-gray-800"></div>
-      </div>
+
+    {% if metadata.files %}
+    <div
+      id="tify-viewer"
+      style="height: 80vh;"
+      data-manifest-url="{% url 'iiif_manifest' metadata.id %}"
+    ></div>
+
+    <script type="module" src="{% static 'js/tify.js' %}"></script>
+    {% endif %}
+
+    <nav class="flex flex-wrap justify-start text-xl max-md:text-base">
+      <button @click="activeTab = 'overview'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
+              :class="{ 'bg-alvin-green': activeTab === 'overview', 'bg-gray-200': activeTab != 'overview' }">
+              <img class="min-sm:pr-1 max-sm:visible" src="{% static 'img/nav/overview.svg' %}" />
+              <span class="max-sm:hidden">{% translate 'Översikt' %}</span>
+      </button>
+      <button @click="activeTab = 'all_metadata'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
+              :class="{ 'bg-alvin-green': activeTab === 'all_metadata', 'bg-gray-200': activeTab != 'all_metadata' }">
+              <img class="min-md:pr-1 min-sm:visible" src="{% static 'img/nav/allmetadata.svg' %}" />
+              <span class="max-sm:hidden">{% translate 'All metadata' %}</span>
+      </button>
       {% if metadata.components %}
       <button data-xon.click="activeTab = 'inventory'" class="dark:text-gray-900 cursor-pointer flex h-full p-2 text-center hover:bg-light-alvin">
             <img class="min-md:pr-1 min-sm:visible" src="{% static 'img/nav/inventory.svg' %}">

@@ -5,7 +5,6 @@ from django.core.paginator import Paginator
 import requests
 from lxml import etree
 from django.conf import settings
-from alvin_viewer.templatetags import metadata_wrangler
 
 from alvin_viewer.extractors.common import _xp, _norm_rt, titles
 

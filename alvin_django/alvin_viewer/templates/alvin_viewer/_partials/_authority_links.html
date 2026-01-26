@@ -1,0 +1,27 @@
+{% load i18n static %}
+
+{% if authority_links %}
+<div class="md-row">
+    <dt class="md-label">
+        {{ label }}
+    </dt>
+    <dd class="md-value">
+        <ul class="list-inside">
+        {% for authority in authority_links.records %}
+            <li>
+                <a href="{{ authority.url }}">
+                    {% if link_type == 'alvin-work' %}
+                        {{ authority.main_title.display }}
+                    {% else %}
+                        {{ authority.name.title }}
+                    {% endif %}
+                </a>
+                {% if authority.type %}
+                    ({{ authority.type }})
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </dd>
+</div>
+{% endif %}

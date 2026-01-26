@@ -8,11 +8,9 @@ from urllib3.util.retry import Retry
 XML_HEADERS = {
     "Content-Type": "application/vnd.cora.record+xml",
     "Accept": "application/vnd.cora.record-decorated+xml",
-    "Accept-Encoding": "gzip, deflate",
 }
 
 SAFE_XML_PARSER = etree.XMLParser(resolve_entities=False, no_network=True, huge_tree=False)
-
 
 @dataclass(frozen=True)
 class AlvinEndpoints:
@@ -55,7 +53,7 @@ class AlvinAPI:
         except etree.XMLSyntaxError as e:
             raise ValueError(f"Invalid XML: {e}") from e
 
-    def fetch_xml(self, url: str, *, cache_key: str | None = None, ttl: int = 60) -> etree._Element:
+    def fetch_xml(self, url: str, *,  cache_key: str| None = None, ttl: int = 60) -> etree._Element:
     
         resp = self.session.get(url, timeout=(3, 15), allow_redirects=False)
         resp.raise_for_status()

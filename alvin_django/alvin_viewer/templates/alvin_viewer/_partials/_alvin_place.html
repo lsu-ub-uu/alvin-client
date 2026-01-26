@@ -1,6 +1,8 @@
-{% load i18n static metadata_wrangler %}
+{% load i18n static %}
 
-
+{% block title %}
+<title>Alvin - {{ metadata.authority_names.title }}</title>
+{% endblock %}
 
 {% block jshead %}
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -14,16 +16,14 @@
     <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.authority_names.label as authority_label %}
             {% for lang, name in metadata.authority_names.names.items %}
-                {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name|alvin_place_name %}
+                {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
     </div>
     <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.variant_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
-                {% with first=name.0|default:name %}
-                        {% include "./_metadata_row.html" with label=variant_label extra_label=first.label_lang value=name|alvin_place_name %}
-                {% endwith %}
+                {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
         {% include "./_metadata_row.html" with label=metadata.country.label value=metadata.country.item %}

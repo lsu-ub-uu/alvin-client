@@ -1,8 +1,8 @@
-{% extends 'alvin_info/master.html' %}
+{% extends 'master.html' %}
 
 {% load i18n static render_record_icon %}
 
-{% block title %}Alvin - {{ metadata|alvin_title:metadata.record_type }}
+{% block title %}Alvin - {{ metadata.main_title.display }}{{ metadata.authority_names.title }}
 {% endblock %}
 
 {% block head %}
@@ -24,7 +24,7 @@
     <div class="pt-8 pb-2">
       <!-- Titel -->
       <h1 class="w-full text-5xl max-md:text-4xl max-sm:text-3xl break-words font-universalis font-bold">
-        {{ metadata.authority_names.title}}{{metadata.main_title.display }}
+        {{metadata.main_title.display }}{{ metadata.authority_names.title}}
       </h1>
 
 
@@ -41,7 +41,7 @@
       <span class="pl-2 uppercase">{% translate 'Tillbaka till sökresultatet' %}</span>
     </a>  
   {% endif %} 
- <h1 class="text-2xl md:text-3xl font-bold pb-2">{{ metadata|alvin_title:metadata.record_type }}</h1>
+ <h1 class="text-2xl md:text-3xl font-bold pb-2">{{ metadata.main_title.display }}{{ metadata.authority_names.title }}</h1>
     <div class="flex w-full items-center mb-4 max-md:text-sm">
       {% render_record_icon metadata %}
     </div>

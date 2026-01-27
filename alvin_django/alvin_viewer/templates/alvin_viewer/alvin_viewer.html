@@ -18,20 +18,7 @@
 {% endblock %}
 
 {% block content %}
-
-
-  <div class="px-10">
-    <div class="pt-8 pb-2">
-      <!-- Titel -->
-      <h1 class="w-full text-5xl max-md:text-4xl max-sm:text-3xl break-words font-universalis font-bold">
-        {{metadata.main_title.display }}{{ metadata.authority_names.title}}
-      </h1>
-
-
-
   <main class="bg-white dark:bg-gray-800 dark:text-white mb-8 w-full md:w-3/4 pt-1 px-3" data-xdata="{ activeTab: 'overview' }">
-
-
   {% if value != None %}
     <a class="flex w-fit pb-2" href="{{ value }}">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -57,12 +44,12 @@
     {% endif %}
 
     <nav class="flex flex-wrap justify-start text-xl max-md:text-base">
-      <button @click="activeTab = 'overview'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
+      <button data-xon.click="activeTab = 'overview'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
               :class="{ 'bg-alvin-green': activeTab === 'overview', 'bg-gray-200': activeTab != 'overview' }">
               <img class="min-sm:pr-1 max-sm:visible" src="{% static 'img/nav/overview.svg' %}" />
               <span class="max-sm:hidden">{% translate 'Översikt' %}</span>
       </button>
-      <button @click="activeTab = 'all_metadata'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
+      <button data-xon.click="activeTab = 'all_metadata'" class="flex h-full p-4 text-center hover:bg-alvin-green" 
               :class="{ 'bg-alvin-green': activeTab === 'all_metadata', 'bg-gray-200': activeTab != 'all_metadata' }">
               <img class="min-md:pr-1 min-sm:visible" src="{% static 'img/nav/allmetadata.svg' %}" />
               <span class="max-sm:hidden">{% translate 'All metadata' %}</span>

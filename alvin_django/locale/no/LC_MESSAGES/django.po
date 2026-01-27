@@ -705,7 +705,7 @@ msgstr "Sted"
 msgid "Verk"
 msgstr "Verk"
 
-#: .\alvin_info\templates\alvin_info\footer.html:29
+#: .\templates\_partials\_footer.html:29
 msgid "Byt språk"
 msgstr "Bytt språk"
 

@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'alvin_info',
     'alvin_viewer',
     'alvin_list_viewer',
-    'search',
     'tailwind',
     'theme',
     'vocabulary',

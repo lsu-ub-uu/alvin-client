@@ -30,7 +30,7 @@
         [data-xcloak] {
             display: none !important; /* Important to override any default */
         }
-    </style> 
+    </style>
     <script src="{% static 'js/panel.js' %}"></script>	
     <script src="{% static 'js/sorttable.js' %}/"></script>
     {% block head %}
@@ -46,29 +46,9 @@
       {% include "vocabulary/userguidenavbarnew.html" %}	
       {% block content %}
       {% endblock %}    
-      {% include "alvin_info/footer.html" %}
+      {% include '_partials/_footer.html' %}
       <!-- Back to top button -->
-  <button
-    type="button"
-    data-twe-ripple-init
-    data-twe-ripple-color="light"
-    class="!fixed bottom-5 end-5 hidden rounded-full bg-orange-600 p-3 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-orange-700 hover:shadow-lg focus:bg-orange-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-orange-800 active:shadow-lg"
-    id="btn-back-to-top">
-    <span class="[&>svg]:w-4">
-        <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="3"
-      stroke="currentColor">
-      <title>Back-to-top button</title>
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
-        </svg>
-      </span>
-    </button>
+  {% include '_partials/_back_to_top.html' %}
     <script src="{% static 'js/btn-back-to-top.js' %}"></script>
   </body>
 </html>

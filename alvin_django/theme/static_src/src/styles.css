@@ -102,11 +102,11 @@ a {
 }
 
 .topnav a {
-   @apply text-inherit font-universalis text-black hover:text-alvin-green;
+   @apply text-inherit font-universalis text-black dark:text-white hover:text-alvin-green;
 }
 
 .sidenav a {
-   @apply text-inherit font-universalis text-black hover:text-alvin-green;
+   @apply text-inherit font-universalis text-black dark:text-white hover:text-alvin-green;
 }
 
 [x-cloak] { display: none !important; }

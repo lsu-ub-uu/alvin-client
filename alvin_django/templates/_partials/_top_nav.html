@@ -1,65 +1,98 @@
 {% load i18n static %}
 
-<header x-data="{ isScrollingDown: false, lastScroll: 0, showSideNav: false }" x-init="
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-            const triggerPoint = 100
-            if (currentScroll > triggerPoint) {
-                if (currentScroll > lastScroll) {
-                    isScrollingDown = true;
-                } else {
-                    isScrollingDown = false;
-                }
-                lastScroll = currentScroll;
-            }
-        })
-    "
-    aria-label="{% trans 'Huvudmeny' %}">
+<header aria-label="{% trans 'Huvudmeny' %}" class="sticky top-0 z-50" data-xdata="{ showSideNav: false, showSearch: false }" data-xon.click.away="showSideNav = false">
     
-    <nav class="topnav fixed top-0 flex justify-between w-full h-16 bg-white border-4 border-black z-40 select-none transition-transform" 
-        x-data="{ showSearch: false }" 
-        :class="{'-translate-y-full': isScrollingDown, 'translate-y-0': !isScrollingDown}"
-        >
+    <nav class="topnav flex justify-between w-full h-16 bg-white/98 border-4 dark:bg-gray-800/98 border-black z-40 select-none">
 
         <nav class="flex flex-shrink-0 items-center h-full">
             
             <!-- Hamburger menu -->
-            <button @click="showSideNav = !showSideNav" class="w-full h-full items-center p-4 border-r-4 border-black hover:bg-alvin-green">
-                <img class="w-7" src="{% static '/img/nav/menu.svg' %}" alt="{% trans 'Mobilmeny' %}">
+            <button data-xon.click="showSideNav = !showSideNav" class="w-full h-full items-center p-4 text-black dark:text-white hover:bg-alvin-green">
+                <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" alt="{% trans 'Mobilmeny' %}">
+                    <path d="M3 5H21"
+                        stroke="currentColor" 
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                    </path>
+                    <path d="M3 12H21" 
+                        stroke="currentColor" 
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                    </path>
+                    <path d="M3 19H21"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                    </path>
+                </svg>
             </button>
 
             <!-- Start -->
-            <a class="h-full mt-6 text-center text-4xl mx-4 text-black" href="{% url 'start' %}">
+            <a class="h-full mt-6 text-center text-4xl mx-4 text-black dark:text-white" href="{% url 'start' %}">
                 ALVIN
             </a>
 
         </nav>
 
         <nav class="flex flex-shrink-0 justify-between items-center h-full border-black">
-            <a class="flex mt-1 p-2 border-black text-nowrap max-md:hidden">
+            <a href="{% url 'copyright' %}" class="flex mt-1 p-2 border-black text-nowrap max-md:hidden">
                 Copyright
             </a>
-            <a class="flex mt-1 p-4 border-black text-nowrap max-md:hidden">
+            <a href="{% url 'about' %}" class="flex mt-1 p-4 border-black text-nowrap max-md:hidden">
                 Om Alvin
             </a>
-
+            
             <!-- Sök -->
-            <button @click="showSearch = !showSearch; $nextTick(() => { $refs.alvinsearch.focus(); });" class="flex w-full h-full justify-between items-center p-4 border-x-4 border-black hover:bg-alvin-green"
-                    :class="{'bg-alvin-green': showSearch}">
+            <button data-xon.click="showSearch = !showSearch; $nextTick(() => { $refs.alvinsearch.focus(); });" 
+                class="flex w-full h-full justify-between items-center dark:text-white p-4 border-x-4 border-black hover:bg-alvin-green hover:text-black"
+                :class="{'bg-alvin-green': showSearch}">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Sök</p>
-                <img class="w-7 transition-all duration-300" src="{% static '/img/nav/binocular.svg' %}"
-                    x-show="!showSearch">
-                <img class="w-7 transition-all duration-300" src="{% static '/img/nav/xmark.svg' %}"
-                    x-show="showSearch" x-cloak>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6" 
+                        data-xshow="!showSearch">
+                        <title>Open search bar</title>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+                <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" data-xshow="showSearch" data-xcloak>
+                    <title>Close search bar</title>
+                    <path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round">
+                    </path>
+                </svg>
             </button>
             
             <!-- Sökmeny -->
             {% include './_search_menu.html' %}
 
             <!-- Hjälp -->
-            <button class="flex w-full h-full justify-between items-center p-4 border-black hover:bg-alvin-orange">
+            <button data-xon.click="showHelp = !showHelp"
+                class="flex w-full h-full justify-between items-center dark:text-white p-4  border-black hover:bg-alvin-orange">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Hjälp</p>
-                <img class="w-7" src="{% static '/img/nav/help-circle.svg' %}">
+                <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round">
+                    </path>
+                    <path d="M9 9C9 5.49997 14.5 5.5 14.5 9C14.5 11.5 12 10.9999 12 13.9999" 
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                    </path>
+                    <path d="M12 18.01L12.01 17.9989"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                    </path>
+                </svg>
             </button>
         </nav>
 

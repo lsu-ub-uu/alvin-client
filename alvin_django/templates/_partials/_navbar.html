@@ -1,9 +1,9 @@
 {% load i18n %}
 
-<nav data-xdata="{ mobileMenuIsOpen: false }" data-xon.click.away="mobileMenuIsOpen = false" class="sticky w-full bg-white/95 dark:bg-gray-800/95 top-0 z-40">
-    <div class="flex h-16 items-center justify-between px-2">
+<nav data-xdata="{ mobileMenuIsOpen: false }" data-xon.click.away="mobileMenuIsOpen = false" class="sticky w-full h-16 bg-white/95 dark:bg-gray-800/95 top-0 z-40 shadow-2xs">
+    <div class="flex h-20 items-center justify-center px-14">
+        <!-- Mobile menu button-->
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            <!-- Mobile menu button-->
             <button data-xon.click="mobileMenuIsOpen = !mobileMenuIsOpen" data-xbind.aria-expanded="mobileMenuIsOpen" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
                 <span class="absolute -inset-0.5"></span>
                 <span class="sr-only">Open main menu</span>
@@ -18,7 +18,7 @@
             </button>
         </div>
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <a href="{% url 'start' %}" class="font-[Universalis] text-4xl text-black dark:text-white">ALVIN</a>
+            <a href="{% url 'start' %}" class="font-[Universalis] text-4xl !text-black dark:!text-white no-underline hover:!text-black focus:!text-black dark:hover:!text-white dark:focus:!text-white">ALVIN</a>
             <div class="hidden sm:ml-6 sm:block">
                 <div class="flex space-x-4">       
                     <a href="{% url 'userguide' %}" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-base font-normal text-white">{% translate 'För medlemmar' %}</a>

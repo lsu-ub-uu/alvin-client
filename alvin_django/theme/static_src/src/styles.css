@@ -58,7 +58,14 @@ https://tailwindcss.com/docs/theme
 
 }
 
-html { @apply font-sans; }
+html {
+  @apply font-sans;
+  scrollbar-gutter: stable;
+}
+
+body {
+  overflow-y: scroll;
+}
 
 .md-row {
   @apply flex justify-start w-full text-xl leading-7 break-words py-2
@@ -71,30 +78,6 @@ html { @apply font-sans; }
 
 .md-value {
   @apply w-full md:w-[55%];
-}
-
-@layer components {
-
-  .alvin-viewer-wrapper {
-  }
-
-  .clover-viewer {
-    @apply flex flex-col;
-  }
-
-  .clover-viewer-header {
-  }
-
-  .clover-viewer-content {
-   
-  }
-
-  .clover-viewer-painting {
-     @apply border-y-4 border-black;
-  }
-
-  .clover-viewer-media-wrapper {
-  }
 }
 
 a { 

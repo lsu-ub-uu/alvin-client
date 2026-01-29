@@ -2,8 +2,7 @@
 
 {% load i18n static render_record_icon %}
 
-{% block title %}Alvin - {{ metadata.main_title.display }}{{ metadata.authority_names.title }}
-{% endblock %}
+{% block title %}Alvin - {{ metadata.main_title.display }}{{ metadata.authority_names.title }}{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -17,9 +16,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="flex flex-col lg:flex-row gap-4">
+<div class="min-h-screen w-full flex flex-col lg:flex-row">
   <main
-    class="bg-white dark:bg-gray-800 dark:text-white mb-8 w-full lg:flex-1 min-w-0 pt-1 px-3 order-2 md:order-2 lg:order-1"
+    class="bg-white dark:bg-gray-800 dark:text-white w-full lg:flex-1 pt-4 pb-8 px-8 order-2 md:order-2 lg:order-1"
     data-xdata="{ activeTab: 'overview' }">
     {% if value != None %}
     <a class="flex w-fit pb-2" href="{{ value }}">
@@ -31,7 +30,7 @@
       <span class="pl-2 uppercase">{% translate 'Tillbaka till sökresultatet' %}</span>
     </a>
     {% endif %}
-    <h1 class="text-2xl md:text-3xl font-bold pb-2">{{ metadata.main_title.display }}{{ metadata.authority_names.title }}</h1>
+    <h1 class="text-2xl md:text-4xl font-bold pb-2">{{ metadata.main_title.display }}{{ metadata.authority_names.title }}</h1>
     <div class="flex w-full items-center mb-4 max-md:text-sm">
       {% render_record_icon metadata %}
     </div>
@@ -46,7 +45,8 @@
             stroke-linejoin="round"></path>
           <path
             d="M12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17Z"
-            fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          </path>
         </svg>
         <span class="max-sm:hidden">{% translate 'Översikt' %}</span>
       </button>
@@ -76,6 +76,12 @@
       {% if metadata.components %}
       <button data-xon.click="activeTab = 'inventory'"
         class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center bg-light-alvin hover:bg-gray-700 hover:text-white">
+        <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 5H11" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M3 12H16" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M3 19H21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
         <img class="min-md:pr-1 min-sm:visible" src="{% static 'img/nav/inventory.svg' %}">
         <span class="max-sm:hidden">
           {% if metadata.type_of_resource.code == 'col' %}
@@ -151,7 +157,7 @@
 
   {% if metadata.files %}
   <aside class="w-full lg:w-1/2 order-1 md:order-1 lg:order-2">
-    <div id="tify-viewer" style="height: 80vh;" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
+    <div class="min-lg:h-full h-[80vh]" id="tify-viewer" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
   </aside>
   <script type="module" src="{% static 'js/tify.js' %}"></script>
   {% endif %}

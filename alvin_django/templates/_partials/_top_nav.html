@@ -1,13 +1,11 @@
 {% load i18n static %}
 
 <header aria-label="{% trans 'Huvudmeny' %}" class="sticky top-0 z-50" data-xdata="{ showSideNav: false, showSearch: false }" data-xon.click.away="showSideNav = false">
-    
-    <nav class="topnav flex justify-between w-full h-16 bg-white/98 border-4 dark:bg-gray-800/98 border-black z-40 select-none">
-
-        <nav class="flex flex-shrink-0 items-center h-full">
-            
+    <nav class="topnav flex justify-between w-full h-16 bg-white/98 dark:bg-gray-800/98 shadow-md z-40 select-none">
+        <nav class="flex flex-shrink-0 justify-center items-center h-full">
+         
             <!-- Hamburger menu -->
-            <button data-xon.click="showSideNav = !showSideNav" class="w-full h-full items-center p-4 text-black dark:text-white hover:bg-alvin-green">
+            <button data-xon.click="showSideNav = !showSideNav" class="flex w-full h-full justify-between items-center dark:text-white p-4 border-black hover:bg-alvin-green">
                 <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" alt="{% trans 'Mobilmeny' %}">
                     <path d="M3 5H21"
                         stroke="currentColor" 
@@ -31,7 +29,7 @@
             </button>
 
             <!-- Start -->
-            <a class="h-full mt-6 text-center text-4xl mx-4 text-black dark:text-white" href="{% url 'start' %}">
+            <a class="h-full text-center py-4 px-2 text-4xl text-black dark:text-white" href="{% url 'start' %}">
                 ALVIN
             </a>
 
@@ -39,15 +37,15 @@
 
         <nav class="flex flex-shrink-0 justify-between items-center h-full border-black">
             <a href="{% url 'copyright' %}" class="flex mt-1 p-2 border-black text-nowrap max-md:hidden">
-                Copyright
+                {% translate 'Upphovsrätt' %}
             </a>
             <a href="{% url 'about' %}" class="flex mt-1 p-4 border-black text-nowrap max-md:hidden">
-                Om Alvin
+                {% translate 'Om Alvin' %}
             </a>
             
             <!-- Sök -->
             <button data-xon.click="showSearch = !showSearch; $nextTick(() => { $refs.alvinsearch.focus(); });" 
-                class="flex w-full h-full justify-between items-center dark:text-white p-4 border-x-4 border-black hover:bg-alvin-green hover:text-black"
+                class="flex w-full h-full justify-between items-center dark:text-white p-4 hover:bg-alvin-green hover:text-black"
                 :class="{'bg-alvin-green': showSearch}">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">Sök</p>
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6" 
@@ -72,7 +70,7 @@
             <!-- Hjälp -->
             <button data-xon.click="showHelp = !showHelp"
                 class="flex w-full h-full justify-between items-center dark:text-white p-4  border-black hover:bg-alvin-orange">
-                <p class="font-universalis mt-1 mr-1 max-lg:hidden">Hjälp</p>
+                <p class="font-universalis mt-1 mr-1 max-lg:hidden">{% translate 'Hjälp' %}</p>
                 <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none">
                     <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" 
                         stroke="currentColor" 
@@ -95,10 +93,9 @@
                 </svg>
             </button>
         </nav>
-
     </nav>
 
-    <!-- Sidomeny -->
+    <!-- Side navbar -->
     {% include './_side_nav.html' %}
 
 </header>

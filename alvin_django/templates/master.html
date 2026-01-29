@@ -51,10 +51,8 @@
 
     <script src="{% static 'js/panel.js' %}"></script>	
 
-    <div class="flex-1 p-4">
-      {% block content %}
-      {% endblock %}
-    </div>
+    {% block content %}
+    {% endblock %}
 
     {% include '_partials/_back_to_top.html' %}
     <script src="{% static 'js/btn-back-to-top.js' %}"></script>

@@ -20,7 +20,30 @@ def alvin_search(request):
     query = request.GET.get('query', '**')  
     if query == '':
         query = '**' 
-    json_safe_str = json.dumps(query)     
+    json_safe_str = json.dumps(query) 
+    country = request.GET.get('country', '')
+    id = request.GET.get('id', '') 
+
+    if id != '':
+        placeRecordIdSearchTerm = f',{{"name":"placeRecordIdSearchTerm","value":"{id}"}}'  
+        organisationRecordIdSearchTerm = f',{{"name":"organisationRecordIdSearchTerm","value":"{id}"}}' 
+        personRecordIdSearchTerm = f',{{"name":"personRecordIdSearchTerm","value":"{id}"}}'
+        alvinRecordIdSearchTerm = f',{{"name":"alvinRecordIdSearchTerm","value":"{id}"}}'
+
+
+    else:  
+        placeRecordIdSearchTerm = ''
+        organisationRecordIdSearchTerm = ''
+        personRecordIdSearchTerm = ''
+        alvinRecordIdSearchTerm = ''
+ 
+    if country != '':
+        placeCountrySearchTerm = f',{{"name":"placeCountrySearchTerm","value":"{country}"}}' 
+        personNationalitySearchTerm = f',{{"name":"personNationalitySearchTerm","value":"{country}"}}'  
+    else:  
+        placeCountrySearchTerm = ''
+        personNationalitySearchTerm = ''      
+
     start = request.GET.get('start', 1)
     if start == '':
         start = 1         
@@ -35,11 +58,35 @@ def alvin_search(request):
     params.pop('start', None)  # remove the parameter if it exists
     view_url = f"{request.path}?{params.urlencode()}" if params else request.path
 
+    personSearchData = f'{{"name":"personSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"personSearchTerm","value":{json_safe_str}}}{personNationalitySearchTerm}{personRecordIdSearchTerm}]}}]}}'
+    
+    organisationSearchData = f'{{"name":"organisationSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"organisationSearchTerm","value":{json_safe_str}}}{organisationRecordIdSearchTerm}]}}]}}'
+
+    placeSearchData = f'{{"name":"placeSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"placeSearchTerm","value":{json_safe_str}}}{placeCountrySearchTerm}{placeRecordIdSearchTerm}]}}]}}'
+
+    alvinRecordSearchData = f'{{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"alvinRecordSearchTerm","value":{json_safe_str}}}{alvinRecordIdSearchTerm}]}}]}}'
+  
      # API host
     api_host = settings.API_HOST
- 
-    list_url = f'{api_host}/rest/record/searchResult/{searchType}Search?searchData={{"name":"{searchType}Search","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"{searchType}SearchTerm","value":{json_safe_str}}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}&view={view}'
 
+    if searchType == 'alvinRecord':
+        #list_url = f'{api_host}/rest/record/searchResult/{searchType}Search?searchData={{"name":"{searchType}Search","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"{searchType}SearchTerm","value":{json_safe_str}}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}&view={view}'
+        list_url = f'{api_host}/rest/record/searchResult/{searchType}Search?searchData={alvinRecordSearchData},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}&view={view}'
+
+    elif searchType == 'person':
+        list_url = f'{api_host}/rest/record/searchResult/{searchType}Search?searchData={personSearchData},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}&view={view}'
+  
+    elif searchType == 'organisation':
+       list_url = f'{api_host}/rest/record/searchResult/{searchType}Search?searchData={organisationSearchData},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}&view={view}'
+
+    elif searchType == 'work':
+        list_url = f'{api_host}/rest/record/searchResult/{searchType}Search?searchData={{"name":"{searchType}Search","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"{searchType}SearchTerm","value":{json_safe_str}}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}&view={view}'
+
+    elif searchType == 'place':
+        list_url = f'{api_host}/rest/record/searchResult/{searchType}Search?searchData={placeSearchData},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}&view={view}'
+
+  
+   
     response = requests.get(list_url, headers=xml_headers_list)
     
     if response.status_code == 200:
@@ -140,6 +187,8 @@ def alvin_search(request):
     context = {
         "searchType":searchType,
         "query":query,
+        "country":country,
+        "id":id,
         "records":records,
         "completeListSize":completeListSize,
         "startnum":startnum,
@@ -150,7 +199,7 @@ def alvin_search(request):
         "encoded_link":encoded_link,
         "view":view,
         "view_url":view_url,
-        "json_safe_str":json_safe_str,  
+        "json_safe_str":json_safe_str, 
         }
 
     return render(request, 'alvin_search/alvin_search.html', context)

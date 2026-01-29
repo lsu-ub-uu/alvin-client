@@ -1,5 +1,5 @@
 {% for c in components %}
-  <article x-data="{ open: false }">
+  <article data-xdata="{ open: false }">
     {% include "alvin_viewer/_partials/_component.html" with c=c only %}
   </article>
 {% endfor %}

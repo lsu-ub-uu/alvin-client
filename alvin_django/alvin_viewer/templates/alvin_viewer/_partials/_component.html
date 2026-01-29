@@ -1,13 +1,13 @@
 {% load i18n static %}
 
-  <header class="flex items-baseline bg-linear-to-tr text-lg p-4 my-2 border-t-4 border-black bg-gray-200 hover:bg-alvin-green cursor-pointer" @click="open = !open">
+  <header class="flex items-baseline bg-linear-to-tr text-lg p-4 my-2 border-t-4 border-black dark:border-white bg-gray-200 dark:bg-gray-700 hover:bg-alvin-green cursor-pointer" data-xon.click="open = !open">
     {% if c.unitid %}
-    <span class="text-sm p-1 mr-2 border-black border-2 border-dashed" itemprop="identifier">{{ c.unitid }}</span>
+    <span class="text-sm p-1 mr-2 border-black dark:border-white border-2 border-dashed" itemprop="identifier">{{ c.unitid }}</span>
     {% endif %}
-    <h1>{{ c.title.display }}<span class="mx-2" x-text="open ? '▼' : '▶'"></span></h1>
+    <h1>{{ c.title.display }}<span class="mx-2" data-xtext="open ? '▼' : '▶'"></span></h1>
   </header>
 
-  <dl x-show="open" x-cloak>
+  <dl data-xshow="open" data-xcloak>
     {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.level.label value=c.level.item %}
     {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.locus.label value=c.locus.text %}
     {% for agent in c.agents %}
@@ -39,14 +39,8 @@
     {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.accession_numbers.label value=c.accession_numbers.texts|join:"<br>" %}
     {% include "./_metadata_row.html" with label=c.access_policy.label value=c.access_policy.text|linebreaksbr %}
     {% for component in c.components %}
-        <article class="lg:ml-4 max-lg:ml-2" x-data="{ open: false }">
+        <article class="lg:ml-4 max-lg:ml-2" data-xdata="{ open: false }">
           {% include "alvin_viewer/_partials/_component.html" with c=component only %}
         </article>    
     {% endfor %}
   </dl>
-
-  {% if c %}
-    <article class="lg:ml-4 max-lg:ml-2" x-data="{ open: false }">
-
-    </article>    
-  {% endif %}

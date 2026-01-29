@@ -1,7 +1,9 @@
-{% extends "master.html" %}
-{% load static %}
-{% load i18n %}
+{% extends 'master.html' %}
+
+{% load static i18n %}
+
 {% block title %}Alvin - {% translate 'Upphovsrätt' %}{% endblock %}
+
 {% block content %}
 <div class="bg-white dark:bg-gray-800 dark:text-white w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
     <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">

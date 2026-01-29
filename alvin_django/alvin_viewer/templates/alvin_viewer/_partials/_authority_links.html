@@ -1,11 +1,11 @@
 {% load i18n static %}
 
 {% if authority_links %}
-<div class="md-row">
-    <dt class="md-label">
+<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+    <dt class="w-full md:w-1/4 flex-grow font-bold pl-2">
         {{ label }}
     </dt>
-    <dd class="md-value">
+    <dd class="w-full md:w-3/4 flex-grow pl-2">
         <ul class="list-inside">
         {% for authority in authority_links.records %}
             <li>

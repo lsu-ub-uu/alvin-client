@@ -68,28 +68,24 @@ body {
 }
 
 .md-row {
-  @apply flex justify-start w-full text-xl leading-7 break-words py-2
-         flex-wrap md:flex-nowrap hover:bg-gray-300;
+  @apply w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b;
 }
 
 .md-label {
-  @apply w-full md:w-[31%] font-semibold;
+  @apply w-full md:w-1/4 flex-grow font-bold pl-2;
 }
 
 .md-value {
-  @apply w-full md:w-[55%];
+  @apply w-full md:w-3/4 flex-grow pl-2;
 }
 
 a { 
-  @apply text-link;
+  @apply text-blue-800 dark:text-blue-200 underline;
 }
 
-.topnav a {
-   @apply text-inherit font-universalis text-black dark:text-white hover:text-alvin-green;
-}
-
+.topnav a,
 .sidenav a {
-   @apply text-inherit font-universalis text-black dark:text-white hover:text-alvin-green;
+   @apply font-universalis text-black dark:text-white hover:text-alvin-green no-underline;
 }
 
 [x-cloak] { display: none !important; }

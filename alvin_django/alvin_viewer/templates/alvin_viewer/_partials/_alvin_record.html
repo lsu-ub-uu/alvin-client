@@ -125,7 +125,7 @@
         {% include "./_metadata_row.html" with label="Id" value=metadata.id %}
     </div>
     {% if metadata.components %}
-    <div data-xshow="activeTab == 'overview' || activeTab == 'all_metadata' || activeTab == 'inventory'" data-xcloak>
+    <div data-xdata="{ openInventory: false }" data-xon.click="openInventory" data-xshow="activeTab == 'overview' || activeTab == 'all_metadata' || activeTab == 'inventory'" data-xcloak>
         <h1 class="text-2xl mt-6" data-xshow="activeTab != 'inventory'">
             {% if metadata.type_of_resource.code == 'col' %}
                 {% translate 'Arkivförteckning' %}
@@ -133,6 +133,7 @@
                 {% translate 'Innehållsbeskrivning' %}
             {% endif %}
         </h1>
+        <div data-xshow=""></div>
         {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
     </div>
     <div data-xshow="activeTab === 'related'" data-xcloak>

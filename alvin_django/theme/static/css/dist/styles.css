@@ -796,6 +796,15 @@
   .border-b-black {
     border-bottom-color: var(--color-black);
   }
+  .bg-\[\#3E6374\] {
+    background-color: #3E6374;
+  }
+  .bg-\[\#F7F9F8\] {
+    background-color: #F7F9F8;
+  }
+  .bg-\[\#F9F7F2\] {
+    background-color: #F9F7F2;
+  }
   .bg-\[\#FAF9F6\] {
     background-color: #FAF9F6;
   }
@@ -1329,13 +1338,6 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-alvin-orange);
-      }
-    }
-  }
-  .hover\:text-black {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-black);
       }
     }
   }
@@ -1889,6 +1891,11 @@
   .dark\:\!text-white {
     @media (prefers-color-scheme: dark) {
       color: var(--color-white) !important;
+    }
+  }
+  .dark\:text-\[\#FAF9F6\] {
+    @media (prefers-color-scheme: dark) {
+      color: #FAF9F6;
     }
   }
   .dark\:text-blue-200 {

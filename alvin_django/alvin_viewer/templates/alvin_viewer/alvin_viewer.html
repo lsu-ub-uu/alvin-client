@@ -1,6 +1,6 @@
 {% extends 'master.html' %}
 
-{% load i18n static render_record_icon %}
+{% load i18n static %}
 
 {% block title %}Alvin - {{ metadata.main_title.display }}{{ metadata.authority_names.title }}{% endblock %}
 
@@ -31,93 +31,62 @@
     </a>
     {% endif %}
     {% if metadata.files %}
-    <aside class="w-full h-[80vh]">
+    <aside class="w-full h-[60vh] min-lg:h-[80vh]">
       <div class="w-full h-full" id="tify-viewer" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
     </aside>
     <script type="module" src="{% static 'js/tify.js' %}"></script>
     {% endif %}
     <h1 class="text-2xl md:text-4xl font-bold pb-2">{{ metadata.main_title.display }}{{ metadata.authority_names.title }}</h1>
-    <div class="flex w-full items-center mb-4 max-md:text-sm">
-      {% render_record_icon metadata %}
-    </div>
+    {% include './_partials/_render_record_icon.html' %}
 
-    <nav class="flex flex-wrap justify-start text-xl text-black dark:text-white">
+    <nav class="flex flex-wrap gap-x-1 justify-start text-xl text-black dark:text-white">
       <button data-xon.click="activeTab = 'overview'"
-        class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center bg-light-alvin hover:bg-gray-700 hover:text-white"
-        :class="{ 'bg-alvin-green': activeTab === 'overview', 'bg-gray-200': activeTab != 'overview' }">
-        <svg class="min-sm:pr-1 max-sm:visible" width="28px" height="28px" viewBox="0 0 24 24" fill="none"
-          xmlns="http://www.w3.org/2000/svg" stroke-width="2">
-          <path d="M3 13C6.6 5 17.4 5 21 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round"></path>
-          <path
-            d="M12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17Z"
-            fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          </path>
-        </svg>
+        class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
+        data-xbind.class="{ 'border-b-4 border-alvin-green': activeTab === 'overview' }">
+        {% include './_icons/overview.svg' with class="h-7 w-7" %}
         <span class="max-sm:hidden">{% translate 'Översikt' %}</span>
       </button>
       <button data-xon.click="activeTab = 'all_metadata'"
-        class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center bg-light-alvin hover:bg-gray-700 hover:text-white"
-        :class="{ 'bg-alvin-green': activeTab === 'all_metadata', 'bg-gray-200': activeTab != 'all_metadata' }">
-        <svg class="min-md:pr-1 min-sm:visible" width="28px" height="28px" stroke-width="2" viewBox="0 0 24 24"
-          fill="none">
-          <path d="M8 6L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          </path>
-          <path d="M4 6.01L4.01 5.99889" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-          </path>
-          <path d="M4 12.01L4.01 11.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-          </path>
-          <path d="M4 18.01L4.01 17.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round"></path>
-          <path d="M8 12L20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          </path>
-          <path d="M8 18L20 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          </path>
-        </svg>
+        class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
+        data-xbind.class="{ 'border-b-4 border-alvin-green': activeTab === 'all_metadata' }">
+        {% include './_icons/allmetadata.svg' with class="h-7 w-7" %}
         <span class="max-sm:hidden">{% translate 'All metadata' %}</span>
       </button>
-
       {% if metadata.components %}
       <button data-xon.click="activeTab = 'inventory'"
-        class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center bg-light-alvin hover:bg-gray-700 hover:text-white min-md:pr-1 min-sm:visible">
-        <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 5H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          <path d="M3 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          <path d="M3 19H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
+        class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
+        data-xbind.class="{ 'border-b-4 border-alvin-green': activeTab === 'inventory' }">
+        {% include './_icons/inventory.svg' %}
         <span class="p:l max-sm:hidden">
           {% if metadata.type_of_resource.code == 'col' %}
-          {% translate 'Arkivförteckning' %}
+            {% translate 'Arkivförteckning' %}
           {% else %}
-          {% translate 'Innehållsbeskrivning' %}
+            {% translate 'Innehållsbeskrivning' %}
           {% endif %}
         </span>
       </button>
       {% endif %}
 
+      {% if has_related %}
       <button data-xon.click="activeTab = 'related'"
-        class="cursor-pointer flex h-full p-2 text-center bg-light-alvin hover:bg-gray-700 hover:text-white">
-        <svg class="w-6 h-6" stroke="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-          height="24" fill="none" viewBox="0 0 24 24">
-          <title>{% translate 'Relaterat' %}</title>
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="M13.213 9.787a3.391 3.391 0 0 0-4.795 0l-3.425 3.426a3.39 3.39 0 0 0 4.795 4.794l.321-.304m-.321-4.49a3.39 3.39 0 0 0 4.795 0l3.424-3.426a3.39 3.39 0 0 0-4.794-4.795l-1.028.961" />
-        </svg>
+        class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
+        data-xbind.class="{ 'border-b-4 border-alvin-green': activeTab === 'related' }">
+        {% include './_icons/related.svg' with class="h-7 w-7" %}
         <span class="max-sm:hidden">{% translate 'Relaterat' %}</span>
       </button>
+      {% endif %}
     </nav>
 
     <!-- Metadata -->
-    <dl class="block w-full border-t">
+    <dl class="block w-full border-y">
       {% if metadata.record_type == 'alvin-place' %}
       {% include './_partials/_alvin_place.html' %}
       {% elif metadata.record_type == 'alvin-person' %}
       {% include './_partials/_alvin_person.html' %}
       {% elif metadata.record_type == 'alvin-organisation' %}
       {% include './_partials/_alvin_organisation.html' %}
+      {% elif metadata.record_type == 'alvin-location' %}
+      {% include './_partials/_alvin_location.html' %}
       {% elif metadata.record_type == 'alvin-work' %}
       {% include './_partials/_alvin_work.html' %}
       {% elif metadata.record_type == 'alvin-record' %}

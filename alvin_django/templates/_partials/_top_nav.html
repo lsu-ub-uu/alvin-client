@@ -5,7 +5,7 @@
         <nav class="flex flex-shrink-0 justify-center items-center h-full">
          
             <!-- Hamburger menu -->
-            <button data-xon.click="showSideNav = !showSideNav" class="flex w-full h-full justify-between items-center dark:text-white p-4 border-black hover:bg-alvin-green">
+            <button data-xon.click="showSideNav = !showSideNav" class="flex w-full h-full justify-between items-center dark:text-white p-4 border-black hover:bg-alvin-green hover:text-white">
                 <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" alt="{% trans 'Mobilmeny' %}">
                     <path d="M3 5H21"
                         stroke="currentColor" 
@@ -39,6 +39,9 @@
             <a href="{% url 'copyright' %}" class="flex mt-1 p-2 border-black text-nowrap max-md:hidden">
                 {% translate 'Upphovsrätt' %}
             </a>
+            <a href="{% url 'institutions' %}" class="flex mt-1 p-4 border-black text-nowrap max-md:hidden">
+                {% translate 'Institutioner' %}
+            </a>
             <a href="{% url 'about' %}" class="flex mt-1 p-4 border-black text-nowrap max-md:hidden">
                 {% translate 'Om Alvin' %}
             </a>
@@ -69,7 +72,7 @@
 
             <!-- Hjälp -->
             <button data-xon.click="showHelp = !showHelp"
-                class="flex w-full h-full justify-between items-center dark:text-white p-4  border-black hover:bg-alvin-orange">
+                class="flex w-full h-full justify-between items-center dark:text-white p-4  border-black hover:bg-alvin-orange hover:text-white">
                 <p class="font-universalis mt-1 mr-1 max-lg:hidden">{% translate 'Hjälp' %}</p>
                 <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none">
                     <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" 

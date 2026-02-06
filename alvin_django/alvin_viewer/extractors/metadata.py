@@ -571,3 +571,26 @@ class RelatedWorkEntry(URL):
 class RelatedWorksBlock:
     label: Optional[str] = None
     records: List[RelatedRecordEntry] = None
+
+# ------------------
+# ALVIN-LOCATION SPECIFIC
+# ------------------
+
+@dataclass
+class Summary:
+    label: Optional[str] = None
+    texts: List[Dict[str,str]] = None
+
+    def is_empty(self) -> bool:
+        return not self.texts
+
+    @property
+    def display(self):
+        ui_lang = get_language()
+        preferred = {'sv':'swe','en':'eng','no':'nor'}.get(ui_lang)
+
+        if preferred in self.texts:
+            return self.texts[preferred]
+        
+        first = next(iter(self.texts.values()), None)
+        return first if first else ""

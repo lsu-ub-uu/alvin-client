@@ -15,7 +15,7 @@ from .metadata import (Agent, Component, CommonMetadata, DateEntry, DatesBlock,
                        NameEntry, NameValue, NamesBlock,
                        OriginPlace, OriginPlaceBlock, RelatedAuthoritiesBlock,
                        RelatedAuthorityEntry, RelatedRecordsBlock, RelatedRecordEntry, 
-                       RelatedRecordPart, RelatedWorksBlock, RelatedWorkEntry, TitlesBlock, TitleEntry)
+                       RelatedRecordPart, RelatedWorksBlock, RelatedWorkEntry, Summary, TitlesBlock, TitleEntry)
 
 
 # ------------------
@@ -496,6 +496,7 @@ def edge(node: etree._Element, xp: str, item: str, item_text: str) -> Edge:
     if li.is_empty():
         return None
     return li
+    
 
 # -------------------
 # ATTRIBUTE COLLECTION ITEMS

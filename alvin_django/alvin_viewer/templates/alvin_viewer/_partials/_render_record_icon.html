@@ -1,0 +1,57 @@
+
+<div class="flex w-full items-center mb-4 max-md:text-sm">
+    {% if metadata.record_type == 'alvin-work' %}
+        <div class="flex flex-row items-center">
+            <svg class="h-6 w-6 z-10" aria-label="{{ metadata.label }}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                {% include '../_icons/work.svg' %}
+            </svg>
+            <svg class="h-6 w-6" aria-label="{{ metadata.form_of_work.item }}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                {% if metadata.form_of_work.code == 'cartography' %}
+                    {% include '../_icons/cartographic.svg' %}
+                {% elif metadata.form_of_work.code == 'music' %}
+                    {% include '../_icons/music.svg' %}
+                {% elif metadata.form_of_work.code == 'text' %}
+                    {% include '../_icons/text.svg' %}
+                {% endif %}
+            </svg>
+            <p class="w-full font-semibold pl-2">{{ metadata.display_label }}</p>
+        </div>
+    {% else %}
+        <svg class="h-6 w-6" aria-label="{{metadata.label}}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+            {% if metadata.type_of_resource.code == 'art' %}
+                {% include '../_icons/artifact.svg' %}
+            {% elif metadata.type_of_resource.code == 'aud' %}
+                {% include '../_icons/audio.svg' %}
+            {% elif metadata.type_of_resource.code == 'car' %}
+                {% include '../_icons/cartographic.svg' %}
+            {% elif metadata.type_of_resource.code == 'col' %}
+                {% include '../_icons/archive.svg' %}
+            {% elif metadata.type_of_resource.code == 'img' %}
+                {% include '../_icons/image.svg' %}
+            {% elif metadata.type_of_resource.code == 'mix' %}
+                {% include '../_icons/mixed.svg' %}
+            {% elif metadata.type_of_resource.code == 'mov' %}
+                {% include '../_icons/movie.svg' %}
+            {% elif metadata.type_of_resource.code == 'mul' %}
+                {% include '../_icons/multimedia.svg' %}
+            {% elif metadata.type_of_resource.code == 'not' %}
+                {% include '../_icons/music.svg' %}
+            {% elif metadata.type_of_resource.code == 'txt' %}
+                {% include '../_icons/text.svg' %}
+            {% elif metadata.record_type == 'alvin-location' %}
+                {% include '../_icons/location.svg' %}
+            {% elif metadata.record_type == 'alvin-person' %}
+                {% include '../_icons/person.svg' %}
+            {% elif metadata.record_type == 'alvin-place' %}
+                {% include '../_icons/place.svg' %}
+            {% elif metadata.record_type == 'alvin-organisation' %}
+                {% include '../_icons/organisation.svg' %}
+            {% endif %}
+        </svg>
+    {% if metadata.record_type != 'alvin-record' %}
+        <p class="w-full font-semibold pl-2">{{ metadata.label }}</p>
+    {% else %}
+        <p class="w-full font-semibold pl-2 text-white">{{ metadata.type_of_resource.item }}</p>
+    {% endif %}
+    {% endif %}
+</div>

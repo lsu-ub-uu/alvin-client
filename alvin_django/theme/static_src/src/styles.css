@@ -68,11 +68,11 @@ body {
 }
 
 .md-row {
-  @apply w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b;
+  @apply w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-[#D1D9D5];
 }
 
 .md-label {
-  @apply w-full md:w-1/4 flex-grow font-bold pl-2;
+  @apply w-full md:w-1/4 flex-grow font-bold pl-2 text-[#1A2E27] dark:text-[#F7F9F8];
 }
 
 .md-value {

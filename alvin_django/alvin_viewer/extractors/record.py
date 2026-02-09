@@ -37,7 +37,7 @@ def extract(root: etree._Element) -> AlvinRecord:
         origin_places = origin_places(root, _xp(rt, "originPlace")),
         publications = decorated_texts(root, _xp(rt, "publication")),
         origin_date = dates(root, _xp(rt, "originDate"), "start", "end"),
-        date_other = [dates(date, ".", "start", "end") for date in elements(root, _xp(rt, "dateOther"))],
+        date_other = [dates(date, ".", "start", "end") for date in elements(root, _xp(rt, "dateOther"))] or None,
         extent = decorated_text(root, _xp(rt, "extent")),
         dimensions = _dimensions(root, _xp(rt, "dimensions")),
         measure = _measure(root, _xp(rt, "measure")),

@@ -42,20 +42,20 @@
     <nav class="flex flex-wrap gap-x-1 justify-start text-xl text-black dark:text-white">
       <button data-xon.click="activeTab = 'overview'"
         class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
-        data-xbind.class="{ 'border-b-4 border-alvin-green': activeTab === 'overview' }">
+        data-xbind.class="{ 'border-b-4 border-dark-alvin': activeTab === 'overview' }">
         {% include './_icons/overview.svg' with class="h-7 w-7" %}
         <span class="max-sm:hidden">{% translate 'Översikt' %}</span>
       </button>
       <button data-xon.click="activeTab = 'all_metadata'"
         class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
-        data-xbind.class="{ 'border-b-4 border-alvin-green': activeTab === 'all_metadata' }">
+        data-xbind.class="{ 'border-b-4 border-dark-alvin': activeTab === 'all_metadata' }">
         {% include './_icons/allmetadata.svg' with class="h-7 w-7" %}
         <span class="max-sm:hidden">{% translate 'All metadata' %}</span>
       </button>
       {% if metadata.components %}
       <button data-xon.click="activeTab = 'inventory'"
         class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
-        data-xbind.class="{ 'border-b-4 border-alvin-green': activeTab === 'inventory' }">
+        data-xbind.class="{ 'border-b-4 border-dark-alvin': activeTab === 'inventory' }">
         {% include './_icons/inventory.svg' %}
         <span class="p:l max-sm:hidden">
           {% if metadata.type_of_resource.code == 'col' %}
@@ -70,7 +70,7 @@
       {% if has_related %}
       <button data-xon.click="activeTab = 'related'"
         class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
-        data-xbind.class="{ 'border-b-4 border-alvin-green': activeTab === 'related' }">
+        data-xbind.class="{ 'border-b-4 border-dark-alvin': activeTab === 'related' }">
         {% include './_icons/related.svg' with class="h-7 w-7" %}
         <span class="max-sm:hidden">{% translate 'Relaterat' %}</span>
       </button>

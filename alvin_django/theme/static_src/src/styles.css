@@ -52,10 +52,12 @@ https://tailwindcss.com/docs/theme
   
   /* Colors */
   --color-link: #bf7f7f;
-  --color-alvin-green: #355F51;
+  --color-alvin: #7fbfa7;
+  --color-light-alvin: #BAE2B6;
+  --color-dark-alvin: #355F51;
   --color-alvin-orange: #bf7125;
   --color-alvin-grey: #f5f5f5;
-
+  --color-off-white: #faf9f6;
 }
 
 html {
@@ -85,7 +87,7 @@ a {
 
 .topnav a,
 .sidenav a {
-   @apply font-universalis text-black dark:text-white hover:text-alvin-green no-underline;
+   @apply font-universalis text-black dark:text-white hover:text-blue-500 no-underline;
 }
 
 [x-cloak] { display: none !important; }
@@ -94,13 +96,13 @@ a {
   .scrollbar-alvin-x {
     /* Firefox */
     scrollbar-width: auto;
-    scrollbar-color: theme(colors.alvin.green) theme(colors.alvin.grey);
+    scrollbar-color: theme(colors.dark.alvin) theme(colors.alvin.grey);
 
     /* WebKit */
     &::-webkit-scrollbar { height: 0.25rem; } /* h-1 */
     &::-webkit-scrollbar-track { background: theme(colors.alvin.grey); }
     &::-webkit-scrollbar-thumb {
-      background: theme(colors.alvin.green);
+      background: theme(colors.dark.alvin);
       border-width: 8px;            /* border-8 */
       border-color: black;          /* border-black */
       border-style: solid;

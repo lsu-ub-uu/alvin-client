@@ -25,9 +25,9 @@ def extract_metadata(root: etree._Element, record_type: str):
 def has_related(metadata) -> bool:
     
     attrs = [
-    "location", "related_records", "agents", "related_persons", "related_organisations",
-    "work", "subject_person", "subject_organisation", "subject_place", 
-    "electronic_locators", "location"
+    "agents", "location", "origin_places", "related_records", "electronic_locators",
+    "subject_person", "subject_organisation", "birth_place", "death_place", "related_persons", 
+    "related_organisations", "subject_place", "work",
     ]
 
     if any(getattr(metadata, attr, None) for attr in attrs):

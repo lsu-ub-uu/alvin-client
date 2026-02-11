@@ -2,9 +2,8 @@
 
 <header aria-label="{% trans 'Huvudmeny' %}" class="sticky top-0 z-50"
     data-xdata="{ showSideNav: false, showSearch: false }" data-xon.click.away="showSideNav = false">
-    <nav class="topnav flex justify-between w-full h-16 bg-white/98 dark:bg-gray-800/98 shadow-md z-40 select-none">
+    <nav class="topnav flex justify-between w-full h-16 bg-white/98 dark:bg-gray-800/98 shadow-md z-10 select-none">
         <nav class="flex flex-shrink-0 justify-center items-center h-full">
-
             <!-- Hamburger menu -->
             <button data-xon.click="showSideNav = !showSideNav"
                 class="flex w-full h-full justify-between items-center dark:text-white p-4 border-black hover:text-blue-500">
@@ -30,14 +29,14 @@
         </nav>
 
         <nav class="flex flex-shrink-0 justify-between items-center h-full border-black">
-            <a href="{% url 'copyright' %}" class="flex mt-1 p-2 border-black text-nowrap max-md:hidden">
-                {% translate 'Upphovsrätt' %}
+            <a href="{% url 'about' %}" class="flex mt-1 p-4 border-black text-nowrap max-md:hidden">
+                {% translate 'Om Alvin' %}
             </a>
             <a href="{% url 'institutions' %}" class="flex mt-1 p-4 border-black text-nowrap max-md:hidden">
                 {% translate 'Institutioner' %}
             </a>
-            <a href="{% url 'about' %}" class="flex mt-1 p-4 border-black text-nowrap max-md:hidden">
-                {% translate 'Om Alvin' %}
+            <a href="{% url 'copyright' %}" class="flex mt-1 p-2 border-black text-nowrap max-md:hidden">
+                {% translate 'Upphovsrätt' %}
             </a>
 
             <!-- Hjälp -->
@@ -57,7 +56,7 @@
             </a>
             
             <!-- Sök -->
-            <button data-xon.click="showSearch = !showSearch; $nextTick(() => { $refs.alvinsearch.focus(); });"
+            <button type="button" data-xon.click="showSearch = !showSearch; if(showSearch) { setTimeout(() => document.getElementById('alvinsearch')?.focus(), 50); }"
                 class="flex w-full h-full justify-between items-center p-2 mr-2 dark:text-white hover:text-blue-500"
                 :class="{'bg-dark-alvin': showSearch}">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6"
@@ -75,14 +74,11 @@
                     </path>
                 </svg>
             </button>
-
-
         </nav>
-    </nav>
-
-    <!-- Extended search -->
-    <div class="absolute top-16 left-0 w-full z-30 transform transition-transform duration-200 ease-out"
+            <!-- Extended search -->
+    <div class="absolute top-16 left-0 w-full transform transition-transform duration-200 ease-out"
         data-xshow="showSearch"
+        data-xon.click.away="showSearch = false"
         data-xtransition:enter="transition-transform duration-200 ease-out"
         data-xtransition:enter-start="-translate-y-full"
         data-xtransition:enter-end="translate-y-0"
@@ -92,7 +88,9 @@
         data-xcloak>
         {% include './_extended_search.html' %}
     </div>
-    <!-- Side navbar -->
+    </nav>
+
+
     {% include './_side_nav.html' %}
 
 </header>

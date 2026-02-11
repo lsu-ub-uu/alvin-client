@@ -10,7 +10,7 @@
             data-xtransition:leave-start="translate-x-0" 
             data-xtransition:leave-end="-translate-x-full" 
             data-xcloak>
-    <button data-xon.click="showSideNav = !showSideNav" class="absolute top-0 left-0 p-2 text-black dark:text-white">
+    <button data-xon.click="showSideNav = !showSideNav" class="absolute top-0 left-0 p-2 text-black dark:text-white hover:text-blue-500">
         <svg width="40px" height="40px" stroke-width="2" viewBox="0 0 24 24" fill="none" data-xcloak>
             <title>Close side navigation</title>
             <path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426" 
@@ -24,14 +24,14 @@
     
     <div class="flex flex-col justify-stretch items-center gap-8 h-full py-40
             overflow-y-auto scrollbar-alvin-x">
-        <a href="{% url 'about' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-dark-alvin">{% trans 'Om Alvin' %}</a>
-        <a href="{% url 'copyright' %}" class="font-universalis text-3xl text-black visited:text-black max-sm:text-3xl hover:text-dark-alvin">{% trans 'Copyright' %}</a>
-        <a href="{% url 'institutions' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-dark-alvin">{% trans 'Medlemmar' %}</a>
-        <hr class="w-20 bg-black border-dark-alvin border-4 rounded-sm">
-        <a href="{% url 'alvin_search' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-dark-alvin">{% trans 'Avancerad sök' %}</a>
-        <hr class="w-20 border-dark-alvin border-4 rounded-sm">
+            <a href="{% url 'about' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin">{% trans 'Om Alvin' %}</a>
+            <a href="{% url 'institutions' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin">{% trans 'Institutioner' %}</a>
+            <a href="{% url 'copyright' %}" class="font-universalis text-3xl text-black visited:text-black max-sm:text-3xl hover:text-alvin">{% trans 'Upphovsrätt' %}</a>
+        <hr class="w-20 bg-black border-alvin border-4 rounded-sm">
         <a href="{% url 'help' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin-orange">{% trans 'Hjälp' %}</a>
-        <hr class="w-20 border-dark-alvin border-4 rounded-sm">
-        <a href="mailto:alvin-support@ub.uu.se" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-dark-alvin">{% trans 'Kontakt' %}</a>
+        <hr class="w-20 border-alvin border-4 rounded-sm">
+        <a href="{% url 'userguide' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin">{% trans 'För medlemmar' %}</a>
+        <hr class="w-20 border-alvin border-4 rounded-sm">
+        <a href="mailto:alvin-support@ub.uu.se" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin">{% trans 'Kontakt' %}</a>
     </div>  
 </nav>

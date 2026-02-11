@@ -5,7 +5,7 @@
 {% endblock %}
 
 <!-- Metadata -->
-<div class="flex flex-col w-full">
+<div class="flex flex-col w-full" data-xdata="{ open_inventory: false }">
     <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
         {% for title in metadata.variant_titles.titles %}
             {% include "./_metadata_row.html" with label=metadata.variant_titles.label extra_label=title.type value=title.display %}
@@ -123,14 +123,19 @@
     </div>
     {% include './_alvin_id_uri.html' %}
     {% if metadata.components %}
-    <div data-xshow="activeTab == 'overview' || activeTab == 'all_metadata' || activeTab == 'inventory'" data-xcloak>
-        <h1 class="text-2xl mt-6" data-xshow="activeTab != 'inventory'">
-            {% if metadata.type_of_resource.code == 'col' %}
-                {% translate 'Arkivförteckning' %}
-            {% else %}
-                {% translate 'Innehållsbeskrivning' %}
-            {% endif %}
-        </h1>
+    <div data-xshow="activeTab !== 'related'">
+        <header class="flex items-baseline bg-linear-to-tr text-lg p-2 border-t border-black dark:border-white bg-gray-200 dark:bg-gray-700 hover:bg-dark-alvin hover:text-[#F7F9F8] cursor-pointer" data-xon.click="open_inventory = !open_inventory">
+            <h1>
+                {% if metadata.type_of_resource.code == 'col' %}
+                    {% translate 'Förteckning' %}
+                {% else %}
+                    {% translate 'Innehållsbeskrivning' %}
+                {% endif %}
+                <span class="mx-2" data-xtext="open_inventory ? '▼' : '▶'"></span>
+            </h1>
+        </header>
+    </div>
+    <div data-xshow="open_inventory && activeTab != 'related'" data-xcloak>
         {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
     </div>
     <div data-xshow="activeTab === 'related'" data-xcloak>

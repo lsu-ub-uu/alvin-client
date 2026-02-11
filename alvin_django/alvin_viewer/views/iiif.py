@@ -1,8 +1,8 @@
 from django.http import JsonResponse, Http404
 from urllib.parse import urljoin
 from django.utils.translation import gettext as _
+from ..extractors.record import extract
 from ..services.alvin_api import AlvinAPI
-from lxml import etree as ET
 
 def _to_int(value, default):
     try:
@@ -17,10 +17,16 @@ def iiif_manifest(request, record_id: str):
         record_xml = api.get_record_xml("alvin-record", record_id)
     except Exception as e:
         raise Http404(str(e))
+    if record_xml is None:
+        raise Http404(_("Record not found."))
 
     manifest_base = request.build_absolute_uri(request.path)
     if not manifest_base.endswith("/"):
         manifest_base += "/"
+
+    # Extract record metadata
+    record = extract(record_xml)
+    main_label = record.main_title.display if record.main_title else None
 
     canvases = []
     idx = 0
@@ -32,22 +38,27 @@ def iiif_manifest(request, record_id: str):
             )
         except Exception:
             continue
+        if file_xml is None:
+            continue
         
         binary = file_xml.find("data/binary")
-        binary_type = binary.get("type").capitalize() if binary is not None else None
+        raw_binary_type = binary.get("type") if binary is not None else None
+        binary_type = raw_binary_type.strip().capitalize() if raw_binary_type else None
 
-        format = file_xml.findtext("data/binary/master/master/mimeType")
+        mime_type = file_xml.findtext("data/binary/master/master/mimeType")
 
         server = file_xml.findtext(".//iiif/server")
         ident = file_xml.findtext(".//iiif/identifier")
-
-        if format == "Image":
-            if not server or not ident:
-                continue
-            raster_url = f"{image_service_id}/full/max/0/default.jpg"
-
         
+        # Only build IIIF canvas entries for image binaries.
+        if binary_type != "Image":
+            continue
+
+        if not server or not ident:
+            continue
+
         image_service_id = f"{server.rstrip('/')}/{ident.strip('/')}"
+        raster_url = f"{image_service_id}/full/max/0/default.jpg"
 
         idx += 1
 
@@ -61,11 +72,11 @@ def iiif_manifest(request, record_id: str):
         body = {
             "id": raster_url,
             "type": binary_type,
-            "format": format,
+            "format": mime_type,
         }
 
         measures = {
-                "heigh": _to_int(file_xml.findtext(".//height"), 1000), 
+                "height": _to_int(file_xml.findtext(".//height"), 1000),
                 "width": _to_int(file_xml.findtext(".//width"), 1000)
                 }
         
@@ -94,7 +105,7 @@ def iiif_manifest(request, record_id: str):
                 {
                     "id": original_url,
                     "type": binary_type,
-                    "format": format,
+                    "format": mime_type,
                     "label": {"none": ["Download original"]},
                 }
             ] if original_url else [],
@@ -102,8 +113,6 @@ def iiif_manifest(request, record_id: str):
 
         if binary_type == "Image":
             canvas.update(measures)
-
-        print(canvas)
 
         canvases.append(canvas)
 
@@ -114,7 +123,7 @@ def iiif_manifest(request, record_id: str):
         "@context": "http://iiif.io/api/presentation/3/context.json",
         "id": request.build_absolute_uri(),
         "type": "Manifest",
-        "label": {"none": [f"Record {record_id}"]},
+        "label": {"none": [main_label]} if main_label else {"none": [str(record_id)]},
         "items": canvases,
     }
 

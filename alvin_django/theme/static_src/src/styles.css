@@ -23,8 +23,7 @@
 
 
 /*
-If you would like to customise you theme, you can do that here too.
-https://tailwindcss.com/docs/theme
+Theme specific 
 
 */
 
@@ -69,6 +68,11 @@ body {
   overflow-y: scroll;
 }
 
+/*
+Alvin viewer
+
+*/ 
+
 .md-row {
   @apply w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-[#D1D9D5];
 }
@@ -89,6 +93,49 @@ a {
 .sidenav a {
    @apply font-universalis text-black dark:text-white hover:text-blue-500 no-underline;
 }
+
+/*
+Alvin member pages 
+
+*/
+
+.hitlist a,
+.pagination a {
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+.hitlist a:active,
+.pagination a:active {
+  border: 2px solid #3B82F6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hitlist a,
+  .pagination a {
+    color: var(--color-white);
+  }
+}
+
+.pagenav a {
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+.pagenav a:hover {
+  color: var(--color-white);
+}
+
+.footer a {
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+/* 
+Tailwind Utilities
+https://tailwindcss.com/docs/functions-and-directives#plugin-directive
+
+*/
 
 [x-cloak] { display: none !important; }
 

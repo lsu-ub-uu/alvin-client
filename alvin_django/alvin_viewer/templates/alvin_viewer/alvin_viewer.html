@@ -36,46 +36,69 @@
     </aside>
     <script type="module" src="{% static 'js/tify.js' %}"></script>
     {% endif %}
-    <h1 class="text-2xl md:text-4xl font-bold pb-2">{{ metadata.main_title.display }}{{ metadata.authority_names.title }}</h1>
+    <h1 class="text-2xl md:text-3xl font-bold py-2">{{ metadata.main_title.display }}{{ metadata.authority_names.title }}</h1>
     {% include './_partials/_render_record_icon.html' %}
 
-    <nav class="flex flex-wrap gap-x-1 justify-start text-xl text-black dark:text-white">
-      <button data-xon.click="activeTab = 'overview'"
-        class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
-        data-xbind.class="{ 'border-b-4 border-dark-alvin': activeTab === 'overview' }">
-        {% include './_icons/overview.svg' with class="h-7 w-7" %}
-        <span class="max-sm:hidden">{% translate 'Översikt' %}</span>
-      </button>
-      <button data-xon.click="activeTab = 'all_metadata'"
-        class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
-        data-xbind.class="{ 'border-b-4 border-dark-alvin': activeTab === 'all_metadata' }">
-        {% include './_icons/allmetadata.svg' with class="h-7 w-7" %}
-        <span class="max-sm:hidden">{% translate 'All metadata' %}</span>
-      </button>
-      {% if metadata.components %}
-      <button data-xon.click="activeTab = 'inventory'"
-        class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
-        data-xbind.class="{ 'border-b-4 border-dark-alvin': activeTab === 'inventory' }">
-        {% include './_icons/inventory.svg' %}
-        <span class="p:l max-sm:hidden">
-          {% if metadata.type_of_resource.code == 'col' %}
-            {% translate 'Arkivförteckning' %}
-          {% else %}
-            {% translate 'Innehållsbeskrivning' %}
-          {% endif %}
-        </span>
-      </button>
-      {% endif %}
+    <div data-xdata="{ download_menu: false }" class="flex justify-between flew-row">
 
-      {% if has_related %}
-      <button data-xon.click="activeTab = 'related'"
-        class="dark:text-gray-200 cursor-pointer flex h-full p-2 text-center hover:bg-gray-700 hover:text-white"
-        data-xbind.class="{ 'border-b-4 border-dark-alvin': activeTab === 'related' }">
-        {% include './_icons/related.svg' with class="h-7 w-7" %}
-        <span class="max-sm:hidden">{% translate 'Relaterat' %}</span>
-      </button>
-      {% endif %}
-    </nav>
+      <!-- Metadata views -->
+      <nav class="flex flex-wrap gap-x-1 justify-start text-md text-black dark:text-white">
+        <button data-xon.click="activeTab = 'overview'"
+          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
+          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'overview' }">
+          {% include './_icons/overview.svg' with class="h-6 w-6" %}
+          <span class="max-sm:hidden">{% translate 'Översikt' %}</span>
+        </button>
+        <button data-xon.click="activeTab = 'all_metadata'"
+          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
+          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'all_metadata' }">
+          {% include './_icons/allmetadata.svg' with class="h-6 w-6" %}
+          <span class="max-sm:hidden">{% translate 'All metadata' %}</span>
+        </button>
+        {% if metadata.components %}
+        <button data-xon.click="activeTab = 'inventory'"
+          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
+          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'inventory' }">
+          {% include './_icons/inventory.svg' with class="h-6 w-6"  %}
+          <span class="p:l max-sm:hidden">
+            {% if metadata.type_of_resource.code == 'col' %}
+              {% translate 'Förteckning' %}
+            {% else %}
+              {% translate 'Innehållsbeskrivning' %}
+            {% endif %}
+          </span>
+        </button>
+        {% endif %}
+
+        {% if has_related %}
+        <button data-xon.click="activeTab = 'related'"
+          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
+          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'related' }">
+          {% include './_icons/related.svg' with class="h-6 w-6" %}
+          <span class="max-sm:hidden">{% translate 'Relaterat' %}</span>
+        </button>
+        {% endif %}
+      </nav>
+      
+      <!-- Download och search tools -->
+      <div class="flex flex-row gap-x-1">
+        <button class="flex flex-row gap-x-1 h-10 dark:text-gray-200 cursor-pointer p-2 text-center hover:text-orange-500" data-xon.click="">
+          <svg class="h-6 w-6" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+          </svg>
+          <span class="max-lg:hidden">{% translate 'Ladda ned' %}</span>
+        </button>
+        {% if metadata.record_type != 'alvin-record' %}
+        <button class="flex flex-row gap-x-1 h-10 dark:text-gray-200 cursor-pointer p-2 text-center hover:text-orange-600" data-xon.click="">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+          <span class="max-lg:hidden">{% translate 'Länkade poster' %}</span>
+        </button>
+        {% endif %}
+      </div>
+    </div>
 
     <!-- Metadata -->
     <dl class="block w-full border-y">

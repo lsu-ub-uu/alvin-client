@@ -6,7 +6,6 @@
 
 <!-- Metadata -->
 <div class="flex flex-col">
-    {{metadata}}
     <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.authority_names.label as authority_label %}
             {% for lang, name in metadata.authority_names.names.items %}

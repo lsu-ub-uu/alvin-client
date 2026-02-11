@@ -7,7 +7,7 @@ from .common import (_get_label, _get_value, _norm_rt, _xp, _get_attribute_item)
 from .common import *
 from .cleaner import clean_empty
 from .records import AlvinRecord
-from .metadata import Appraisal, Axis, Classification, Coin, Dimension, Measure, SubjectMiscEntry
+from .metadata import Appraisal, Axis, Classification, Coin, Dimension, FilesBlock, FileGroup, File, Measure, SubjectMiscEntry
 
 rt = _norm_rt("alvin-record")
 
@@ -63,7 +63,7 @@ def extract(root: etree._Element) -> AlvinRecord:
         binding_deco_note = decorated_text(root, _xp(rt, "bindingDesc/decoNote"), _xp(rt, "bindingDesc")),
         identifiers = identifiers(root, _xp(rt, "identifier")),
         work = related_works(root, _xp(rt, "work")),
-        files = element(root, _xp(rt, "fileSection")),
+        files = files(root, _xp(rt, "fileSection")),
         components = components(elements(root, _xp(rt, component_type))),
 
         # Archives
@@ -148,6 +148,34 @@ def coin(root: etree._Element, xp: str) -> Coin:
     if all(text.is_empty() for text in [c.description, c.legend]):
         return None
     return c
+
+def files(root: etree._Element, xp: str) -> FilesBlock | None:
+    target = element(root, xp)
+    if not target:
+        return None
+    
+    files = FilesBlock(
+        rights = _get_value(element(target, "./rights")),
+        digital_origin = _get_value(target, "./digitalOrigin"),
+        file_groups = [
+            FileGroup(
+                type = _get_value(group, "./type"),
+                files = [File(
+                    type = _get_value(file, "./type"),
+                    binary_id = text(file, "./fileLocation/linkedRecordId"),
+                    original_name = text(file, "./fileLocation/linkedRecord/binary/master/originalFileName"),
+                    master_url = text(file, "./fileLocation/linkedRecord/binary/master/master/actionLinks/read/url"),
+                    jp2_url = text(file, "./fileLocation/linkedRecord/binary/jp2/jp2/actionLinks/read/url"),
+                )
+                for file in elements(group, "file")],
+            )
+            for group in elements(target, "fileGroup")
+        ]
+    )
+    
+    if all(not f for f in files.file_groups):
+        return None
+    return files
 
 def _subjects_misc(root: etree._Element, xp: str) -> List[SubjectMiscEntry] | None:
     

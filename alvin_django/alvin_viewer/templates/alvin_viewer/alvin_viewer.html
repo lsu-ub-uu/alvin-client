@@ -19,7 +19,8 @@
 
   <main
     class="min-h-screen w-full flex flex-col lg:flex-1 pt-4 pb-8 px-8"
-    data-xdata="{ activeTab: 'overview' }">
+    data-xdata="{ activeTab: 'overview', download: false }"
+    data-xon.click.away="download = false">
     {% if value != None %}
     <a class="flex w-fit pb-2" href="{{ value }}">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -39,7 +40,7 @@
     <h1 class="text-2xl md:text-3xl font-bold py-2">{{ metadata.main_title.display }}{{ metadata.authority_names.title }}</h1>
     {% include './_partials/_render_record_icon.html' %}
 
-    <div data-xdata="{ download_menu: false }" class="flex justify-between flew-row">
+    <div data-xdata="{ download_menu: false }" class="flex justify-between flex-row">
 
       <!-- Metadata views -->
       <nav class="flex flex-wrap gap-x-1 justify-start text-md text-black dark:text-white">
@@ -81,16 +82,20 @@
       </nav>
       
       <!-- Download och search tools -->
-      <div class="flex flex-row gap-x-1">
-        <button class="flex flex-row gap-x-1 h-10 dark:text-gray-200 cursor-pointer p-2 text-center hover:text-orange-500" data-xon.click="">
+      <div class="flexflex-row gap-x-1">
+        {% if metadata.record_type == 'alvin-record' %}
+        <button class="flex flex-row gap-x-1 h-10 dark:text-gray-200 cursor-pointer p-2 text-center hover:text-orange-600" data-xon.click="download = !download">
           <svg class="h-6 w-6" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <title>{% translate 'Ladda ned' %}</title>
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
           </svg>
           <span class="max-lg:hidden">{% translate 'Ladda ned' %}</span>
         </button>
+        {% endif %}
         {% if metadata.record_type != 'alvin-record' %}
         <button class="flex flex-row gap-x-1 h-10 dark:text-gray-200 cursor-pointer p-2 text-center hover:text-orange-600" data-xon.click="">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor">
+              <title>{% translate 'Sök länkade poster' %}</title>
               <path stroke-linecap="round" stroke-linejoin="round"
                   d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
@@ -119,9 +124,10 @@
 
     {% block jsbody %}
     {% endblock %}
-  </main>
 
-{% include './_partials/_search_related.html' %}
+    {% include './_partials/_search_related.html' %}
+    {% include './_partials/_download_menu.html' %}
+  </main>
 
 <script src="/static/js/clipboard.js-master/dist/clipboard.min.js"></script>
 <script>

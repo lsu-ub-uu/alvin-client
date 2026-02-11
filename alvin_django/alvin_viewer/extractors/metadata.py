@@ -594,3 +594,26 @@ class Summary:
         
         first = next(iter(self.texts.values()), None)
         return first if first else ""
+    
+# ------------------
+# BINARIES
+# ------------------
+
+@dataclass 
+class File:
+    type: Optional[str] = None
+    binary_id: Optional[str] = None
+    original_name: Optional[str] = None
+    master_url: Optional[str] = None
+    jp2_url: Optional[str] = None
+
+@dataclass 
+class FileGroup:
+    type: Optional[str] = None
+    files: List[File] = None
+
+@dataclass 
+class FilesBlock:
+    rights: str = None
+    digital_origin: str = None
+    file_groups: List[FileGroup] = None

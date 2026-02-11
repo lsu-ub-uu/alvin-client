@@ -1,11 +1,11 @@
 {% load i18n static %}
 
 <header aria-label="{% trans 'Huvudmeny' %}" class="sticky top-0 z-50"
-    data-xdata="{ showSideNav: false, showSearch: false }" data-xon.click.away="showSideNav = false">
+    data-xdata="{ activeMenu: null }" data-xon.click.away="activeMenu = null">
     <nav class="topnav flex justify-between w-full h-16 bg-white/98 dark:bg-gray-800/98 shadow-md z-10 select-none">
         <nav class="flex flex-shrink-0 justify-center items-center h-full">
             <!-- Hamburger menu -->
-            <button data-xon.click="showSideNav = !showSideNav"
+            <button data-xon.click="activeMenu = activeMenu === 'sidenav' ? null : 'sidenav'"
                 class="flex w-full h-full justify-between items-center dark:text-white p-4 border-black hover:text-blue-500">
                 <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none"
                     alt="{% trans 'Mobilmeny' %}">
@@ -42,9 +42,10 @@
             <!-- Hjälp -->
             <a  href="{% url 'help' %}" class="flex w-full h-full justify-between items-center p-2 dark:text-white">
                 <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none">
+                    <title>{% translate 'Hjälp' %}</title>
                     <path
                         d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                     </path>
                     <path d="M9 9C9 5.49997 14.5 5.5 14.5 9C14.5 11.5 12 10.9999 12 13.9999" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -56,16 +57,16 @@
             </a>
             
             <!-- Sök -->
-            <button type="button" data-xon.click="showSearch = !showSearch; if(showSearch) { setTimeout(() => document.getElementById('alvinsearch')?.focus(), 50); }"
+            <button type="button" data-xon.click="activeMenu = activeMenu === 'search' ? null : 'search'; if(activeMenu === 'search') { setTimeout(() => document.getElementById('alvinsearch')?.focus(), 50); }"
                 class="flex w-full h-full justify-between items-center p-2 mr-2 dark:text-white hover:text-blue-500"
-                :class="{'bg-dark-alvin': showSearch}">
+                :class="{'bg-dark-alvin': activeMenu === 'search'}">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6"
-                    data-xshow="!showSearch">
+                    data-xshow="activeMenu !== 'search'">
                     <title>Open search bar</title>
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
-                <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" data-xshow="showSearch"
+                <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" data-xshow="activeMenu === 'search'"
                     data-xcloak>
                     <title>Close search bar</title>
                     <path
@@ -75,19 +76,19 @@
                 </svg>
             </button>
         </nav>
-            <!-- Extended search -->
-    <div class="absolute top-16 left-0 w-full transform transition-transform duration-200 ease-out"
-        data-xshow="showSearch"
-        data-xon.click.away="showSearch = false"
-        data-xtransition:enter="transition-transform duration-200 ease-out"
-        data-xtransition:enter-start="-translate-y-full"
-        data-xtransition:enter-end="translate-y-0"
-        data-xtransition:leave="transition-transform duration-150 ease-in"
-        data-xtransition:leave-start="translate-y-0"
-        data-xtransition:leave-end="-translate-y-full"
-        data-xcloak>
-        {% include './_extended_search.html' %}
-    </div>
+        
+        <!-- Extended search -->
+        <div class="absolute top-16 left-0 w-full transform transition-transform duration-200 ease-out"
+            data-xshow="activeMenu === 'search'"
+            data-xtransition:enter="transition-transform duration-200 ease-out"
+            data-xtransition:enter-start="-translate-y-full"
+            data-xtransition:enter-end="translate-y-0"
+            data-xtransition:leave="transition-transform duration-150 ease-in"
+            data-xtransition:leave-start="translate-y-0"
+            data-xtransition:leave-end="-translate-y-full"
+            data-xcloak>
+            {% include './_extended_search.html' %}
+        </div>
     </nav>
 
 

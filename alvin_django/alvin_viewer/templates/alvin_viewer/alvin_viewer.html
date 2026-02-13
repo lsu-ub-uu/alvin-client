@@ -33,12 +33,11 @@
     {% endif %}
     {% if metadata.files %}
     <aside class="w-full">
-    <div class="w-full h-[60vh] lg:h-[70vh] bg-black rounded-lg shadow-inner" id="tify-viewer" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
-
-    <div id="thumbnail-strip" class="flex flex-row gap-3 overflow-x-auto py-4 px-2 mt-2 ods-thumbnail-strip">
-    </div>
+      <div class="w-full h-[60vh] lg:h-[70vh] bg-black rounded-lg shadow-inner" id="tify-viewer" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
+      <div id="thumbnail-strip" class="flex flex-row gap-3 overflow-x-auto py-4 px-2 mt-2 ods-thumbnail-strip"></div>
+      <div id="thumbnail-gallery" class="flex flex-row gap-3 overflow-x-auto py-4 px-2 mt-2 custom-scrollbar border-t border-gray-200 dark:border-gray-700"></div>
+      <script src="{% static 'js/tify.js' %}"></script>
     </aside>
-    <script src="{% static 'js/tify.js' %}"></script>
     {% endif %}
     <h1 class="text-2xl md:text-3xl font-bold py-2">{{ metadata.main_title.display }}{{ metadata.authority_names.title }}</h1>
     {% include './_partials/_render_record_icon.html' %}

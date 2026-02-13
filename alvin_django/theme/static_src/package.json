@@ -9,7 +9,6 @@
     "build:tailwind": "cross-env NODE_ENV=production tailwindcss --postcss -i ./src/styles.css -o ../static/css/dist/styles.css --minify",
     "dev": "cross-env NODE_ENV=development tailwindcss --postcss -i ./src/styles.css -o ../static/css/dist/styles.css -w",
     "tailwindcss": "node ./node_modules/tailwindcss/lib/cli.js",
-
     "build:js": "esbuild ./src/tify.js --bundle --outfile=../static/js/tify.js --format=esm --minify",
     "dev:js": "esbuild ./src/tify.js --bundle --outfile=../static/js/tify.js --format=esm --watch"
   },
@@ -31,6 +30,7 @@
     "tailwindcss": "^4.0.0"
   },
   "dependencies": {
+    "openseadragon": "^5.0.1",
     "tify": "^0.34.5"
   }
 }

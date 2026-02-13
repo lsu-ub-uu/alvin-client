@@ -1,11 +1,11 @@
+from django.utils import translation
+
 from typing import Callable, Iterable, Optional, Any, Dict, List
 from lxml import etree
-from django.utils import translation
 
 from ..xmlutils.nodes import text, attr, element, elements, first
 from .common import (_get_label, _get_value, _norm_rt, _xp, _get_attribute_item)
 from .common import *
-from .cleaner import clean_empty
 from .records import AlvinRecord
 from .metadata import Appraisal, Axis, Classification, Coin, Dimension, FilesBlock, FileGroup, File, Measure, SubjectMiscEntry
 
@@ -165,7 +165,9 @@ def files(root: etree._Element, xp: str) -> FilesBlock | None:
                     binary_id = text(file, "./fileLocation/linkedRecordId"),
                     original_name = text(file, "./fileLocation/linkedRecord/binary/master/originalFileName"),
                     master_url = text(file, "./fileLocation/linkedRecord/binary/master/master/actionLinks/read/url"),
+                    master_type = text(file, "./fileLocation/linkedRecord/binary/master/master/mimeType"),
                     jp2_url = text(file, "./fileLocation/linkedRecord/binary/jp2/jp2/actionLinks/read/url"),
+                    thumbnail_url = text(file, "./fileLocation/linkedRecord/binary/thumbnail/thumbnail/actionLinks/read/url"),
                 )
                 for file in elements(group, "file")],
             )

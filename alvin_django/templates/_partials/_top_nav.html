@@ -1,7 +1,7 @@
 {% load i18n static %}
 
 <header aria-label="{% trans 'Huvudmeny' %}" class="sticky top-0 z-50"
-    data-xdata="{ activeMenu: null }" data-xon.click.away="activeMenu = null">
+    data-xdata="{ activeMenu: null }" data-xon.keydown.escape="activeMenu = null" data-xon.click.away="activeMenu = null">
     <nav class="topnav flex justify-between w-full h-16 bg-white/98 dark:bg-gray-800/98 shadow-md z-10 select-none">
         <nav class="flex flex-shrink-0 justify-center items-center h-full">
             <!-- Hamburger menu -->

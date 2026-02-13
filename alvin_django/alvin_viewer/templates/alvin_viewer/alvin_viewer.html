@@ -82,8 +82,7 @@
       </nav>
       
       <!-- Download och search tools -->
-      <div class="flexflex-row gap-x-1">
-        {% if metadata.record_type == 'alvin-record' %}
+      <div class="flex flex-row gap-x-1">
         <button class="flex flex-row gap-x-1 h-10 dark:text-gray-200 cursor-pointer p-2 text-center hover:text-orange-600" data-xon.click="download = !download">
           <svg class="h-6 w-6" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <title>{% translate 'Ladda ned' %}</title>
@@ -91,16 +90,21 @@
           </svg>
           <span class="max-lg:hidden">{% translate 'Ladda ned' %}</span>
         </button>
-        {% endif %}
         {% if metadata.record_type != 'alvin-record' %}
-        <button class="flex flex-row gap-x-1 h-10 dark:text-gray-200 cursor-pointer p-2 text-center hover:text-orange-600" data-xon.click="">
+
+        <form action="{% url 'alvin_search' %}" method="get">
+          <input type="hidden" name="searchType" id="searchType" value="alvinRecord">    
+          <input type="hidden" name="{{ metadata.record_type_stripped }}" id="{{ metadata.record_type_stripped }}" value="{{ metadata.id }}">
+          <input type="hidden" name="view" id="view" value="list">
+          <button type="submit" class="flex flex-row gap-x-1 h-10 dark:text-gray-200 cursor-pointer p-2 text-center hover:text-orange-600" data-xon.click="">
             <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor">
               <title>{% translate 'Sök länkade poster' %}</title>
               <path stroke-linecap="round" stroke-linejoin="round"
                   d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
-          <span class="max-lg:hidden">{% translate 'Länkade poster' %}</span>
-        </button>
+            <span class="max-lg:hidden">{% translate 'Länkade poster' %}</span>
+          </button>
+        </form>
         {% endif %}
       </div>
     </div>
@@ -125,7 +129,6 @@
     {% block jsbody %}
     {% endblock %}
 
-    {% include './_partials/_search_related.html' %}
     {% include './_partials/_download_menu.html' %}
   </main>
 

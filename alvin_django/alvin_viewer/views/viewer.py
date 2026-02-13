@@ -3,6 +3,7 @@ from django.http import Http404
 from django.shortcuts import render
 from lxml import etree
 
+from .download import download
 from ..services.alvin_api import AlvinAPI
 from ..extractors import location, person, place, organisation, record, work 
 
@@ -61,3 +62,4 @@ def alvin_viewer(request, record_type: str, record_id: str):
         raise Http404(str(e))'''
     context = {"metadata": metadata, "value": value, "has_related": has_related(metadata)}
     return render(request, "alvin_viewer/alvin_viewer.html", context)
+

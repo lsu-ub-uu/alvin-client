@@ -74,6 +74,10 @@ class CommonMetadata:
     last_updated: Optional[DecoratedText] = None
     source_xml: Optional[str] = None
 
+    @property
+    def record_type_stripped(self) -> str:
+        return self.record_type.replace("alvin-", "")
+
 @dataclass
 class Component:
     # Archives
@@ -243,7 +247,7 @@ class Measure:
             return f"{self.weight} {self.unit}" if self.unit else self.weight
         return None
 
-@dataclass
+@dataclass(slots=True)
 class SubjectMiscEntry:
     label: Optional[str] = None
     topic: Optional[str] = None
@@ -259,6 +263,19 @@ class SubjectMiscEntry:
     def display(self) -> str:
         parts = [p for p in [self.topic, self.genre_form, self.geographic_coverage, self.temporal, self.occupation] if p is not None]
         return ", ".join(filter(None, parts))
+
+@dataclass(slots=True)
+class SubjectMiscBlock:
+    label: Optional[str] = None
+    entries: List[SubjectMiscEntry] = None
+
+    def is_empty(self) -> bool:
+        return not self.entries
+    
+    @property
+    def display(self) -> str:
+        return " ; ".join(e.display for e in self.entries if e.display)
+
 
 # ------------------
 # NAMES AND TITLES BLOCKS 
@@ -605,7 +622,9 @@ class File:
     binary_id: Optional[str] = None
     original_name: Optional[str] = None
     master_url: Optional[str] = None
+    master_type: Optional[str] = None
     jp2_url: Optional[str] = None
+    thumbnail_url: Optional[str] = None
 
 @dataclass 
 class FileGroup:

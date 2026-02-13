@@ -1,0 +1,291 @@
+{% extends "vocabulary/userguidemaster.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Alvin - Cora REST-API{% endblock %}
+{% block content %}
+<div class="bg-white dark:bg-gray-800 dark:text-white w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+  <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="md:flex flex-col md:flex-row">
+      <div class="flex flex-col w-full flex-shrink-0">
+        <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+          <div class="text-lg font-semibold tracking-widest text-gray-900 dark:text-gray-100 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+                <!-- Mobile menu button-->
+                <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+                    <span class="absolute -inset-0.5"></span>
+                    <span class="sr-only">Open main menu</span>
+                    <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <title>Mobile-menu is not open</title>
+                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
+                        <title>Mobile-menu is open</title>
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+	    </div>
+            <nav class="hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#records">{% translate 'Poster i Alvin' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#create">{% translate 'Skapa bibliografisk post' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#read">{% translate 'Läsa bibliografisk post' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#update">{% translate 'Uppdatera bibliografisk post' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#delete">{% translate 'Ta bort bibliografisk post' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#authority">{% translate 'Auktoritetsposter' %}</a>   
+            </nav> 
+
+	    <!-- Mobile menu -->
+
+            <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4">
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#records">{% translate 'Poster i Alvin' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#create">{% translate 'Skapa bibliografisk post' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#read">{% translate 'Läsa bibliografisk post' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#update">{% translate 'Uppdatera bibliografisk post' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#delete">{% translate 'Ta bort bibliografisk post' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#authority">{% translate 'Auktoritetsposter' %}</a>  
+            </div>
+        </div>
+    </div>
+  </div>
+  <span id="main-content-marker"></span>
+  <main class="w-full md:w-2/4 flex-grow pt-1 px-3 mb-10">
+     <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">Cora REST-API</h1>
+     <p class="py-2 font-bold">{% translate 'Medlemmar kan läsa, skapa och uppdatera poster i Alvin via ett REST-API som bygger på Cora, ett metadatadrivet generiskt öppet digitalt arkivsystem utformat för att hantera strukturerad metadata och filer.' %}</p> 
+     <p class="py-2">{% translate 'Cora utvecklas av Nationella system vid Uppsala universitetsbibliotek' %}</p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://cora.alvin-portal.org/rest/">Cora Record API-dokumentation</a> beskriver hur poster och filer hanteras samt hur sökningar görs.</p>
+ 
+   <h2 id="alvin" class="text-3xl md:text-4xl font-bold pt-4">Poster i Alvin</h2>
+    <p class="py-2">För att skapa och uppdatera poster krävs att användaren är registrerad i systemet (endast tillgängligt för personer kopplade till Alvins medlemsorganisationer). Publicerade poster kan däremot läsas av alla och är öppet tillgängliga utan inloggning.</p>
+
+     <p class="py-2">Poster hanteras via Alvins dataformat i Cora uttryckt som antingen XML eller JSON. Formatbeskrivningen av typer och klasser är tillgänglig i katalogiseringsklienten samt som öppen länkad vokabulär.</p> 
+ 
+     
+     <h3 id="create" class="text-2xl md:text-3xl font-bold pt-4">Skapa bibliografisk post</h3>
+     <p class="py-2">Obligatoriska fält för alla bibliografiska poster (<span class="font-mono">record</span>) är resurstyp (<span class="font-mono">typeOfResource</span>), titel (<span class="font-mono">title</span>) samt arkivinstitution (<span class="font-mono">location</span>). Förutom beskrivande Alvin-metadata kräver Cora ett antal specifika obligatoriska kontrollfält i elementet <span class="font-mono">recordInfo</span>.</p> 
+
+<p class="py-2">
+<pre class="text-xs px-4 text-white bg-black overflow-auto">  
+&lt;record&gt;
+  &lt;typeOfResource&gt;img&lt;/typeOfResource&gt;
+  &lt;title&gt;
+    &lt;mainTitle&gt;A title&lt;/mainTitle&gt;
+  &lt;/title&gt;
+  &lt;physicalLocation&gt;
+    &lt;heldBy&gt;
+      &lt;location&gt;
+        &lt;linkedRecordType&gt;alvin-location&lt;/linkedRecordType&gt;
+        &lt;linkedRecordId&gt;1&lt;/linkedRecordId&gt;
+      &lt;/location&gt;
+    &lt;/heldBy&gt;
+  &lt;/physicalLocation&gt;
+  &lt;recordInfo&gt;
+    &lt;validationType&gt;
+      &lt;linkedRecordType&gt;validationType&lt;/linkedRecordType&gt;
+      &lt;linkedRecordId&gt;recordStillImage&lt;/linkedRecordId&gt;
+    &lt;/validationType&gt;
+    &lt;dataDivider&gt;
+      &lt;linkedRecordType&gt;system&lt;/linkedRecordType&gt;
+      &lt;linkedRecordId&gt;alvinData&lt;/linkedRecordId&gt;
+     &lt;/dataDivider&gt;
+     &lt;permissionUnit&gt;
+       &lt;linkedRecordType&gt;permissionUnit&lt;/linkedRecordType&gt;
+       &lt;linkedRecordId&gt;1&lt;/linkedRecordId&gt;
+     &lt;/permissionUnit&gt;
+     &lt;visibility&gt;published&lt;/visibility&gt;
+  &lt;/recordInfo&gt;
+&lt;/record&gt;
+
+</pre>
+</p>
+<ul class="py-2 list-disc list-inside">
+<li class="py-2"><span class="font-mono">validationType</span> anger vilken uppsättning metadataelement posten kontrolleras mot. Olika resurstyper har olika tillåtna underelement. Kopplat till resurstypen via länkat id.</li>
+<li class="py-2"><span class="font-mono">dataDivider</span> har ett fast värde alvinData som länkat id.</li>
+<li class="py-2"><span class="font-mono">permissionUnit</span> är för att hantera rättigheter en nödvändig dubblering av id-nummer för den länkade arkivinstitutionen i posten. alvin-location med länkat id 1 i elementet location dubbleras alltså till permissionUnit med värde 1. Endast poster som tillhör användarens egen organisation kan skapas.</li>
+<li class="py-2"><span class="font-mono">visibility</span> anger om posten skall vara publikt tillgänglig eller inte. Poster kan antingen vara published (läsbara för alla) eller unpublished (endast tillgängliga för inloggade användare hos den egna organisationen).</li>
+</ul>
+
+<h3 id="read" class="text-2xl md:text-3xl font-bold pt-4">Läsa bibliografisk post</h3>
+<p class="py-2">Poster som läses via API:et innehåller förutom själva den beskrivande metadatan länkar (<span class="font-mono">actionLinks</span>) till de olika möjligheter användaren har att anropa både posten och inlänkade poster i API:et. Ett omgivande Cora-element (<span class="font-mono">record</span>) innehåller (<span class="font-mono">data</span>) som i sin tur innehåller den faktiska metadataposten.</p>
+<p class="py-2">Notera attributet <span class="font-mono">repeatId</span> som är obligatoriskt för alla upprepningsbara fält i Coras API. <span class="font-mono">repeatId</span> måste innehålla ett unikt nummer inom respektive element.</p>
+<p class="py-2">
+<pre class="text-xs px-4 text-white bg-black overflow-auto">
+&lt;record&gt;
+  &lt;data&gt;
+    &lt;record&gt;
+      &lt;typeOfResource&gt;img&lt;/typeOfResource&gt;
+      &lt;title&gt;
+        &lt;mainTitle&gt;A title&lt;/mainTitle&gt;
+      &lt;/title&gt;
+      &lt;physicalLocation&gt;
+        &lt;heldBy&gt;
+          &lt;location&gt;
+            &lt;linkedRecordType&gt;alvin-location&lt;/linkedRecordType&gt;
+            &lt;linkedRecordId&gt;1&lt;/linkedRecordId&gt;
+            &lt;actionLinks&gt;
+              &lt;read&gt;
+                &lt;requestMethod&gt;GET&lt;/requestMethod&gt;
+                &lt;rel&gt;read&lt;/rel&gt;
+                &lt;url&gt;https://cora.alvin-portal.org/rest/record/alvin-location/1&lt;/url&gt;
+                &lt;accept&gt;application/vnd.cora.record+xml&lt;/accept&gt;
+              &lt;/read&gt;
+            &lt;/actionLinks&gt;
+          &lt;/location&gt;
+        &lt;/heldBy&gt;
+      &lt;/physicalLocation&gt;
+      &lt;recordInfo&gt;
+        &lt;validationType&gt;
+          &lt;linkedRecordType&gt;validationType&lt;/linkedRecordType&gt;
+          &lt;linkedRecordId&gt;recordStillImage&lt;/linkedRecordId&gt;
+          &lt;actionLinks&gt;
+            &lt;read&gt;
+              &lt;requestMethod&gt;GET&lt;/requestMethod&gt;
+              &lt;rel&gt;read&lt;/rel&gt;
+              &lt;url&gt;https://cora.alvin-portal.org/rest/record/validationType/recordStillImage&lt;/url&gt;
+              &lt;accept&gt;application/vnd.cora.record+xml&lt;/accept&gt;
+            &lt;/read&gt;
+          &lt;/actionLinks&gt;
+        &lt;/validationType&gt;
+        &lt;dataDivider&gt;
+          &lt;linkedRecordType&gt;system&lt;/linkedRecordType&gt;
+          &lt;linkedRecordId&gt;alvinData&lt;/linkedRecordId&gt;
+          &lt;actionLinks&gt;
+            &lt;read&gt;
+              &lt;requestMethod&gt;GET&lt;/requestMethod&gt;
+              &lt;rel&gt;read&lt;/rel&gt;
+              &lt;url&gt;https://cora.alvin-portal.org/rest/record/system/alvinData&lt;/url&gt;
+              &lt;accept&gt;application/vnd.cora.record+xml&lt;/accept&gt;
+            &lt;/read&gt;
+          &lt;/actionLinks&gt;
+        &lt;/dataDivider&gt;
+        &lt;permissionUnit&gt;
+          &lt;linkedRecordType&gt;permissionUnit&lt;/linkedRecordType&gt;
+          &lt;linkedRecordId&gt;1&lt;/linkedRecordId&gt;
+          &lt;actionLinks&gt;
+            &lt;read&gt;
+              &lt;requestMethod&gt;GET&lt;/requestMethod&gt;
+              &lt;rel&gt;read&lt;/rel&gt;
+              &lt;url&gt;https://cora.alvin-portal.org/rest/record/permissionUnit/1&lt;/url&gt;
+              &lt;accept&gt;application/vnd.cora.record+xml&lt;/accept&gt;
+            &lt;/read&gt;
+          &lt;/actionLinks&gt;
+        &lt;/permissionUnit&gt;
+        &lt;visibility&gt;published&lt;/visibility&gt;
+        &lt;tsVisibility&gt;2026-01-14T15:03:02.382669Z&lt;/tsVisibility&gt;
+        &lt;inTrashBin&gt;false&lt;/inTrashBin&gt;
+        &lt;id&gt;2&lt;/id&gt;
+        &lt;type&gt;
+          &lt;linkedRecordType&gt;recordType&lt;/linkedRecordType&gt;
+          &lt;linkedRecordId&gt;alvin-record&lt;/linkedRecordId&gt;
+          &lt;actionLinks&gt;
+            &lt;read&gt;
+              &lt;requestMethod&gt;GET&lt;/requestMethod&gt;
+              &lt;rel&gt;read&lt;/rel&gt;
+              &lt;url&gt;https://cora.alvin-portal.org/rest/record/recordType/alvin-record&lt;/url&gt;
+              &lt;accept&gt;application/vnd.cora.record+xml&lt;/accept&gt;
+            &lt;/read&gt;
+          &lt;/actionLinks&gt;
+        &lt;/type&gt;
+        &lt;createdBy&gt;
+          &lt;linkedRecordType&gt;user&lt;/linkedRecordType&gt;
+          &lt;linkedRecordId&gt;111111&lt;/linkedRecordId&gt;
+        &lt;/createdBy&gt;
+        &lt;tsCreated&gt;2026-01-14T15:03:02.383666Z&lt;/tsCreated&gt;
+        &lt;updated repeatId="0"&gt;
+          &lt;tsUpdated&gt;2026-01-14T17:29:26.591761Z&lt;/tsUpdated&gt;
+          &lt;updatedBy&gt;
+            &lt;linkedRecordType&gt;user&lt;/linkedRecordType&gt;
+            &lt;linkedRecordId&gt;111111&lt;/linkedRecordId&gt;
+          &lt;/updatedBy&gt;
+        &lt;/updated&gt;
+        &lt;urn&gt;urn:nbn:se:alvin:portal:record-1&lt;/urn&gt;
+      &lt;/recordInfo&gt;
+    &lt;/record&gt;
+  &lt;/data&gt;
+  &lt;actionLinks&gt;
+    &lt;read&gt;
+      &lt;requestMethod&gt;GET&lt;/requestMethod&gt;
+      &lt;rel&gt;read&lt;/rel&gt;
+      &lt;url&gt;https://cora.alvin-portal.org/rest/record/alvin-record/1&lt;/url&gt;
+      &lt;accept&gt;application/vnd.cora.record+xml&lt;/accept&gt;
+    &lt;/read&gt;
+  &lt;/actionLinks&gt;
+&lt;/record&gt;  
+
+</pre>
+</p>
+  
+     <h3 id="update" class="text-2xl md:text-3xl font-bold pt-4">Uppdatera bibliografisk post</h3>
+<p class="py-2">Vid uppdatering av en befintlig post anges även <span class="font-mono">id</span> samt <span class="font-mono">type</span> i <span class="font-mono">recordInfo</span>. <span class="font-mono">inTrashBin</span> sätts till false.</p>
+<p class="py-2">
+<pre class="text-xs px-4 text-white bg-black overflow-auto">  
+&lt;record&gt;
+  &lt;typeOfResource&gt;img&lt;/typeOfResource&gt;
+  &lt;title&gt;
+    &lt;mainTitle&gt;An updated title&lt;/mainTitle&gt;
+  &lt;/title&gt;
+  &lt;physicalLocation&gt;
+    &lt;heldBy&gt;
+      &lt;location&gt;
+        &lt;linkedRecordType&gt;alvin-location&lt;/linkedRecordType&gt;
+        &lt;linkedRecordId&gt;1&lt;/linkedRecordId&gt;
+      &lt;/location&gt;
+    &lt;/heldBy&gt;
+  &lt;/physicalLocation&gt;
+  &lt;recordInfo&gt;
+    &lt;id&gt;1&lt;/id&gt;
+    &lt;type&gt;
+      &lt;linkedRecordType&gt;recordType&lt;/linkedRecordType&gt;
+      &lt;linkedRecordId&gt;alvin-record&lt;/linkedRecordId&gt;
+    &lt;/type&gt;
+    &lt;validationType&gt;
+      &lt;linkedRecordType&gt;validationType&lt;/linkedRecordType&gt;
+      &lt;linkedRecordId&gt;recordStillImage&lt;/linkedRecordId&gt;
+    &lt;/validationType&gt;
+    &lt;dataDivider&gt;
+      &lt;linkedRecordType&gt;system&lt;/linkedRecordType&gt;
+      &lt;linkedRecordId&gt;alvinData&lt;/linkedRecordId&gt;
+     &lt;/dataDivider&gt;
+     &lt;permissionUnit&gt;
+       &lt;linkedRecordType&gt;permissionUnit&lt;/linkedRecordType&gt;
+       &lt;linkedRecordId&gt;1&lt;/linkedRecordId&gt;
+     &lt;/permissionUnit&gt;
+     &lt;visibility&gt;published&lt;/visibility&gt;
+     &lt;inTrashBin&gt;false&lt;/inTrashBin&gt;
+  &lt;/recordInfo&gt;
+&lt;/record&gt;
+
+</pre>
+</p>
+
+
+
+  <h3 id="delete" class="text-2xl md:text-3xl font-bold pt-4">Ta bort bibliografisk post</h3>
+
+<p class="py-2">Bibliografiska poster kan av arkivskäl inte tas bort helt från systemet men går att dölja för användare genom att 
+uppdatera posten som ovan och i <span class="font-mono">recordInfo</span> sätta <span class="font-mono">inTrashBin</span> till true.</p>
+
+  <h3 id="authority" class="text-2xl md:text-3xl font-bold pt-4">Auktoritetsposter</h3>
+
+<p class="py-2">Hanteras på motsvarande sätt som bibliografiska poster men kan skapas och uppdateras oavsett användarens organisationstillhörighet. De är också alltid öppet publicerade. Det innebär att recordInfo för auktoritetsposter varken innehåller elementen permissionUnit eller visibility. 
+Likaså kan auktoritetsposter som inte är länkade från en annan post tas bort från systemet genom ett DELETE anrop varför inte heller inTrashBin finns för auktoritetsposter.</p>
+<p class="py-2">Som beskrivande metadata måste auktoritetsposter för person, organisation och plats innehålla minst ett 
+<span class="font-mono">authority</span>-element och auktoritetsposter för verk <span class="font-mono">title</span> samt <span class="font-mono">formOfWork</span> som obligatoriska element.</p>
+
+
+
+
+
+ 
+
+
+ 
+ </main>
+  <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+        <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
+            <div class="flex justify-center py-4 dark:bg-off-white">
+                <a class="text-center" href="https://www.uu.se/kontakt-och-organisation/organisation?query=BI%3A87">
+                    <img class="w-48 object-center" alt="Uppsala universitet, Nationella system" src="/static/img/UU_logo_4f_42-e1619707029600.png">
+                </a>
+            </div>
+      </div>   
+  </div>
+</div>
+{% endblock %}

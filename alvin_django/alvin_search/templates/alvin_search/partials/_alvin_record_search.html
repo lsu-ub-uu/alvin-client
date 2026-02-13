@@ -39,18 +39,15 @@
                     {{record.locationsv}} 
                 {% endif %} 
                 </span>
-                {% if record.shelfmark != None %}
-                    {{record.shelfmark}} 
-                {% endif %} 
             </div>
  
             <div class="flex pt-2 font-semibold text-blue-800 dark:text-blue-200 underline text-base w-full">
                {{record.title|truncatechars:100 }}     
             </div>
 
-            <div class="flex dark:text-white">{% if record.namefamily != None %}{{record.namefamily}}{% if record.familyName != None %} (family){% endif %}{% if record.namegiven != None %}, {% endif %}{% endif %}
-              {% if record.namegiven != None %}{{record.namegiven}}{% endif %}{% if record.namenumeration != None %} {{record.namenumeration}}{% endif %}{% if record.nametermsOfAddress != None %}, {{record.nametermsOfAddress}}{% endif %}
-              {% if record.namefamilytwo != None %}et al.{% endif %}
+            <div class="flex dark:text-white">
+              {% if record.namegiven != None %}{{record.namegiven}}{% endif %}{% if record.namenumeration != None %} {{record.namenumeration}}{% endif %}{% if record.namefamily != None %} {% endif %}{% if record.namefamily != None %}{{record.namefamily}}{% if record.familyName != None %} (family){% endif %}{% endif %}{% if record.nametermsOfAddress != None %}, {{record.nametermsOfAddress}}{% endif %}              
+              {% if record.namefamilytwo != None %}{% translate 'm.fl.' %}{% endif %}
             </div>
    
             <div class="flex dark:text-white"> 

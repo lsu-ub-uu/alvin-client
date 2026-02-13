@@ -31,8 +31,15 @@
     <xsl:param name="sub34"/>
     <xsl:param name="sub36"/>
     <xsl:param name="sub38"/>
+    <xsl:param name="sub39"/>
+    <xsl:param name="sub40"/>
+    <xsl:param name="sub41"/>
+    <xsl:param name="sub42"/>
+    <xsl:param name="sub43"/>
     <xsl:param name="sub44"/>
+    <xsl:param name="sub45"/>
     <xsl:param name="sub46"/>
+    <xsl:param name="sub56"/>
     <xsl:template match="/">
         <xsl:apply-templates select="record/data/metadata"/>
     </xsl:template>
@@ -311,16 +318,58 @@
                                     <xsl:with-param name="sub" select="$sub38"/>
                                 </xsl:call-template>
                             </xsl:if>
+                            <xsl:if test="$sub39 != 'None'">
+                                <xsl:call-template name="sub">
+                                    <xsl:with-param name="baseURL" select="$baseURL"/>
+                                    <xsl:with-param name="sub" select="$sub39"/>
+                                </xsl:call-template>
+                            </xsl:if>
+                            <xsl:if test="$sub40 != 'None'">
+                                <xsl:call-template name="sub">
+                                    <xsl:with-param name="baseURL" select="$baseURL"/>
+                                    <xsl:with-param name="sub" select="$sub40"/>
+                                </xsl:call-template>
+                            </xsl:if>
+                            <xsl:if test="$sub41 != 'None'">
+                                <xsl:call-template name="sub">
+                                    <xsl:with-param name="baseURL" select="$baseURL"/>
+                                    <xsl:with-param name="sub" select="$sub41"/>
+                                </xsl:call-template>
+                            </xsl:if>
+                            <xsl:if test="$sub42 != 'None'">
+                                <xsl:call-template name="sub">
+                                    <xsl:with-param name="baseURL" select="$baseURL"/>
+                                    <xsl:with-param name="sub" select="$sub42"/>
+                                </xsl:call-template>
+                            </xsl:if>
+                            <xsl:if test="$sub43 != 'None'">
+                                <xsl:call-template name="sub">
+                                    <xsl:with-param name="baseURL" select="$baseURL"/>
+                                    <xsl:with-param name="sub" select="$sub43"/>
+                                </xsl:call-template>
+                            </xsl:if>
                             <xsl:if test="$sub44 != 'None'">
                                 <xsl:call-template name="sub">
                                     <xsl:with-param name="baseURL" select="$baseURL"/>
                                     <xsl:with-param name="sub" select="$sub44"/>
                                 </xsl:call-template>
                             </xsl:if>
+                            <xsl:if test="$sub45 != 'None'">
+                                <xsl:call-template name="sub">
+                                    <xsl:with-param name="baseURL" select="$baseURL"/>
+                                    <xsl:with-param name="sub" select="$sub45"/>
+                                </xsl:call-template>
+                            </xsl:if>
                             <xsl:if test="$sub46 != 'None'">
                                 <xsl:call-template name="sub">
                                     <xsl:with-param name="baseURL" select="$baseURL"/>
                                     <xsl:with-param name="sub" select="$sub46"/>
+                                </xsl:call-template>
+                            </xsl:if>
+                            <xsl:if test="$sub56 != 'None'">
+                                <xsl:call-template name="sub">
+                                    <xsl:with-param name="baseURL" select="$baseURL"/>
+                                    <xsl:with-param name="sub" select="$sub56"/>
                                 </xsl:call-template>
                             </xsl:if>
                         </xsl:if>

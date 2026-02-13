@@ -136,7 +136,12 @@
      <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
        <div class="flex flex-col justify-center">  
          <div class="flex justify-center py-4"> 
-            <a href="" class="flex flex-row bg-orange-600 hover:bg-orange-700 focus:bg-blue-800 text-white font-semibold py-2 px-4 rounded-full">{% translate 'Sök länkade poster' %}</a>
+               <form action="/search" method="get">
+                    <input type="hidden" name="searchType" id="searchType" value="alvinRecord">    
+                    <input type="hidden" name="location" id="location" value="{{ metadata.id }}">
+                    <input type="hidden" name="view" id="view" value="list">
+                    <input type="submit" value="Länkade poster">
+                </form>
          </div>
          <div class="flex justify-center"> 
           <h2 class="text-xl md:text-2xl font-bold pt-4">{% translate 'Exportera' %}</h2>

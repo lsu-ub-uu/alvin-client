@@ -1,5 +1,4 @@
-{% load static %}
-{% load i18n %}
+{% load static i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
@@ -11,6 +10,7 @@
     <meta name="DC.Publisher" content="Uppsala University Library">
     <meta name="keywords" content="Alvin, cultural heritage, digital collections, databases, libraries, archives">
     <meta name="description" content="Alvin - Nordic platform for preserving and making digitised cultural heritage available">
+
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
     <link rel="alternate" href="{{ request.get_host }}/en{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="en">
     <link rel="alternate" href="{{ request.get_host }}/no{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="no">
@@ -46,9 +46,10 @@
       {% include "vocabulary/userguidenavbarnew.html" %}	
       {% block content %}
       {% endblock %}    
-      {% include '_partials/_footer.html' %}
-      <!-- Back to top button -->
-  {% include '_partials/_back_to_top.html' %}
-    <script src="{% static 'js/btn-back-to-top.js' %}"></script>
+      
+
+    {% include '_partials/_back_to_top.html' %}
+    {% include "vocabulary/ugfooter.html" %}
+
   </body>
 </html>

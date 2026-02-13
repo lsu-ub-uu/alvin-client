@@ -40,9 +40,6 @@
   <span id="main-content-marker"></span>
   <main class="w-full md:w-2/4 flex-grow pt-1 px-3 mb-10">
      <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">IIIF</h1>
-     {% if LANGUAGE_CODE != "sv" %}
-         <p class="py-2 text-sm italic">{% translate 'AI-genererad översättning' %}
-     {% endif %}
      <p class="py-2 font-bold">{% translate 'International Image Interoperability Framework (IIIF) definierar universella standarder för att beskriva och leverera bilder över webben.' %}</p> 
      <p class="py-2">{% translate 'Nästan allt digitalt material som du hittar i Alvin får användas helt fritt. Var dock uppmärksam på att en del modernare material kan vara upphovsrättsskyddat. Rättighetsmärkningen i varje post talar om vad som gäller.' %}</p>
      <h2 id="imageapi" class="text-3xl md:text-4xl font-bold pt-4">IIIF Image API</h2> 
@@ -63,7 +60,7 @@
         </div>
         <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
             <div class="w-full md:w-1/4 flex-grow font-bold pl-2">Identifier</div>
-            <div class="w-full md:w-3/4 flex-grow pl-2">binary:1306702059522961</div>
+            <div class="w-full md:w-3/4 flex-grow pl-2">binary:2758142690426554</div>
         </div>
         <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
             <div class="w-full md:w-1/4 flex-grow font-bold pl-2">
@@ -168,13 +165,13 @@
     const encodedFormat = encodeURIComponent(format);
 
     // Example: create a profile URL
-    const generatedUrl = `https://cora.alvin-portal.org/iiif/binary:1306702059522961/${encodedRegion}/${size}/${encodedRotation}/${encodedQuality}${encodedFormat}`;
+    const generatedUrl = `https://cora.alvin-portal.org/iiif/binary:2758142690426554/${encodedRegion}/${size}/${encodedRotation}/${encodedQuality}${encodedFormat}`;
 
     // Display clickable link
     document.getElementById('result').innerHTML =
         `<div><a class="text-blue-800 dark:text-blue-200 underline" href="${generatedUrl}">${generatedUrl}</a></div>
-         <div class="flex justify-center pt-4"> <img src="${generatedUrl}" alt="binary:1306702059522961"></div>
-         <div><p class="py-2"><span class="font-semibold">Bildinformation:</span> <a class="text-blue-800 dark:text-blue-200 underline" href="https://cora.alvin-portal.org/iiif/binary:1306702059522961/info.json">https://cora.alvin-portal.org/iiif/binary:1306702059522961/info.json</a></p></div>`;
+         <div class="flex justify-center pt-4"> <img src="${generatedUrl}" alt="binary:2758142690426554"></div>
+         <div><p class="py-2"><span class="font-semibold">Bildinformation:</span> <a class="text-blue-800 dark:text-blue-200 underline" href="https://cora.alvin-portal.org/iiif/binary:2758142690426554/info.json">https://cora.alvin-portal.org/iiif/binary:2758142690426554/info.json</a></p></div>`;
 
  });
  </script>
@@ -183,12 +180,12 @@
 
  <h2 id="iiifmanifest" class="text-3xl md:text-4xl font-bold pt-4">IIIF Manifest</h2> 
  <p class="py-2">Ett IIIF-manifest är det paket som innehåller all information relaterad till ett visst digitalt objekt, inklusive själva bilden och metadata.</p>
-
+ <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/iiif/manifest/12622/">Exempel IIIF Manifest från Alvin.</a> (Innehåller endast filinformation).</p>
  </main>
   <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
         <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
             <div class="flex justify-center py-4"> 
-                <a href="https://iiif.io/">
+                <a class="text-blue-800 dark:text-blue-200 underline" href="https://iiif.io/">
                     <img class="w-48 object-center" alt="International Image Interoperability Framework (IIIF)" src="/static/img/International_Image_Interoperability_Framework_logo.png">
                 </a>
             </div>

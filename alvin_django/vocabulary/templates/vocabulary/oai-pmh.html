@@ -49,9 +49,6 @@
   <span id="main-content-marker"></span>
   <main class="w-full md:w-2/4 flex-grow pt-1 px-3">
      <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">OAI-PMH</h1>
-     {% if LANGUAGE_CODE != "sv" %}
-         <p class="py-2 text-sm italic">{% translate 'AI-genererad översättning' %}
-     {% endif %}
      <p class="py-2 font-bold">{% translate 'Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH) är ett protokoll som utvecklats för att samla in metadatabeskrivningar av poster i ett arkiv så att tjänster kan byggas med hjälp av metadata från flera arkiv. Metadataposter från Alvin kan hämtas via protokollet' %} <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.openarchives.org/OAI/openarchivesprotocol.html">OAI-PMH, Version 2</a>.
      <p class="py-2">{% translate 'Metadataposter från Alvin är fritt tillgängliga enligt' %} <a class="text-blue-800 dark:text-blue-200 underline" href="https://creativecommons.org/public-domain/cc0/">Creative Commons CC0</a>.
      <p class="py-2">{% translate 'Protokollet består av sex olika typer av förfrågningar <span class="italic">(verb)</span> som anger vilken tjänst som anropas:' %}</p>

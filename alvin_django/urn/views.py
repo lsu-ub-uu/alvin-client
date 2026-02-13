@@ -104,9 +104,16 @@ def metadatardf(request, id, method="GET"):
   suba34 = record_xml.findtext("./data/recordToRecordLink[32]/from/[linkedRecordType='metadata']/linkedRecordId")
   suba36 = record_xml.findtext("./data/recordToRecordLink[36]/from/[linkedRecordType='metadata']/linkedRecordId")
   suba38 = record_xml.findtext("./data/recordToRecordLink[38]/from/[linkedRecordType='metadata']/linkedRecordId")
+  suba39 = record_xml.findtext("./data/recordToRecordLink[39]/from/[linkedRecordType='metadata']/linkedRecordId") 
+  suba40 = record_xml.findtext("./data/recordToRecordLink[40]/from/[linkedRecordType='metadata']/linkedRecordId") 
+  suba41 = record_xml.findtext("./data/recordToRecordLink[41]/from/[linkedRecordType='metadata']/linkedRecordId") 
+  suba42 = record_xml.findtext("./data/recordToRecordLink[42]/from/[linkedRecordType='metadata']/linkedRecordId") 
+  suba43 = record_xml.findtext("./data/recordToRecordLink[43]/from/[linkedRecordType='metadata']/linkedRecordId") 
   suba44 = record_xml.findtext("./data/recordToRecordLink[44]/from/[linkedRecordType='metadata']/linkedRecordId")
+  suba45 = record_xml.findtext("./data/recordToRecordLink[45]/from/[linkedRecordType='metadata']/linkedRecordId") 
   suba46 = record_xml.findtext("./data/recordToRecordLink[46]/from/[linkedRecordType='metadata']/linkedRecordId")
-  
+  suba56 = record_xml.findtext("./data/recordToRecordLink[56]/from/[linkedRecordType='metadata']/linkedRecordId")  
+ 
   if not suba1:
     sub1 = 'None'
   else:
@@ -237,15 +244,50 @@ def metadatardf(request, id, method="GET"):
   else:
     sub38 = suba38
 
+  if not suba39:
+    sub39 = 'None'
+  else:
+    sub39 = suba39
+
+  if not suba40:
+    sub40 = 'None'
+  else:
+    sub40 = suba40
+
+  if not suba41:
+    sub41 = 'None'
+  else:
+    sub41 = suba41
+
+  if not suba42:
+    sub42 = 'None'
+  else:
+    sub42 = suba42
+
+  if not suba43:
+    sub43 = 'None'
+  else:
+    sub43 = suba43
+
   if not suba44:
     sub44 = 'None'
   else:
     sub44 = suba44
 
+  if not suba45:
+    sub45 = 'None'
+  else:
+    sub45 = suba45
+
   if not suba46:
     sub46 = 'None'
   else:
     sub46 = suba46
+
+  if not suba56:
+    sub56 = 'None'
+  else:
+    sub56 = suba56
 
   lang = request.LANGUAGE_CODE
 
@@ -277,8 +319,15 @@ def metadatardf(request, id, method="GET"):
   argDict["sub34"] = etree.XSLT.strparam(sub34)
   argDict["sub36"] = etree.XSLT.strparam(sub36)
   argDict["sub38"] = etree.XSLT.strparam(sub38)
+  argDict["sub39"] = etree.XSLT.strparam(sub39)
+  argDict["sub40"] = etree.XSLT.strparam(sub40)
+  argDict["sub41"] = etree.XSLT.strparam(sub41)
+  argDict["sub42"] = etree.XSLT.strparam(sub42)
+  argDict["sub43"] = etree.XSLT.strparam(sub43)
   argDict["sub44"] = etree.XSLT.strparam(sub44)
+  argDict["sub45"] = etree.XSLT.strparam(sub45)
   argDict["sub46"] = etree.XSLT.strparam(sub46)
+  argDict["sub56"] = etree.XSLT.strparam(sub56)
 
   with urllib.request.urlopen(req) as f:
     xml_tree = etree.parse(f, parser)

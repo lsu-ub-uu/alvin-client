@@ -4,19 +4,7 @@
 
 {% block title %}Alvin - {{ metadata.main_title.display }}{{ metadata.authority_names.title }}{% endblock %}
 
-{% block head %}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-{% endblock %}
-
-{% block jshead %}
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="">
-  </script>
-{% endblock %}
-
 {% block content %}
-
   <main
     class="min-h-screen w-full flex flex-col lg:flex-1 pt-4 pb-8 px-8"
     data-xdata="{ activeTab: 'overview', download: false }"
@@ -32,12 +20,27 @@
     </a>
     {% endif %}
     {% if metadata.files %}
-    <aside class="w-full">
-      <div class="w-full h-[60vh] lg:h-[70vh] bg-black rounded-lg shadow-inner" id="tify-viewer" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
-      <div id="thumbnail-strip" class="flex flex-row gap-3 overflow-x-auto py-4 px-2 mt-2 ods-thumbnail-strip"></div>
-      <div id="thumbnail-gallery" class="flex flex-row gap-3 overflow-x-auto py-4 px-2 mt-2 custom-scrollbar border-t border-gray-200 dark:border-gray-700"></div>
-      <script src="{% static 'js/tify.js' %}"></script>
+    <aside class="w-full h-[60vh] lg:h-[80vh] relative">
+      <div id="osd-wrapper" class="w-full h-full flex flex-row bg-black overflow-hidden relative">
+        
+        <div id="tify-viewer" class="flex-1 h-full" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
+
+        <div id="thumb-sidebar" class="hidden w-48 h-full bg-gray-900 border-l border-gray-700 overflow-y-auto flex-none z-10 ease-in-out duration-300 transition-all">
+          <div id="thumb-list" class="flex flex-col gap-4 p-4">
+            </div>
+        </div>
+
+        <button id="toggle-thumbs" class="absolute top-4 right-4 z-20 bg-black/50 hover:bg-black text-white p-2 rounded shadow-lg border border-white/20">
+          <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none">
+            <path d="M21 7.6V20.4C21 20.7314 20.7314 21 20.4 21H7.6C7.26863 21 7 20.7314 7 20.4V7.6C7 7.26863 7.26863 7 7.6 7H20.4C20.7314 7 21 7.26863 21 7.6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M18 4H4.6C4.26863 4 4 4.26863 4 4.6V18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M7 16.8L12.4444 15L21 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M16.5 13C15.6716 13 15 12.3284 15 11.5C15 10.6716 15.6716 10 16.5 10C17.3284 10 18 10.6716 18 11.5C18 12.3284 17.3284 13 16.5 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
     </aside>
+    <script src="{% static 'js/tify.js' %}"></script>
     {% endif %}
     <h1 class="text-2xl md:text-3xl font-bold py-2">{{ metadata.main_title.display }}{{ metadata.authority_names.title }}</h1>
     {% include './_partials/_render_record_icon.html' %}

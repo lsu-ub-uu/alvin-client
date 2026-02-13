@@ -2,7 +2,6 @@ from lxml import etree
 from .common import _get_label, _get_value, _norm_rt, _xp, agents, compact, dates, decorated_text, decorated_list, decorated_list_item, electronic_locators, first, origin_places, titles
 from .records import AlvinWork
 from ..xmlutils.nodes import text, attr, element, elements
-from .cleaner import clean_empty
 
 rt = _norm_rt("alvin-work")
 

@@ -4,7 +4,6 @@ from .records import AlvinPlace
 
 from .common import _get_label, _norm_rt, _xp, compact, decorated_list_item, decorated_text, element, names, text
 from .mappings import place
-from .cleaner import clean_empty
 
 rt = _norm_rt("alvin-place")
 

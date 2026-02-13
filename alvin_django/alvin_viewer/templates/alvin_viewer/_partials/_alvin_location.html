@@ -1,0 +1,45 @@
+{% load i18n static %}
+
+{% block title %}
+<title>Alvin - {{ metadata.authority_names.title }}</title>
+{% endblock %}
+
+<!-- Metadata -->
+<div class="flex flex-col">
+    <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
+        {% with metadata.authority_names.label as authority_label %}
+            {% for lang, name in metadata.authority_names.names.items %}
+                {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name.display %}
+            {% endfor %}
+        {% endwith %}
+        {% include "./_metadata_row.html" with label=metadata.dates.label value=metadata.organisation_info.dates.display %}
+        {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
+    </div>    
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
+        {% with metadata.variant_names.label as variant_label %}
+            {% for lang, name in metadata.variant_names.names.items %}
+                {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name.display %}
+            {% endfor %}
+        {% endwith %}
+        {% include "./_metadata_row.html" with label=metadata.organisation_info.label value=metadata.organisation_info.dates.display %}
+        {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
+        {% include "./_metadata_row.html" with label=metadata.member_type.label value=metadata.member_type.item %}
+        {% include "./_metadata_row.html" with label=metadata.email.label url=metadata.email.text value=metadata.email.text %}
+        {% include "./_address.html" with label=metadata.address.label place_id=metadata.address.place.id box=metadata.address.box street=metadata.address.street postcode=metadata.address.postcode place=metadata.address.place.name.title country=metadata.address.country %}
+        {% include "./_metadata_row.html" with label=metadata.summary.label value=metadata.summary.display %}
+        {% if metadata.latitude and metadata.longitude %}
+            {% include "./_metadata_row.html" with label=metadata.longitude.label value=metadata.longitude.text %}
+            {% include "./_metadata_row.html" with label=metadata.latitude.label value=metadata.latitude.text %}
+        {% endif %}
+    </div>
+    <div data-xshow="activeTab === 'all_metadata' || activeTab === 'related'" data-xcloak>
+        {% for electronic_locator in metadata.electronic_locators %}
+            {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
+        {% endfor %}
+    </div>
+    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
+        {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
+        {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
+    </div>
+    {% include './_alvin_id_uri.html' %}
+</div>

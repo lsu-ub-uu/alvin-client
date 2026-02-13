@@ -1,0 +1,18 @@
+{% load i18n static %}
+<nav id="myHelp"
+    class="absolute top-11 right-0 flex w-fit min-w-48 flex-col overflow-hidden origin-top-right rounded-md bg-white shadow-lg outline outline-black/5 z-10 max-h-0"
+    role="menu">
+    <p class="block px-4 py-2 text-base text-orange-400 bg-white font-bold">{% translate 'HJÄLP' %}</p>
+    <a href="/help#search"
+        class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white focus:outline-hidden">{%
+        translate 'Sök' %}</a>
+    <a href="/help#download"
+        class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white focus:outline-hidden">{%
+        translate 'Ladda ner' %}</a>
+    <a href="/help#imageviewer"
+        class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white focus:outline-hidden">{%
+        translate 'Bildvisare' %}</a>
+    <a href="/help#apis"
+        class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white focus:outline-hidden">{%
+        translate 'API' %}</a>
+</nav>

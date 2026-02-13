@@ -1,8 +1,8 @@
 {% load i18n static %}
 
 {% if box or street or postcode or place_id or country %}
-<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
-    <div class="w-full md:w-1/4 flex-grow font-bold pl-2">Adress</div>
+<address class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
+    <div class="w-full md:w-1/4 flex-grow font-bold pl-2">{{label}}</div>
     <div class="w-full md:w-3/4 flex flex-grow pl-2">
         <div class="flex flex-col">
            {% if box %}
@@ -12,14 +12,13 @@
                 <div>{{ street }}</div>
             {% endif %}
             {% if postcode or place_id %}
-            <p>
-                {{ postcode }}{% if place %} <a href="{% url 'alvin_viewer' 'alvin-place' place_id  %}">{{ place }}</a>{% endif %}
+            <p>{{ postcode }}{% if place %} <a href="{% url 'alvin_viewer' 'alvin-place' place_id  %}">{{ place }}</a>{% endif %}</p>
+            {% endif %}
+            {% if country %}
+            {{ country.item }}
             {% endif %}
             </div>
-            {% if country %}
-                <div>{{ country.item }}</div>
-            {% endif %}
         </div>
     </div>
-</div>
+</address>
 {% endif %}

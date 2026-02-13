@@ -4,7 +4,6 @@ from .records import AlvinOrganisation
 from .metadata import Address
 from .common import _get_label, _norm_rt, _xp, compact, dates, first, decorated_list_item, decorated_text, decorated_texts_with_type, electronic_locators, element, identifiers, names, origin_place, related_authority, text
 from .mappings import organisation
-from .cleaner import clean_empty
 
 rt = _norm_rt("alvin-organisation")
 

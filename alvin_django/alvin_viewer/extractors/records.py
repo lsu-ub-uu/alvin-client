@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Optional
 
-from .metadata import Address, Agent, Appraisal, Axis, Classification, Coin, CommonMetadata, Component, DateEntry, DatesBlock, DecoratedList, DecoratedListItem, Edge, DecoratedText, DecoratedTexts, DecoratedTextsWithType, Dimension, ElectronicLocator, Identifier, Location, Measure, NamesBlock, OriginPlace, RelatedAuthoritiesBlock, RelatedRecordsBlock, SubjectMiscEntry, TitlesBlock
+from .metadata import Address, Agent, Appraisal, Axis, Classification, Coin, CommonMetadata, Component, DateEntry, DatesBlock, DecoratedList, DecoratedListItem, Edge, DecoratedText, DecoratedTexts, DecoratedTextsWithType, Dimension, ElectronicLocator, FilesBlock, Identifier, Location, Measure, NamesBlock, OriginPlace, RelatedAuthoritiesBlock, RelatedRecordsBlock, SubjectMiscEntry, TitlesBlock
 
 @dataclass(slots=True)
 class AlvinPlace(CommonMetadata):
@@ -46,6 +46,21 @@ class AlvinOrganisation(CommonMetadata):
     related_organisations: RelatedAuthoritiesBlock = None
 
 @dataclass(slots=True)
+class AlvinLocation(CommonMetadata):
+    label: Optional[str] = None
+    authority_names: NamesBlock = None
+    dates: DatesBlock = None
+    display_date: DecoratedText = None
+    member_type: DecoratedListItem = None
+    email: DecoratedText = None
+    summary: DecoratedTextsWithType = None
+    address: Address = None
+    latitude: DecoratedText = None
+    longitude: DecoratedText = None
+    electronic_locators: List[ElectronicLocator] = None
+    related_organisations: RelatedAuthoritiesBlock = None
+
+@dataclass(slots=True)
 class AlvinWork(CommonMetadata):
     label: Optional[str] = None
     form_of_work: DecoratedListItem = None
@@ -69,6 +84,10 @@ class AlvinWork(CommonMetadata):
     serial_number: DecoratedText = None
     opus_number: DecoratedText = None
     thematic_number: DecoratedText = None
+
+    @property
+    def display_label(self):
+        return f"{self.label}, {self.form_of_work.item}".capitalize
 
 @dataclass(slots=True)
 class AlvinRecord(CommonMetadata):
@@ -117,7 +136,7 @@ class AlvinRecord(CommonMetadata):
     identifiers: List[Identifier] = None
     work: RelatedAuthoritiesBlock = None
     components: List[Component] = None
-    files: Optional[etree._Element] = None
+    files: FilesBlock = None
 
     # Archives
     level: DecoratedListItem = None

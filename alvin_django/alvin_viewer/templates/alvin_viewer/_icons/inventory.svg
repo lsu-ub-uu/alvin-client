@@ -1,0 +1,13 @@
+{% load i18n %}
+<svg class="{{ class|default:'' }}" stroke-width="2" viewBox="0 0 24 24"fill="none">
+    <title>
+        {% if metadata.type_of_resource.code == 'col' %}
+            {% translate 'Förteckning' %}
+        {% else %}
+            {% translate 'Innehållsbeskrivning' %}
+        {% endif %}
+    </title>
+    <path d="M3 19H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M3 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M3 5H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>

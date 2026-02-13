@@ -23,8 +23,7 @@
 
 
 /*
-If you would like to customise you theme, you can do that here too.
-https://tailwindcss.com/docs/theme
+Theme specific 
 
 */
 
@@ -52,10 +51,12 @@ https://tailwindcss.com/docs/theme
   
   /* Colors */
   --color-link: #bf7f7f;
-  --color-alvin-green: #355F51;
+  --color-alvin: #7fbfa7;
+  --color-light-alvin: #BAE2B6;
+  --color-dark-alvin: #355F51;
   --color-alvin-orange: #bf7125;
   --color-alvin-grey: #f5f5f5;
-
+  --color-off-white: #faf9f6;
 }
 
 html {
@@ -67,12 +68,17 @@ body {
   overflow-y: scroll;
 }
 
+/*
+Alvin viewer
+
+*/ 
+
 .md-row {
-  @apply w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b;
+  @apply w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-[#D1D9D5];
 }
 
 .md-label {
-  @apply w-full md:w-1/4 flex-grow font-bold pl-2;
+  @apply w-full md:w-1/4 flex-grow font-bold pl-2 text-[#1A2E27] dark:text-[#F7F9F8];
 }
 
 .md-value {
@@ -85,8 +91,51 @@ a {
 
 .topnav a,
 .sidenav a {
-   @apply font-universalis text-black dark:text-white hover:text-alvin-green no-underline;
+   @apply font-universalis text-black dark:text-white hover:text-blue-500 no-underline;
 }
+
+/*
+Alvin member pages 
+
+*/
+
+.hitlist a,
+.pagination a {
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+.hitlist a:active,
+.pagination a:active {
+  border: 2px solid #3B82F6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hitlist a,
+  .pagination a {
+    color: var(--color-white);
+  }
+}
+
+.pagenav a {
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+.pagenav a:hover {
+  color: var(--color-white);
+}
+
+.footer a {
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+/* 
+Tailwind Utilities
+https://tailwindcss.com/docs/functions-and-directives#plugin-directive
+
+*/
 
 [x-cloak] { display: none !important; }
 
@@ -94,13 +143,13 @@ a {
   .scrollbar-alvin-x {
     /* Firefox */
     scrollbar-width: auto;
-    scrollbar-color: theme(colors.alvin.green) theme(colors.alvin.grey);
+    scrollbar-color: theme(colors.dark.alvin) theme(colors.alvin.grey);
 
     /* WebKit */
     &::-webkit-scrollbar { height: 0.25rem; } /* h-1 */
     &::-webkit-scrollbar-track { background: theme(colors.alvin.grey); }
     &::-webkit-scrollbar-thumb {
-      background: theme(colors.alvin.green);
+      background: theme(colors.dark.alvin);
       border-width: 8px;            /* border-8 */
       border-color: black;          /* border-black */
       border-style: solid;

@@ -15,7 +15,7 @@ from .metadata import (Agent, Component, CommonMetadata, DateEntry, DatesBlock,
                        NameEntry, NameValue, NamesBlock,
                        OriginPlace, OriginPlaceBlock, RelatedAuthoritiesBlock,
                        RelatedAuthorityEntry, RelatedRecordsBlock, RelatedRecordEntry, 
-                       RelatedRecordPart, RelatedWorksBlock, RelatedWorkEntry, TitlesBlock, TitleEntry)
+                       RelatedRecordPart, RelatedWorksBlock, RelatedWorkEntry, Summary, TitlesBlock, TitleEntry)
 
 
 # ------------------
@@ -239,10 +239,10 @@ def related_records(node: etree._Element, xp: str) -> dict | None:
     )
     return rrb
 
-def related_works(node: etree._Element, xp: str) -> List[Dict[str, str]]:
+def related_works(node: etree._Element, xp: str) -> List[Dict[str, str]] | None:
     target = _get_target(node, xp)
     if target is None:
-        return {}
+        return None
     
     rws = RelatedWorksBlock(
         label = _get_label(target),
@@ -374,7 +374,7 @@ def components(nodes: List[etree._Element]) -> List[Component] | None:
         )
         comps.append(md)
     
-    return comps
+    return comps or None
 
 # ------------------
 # DECORATED METADATA
@@ -496,6 +496,7 @@ def edge(node: etree._Element, xp: str, item: str, item_text: str) -> Edge:
     if li.is_empty():
         return None
     return li
+    
 
 # -------------------
 # ATTRIBUTE COLLECTION ITEMS

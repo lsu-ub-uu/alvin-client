@@ -1,101 +1,97 @@
 {% load i18n static %}
 
-<header aria-label="{% trans 'Huvudmeny' %}" class="sticky top-0 z-50" data-xdata="{ showSideNav: false, showSearch: false }" data-xon.click.away="showSideNav = false">
-    <nav class="topnav flex justify-between w-full h-16 bg-white/98 dark:bg-gray-800/98 shadow-md z-40 select-none">
+<header aria-label="{% trans 'Huvudmeny' %}" class="sticky top-0 z-50"
+    data-xdata="{ activeMenu: null }" data-xon.keydown.escape="activeMenu = null" data-xon.click.away="activeMenu = null">
+    <nav class="topnav flex justify-between w-full h-16 bg-white/98 dark:bg-gray-800/98 shadow-md z-10 select-none">
         <nav class="flex flex-shrink-0 justify-center items-center h-full">
-         
             <!-- Hamburger menu -->
-            <button data-xon.click="showSideNav = !showSideNav" class="flex w-full h-full justify-between items-center dark:text-white p-4 border-black hover:bg-alvin-green">
-                <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" alt="{% trans 'Mobilmeny' %}">
-                    <path d="M3 5H21"
-                        stroke="currentColor" 
-                        stroke-width="2"
-                        stroke-linecap="round"
+            <button data-xon.click="activeMenu = activeMenu === 'sidenav' ? null : 'sidenav'"
+                class="flex w-full h-full justify-between items-center dark:text-white p-4 border-black hover:text-blue-500">
+                <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                    alt="{% trans 'Mobilmeny' %}">
+                    <path d="M3 5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                     </path>
-                    <path d="M3 12H21" 
-                        stroke="currentColor" 
-                        stroke-width="2"
-                        stroke-linecap="round"
+                    <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                     </path>
-                    <path d="M3 19H21"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
+                    <path d="M3 19H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                     </path>
                 </svg>
             </button>
 
             <!-- Start -->
-            <a class="h-full text-center py-4 px-2 text-4xl text-black dark:text-white" href="{% url 'start' %}">
+            <a class="h-full text-center py-4 px-2 border-b-6 border-alvin text-4xl !text-black dark:!text-white" href="{% url 'start' %}">
                 ALVIN
             </a>
 
         </nav>
 
         <nav class="flex flex-shrink-0 justify-between items-center h-full border-black">
-            <a href="{% url 'copyright' %}" class="flex mt-1 p-2 border-black text-nowrap max-md:hidden">
-                {% translate 'Upphovsrätt' %}
-            </a>
             <a href="{% url 'about' %}" class="flex mt-1 p-4 border-black text-nowrap max-md:hidden">
                 {% translate 'Om Alvin' %}
             </a>
-            
-            <!-- Sök -->
-            <button data-xon.click="showSearch = !showSearch; $nextTick(() => { $refs.alvinsearch.focus(); });" 
-                class="flex w-full h-full justify-between items-center dark:text-white p-4 hover:bg-alvin-green hover:text-white"
-                :class="{'bg-alvin-green': showSearch}">
-                <p class="font-universalis mt-1 mr-1 max-lg:hidden">Sök</p>
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6" 
-                        data-xshow="!showSearch">
-                        <title>Open search bar</title>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                </svg>
-                <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" data-xshow="showSearch" data-xcloak>
-                    <title>Close search bar</title>
-                    <path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426" 
-                        stroke="currentColor" 
-                        stroke-width="2" 
-                        stroke-linecap="round" 
-                        stroke-linejoin="round">
-                    </path>
-                </svg>
-            </button>
-            
-            <!-- Sökmeny -->
-            {% include './_search_menu.html' %}
+            <a href="{% url 'institutions' %}" class="flex mt-1 p-4 border-black text-nowrap max-md:hidden">
+                {% translate 'Institutioner' %}
+            </a>
+            <a href="{% url 'copyright' %}" class="flex mt-1 p-2 border-black text-nowrap max-md:hidden">
+                {% translate 'Upphovsrätt' %}
+            </a>
 
             <!-- Hjälp -->
-            <button data-xon.click="showHelp = !showHelp"
-                class="flex w-full h-full justify-between items-center dark:text-white p-4  border-black hover:bg-alvin-orange">
-                <p class="font-universalis mt-1 mr-1 max-lg:hidden">{% translate 'Hjälp' %}</p>
+            <a  href="{% url 'help' %}" class="flex w-full h-full justify-between items-center p-2 dark:text-white">
                 <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" 
-                        stroke="currentColor" 
-                        stroke-width="2" 
-                        stroke-linecap="round" 
+                    <title>{% translate 'Hjälp' %}</title>
+                    <path
+                        d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                        stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    </path>
+                    <path d="M9 9C9 5.49997 14.5 5.5 14.5 9C14.5 11.5 12 10.9999 12 13.9999" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    </path>
+                    <path d="M12 18.01L12.01 17.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                     </path>
-                    <path d="M9 9C9 5.49997 14.5 5.5 14.5 9C14.5 11.5 12 10.9999 12 13.9999" 
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                    </path>
-                    <path d="M12 18.01L12.01 17.9989"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
+                </svg>
+            </a>
+            
+            <!-- Sök -->
+            <button type="button" data-xon.click="activeMenu = activeMenu === 'search' ? null : 'search'; if(activeMenu === 'search') { setTimeout(() => document.getElementById('alvinsearch')?.focus(), 50); }"
+                class="flex w-full h-full justify-between items-center p-2 mr-2 dark:text-white hover:text-blue-500"
+                :class="{'bg-dark-alvin': activeMenu === 'search'}">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6"
+                    data-xshow="activeMenu !== 'search'">
+                    <title>Open search bar</title>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+                <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" data-xshow="activeMenu === 'search'"
+                    data-xcloak>
+                    <title>Close search bar</title>
+                    <path
+                        d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     </path>
                 </svg>
             </button>
         </nav>
+        
+        <!-- Extended search -->
+        <div class="absolute top-16 left-0 w-full transform transition-transform duration-200 ease-out"
+            data-xshow="activeMenu === 'search'"
+            data-xtransition:enter="transition-transform duration-200 ease-out"
+            data-xtransition:enter-start="-translate-y-full"
+            data-xtransition:enter-end="translate-y-0"
+            data-xtransition:leave="transition-transform duration-150 ease-in"
+            data-xtransition:leave-start="translate-y-0"
+            data-xtransition:leave-end="-translate-y-full"
+            data-xcloak>
+            {% include './_extended_search.html' %}
+        </div>
     </nav>
 
-    <!-- Side navbar -->
+
     {% include './_side_nav.html' %}
 
 </header>

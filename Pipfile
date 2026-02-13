@@ -7,6 +7,7 @@ django-tailwind-4 = "*"
 lxml = "*"
 requests = ">=2.32"
 arrow = "*"
+zipstream-ng = "*"
 
 [dev-packages]
 pytest = "*"

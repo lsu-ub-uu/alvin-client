@@ -4,6 +4,7 @@
 <html lang="swe">
 
 <head>
+    {% tailwind_css %}
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="robots" content="index, follow">
     <meta name="DC.Publisher" content="{% translate 'Uppsala universitet' %}">
@@ -14,10 +15,6 @@
     <meta name="siteName" content="Alvin">
     <meta name="creator" content="UUB Alvin support">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    {% tailwind_css %}
-
-    {% load static %}
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
@@ -39,11 +36,9 @@
     {% include '_partials/_top_nav.html' %}
 
     {% block content %}
-
     {% endblock %}
 
     {% block jsbody %}
-
     {% endblock %}  
     
 </body>

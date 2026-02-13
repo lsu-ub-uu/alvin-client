@@ -25,6 +25,7 @@ class AlvinEndpoints:
                 "alvin-place": "alvin-place/{id}",
                 "alvin-person": "alvin-person/{id}",
                 "alvin-organisation": "alvin-organisation/{id}",
+                "alvin-location": "alvin-location/{id}",
                 "alvin-work": "alvin-work/{id}",
                 "alvin-record": "alvin-record/{id}",
             },

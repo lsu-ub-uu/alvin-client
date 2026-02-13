@@ -11,6 +11,7 @@
         />
     </svg>
     <form method="post" action="{% url 'set_language' %}" class="pl-2"> 
+    <input name="next" type="hidden" value="{{ request.get_full_path|slice:"3:" }}">
     {% get_current_language as current_language %}
     <select id="language-select" name="language" class="bg-gray-900" onchange="this.form.submit()">
         <option value="en"{% if current_language == "en" %} selected{% endif %}>English</option>

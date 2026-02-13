@@ -4,12 +4,22 @@
 @source "../../../alvin_viewer/templates/alvin_viewer/_partials";
 @source "../../../vocabulary/templates/vocabulary";
 @source "../../../alvin_search/templates/alvin_search";
+@source "../../../templates/";
 
 @font-face {
     font-family: 'Universalis';
     font-style: normal;
     font-weight: normal;
     src: local('Universalis ADF Std Regular'), url('UniversalisADFStd-Bold.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: "NotoSans";
+  src: url("/static/fonts/NotoSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @theme { 
@@ -20,9 +30,13 @@
 }
 
 html {
-    scrollbar-gutter: stable;
+  font-family: NotoSans;
+  scrollbar-gutter: stable;
 }
 
 body {
     overflow-y: scroll;
 }
+
+
+

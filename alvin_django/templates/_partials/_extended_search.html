@@ -23,10 +23,10 @@
         <fieldset class="flex justify-center gap-x-2 text-sm md:text-base dark:text-white"> 
             <legend class="sr-only">{% translate 'Söktyp' %}</legend>
             <div>
-                <input type="radio" id="record" name="searchType" value="alvinRecord"  
-                {% if searchType == 'record' %} checked {% endif %}
+                <input type="radio" id="alvinRecord" name="searchType" value="alvinRecord"  
+                {% if searchType == 'alvinRecord' %} checked {% endif %}
                 class="sr-only peer">
-                <label for="record" 
+                <label for="alvinRecord"
                         class="flex items-center bg-alvin-grey dark:bg-gray-700 rounded-full px-4 py-2 cursor-pointer group gap-1 
                             transition-all duration-200 peer-checked:text-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500">
                     <svg class="w-6 h-6" stroke-width="2" fill="none">

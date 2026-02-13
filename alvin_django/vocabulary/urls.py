@@ -3,9 +3,9 @@ from . import views
 
 urlpatterns = [
     path('userguide/', views.userguide, name='userguide'),
-    path('api/', views.api, name='api'),
-    path('api/oai-pmh', views.oai_pmh, name='oai-pmh'),
-    path('api/iiif', views.iiif, name='iiif'),
+    path('api/rest-api/', views.rest_api, name='rest-api'),
+    path('api/oai-pmh/', views.oai_pmh, name='oai-pmh'),
+    path('api/iiif/', views.iiif, name='iiif'),
     path('vocabulary/', views.vocabulary, name='vocabulary'),
     path('vocabulary/<str:id>', views.metadata, name='metadata'),
     path('cataloguing/', views.cataloguing, name='cataloguing'),

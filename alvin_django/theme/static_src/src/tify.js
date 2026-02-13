@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const el = document.querySelector("#tify-viewer");
   if (!el) return;
 
-  // Deny internak server address
+  // Deny internal server address that OSD might use, and replace with public address
   if (typeof OpenSeadragon !== "undefined" && OpenSeadragon.IIIFTileSource) {
     const originalConfigure = OpenSeadragon.IIIFTileSource.prototype.configure;
     OpenSeadragon.IIIFTileSource.prototype.configure = function (data, url) {
@@ -70,13 +70,13 @@ document.addEventListener("DOMContentLoaded", () => {
         number.innerText = index + 1;
 
         const img = document.createElement("img");
-        // Bygg tumnagel-URL (IIIF Image API)
+        // Thumbnail URL generation
         const thumbUrl = typeof source === 'string' 
           ? source.replace("/info.json", "/full/160,/0/default.jpg") 
           : source.url;
         
         img.src = thumbUrl;
-        img.className = "thumb-item w-full rounded border-2 border-transparent transition-all";
+        img.className = `thumb-item w-full rounded border-2 transition-all ${index === 0 ? "border-orange-500" : "border-transparent"}`;
         img.dataset.index = index;
 
         wrapper.appendChild(number);
@@ -84,28 +84,27 @@ document.addEventListener("DOMContentLoaded", () => {
         wrapper.onclick = () => viewer.goToPage(index);
         thumbList.appendChild(wrapper);
       });
-
-      // 5. Toggle-funktion för sidopanelen
+      
+      //Toggle button for thumbnail sidebar
       const sidebar = document.getElementById("thumb-sidebar");
       const toggleBtn = document.getElementById("toggle-thumbs");
       if (toggleBtn && sidebar) {
         toggleBtn.onclick = () => {
-          sidebar.classList.toggle("hidden");
-          // Låt OSD veta att containern ändrat storlek
-          setTimeout(() => viewer.viewport.goHome(), 250);
+          sidebar.classList.toggle("translate-x-full");
         };
       }
 
-      // 6. Markera aktiv tumnagel vid bläddring
+      //Active thumbnail highlight and scroll into view
       viewer.addHandler("page", (e) => {
         document.querySelectorAll(".thumb-item").forEach((img, i) => {
           const isActive = i === e.page;
           img.classList.toggle("border-orange-500", isActive);
+          img.classList.toggle("border-transparent", !isActive);
           if (isActive) {
             img.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }
         });
       });
     })
-    .catch((err) => console.error("Manifestfel:", err));
+    .catch((err) => console.error("Failed to load manifest:", err));
 });

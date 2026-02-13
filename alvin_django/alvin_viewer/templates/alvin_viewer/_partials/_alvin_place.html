@@ -4,17 +4,6 @@
 <title>Alvin - {{ metadata.authority_names.title }}</title>
 {% endblock %}
 
-{% block head %}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-{% endblock %}
-
-{% block jshead %}
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="">
-</script>
-{% endblock %}
-
 <!-- Metadata -->
 <div class="flex flex-col">
     <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
@@ -44,32 +33,7 @@
     {% include './_alvin_id_uri.html' %}
 </div>
 
-{% if metadata.latitude and metadata.longitude %}
 <div id="alvin-map" class="w-full h-96 mt-8 z-0 border rounded shadow-sm"
-        data-latitude="{{ metadata.latitude.text }}"
-        data-longitude="{{ metadata.longitude.text }}"></div>
-{% endif %}
-
-{% block jsbody %}
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-      var mapElement = document.getElementById('alvin-map');
-      if (mapElement) {
-          var lat = mapElement.dataset.latitude;
-          var lng = mapElement.dataset.longitude;
-          var hasLocation = lat && lng;
-
-          var map = L.map('alvin-map').setView(hasLocation ? [lat, lng] : [62.0, 15.0], hasLocation ? 13 : 4);
-          
-          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              maxZoom: 19,
-              attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          }).addTo(map);
-
-          if (hasLocation) {
-              L.marker([lat, lng]).addTo(map);
-          }
-      }
-  });
-</script>
-{% endblock %}
+    {% if metadata.latitude %}data-latitude="{{ metadata.latitude.text }}"{% endif %}
+    {% if metadata.longitude %}data-longitude="{{ metadata.longitude.text }}"{% endif %}>
+</div>

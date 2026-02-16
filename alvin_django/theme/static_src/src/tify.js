@@ -1,110 +1,233 @@
 import OpenSeadragon from "openseadragon";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const el = document.querySelector("#tify-viewer");
-  if (!el) return;
+/* ==============================
+Entry
+============================== */
 
-  // Deny internal server address that OSD might use, and replace with public address
-  if (typeof OpenSeadragon !== "undefined" && OpenSeadragon.IIIFTileSource) {
-    const originalConfigure = OpenSeadragon.IIIFTileSource.prototype.configure;
-    OpenSeadragon.IIIFTileSource.prototype.configure = function (data, url) {
-      const publicBaseUrl = url.replace(/\/info\.json$/, "");
-      if (data) {
-        data["@id"] = publicBaseUrl;
-        data["id"] = publicBaseUrl;
-      }
-      return originalConfigure.call(this, data, url);
-    };
+document.addEventListener("DOMContentLoaded", init);
+
+async function init() {
+  patchIIIFTileSourceBaseUrl();
+
+  const container = document.getElementById("tify-viewer");
+  if (!container) return;
+
+  const manifestUrl = container.dataset.manifestUrl;
+  if (!manifestUrl) {
+    console.error("Missing data-manifest-url attribute.");
+    return;
   }
 
-  const manifestUrl = el.dataset.manifestUrl;
+  try {
+    const manifest = await loadManifest(manifestUrl);
+    const tileSources = extractTileSources(manifest);
 
-  // 2. Hämta manifestet
-  fetch(manifestUrl)
-    .then((r) => r.json())
-    .then((manifest) => {
-      let tileSources = [];
+    if (!tileSources.length) {
+      console.warn("No tileSources found in manifest.");
+      return;
+    }
 
-      // Återställd logik från din originalfil för att extrahera bilder
-      if (manifest.sequences && manifest.sequences[0].canvases) {
-        // IIIF v2
-        tileSources = manifest.sequences[0].canvases.map((canvas) => {
-          const image = canvas.images[0].resource;
-          if (image.service) {
-            const service = Array.isArray(image.service) ? image.service[0] : image.service;
-            let serviceId = (service["@id"] || service.id).replace(/\/$/, "");
-            return serviceId.endsWith("/info.json") ? serviceId : `${serviceId}/info.json`;
-          }
-          return { type: 'image', url: image["@id"] || image.id };
-        }).filter(Boolean);
-      } else if (manifest.items) {
-        // IIIF v3
-        tileSources = manifest.items.map((item) => {
-          try {
-            const service = item.items[0].items[0].body.service[0];
-            let serviceId = (service.id || service["@id"]).replace(/\/$/, "");
-            return `${serviceId}/info.json`;
-          } catch (e) { return null; }
-        }).filter(Boolean);
-      }
+    const viewer = createViewer(tileSources);
+    const thumbnails = createThumbnails(tileSources, viewer);
 
-      // 3. Initiera OpenSeadragon
-      const viewer = OpenSeadragon({
-        id: "tify-viewer",
-        prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
-        tileSources: tileSources,
-        sequenceMode: true,
-        showRotationControl: true,
-        autoHideControls: false,
-        element: document.getElementById("osd-wrapper") // Krävs för fullskärm
-      });
+    setupActiveThumbnailSync(viewer, thumbnails);
+    setupSidebarToggle();
 
-      // 4. Generera vertikala numrerade tumnaglar
-      const thumbList = document.getElementById("thumb-list");
-      tileSources.forEach((source, index) => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "relative group cursor-pointer mb-2";
-        
-        const number = document.createElement("span");
-        number.className = "absolute top-1 left-1 bg-black/70 text-white text-[10px] px-1.5 py-0.5 rounded z-10 border border-white/20";
-        number.innerText = index + 1;
+  } catch (error) {
+    console.error("Viewer initialization failed:", error);
+  }
+}
 
-        const img = document.createElement("img");
-        // Thumbnail URL generation
-        const thumbUrl = typeof source === 'string' 
-          ? source.replace("/info.json", "/full/160,/0/default.jpg") 
-          : source.url;
-        
-        img.src = thumbUrl;
-        img.className = `thumb-item w-full rounded border-2 transition-all ${index === 0 ? "border-orange-500" : "border-transparent"}`;
-        img.dataset.index = index;
+/* ==============================
+Data Loading
+============================== */
 
-        wrapper.appendChild(number);
-        wrapper.appendChild(img);
-        wrapper.onclick = () => viewer.goToPage(index);
-        thumbList.appendChild(wrapper);
-      });
-      
-      //Toggle button for thumbnail sidebar
-      const sidebar = document.getElementById("thumb-sidebar");
-      const toggleBtn = document.getElementById("toggle-thumbs");
-      if (toggleBtn && sidebar) {
-        toggleBtn.onclick = () => {
-          sidebar.classList.toggle("translate-x-full");
-        };
-      }
+async function loadManifest(url) {
+  try {
+    const response = await fetch(url);
 
-      //Active thumbnail highlight and scroll into view
-      viewer.addHandler("page", (e) => {
-        document.querySelectorAll(".thumb-item").forEach((img, i) => {
-          const isActive = i === e.page;
-          img.classList.toggle("border-orange-500", isActive);
-          img.classList.toggle("border-transparent", !isActive);
-          if (isActive) {
-            img.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    throw new Error(`Manifest load failed: ${error.message}`);
+  }
+}
+
+function patchIIIFTileSourceBaseUrl() {
+  if (!OpenSeadragon?.IIIFTileSource) return;
+
+  const proto = OpenSeadragon.IIIFTileSource.prototype;
+
+  // Undvik att patcha flera gånger
+  if (proto.__isPatched) return;
+
+  const originalConfigure = proto.configure;
+
+  proto.configure = function (data, url) {
+    if (data && url) {
+      const publicBaseUrl = url.replace(/\/info\.json$/, "");
+      data["@id"] = publicBaseUrl;
+      data["id"] = publicBaseUrl;
+    }
+
+    return originalConfigure.call(this, data, url);
+  };
+
+  proto.__isPatched = true;
+}
+
+/* ==============================
+IIIF Parsing
+============================== */
+
+function extractTileSources(manifest) {
+  // IIIF v3
+  if (Array.isArray(manifest.items)) {
+    return manifest.items
+      .map(extractV3Service)
+      .filter(Boolean);
+  }
+
+  // IIIF v2
+  if (manifest.sequences?.[0]?.canvases) {
+    return manifest.sequences[0].canvases
+      .map(extractV2Service)
+      .filter(Boolean);
+  }
+
+  return [];
+}
+
+function extractV3Service(item) {
+  try {
+    const service =
+      item.items?.[0]?.items?.[0]?.body?.service?.[0];
+
+    const id = service?.id || service?.["@id"];
+    return normalizeServiceId(id);
+  } catch {
+    return null;
+  }
+}
+
+function extractV2Service(canvas) {
+  try {
+    const id =
+      canvas.images?.[0]?.resource?.service?.["@id"];
+
+    return normalizeServiceId(id);
+  } catch {
+    return null;
+  }
+}
+
+function normalizeServiceId(id) {
+  if (!id) return null;
+  const clean = id.replace(/\/$/, "");
+  return `${clean}/info.json`;
+}
+
+/* ==============================
+Viewer Setup
+============================== */
+
+function createViewer(tileSources) {
+  return OpenSeadragon({
+    id: "tify-viewer",
+    element: document.getElementById("osd-wrapper"),
+    prefixUrl: "/static/openseadragon/images/", // host locally
+    tileSources,
+    sequenceMode: true,
+    showRotationControl: true,
+    autoHideControls: false
+  });
+}
+
+/* ==============================
+Thumbnails
+============================== */
+
+function createThumbnails(tileSources, viewer) {
+  const thumbList = document.getElementById("thumb-list");
+  if (!thumbList) return [];
+
+  const thumbnails = [];
+
+  tileSources.forEach((source, index) => {
+    const wrapper = document.createElement("div");
+    wrapper.className =
+      "relative group cursor-pointer mb-2";
+
+    const number = document.createElement("span");
+    number.className =
+      "absolute top-1 left-1 bg-black/70 text-white text-[10px] px-1.5 py-0.5 rounded z-10 border border-white/20";
+    number.textContent = index + 1;
+
+    const img = document.createElement("img");
+    img.loading = "lazy";
+    img.src = createThumbnailUrl(source);
+    img.dataset.index = index;
+
+    img.className =
+      "thumb-item w-full rounded border-2 transition-all border-transparent";
+
+    if (index === 0) {
+      img.classList.add("border-orange-500");
+    }
+
+    wrapper.append(number, img);
+    wrapper.addEventListener("click", () =>
+      viewer.goToPage(index)
+    );
+
+    thumbList.appendChild(wrapper);
+    thumbnails.push(img);
+  });
+
+  return thumbnails;
+}
+
+function createThumbnailUrl(infoJsonUrl, width = 160) {
+  return infoJsonUrl.replace(
+    "/info.json",
+    `/full/${width},/0/default.jpg`
+  );
+}
+
+/* ==============================
+UI Sync
+============================== */
+
+function setupActiveThumbnailSync(viewer, thumbnails) {
+  if (!thumbnails.length) return;
+
+  viewer.addHandler("page", (event) => {
+    thumbnails.forEach((img, i) => {
+      const isActive = i === event.page;
+
+      img.classList.toggle("border-orange-500", isActive);
+      img.classList.toggle("border-transparent", !isActive);
+
+      if (isActive) {
+        img.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest"
         });
-      });
-    })
-    .catch((err) => console.error("Failed to load manifest:", err));
-});
+      }
+    });
+  });
+}
+
+function setupSidebarToggle() {
+  const sidebar = document.getElementById("thumb-sidebar");
+  const toggleBtn = document.getElementById("toggle-thumbs");
+
+  if (!sidebar || !toggleBtn) return;
+
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("translate-x-full");
+  });
+}

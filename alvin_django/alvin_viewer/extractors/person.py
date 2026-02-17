@@ -45,7 +45,7 @@ def extract(root: etree._Element) -> AlvinPerson:
         nationality = _nationality(root, _xp(rt, "personInfo/nationality")),
         gender = decorated_list_item(root, _xp(rt, "personInfo/gender")),
         fields_of_endeavor = decorated_texts(root, _xp(rt, "fieldOfEndeavor")),
-        notes = decorated_texts_with_type(root, _xp(rt, "note"), ".", "./@noteType"),
+        notes = decorated_texts_with_type(root, _xp(rt, "note"), ".", "noteTypeCollection", "./@noteType"),
         identifiers = identifiers(root, _xp(rt, "identifier")),
         electronic_locators = electronic_locators(root, _xp(rt, "electronicLocator")),
         related_persons = related_authority(root, _xp(rt, "related[person]"), "person"),

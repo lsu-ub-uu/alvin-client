@@ -55,7 +55,7 @@ def identifiers(root: etree._Element, xp: str) -> List[Identifier]:
         return None
     return [Identifier(
         label = _get_label(t),
-        type = _get_attribute_item(attr(t, "./@type")), 
+        type = _get_attribute_item("identifierTypeCollection", attr(t, "./@type")), 
         identifier = text(t, ".")
     ) for t in targets]
 
@@ -83,7 +83,7 @@ def titles(root: etree._Element, xp: str) -> TitlesBlock:
         return TitlesBlock(
             label = _get_label(target),
             titles = [TitleEntry(
-                type = _get_attribute_item(attr(t, "./@variantType")),
+                type = _get_attribute_item("variantTitleTypeCollection", attr(t, "./@variantType")),
                 main_title = text(t, "mainTitle"),
                 subtitle = text(t, "subtitle"),
                 orientation_code = text(t, "orientationCode"),
@@ -92,7 +92,7 @@ def titles(root: etree._Element, xp: str) -> TitlesBlock:
 
     return TitleEntry(
             label = _get_label(target),
-            type = _get_attribute_item(attr(target, "./@variantType")),
+            type = _get_attribute_item("variantTitleTypeCollection", attr(target, "./@variantType")),
             main_title = text(target, "mainTitle"),
             subtitle = text(target, "subtitle"),
             orientation_code = text(target, "orientationCode"),
@@ -115,8 +115,8 @@ def names(node: etree._Element, xp: str, name_parts: Dict[str, str]) -> NamesBlo
             parts[key] = (el.text or "").strip() if el is not None else ""
             
         lang = attr(target, "./@lang")
-        label_lang = _get_attribute_item(attr(target, "./@lang")) or None
-        variant_type = _get_attribute_item(attr(target, "./@variantType")) or None
+        label_lang = _get_attribute_item("languageCodeCollection", attr(target, "./@lang")) or None
+        variant_type = _get_attribute_item("variantNameTypeCollection", attr(target, "./@variantType")) or None
 
         entry = NameEntry(parts=parts, variant_type=variant_type, label_lang=label_lang)
 
@@ -134,7 +134,8 @@ def names(node: etree._Element, xp: str, name_parts: Dict[str, str]) -> NamesBlo
         for lang, value in per_lang_raw.items()
     }
 
-    block = NamesBlock(label=label, names=per_lang)
+    block = NamesBlock(label=_get_label(element(node, xp)),
+                       names=per_lang)
     if not block.label and not block.names:
         return None
     return block
@@ -159,9 +160,9 @@ def dates(node: etree._Element, xp: str, start_tag: str, end_tag: str) -> Dict:
         return None
     return DatesBlock(
         label = _get_label(target),
-        type = _get_attribute_item(attr(target, "./@type")),
+        type = _get_attribute_item("dateTypeCollection",attr(target, "./@type")),
         dates = DatesValue(
-            type = _get_attribute_item(attr(target, "./@type")),
+            type = _get_attribute_item("dateTypeCollection", attr(target, "./@type")),
             start_date = a_date(target, f"{start_tag}"),
             end_date = a_date(target, f"{end_tag}"),
             date_note = text(target, "note"),
@@ -226,11 +227,11 @@ def related_records(node: etree._Element, xp: str) -> dict | None:
     rrb = RelatedRecordsBlock(
         label = _get_label(target),
         records = [RelatedRecordEntry(
-            type = _get_attribute_item(attr(t, "./@relatedToType")),
+            type = _get_attribute_item("relatedToTypeCollection", attr(t, "./@relatedToType")),
             id = text(t, f"record/linkedRecordId"),
             main_title = titles(t, f"record/linkedRecord/record/title"),
             parts = [RelatedRecordPart(
-                type = _get_attribute_item(attr(part, "./@partType")),
+                type = _get_attribute_item("partTypeCollection", attr(part, "./@partType")),
                 typeattr = attr(part, "./@partType"),
                 number = text(part, "partNumber"),
                 extent = text(part, "extent"),
@@ -306,7 +307,6 @@ def related_authority(node: etree._Element, xp: str, authority: str, alternative
         records = [RelatedAuthorityEntry(
             id = text(e, f"{authority}/linkedRecordId"),
             record_type = text(e, (f"{authority}/linkedRecordType")),
-            type = _get_attribute_item(attr(e, "./@type")) if attr(e, "./@type") not in ("person", "organisation", "place") else None,
             name = names(e, f"{authority}/linkedRecord/{authority}/authority", AN[authority]),
             )
             for e in elements(node, xp)]
@@ -435,7 +435,7 @@ def decorated_texts(node: etree._Element | None, xp: str | None = None) -> Decor
         return None
     return dts
 
-def decorated_texts_with_type(node: etree.Element, xp: str, tag: str, textType: str | None = None) -> DecoratedTextsWithType | None:
+def decorated_texts_with_type(node: etree.Element, xp: str, tag: str, typeCollection: str, textType: str | None = None) -> DecoratedTextsWithType | None:
     target = _get_target(node, xp)
     if target is None:
         return None
@@ -443,7 +443,7 @@ def decorated_texts_with_type(node: etree.Element, xp: str, tag: str, textType: 
     dtwt = DecoratedTextsWithType(
         label = _get_label(target),
         texts = [DecoratedTextWithType(
-            type = _get_attribute_item(attr(e, textType)),
+            type = _get_attribute_item(typeCollection, attr(e, textType)),
             text = text(e, ".")
             ) for e in elements(node, f"{xp}/{tag}")]
     )
@@ -502,7 +502,7 @@ def edge(node: etree._Element, xp: str, item: str, item_text: str) -> Edge:
 # ATTRIBUTE COLLECTION ITEMS
 # -------------------
 
-def _get_attribute_item(item: str) -> str:
+def _get_attribute_item(collection: str, item: str) -> str:
     if item is None:
         return None
-    return ITEMS_DICT.get(item, {}).get(_get_lang(), None) or f"Item not in cache: {item}"
+    return ITEMS_DICT.get(collection, {}).get(item, {}).get(_get_lang(), None) or f"Item not in cache: {item}"

@@ -175,3 +175,7 @@ class AlvinRecord(CommonMetadata):
     obverse: Coin = None
     reverse: Coin = None
     countermark: DecoratedTexts = None
+
+    @property
+    def display_label(self):
+        return f"{self.type_of_resource.item}, {self.production_method.item}".capitalize()

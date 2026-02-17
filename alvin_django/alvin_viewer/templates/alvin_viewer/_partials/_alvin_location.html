@@ -6,7 +6,7 @@
 
 <!-- Metadata -->
 <div class="flex flex-col">
-    <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
+        <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.authority_names.label as authority_label %}
             {% for lang, name in metadata.authority_names.names.items %}
                 {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name.display %}
@@ -14,7 +14,13 @@
         {% endwith %}
         {% include "./_metadata_row.html" with label=metadata.dates.label value=metadata.organisation_info.dates.display %}
         {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
-    </div>    
+        {% include "./_address.html" with label=metadata.address.label place_id=metadata.address.place.id box=metadata.address.box street=metadata.address.street postcode=metadata.address.postcode place=metadata.address.place.name.title country=metadata.address.country %}
+        {% if metadata.email.text %}
+            {% with "mailto:"|add:metadata.email.text as mailto_url %}
+                {% include "./_metadata_row.html" with label=metadata.email.label url=mailto_url value=metadata.email.text %}
+            {% endwith %}
+        {% endif %}
+    </div>
     <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.variant_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
@@ -24,13 +30,10 @@
         {% include "./_metadata_row.html" with label=metadata.organisation_info.label value=metadata.organisation_info.dates.display %}
         {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
         {% include "./_metadata_row.html" with label=metadata.member_type.label value=metadata.member_type.item %}
-        {% include "./_metadata_row.html" with label=metadata.email.label url=metadata.email.text value=metadata.email.text %}
-        {% include "./_address.html" with label=metadata.address.label place_id=metadata.address.place.id box=metadata.address.box street=metadata.address.street postcode=metadata.address.postcode place=metadata.address.place.name.title country=metadata.address.country %}
         {% include "./_metadata_row.html" with label=metadata.summary.label value=metadata.summary.display %}
-        {% if metadata.latitude and metadata.longitude %}
-            {% include "./_metadata_row.html" with label=metadata.longitude.label value=metadata.longitude.text %}
-            {% include "./_metadata_row.html" with label=metadata.latitude.label value=metadata.latitude.text %}
-        {% endif %}
+        {% include "./_metadata_row.html" with label={% translate 'Vägbeskrivning' %} url= value= %}
+        {% include "./_metadata_row.html" with label=metadata.longitude.label value=metadata.longitude.text %}
+        {% include "./_metadata_row.html" with label=metadata.latitude.label value=metadata.latitude.text %}
     </div>
     <div data-xshow="activeTab === 'all_metadata' || activeTab === 'related'" data-xcloak>
         {% for electronic_locator in metadata.electronic_locators %}

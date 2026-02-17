@@ -215,7 +215,7 @@ class Dimension(Dict):
     
     @property
     def combined_label(self):
-        return f"{self.label}, {self.scope}".capitalize() if self.scope is not None else self.label
+        return f"{self.label}, {self.scope}".capitalize() if self.scope else self.label
 
 @dataclass(slots=True)
 class ElectronicLocator:
@@ -250,6 +250,7 @@ class Measure:
 @dataclass(slots=True)
 class SubjectMiscEntry:
     label: Optional[str] = None
+    authority: Optional[str] = None
     topic: Optional[str] = None
     genre_form: Optional[str] = None
     geographic_coverage: Optional[str] = None
@@ -344,6 +345,7 @@ class NamesBlock:
     def is_empty(self) -> bool:
         return not self.label and not self.names
     
+    @property
     def title(self) -> str:
         if not self.names:
             return ""
@@ -471,7 +473,7 @@ class Agent(URL):
     
     @property
     def display(self) -> str | None:
-        title = self.names.title()
+        title = self.names.title
         if self.certainty == "uncertain":
             title += "?"
         return title
@@ -489,7 +491,7 @@ class Location(URL):
 
     @property
     def display(self) -> Optional[str]:
-        return self.names.title() if self.names else None
+        return self.names.title if self.names else None
 
 @dataclass(slots=True)
 class OriginPlace(URL):
@@ -506,7 +508,7 @@ class OriginPlace(URL):
     
     @property
     def display(self) -> Optional[str]:
-        title = self.name.title()
+        title = self.name.title
         if self.certainty == "uncertain":
             title += "?"
         return title

@@ -1,7 +1,6 @@
 {% load i18n static %}
 
 {% if record_type_links %}
-
 <div class="md-row">
     <dt class="md-label">
         {{ label }}
@@ -11,7 +10,7 @@
         {% for record_type in record_type_links.records %}
             <li>
             <a href="{{ record_type.url }}">
-                {{ record_type.main_title.display }}
+                {% firstof record_type.main_title.display record_type.name.title %}
             </a>
             {% if record_type.type %}
                 ({{ record_type.type }})

@@ -215,7 +215,7 @@ class Dimension(Dict):
     
     @property
     def combined_label(self):
-        return f"{self.label}, {self.scope}".capitalize() if self.scope is not None else self.label
+        return f"{self.label}, {self.scope}".capitalize() if self.scope else self.label
 
 @dataclass(slots=True)
 class ElectronicLocator:
@@ -250,6 +250,7 @@ class Measure:
 @dataclass(slots=True)
 class SubjectMiscEntry:
     label: Optional[str] = None
+    authority: Optional[str] = None
     topic: Optional[str] = None
     genre_form: Optional[str] = None
     geographic_coverage: Optional[str] = None

@@ -29,7 +29,7 @@ async function init() {
 
     const viewer = createViewer(tileSources);
     const thumbnails = createThumbnails(tileSources, viewer);
-
+    
     setupActiveThumbnailSync(viewer, thumbnails);
     setupSidebarToggle();
 
@@ -154,47 +154,38 @@ function createThumbnails(tileSources, viewer) {
   const thumbList = document.getElementById("thumb-list");
   if (!thumbList) return [];
 
+  const fragment = document.createDocumentFragment();
   const thumbnails = [];
 
   tileSources.forEach((source, index) => {
     const wrapper = document.createElement("div");
-    wrapper.className =
-      "relative group cursor-pointer mb-2";
+    wrapper.className = "relative group cursor-pointer mb-2";
 
     const number = document.createElement("span");
-    number.className =
-      "absolute top-1 left-1 bg-black/70 text-white text-[10px] px-1.5 py-0.5 rounded z-10 border border-white/20";
+    number.className = "absolute top-1 left-1 bg-black/70 text-white text-[10px] px-1.5 py-0.5 rounded z-10 border border-white/20 pointer-events-none";
     number.textContent = index + 1;
 
     const img = document.createElement("img");
     img.loading = "lazy";
     img.src = createThumbnailUrl(source);
     img.dataset.index = index;
-
-    img.className =
-      "thumb-item w-full rounded border-2 transition-all border-transparent";
+    img.className = "thumb-item w-full rounded border-2 transition-all border-transparent";
 
     if (index === 0) {
+      img.classList.remove("border-transparent");
       img.classList.add("border-orange-500");
     }
 
     wrapper.append(number, img);
-    wrapper.addEventListener("click", () =>
-      viewer.goToPage(index)
-    );
+    wrapper.addEventListener("click", () => viewer.goToPage(index));
 
-    thumbList.appendChild(wrapper);
+    fragment.appendChild(wrapper);
     thumbnails.push(img);
   });
 
+  thumbList.innerHTML = ""; // Rensa om funktionen anropas igen
+  thumbList.appendChild(fragment);
   return thumbnails;
-}
-
-function createThumbnailUrl(infoJsonUrl, width = 160) {
-  return infoJsonUrl.replace(
-    "/info.json",
-    `/full/${width},/0/default.jpg`
-  );
 }
 
 /* ==============================
@@ -204,22 +195,29 @@ UI Sync
 function setupActiveThumbnailSync(viewer, thumbnails) {
   if (!thumbnails.length) return;
 
+  let currentIndex = 0; 
+  const sidebar = document.getElementById("thumb-sidebar");
+
   viewer.addHandler("page", (event) => {
-    thumbnails.forEach((img, i) => {
-      const isActive = i === event.page;
+    const newIndex = event.page;
+    
+    thumbnails[currentIndex].classList.replace("border-orange-500", "border-transparent");
+    
+    const activeImg = thumbnails[newIndex];
+    activeImg.classList.replace("border-transparent", "border-orange-500");
+    
+    const isSidebarOpen = sidebar && !sidebar.classList.contains("translate-x-full");
+    if (isSidebarOpen) {
+      scrollSidebarToActive(sidebar, activeImg);
+    }
 
-      img.classList.toggle("border-orange-500", isActive);
-      img.classList.toggle("border-transparent", !isActive);
-
-      if (isActive) {
-        img.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest"
-        });
-      }
-    });
+    currentIndex = newIndex;
   });
 }
+
+/* ==============================
+UI Sidebar & Utils
+============================== */
 
 function setupSidebarToggle() {
   const sidebar = document.getElementById("thumb-sidebar");
@@ -229,5 +227,36 @@ function setupSidebarToggle() {
 
   toggleBtn.addEventListener("click", () => {
     sidebar.classList.toggle("translate-x-full");
+    
+    const isOpen = !sidebar.classList.contains("translate-x-full");
+    if (isOpen) {
+      const activeThumb = sidebar.querySelector(".thumb-item.border-orange-500");
+      if (activeThumb) {
+        scrollSidebarToActive(sidebar, activeThumb);
+      }
+    }
   });
+}
+
+function createThumbnailUrl(infoJsonUrl, width = 160) {
+  return infoJsonUrl.replace(
+    /\/info\.json$/,
+    `/full/${width},/0/default.jpg`
+  );
+}
+
+function scrollSidebarToActive(sidebar, activeElement) {
+  if (!sidebar || !activeElement) return;
+
+  const sidebarRect = sidebar.getBoundingClientRect();
+  const elementRect = activeElement.getBoundingClientRect();
+  
+  const offsetTop = elementRect.top - sidebarRect.top;
+  const offsetBottom = elementRect.bottom - sidebarRect.bottom;
+  
+  if (offsetTop < 0) {
+    sidebar.scrollTo({ top: sidebar.scrollTop + offsetTop, behavior: "smooth" });
+  } else if (offsetBottom > 0) {
+    sidebar.scrollTo({ top: sidebar.scrollTop + offsetBottom, behavior: "smooth" });
+  }
 }

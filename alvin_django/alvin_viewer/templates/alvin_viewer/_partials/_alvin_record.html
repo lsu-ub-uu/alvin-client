@@ -6,7 +6,9 @@
 
 <!-- Metadata -->
 <div class="flex flex-col w-full" data-xdata="{ open_inventory: false }">
+    {{metadata}}
     <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
+        {% include './_metadata_row.html' with label=metadata.main_title.label value=metadata.main_title.display %}
         {% for title in metadata.variant_titles.titles %}
             {% include "./_metadata_row.html" with label=metadata.variant_titles.label extra_label=title.type value=title.display %}
         {% endfor %}
@@ -58,7 +60,7 @@
         {% include "./_metadata_row.html" with label=metadata.literature.label value=metadata.literature.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.access_policy.label value=metadata.access_policy.text|linebreaksbr %}
         {% for subject in metadata.subjects %}
-            {% include "./_metadata_row.html" with label=subject.label value=subject.display %}
+            {% include "./_metadata_row.html" with label=subject.label extra_label=subject.authority value=subject.display %}
         {% endfor %}
     </div>
     <div data-xshow="activeTab == 'all_metadata' || activeTab == 'related'" data-xcloak>
@@ -119,7 +121,6 @@
         {% include "./_metadata_row.html" with label=metadata.countermark.label value=metadata.countermark.texts|join:"<br>" %}
         {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
         {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
-        {% include "./_metadata_row.html" with label="Källdata" value=metadata.source_xml %}
     </div>
     {% include './_alvin_id_uri.html' %}
     {% if metadata.components %}

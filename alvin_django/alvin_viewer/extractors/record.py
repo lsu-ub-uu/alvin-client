@@ -186,7 +186,8 @@ def _subjects_misc(root: etree._Element, xp: str) -> List[SubjectMiscEntry] | No
         return None
 
     subjects = [SubjectMiscEntry(
-            label = _get_attribute_item(attr(e, "./@authority")),
+            label = _get_label(e),
+            authority = _get_attribute_item(attr(e, "./@authority")),
             topic = text(e, "topic"),
             genre_form = text(e, "genreForm"),
             geographic_coverage = text(e, "geographicCoverage"),
@@ -221,7 +222,7 @@ def _dimensions(root: etree._Element, xp: str) -> List[Dimension] | None:
     
     ds = [Dimension(
         label =_get_label(t),
-        scope = _get_value(element(t, "scope")),
+        scope = _get_value(element(t, "scope")) or None,
         height = decorated_text(t, _xp(rt, "height", absolute=True)),
         width = decorated_text(t, _xp(rt, "width", absolute=True)),
         depth = decorated_text(t, _xp(rt, "depth", absolute=True)),

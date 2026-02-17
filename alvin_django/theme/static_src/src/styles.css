@@ -64,10 +64,6 @@ html {
   scrollbar-gutter: stable;
 }
 
-body {
-  overflow-y: scroll;
-}
-
 /*
 Alvin viewer
 

@@ -28,8 +28,6 @@
                 {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
-        {% include "./_metadata_row.html" with label=metadata.birth_date.label value=metadata.birth_date.display %}
-        {% include "./_metadata_row.html" with label=metadata.death_date.label value=metadata.death_date.display %}
     </div>
     <div x-show="activeTab === 'all_metadata' || activeTab === 'related'" x-cloak>
         {% include "./_metadata_row.html" with label=metadata.birth_place.label url=metadata.birth_place.url value=metadata.birth_place.display %}

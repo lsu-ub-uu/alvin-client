@@ -224,6 +224,9 @@
   }
 }
 @layer utilities {
+  .pointer-events-none {
+    pointer-events: none;
+  }
   .visible {
     visibility: visible;
   }
@@ -3686,9 +3689,6 @@ h3.tify-player-select-title:after,.tify-media-dropdown.-layers .tify-dropdown-co
 html {
   font-family: var(--font-sans);
   scrollbar-gutter: stable;
-}
-body {
-  overflow-y: scroll;
 }
 .md-row {
   display: flex;

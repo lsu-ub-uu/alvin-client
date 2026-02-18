@@ -58,8 +58,7 @@ class AlvinLocation(CommonMetadata):
     latitude: DecoratedText = None
     longitude: DecoratedText = None
     electronic_locators: List[ElectronicLocator] = None
-    related_organisations: RelatedAuthoritiesBlock = None
-
+    
     @property
     def maps_url(self):
         return f"https://maps.google.com/?q={self.latitude.text},{self.longitude.text}"

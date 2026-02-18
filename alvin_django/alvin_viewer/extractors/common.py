@@ -278,8 +278,8 @@ def agents(node: etree._Element, xp: str) -> NamesBlock:
     
     agents = [Agent(
         label = _get_label(agent),
-        type = None if attr(agent, './@type') is None else f"alvin-{attr(agent, './@type')}",
-        id = text(agent, ".//linkedRecordId"),
+        type = attr(agent, './@type'),
+        id = text(agent, f"./{attr(agent, './@type')}/linkedRecordId"),
         names = names(agent, ".//authority", person["AUTH_NAME"] if attr(agent, './@type') == 'person' else organisation["AUTH_NAME"]),
         roles = decorated_list(agent, "role"),
         certainty = text(agent, "certainty"),

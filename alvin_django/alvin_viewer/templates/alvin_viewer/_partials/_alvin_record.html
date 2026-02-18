@@ -124,7 +124,7 @@
         {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
     </div>
     {% include "./_alvin_id_uri.html" %}
-    {% include "./_metadata_row.html" with label=metadata.urn_nbn.label url="http://urn.kb.se/resolve?urn="|add:metadata.urn_nbn.text value=metadata.urn_nbn.text %}
+    {% include "./_metadata_row.html" with label=metadata.urn_nbn.label value=metadata.urn_nbn.text %}
     {% if metadata.components %}
     <div data-xshow="activeTab !== 'related'">
         <header class="flex items-baseline bg-linear-to-tr text-lg p-2 border-t border-black dark:border-white bg-gray-200 dark:bg-gray-700 hover:bg-dark-alvin hover:text-[#F7F9F8] cursor-pointer" data-xon.click="open_inventory = !open_inventory">

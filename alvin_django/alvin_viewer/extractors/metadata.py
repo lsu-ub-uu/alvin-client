@@ -460,10 +460,10 @@ class URL:
 
 @dataclass(slots=True)
 class Agent(URL):
-    record_type_field = "type"
+    record_type_field = "agent_type"
     roles: DecoratedList
     label: Optional[str] = None
-    type: Optional[str] = None
+    agent_type: Optional[str] = None
     id: Optional[str] = None
     names: NamesBlock = None
     certainty: Optional[str] = None

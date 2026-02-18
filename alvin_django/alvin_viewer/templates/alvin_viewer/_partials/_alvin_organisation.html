@@ -42,7 +42,9 @@
         {% endfor %}
     </div>
      <div data-xshow="activeTab === 'all_metadata' || activeTab === 'related'" data-xcloak>
-        {% include "./_record_type_links.html" with label=metadata.related_organisations.label link_type="alvin-organisation" record_type_links=metadata.related_organisations %}
+        {% for type_block in metadata.related_organisations.ordered_by_type %}
+            {% include "./_record_type_links.html" with label=type_block.label link_type="alvin-organisation" record_type_links=type_block %}
+        {% endfor %}
     </div>
     <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}

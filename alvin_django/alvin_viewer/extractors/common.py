@@ -289,11 +289,13 @@ def agents(node: etree._Element, xp: str) -> NamesBlock:
         return None
     return agents
 
-def related_authority(node: etree._Element, xp: str, authority: str, alternative_label_xp: str = None) -> RelatedAuthoritiesBlock | None:
+def related_authority(node: etree._Element, xp: str, authority: str, collection: str = None, alternative_label_xp: str = None) -> RelatedAuthoritiesBlock | None:
     target = element(node, xp)
     if target is None:
         return None
     
+    related_type = _get_attribute_item(collection, attr(target, "./@type")) if collection else None
+
     AN = {
         "person": person["AUTH_NAME"],
         "organisation": organisation["AUTH_NAME"],
@@ -306,6 +308,7 @@ def related_authority(node: etree._Element, xp: str, authority: str, alternative
         label = _get_label(label_node),
         records = [RelatedAuthorityEntry(
             id = text(e, f"{authority}/linkedRecordId"),
+            type = related_type,
             record_type = text(e, (f"{authority}/linkedRecordType")),
             name = names(e, f"{authority}/linkedRecord/{authority}/authority", AN[authority]),
             )

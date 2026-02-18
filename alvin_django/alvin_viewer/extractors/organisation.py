@@ -32,5 +32,5 @@ def extract(root: etree._Element) -> AlvinOrganisation:
         identifiers = identifiers(root, _xp(rt, "identifier")),
         address = address,
         electronic_locators = electronic_locators(root, _xp(rt, "electronicLocator")),
-        related_organisations = related_authority(root, _xp(rt, "related"), "organisation")
+        related_organisations = related_authority(root, _xp(rt, "related"), "organisation", "relatedOrganisationTypeCollection")
     )

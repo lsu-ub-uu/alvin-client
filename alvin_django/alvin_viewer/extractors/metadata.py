@@ -545,6 +545,23 @@ class RelatedAuthoritiesBlock:
     def is_empty(self) -> bool:
         return not self.records
     
+    def ordered_by_type(self) -> Dict[str, List[RelatedAuthorityEntry]] | None:
+        records = getattr(self, "records", None)
+        if records is None:
+            return None
+        
+        ordered = {}
+        for record in records:
+            record_type = getattr(record, "type", None)
+            if record_type not in ordered:
+                ordered[record_type] = []
+            ordered[record_type].append(record)
+
+        return [RelatedAuthoritiesBlock(
+            label=related_type,
+            records = ordered_records
+        ) for related_type, ordered_records in ordered.items()]
+    
 @dataclass
 class RelatedRecordPart:
     type: Optional[str] = None

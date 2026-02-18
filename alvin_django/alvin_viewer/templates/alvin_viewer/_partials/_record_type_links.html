@@ -12,9 +12,6 @@
             <a href="{{ record_type.url }}">
                 {% firstof record_type.main_title.display record_type.name.title %}
             </a>
-            {% if record_type.type %}
-                ({{ record_type.type }})
-            {% endif %}
             {% if record_type.parts %}
             <ul class="pb-1 list-inside">
                 {% for part in record_type.parts %}

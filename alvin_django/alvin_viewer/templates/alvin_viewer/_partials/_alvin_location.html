@@ -31,7 +31,10 @@
         {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
         {% include "./_metadata_row.html" with label=metadata.member_type.label value=metadata.member_type.item %}
         {% include "./_metadata_row.html" with label=metadata.summary.label value=metadata.summary.display %}
-        {% include "./_metadata_row.html" with label={% translate 'Vägbeskrivning' %} url= value= %}
+        {% if metadata.longitude and metadata.latitude %}
+            {% translate "Vägbeskrivning" as label %}
+            {% include "./_metadata_row.html" with label=label url=metadata.maps_url value='Google Maps' %}
+        {% endif %}
         {% include "./_metadata_row.html" with label=metadata.longitude.label value=metadata.longitude.text %}
         {% include "./_metadata_row.html" with label=metadata.latitude.label value=metadata.latitude.text %}
     </div>

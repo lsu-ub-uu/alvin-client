@@ -60,6 +60,10 @@ class AlvinLocation(CommonMetadata):
     electronic_locators: List[ElectronicLocator] = None
     related_organisations: RelatedAuthoritiesBlock = None
 
+    @property
+    def maps_url(self):
+        return f"https://maps.google.com/?q={self.latitude.text},{self.longitude.text}"
+    
 @dataclass(slots=True)
 class AlvinWork(CommonMetadata):
     label: Optional[str] = None
@@ -87,7 +91,10 @@ class AlvinWork(CommonMetadata):
 
     @property
     def display_label(self):
-        return f"{self.label}, {self.form_of_work.item}".capitalize
+        form_of_work = getattr(self.form_of_work, "item", None)
+        if form_of_work is not None:
+            return f"{self.label}, {form_of_work}".capitalize()
+        return self.label
 
 @dataclass(slots=True)
 class AlvinRecord(CommonMetadata):
@@ -137,6 +144,7 @@ class AlvinRecord(CommonMetadata):
     work: RelatedAuthoritiesBlock = None
     components: List[Component] = None
     files: FilesBlock = None
+    urn_nbn: DecoratedText = None
 
     # Archives
     level: DecoratedListItem = None
@@ -178,4 +186,15 @@ class AlvinRecord(CommonMetadata):
 
     @property
     def display_label(self):
-        return f"{self.type_of_resource.item}, {self.production_method.item}".capitalize()
+        tor = getattr(self.type_of_resource, "item", None)
+        prod_method = getattr(self.production_method, "item", None)
+        parts = [tor, prod_method]
+        main_label = ", ".join(filter(None, parts))
+
+        collection = getattr(self.collection, "item", None)
+
+        tor_code = getattr(self.type_of_resource, "code", None)
+        
+        if collection is not None and tor_code != 'col':
+            return f"{main_label} ({collection})"
+        return main_label

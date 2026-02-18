@@ -64,6 +64,7 @@ def extract(root: etree._Element) -> AlvinRecord:
         identifiers = identifiers(root, _xp(rt, "identifier")),
         work = related_works(root, _xp(rt, "work")),
         files = files(root, _xp(rt, "fileSection")),
+        urn_nbn = decorated_text(root, _xp(rt, "recordInfo/urn")),
         components = components(elements(root, _xp(rt, component_type))),
 
         # Archives

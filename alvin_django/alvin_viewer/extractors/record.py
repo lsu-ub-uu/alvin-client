@@ -43,12 +43,12 @@ def extract(root: etree._Element) -> AlvinRecord:
         measure = _measure(root, _xp(rt, "measure")),
         base_material = decorated_list(root, _xp(rt, "baseMaterial")),
         applied_material = decorated_list(root, _xp(rt, "appliedMaterial")),
-        physical_description_notes = decorated_texts_with_type(root, _xp(rt, "physicalDescription"), "note", "./@noteType"),
+        physical_description_notes = decorated_texts_with_type(root, _xp(rt, "physicalDescription"), "note", "physicalDescriptionNoteTypeCollection", "./@noteType"),
         summary = decorated_text(root, _xp(rt, "summary")),
         transcription = decorated_text(root, "transcription"),
         table_of_contents = decorated_text(root, "tableOfContents"),
         literature = decorated_text(root, _xp(rt, "listBibl")),
-        notes = decorated_texts_with_type(root, _xp(rt, "note"), ".", "./@noteType"),
+        notes = decorated_texts_with_type(root, _xp(rt, "note"), ".", "noteTypeCollection", "./@noteType"),
         access_policy = decorated_text(root, _xp(rt, "accessPolicy")),
         related_records = related_records(root, _xp(rt, "relatedTo")),
         electronic_locators = electronic_locators(root, _xp(rt, "electronicLocator")),
@@ -64,6 +64,7 @@ def extract(root: etree._Element) -> AlvinRecord:
         identifiers = identifiers(root, _xp(rt, "identifier")),
         work = related_works(root, _xp(rt, "work")),
         files = files(root, _xp(rt, "fileSection")),
+        urn_nbn = decorated_text(root, _xp(rt, "recordInfo/urn")),
         components = components(elements(root, _xp(rt, component_type))),
 
         # Archives
@@ -187,7 +188,7 @@ def _subjects_misc(root: etree._Element, xp: str) -> List[SubjectMiscEntry] | No
 
     subjects = [SubjectMiscEntry(
             label = _get_label(e),
-            authority = _get_attribute_item(attr(e, "./@authority")),
+            authority = _get_attribute_item("subjectHeadingSchemaCollection", attr(e, "./@authority")),
             topic = text(e, "topic"),
             genre_form = text(e, "genreForm"),
             geographic_coverage = text(e, "geographicCoverage"),
@@ -206,7 +207,7 @@ def _classifications(root: etree._Element, xp) -> List[Classification] | None:
     
     cs = [Classification(
         label = _get_label(t),
-        type = _get_attribute_item(attr(t, "./@authority")),
+        type = _get_attribute_item("classificationSchemeCollection", attr(t, "./@authority")),
         text = text(t, "."),
         ) for t in targets]
     

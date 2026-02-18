@@ -51,7 +51,7 @@
         {% if metadata.record_type != 'alvin-record' %}
             <p class="w-full font-semibold pl-2">{{ metadata.label }}</p>
         {% else %}
-            <p class="w-full font-semibold pl-2">{{ metadata.type_of_resource.item }}</p>
+            <p class="w-full font-semibold pl-2">{{ metadata.display_label }}</p>
         {% endif %}
     {% endif %}
 </div>

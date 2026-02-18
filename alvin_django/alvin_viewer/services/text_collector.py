@@ -79,7 +79,7 @@ def _deco_process_collection(collection) -> dict:
 def _deco_cache_collections(collections) -> None:
     result: dict[str, dict[str, str]] = {}
     for collection in collections:
-        result.update(_deco_process_collection(collection))
+        result[collection] = _deco_process_collection(collection)
     cache.set(CACHE_DICT_KEY, result)
     logger.info("Processed XML and stored dictionary in cache.")
 

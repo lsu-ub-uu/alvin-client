@@ -18,7 +18,7 @@
         {% include "./_metadata_row.html" with label=agent.label url=agent.url value=agent.display attribute=agent.display_roles %}
     {% endfor %}
     {% for place in metadata.origin_places.places %}
-        {% include "./_metadata_row.html" with label=place.label url=place.url value=place.name.title %}
+        {% include "./_metadata_row.html" with label=place.label url=place.url value=place.name.title extra_value=place.display_countries %}
     {% endfor %}
     </div>
     <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
@@ -82,7 +82,9 @@
 
     </div>
     <div data-xshow="activeTab == 'all_metadata' || activeTab == 'related'" data-xcloak>
-        {% include "alvin_viewer/_partials/_record_type_links.html" with label=metadata.related_records.label link_type="alvin-record" record_type_links=metadata.related_records %}
+        {% for type_block in metadata.related_records.ordered_by_type %}
+            {% include "alvin_viewer/_partials/_record_type_links.html" with label=type_block.label link_type="alvin-record" record_type_links=type_block %}
+        {% endfor%}
         {% include "./_authority_links.html" with label=metadata.work.label link_type="alvin-work" authority_links=metadata.work %}
         {% for electronic_locator in metadata.electronic_locators %}
             {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
@@ -122,7 +124,8 @@
         {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
         {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
     </div>
-    {% include './_alvin_id_uri.html' %}
+    {% include "./_alvin_id_uri.html" %}
+    {% include "./_metadata_row.html" with label=metadata.urn_nbn.label value=metadata.urn_nbn.text %}
     {% if metadata.components %}
     <div data-xshow="activeTab !== 'related'">
         <header class="flex items-baseline bg-linear-to-tr text-lg p-2 border-t border-black dark:border-white bg-gray-200 dark:bg-gray-700 hover:bg-dark-alvin hover:text-[#F7F9F8] cursor-pointer" data-xon.click="open_inventory = !open_inventory">

@@ -10,15 +10,8 @@
         {% for authority in authority_links.records %}
             <li>
                 <a href="{{ authority.url }}">
-                    {% if link_type == 'alvin-work' %}
-                        {{ authority.main_title.display }}
-                    {% else %}
-                        {{ authority.name.title }}
-                    {% endif %}
+                    {% firstof authority.main_title.display authority.name.title %}
                 </a>
-                {% if authority.type %}
-                    ({{ authority.type }})
-                {% endif %}
             </li>
         {% endfor %}
         </ul>

@@ -33,7 +33,9 @@
     {% include './_alvin_id_uri.html' %}
 </div>
 
+{% if metadata.longitude and metadata.latitude %}
 <div id="alvin-map" class="w-full h-96 mt-8 z-0 border rounded shadow-sm"
-    {% if metadata.latitude %}data-latitude="{{ metadata.latitude.text }}"{% endif %}
-    {% if metadata.longitude %}data-longitude="{{ metadata.longitude.text }}"{% endif %}>
+    data-latitude="{{ metadata.latitude.text }}"
+    data-longitude="{{ metadata.longitude.text }}">
 </div>
+{% endif %}

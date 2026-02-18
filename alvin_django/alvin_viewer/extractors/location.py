@@ -52,5 +52,4 @@ def extract(root: etree._Element) -> AlvinLocation:
         latitude = decorated_text(root, _xp(rt, "point/latitude")),
         longitude = decorated_text(root, _xp(rt, "point/longitude")),
         electronic_locators = electronic_locators(root, _xp(rt, "electronicLocator")),
-        related_organisations = related_authority(root, _xp(rt, "related"), "organisation")
     )

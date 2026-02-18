@@ -28,9 +28,9 @@ def extract(root: etree._Element) -> AlvinOrganisation:
         variant_names = names(root, _xp(rt, "variant"), organisation["VARIANT"]),
         organisation_info = dates(root, _xp(rt, "organisationInfo"), "start", "end"),
         display_date = decorated_text(root, _xp(rt, "organisationInfo/displayDate")),
-        notes = decorated_texts_with_type(root, _xp(rt, "note"), ".", "./@noteType"),
+        notes = decorated_texts_with_type(root, _xp(rt, "note"), ".", "noteTypeAuthorityCollection", "./@noteType"),
         identifiers = identifiers(root, _xp(rt, "identifier")),
         address = address,
         electronic_locators = electronic_locators(root, _xp(rt, "electronicLocator")),
-        related_organisations = related_authority(root, _xp(rt, "related"), "organisation")
+        related_organisations = related_authority(root, _xp(rt, "related"), "organisation", "relatedOrganisationTypeCollection")
     )

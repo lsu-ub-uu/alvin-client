@@ -345,6 +345,7 @@ class NamesBlock:
     def is_empty(self) -> bool:
         return not self.label and not self.names
     
+    @property
     def title(self) -> str:
         if not self.names:
             return ""
@@ -459,10 +460,10 @@ class URL:
 
 @dataclass(slots=True)
 class Agent(URL):
-    record_type_field = "type"
+    record_type_field = "agent_type"
     roles: DecoratedList
     label: Optional[str] = None
-    type: Optional[str] = None
+    agent_type: Optional[str] = None
     id: Optional[str] = None
     names: NamesBlock = None
     certainty: Optional[str] = None
@@ -472,7 +473,7 @@ class Agent(URL):
     
     @property
     def display(self) -> str | None:
-        title = self.names.title()
+        title = self.names.title
         if self.certainty == "uncertain":
             title += "?"
         return title
@@ -490,7 +491,7 @@ class Location(URL):
 
     @property
     def display(self) -> Optional[str]:
-        return self.names.title() if self.names else None
+        return self.names.title if self.names else None
 
 @dataclass(slots=True)
 class OriginPlace(URL):
@@ -507,7 +508,7 @@ class OriginPlace(URL):
     
     @property
     def display(self) -> Optional[str]:
-        title = self.name.title()
+        title = self.name.title
         if self.certainty == "uncertain":
             title += "?"
         return title
@@ -544,6 +545,23 @@ class RelatedAuthoritiesBlock:
     def is_empty(self) -> bool:
         return not self.records
     
+    def ordered_by_type(self) -> Dict[str, List[RelatedAuthorityEntry]] | None:
+        records = getattr(self, "records", None)
+        if records is None:
+            return None
+        
+        ordered = {}
+        for record in records:
+            record_type = getattr(record, "type", None)
+            if record_type not in ordered:
+                ordered[record_type] = []
+            ordered[record_type].append(record)
+
+        return [RelatedAuthoritiesBlock(
+            label=related_type,
+            records = ordered_records
+        ) for related_type, ordered_records in ordered.items()]
+    
 @dataclass
 class RelatedRecordPart:
     type: Optional[str] = None
@@ -574,6 +592,26 @@ class RelatedRecordEntry(URL):
 class RelatedRecordsBlock:
     label: Optional[str] = None
     records: List[RelatedRecordEntry] = None
+
+    def is_empty(self) -> bool:
+        return not self.records
+    
+    def ordered_by_type(self) -> Dict[str, List[RelatedRecordEntry]] | None:
+        records = getattr(self, "records", None)
+        if records is None:
+            return None
+        
+        ordered = {}
+        for record in records:
+            record_type = getattr(record, "type", None)
+            if record_type not in ordered:
+                ordered[record_type] = []
+            ordered[record_type].append(record)
+
+        return [RelatedRecordsBlock(
+            label=related_type,
+            records = ordered_records
+        ) for related_type, ordered_records in ordered.items()]
 
 @dataclass(slots=True)
 class RelatedWorkEntry(URL):

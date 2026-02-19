@@ -6,7 +6,6 @@
 
 <!-- Metadata -->
 <div class="flex flex-col w-full" data-xdata="{ open_inventory: false }">
-    {{metadata}}
     <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
         {% include './_metadata_row.html' with label=metadata.main_title.label value=metadata.main_title.display %}
         {% for title in metadata.variant_titles.titles %}

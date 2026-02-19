@@ -4,7 +4,7 @@
         <div class="bg-white dark:bg-gray-600 items-center justify-between w-full flex rounded-full shadow-lg p-2 mb-5 sticky">           
             <input name="query" id="alvinsearch" x-ref="alvinsearch" class="font-normal rounded-full w-full py-4 pl-4 text-gray-700 dark:text-gray-100 bg-gray-100 dark:bg-gray-900 leading-tight focus:outline-none focus:shadow-outline lg:text-base md:text-base text-sm"
                 type="text" placeholder="{% translate 'Sök över en halv miljon objekt' %}" 
-                {% if query != '' %}
+                {% if query != '**' %}
                 value="{{ query }}"
                 {% endif %}>
             <div class="bg-gray-900 p-2 hover:bg-dark-alvin mx-2 rounded-full">
@@ -23,8 +23,8 @@
         <fieldset class="flex justify-center gap-x-2 text-sm md:text-base dark:text-white"> 
             <legend class="sr-only">{% translate 'Söktyp' %}</legend>
             <div>
-                <input type="radio" id="alvinRecord" name="searchType" value="alvinRecord"  
-                {% if searchType == 'alvinRecord' %} checked {% endif %}
+                <input type="radio" id="alvinRecord" name="searchType" value="alvinRecord" checked 
+               
                 class="sr-only peer">
                 <label for="alvinRecord"
                         class="flex items-center bg-alvin-grey dark:bg-gray-700 rounded-full px-4 py-2 cursor-pointer group gap-1 

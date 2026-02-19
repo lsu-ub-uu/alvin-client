@@ -16,7 +16,7 @@ import json
 def alvin_search(request):
     xml_headers_list = {'Content-Type':'application/vnd.cora.recordList-decorated+xml','Accept':'application/vnd.cora.recordList-decorated+xml'}
 
-    searchType = request.GET.get('searchType', '')
+    searchType = request.GET.get('searchType', 'alvinRecord')
     query = request.GET.get('query', '**')  
     if query == '':
         query = '**' 

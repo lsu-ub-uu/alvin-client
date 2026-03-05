@@ -353,14 +353,14 @@ def components(nodes: List[etree._Element]) -> List[Component] | None:
             # Manuscripts
             languages = decorated_list(comp, "language"),
             origin_places = origin_places(comp, "originPlace"),
-            physical_description_notes = decorated_texts_with_type(comp, "physicalLocation", "note", "./@noteType"),
+            physical_description_notes = decorated_texts_with_type(comp, "physicalLocation", "note", "noteTypeCollection", "./@noteType"),
             locus = decorated_text(comp, "locus"),
             incipit = decorated_text(comp, "incipit"),
             explicit = decorated_text(comp, "explicit"),
             rubric = decorated_text(comp, "rubric"),
             final_rubric = decorated_text(comp, "finalRubric"),
             literature = decorated_text(comp, "listBibl"),
-            notes = decorated_texts_with_type(comp, "note", ".", "./@noteType"),
+            notes = decorated_texts_with_type(comp, "note", ".", "noteTypeCollection", "./@noteType"),
 
             # Common
             title = titles(comp, "title"),

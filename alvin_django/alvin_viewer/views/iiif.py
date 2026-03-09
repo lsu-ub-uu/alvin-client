@@ -21,7 +21,6 @@ def iiif_manifest(request, record_id: str):
     if record_xml is None:
         raise Http404(_("Record not found."))
 
-
     manifest_base = request.build_absolute_uri(request.path)
     if not manifest_base.endswith("/"):
         manifest_base += "/"
@@ -64,8 +63,6 @@ def iiif_manifest(request, record_id: str):
 
         if not server.startswith("http"):
             server = f"https://{server}"
-
-        print(f"DEBUG IIIF URL: {server}/{ident}")
 
         image_service_id = f"{server.rstrip('/')}/{ident.strip('/')}"
         raster_url = f"{image_service_id}/full/max/0/default.jpg"

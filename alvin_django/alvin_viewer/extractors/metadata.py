@@ -668,6 +668,7 @@ class File:
 @dataclass 
 class FileGroup:
     type: Optional[str] = None
+    type_code: Optional[str] = None 
     files: List[File] = None
 
 @dataclass 
@@ -675,3 +676,15 @@ class FilesBlock:
     rights: str = None
     digital_origin: str = None
     file_groups: List[FileGroup] = None
+
+    @property
+    def pdf_files(self) -> List[str]:
+        pdfs = []
+        if self.file_groups:
+            for group in self.file_groups:
+                if group.type_code == "transcription":
+                    for f in group.files:
+                        if f.master_type == 'application/pdf' or f.type == 'application/pdf':
+                            if f.master_url:
+                                pdfs.append(f.master_url)
+        return pdfs

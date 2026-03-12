@@ -29,10 +29,8 @@ async function init() {
     
     setupActiveThumbnailSync(viewer, thumbnails);
 
-    // NYTT: Kasta ut en signal till Alpine om hur många sidor som finns
     window.dispatchEvent(new CustomEvent('osd-loaded', { detail: { totalPages: tileSources.length } }));
 
-    // NYTT: Kasta ut en signal till Alpine varje gång bilden byts
     viewer.addHandler('page', (event) => {
       window.dispatchEvent(new CustomEvent('osd-page-changed', { detail: { page: event.page } }));
     });
@@ -55,7 +53,7 @@ async function init() {
 }
 
 /* ==============================
-Data Loading & IIIF
+Data Loading and IIIF
 ============================== */
 
 async function loadManifest(url) {
@@ -105,7 +103,7 @@ function extractV2Service(canvas) {
 }
 
 /* ==============================
-Viewer Setup & Thumbnails
+Viewer Setup and Thumbnails
 ============================== */
 
 function createViewer(tileSources) {

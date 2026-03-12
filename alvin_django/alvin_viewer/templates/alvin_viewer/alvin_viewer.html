@@ -206,7 +206,7 @@
               const response = await fetch(url);
               if (!response.ok) throw new Error(`HTTP ${response.status}`);
               
-              // NYTT: Hanterar textfiler utan att krascha Firefox färgteman!
+              // Firefox fixes for text/plain mime type
               if (mimeType === 'text/plain') {
                 const textContent = await response.text();
                 wrapper.innerHTML = '';

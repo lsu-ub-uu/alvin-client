@@ -678,13 +678,30 @@ class FilesBlock:
     file_groups: List[FileGroup] = None
 
     @property
-    def pdf_files(self) -> List[str]:
-        pdfs = []
+    def transcriptions(self) -> dict:
+
+        trans = {}
+        files = []
+
         if self.file_groups:
             for group in self.file_groups:
                 if group.type_code == "transcription":
+                    trans["label"] = group.type
                     for f in group.files:
-                        if f.master_type == 'application/pdf' or f.type == 'application/pdf':
+                        # NYTT: Acceptera både PDF och vanliga textfiler
+                        if f.master_type in ['application/pdf', 'text/plain']:
                             if f.master_url:
-                                pdfs.append(f.master_url)
-        return pdfs
+                                file_type = f.master_type
+                                file_name = f.original_name
+                                mime = f.master_type or "application/pdf"
+                                
+                                files.append({
+                                    "url": f.master_url,
+                                    "name": file_name,
+                                    "type": file_type,
+                                    "mime_type": mime
+                                })
+                    
+                    trans["files"] = files
+        
+        return trans

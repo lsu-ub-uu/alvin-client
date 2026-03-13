@@ -152,6 +152,9 @@
           currentBlobUrl: null,
           currentPage: 1,
           totalPages: 0,
+          
+          // Tillstånd för vald dokumentkategori
+          selectedCategory: '',
 
           toggleSidebar() {
             this.sidebarOpen = !this.sidebarOpen;
@@ -186,16 +189,35 @@
             }
           },
 
+          // Öppna panelen och ladda första filen direkt (i den förvalda kategorin)
           toggleDoc() {
             this.docOpen = !this.docOpen;
             if (this.docOpen && this.isFirstLoad) {
-              const selector = document.getElementById('pdf-selector');
-              if (selector && selector.options.length > 0) {
-                const option = selector.options[0];
-                this.renderDoc(option.value, option.dataset.mime);
+              this.$nextTick(() => {
+                this.loadCurrentCategoryFile();
                 this.isFirstLoad = false;
-              }
+              });
             }
+          },
+
+          // Hjälpfunktion för att ladda den fil som är vald i den aktiva kategorin
+          loadCurrentCategoryFile() {
+            const selector = document.getElementById('file-select-' + this.selectedCategory);
+            if (selector && selector.options.length > 0) {
+              const option = selector.options[selector.selectedIndex];
+              this.renderDoc(option.value, option.dataset.mime);
+            }
+          },
+
+          // Triggas när användaren byter mellan t.ex "Översättning" och "Transkription"
+          categoryChanged() {
+            this.$nextTick(() => {
+              const selector = document.getElementById('file-select-' + this.selectedCategory);
+              if (selector && selector.options.length > 0) {
+                selector.selectedIndex = 0; // Tvinga tillbaka fillistan till första valet
+              }
+              this.loadCurrentCategoryFile(); // Ladda in dokumentet
+            });
           },
 
           async renderDoc(url, mimeType = 'application/pdf') {
@@ -206,7 +228,6 @@
               const response = await fetch(url);
               if (!response.ok) throw new Error(`HTTP ${response.status}`);
               
-              // Firefox fixes for text/plain mime type
               if (mimeType === 'text/plain') {
                 const textContent = await response.text();
                 wrapper.innerHTML = '';

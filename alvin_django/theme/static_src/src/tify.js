@@ -140,7 +140,7 @@ function createThumbnails(tileSources, viewer) {
     img.loading = "lazy";
     img.src = source.replace(/\/info\.json$/, `/full/160,/0/default.jpg`);
     img.className = `thumb-item w-full rounded border-2 transition-all ${index === 0 ? 'border-orange-500' : 'border-transparent'}`;
-
+    
     wrapper.append(number, img);
     wrapper.addEventListener("click", () => viewer.goToPage(index));
 

@@ -3,6 +3,7 @@ from urllib.parse import urljoin
 from django.utils.translation import gettext as _
 from ..extractors.record import extract
 from ..services.alvin_api import AlvinAPI
+from lxml import etree as ET
 
 def _to_int(value, default):
     try:
@@ -47,15 +48,21 @@ def iiif_manifest(request, record_id: str):
 
         mime_type = file_xml.findtext("data/binary/master/master/mimeType")
 
-        server = file_xml.findtext(".//iiif/server")
-        ident = file_xml.findtext(".//iiif/identifier")
+        server = file_xml.findtext("otherProtocols/iiif/server")
+        ident = file_xml.findtext("otherProtocols/iiif/identifier")
         
-        # Only build IIIF canvas entries for image binaries.
+        # Only build IIIF canvas entries for image binaries
         if binary_type != "Image":
             continue
 
         if not server or not ident:
             continue
+        
+        server = server.strip()
+        ident = ident.strip()
+
+        if not server.startswith("http"):
+            server = f"https://{server}"
 
         image_service_id = f"{server.rstrip('/')}/{ident.strip('/')}"
         raster_url = f"{image_service_id}/full/max/0/default.jpg"
@@ -73,6 +80,11 @@ def iiif_manifest(request, record_id: str):
             "id": raster_url,
             "type": binary_type,
             "format": mime_type,
+            "service": [{
+                "id": image_service_id,
+                "type": "ImageService2",
+                "profile": "http://iiif.io/api/image/2/level2.json"
+            }]
         }
 
         measures = {

@@ -52,7 +52,7 @@ def extract(root: etree._Element) -> AlvinRecord:
         access_policy = decorated_text(root, _xp(rt, "accessPolicy")),
         related_records = related_records(root, _xp(rt, "relatedTo")),
         electronic_locators = electronic_locators(root, _xp(rt, "electronicLocator")),
-        genre_form = decorated_list(root, _xp(rt, "genreForm")),
+        genre_form = decorated_list(root, _xp(rt, "genre")),
         subjects = _subjects_misc(root, _xp(rt, "subject[not(@type = 'person' or @type = 'organisation' or @type = 'place')]")),
         subject_person = subject_authority(root, rt, "person"),
         subject_organisation = subject_authority(root, rt, "organisation"),
@@ -99,7 +99,7 @@ def extract(root: etree._Element) -> AlvinRecord:
         # Numismatic
         appraisal = appraisal(root, _xp(rt, "appraisal")),
         axis = axis(root, _xp(rt, "axis")),
-        edge = edge(root, _xp(rt, "edge"), "description", "legend"),
+        edge = edge(root, _xp(rt, "edge"), "edgeDescription", "legend"),
         conservation_state = decorated_list(root, _xp(rt, "conservationState")),
         obverse = coin(root, _xp(rt, "obverse")),
         reverse = coin(root, _xp(rt, "reverse")),
@@ -161,6 +161,7 @@ def files(root: etree._Element, xp: str) -> FilesBlock | None:
         file_groups = [
             FileGroup(
                 type = _get_value(group, "./type"),
+                type_code = text(group, "./type"),
                 files = [File(
                     type = _get_value(file, "./type"),
                     binary_id = text(file, "./fileLocation/linkedRecordId"),

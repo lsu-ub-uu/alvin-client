@@ -56,12 +56,12 @@ def download(request, url_type: str, record_id: int):
                     for chunk in resp.iter_content(chunk_size=8192):
                         yield chunk
                     resp.close()
+            
+            zs.add(stream_file(), arcname=file_info['name'])
 
         except Exception as e:
             failed_files.append(f"Failed to download file: {file_info['name']}, {e}")
             continue
-        
-        zs.add(stream_file(), arcname=file_info['name'])
     
     if failed_files:
         log_content = "\n".join(failed_files)

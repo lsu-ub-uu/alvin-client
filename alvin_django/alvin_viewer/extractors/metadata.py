@@ -668,6 +668,7 @@ class File:
 @dataclass 
 class FileGroup:
     type: Optional[str] = None
+    type_code: Optional[str] = None 
     files: List[File] = None
 
 @dataclass 
@@ -675,3 +676,32 @@ class FilesBlock:
     rights: str = None
     digital_origin: str = None
     file_groups: List[FileGroup] = None
+
+    @property
+    def documents(self) -> List[dict]:
+        docs_dict = {}
+
+        if self.file_groups:
+            for group in self.file_groups:
+                if group.type_code in ["transcription", "translation"]:
+                    code = group.type_code
+                    label = group.type or ("Transkription" if code == "transcription" else "Översättning")
+                    
+                    if code not in docs_dict:
+                        docs_dict[code] = {
+                            "label": label,
+                            "type_code": code,
+                            "files": []
+                        }
+                    
+                    for f in group.files:
+                        mime = f.master_type or "application/pdf"
+                        if mime in ['application/pdf', 'text/plain']:
+                            if f.master_url:
+                                docs_dict[code]["files"].append({
+                                    "url": f.master_url,
+                                    "name": f.original_name or "Dokument",
+                                    "mime_type": mime
+                                })
+                
+        return [group_data for group_data in docs_dict.values() if group_data["files"]]

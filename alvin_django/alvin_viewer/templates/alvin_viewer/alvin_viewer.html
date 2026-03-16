@@ -17,7 +17,7 @@
 
 {% block content %}
   <main
-    class="min-h-screen w-full flex flex-col lg:flex-1 pt-4 pb-8 px-8"
+    class="min-h-screen w-full flex flex-col lg:flex-1 pt-4 pb-8 px-2 md:px-8"
     data-xdata="{ activeTab: 'overview', download: false }"
     data-xon.click.away="download = false">
     {% if value != None %}
@@ -30,29 +30,11 @@
       <span class="pl-2 uppercase">{% translate 'Tillbaka till sökresultatet' %}</span>
     </a>
     {% endif %}
+    
     {% if metadata.files %}
-    <aside class="w-full h-[60vh] lg:h-[80vh] relative">
-      <div id="osd-wrapper" class="w-full h-full bg-black overflow-hidden relative">
-        
-        <div id="tify-viewer" class="w-full h-full absolute inset-0" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
-
-        <div id="thumb-sidebar" class="absolute top-0 right-0 h-full z-30 translate-x-full w-48 bg-gray-900 border-l border-gray-700 overflow-y-auto ease-in-out duration-300 transition-transform">
-          <div id="thumb-list" class="flex flex-col gap-4 p-4">
-            </div>
-        </div>
-
-        <button id="toggle-thumbs" class="absolute top-4 right-4 z-40 bg-black/50 hover:bg-black text-white p-2 rounded shadow-lg border border-white/20">
-          <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none">
-            <path d="M21 7.6V20.4C21 20.7314 20.7314 21 20.4 21H7.6C7.26863 21 7 20.7314 7 20.4V7.6C7 7.26863 7.26863 7 7.6 7H20.4C20.7314 7 21 7.26863 21 7.6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path d="M18 4H4.6C4.26863 4 4 4.26863 4 4.6V18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path d="M7 16.8L12.4444 15L21 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path d="M16.5 13C15.6716 13 15 12.3284 15 11.5C15 10.6716 15.6716 10 16.5 10C17.3284 10 18 10.6716 18 11.5C18 12.3284 17.3284 13 16.5 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </button>
-      </div>
-    </aside>
-    <script src="{% static 'js/tify.js' %}"></script>
+      {% include './_partials/_viewer.html' %}
     {% endif %}
+
     <h1 class="text-2xl md:text-3xl font-bold py-2">{% firstof metadata.main_title.display metadata.authority_names.title %}</h1>
     {% include './_partials/_render_record_icon.html' %}
 
@@ -162,6 +144,153 @@
               }
           }
       });
+    </script>
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('documentViewer', () => ({
+          sidebarOpen: false,
+          docOpen: false,
+          isFirstLoad: true,
+          currentBlobUrl: null,
+          currentPage: 1,
+          totalPages: 0,
+          
+          // Tillstånd för vald dokumentkategori
+          selectedCategory: '',
+
+          toggleSidebar() {
+            this.sidebarOpen = !this.sidebarOpen;
+            if (this.sidebarOpen) {
+              setTimeout(() => {
+                const activeThumb = document.querySelector('.thumb-item.border-orange-500');
+                if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }, 300);
+            }
+          },
+
+          goToPage(page) {
+            let p = parseInt(page);
+            if (isNaN(p) || p < 1) p = 1;
+            if (p > this.totalPages) p = this.totalPages;
+            
+            if (window.osdViewer) window.osdViewer.goToPage(p - 1);
+          },
+          prevPage() {
+            if (this.currentPage > 1) this.goToPage(this.currentPage - 1);
+          },
+          nextPage() {
+            if (this.currentPage < this.totalPages) this.goToPage(this.currentPage + 1);
+          },
+
+          toggleFullscreen() {
+            const container = document.getElementById('viewer-fullscreen-container');
+            if (!document.fullscreenElement) {
+              container.requestFullscreen();
+            } else {
+              document.exitFullscreen();
+            }
+          },
+
+          // Öppna panelen och ladda första filen direkt (i den förvalda kategorin)
+          toggleDoc() {
+            this.docOpen = !this.docOpen;
+            if (this.docOpen && this.isFirstLoad) {
+              this.$nextTick(() => {
+                this.loadCurrentCategoryFile();
+                this.isFirstLoad = false;
+              });
+            }
+          },
+
+          // Hjälpfunktion för att ladda den fil som är vald i den aktiva kategorin
+          loadCurrentCategoryFile() {
+            const selector = document.getElementById('file-select-' + this.selectedCategory);
+            if (selector && selector.options.length > 0) {
+              const option = selector.options[selector.selectedIndex];
+              this.renderDoc(option.value, option.dataset.mime);
+            }
+          },
+
+          // Triggas när användaren byter mellan t.ex "Översättning" och "Transkription"
+          categoryChanged() {
+            this.$nextTick(() => {
+              const selector = document.getElementById('file-select-' + this.selectedCategory);
+              if (selector && selector.options.length > 0) {
+                selector.selectedIndex = 0; // Tvinga tillbaka fillistan till första valet
+              }
+              this.loadCurrentCategoryFile(); // Ladda in dokumentet
+            });
+          },
+
+          async renderDoc(url, mimeType = 'application/pdf') {
+            const wrapper = document.getElementById('pdf-iframe-wrapper');
+            wrapper.innerHTML = '<div class="absolute inset-0 flex items-center justify-center text-sm font-semibold text-gray-800 dark:text-gray-300">Laddar dokument i bakgrunden...</div>';
+
+            try {
+              const response = await fetch(url);
+              if (!response.ok) throw new Error(`HTTP ${response.status}`);
+              
+              if (mimeType === 'text/plain') {
+                const textContent = await response.text();
+                wrapper.innerHTML = '';
+                
+                const pre = document.createElement('pre');
+                pre.className = "absolute inset-0 w-full h-full p-4 overflow-auto font-mono text-sm whitespace-pre-wrap text-black bg-white dark:bg-gray-900 dark:text-gray-200";
+                pre.textContent = textContent;
+                
+                wrapper.appendChild(pre);
+                return; 
+              }
+              
+              const blob = await response.blob();
+              const fileBlob = new Blob([blob], { type: mimeType });
+              
+              if (this.currentBlobUrl) URL.revokeObjectURL(this.currentBlobUrl);
+              this.currentBlobUrl = URL.createObjectURL(fileBlob);
+              
+              const fileObject = document.createElement("object");
+              fileObject.data = this.currentBlobUrl + "#view=FitH";
+              fileObject.type = mimeType;
+              fileObject.className = "absolute inset-0 w-full h-full border-0 block bg-transparent";
+                
+              wrapper.innerHTML = ''; 
+              wrapper.appendChild(fileObject);
+              
+            } catch (error) {
+              wrapper.innerHTML = `<div class="absolute inset-0 p-4 bg-gray-100 dark:bg-gray-800 flex flex-col justify-center items-center text-center">
+                  <p class="text-red-600 mb-2">Kunde inte ladda dokumentet direkt i webbläsaren.</p>
+                  <a href="${url}" class="text-orange-500 underline" target="_blank">Ladda ned filen</a>
+                </div>`;
+            }
+          },
+
+          cleanup() {
+            if (this.currentBlobUrl) URL.revokeObjectURL(this.currentBlobUrl);
+          },
+
+          osdZoomIn() {
+            if (window.osdViewer && window.osdViewer.viewport) window.osdViewer.viewport.zoomBy(1.2);
+          },
+          osdZoomOut() {
+            if (window.osdViewer && window.osdViewer.viewport) window.osdViewer.viewport.zoomBy(0.8);
+          },
+          osdHome() {
+            if (window.osdViewer && window.osdViewer.viewport) window.osdViewer.viewport.goHome();
+          },
+          osdRotateLeft() {
+            if (window.osdViewer && window.osdViewer.viewport) {
+              const currentRot = window.osdViewer.viewport.getRotation();
+              window.osdViewer.viewport.setRotation(currentRot - 90);
+            }
+          },
+          osdRotateRight() {
+            if (window.osdViewer && window.osdViewer.viewport) {
+              const currentRot = window.osdViewer.viewport.getRotation();
+              window.osdViewer.viewport.setRotation(currentRot + 90);
+            }
+          }
+        }))
+      })
     </script>
     {% endblock %}
 

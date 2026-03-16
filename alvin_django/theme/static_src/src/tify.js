@@ -22,16 +22,30 @@ async function init() {
     const manifest = await loadManifest(manifestUrl);
     const tileSources = extractTileSources(manifest);
 
-    if (!tileSources.length) {
-      console.warn("No tileSources found in manifest.");
-      return;
-    }
+    if (!tileSources.length) return;
 
     const viewer = createViewer(tileSources);
     const thumbnails = createThumbnails(tileSources, viewer);
     
     setupActiveThumbnailSync(viewer, thumbnails);
-    setupSidebarToggle();
+
+    window.dispatchEvent(new CustomEvent('osd-loaded', { detail: { totalPages: tileSources.length } }));
+
+    viewer.addHandler('page', (event) => {
+      window.dispatchEvent(new CustomEvent('osd-page-changed', { detail: { page: event.page } }));
+    });
+
+    viewer.addHandler('open', () => {
+      if (viewer.viewport) viewer.viewport.goHome(true); 
+    });
+
+    const osdWrapper = document.getElementById("osd-wrapper");
+    if (osdWrapper) {
+      const resizeObserver = new ResizeObserver(() => {
+        window.dispatchEvent(new Event('resize'));
+      });
+      resizeObserver.observe(osdWrapper);
+    }
 
   } catch (error) {
     console.error("Viewer initialization failed:", error);
@@ -39,116 +53,73 @@ async function init() {
 }
 
 /* ==============================
-Data Loading
+Data Loading and IIIF
 ============================== */
 
 async function loadManifest(url) {
-  try {
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    throw new Error(`Manifest load failed: ${error.message}`);
-  }
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return await response.json();
 }
 
 function patchIIIFTileSourceBaseUrl() {
   if (!OpenSeadragon?.IIIFTileSource) return;
-
   const proto = OpenSeadragon.IIIFTileSource.prototype;
-
-  // Undvik att patcha flera gånger
   if (proto.__isPatched) return;
-
   const originalConfigure = proto.configure;
-
   proto.configure = function (data, url) {
     if (data && url) {
       const publicBaseUrl = url.replace(/\/info\.json$/, "");
       data["@id"] = publicBaseUrl;
       data["id"] = publicBaseUrl;
     }
-
     return originalConfigure.call(this, data, url);
   };
-
   proto.__isPatched = true;
 }
 
-/* ==============================
-IIIF Parsing
-============================== */
-
 function extractTileSources(manifest) {
-  // IIIF v3
   if (Array.isArray(manifest.items)) {
-    return manifest.items
-      .map(extractV3Service)
-      .filter(Boolean);
+    return manifest.items.map(extractV3Service).filter(Boolean);
   }
-
-  // IIIF v2
   if (manifest.sequences?.[0]?.canvases) {
-    return manifest.sequences[0].canvases
-      .map(extractV2Service)
-      .filter(Boolean);
+    return manifest.sequences[0].canvases.map(extractV2Service).filter(Boolean);
   }
-
   return [];
 }
 
 function extractV3Service(item) {
   try {
-    const service =
-      item.items?.[0]?.items?.[0]?.body?.service?.[0];
-
-    const id = service?.id || service?.["@id"];
-    return normalizeServiceId(id);
-  } catch {
-    return null;
-  }
+    const id = item.items?.[0]?.items?.[0]?.body?.service?.[0]?.["@id"] || item.items?.[0]?.items?.[0]?.body?.service?.[0]?.id;
+    return id ? `${id.replace(/\/$/, "")}/info.json` : null;
+  } catch { return null; }
 }
 
 function extractV2Service(canvas) {
   try {
-    const id =
-      canvas.images?.[0]?.resource?.service?.["@id"];
-
-    return normalizeServiceId(id);
-  } catch {
-    return null;
-  }
-}
-
-function normalizeServiceId(id) {
-  if (!id) return null;
-  const clean = id.replace(/\/$/, "");
-  return `${clean}/info.json`;
+    const id = canvas.images?.[0]?.resource?.service?.["@id"];
+    return id ? `${id.replace(/\/$/, "")}/info.json` : null;
+  } catch { return null; }
 }
 
 /* ==============================
-Viewer Setup
+Viewer Setup and Thumbnails
 ============================== */
 
 function createViewer(tileSources) {
-  return OpenSeadragon({
-    id: "tify-viewer",
-    element: document.getElementById("osd-wrapper"),
-    prefixUrl: "/static/openseadragon/images/", // host locally
+  const viewer = OpenSeadragon({
+    id: "tify-viewer", 
+    prefixUrl: "/static/openseadragon/images/", 
     tileSources,
     sequenceMode: true,
-    showRotationControl: true,
-    autoHideControls: false
+    showNavigationControl: false,
+    showSequenceControl: false,
+    crossOriginPolicy: "Anonymous"
   });
+  
+  window.osdViewer = viewer;
+  return viewer;
 }
-
-/* ==============================
-Thumbnails
-============================== */
 
 function createThumbnails(tileSources, viewer) {
   const thumbList = document.getElementById("thumb-list");
@@ -167,15 +138,9 @@ function createThumbnails(tileSources, viewer) {
 
     const img = document.createElement("img");
     img.loading = "lazy";
-    img.src = createThumbnailUrl(source);
-    img.dataset.index = index;
-    img.className = "thumb-item w-full rounded border-2 transition-all border-transparent";
-
-    if (index === 0) {
-      img.classList.remove("border-transparent");
-      img.classList.add("border-orange-500");
-    }
-
+    img.src = source.replace(/\/info\.json$/, `/full/160,/0/default.jpg`);
+    img.className = `thumb-item w-full rounded border-2 transition-all ${index === 0 ? 'border-orange-500' : 'border-transparent'}`;
+    
     wrapper.append(number, img);
     wrapper.addEventListener("click", () => viewer.goToPage(index));
 
@@ -183,80 +148,24 @@ function createThumbnails(tileSources, viewer) {
     thumbnails.push(img);
   });
 
-  thumbList.innerHTML = ""; // Rensa om funktionen anropas igen
+  thumbList.innerHTML = "";
   thumbList.appendChild(fragment);
   return thumbnails;
 }
 
-/* ==============================
-UI Sync
-============================== */
-
 function setupActiveThumbnailSync(viewer, thumbnails) {
   if (!thumbnails.length) return;
-
   let currentIndex = 0; 
   const sidebar = document.getElementById("thumb-sidebar");
 
   viewer.addHandler("page", (event) => {
-    const newIndex = event.page;
-    
     thumbnails[currentIndex].classList.replace("border-orange-500", "border-transparent");
-    
-    const activeImg = thumbnails[newIndex];
+    const activeImg = thumbnails[event.page];
     activeImg.classList.replace("border-transparent", "border-orange-500");
     
-    const isSidebarOpen = sidebar && !sidebar.classList.contains("translate-x-full");
-    if (isSidebarOpen) {
-      scrollSidebarToActive(sidebar, activeImg);
+    if (sidebar && !sidebar.classList.contains("translate-x-full")) {
+      activeImg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-
-    currentIndex = newIndex;
+    currentIndex = event.page;
   });
-}
-
-/* ==============================
-UI Sidebar & Utils
-============================== */
-
-function setupSidebarToggle() {
-  const sidebar = document.getElementById("thumb-sidebar");
-  const toggleBtn = document.getElementById("toggle-thumbs");
-
-  if (!sidebar || !toggleBtn) return;
-
-  toggleBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("translate-x-full");
-    
-    const isOpen = !sidebar.classList.contains("translate-x-full");
-    if (isOpen) {
-      const activeThumb = sidebar.querySelector(".thumb-item.border-orange-500");
-      if (activeThumb) {
-        scrollSidebarToActive(sidebar, activeThumb);
-      }
-    }
-  });
-}
-
-function createThumbnailUrl(infoJsonUrl, width = 160) {
-  return infoJsonUrl.replace(
-    /\/info\.json$/,
-    `/full/${width},/0/default.jpg`
-  );
-}
-
-function scrollSidebarToActive(sidebar, activeElement) {
-  if (!sidebar || !activeElement) return;
-
-  const sidebarRect = sidebar.getBoundingClientRect();
-  const elementRect = activeElement.getBoundingClientRect();
-  
-  const offsetTop = elementRect.top - sidebarRect.top;
-  const offsetBottom = elementRect.bottom - sidebarRect.bottom;
-  
-  if (offsetTop < 0) {
-    sidebar.scrollTo({ top: sidebar.scrollTop + offsetTop, behavior: "smooth" });
-  } else if (offsetBottom > 0) {
-    sidebar.scrollTo({ top: sidebar.scrollTop + offsetBottom, behavior: "smooth" });
-  }
 }

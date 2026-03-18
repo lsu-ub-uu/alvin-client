@@ -65,22 +65,40 @@ html {
 }
 
 /*
-Alvin viewer
-
+Alvin viewer 
 */ 
 
 .md-row {
-  @apply w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow not-last:border-b border-[#D1D9D5];
+  /* Använd display: flex och w-full för att tvinga ut raden */
+  @apply w-full flex;
+}
+
+#overview .md-row {
+  @apply flex-col py-2;
+}
+
+#allmetadata .md-row {
+  /* Vi byter till flex-row vid sm: */
+  @apply py-4 flex-col sm:flex-row not-last:border-b border-[#D1D9D5] items-baseline;
 }
 
 .md-label {
-  @apply w-full md:w-1/4 flex-grow font-bold pl-4 text-[#1A2E27] dark:text-[#F7F9F8];
+  @apply w-full font-bold text-dark-alvin dark:text-[#F7F9F8];
+}
+
+#allmetadata .md-label {
+  /* Ändra från md: till sm: så den matchar när raden blir en rad */
+  @apply sm:w-2/5 pl-4 shrink-0; 
 }
 
 .md-value {
-  @apply w-full md:w-2/4 flex-grow px-4;
+  @apply w-full;
 }
 
+#allmetadata .md-value {
+  /* Låt värdet ta resten av platsen (3/5 eller flex-1) */
+  @apply sm:w-3/5 pl-4 flex-grow;
+}
 a { 
   @apply text-blue-800 dark:text-blue-200 underline;
 }

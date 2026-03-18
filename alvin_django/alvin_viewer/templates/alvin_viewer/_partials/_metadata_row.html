@@ -2,12 +2,20 @@
 
 {% if value %}
 <div class="md-row">
-    <dt class="md-label">
-        {{ label }}
-        {% if extra_label %}
-            ({{ extra_label }})
+    <div class="md-label flex flex-row gap-x-1.5">
+        {% if svg_path %}
+        <svg class="size-6 shrink-0" stroke="currentColor" aria-hidden="true" fill="none" viewBox="0 0 24 24">
+            <title>{% firstof agent.label label %}</title>
+            {% include svg_path %}
+        </svg>
         {% endif %}
-    </dt>
+        <dt>
+            {{ label }}
+            {% if extra_label %}
+            ({{ extra_label }})
+            {% endif %}
+        </dt>
+    </div>
     <dd class="md-value">
         {% if url %}
             <a class="text-blue-800 dark:text-blue-200 underline" href="{{ url }}">{{ value }}</a>{% if extra_value %}{{ extra_value }}{% endif %}

@@ -9,16 +9,33 @@
     <section class="mt-4" aria-labelledby="summary-heading">
         <h2 id="summary-heading" class="sr-only">{{metadata.summary.label}}</h2>
         <p class="text-lg">{{metadata.summary.text|linebreaksbr}}</p>
+        {% if metadata.subjects %}
+        <div class="flex flex-col my-5 dark:text-gray-200">
+            <div class="flex gap-x-1 mb-2">
+                <svg aria-hidden="true" focusable="false" class="size-6" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
+                    <path d="M3 17.4V6.6C3 6.26863 3.26863 6 3.6 6H16.6789C16.8795 6 17.0668 6.10026 17.1781 6.26718L20.7781 11.6672C20.9125 11.8687 20.9125 12.1313 20.7781 12.3328L17.1781 17.7328C17.0668 17.8997 16.8795 18 16.6789 18H3.6C3.26863 18 3 17.7314 3 17.4Z" stroke="currentColor" stroke-width="2"></path>
+                </svg>
+                <h2 class="text-md font-bold" id="subject-words-heading">{{metadata.subjects.label}}</h2>
+            </div>
+            <ul class="flex gap-x-2 gap-y-2 flex-wrap list-none" aria-labelledby="subject-words-heading">
+            {% for subject_group in metadata.subjects.entries %}
+                {% for subject in subject_group.collect_subjects %}
+                <li class="dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 dark:text-off-white dark:hover:text-[#333333] hover:bg-light-alvin shadow-sm px-4 py-2 rounded-md shadow-lg cursor-pointer">{{subject}}</li>
+                {% endfor %}
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
     </section>
-    <dl class="border border-[#D1D9D5] bg-white dark:bg-white/5 rounded-xl">
-        {% include './_metadata_row.html' with label=metadata.main_title.label value=metadata.main_title.display %}
+    <dl id="overview" class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
         {% for agent in metadata.agents %}
-            {% include "./_metadata_row.html" with label=agent.label url=agent.url value=agent.display attribute=agent.display_roles %}
+            {% include "./_metadata_row.html" with svg_path=agent.icon_path label=agent.display_roles url=agent.url value=agent.display %}
         {% endfor %}
         {% for place in metadata.origin_places.places %}
-            {% include "./_metadata_row.html" with label=place.label url=place.url value=place.name.title extra_value=place.display_countries %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/place.svg" label=place.label url=place.url value=place.name.title extra_value=place.display_countries %}
         {% endfor %}
-        {% include "./_metadata_row.html" with label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
+        {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
+        {% include "./_metadata_row.html" with svg_path="../_icons/location.svg" label=metadata.location.label url=metadata.location.url value=metadata.location.names.title %}
         {% include "./_metadata_row.html" with label=metadata.urn_nbn.label value=metadata.urn_nbn.text %}
         <div class="md-row">
             <dt class="md-label">Alvin-ID</dt>
@@ -52,7 +69,7 @@
         </div>
     </dl>
 
-    <dl class="border border-[#D1D9D5] bg-white dark:bg-gray-700 rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
+    <dl id="allmetadata" class="py-2 px-4 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% for title in metadata.variant_titles.titles %}
             {% include "./_metadata_row.html" with label=metadata.variant_titles.label extra_label=title.type value=title.display %}
         {% endfor %}
@@ -62,7 +79,6 @@
             {% include "./_metadata_row.html" with label=date.dates.type value=date.dates.display|linebreaksbr %}
         {% endfor %}
         {% include "./_metadata_row.html" with label=metadata.languages.label value=metadata.languages.items|join:"<br>"|safe %}
-        {% include "./_metadata_row.html" with label=metadata.location.label url=metadata.location.url value=metadata.location.names.title %}
         {% include "./_metadata_row.html" with label=metadata.sublocation.label value=metadata.sublocation.text %}
         {% include "./_metadata_row.html" with label=metadata.shelf_mark.label value=metadata.shelf_mark.text %}
         {% include "./_metadata_row.html" with label=metadata.former_shelf_mark.label value=metadata.former_shelf_mark.texts|join:"<br>" %}
@@ -85,12 +101,12 @@
         {% include "./_metadata_row.html" with label=metadata.table_of_contents.label value=metadata.table_of_contents.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.literature.label value=metadata.literature.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.access_policy.label value=metadata.access_policy.text|linebreaksbr %}
-        {% for subject in metadata.subjects %}
+        {% for subject in metadata.subjects.entries %}
             {% include "./_metadata_row.html" with label=subject.label extra_label=subject.authority value=subject.display %}
         {% endfor %}
-        {% include "./_authority_links.html" with label=metadata.subject_person.label link_type="alvin-person" authority_links=metadata.subject_person %}
-        {% include "./_authority_links.html" with label=metadata.subject_organisation.label link_type="alvin-organisation" authority_links=metadata.subject_organisation %}
-        {% include "./_authority_links.html" with label=metadata.subject_place.label link_type="alvin-place" authority_links=metadata.subject_place %}
+        {% include "./_authority_links.html" with label=metadata.subject_person.label link_type="alvin-person" authority_links=metadata.subject_person.entries %}
+        {% include "./_authority_links.html" with label=metadata.subject_organisation.label link_type="alvin-organisation" authority_links=metadata.subject_organisation.entries %}
+        {% include "./_authority_links.html" with label=metadata.subject_place.label link_type="alvin-place" authority_links=metadata.subject_place.entries %}
         {% include "./_metadata_row.html" with label=metadata.genre_form.label value=metadata.genre_form.items|join:"<br>"|safe %}
         {% for classification in metadata.classifications %}
             {% include "./_metadata_row.html" with label=classification.label extra_label=classification.type value=classification.text %}
@@ -143,23 +159,38 @@
     </dl>
 
     {% if metadata.components %}
-    <div data-xshow="activeTab !== 'related'">
-        <header class="flex items-baseline bg-linear-to-tr text-lg p-2 border-t border-black dark:border-white bg-gray-200 dark:bg-gray-700 hover:bg-dark-alvin hover:text-[#F7F9F8] cursor-pointer" data-xon.click="open_inventory = !open_inventory">
-            <h1>
+    <div class="flex flex-col py-2 border-b border-[#D1D9D5]">
+        <button data-xon.click="open_inventory = !open_inventory"
+            class="flex gap-x-1 h-full p-2 dark:text-gray-200 text-center cursor-pointer hover:text-alvin">
+            {% include '../_icons/inventory.svg' with class="size-6" %}
+            <div class="flex flex-row">
                 {% if metadata.type_of_resource.code == 'col' %}
                     {% translate 'Förteckning' %}
                 {% else %}
                     {% translate 'Innehållsbeskrivning' %}
                 {% endif %}
-                <span class="mx-2" data-xtext="open_inventory ? '▼' : '▶'"></span>
-            </h1>
-        </header>
-    </div>
-    <div data-xshow="open_inventory && activeTab != 'related'" data-xcloak>
-        {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
+            </div>
+            <svg class="inline-block  size-6 transition-transform ease-in-out duration-300" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor"
+                :class="{'rotate-90': !open_inventory ? 'rotate-0' }">
+                <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
+        <div class="dark:border dark:border-white/10 bg-white dark:bg-white/15 rounded-xl overflow-hidden" data-xshow="open_inventory && activeTab != 'related'" data-xcloak>
+            {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
+        </div>
     </div>
     <div data-xshow="activeTab === 'related'" data-xcloak>
         <!-- Related records from components -->
+    </div>
+    {% endif %}
+    {% if has_related %}
+    <div class="flex flex-col py-2 border-b border-[#D1D9D5]">
+        <button data-xon.click="activeTab = 'related'"
+            class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
+            data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'related' }">
+            {% include '../_icons/related.svg' with class="h-6 w-6" %}
+            <span class="max-sm:hidden">{% translate 'Relaterat' %}</span>
+        </button>
     </div>
     {% endif %}
 </div>

@@ -259,11 +259,15 @@ class SubjectMiscEntry:
 
     def is_empty(self) -> bool:
         return not (self.topic or self.genre_form or self.geographic_coverage or self.temporal or self.occupation)
-    
+
     @property
     def display(self) -> str:
-        parts = [p for p in [self.topic, self.genre_form, self.geographic_coverage, self.temporal, self.occupation] if p is not None]
+        parts = self.collect_subjects
         return ", ".join(filter(None, parts))
+    
+    @property
+    def collect_subjects(self) -> list[str]:
+        return [p for p in [self.topic, self.genre_form, self.geographic_coverage, self.temporal, self.occupation] if p is not None]
 
 @dataclass(slots=True)
 class SubjectMiscBlock:
@@ -481,6 +485,14 @@ class Agent(URL):
     @property
     def display_roles(self) -> str | None:
         return ", ".join(self.roles.items) if self.roles.items else None
+    
+    @property
+    def icon_path(self) -> str | None:
+        if self.agent_type == "alvin-person":
+            return "../_icons/person.svg"
+        return "../_icons/organisation.svg"  
+
+
 
 @dataclass(slots=True)
 class Location(URL):

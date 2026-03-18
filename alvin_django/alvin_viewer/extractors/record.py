@@ -7,7 +7,7 @@ from ..xmlutils.nodes import text, attr, element, elements, first
 from .common import (_get_label, _get_value, _norm_rt, _xp, _get_attribute_item)
 from .common import *
 from .records import AlvinRecord
-from .metadata import Appraisal, Axis, Classification, Coin, Dimension, FilesBlock, FileGroup, File, Measure, SubjectMiscEntry
+from .metadata import Appraisal, Axis, Classification, Coin, Dimension, FilesBlock, FileGroup, File, Measure, SubjectMiscBlock, SubjectMiscEntry
 
 rt = _norm_rt("alvin-record")
 
@@ -181,7 +181,7 @@ def files(root: etree._Element, xp: str) -> FilesBlock | None:
         return None
     return files
 
-def _subjects_misc(root: etree._Element, xp: str) -> List[SubjectMiscEntry] | None:
+def _subjects_misc(root: etree._Element, xp: str) -> SubjectMiscBlock | None:
     
     targets = elements(root, xp)
     if targets is None:
@@ -199,7 +199,11 @@ def _subjects_misc(root: etree._Element, xp: str) -> List[SubjectMiscEntry] | No
 
     if all(s.is_empty() for s in subjects):
         return None
-    return subjects
+
+    return SubjectMiscBlock(
+        label = _get_label(targets[0]),
+        entries = subjects
+    )
 
 def _classifications(root: etree._Element, xp) -> List[Classification] | None:
     targets = elements(root, xp)

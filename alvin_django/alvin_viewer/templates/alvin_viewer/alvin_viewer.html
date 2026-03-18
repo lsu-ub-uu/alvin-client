@@ -41,10 +41,11 @@
     <div data-xdata="{ download_menu: false }" class="flex justify-between flex-row p-4 my-4 border-y border-[#D1D9D5] ">
       <!-- Download och search tools -->
       <div class="flex flex-row gap-x-1">
-        <button class="flex flex-row gap-x-1 h-10 dark:text-gray-200 dark:bg-white/10 border border-[#D1D9D5] rounded-md cursor-pointer p-2 text-center hover:dark:bg-white/15 transition ease-in-out duration-150" data-xon.click="download = !download">
-          <svg class="h-6 w-6" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <title>{% translate 'Ladda ned' %}</title>
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+        <button class="flex flex-row gap-x-1 h-10 dark:text-gray-200 bg-gray-100 dark:bg-white/10 border border-[#D1D9D5] rounded-md cursor-pointer p-2 text-center hover:dark:bg-white/15 shadow-sm transition ease-in-out duration-150" data-xon.click="download = !download">
+          <svg class="size-6" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
+              <title>{% translate 'Ladda ned' %}</title>
+              <path d="M6 20L18 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M12 4V16M12 16L15.5 12.5M12 16L8.5 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
           <span class="max-lg:hidden">{% translate 'Ladda ned' %}</span>
         </button>
@@ -67,44 +68,21 @@
       </div>
     </div>
 
-    <div class="flex justify-between flex-row mt-8 border-b border-[#D1D9D5]">
+    <div class="flex justify-between flex-row mt-5 border-b border-[#D1D9D5]">
       <!-- Metadata views -->
       <nav class="flex flex-wrap gap-x-1 justify-start text-md text-black dark:text-white">
         <button data-xon.click="activeTab = 'overview'"
           class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
           data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'overview' }">
           {% include './_icons/overview.svg' with class="h-6 w-6" %}
-          <span class="max-sm:hidden">{% translate 'Översikt' %}</span>
+          <span>{% translate 'Översikt' %}</span>
         </button>
         <button data-xon.click="activeTab = 'all_metadata'"
           class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
           data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'all_metadata' }">
           {% include './_icons/allmetadata.svg' with class="h-6 w-6" %}
-          <span class="max-sm:hidden">{% translate 'All metadata' %}</span>
+          <span>{% translate 'All metadata' %}</span>
         </button>
-        {% if metadata.components %}
-        <button data-xon.click="activeTab = 'inventory'"
-          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
-          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'inventory' }">
-          {% include './_icons/inventory.svg' with class="h-6 w-6"  %}
-          <span class="p:l max-sm:hidden">
-            {% if metadata.type_of_resource.code == 'col' %}
-              {% translate 'Förteckning' %}
-            {% else %}
-              {% translate 'Innehållsbeskrivning' %}
-            {% endif %}
-          </span>
-        </button>
-        {% endif %}
-
-        {% if has_related %}
-        <button data-xon.click="activeTab = 'related'"
-          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
-          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'related' }">
-          {% include './_icons/related.svg' with class="h-6 w-6" %}
-          <span class="max-sm:hidden">{% translate 'Relaterat' %}</span>
-        </button>
-        {% endif %}
       </nav>
     </div>
 

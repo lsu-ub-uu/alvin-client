@@ -24,7 +24,7 @@ from io import BytesIO, StringIO
 from lxml import etree
 
 from . import views
-from .models import DCRecord, Header, MetadataFormat, Set, XMLRecord
+#from .models import DCRecord, Header, MetadataFormat, Set, XMLRecord >>> alvin-django does not use models
 
 
 OAI_DC_RECORD = """<?xml version="1.0"?>

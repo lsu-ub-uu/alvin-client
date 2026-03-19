@@ -1,46 +1,139 @@
 {% load i18n static %}
 
-  <header class="flex items-baseline bg-linear-to-tr text-lg p-2 mb-2 bg-gray-200 dark:bg-gray-700 hover:bg-dark-alvin hover:text-[#F7F9F8] cursor-pointer" data-xon.click="open = !open">
-    {% if c.unitid %}
-    <span class="text-sm p-1 mr-2 border-black dark:border-white border-2 border-dashed" itemprop="identifier">{{ c.unitid }}</span>
-    {% endif %}
-    <h1>{{ c.title.display }}<span class="mx-2" data-xtext="open ? '▼' : '▶'"></span></h1>
+{% if is_root %}
+<div class="bg-gray-100 dark:bg-white/15 dark:border dark:border-white/10 rounded-xl shadow-sm mb-8 overflow-hidden">
+  
+  <header class="flex items-center justify-between p-5 border-b border-gray-200 dark:border-white/5 bg-gray-200/10 dark:bg-white/5 cursor-pointer hover:bg-gray-200 dark:hover:bg-white/10 transition-colors" data-xon.click="open = !open">
+    <div class="flex items-center gap-x-4">
+      {% if c.unitid %}
+      <span class="text-xs font-semibold px-2 py-1 dark:bg-white/10 border border-dashed border-gray-400 dark:border-gray-500 rounded text-gray-800 dark:text-gray-200 shadow-sm" itemprop="identifier">
+        {{ c.unitid }}
+      </span>
+      {% endif %}
+      <h1 class="text-md font-bold text-gray-900 dark:text-white">{{ c.title.display }}</h1>
+    </div>
+    <svg class="size-6 text-gray-500 transition-transform duration-200" data-xbind:class="open ? 'rotate-180' : 'rotate-0'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
   </header>
 
-  <dl data-xshow="open" data-xcloak>
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.level.label value=c.level.item %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.locus.label value=c.locus.text %}
-    {% for agent in c.agents %}
-      {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.label url=agent.url value=agent.display attribute=agent.display_roles %}
-    {% endfor %}
-    {% include "./_metadata_row.html" with label=c.languages.label value=c.languages.items|join:"<br>"|safe %}
-    {% for place in c.origin_places %}
-      {% include "./_metadata_row.html" with label=place.label url=place.url value=place.name.title %}
-    {% endfor %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.origin_date.label value=c.origin_date.dates.display %}
-    {% for note in c.physical_description_notes.texts %}
-      {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
-    {% endfor %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.incipit.label value=c.incipit.text %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.explicit.label value=c.explicit.text %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.rubric.label value=c.rubric.text %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.final_rubric.label value=c.final_rubric.text %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.literature.label value=c.literature.text %}
-    {% for note in c.notes.texts %}
-      {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
-    {% endfor %}
-    {% include "./_authority_links.html" with label=c.place.label link_type="alvin-place" authority_links=c.place %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.display_date.label value=c.display_date.text %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.extent.label value=c.extent.text|linebreaksbr %}
-    {% for electronic_locator in c.electronic_locators %}
-      {% include "alvin_viewer/_partials/_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
-    {% endfor %}
-    {% include "alvin_viewer/_partials/_record_type_links.html" with label=c.related_records.label link_type="alvin-record" record_type_links=c.related_records %}
-    {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.accession_numbers.label value=c.accession_numbers.texts|join:"<br>" %}
-    {% include "./_metadata_row.html" with label=c.access_policy.label value=c.access_policy.text|linebreaksbr %}
-    {% for component in c.components %}
-        <article class="lg:ml-4 max-lg:ml-2" data-xdata="{ open: false }">
-          {% include "alvin_viewer/_partials/_component.html" with c=component only %}
+  <div data-xshow="open" data-xcloak class="p-5">
+    <dl id="inventory-metadata-first" class="flex flex-col gap-y-2">
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.level.label value=c.level.item %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.locus.label value=c.locus.text %}
+      {% for agent in c.agents %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.label url=agent.url value=agent.display attribute=agent.display_roles %}
+      {% endfor %}
+      {% include "./_metadata_row.html" with label=c.languages.label value=c.languages.items|join:"<br>"|safe %}
+      {% for place in c.origin_places %}
+        {% include "./_metadata_row.html" with label=place.label url=place.url value=place.name.title %}
+      {% endfor %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.origin_date.label value=c.origin_date.dates.display %}
+      {% for note in c.physical_description_notes.texts %}
+        {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
+      {% endfor %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.incipit.label value=c.incipit.text %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.explicit.label value=c.explicit.text %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.rubric.label value=c.rubric.text %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.final_rubric.label value=c.final_rubric.text %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.literature.label value=c.literature.text %}
+      {% for note in c.notes.texts %}
+        {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
+      {% endfor %}
+      {% include "./_authority_links.html" with label=c.place.label link_type="alvin-place" authority_links=c.place %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.display_date.label value=c.display_date.text %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.extent.label value=c.extent.text|linebreaksbr %}
+      {% for electronic_locator in c.electronic_locators %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
+      {% endfor %}
+      {% include "alvin_viewer/_partials/_record_type_links.html" with label=c.related_records.label link_type="alvin-record" record_type_links=c.related_records %}
+      {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.accession_numbers.label value=c.accession_numbers.texts|join:"<br>" %}
+      {% include "./_metadata_row.html" with label=c.access_policy.label value=c.access_policy.text|linebreaksbr %}
+    </dl>
+  </div>
+</div>
+
+{% if c.components %}
+  <div class="mt-6">
+    <h2 class="mb-3 ml-2 text-sm font-bold tracking-widest uppercase">Hierarki</h2>
+    <div class="flex flex-col gap-y-2">
+      {% for component in c.components %}
+        <article data-xdata="{ open: false }" class="w-full">
+          {% include "alvin_viewer/_partials/_component.html" with c=component is_root=False depth=2 only %}
         </article>    
-    {% endfor %}
-  </dl>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% else %}
+<div class="w-full dark:border dark:border-white/10 bg-gray-100 dark:bg-white/3 rounded-md shadow-sm overflow-hidden">
+  
+  <header class="flex items-center justify-between py-1.5 px-2 border-b border-gray-200 dark:border-white/5 bg-gray-300/10 dark:bg-white/15 hover:bg-gray-300 dark:hover:bg-white/5 cursor-pointer transition-colors" data-xon.click="open = !open">
+    <div class="flex items-center gap-x-2">
+      <svg class="size-4 text-gray-500 transition-transform duration-200" data-xbind:class="open ? 'rotate-180' : 'rotate-0'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+      <h3 class="text-sm font-medium text-gray-800 dark:text-gray-200">
+        {% if c.unitid %}
+        <span class="mr-2 text-gray-500">{{ c.unitid }}</span>
+        {% endif %}
+        {{ c.title.display }}
+      </h3>
+    </div>
+    
+    {% if c.level.item %}
+    <span class="text-[10px] px-2 py-0.5 font-semibold text-off-white dark:text-[#333333] bg-dark-alvin dark:bg-alvin rounded uppercase tracking-wide">
+      {{ c.level.item }}
+    </span>
+    {% endif %}
+  </header>
+  
+<div data-xshow="open" data-xcloak class="border-l-2 border-gray-300/75 dark:border-white/30 py-2 ml-2 pl-2">      
+    <div class="mb-4 {% if depth >= 4 %}text-sm{% endif %}">
+      <dl id="inventory-metadata" class="flex flex-col gap-y-2">
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.locus.label value=c.locus.text %}
+        {% for agent in c.agents %}
+          {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.label url=agent.url value=agent.display attribute=agent.display_roles %}
+        {% endfor %}
+        {% include "./_metadata_row.html" with label=c.languages.label value=c.languages.items|join:"<br>"|safe %}
+        {% for place in c.origin_places %}
+          {% include "./_metadata_row.html" with label=place.label url=place.url value=place.name.title %}
+        {% endfor %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.origin_date.label value=c.origin_date.dates.display %}
+        {% for note in c.physical_description_notes.texts %}
+          {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
+        {% endfor %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.incipit.label value=c.incipit.text %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.explicit.label value=c.explicit.text %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.rubric.label value=c.rubric.text %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.final_rubric.label value=c.final_rubric.text %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.literature.label value=c.literature.text %}
+        {% for note in c.notes.texts %}
+          {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
+        {% endfor %}
+        {% include "./_authority_links.html" with label=c.place.label link_type="alvin-place" authority_links=c.place %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.display_date.label value=c.display_date.text %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.extent.label value=c.extent.text|linebreaksbr %}
+        {% for electronic_locator in c.electronic_locators %}
+          {% include "alvin_viewer/_partials/_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
+        {% endfor %}
+        {% include "alvin_viewer/_partials/_record_type_links.html" with label=c.related_records.label link_type="alvin-record" record_type_links=c.related_records %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.accession_numbers.label value=c.accession_numbers.texts|join:"<br>" %}
+        {% include "./_metadata_row.html" with label=c.access_policy.label value=c.access_policy.text|linebreaksbr %}
+      </dl>
+    </div>
+
+    {% if c.components %}
+      <div class="flex flex-col gap-y-1 mt-2">
+        {% for component in c.components %}
+          <article data-xdata="{ open: false }">
+            {% include "alvin_viewer/_partials/_component.html" with c=component is_root=False depth=depth|add:1 only %}
+          </article>    
+        {% endfor %}
+      </div>
+    {% endif %}
+    
+  </div>
+</div>
+{% endif %}

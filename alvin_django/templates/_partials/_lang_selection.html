@@ -2,7 +2,7 @@
 
 <div class="inline-block" x-data="{ showLanguageDropdown: false }">
     <figure>
-        <img @click="showLanguageDropdown = !showLanguageDropdown" class="w-6 h-6 cursor-pointer" src="{% static 'img/nav/globe.svg' %}">
+        <img @click="showLanguageDropdown = !showLanguageDropdown" class="size-6 cursor-pointer" src="{% static 'img/nav/globe.svg' %}">
     </figure>
     
     <form x-show="showLanguageDropdown" id="language-selector" class="absolute top-20 right-2 z-50" action="{% url 'set_language' %}" method="post">

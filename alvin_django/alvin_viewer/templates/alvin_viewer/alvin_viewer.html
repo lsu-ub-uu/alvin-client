@@ -22,7 +22,7 @@
     data-xon.click.away="download = false">
     {% if value != None %}
     <a class="flex w-fit pb-2" href="{{ value }}">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="size-6">
         <title>{% translate 'Tillbaka till sökresultatet' %}</title>
         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
@@ -42,7 +42,7 @@
       <!-- Download och search tools -->
       <div class="flex flex-row gap-x-1">
         <button class="flex flex-row gap-x-1 h-10 dark:text-gray-200 bg-gray-100 dark:bg-white/10 border border-[#D1D9D5] rounded-md cursor-pointer p-2 text-center hover:dark:bg-white/15 shadow-sm transition ease-in-out duration-150" data-xon.click="download = !download">
-          <svg class="size-6" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
+          <svg class="size-6" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor">
               <title>{% translate 'Ladda ned' %}</title>
               <path d="M6 20L18 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
               <path d="M12 4V16M12 16L15.5 12.5M12 16L8.5 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -56,7 +56,7 @@
           <input type="hidden" name="{{ metadata.record_type_stripped }}" id="{{ metadata.record_type_stripped }}" value="{{ metadata.id }}">
           <input type="hidden" name="view" id="view" value="list">
           <button type="submit" class="flex flex-row gap-x-1 h-10 dark:text-gray-200 cursor-pointer p-2 text-center hover:text-orange-600" data-xon.click="">
-            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor">
+            <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor">
               <title>{% translate 'Sök länkade poster' %}</title>
               <path stroke-linecap="round" stroke-linejoin="round"
                   d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -74,13 +74,13 @@
         <button data-xon.click="activeTab = 'overview'"
           class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
           data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'overview' }">
-          {% include './_icons/overview.svg' with class="h-6 w-6" %}
+          {% include './_icons/overview.svg' with class="size-6" %}
           <span>{% translate 'Översikt' %}</span>
         </button>
         <button data-xon.click="activeTab = 'all_metadata'"
           class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
           data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'all_metadata' }">
-          {% include './_icons/allmetadata.svg' with class="h-6 w-6" %}
+          {% include './_icons/allmetadata.svg' with class="size-6" %}
           <span>{% translate 'All metadata' %}</span>
         </button>
       </nav>

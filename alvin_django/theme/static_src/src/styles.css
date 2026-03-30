@@ -89,7 +89,7 @@ Alvin viewer
 } 
 
 .md-label {
-  @apply w-full font-bold text-dark-alvin dark:text-[#F7F9F8];
+  @apply w-full font-bold text-dark-alvin dark:text-[#c6e3d9];
 }
 
 

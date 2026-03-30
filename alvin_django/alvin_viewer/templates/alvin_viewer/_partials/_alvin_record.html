@@ -1,11 +1,7 @@
 {% load i18n static %}
 
-{% block title %}
-<title>Alvin - {{ metadata.main_title.display }}</title>
-{% endblock %}
-
 <!-- Metadata -->
-<div class="flex flex-col gap-y-4 min-lg:w-3/5 leading-[1.5]" data-xdata="{ open_inventory: false }">
+<div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_inventory: false, open_related: false }">
     <section class="mt-4" aria-labelledby="summary-heading">
         <h2 id="summary-heading" class="sr-only">{{metadata.summary.label}}</h2>
         <p class="text-lg">{{metadata.summary.text|linebreaksbr}}</p>
@@ -20,7 +16,7 @@
             <ul class="flex gap-x-2 gap-y-2 flex-wrap list-none" aria-labelledby="subject-words-heading">
             {% for subject_group in metadata.subjects.entries %}
                 {% for subject in subject_group.collect_subjects %}
-                <li class="dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 dark:text-off-white dark:hover:text-[#333333] hover:bg-light-alvin shadow-sm px-4 py-2 rounded-md shadow-lg cursor-pointer">{{subject}}</li>
+                <li class="dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 dark:text-off-white hover:bg-light-alvin hover:text-dark-alvin shadow-sm px-4 py-2 rounded-md cursor-pointer">{{subject}}</li>
                 {% endfor %}
             {% endfor %}
             </ul>
@@ -28,6 +24,7 @@
         {% endif %}
     </section>
 
+    {% if has_all_metadata %}
     <dl id="allmetadata" class="py-2 px-4 mb-6 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% for title in metadata.variant_titles.titles %}
             {% include "./_metadata_row.html" with label=metadata.variant_titles.label extra_label=title.type value=title.display %}
@@ -113,9 +110,8 @@
         {% include "./_metadata_row.html" with label=metadata.reverse.description_label value=metadata.reverse.description.text %}
         {% include "./_metadata_row.html" with label=metadata.reverse.legend_label value=metadata.reverse.legend.text %}
         {% include "./_metadata_row.html" with label=metadata.countermark.label value=metadata.countermark.texts|join:"<br>" %}
-        {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
-        {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
     </dl>
+    {% endif %}
 
     <dl id="overview" class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
         {% for agent in metadata.agents %}
@@ -126,37 +122,26 @@
         {% endfor %}
         {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
         {% include "./_metadata_row.html" with svg_path="../_icons/location.svg" label=metadata.location.label url=metadata.location.url value=metadata.location.names.title %}
-        {% include "./_metadata_row.html" with label=metadata.urn_nbn.label value=metadata.urn_nbn.text %}
-        <div class="md-row">
-            <dt class="md-label">Alvin-ID</dt>
-            <dd class="md-value">
-            {{ metadata.record_type }}:{{ metadata.id }}
-            </dd>
-        </div>
-        <div class="md-row">
-            <dt class="md-label">URI</dt>
-            <dd data-xdata="{ copied: false }" class="md-value flex flex-row gap-x-1 justify-start" id="uri">
-                <span data-xref="uri_text" class="truncate">{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}</span>
-                <button
-                data-xon.click="navigator.clipboard.writeText($refs.uri_text.innerText.trim()); copied = true; setTimeout(() => copied = false, 2000)"
-                class="btn flex items-right flex justify-end">
-                    <span data-xshow="!copied">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6 float-right">
-                            <title>Copy</title>
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
-                        </svg>
-                    </span>
-                    <span data-xshow="copied">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-green-500">
-                            <title>Copied!</title>
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                        </svg>
-                    </span>
-                </button>
-            </dd>
-        </div>
+        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
+        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
+        {% if metadata.files.rights_code %}
+        <section class="border-t border-[#D1D9D5] mt-4 py-4" aria-labelledby="licensing-heading">
+            <div class="flex flex-row gap-x-2 items-center">
+                <svg class="size-9 text-dark-alvin dark:text-[#c6e3d9] mx-4" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
+                    <path d="M12 7L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M12 16.01L12.01 15.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M5 18L3.13036 4.91253C3.05646 4.39524 3.39389 3.91247 3.90398 3.79912L11.5661 2.09641C11.8519 2.03291 12.1481 2.03291 12.4339 2.09641L20.096 3.79912C20.6061 3.91247 20.9435 4.39524 20.8696 4.91252L19 18C18.9293 18.495 18.5 21.5 12 21.5C5.5 21.5 5.07071 18.495 5 18Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                
+                <div>
+                    <h2 class="text-dark-alvin dark:text-[#c6e3d9] font-bold" id="licensing-heading">{{metadata.files.rights_label}}</h2>
+                    <p>{{metadata.files.rights}}</p>
+                    <a href="{{metadata.files.rights_url}}">{%translate 'Information om licensen' %}</a>
+                </div>
+                
+            </div>
+        </section>
+        {% endif %}
     </dl>
 
     {% if metadata.components %}
@@ -191,13 +176,56 @@
     </div>
     {% endif %}
     {% if has_related %}
-    <div class="flex flex-col py-2 border-b border-[#D1D9D5]">
-        <button data-xon.click=""
-            class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
-            data-xbind.class="">
+    <div class="flex flex-row py-2 border-b border-[#D1D9D5]">
+        <button
+            data-xon.click="open_related = !open_related"
+            class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin">
             {% include '../_icons/related.svg' with class="size-6" %}
             <span>{% translate 'Relaterat' %}</span>
+            <svg 
+                class="size-6 inline-block transition-transform duration-100 ease-in-out origin-center" 
+                data-xbind:class="open_related ? 'rotate-90' : 'rotate-0'"
+                stroke-width="2" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                color="currentColor"
+                >
+                <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
         </button>
     </div>
+
+    <section data-xshow="open_related" data-xcloak>
+        <!-- Related records -->
+        <div class="mt-4">
+            <h3 class="font-bold">{{metadata.related_records.label}}:</h3>
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-1 mt-4">
+            {% for record in metadata.related_records.records %}
+            <a href="{{ record.url }}" class="group relative w-full h-[280px] bg-gray-100 shadow-md rounded overflow-hidden flex flex-col">
+    
+                {% if record.thumbnail_url %}
+                <img src="{{record.thumbnail_url}}" class="w-full h-[240px] object-cover group-hover:scale-110 transition-all duration-200 ease-in-out">
+                {% else %}
+                <svg class="w-full h-full p-14 text-gray-400 group-hover:scale-110 transition-all duration-200 ease-in-out" viewBox="0 0 24 24" fill="none">
+                    <title>{% translate 'Tumnagel saknas' %}</title>
+                    {% include '../_icons/no-image.svg' %}
+                </svg>
+                {% endif %}
+
+                <h4 class="absolute bottom-0 w-full p-2 bg-black/90 text-off-white 
+                        transition-all duration-200 ease-in-out overflow-hidden
+                        max-h-10 truncate
+                        group-hover:max-h-full group-hover:whitespace-normal rounded-t">
+                    {{record.main_title.display}}
+                </h4>
+
+                <span class="absolute top-1 left-1 p-1 bg-dark-alvin/90 text-off-white rounded">{{record.type}}</span>
+            </a>
+            {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
     {% endif %}
 </div>

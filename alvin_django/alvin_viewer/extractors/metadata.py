@@ -492,8 +492,6 @@ class Agent(URL):
             return "../_icons/person.svg"
         return "../_icons/organisation.svg"  
 
-
-
 @dataclass(slots=True)
 class Location(URL):
     fixed_record_type = "alvin-location"
@@ -593,6 +591,7 @@ class RelatedRecordEntry(URL):
     id: Optional[str] = None
     main_title: TitlesBlock = None
     parts: List[RelatedRecordPart] = None
+    thumbnail_url: Optional[str] = None
 
     @property
     def display_parts(self) -> str:
@@ -686,8 +685,27 @@ class FileGroup:
 @dataclass 
 class FilesBlock:
     rights: str = None
+    rights_code: str = None
+    rights_label: str = None
     digital_origin: str = None
     file_groups: List[FileGroup] = None
+
+    @property
+    def rights_url(self):
+
+        current_lang = get_language()
+        cc_base_url = "https://creativecommons.org"
+
+        match self.rights_code:
+            case "public_domain_mark":
+                return f"{cc_base_url}/publicdomain/mark/1.0/"
+            case "CC0":
+                return f"{cc_base_url}/publicdomain/zero/1.0/deed.{current_lang}"
+            case "in_copyright":
+                return "https://rightsstatements.org/page/InC/1.0/?language=en"
+
+        license_stub = self.rights_code.replace("CC_","").replace("_","-").lower()
+        return f"{cc_base_url}/licenses/{license_stub}/4.0/deed.{current_lang}"
 
     @property
     def documents(self) -> List[dict]:

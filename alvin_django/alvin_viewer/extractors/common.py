@@ -59,17 +59,6 @@ def identifiers(root: etree._Element, xp: str) -> List[Identifier]:
         identifier = text(t, ".")
     ) for t in targets]
 
-def common(root: etree._Element, record_type: str) -> Dict[str, Any]:
-    rt = _norm_rt(record_type)
-
-    return CommonMetadata(
-        id=text(root, _xp(rt, "recordInfo/id")),
-        record_type=record_type,
-        source_xml=text(root, "actionLinks/read/url"),
-        created=decorated_text(root, _xp(rt, "recordInfo/tsCreated")),
-        last_updated=decorated_text(root, _xp(rt, "recordInfo/updated/tsUpdated")),
-    )
-
 # TITLES / NAMES ---
 
 def titles(root: etree._Element, xp: str) -> TitlesBlock:
@@ -235,8 +224,10 @@ def related_records(node: etree._Element, xp: str) -> dict | None:
                 typeattr = attr(part, "./@partType"),
                 number = text(part, "partNumber"),
                 extent = text(part, "extent"),
-            ) for part in elements(t, "part")],
-        ) for t in elements(node, xp)]
+                ) for part in elements(t, "part")],
+            thumbnail_url = text(t, "record/linkedRecord/record/fileSection/fileGroup/file/fileLocation/linkedRecord/binary/thumbnail/thumbnail/actionLinks/read/url")
+            ) for t in elements(node, xp)],
+            
     )
     return rrb
 
@@ -348,7 +339,7 @@ def components(nodes: List[etree._Element]) -> List[Component] | None:
         md = Component(
             # Archives
             level = decorated_list_item(comp, "level"),
-            unitid = text(comp, "unitid"),
+            unitid = decorated_text(comp, "unitid"),
 
             # Manuscripts
             languages = decorated_list(comp, "language"),

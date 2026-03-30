@@ -18,6 +18,8 @@ def extract(root: etree._Element) -> AlvinRecord:
 
     return AlvinRecord(
         id = text(root, _xp(rt, "recordInfo/id")),
+        created = decorated_text(root, _xp(rt, "recordInfo/tsCreated")),
+        last_updated = decorated_text(root, _xp(rt, "recordInfo/updated/tsUpdated")),
         record_type = "alvin-record",
         source_xml = text(root, "actionLinks/read/url"),
         type_of_resource = tor,
@@ -157,6 +159,8 @@ def files(root: etree._Element, xp: str) -> FilesBlock | None:
     
     files = FilesBlock(
         rights = _get_value(element(target, "./rights")),
+        rights_code = text(target, "./rights"),
+        rights_label = _get_label(element(target, "./rights")),
         digital_origin = _get_value(target, "./digitalOrigin"),
         file_groups = [
             FileGroup(

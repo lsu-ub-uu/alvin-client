@@ -102,7 +102,7 @@
                 <nav class="flex flex-row" aria-label="Dokumenttyper">
                     {% for group in metadata.files.documents %}
                     <button data-xon.click="selectedCategory = '{{ group.type_code }}'"
-                            class="relative px-4 py-3 text-sm transition-all hover:bg-gray-300/50 dark:hover:bg-white/10 hover:shadow-sm focus:outline-none cursor-pointer"
+                            class="relative px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-300/50 dark:hover:bg-white/10 hover:shadow-sm focus:outline-none transition-all cursor-pointer"
                             data-xbind.class="selectedCategory === '{{ group.type_code }}' 
                                 ? 'text-orange-600' 
                                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'">

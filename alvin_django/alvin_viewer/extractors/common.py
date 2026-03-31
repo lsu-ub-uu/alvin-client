@@ -8,7 +8,7 @@ from django.core.cache import cache
 from ..xmlutils.nodes import attr, element, elements, first, text, texts
 from .mappings import person, place, organisation
 from ..services.text_collector import get_item_dict
-from .metadata import (Agent, Component, CommonMetadata, DateEntry, DatesBlock, 
+from .metadata import (Agent, Component, CommonMetadata, ComponentsBlock, DateEntry, DatesBlock, 
                        DatesValue, DecoratedList, DecoratedText, 
                        DecoratedListItem, DecoratedTextWithType, DecoratedTexts, 
                        DecoratedTextsWithType, Edge, ElectronicLocator, Identifier, Location,
@@ -332,7 +332,8 @@ def subject_authority(node: etree._Element, resource_type: str, authority: str) 
 
 # COMPONENTS -------
 
-def components(nodes: List[etree._Element]) -> List[Component] | None:
+def components(nodes: List[etree._Element]) -> ComponentsBlock | None:
+    
     comps = []
     for comp in nodes:
         sub = components(comp.xpath("./*[contains(name(), 'component')]|./*[contains(name(), 'msItem')]")) or None
@@ -367,8 +368,8 @@ def components(nodes: List[etree._Element]) -> List[Component] | None:
             components = sub
         )
         comps.append(md)
-    
-    return comps or None
+        
+    return ComponentsBlock(items=comps) if comps else None
 
 # ------------------
 # DECORATED METADATA

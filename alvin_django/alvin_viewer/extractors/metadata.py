@@ -109,6 +109,31 @@ class Component:
     access_policy: DecoratedText = None
     components: List[Component] = None
 
+
+@dataclass
+class ComponentsBlock:
+    items: List[Component] = None
+
+    @property
+    def all_related_records(self) -> Optional[RelatedRecordsBlock]:
+        def crawl(components: List[Component]):
+            for comp in components:
+                if comp.related_records and comp.related_records.records:
+                    yield from comp.related_records.records
+                
+                if comp.components and comp.components:
+                    yield from crawl(comp.components)
+
+        if not self.items:
+            return None
+
+        all_entries = list(crawl(self.items))
+        
+        return RelatedRecordsBlock(records=all_entries) if all_entries else None
+
+    def __iter__(self):
+        return iter(self.items)
+
 @dataclass(slots=True)
 class DecoratedText:
     label: Optional[str] = None

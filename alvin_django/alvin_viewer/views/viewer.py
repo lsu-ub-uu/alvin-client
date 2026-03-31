@@ -25,9 +25,9 @@ def extract_metadata(root: etree._Element, record_type: str):
 def has_related(metadata) -> bool:
     
     attrs = [
-    "agents", "location", "origin_places", "related_records", "electronic_locators",
-    "subject_person", "subject_organisation", "birth_place", "death_place", "related_persons", 
-    "related_organisations", "subject_place", "work"
+    "electronic_locators",
+    "subject_person", "subject_organisation", "subject_place", "birth_place", "death_place", "related_persons", 
+    "related_organisations", "work"
     ]
 
     if any(getattr(metadata, attr, None) for attr in attrs):
@@ -39,7 +39,7 @@ def has_related(metadata) -> bool:
                 return True
             sub_components = getattr(component, "components", None)
             if sub_components:
-                if _check_components(sub_components): # Viktigt: returnera True om träff hittas!
+                if _check_components(sub_components):
                     return True
 
     components = getattr(metadata, "components", None)
@@ -56,11 +56,10 @@ def has_all_metadata(metadata) -> bool:
         "subcollection", "physical_location_note", "base_material",
         "applied_material", "extent", "dimensions", "measure",
         "physical_description_notes", "notes", "transcription",
-        "table_of_contents", "literature", "access_policy", "subjects",
-        "subject_person", "subject_organisation", "subject_place",
+        "table_of_contents", "literature", "access_policy",
         "genre_form", "classifications", "identifiers", "deco_note",
-        "binding", "binding_deco_note", "related_records", "work",
-        "electronic_locators", "level", "shelf_metres", "archival_units",
+        "binding", "binding_deco_note",
+        "level", "shelf_metres", "archival_units",
         "other_findaid", "weeding", "related_material", "arrangement",
         "accruals", "locus", "incipit", "explicit", "rubric",
         "final_rubric", "music_key", "music_key_other", "music_medium",

@@ -60,9 +60,6 @@
         {% for subject in metadata.subjects.entries %}
             {% include "./_metadata_row.html" with label=subject.label extra_label=subject.authority value=subject.display %}
         {% endfor %}
-        {% include "./_authority_links.html" with label=metadata.subject_person.label link_type="alvin-person" authority_links=metadata.subject_person.entries %}
-        {% include "./_authority_links.html" with label=metadata.subject_organisation.label link_type="alvin-organisation" authority_links=metadata.subject_organisation.entries %}
-        {% include "./_authority_links.html" with label=metadata.subject_place.label link_type="alvin-place" authority_links=metadata.subject_place.entries %}
         {% include "./_metadata_row.html" with label=metadata.genre_form.label value=metadata.genre_form.items|join:"<br>"|safe %}
         {% for classification in metadata.classifications %}
             {% include "./_metadata_row.html" with label=classification.label extra_label=classification.type value=classification.text %}
@@ -73,13 +70,6 @@
         {% include "./_metadata_row.html" with label=metadata.deco_note.combined_label value=metadata.binding.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.binding.combined_label value=metadata.binding.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.binding_deco_note.combined_label value=metadata.binding_deco_note.text|linebreaksbr %}
-        {% for type_block in metadata.related_records.ordered_by_type %}
-        {% include "alvin_viewer/_partials/_record_type_links.html" with label=type_block.label link_type="alvin-record" record_type_links=type_block %}
-        {% endfor%}
-        {% include "./_authority_links.html" with label=metadata.work.label link_type="alvin-work" authority_links=metadata.work %}
-        {% for electronic_locator in metadata.electronic_locators %}
-            {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
-        {% endfor %}
         {% include "./_metadata_row.html" with label=metadata.level.label value=metadata.level.item %}
         {% include "./_metadata_row.html" with label=metadata.shelf_metres.label value=metadata.shelf_metres.item %}
         {% include "./_metadata_row.html" with label=metadata.archival_units.label value=metadata.archival_units.text %}
@@ -113,36 +103,47 @@
     </dl>
     {% endif %}
 
-    <dl id="overview" class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
-        {% for agent in metadata.agents %}
-            {% include "./_metadata_row.html" with svg_path=agent.icon_path label=agent.display_roles url=agent.url value=agent.display %}
-        {% endfor %}
-        {% for place in metadata.origin_places.places %}
-            {% include "./_metadata_row.html" with svg_path="../_icons/place.svg" label=place.label url=place.url value=place.name.title extra_value=place.display_countries %}
-        {% endfor %}
-        {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/location.svg" label=metadata.location.label url=metadata.location.url value=metadata.location.names.title %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
-        {% if metadata.files.rights_code %}
-        <section class="border-t border-[#D1D9D5] mt-4 py-4" aria-labelledby="licensing-heading">
-            <div class="flex flex-row gap-x-2 items-center">
-                <svg class="size-9 text-dark-alvin dark:text-[#c6e3d9] mx-4" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
-                    <path d="M12 7L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <path d="M12 16.01L12.01 15.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <path d="M5 18L3.13036 4.91253C3.05646 4.39524 3.39389 3.91247 3.90398 3.79912L11.5661 2.09641C11.8519 2.03291 12.1481 2.03291 12.4339 2.09641L20.096 3.79912C20.6061 3.91247 20.9435 4.39524 20.8696 4.91252L19 18C18.9293 18.495 18.5 21.5 12 21.5C5.5 21.5 5.07071 18.495 5 18Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-                
-                <div>
-                    <h2 class="text-dark-alvin dark:text-[#c6e3d9] font-bold" id="licensing-heading">{{metadata.files.rights_label}}</h2>
-                    <p>{{metadata.files.rights}}</p>
-                    <a href="{{metadata.files.rights_url}}">{%translate 'Information om licensen' %}</a>
+    <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
+        <div class="flex flex-row gap-2 items-center text-[#333333] dark:text-off-white font-bold text-xl">
+            <svg class="size-7 my-6 text-dark-alvin dark:text-light-alvin" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor">
+                <path d="M12 11.5V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12 7.51L12.01 7.49889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <h4>{% translate 'Grundfakta' %}</h4>
+        </div>
+        <dl id="overview">
+            {% for agent in metadata.agents %}
+                {% include "./_metadata_row.html" with svg_path=agent.icon_path label=agent.display_roles url=agent.url value=agent.display %}
+            {% endfor %}
+            {% for place in metadata.origin_places.places %}
+                {% include "./_metadata_row.html" with svg_path="../_icons/place.svg" label=place.label url=place.url value=place.name.title extra_value=place.display_countries %}
+            {% endfor %}
+            {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/location.svg" label=metadata.location.label url=metadata.location.url value=metadata.location.names.title %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
+            {% if metadata.files.rights_code %}
+            <section class="border-t border-[#D1D9D5] mt-4 py-4" aria-labelledby="licensing-heading">
+                <div class="flex flex-row gap-x-2 items-center">
+                    <svg class="size-9 text-dark-alvin dark:text-[#c6e3d9] mx-4" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
+                        <title>{{metadata.files.rights_label}}</title>
+                        <path d="M12 7L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M12 16.01L12.01 15.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M5 18L3.13036 4.91253C3.05646 4.39524 3.39389 3.91247 3.90398 3.79912L11.5661 2.09641C11.8519 2.03291 12.1481 2.03291 12.4339 2.09641L20.096 3.79912C20.6061 3.91247 20.9435 4.39524 20.8696 4.91252L19 18C18.9293 18.495 18.5 21.5 12 21.5C5.5 21.5 5.07071 18.495 5 18Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    
+                    <div>
+                        <h2 class="text-dark-alvin dark:text-[#c6e3d9] font-bold" id="licensing-heading">{{metadata.files.rights_label}}</h2>
+                        <p>{{metadata.files.rights}}</p>
+                        <a href="{{metadata.files.rights_url}}">{%translate 'Information om licensen' %}</a>
+                    </div>
+                    
                 </div>
-                
-            </div>
-        </section>
-        {% endif %}
-    </dl>
+            </section>
+            {% endif %}
+        </dl>
+    </section>
 
     {% if metadata.components %}
     <div class="flex flex-col justify-baseline py-2 border-b border-[#D1D9D5]">
@@ -171,11 +172,9 @@
             {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
         </div>
     </div>
-    <div data-xshow="activeTab === 'related'" data-xcloak>
-        <!-- Related records from components -->
-    </div>
     {% endif %}
-    {% if has_related %}
+
+    {% if has_related or metadata.related_records or metadata.components.all_related_records %}
     <div class="flex flex-row py-2 border-b border-[#D1D9D5]">
         <button
             data-xon.click="open_related = !open_related"
@@ -195,37 +194,120 @@
         </button>
     </div>
 
-    <section data-xshow="open_related" data-xcloak>
-        <!-- Related records -->
-        <div class="mt-4">
-            <h3 class="font-bold">{{metadata.related_records.label}}:</h3>
-            <div class="grid grid-cols-3 md:grid-cols-5 gap-1 mt-4">
-            {% for record in metadata.related_records.records %}
-            <a href="{{ record.url }}" class="group relative w-full h-[280px] bg-gray-100 shadow-md rounded overflow-hidden flex flex-col">
-    
-                {% if record.thumbnail_url %}
-                <img src="{{record.thumbnail_url}}" class="w-full h-[240px] object-cover group-hover:scale-110 transition-all duration-200 ease-in-out">
-                {% else %}
-                <svg class="w-full h-full p-14 text-gray-400 group-hover:scale-110 transition-all duration-200 ease-in-out" viewBox="0 0 24 24" fill="none">
-                    <title>{% translate 'Tumnagel saknas' %}</title>
-                    {% include '../_icons/no-image.svg' %}
-                </svg>
-                {% endif %}
+    <section data-xshow="open_related" data-xcloak aria-labelledby="related-heading" class="mt-6">
 
-                <h4 class="absolute bottom-0 w-full p-2 bg-black/90 text-off-white 
-                        transition-all duration-200 ease-in-out overflow-hidden
-                        max-h-10 truncate
-                        group-hover:max-h-full group-hover:whitespace-normal rounded-t">
-                    {{record.main_title.display}}
-                </h4>
+        {% if metadata.related_records %}
+        <h2 id="related-heading" class="py-2 font-bold">
+            {{metadata.related_records.label}}:
+        </h2>
+        <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
 
-                <span class="absolute top-1 left-1 p-1 bg-dark-alvin/90 text-off-white rounded">{{record.type}}</span>
-            </a>
-            {% endfor %}
-            </div>
+
+            {% for type_block in metadata.related_records.ordered_by_type %}
+            <h3 class="my-2">{{type_block.label}}</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
+
+                {% for record in type_block.records %}
+                <li class="w-full h-[240px]">
+                    <a href="{{ record.url }}" 
+                    class="group relative block w-full h-full bg-gray-100 dark:bg-white/10 rounded-md overflow-hidden shadow-md hover:shadow-md transition-shadow duration-300 ease-in-out">
+                        
+                        <div class="w-full h-[240px] overflow-hidden bg-gray-100 dark:bg-white/10">
+                            {% if record.thumbnail_url %}
+                            <img src="{{record.thumbnail_url}}" 
+                                alt="{{record.main_title.display}}"
+                                class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110">
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center transition-transform duration-500 ease-in-out group-hover:scale-110">
+                                <svg class="size-20 text-gray-400" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <title>{% translate 'Tumnagel saknas' %}</title>
+                                    {% include '../_icons/no-image.svg' %}
+                                </svg>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="absolute bottom-0 w-full p-4 bg-gray-900/90 text-white transition-all duration-300 ease-in-out max-h-[80px] group-hover:max-h-full">
+                            <h3 class="font-medium text-sm leading-tight truncate group-hover:whitespace-normal">
+                                {{record.main_title.display}}
+                            </h3>
+                            <p class="mt-2 text-xs text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                {% translate 'Klicka för att visa detaljer' %}
+                            </p>
+                        </div>
+
+                    </a>
+                </li>
+                {% endfor %}
+
+            </ul>
+
+        {% endfor %}
         </div>
+        {% endif %}
+        
+        {% if metadata.components.all_related_records %}
+        <h2 id="related-heading" class="py-2 font-bold">
+            {% translate 'Relaterade poster från komponenter' %}:
+        </h2>
+        <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
+
+            {% for type_block in metadata.components.all_related_records.ordered_by_type %}
+            <h3 class="my-2">{{type_block.label}}</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
+
+                {% for record in type_block.records %}
+                <li class="w-full h-[240px]">
+                    <a href="{{ record.url }}" 
+                    class="group relative block w-full h-full bg-gray-100 dark:bg-white/10 rounded-md overflow-hidden shadow-md hover:shadow-md transition-shadow duration-300 ease-in-out">
+                        
+                        <div class="w-full h-[240px] overflow-hidden bg-gray-100 dark:bg-white/10">
+                            {% if record.thumbnail_url %}
+                            <img src="{{record.thumbnail_url}}" 
+                                alt="{{record.main_title.display}}"
+                                class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110">
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center transition-transform duration-500 ease-in-out group-hover:scale-110">
+                                <svg class="size-20 text-gray-400" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <title>{% translate 'Tumnagel saknas' %}</title>
+                                    {% include '../_icons/no-image.svg' %}
+                                </svg>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="absolute bottom-0 w-full p-4 bg-gray-900/90 text-white transition-all duration-300 ease-in-out max-h-[80px] group-hover:max-h-full">
+                            <h3 class="font-medium text-sm leading-tight truncate group-hover:whitespace-normal">
+                                {{record.main_title.display}}
+                            </h3>
+                            <p class="mt-2 text-xs text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                {% translate 'Klicka för att visa detaljer' %}
+                            </p>
+                        </div>
+
+                    </a>
+                </li>
+                {% endfor %}
+
+            </ul>
+
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <h2 class="py-2 font-bold text-lg py-2">{% translate 'Övrigt relaterat' %}:</h2>
+        <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
+            <dl id="allmetadata">
+                {% include "./_authority_links.html" with label=metadata.subject_person.label link_type="alvin-person" authority_links=metadata.subject_person %}
+                {% include "./_authority_links.html" with label=metadata.subject_organisation.label link_type="alvin-organisation" authority_links=metadata.subject_organisation %}
+                {% include "./_authority_links.html" with label=metadata.subject_place.label link_type="alvin-place" authority_links=metadata.subject_place %}
+                {% include "./_authority_links.html" with label=metadata.work.label link_type="alvin-work" authority_links=metadata.work %}
+                {% for electronic_locator in metadata.electronic_locators %}
+                    {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
+                {% endfor %}
+            </dl>
+        </div>
+
     </section>
-
-
     {% endif %}
 </div>

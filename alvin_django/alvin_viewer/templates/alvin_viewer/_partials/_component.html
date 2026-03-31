@@ -1,9 +1,9 @@
 {% load i18n static %}
 
 {% if is_root %}
-<div class="bg-gray-100 dark:bg-white/15 dark:border dark:border-white/10 rounded-xl shadow-sm mb-8 overflow-hidden">
+<div class="">
   
-  <header class="border-b border-gray-200 dark:border-white/5 bg-gray-200/10 dark:bg-white/5">
+  <header class="border-b border-gray-200 dark:border-white/5 bg-gray-200/10 dark:bg-white/1">
     <button 
       type="button"
       class="flex items-center justify-between w-full p-5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-inset"
@@ -15,14 +15,14 @@
       </div>
       
       <svg 
-        class="size-6 text-gray-500 transition-transform duration-200" 
+        class="size-6 transition-transform duration-200" 
         data-xbind:class="open ? 'rotate-180' : 'rotate-0'" 
         fill="none" 
         viewBox="0 0 24 24" 
         stroke="currentColor"
         aria-hidden="true"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        <path stroke-linecap="round" stroke="currentColor" stroke-linejoin="round"  stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
     </button>
   </header>
@@ -79,29 +79,24 @@
 {% endif %}
 
 {% else %}
-<div class="w-full dark:border dark:border-white/10 bg-gray-100 dark:bg-white/3 rounded-md shadow-sm overflow-hidden">
+<div class="w-full dark:border dark:border-white/10 bg-gray-100 dark:bg-white/1 rounded-md shadow-sm overflow-hidden">
   
   <header class="flex items-center justify-between py-1.5 px-2 border-b border-gray-200 dark:border-white/5 bg-gray-300/10 dark:bg-white/15 hover:bg-gray-300 dark:hover:bg-white/5 cursor-pointer transition-colors" data-xon.click="open = !open">
     <div class="flex flex-row items-center gap-x-2">
-      <svg class="size-4 text-gray-500 transition-transform duration-200" data-xbind:class="open ? 'rotate-180' : 'rotate-0'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg class="size-4 transition-transform duration-200" data-xbind:class="open ? 'rotate-180' : 'rotate-0'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
       <h3 class="text-md font-medium text-gray-800 dark:text-gray-200">
         {{ c.title.display }}
       </h3>
     </div>
-    
-    {% if c.level.item %}
-    <span class="text-[10px] px-2 py-0.5 font-semibold text-off-white dark:text-[#333333] bg-dark-alvin dark:bg-alvin rounded uppercase tracking-wide">
-      {{ c.level.item }}
-    </span>
-    {% endif %}
   </header>
   
 <div data-xshow="open" data-xcloak class="border-l-2 border-gray-300/75 dark:border-white/30 py-2 ml-2 pl-2">      
     <div class="mb-4 {% if depth >= 4 %}text-sm{% endif %}">
       <dl id="inventory-metadata" class="flex flex-col gap-y-2">
         {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.unitid.label value=c.unitid.text %}
+        {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.level.label value=c.level.item %}
         {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.locus.label value=c.locus.text %}
         {% for agent in c.agents %}
           {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.label url=agent.url value=agent.display attribute=agent.display_roles %}

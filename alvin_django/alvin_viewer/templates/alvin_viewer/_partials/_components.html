@@ -1,5 +1,5 @@
 {% for c in components %}
-  <article data-xdata="{ open: true }" class="w-full">
+  <article class="w-full my-6 bg-gray-100 dark:bg-white/10 dark:border dark:border-white/10 rounded-xl shadow-sm overflow-hidden" data-xdata="{ open: true }">
     {% include "alvin_viewer/_partials/_component.html" with c=c is_root=True depth=1 only %}
   </article>
 {% endfor %}

@@ -15,7 +15,6 @@
 */
 
 @import "tailwindcss";
-@import "tify/dist/tify.css";
 @source "../../../templates";
 @source "../../../**/*.html";
 @source "../../../**/*.py";
@@ -65,24 +64,61 @@ html {
 }
 
 /*
-Alvin viewer
-
+Alvin viewer 
 */ 
 
 .md-row {
-  @apply w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-[#D1D9D5];
+  /* Använd display: flex och w-full för att tvinga ut raden */
+  @apply w-full flex;
 }
 
+#overview .md-row {
+  @apply flex-col py-2;
+}
+
+#allmetadata .md-row {
+  @apply py-4 flex-col sm:flex-row not-last:border-b border-[#D1D9D5] items-baseline;
+}
+
+#inventory-metadata .md-row {
+  @apply flex-col sm:flex-row items-baseline;
+}
+
+#inventory-metadata-first .md-row {
+  @apply flex-col sm:flex-row items-baseline;
+} 
+
 .md-label {
-  @apply w-full md:w-1/4 flex-grow font-bold pl-2 text-[#1A2E27] dark:text-[#F7F9F8];
+  @apply w-full font-bold text-dark-alvin dark:text-[#c6e3d9];
+}
+
+
+
+#allmetadata .md-label {
+  /* Ändra från md: till sm: så den matchar när raden blir en rad */
+  @apply sm:w-2/5 pl-4 shrink-0; 
+}
+
+#inventory-metadata .md-label,
+#inventory-metadata-first .md-label {
+  @apply sm:w-1/3 sm:pr-4 shrink-0; 
 }
 
 .md-value {
-  @apply w-full md:w-3/4 flex-grow pl-2;
+  @apply w-full;
 }
 
+#allmetadata .md-value {
+  /* Låt värdet ta resten av platsen (3/5 eller flex-1) */
+  @apply sm:w-3/5 pl-4 flex-grow;
+}
 a { 
   @apply text-blue-800 dark:text-blue-200 underline;
+}
+
+#inventory-metadata .md-value,
+#inventory-metadata-first .md-value {
+  @apply sm:w-2/3 flex-grow;
 }
 
 .topnav a,

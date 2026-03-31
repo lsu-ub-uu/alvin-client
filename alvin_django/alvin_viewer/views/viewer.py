@@ -3,7 +3,6 @@ from django.http import Http404
 from django.shortcuts import render
 from lxml import etree
 
-from .download import download
 from ..services.alvin_api import AlvinAPI
 from ..extractors import location, person, place, organisation, record, work 
 
@@ -26,9 +25,9 @@ def extract_metadata(root: etree._Element, record_type: str):
 def has_related(metadata) -> bool:
     
     attrs = [
-    "agents", "location", "origin_places", "related_records", "electronic_locators",
-    "subject_person", "subject_organisation", "birth_place", "death_place", "related_persons", 
-    "related_organisations", "subject_place", "work"
+    "electronic_locators",
+    "subject_person", "subject_organisation", "subject_place", "birth_place", "death_place", "related_persons", 
+    "related_organisations", "work"
     ]
 
     if any(getattr(metadata, attr, None) for attr in attrs):
@@ -40,13 +39,45 @@ def has_related(metadata) -> bool:
                 return True
             sub_components = getattr(component, "components", None)
             if sub_components:
-                if _check_components(sub_components): # Viktigt: returnera True om träff hittas!
+                if _check_components(sub_components):
                     return True
 
     components = getattr(metadata, "components", None)
     if components:
         return _check_components(components)     
             
+    return False
+
+def has_all_metadata(metadata) -> bool:
+    attrs = [
+        # Common, AlvinRecord
+        "variant_titles", "edition_statement", "publications", "date_other",
+        "languages", "sublocation", "shelf_mark", "former_shelf_mark",
+        "subcollection", "physical_location_note", "base_material",
+        "applied_material", "extent", "dimensions", "measure",
+        "physical_description_notes", "notes", "transcription",
+        "table_of_contents", "literature", "access_policy",
+        "genre_form", "classifications", "identifiers", "deco_note",
+        "binding", "binding_deco_note",
+        "level", "shelf_metres", "archival_units",
+        "other_findaid", "weeding", "related_material", "arrangement",
+        "accruals", "locus", "incipit", "explicit", "rubric",
+        "final_rubric", "music_key", "music_key_other", "music_medium",
+        "music_medium_other", "music_notation", "scale", "projection",
+        "coordinates", "appraisal", "edge", "axis", "conservation_state",
+        "obverse", "reverse", "countermark",
+        
+        # AlvinPerson, AlvinPlace, AlvinOrganisation, AlvinLocation, AlvinWork
+        "variant_names", "birth_date", "death_date", "display_date",
+        "birth_place", "death_place", "nationality", "gender",
+        "fields_of_endeavor", "related_persons", "related_organisations",
+        "organisation_info", "address", "dates", "member_type", "email",
+        "form_of_work", "serial_number", "opus_number", "thematic_number",
+        "country", "latitude", "longitude"
+    ]
+
+    if any(getattr(metadata, attr, None) for attr in attrs):
+        return True
     return False
 
 def alvin_viewer(request, record_type: str, record_id: str):
@@ -60,6 +91,6 @@ def alvin_viewer(request, record_type: str, record_id: str):
         metadata = extract_metadata(root, record_type)
     except Exception as e:
         raise Http404(str(e))'''
-    context = {"metadata": metadata, "value": value, "has_related": has_related(metadata)}
+    context = {"metadata": metadata, "value": value, "has_related": has_related(metadata), "has_all_metadata": has_all_metadata(metadata)}
     return render(request, "alvin_viewer/alvin_viewer.html", context)
 

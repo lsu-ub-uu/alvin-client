@@ -97,12 +97,12 @@
          style="display: none;" 
          class="flex flex-col md:w-1/2 absolute md:relative right-0 inset-y-0 w-full h-full shadow-2xl z-40 bg-white dark:bg-gray-900">
     
-        <div id="pdf-header" class="flex flex-col min-w-0 shrink-0 pr-1 text-[#333333] dark:text-[#FAF9F6] bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700">
+        <div id="pdf-header" class="flex flex-col min-w-0 shrink-0 pr-1 text-[#333333] dark:text-off-white bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700">
             <div class="flex flex-row items-center justify-between">
                 <nav class="flex flex-row" aria-label="Dokumenttyper">
                     {% for group in metadata.files.documents %}
                     <button data-xon.click="selectedCategory = '{{ group.type_code }}'"
-                            class="relative px-4 py-3 text-sm transition-all hover:bg-gray-300/50 dark:hover:bg-white/10 hover:shadow-sm focus:outline-none cursor-pointer"
+                            class="relative px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-300/50 dark:hover:bg-white/10 hover:shadow-sm focus:outline-none transition-all cursor-pointer"
                             data-xbind.class="selectedCategory === '{{ group.type_code }}' 
                                 ? 'text-orange-600' 
                                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'">
@@ -127,15 +127,15 @@
                         data-xon.change="renderDoc($event.target.value, $event.target.options[$event.target.selectedIndex].dataset.mime)" 
                         autocomplete="off" 
                         style="display: none;"
-                        class="w-full bg-white dark:bg-gray-800 text-[#333333] dark:text-[#FAF9F6] border-b-2 border-gray-300 dark:border-gray-600 focus:border-orange-600 pl-2 text-sm truncate outline-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-all shadow-sm">
+                        class="w-full bg-white dark:bg-gray-800 text-[#333333] dark:text-off-white border-b-2 border-gray-300 dark:border-gray-600 focus:border-orange-600 pl-2 text-sm truncate outline-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-all shadow-sm">
                         {% for file in group.files %}
-                        <option value="{{ file.url }}" data-mime="{{ file.mime_type }}" class="bg-white dark:bg-gray-800 text-[#333333] dark:text-[#FAF9F6] rounded-b truncate">{{ file.name }}</option>
+                        <option value="{{ file.url }}" data-mime="{{ file.mime_type }}" class="bg-white dark:bg-gray-800 text-[#333333] dark:text-off-white rounded-b truncate">{{ file.name }}</option>
                         {% endfor %}
                 </select>
                 {% endfor %}
             </div>
         </div>
-        <div id="pdf-iframe-wrapper" class="flex-1 min-h-0 w-full relative bg-[#F7F9F8] dark:bg-gray-800 text-[#333333] dark:text-[#FAF9F6]"></div>
+        <div id="pdf-iframe-wrapper" class="flex-1 min-h-0 w-full relative bg-[#F7F9F8] dark:bg-gray-800 text-[#333333] dark:text-off-white"></div>
     </div>
     {% endif %}
     

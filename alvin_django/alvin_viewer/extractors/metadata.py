@@ -109,6 +109,31 @@ class Component:
     access_policy: DecoratedText = None
     components: List[Component] = None
 
+
+@dataclass
+class ComponentsBlock:
+    items: List[Component] = None
+
+    @property
+    def all_related_records(self) -> Optional[RelatedRecordsBlock]:
+        def crawl(components: List[Component]):
+            for comp in components:
+                if comp.related_records and comp.related_records.records:
+                    yield from comp.related_records.records
+                
+                if comp.components and comp.components:
+                    yield from crawl(comp.components)
+
+        if not self.items:
+            return None
+
+        all_entries = list(crawl(self.items))
+        
+        return RelatedRecordsBlock(records=all_entries) if all_entries else None
+
+    def __iter__(self):
+        return iter(self.items)
+
 @dataclass(slots=True)
 class DecoratedText:
     label: Optional[str] = None
@@ -259,11 +284,15 @@ class SubjectMiscEntry:
 
     def is_empty(self) -> bool:
         return not (self.topic or self.genre_form or self.geographic_coverage or self.temporal or self.occupation)
-    
+
     @property
     def display(self) -> str:
-        parts = [p for p in [self.topic, self.genre_form, self.geographic_coverage, self.temporal, self.occupation] if p is not None]
+        parts = self.collect_subjects
         return ", ".join(filter(None, parts))
+    
+    @property
+    def collect_subjects(self) -> list[str]:
+        return [p for p in [self.topic, self.genre_form, self.geographic_coverage, self.temporal, self.occupation] if p is not None]
 
 @dataclass(slots=True)
 class SubjectMiscBlock:
@@ -481,6 +510,12 @@ class Agent(URL):
     @property
     def display_roles(self) -> str | None:
         return ", ".join(self.roles.items) if self.roles.items else None
+    
+    @property
+    def icon_path(self) -> str | None:
+        if self.agent_type == "alvin-person":
+            return "../_icons/person.svg"
+        return "../_icons/organisation.svg"  
 
 @dataclass(slots=True)
 class Location(URL):
@@ -581,6 +616,7 @@ class RelatedRecordEntry(URL):
     id: Optional[str] = None
     main_title: TitlesBlock = None
     parts: List[RelatedRecordPart] = None
+    thumbnail_url: Optional[str] = None
 
     @property
     def display_parts(self) -> str:
@@ -674,8 +710,27 @@ class FileGroup:
 @dataclass 
 class FilesBlock:
     rights: str = None
+    rights_code: str = None
+    rights_label: str = None
     digital_origin: str = None
     file_groups: List[FileGroup] = None
+
+    @property
+    def rights_url(self):
+
+        current_lang = get_language()
+        cc_base_url = "https://creativecommons.org"
+
+        match self.rights_code:
+            case "public_domain_mark":
+                return f"{cc_base_url}/publicdomain/mark/1.0/"
+            case "CC0":
+                return f"{cc_base_url}/publicdomain/zero/1.0/deed.{current_lang}"
+            case "in_copyright":
+                return "https://rightsstatements.org/page/InC/1.0/?language=en"
+
+        license_stub = self.rights_code.replace("CC_","").replace("_","-").lower()
+        return f"{cc_base_url}/licenses/{license_stub}/4.0/deed.{current_lang}"
 
     @property
     def documents(self) -> List[dict]:

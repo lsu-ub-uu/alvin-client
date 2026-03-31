@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Optional
 
-from .metadata import Address, Agent, Appraisal, Axis, Classification, Coin, CommonMetadata, Component, DateEntry, DatesBlock, DecoratedList, DecoratedListItem, Edge, DecoratedText, DecoratedTexts, DecoratedTextsWithType, Dimension, ElectronicLocator, FilesBlock, Identifier, Location, Measure, NamesBlock, OriginPlace, RelatedAuthoritiesBlock, RelatedRecordsBlock, SubjectMiscEntry, TitlesBlock
+from .metadata import Address, Agent, Appraisal, Axis, Classification, Coin, CommonMetadata, Component, ComponentsBlock, DateEntry, DatesBlock, DecoratedList, DecoratedListItem, Edge, DecoratedText, DecoratedTexts, DecoratedTextsWithType, Dimension, ElectronicLocator, FilesBlock, Identifier, Location, Measure, NamesBlock, OriginPlace, RelatedAuthoritiesBlock, RelatedRecordsBlock, SubjectMiscEntry, TitlesBlock
 
 @dataclass(slots=True)
 class AlvinPlace(CommonMetadata):
@@ -141,7 +141,7 @@ class AlvinRecord(CommonMetadata):
     binding_deco_note: DecoratedText = None
     identifiers: List[Identifier] = None
     work: RelatedAuthoritiesBlock = None
-    components: List[Component] = None
+    components: ComponentsBlock = None
     files: FilesBlock = None
     urn_nbn: DecoratedText = None
 

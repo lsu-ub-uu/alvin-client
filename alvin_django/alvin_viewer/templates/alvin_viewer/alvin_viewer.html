@@ -18,11 +18,11 @@
 {% block content %}
   <main
     class="min-h-screen w-full flex flex-col lg:flex-1 pt-4 pb-8 px-2 md:px-8"
-    data-xdata="{ activeTab: 'overview', download: false }"
+    data-xdata="{ activeTab: 'overview', download: false, share: false }"
     data-xon.click.away="download = false">
     {% if value != None %}
     <a class="flex w-fit pb-2" href="{{ value }}">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="size-6">
         <title>{% translate 'Tillbaka till sökresultatet' %}</title>
         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
@@ -34,59 +34,31 @@
     {% if metadata.files %}
       {% include './_partials/_viewer.html' %}
     {% endif %}
-
-    <h1 class="text-2xl md:text-3xl font-bold py-2">{% firstof metadata.main_title.display metadata.authority_names.title %}</h1>
+    <div class="mx-auto w-full max-w-4xl py-4">
+    <h1 class="text-3xl font-bold py-2">{% firstof metadata.main_title.display metadata.authority_names.title %}</h1>
     {% include './_partials/_render_record_icon.html' %}
-
-    <div data-xdata="{ download_menu: false }" class="flex justify-between flex-row">
-
-      <!-- Metadata views -->
-      <nav class="flex flex-wrap gap-x-1 justify-start text-md text-black dark:text-white">
-        <button data-xon.click="activeTab = 'overview'"
-          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
-          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'overview' }">
-          {% include './_icons/overview.svg' with class="h-6 w-6" %}
-          <span class="max-sm:hidden">{% translate 'Översikt' %}</span>
-        </button>
-        <button data-xon.click="activeTab = 'all_metadata'"
-          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
-          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'all_metadata' }">
-          {% include './_icons/allmetadata.svg' with class="h-6 w-6" %}
-          <span class="max-sm:hidden">{% translate 'All metadata' %}</span>
-        </button>
-        {% if metadata.components %}
-        <button data-xon.click="activeTab = 'inventory'"
-          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
-          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'inventory' }">
-          {% include './_icons/inventory.svg' with class="h-6 w-6"  %}
-          <span class="p:l max-sm:hidden">
-            {% if metadata.type_of_resource.code == 'col' %}
-              {% translate 'Förteckning' %}
-            {% else %}
-              {% translate 'Innehållsbeskrivning' %}
-            {% endif %}
-          </span>
-        </button>
-        {% endif %}
-
-        {% if has_related %}
-        <button data-xon.click="activeTab = 'related'"
-          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
-          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'related' }">
-          {% include './_icons/related.svg' with class="h-6 w-6" %}
-          <span class="max-sm:hidden">{% translate 'Relaterat' %}</span>
-        </button>
-        {% endif %}
-      </nav>
-      
+    </div>
+    <div class="flex mx-auto w-full max-w-4xl justify-between flex-row py-4 my-4 border-y border-[#D1D9D5] ">
       <!-- Download och search tools -->
       <div class="flex flex-row gap-x-1">
-        <button class="flex flex-row gap-x-1 h-10 dark:text-gray-200 cursor-pointer p-2 text-center hover:text-orange-600" data-xon.click="download = !download">
-          <svg class="h-6 w-6" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <title>{% translate 'Ladda ned' %}</title>
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+        <button class="flex flex-row gap-x-1 items-center h-10 dark:text-gray-200 bg-gray-100 dark:bg-white/10 border border-[#D1D9D5] rounded-md cursor-pointer p-2 text-center hover:bg-gray-300 hover:dark:bg-white/15 shadow-sm transition ease-in-out duration-150" data-xon.click="download = !download">
+          <svg class="size-5" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor">
+              <title>{% translate 'Ladda ned' %}</title>
+              <path d="M6 20L18 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M12 4V16M12 16L15.5 12.5M12 16L8.5 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
-          <span class="max-lg:hidden">{% translate 'Ladda ned' %}</span>
+          <span>{% translate 'Ladda ned' %}</span>
+        </button>
+        <button class="flex flex-row gap-x-1 items-center h-10 dark:text-gray-200 bg-gray-100 dark:bg-white/10 border border-[#D1D9D5] rounded-md cursor-pointer p-2 text-center hover:bg-gray-300 hover:dark:bg-white/15 shadow-sm transition ease-in-out duration-150" data-xon.click="share = !share">
+          <svg class="size-5" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor">
+            <title>{% translate 'Dela' %}</title>
+            <path d="M18 22C19.6569 22 21 20.6569 21 19C21 17.3431 19.6569 16 18 16C16.3431 16 15 17.3431 15 19C15 20.6569 16.3431 22 18 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M18 8C19.6569 8 21 6.65685 21 5C21 3.34315 19.6569 2 18 2C16.3431 2 15 3.34315 15 5C15 6.65685 16.3431 8 18 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M15.5 6.5L8.5 10.5" stroke="currentColor" stroke-width="2"></path>
+            <path d="M8.5 13.5L15.5 17.5" stroke="currentColor" stroke-width="2"></path>
+          </svg>
+          <span>{% translate 'Dela' %}</span>
         </button>
         {% if metadata.record_type != 'alvin-record' %}
 
@@ -95,7 +67,7 @@
           <input type="hidden" name="{{ metadata.record_type_stripped }}" id="{{ metadata.record_type_stripped }}" value="{{ metadata.id }}">
           <input type="hidden" name="view" id="view" value="list">
           <button type="submit" class="flex flex-row gap-x-1 h-10 dark:text-gray-200 cursor-pointer p-2 text-center hover:text-orange-600" data-xon.click="">
-            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor">
+            <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor">
               <title>{% translate 'Sök länkade poster' %}</title>
               <path stroke-linecap="round" stroke-linejoin="round"
                   d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -107,8 +79,27 @@
       </div>
     </div>
 
+    <div class="flex flex-row mx-auto w-full max-w-4xl mt-5 border-b border-[#D1D9D5] ">
+      <nav class="flex flex-wrap gap-x-1 justify-start text-md text-black dark:text-white w-full">
+        <button data-xon.click="activeTab = 'overview'"
+          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
+          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'overview' }">
+          {% include './_icons/overview.svg' with class="size-6 shrink-0" %}
+          <span>{% translate 'Översikt' %}</span>
+        </button>
+        {% if has_all_metadata %}
+        <button data-xon.click="activeTab = 'all_metadata'"
+          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
+          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'all_metadata' }">
+          {% include './_icons/allmetadata.svg' with class="size-6 shrink-0" %}
+          <span>{% translate 'All metadata' %}</span>
+        </button>
+        {% endif %}
+      </nav>
+    </div>
+    
     <!-- Metadata -->
-    <dl class="block w-full border-y">
+    <div class="w-full">
       {% if metadata.record_type == 'alvin-place' %}
       {% include './_partials/_alvin_place.html' %}
       {% elif metadata.record_type == 'alvin-person' %}
@@ -122,7 +113,7 @@
       {% elif metadata.record_type == 'alvin-record' %}
       {% include './_partials/_alvin_record.html' %}
       {% endif %}
-    </dl>
+    </div>
 
     {% block jsbody %}
     <script>
@@ -189,7 +180,6 @@
             }
           },
 
-          // Öppna panelen och ladda första filen direkt (i den förvalda kategorin)
           toggleDoc() {
             this.docOpen = !this.docOpen;
             if (this.docOpen && this.isFirstLoad) {
@@ -200,7 +190,6 @@
             }
           },
 
-          // Hjälpfunktion för att ladda den fil som är vald i den aktiva kategorin
           loadCurrentCategoryFile() {
             const selector = document.getElementById('file-select-' + this.selectedCategory);
             if (selector && selector.options.length > 0) {
@@ -209,14 +198,13 @@
             }
           },
 
-          // Triggas när användaren byter mellan t.ex "Översättning" och "Transkription"
           categoryChanged() {
             this.$nextTick(() => {
               const selector = document.getElementById('file-select-' + this.selectedCategory);
               if (selector && selector.options.length > 0) {
-                selector.selectedIndex = 0; // Tvinga tillbaka fillistan till första valet
+                selector.selectedIndex = 0;
               }
-              this.loadCurrentCategoryFile(); // Ladda in dokumentet
+              this.loadCurrentCategoryFile();
             });
           },
 
@@ -261,7 +249,7 @@
                 </div>`;
             }
           },
-
+          
           cleanup() {
             if (this.currentBlobUrl) URL.revokeObjectURL(this.currentBlobUrl);
           },
@@ -293,6 +281,8 @@
     {% endblock %}
 
     {% include './_partials/_download_menu.html' %}
+    {% include './_partials/_share_menu.html' %}
+
   </main>
 
 <script src="/static/js/clipboard.js-master/dist/clipboard.min.js"></script>

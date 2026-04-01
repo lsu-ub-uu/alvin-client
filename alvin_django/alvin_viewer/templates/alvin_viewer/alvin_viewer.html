@@ -144,7 +144,6 @@
           currentPage: 1,
           totalPages: 0,
           
-          // Tillstånd för vald dokumentkategori
           selectedCategory: '',
 
           toggleSidebar() {
@@ -180,14 +179,15 @@
             }
           },
 
-          toggleDoc() {
-            this.docOpen = !this.docOpen;
-            if (this.docOpen && this.isFirstLoad) {
-              this.$nextTick(() => {
-                this.loadCurrentCategoryFile();
-                this.isFirstLoad = false;
-              });
-            }
+          async toggleDoc() {
+              this.docOpen = !this.docOpen;
+
+              if (this.docOpen && this.isFirstLoad) {
+                  await this.$nextTick(); 
+                  
+                  this.loadCurrentCategoryFile();
+                  this.isFirstLoad = false;
+              }
           },
 
           loadCurrentCategoryFile() {
@@ -280,25 +280,9 @@
     </script>
     {% endblock %}
 
+    <!-- Hidden tool menus -->
     {% include './_partials/_download_menu.html' %}
     {% include './_partials/_share_menu.html' %}
 
   </main>
-
-<script src="/static/js/clipboard.js-master/dist/clipboard.min.js"></script>
-<script>
-  var clipboard = new ClipboardJS('.btn');
-
-  clipboard.on('success', function (e) {
-    console.info('Action:', e.action);
-    console.info('Text:', e.text);
-    console.info('Trigger:', e.trigger);
-  });
-
-  clipboard.on('error', function (e) {
-    console.info('Action:', e.action);
-    console.info('Text:', e.text);
-    console.info('Trigger:', e.trigger);
-  });
-</script>
 {% endblock %}

@@ -168,7 +168,7 @@
                 <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
         </button>
-        <div class="p-4" data-xshow="open_inventory" data-xcloak>
+        <div class="py-4" data-xshow="open_inventory" data-xcloak>
             {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
         </div>
     </div>
@@ -296,7 +296,7 @@
         {% endif %}
 
         {% if has_related %}
-        <h2 class="py-2 font-bold text-lg py-2">{% translate 'Övrigt relaterat' %}:</h2>
+        <h2 class="py-2 font-bold text-lg">{% translate 'Övrigt relaterat' %}:</h2>
         <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
             <dl id="allmetadata">
                 {% include "./_authority_links.html" with label=metadata.subject_person.label link_type="alvin-person" authority_links=metadata.subject_person %}

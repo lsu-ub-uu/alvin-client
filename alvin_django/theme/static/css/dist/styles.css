@@ -1129,6 +1129,9 @@
       background-color: color-mix(in oklab, var(--color-white) 98%, transparent);
     }
   }
+  .bg-\[url\(\.\.\/\.\.\/img\/cartamarina\.webp\)\] {
+    background-image: url(../../img/cartamarina.webp);
+  }
   .bg-\[url\(\/static\/img\/cartamarina\.webp\)\] {
     background-image: url(/static/img/cartamarina.webp);
   }
@@ -2756,14 +2759,14 @@
 }
 @font-face {
   font-family: "Universalis";
-  src: url("/static/fonts/UniversalisADFStd-Bold.woff") format("woff");
+  src: url("../../fonts/UniversalisADFStd-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "NotoSans";
-  src: url("/static/fonts/NotoSans-Regular.ttf") format("truetype");
+  src: url("../../fonts/NotoSans-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;

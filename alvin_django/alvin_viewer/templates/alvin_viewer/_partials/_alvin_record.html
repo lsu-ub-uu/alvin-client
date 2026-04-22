@@ -3,8 +3,10 @@
 <!-- Metadata -->
 <div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_inventory: false, open_related: false }">
     <section class="mt-4" aria-labelledby="summary-heading">
+        {% if metadata.summary %}
         <h2 id="summary-heading" class="sr-only">{{metadata.summary.label}}</h2>
         <p class="text-lg">{{metadata.summary.text|linebreaksbr}}</p>
+        {% endif %}
         {% if metadata.subjects %}
         <div class="flex flex-col my-5 dark:text-gray-200">
             <div class="flex gap-x-1 mb-2">

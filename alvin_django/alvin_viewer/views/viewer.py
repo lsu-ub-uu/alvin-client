@@ -26,7 +26,7 @@ def has_related(metadata) -> bool:
     
     attrs = [
     "electronic_locators",
-    "subject_person", "subject_organisation", "subject_place", "birth_place", "death_place", "related_persons", 
+    "subject_person", "subject_organisation", "subject_place", "related_persons", 
     "related_organisations", "work"
     ]
 

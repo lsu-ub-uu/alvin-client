@@ -1,22 +1,17 @@
 {% load i18n static %}
 
-{% block title %}
-<title>Alvin - {{ metadata.authority_names.title }}</title>
-{% endblock %}
-
 <!-- Metadata -->
 <div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_related: false }">
-    {% if metadata.biographical_note %}
     <section class="mt-4" aria-labelledby="summary-heading">
+        {% if metadata.biographical_note %}
         <h2 id="summary-heading" class="sr-only">{{metadata.biographical_note.type}}</h2>
         <p class="text-lg">{{metadata.biographical_note.text|linebreaksbr}}</p>
+        {% endif %}
     </section>
-    {% endif %}
+
 
     {% if has_all_metadata %}
     <dl id="allmetadata" class="py-2 px-4 mb-6 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
-        
-        {{metadata.variant_names}}
         {% with metadata.variant_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
                 {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name.display %}
@@ -43,6 +38,7 @@
             </svg>
             <h4 class="text-dark-alvin dark:text-light-alvin">{% translate 'Översikt' %}</h4>
         </div>
+        
         <dl id="overview">
 
         {% with metadata.authority_names.label as authority_label %}
@@ -167,7 +163,7 @@
         </div>
         {% endif %}
 
-        {% if has_related %}
+        {% if metadata.electronic_locators %}
         <h2 class="py-2 font-bold">{% translate 'Övrigt relaterat' %}:</h2>
         <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
             <dl id="allmetadata">

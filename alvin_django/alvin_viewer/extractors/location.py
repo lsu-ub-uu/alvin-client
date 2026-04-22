@@ -39,7 +39,6 @@ def extract(root: etree._Element) -> AlvinLocation:
     return AlvinLocation(
         id=text(root, _xp(rt, "recordInfo/id")),
         record_type = "alvin-location",
-        source_xml = text(root, "actionLinks/read/url"),
         created = decorated_text(root, _xp(rt, "recordInfo/tsCreated")),
         label = _get_label(element(root, "data/location")),
         authority_names = names(root, _xp(rt, "authority"), organisation["AUTH_NAME"]),

@@ -10,7 +10,6 @@ def extract(root: etree._Element) -> AlvinWork:
     return AlvinWork(
         id=text(root, _xp(rt, "recordInfo/id")),
         record_type="alvin-work",
-        source_xml = text(root, "actionLinks/read/url"),
         created = decorated_text(root, _xp(rt, "recordInfo/tsCreated")),
         last_updated = decorated_text(root, _xp(rt, "recordInfo/updated/tsUpdated[last()]")),
         form_of_work = decorated_list_item(root, _xp(rt, "formOfWork")),

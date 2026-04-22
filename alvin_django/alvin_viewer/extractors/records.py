@@ -39,9 +39,12 @@ class AlvinOrganisation(CommonMetadata):
     label: Optional[str] = None
     authority_names: NamesBlock = None
     variant_names: NamesBlock = None
-    organisation_info: DatesBlock = None
+    start_date: DateEntry = None
+    end_date: DateEntry = None
     display_date: DecoratedText = None
-    notes: DecoratedTextsWithType = None
+    biographical_note: DecoratedTextWithType = None
+    general_note: DecoratedTextsWithType = None
+    source_note: DecoratedTextWithType = None
     identifiers: List[Identifier] = None
     address: Address = None
     electronic_locators: List[ElectronicLocator] = None

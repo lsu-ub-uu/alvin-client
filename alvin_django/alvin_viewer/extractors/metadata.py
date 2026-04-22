@@ -72,7 +72,6 @@ class CommonMetadata:
     record_type: str
     created: Optional[DecoratedText] = None
     last_updated: Optional[DecoratedText] = None
-    source_xml: Optional[str] = None
 
     @property
     def record_type_stripped(self) -> str:

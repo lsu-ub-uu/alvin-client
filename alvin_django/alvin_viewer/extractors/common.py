@@ -51,6 +51,16 @@ def compact(d: Dict[str, Any]) -> Dict[str, Any]:
 
 # COMMON -----------
 
+def note_and_type(node: etree._Element, xp: str, note_type: str, type_collection: str) -> DecoratedTextWithType | None:
+    target = _get_target(node, xp)
+    if target is None:
+        return None
+
+    return DecoratedTextWithType(
+        type = _get_attribute_item(note_type, type_collection),
+        text = text(node, xp)
+    )
+
 def identifiers(root: etree._Element, xp: str) -> List[Identifier]:
     targets = elements(root, xp)
     if not targets:
@@ -147,6 +157,12 @@ def a_date(node: etree._Element, kind: str) -> DateEntry:
         day = text(target, "date/day"),
         era = _get_value(target, "date/era")
     )
+
+def date(root: etree._ElementTree, xp: str, kind: str) -> DateEntry:
+    target = _get_target(root, xp)
+    if target is None:
+        return None
+    return a_date(target, kind)
 
 def dates(node: etree._Element, xp: str, start_tag: str, end_tag: str) -> Dict:
     target = element(node, xp)

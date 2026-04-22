@@ -68,10 +68,8 @@ def has_all_metadata(metadata) -> bool:
         "obverse", "reverse", "countermark",
         
         # AlvinPerson, AlvinPlace, AlvinOrganisation, AlvinLocation, AlvinWork
-        "variant_names", "birth_date", "death_date", "display_date",
-        "birth_place", "death_place", "nationality", "gender",
-        "fields_of_endeavor", "related_persons", "related_organisations",
-        "organisation_info", "address", "dates", "member_type", "email",
+        "variant_names", "nationality", "gender",
+        "fields_of_endeavor", "address", "dates", "member_type", "email",
         "form_of_work", "serial_number", "opus_number", "thematic_number",
         "country", "latitude", "longitude"
     ]

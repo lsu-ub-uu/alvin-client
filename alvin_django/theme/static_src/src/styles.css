@@ -168,7 +168,7 @@ OpenSeaDragon viewer
 
 */
 
-/* Sidopanelens scrollbar */
+/* Side panel scrollbar */
 #thumb-sidebar {
   scrollbar-width: thin;
   scrollbar-color: #f97316 #1a1a1a;
@@ -183,13 +183,13 @@ OpenSeaDragon viewer
   border-radius: 3px;
 }
 
-/* Förhindra att bilder i sidofältet trycks ihop */
+/* Stop images in the side bar being squished */
 .thumb-item {
   aspect-ratio: auto;
   display: block;
 }
 
-/* Säkerställ att wrappern täcker hela ytan i fullskärm */
+/* Make sure the wrapper covers the entire screen in fullscreen mode */
 #osd-wrapper:-webkit-full-screen {
   width: 100%;
   height: 100%;

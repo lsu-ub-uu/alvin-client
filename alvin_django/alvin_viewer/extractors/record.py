@@ -21,7 +21,6 @@ def extract(root: etree._Element) -> AlvinRecord:
         created = decorated_text(root, _xp(rt, "recordInfo/tsCreated")),
         last_updated = decorated_text(root, _xp(rt, "recordInfo/updated/tsUpdated")),
         record_type = "alvin-record",
-        source_xml = text(root, "actionLinks/read/url"),
         type_of_resource = tor,
         collection = decorated_list_item(root, _xp(rt, "collection")),
         production_method = decorated_list_item(root, _xp(rt, "productionMethod")),

@@ -1,49 +1,128 @@
 {% load i18n static %}
 
 <!-- Metadata -->
-<div class="flex flex-col">
-    <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
-        {% with metadata.authority_names.label as authority_label %}
-            {% for lang, name in metadata.authority_names.names.items %}
-                {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name.display %}
-            {% endfor %}
-        {% endwith %}
+<div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_related: false }">
+    <section class="mt-4" aria-labelledby="summary-heading">
+        {% if metadata.biographical_note %}
+        <h2 id="summary-heading" class="sr-only">{{metadata.biographical_note.type}}</h2>
+        <p class="text-lg">{{metadata.biographical_note.text|linebreaksbr}}</p>
+        {% endif %}
+    </section>
 
-        {% include "./_metadata_row.html" with label=metadata.organisation_info.label value=metadata.organisation_info.dates.display %}
-        {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
-    </div>    
-    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
+    {% if has_all_metadata %}
+    <dl id="allmetadata" class="py-2 px-4 mb-6 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.variant_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
                 {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
-        {% include "./_metadata_row.html" with label=metadata.organisation_info.label value=metadata.organisation_info.dates.display %}
-        {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
-    </div>
-    <div x-show="activeTab === 'all_metadata'" x-cloak>
-        {% include "./_address.html" with label=metadata.address.label place_id=metadata.address.place.id box=metadata.address.box street=metadata.address.street postcode=metadata.address.postcode place=metadata.address.place.name.title country=metadata.address.country %}
-    </div>
-    <div data-xshow="activeTab === 'all_metadata' || activeTab === 'related'" data-xcloak>
-        {% for electronic_locator in metadata.electronic_locators %}
-            {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
-        {% endfor %}
-    </div>  
-    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
-        {% for note in metadata.notes.texts %}
-            {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
-        {% endfor %}
+        {% include "./_metadata_row.html" with label=metadata.general_note.type value=metadata.general_note.text %}
+        {% include "./_metadata_row.html" with label=metadata.source_note.type value=metadata.source_note.text %}
         {% for identifier in metadata.identifiers %}
             {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type value=identifier.identifier %}
         {% endfor %}
+    </dl>
+    {% endif %}
+
+    <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
+        <div class="flex flex-row gap-2 items-center text-[#333333] dark:text-off-white font-bold text-xl">
+            <svg class="size-7 my-4 text-dark-alvin dark:text-light-alvin" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor">
+                <path d="M12 11.5V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12 7.51L12.01 7.49889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <h4 class="text-dark-alvin dark:text-light-alvin">{% translate 'Översikt' %}</h4>
+        </div>
+        
+        <dl id="overview">
+            {% with metadata.authority_names.label as authority_label %}
+                {% for lang, name in metadata.authority_names.names.items %}
+                    {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name.display %}
+                {% endfor %}
+            {% endwith %}
+            {% include "./_metadata_row.html" with label=metadata.start_date.label value=metadata.start_date.display %}
+            {% include "./_metadata_row.html" with label=metadata.end_date.label value=metadata.end_date.display %} 
+            {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
+            {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
+            {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
+        </dl>
+
+    </section>
+
+    {% if has_related %}
+    <div class="flex flex-row py-2 border-b border-[#D1D9D5]">
+        <button
+            data-xon.click="open_related = ! open_related"
+            class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin">
+            {% include '../_icons/related.svg' with class="size-6" %}
+            <span>{% translate 'Relaterat' %}</span>
+            <svg 
+                class="size-6 inline-block transition-transform duration-100 ease-in-out origin-center" 
+                data-xbind:class="open_related ? 'rotate-90' : 'rotate-0'"
+                stroke-width="2" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                color="currentColor"
+                >
+                <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
     </div>
-     <div data-xshow="activeTab === 'all_metadata' || activeTab === 'related'" data-xcloak>
-        {% for type_block in metadata.related_organisations.ordered_by_type %}
-            {% include "./_record_type_links.html" with label=type_block.label link_type="alvin-organisation" record_type_links=type_block %}
-        {% endfor %}
-    </div>
-    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
-        {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
-        {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
-    </div>
+
+    <section data-xshow="open_related" data-xcloak aria-labelledby="related-heading" class="mt-6">
+
+        {% if metadata.related_organisations %}
+        <h2 id="related-heading" class="py-2 font-bold">
+            {{metadata.related_organisations.label}}:
+        </h2>
+        <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
+           
+            {% for type_block in metadata.related_organisations.ordered_by_type %}
+            <h3 class="my-2">{{type_block.label}}</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
+                
+                {% for organisation in type_block.records %}
+                <li class="w-full h-[240px]">
+                    <a href="{{ organisation.url }}" 
+                    class="group relative block w-full h-full bg-gray-100 dark:bg-white/10 rounded-md overflow-hidden shadow-md hover:shadow-md transition-shadow duration-300 ease-in-out">
+                        
+                        <div class="w-full h-[240px] overflow-hidden bg-gray-100 dark:bg-white/10">
+                            <div class="w-full h-full flex items-center justify-center transition-transform duration-500 ease-in-out group-hover:scale-110">
+                                <svg class="size-20 text-gray-400" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <title>Organisation</title>
+                                    {% include '../_icons/organisation.svg' %}
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="absolute bottom-0 w-full p-4 bg-gray-900/90 text-white transition-all duration-300 ease-in-out max-h-[80px] group-hover:max-h-full">
+                            <h3 class="font-medium text-sm leading-tight truncate group-hover:whitespace-normal">
+                                {{organisation.name.title}}
+                            </h3>
+                            <p class="mt-2 text-xs text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                {% translate 'Klicka för att visa detaljer' %}
+                            </p>
+                        </div>
+
+                    </a>
+                </li>
+                {% endfor %}
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+        {% if metadata.electronic_locators %}
+        <h2 class="py-2 font-bold">{% translate 'Övrigt relaterat' %}:</h2>
+        <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
+            <dl id="allmetadata">
+                {% for electronic_locator in metadata.electronic_locators %}
+                    {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
+                {% endfor %}
+            </dl>
+        </div>
+        {% endif %}
+
+    </section>
+    {% endif %}
 </div>

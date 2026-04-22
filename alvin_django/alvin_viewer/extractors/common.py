@@ -24,8 +24,10 @@ from .metadata import (Agent, Component, CommonMetadata, ComponentsBlock, DateEn
 
 # HELPERS ----------
 
+# Cache for collection items to avoid repeated API calls
 ITEMS_DICT = get_item_dict()
 
+# Helper to standardize XPath construction for record types
 def _xp(rt: str, xpath: str, absolute: bool = False) -> str:
     return xpath if absolute else f"data/{rt}/{xpath}"
 
@@ -87,11 +89,11 @@ def titles(root: etree._Element, xp: str) -> TitlesBlock:
             orientation_code = text(target, "orientationCode"),
         )
 
-def names(node: etree._Element, xp: str, name_parts: Dict[str, str]) -> NamesBlock | None:
+def names(node: etree._Element, xp: str, name_parts: Dict[str, str], variant_collection: str = None) -> NamesBlock | None:
     targets = elements(node, xp)
     if not targets:
         return None
-
+    
     per_lang_raw: Dict[str, Union[NameEntry, List[NameEntry]]] = {}
     label: Optional[str] = None
 
@@ -105,7 +107,10 @@ def names(node: etree._Element, xp: str, name_parts: Dict[str, str]) -> NamesBlo
             
         lang = attr(target, "./@lang")
         label_lang = _get_attribute_item("languageCodeCollection", attr(target, "./@lang")) or None
-        variant_type = _get_attribute_item("variantNameTypeCollection", attr(target, "./@variantType")) or None
+        
+        variant_type = None
+        if variant_collection:
+            variant_type = _get_attribute_item(variant_collection, attr(target, "./@variantType"))
 
         entry = NameEntry(parts=parts, variant_type=variant_type, label_lang=label_lang)
 
@@ -357,7 +362,7 @@ def components(nodes: List[etree._Element]) -> ComponentsBlock | None:
             # Common
             title = titles(comp, "title"),
             agents = agents(comp, "agent"),
-            place =  related_authority(comp, ".", "place", "place"),
+            place =  related_authority(comp, ".", "place", "place", "place"),
             related_records = related_records(comp, "relatedTo"),
             origin_date = dates(comp, "originDate", "start", "end"),
             extent = decorated_text(comp, "extent"),
@@ -439,7 +444,7 @@ def decorated_texts_with_type(node: etree.Element, xp: str, tag: str, typeCollec
         label = _get_label(target),
         texts = [DecoratedTextWithType(
             type = _get_attribute_item(typeCollection, attr(e, textType)),
-            text = text(e, ".")
+            text = text(e, "."),
             ) for e in elements(node, f"{xp}/{tag}")]
     )
 

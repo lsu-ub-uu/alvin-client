@@ -37,7 +37,7 @@
         {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.label url=agent.url value=agent.display attribute=agent.display_roles %}
       {% endfor %}
       {% include "./_metadata_row.html" with label=c.languages.label value=c.languages.items|join:"<br>"|safe %}
-      {% for place in c.origin_places %}
+      {% for place in c.origin_places.places %}
         {% include "./_metadata_row.html" with label=place.label url=place.url value=place.name.title %}
       {% endfor %}
       {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.origin_date.label value=c.origin_date.dates.display %}
@@ -102,7 +102,7 @@
           {% include "alvin_viewer/_partials/_metadata_row.html" with label=agent.label url=agent.url value=agent.display attribute=agent.display_roles %}
         {% endfor %}
         {% include "./_metadata_row.html" with label=c.languages.label value=c.languages.items|join:"<br>"|safe %}
-        {% for place in c.origin_places %}
+        {% for place in c.origin_places.places %}
           {% include "./_metadata_row.html" with label=place.label url=place.url value=place.name.title %}
         {% endfor %}
         {% include "alvin_viewer/_partials/_metadata_row.html" with label=c.origin_date.label value=c.origin_date.dates.display %}

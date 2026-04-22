@@ -102,3 +102,4 @@ def get_item_dict() -> Optional[dict]:
             _reload_items()
             d = cache.get(CACHE_DICT_KEY)
         return d or None
+    

@@ -25,7 +25,7 @@ def extract(root: etree._Element) -> AlvinOrganisation:
         created = decorated_text(root, _xp(rt, "recordInfo/tsCreated")),
         label = _get_label(element(root, "data/organisation")),
         authority_names = names(root, _xp(rt, "authority"), organisation["AUTH_NAME"]),
-        variant_names = names(root, _xp(rt, "variant"), organisation["VARIANT"]),
+        variant_names = names(root, _xp(rt, "variant"), organisation["VARIANT"], "variantOrganisationNameTypeCollection"),
         organisation_info = dates(root, _xp(rt, "organisationInfo"), "start", "end"),
         display_date = decorated_text(root, _xp(rt, "organisationInfo/displayDate")),
         notes = decorated_texts_with_type(root, _xp(rt, "note"), ".", "noteTypeAuthorityCollection", "./@noteType"),

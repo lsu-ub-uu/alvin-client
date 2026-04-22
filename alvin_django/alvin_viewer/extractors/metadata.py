@@ -342,8 +342,8 @@ class NameEntry:
         n = joiner.join(filter(None, (self.parts.get(key) for key in keys)))
         if self.parts.get("terms_of_address"):
             n += f", {self.parts.get('terms_of_address')}"
-        if self.parts.get("variant_type"):
-            n += f" ({self.parts.get('variant_type')})"
+        if getattr(self, "variant_type"):
+            n += f" ({getattr(self, "variant_type")})"
         return n
 
 @dataclass(slots=True)

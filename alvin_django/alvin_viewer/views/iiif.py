@@ -3,7 +3,6 @@ from urllib.parse import urljoin
 from django.utils.translation import gettext as _
 from ..extractors.record import extract
 from ..services.alvin_api import AlvinAPI
-from lxml import etree as ET
 
 def _to_int(value, default):
     try:
@@ -72,7 +71,6 @@ def iiif_manifest(request, record_id: str):
         canvas_id = urljoin(manifest_base, f"canvas/{idx}")
         anno_page_id = urljoin(canvas_id + "/", "page")
         anno_id = urljoin(anno_page_id + "/", "anno")
-
         
         original_url = f.findtext("fileLocation/linkedRecord/binary/master/master/actionLinks/read/url")
                 

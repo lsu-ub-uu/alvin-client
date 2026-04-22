@@ -296,7 +296,7 @@
         {% endif %}
 
         {% if has_related %}
-        <h2 class="py-2 font-bold text-lg">{% translate 'Övrigt relaterat' %}:</h2>
+        <h2 class="py-2 font-bold">{% translate 'Övrigt relaterat' %}:</h2>
         <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
             <dl id="allmetadata">
                 {% include "./_authority_links.html" with label=metadata.subject_person.label link_type="alvin-person" authority_links=metadata.subject_person %}

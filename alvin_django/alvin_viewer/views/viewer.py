@@ -70,7 +70,7 @@ def has_all_metadata(metadata) -> bool:
         # AlvinPerson, AlvinPlace, AlvinOrganisation, AlvinLocation, AlvinWork
         "variant_names", "nationality", "gender",
         "fields_of_endeavor", "address", "dates", "member_type", "email",
-        "form_of_work", "serial_number", "opus_number", "thematic_number",
+        "serial_number", "opus_number", "thematic_number",
         "country", "latitude", "longitude"
     ]
 

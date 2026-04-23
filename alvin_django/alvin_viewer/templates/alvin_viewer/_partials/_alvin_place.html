@@ -1,15 +1,16 @@
 {% load i18n static %}
 
 <!-- Metadata -->
-<div class="flex flex-col">
-    <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
-        {% with metadata.authority_names.label as authority_label %}
-            {% for lang, name in metadata.authority_names.names.items %}
-                {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name.display %}
-            {% endfor %}
-        {% endwith %}
-    </div>
-    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
+<div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_related: false }">
+    <section class="mt-4" aria-labelledby="summary-heading">
+        {% if metadata.biographical_note %}
+        <h2 id="summary-heading" class="sr-only">{{metadata.biographical_note.type}}</h2>
+        <p class="text-lg">{{metadata.biographical_note.text|linebreaksbr}}</p>
+        {% endif %}
+    </section>
+
+    {% if has_all_metadata %}
+    <dl id="allmetadata" class="py-2 px-4 mb-6 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.variant_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
                 {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name.display %}
@@ -20,16 +21,27 @@
             {% include "./_metadata_row.html" with label=metadata.longitude.label value=metadata.longitude.text %}
             {% include "./_metadata_row.html" with label=metadata.latitude.label value=metadata.latitude.text %}
         {% endif %}
-        {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
-        {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
-    </div>
-    <div data-xshow="activeTab === 'related'" data-xcloak>
-        <!-- Incoming links -->
-    </div>
+    </dl>
+    {% endif %}
+
+    <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
+        {% include "./_overview.html" %}
+        <dl id="overview">
+        {% with metadata.authority_names.label as authority_label %}
+            {% for lang, name in metadata.authority_names.names.items %}
+                {% include "./_metadata_row.html" with svg_path="../_icons/placename.svg" label=authority_label extra_label=name.label_lang value=name.display %}
+            {% endfor %}
+        {% endwith %}
+        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
+        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
+        </dl>
+
+    </section>
 </div>
 
+<!-- Map -->
 {% if metadata.longitude and metadata.latitude %}
-<div id="alvin-map" class="w-full h-96 mt-8 z-0 border rounded shadow-sm"
+<div id="alvin-map" class="w-full h-96 max-w-4xl mx-auto rounded-xl mt-10"
     data-latitude="{{ metadata.latitude.text }}"
     data-longitude="{{ metadata.longitude.text }}">
 </div>

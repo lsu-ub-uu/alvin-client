@@ -1,34 +1,31 @@
 {% load i18n static %}
 
-{% if box or street or postcode or place_id or country %}
+{% if address.box or address.street or address.postcode or address.place_id or address.country %}
 <div class="md-row">
     <div class="md-label flex flex-row gap-x-1.5">
-        <dt>{{ label }}</dt>
+        <dt>{{ address.label }}</dt>
     </div>
     
     <dd class="md-value">
         <address class="flex flex-col not-italic">
-            {% if box %}
-                <div>{{ box.text }}</div>
+            {% if address.box %}
+                <div>{{ address.box }}</div>
             {% endif %}
             
-            {% if street %}
-                <div>{{ street }}</div>
+            {% if address.street %}
+                <div>{{ address.street }}</div>
             {% endif %}
             
-            {% if postcode or place_id or place %}
+            {% if address.postcode or address.place %}
                 <div>
-                    {{ postcode }}
-                    {% if place_id and place %}
-                        <a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'alvin_viewer' 'alvin-place' place_id %}">{{ place }}</a>
-                    {% elif place %}
-                        {{ place }}
+                    {% if address.place %}
+                        <a class="text-blue-800 dark:text-blue-200 underline" href="{{ address.place.url }}">{{ address.place.display }}</a>
                     {% endif %}
                 </div>
             {% endif %}
             
-            {% if country %}
-                <div>{{ country.item }}</div>
+            {% if address.country %}
+                <div>{{ address.country.item }}</div>
             {% endif %}
         </address>
     </dd>

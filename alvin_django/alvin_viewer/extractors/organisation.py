@@ -2,24 +2,10 @@ from lxml import etree
 
 from .records import AlvinOrganisation
 from .metadata import Address
-from .common import _get_label, _norm_rt, _xp, date, decorated_list_item, decorated_text, note_and_type, electronic_locators, element, identifiers, names, origin_place, related_authority, text
+from .common import _get_label, _norm_rt, _xp, address, date, decorated_list_item, decorated_text, note_and_type, electronic_locators, element, identifiers, names, origin_place, related_authority, text
 from .mappings import organisation
 
 rt = _norm_rt("alvin-organisation")
-
-def _address(root: etree._Element) -> Address:
-    target = element(root, _xp(rt, "address"))
-    if target is None:
-        return None
-    
-    return Address(
-        label = _get_label(element(root, _xp(rt, "address"))),
-        box = decorated_text(root, _xp(rt, "address/postOfficeBox")),
-        street = text(root, _xp(rt, "address/street")),
-        postcode = text(root, _xp(rt, "address/postcode")),
-        place = origin_place(root, _xp(rt, "address")),
-        country = decorated_list_item(root, _xp(rt, "address/country"))
-    )
 
 def extract(root: etree._Element) -> AlvinOrganisation:
 
@@ -37,7 +23,7 @@ def extract(root: etree._Element) -> AlvinOrganisation:
         general_note = note_and_type(root, _xp(rt, "note[@noteType = 'general']"), "noteTypeCollection", "general"),
         source_note = note_and_type(root, _xp(rt, "note[@noteType = 'sourceData']"), "noteTypeCollection", "sourceData"),
         identifiers = identifiers(root, _xp(rt, "identifier")),
-        address = _address(root),
+        address = address(root, rt),
         electronic_locators = electronic_locators(root, _xp(rt, "electronicLocator")),
         related_organisations = related_authority(root, _xp(rt, "related"), "organisation", "relatedOrganisationTypeCollection")
     )

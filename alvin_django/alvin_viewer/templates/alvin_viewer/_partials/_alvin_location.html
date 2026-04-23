@@ -1,50 +1,83 @@
 {% load i18n static %}
 
-{% block title %}
-<title>Alvin - {{ metadata.authority_names.title }}</title>
-{% endblock %}
-
 <!-- Metadata -->
-<div class="flex flex-col">
-        <div data-xshow="activeTab === 'overview' || activeTab === 'all_metadata'" data-xcloak>
-        {% with metadata.authority_names.label as authority_label %}
-            {% for lang, name in metadata.authority_names.names.items %}
-                {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name.display %}
-            {% endfor %}
-        {% endwith %}
-        {% include "./_metadata_row.html" with label=metadata.dates.label value=metadata.organisation_info.dates.display %}
-        {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
-        {% include "./_address.html" with label=metadata.address.label place_id=metadata.address.place.id box=metadata.address.box street=metadata.address.street postcode=metadata.address.postcode place=metadata.address.place.name.title country=metadata.address.country %}
-        {% if metadata.email.text %}
-            {% with "mailto:"|add:metadata.email.text as mailto_url %}
-                {% include "./_metadata_row.html" with label=metadata.email.label url=mailto_url value=metadata.email.text %}
-            {% endwith %}
+<div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_related: false }">
+    <section class="mt-4" aria-labelledby="summary-heading">
+        {% if metadata.summary %}
+        <h2 id="summary-heading" class="sr-only">{{metadata.summary.label}}</h2>
+        <p class="text-lg">{{metadata.summary.display}}</p>
         {% endif %}
-    </div>
-    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
+    </section>
+
+    {% if has_all_metadata %}
+    <dl id="allmetadata" class="py-2 px-4 mb-6 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% with metadata.variant_names.label as variant_label %}
             {% for lang, name in metadata.variant_names.names.items %}
                 {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
-        {% include "./_metadata_row.html" with label=metadata.organisation_info.label value=metadata.organisation_info.dates.display %}
-        {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
         {% include "./_metadata_row.html" with label=metadata.member_type.label value=metadata.member_type.item %}
-        {% include "./_metadata_row.html" with label=metadata.summary.label value=metadata.summary.display %}
+        {% include "./_address.html" with address=metadata.address %}
         {% if metadata.longitude and metadata.latitude %}
             {% translate "Vägbeskrivning" as label %}
             {% include "./_metadata_row.html" with label=label url=metadata.maps_url value='Google Maps' %}
         {% endif %}
-        {% include "./_metadata_row.html" with label=metadata.longitude.label value=metadata.longitude.text %}
-        {% include "./_metadata_row.html" with label=metadata.latitude.label value=metadata.latitude.text %}
+    </dl>
+    {% endif %}
+
+    <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
+        {% include "./_overview.html" %}
+        <dl id="overview">
+            {% with metadata.authority_names.label as authority_label %}
+                {% for lang, name in metadata.authority_names.names.items %}
+                    {% include "./_metadata_row.html" with svg_path="../_icons/organisationname.svg" label=authority_label extra_label=name.label_lang value=name.display %}
+                {% endfor %}
+            {% endwith %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.start_date.label value=metadata.start_date.display %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.end_date.label value=metadata.end_date.display %} 
+            {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.display_date.label value=metadata.display_date.text %}
+            {% if metadata.email.text %}
+                {% with "mailto:"|add:metadata.email.text as mailto_url %}
+                    {% include "./_metadata_row.html" with svg_path="../_icons/email.svg" label=metadata.email.label url=mailto_url value=metadata.email.text %}
+                {% endwith %}
+            {% endif %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
+        </dl>
+
+    </section>
+
+    {% if has_related %}
+    <div class="flex flex-row py-2 border-b border-[#D1D9D5]">
+        <button
+            data-xon.click="open_related = ! open_related"
+            class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin">
+            {% include '../_icons/related.svg' with class="size-6" %}
+            <span>{% translate 'Relaterat' %}</span>
+            <svg 
+                class="size-6 inline-block transition-transform duration-100 ease-in-out origin-center" 
+                data-xbind:class="open_related ? 'rotate-90' : 'rotate-0'"
+                stroke-width="2" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                color="currentColor"
+                >
+                <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
     </div>
-    <div data-xshow="activeTab === 'all_metadata' || activeTab === 'related'" data-xcloak>
-        {% for electronic_locator in metadata.electronic_locators %}
-            {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
-        {% endfor %}
-    </div>
-    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
-        {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
-        {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
-    </div>
+
+    {% if metadata.electronic_locators %}
+    <div data-xshow="open_related" data-xcloak class="mt-6"> 
+        <h2 class="py-2 font-bold">{% translate 'Övrigt relaterat' %}:</h2>
+        <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
+            <dl id="allmetadata">
+                {% for electronic_locator in metadata.electronic_locators %}
+                    {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
+                {% endfor %}
+            </dl>
+        </div>
+    </div>   
+    {% endif %}
+    {% endif %}
 </div>

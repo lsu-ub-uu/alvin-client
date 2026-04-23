@@ -106,14 +106,7 @@
     {% endif %}
 
     <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
-        <div class="flex flex-row gap-2 items-center text-[#333333] dark:text-off-white font-bold text-xl">
-            <svg class="size-7 my-4 text-dark-alvin dark:text-light-alvin" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor">
-                <path d="M12 11.5V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M12 7.51L12.01 7.49889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            <h4 class="text-dark-alvin dark:text-light-alvin">{% translate 'Översikt' %}</h4>
-        </div>
+        {% include "./_overview.html" %}
         <dl id="overview">
             {% for agent in metadata.agents %}
                 {% include "./_metadata_row.html" with svg_path=agent.icon_path label=agent.display_roles url=agent.url value=agent.display %}
@@ -128,7 +121,7 @@
             {% if metadata.files.rights_code %}
             <section class="border-t border-[#D1D9D5] mt-4 py-4" aria-labelledby="licensing-heading">
                 <div class="flex flex-row gap-x-2 items-center">
-                    <svg class="size-9 text-dark-alvin dark:text-[#c6e3d9] mx-4" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
+                    <svg class="size-9 mx-4" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
                         <title>{{metadata.files.rights_label}}</title>
                         <path d="M12 7L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M12 16.01L12.01 15.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -136,7 +129,7 @@
                     </svg>
                     
                     <div>
-                        <h2 class="text-dark-alvin dark:text-[#c6e3d9] font-bold" id="licensing-heading">{{metadata.files.rights_label}}</h2>
+                        <h2 class="font-bold" id="licensing-heading">{{metadata.files.rights_label}}</h2>
                         <p>{{metadata.files.rights}}</p>
                         <a href="{{metadata.files.rights_url}}">{%translate 'Information om licensen' %}</a>
                     </div>
@@ -203,7 +196,6 @@
             {{metadata.related_records.label}}:
         </h2>
         <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
-
 
             {% for type_block in metadata.related_records.ordered_by_type %}
             <h3 class="my-2">{{type_block.label}}</h3>

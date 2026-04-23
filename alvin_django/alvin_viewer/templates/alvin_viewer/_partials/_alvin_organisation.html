@@ -16,6 +16,7 @@
                 {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
+        {% include "./_address.html" with address=metadata.address %}
         {% include "./_metadata_row.html" with label=metadata.general_note.type value=metadata.general_note.text %}
         {% include "./_metadata_row.html" with label=metadata.source_note.type value=metadata.source_note.text %}
         {% for identifier in metadata.identifiers %}
@@ -25,26 +26,18 @@
     {% endif %}
 
     <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
-        <div class="flex flex-row gap-2 items-center text-[#333333] dark:text-off-white font-bold text-xl">
-            <svg class="size-7 my-4 text-dark-alvin dark:text-light-alvin" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor">
-                <path d="M12 11.5V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M12 7.51L12.01 7.49889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            <h4 class="text-dark-alvin dark:text-light-alvin">{% translate 'Översikt' %}</h4>
-        </div>
-        
+        {% include "./_overview.html" %}
         <dl id="overview">
             {% with metadata.authority_names.label as authority_label %}
                 {% for lang, name in metadata.authority_names.names.items %}
-                    {% include "./_metadata_row.html" with label=authority_label extra_label=name.label_lang value=name.display %}
+                    {% include "./_metadata_row.html" with svg_path="../_icons/organisationname.svg" label=authority_label extra_label=name.label_lang value=name.display %}
                 {% endfor %}
             {% endwith %}
-            {% include "./_metadata_row.html" with label=metadata.start_date.label value=metadata.start_date.display %}
-            {% include "./_metadata_row.html" with label=metadata.end_date.label value=metadata.end_date.display %} 
-            {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
-            {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
-            {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.start_date.label value=metadata.start_date.display %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.end_date.label value=metadata.end_date.display %} 
+            {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.display_date.label value=metadata.display_date.text %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
         </dl>
 
     </section>

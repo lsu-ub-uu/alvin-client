@@ -54,7 +54,8 @@ class AlvinOrganisation(CommonMetadata):
 class AlvinLocation(CommonMetadata):
     label: Optional[str] = None
     authority_names: NamesBlock = None
-    dates: DatesBlock = None
+    start_date: DateEntry = None
+    end_date: DateEntry = None
     display_date: DecoratedText = None
     member_type: DecoratedListItem = None
     email: DecoratedText = None
@@ -80,6 +81,7 @@ class AlvinWork(CommonMetadata):
     incipit: DecoratedText = None
     literature: DecoratedText = None
     note: DecoratedText = None
+    thesis: DecoratedText = None
     agents: List[Agent] = None
     longitude: DecoratedText = None
     latitude: DecoratedText = None

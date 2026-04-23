@@ -8,7 +8,7 @@ from django.core.cache import cache
 from ..xmlutils.nodes import attr, element, elements, first, text, texts
 from .mappings import person, place, organisation
 from ..services.text_collector import get_item_dict
-from .metadata import (Agent, Component, CommonMetadata, ComponentsBlock, DateEntry, DatesBlock, 
+from .metadata import (Address, Address, Agent, Component, ComponentsBlock, DateEntry, DatesBlock, 
                        DatesValue, DecoratedList, DecoratedText, 
                        DecoratedListItem, DecoratedTextWithType, DecoratedTexts, 
                        DecoratedTextsWithType, Edge, ElectronicLocator, Identifier, Location,
@@ -50,6 +50,21 @@ def compact(d: Dict[str, Any]) -> Dict[str, Any]:
 
 
 # COMMON -----------
+
+def address(root: etree._Element, resource_type: str) -> Address:
+    target = element(root, _xp(resource_type, ".//address"))
+    print(target)
+    if target is None:
+        return None
+    
+    return Address(
+        label = _get_label(element(root, _xp(resource_type, "address"))),
+        box = text(root, _xp(resource_type, "address/postOfficeBox")),
+        street = text(root, _xp(resource_type, "address/street")),
+        postcode = text(root, _xp(resource_type, "address/postcode")),
+        place = origin_place(root, _xp(resource_type, "address")),
+        country = decorated_list_item(root, _xp(resource_type, "address/country"))
+    )
 
 def note_and_type(node: etree._Element, xp: str, note_type: str, type_collection: str) -> DecoratedTextWithType | None:
     target = _get_target(node, xp)

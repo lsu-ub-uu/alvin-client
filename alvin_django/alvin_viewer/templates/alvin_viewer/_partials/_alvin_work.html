@@ -1,26 +1,36 @@
 {% load i18n static %}
 
 <!-- Metadata -->
- <div class="flex flex-col w-full">
-    <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'">
+<div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_inventory: false, open_related: false }">
+    <section class="mt-4" aria-labelledby="summary-heading">
+        {% if metadata.summary %}
+        <h2 id="summary-heading" class="sr-only">{{metadata.summary.label}}</h2>
+        <p class="text-lg">{{metadata.summary.text|linebreaksbr}}</p>
+        {% endif %}
+        {% if metadata.subjects %}
+        <div class="flex flex-col my-5 dark:text-gray-200">
+            <div class="flex gap-x-1 mb-2">
+                <svg aria-hidden="true" focusable="false" class="size-6" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
+                    <path d="M3 17.4V6.6C3 6.26863 3.26863 6 3.6 6H16.6789C16.8795 6 17.0668 6.10026 17.1781 6.26718L20.7781 11.6672C20.9125 11.8687 20.9125 12.1313 20.7781 12.3328L17.1781 17.7328C17.0668 17.8997 16.8795 18 16.6789 18H3.6C3.26863 18 3 17.7314 3 17.4Z" stroke="currentColor" stroke-width="2"></path>
+                </svg>
+                <h2 class="text-md font-bold" id="subject-words-heading">{{metadata.subjects.label}}</h2>
+            </div>
+            <ul class="flex gap-x-2 gap-y-2 flex-wrap list-none" aria-labelledby="subject-words-heading">
+            {% for subject_group in metadata.subjects.entries %}
+                {% for subject in subject_group.collect_subjects %}
+                <li class="dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 dark:text-off-white hover:bg-light-alvin hover:text-dark-alvin shadow-sm px-4 py-2 rounded-md cursor-pointer">{{subject}}</li>
+                {% endfor %}
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </section>
+
+    {% if has_all_metadata %}
+    <dl id="allmetadata" class="py-2 px-4 mb-6 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% for title in metadata.variant_titles.titles %}
             {% include "./_metadata_row.html" with label=metadata.variant_titles.label extra_label=title.type value=title.display %}
         {% endfor %}
-    </div>
-    <div>
-        {% for agent in metadata.agents %}
-            {% include "./_metadata_row.html" with label=agent.label url=agent.url value=agent.display attribute=agent.display_roles %}
-        {% endfor %}
-    </div>
-    <div x-show="activeTab === 'overview' || activeTab === 'all_metadata'">
-        {% include "./_metadata_row.html" with label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
-    </div>
-    <div>
-        {% for place in metadata.origin_places.places %}
-            {% include "./_metadata_row.html" with label=metadata.origin_places.label url=place.url value=place.display extra_value=place.display_countries %}
-        {% endfor %}
-    </div>
-    <div data-xshow="activeTab === 'all_metadata'" data-xcloak>
         {% for date in metadata.date_other %}
             {% include "./_metadata_row.html" with label=date.type value=date.dates.display|linebreaksbr %}
         {% endfor %}
@@ -35,11 +45,34 @@
         {% include "./_metadata_row.html" with label=metadata.music_medium_other.label value=metadata.music_medium_other.text %}
         {% include "./_metadata_row.html" with label=metadata.genre_form.label value=metadata.genre_form.display %}
         {% include "./_metadata_row.html" with label=metadata.note.label value=metadata.note.text|linebreaksbr %}
+        {% include "./_metadata_row.html" with label=metadata.thesis.label value=metadata.thesis.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.literature.label value=metadata.literature.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.serial_number.label value=metadata.serial_number.text %}
         {% include "./_metadata_row.html" with label=metadata.opus_number.label value=metadata.opus_number.text %}
         {% include "./_metadata_row.html" with label=metadata.thematic_number.label value=metadata.thematic_number.text %}
-        {% include "./_metadata_row.html" with label=metadata.created.label value=metadata.created.text %}
-        {% include "./_metadata_row.html" with label=metadata.last_updated.label value=metadata.last_updated.text %}
-    </div>
+    </dl>
+    {% endif %}
+
+    <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
+        {% include "./_overview.html" %}
+        <dl id="overview">
+            {% for agent in metadata.agents %}
+                {% include "./_metadata_row.html" with svg_path=agent.icon_path label=agent.display_roles url=agent.url value=agent.display %}
+            {% endfor %}
+            {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
+            {% for place in metadata.origin_places.places %}
+                {% include "./_metadata_row.html" with svg_path="../_icons/place.svg" label=place.label url=place.url value=place.display extra_value=place.display_countries %}
+            {% endfor %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
+        </dl>
+    </section>
+
+    <section data-xshow="open_related" data-xcloak aria-labelledby="related-heading" class="mt-6">
+
+        {% if has_related %}
+        {% endif %}
+
+    </section>
+    
 </div>

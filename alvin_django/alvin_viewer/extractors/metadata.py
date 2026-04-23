@@ -342,7 +342,7 @@ class NameEntry:
         if self.parts.get("terms_of_address"):
             n += f", {self.parts.get('terms_of_address')}"
         if getattr(self, "variant_type"):
-            n += f" ({getattr(self, "variant_type")})"
+            n += f" ({getattr(self, 'variant_type')})"
         return n
 
 @dataclass(slots=True)

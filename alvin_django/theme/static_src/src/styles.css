@@ -56,6 +56,16 @@ Theme specific
   --color-alvin-orange: #bf7125;
   --color-alvin-grey: #f5f5f5;
   --color-off-white: #faf9f6;
+
+  /* Material design palette */
+  --color-primary: #7fbfa7;
+  --color-primary-dark: #5e9b85;
+  --color-primary-container: #dcf0e8;
+  --color-on-primary-container: #1e3b30;
+  
+  --color-surface: #f4faf7;
+  --color-surface-container: #e8f3ef;
+  --color-surface-container-high: #dbe9e3;
 }
 
 html {
@@ -89,10 +99,8 @@ Alvin viewer
 } 
 
 .md-label {
-  @apply w-full font-bold;
+  @apply w-full font-bold text-primary-dark;
 }
-
-
 
 #allmetadata .md-label {
   /* Ändra från md: till sm: så den matchar när raden blir en rad */
@@ -112,6 +120,7 @@ Alvin viewer
   /* Låt värdet ta resten av platsen (3/5 eller flex-1) */
   @apply sm:w-3/5 pl-4 flex-grow;
 }
+
 a { 
   @apply text-blue-800 dark:text-blue-200 underline;
 }

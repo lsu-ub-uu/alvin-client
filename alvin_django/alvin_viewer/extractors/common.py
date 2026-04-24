@@ -536,4 +536,7 @@ def edge(node: etree._Element, xp: str, item: str, item_text: str) -> Edge:
 def _get_attribute_item(collection: str, item: str) -> str:
     if item is None:
         return None
-    return ITEMS_DICT.get(collection, {}).get(item, {}).get(_get_lang(), None) or f"Item not in cache: {item}"
+    try:
+        return ITEMS_DICT.get(collection, {}).get(item, {}).get(_get_lang(), None) or f"Item not in cache: {item}"
+    except Exception as e:
+        return f"Error retrieving item: {item} ({str(e)})"

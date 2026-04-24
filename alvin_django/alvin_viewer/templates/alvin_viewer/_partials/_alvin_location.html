@@ -26,7 +26,6 @@
     {% endif %}
 
     <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
-        {% include "./_overview.html" %}
         <dl id="overview">
             {% with metadata.authority_names.label as authority_label %}
                 {% for lang, name in metadata.authority_names.names.items %}

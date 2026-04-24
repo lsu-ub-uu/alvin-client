@@ -54,7 +54,6 @@
     {% endif %}
 
     <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
-        {% include "./_overview.html" %}
         <dl id="overview">
             {% for agent in metadata.agents %}
                 {% include "./_metadata_row.html" with svg_path=agent.icon_path label=agent.display_roles url=agent.url value=agent.display %}

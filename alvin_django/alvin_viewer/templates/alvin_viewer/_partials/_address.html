@@ -16,7 +16,7 @@
                 <div>{{ address.street }}</div>
             {% endif %}
             
-            {% if address.postcode or address.place %}
+            {% if address.place.name %}
                 <div>
                     {% if address.place %}
                         <a class="text-blue-800 dark:text-blue-200 underline" href="{{ address.place.url }}">{{ address.place.display }}</a>

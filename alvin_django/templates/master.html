@@ -16,12 +16,13 @@
     {% tailwind_css %}
 
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
     <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
-    <link rel="alternate" href="{{ request.get_host }}/en{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="en">
-    <link rel="alternate" href="{{ request.get_host }}/no{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="no">
-    <link rel="alternate" href="{{ request.get_host }}/sv{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="sv">
-    <link rel="alternate" href="{{ request.get_host }}{% with description=request.get_full_path|safe %}{{description|slice:"3:2083" }}{% endwith %}" hreflang="x-default">
-    
+     <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}/en{{ request.get_full_path|slice:"3:" }}" hreflang="en">
+    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}/no{{ request.get_full_path|slice:"3:" }}" hreflang="no">
+    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}/sv{{ request.get_full_path|slice:"3:" }}" hreflang="sv">
+    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"3:" }}" hreflang="x-default">   
     <!-- AlpineJS -->
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="{% static 'js/alpine-validation.js' %}"></script>

@@ -1,4 +1,4 @@
-{% extends "vocabulary/userguidemaster.html" %}
+{% extends "userguidemaster.html" %}
 {% load static %}
 {% load i18n %}
 {% block title %}Alvin - {% translate 'Plats' %}{% endblock %}
@@ -23,7 +23,7 @@
                     </svg>
                 </button>
 	    </div>
-            <nav class="hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
+            <nav class="pagenav hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#sections">{% translate 'Sektioner i formuläret' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#authority">{% translate 'Auktoritetsinformation' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#variant">{% translate 'Variantformer' %}</a>
@@ -32,7 +32,7 @@
 
 	    <!-- Mobile menu -->
 
-            <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4">
+            <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4 pagenav">
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#sections">{% translate 'Sektioner i formuläret' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#authority">{% translate 'Auktoritetsinformation' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#variant">{% translate 'Variantformer' %}</a>              

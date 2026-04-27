@@ -138,7 +138,7 @@
       <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
           <div class="flex flex-col justify-center">  
               <h2 class="text-2xl font-bold pb-2">{% translate 'Sökfilter' %}</h2> 
-              <form action="/search" method="get">
+              <form action="{% url 'alvin_search' %}" method="get">
                   <input type="hidden" name="searchType" id="searchType" value="{{ searchType }}">
                   <div class="py-2">
                       <label for="freetext" class="text-sm py-2 uppercase font-semibold text-gray-700 dark:text-gray-300">{% translate 'Fritext' %}</label>

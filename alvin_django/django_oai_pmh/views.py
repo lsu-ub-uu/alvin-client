@@ -25,6 +25,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
 from .settings import NUM_PER_PAGE
+from django.templatetags.static import static
 
 import requests
 from lxml import etree
@@ -81,18 +82,34 @@ def oai2(request):
                             errors.append(_error("idDoesNotExist", identifier))                                                 
                         if response.status_code == 200:
                             xml_record = etree.fromstring(response.content) 
+                            xslt_path_alvin_xml = static('xsl/metadata-alvin_xml.xsl')
+                            absolute_xslt_alvin_xml = request.build_absolute_uri(xslt_path_alvin_xml)
+                            xslt_path_alvin_rdf = static('xsl/metadata-alvin_rdf.xsl')
+                            absolute_xslt_alvin_rdf = request.build_absolute_uri(xslt_path_alvin_rdf)
+                            xslt_path_oai_dc = static('xsl/metadata-oai_dc.xsl')
+                            absolute_xslt_oai_dc = request.build_absolute_uri( xslt_path_oai_dc)
                             
                             if metadata_prefix == 'alvin_xml':
 
-                                with urlopen('http://127.0.0.1:8000/static/xsl/metadata-alvin_xml.xsl') as f:
+                                with urlopen(absolute_xslt_alvin_xml) as f:
                                   xslt_tree = etree.parse(f, parser)
                                   transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
                                   metadataalvin_xml = transform(xml_record)	# Transform source XML tree
 
+                            elif metadata_prefix == 'alvin_rdf':
+                                domain_root = request.build_absolute_uri('/')[:-1]  
+  
+                                argDict = {}
+                                argDict["domain_root"] = etree.XSLT.strparam(domain_root)
+
+                                with urlopen(absolute_xslt_alvin_rdf) as f:
+                                  xslt_tree = etree.parse(f, parser)
+                                  transform = etree.XSLT(xslt_tree)     	        # Create the XSLT transformer
+                                  metadataalvin_rdf = transform(xml_record, **argDict)	# Transform source XML tree
                             
                             else:
 
-                                with urlopen('http://127.0.0.1:8000/static/xsl/metadata-oai_dc.xsl') as f:
+                                with urlopen(absolute_xslt_oai_dc) as f:
                                   xslt_tree = etree.parse(f, parser)
                                   transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
                                   metadataoai_dc = transform(xml_record)	# Transform source XML tree
@@ -309,7 +326,13 @@ def oai2(request):
                 response = requests.get(list_url, headers=xml_headers_list)
 
             if response.status_code == 200:
-                xml_list = etree.fromstring(response.content)         
+                xml_list = etree.fromstring(response.content) 
+                xslt_path_alvin_xml = static('xsl/metadata-alvin_xml.xsl')
+                absolute_xslt_alvin_xml = request.build_absolute_uri(xslt_path_alvin_xml)
+                xslt_path_alvin_rdf = static('xsl/metadata-alvin_rdf.xsl')
+                absolute_xslt_alvin_rdf = request.build_absolute_uri(xslt_path_alvin_rdf)
+                xslt_path_oai_dc = static('xsl/metadata-oai_dc.xsl')
+                absolute_xslt_oai_dc = request.build_absolute_uri( xslt_path_oai_dc)        
                 records = []
                 for record in xml_list.findall('data/record/data/record'):
                     records.append({
@@ -320,14 +343,21 @@ def oai2(request):
 
                 if metadataprefix == 'alvin_xml':
 
-                    with urlopen('http://127.0.0.1:8000/static/xsl/metadata-alvin_xml.xsl') as f:
+                    with urlopen(absolute_xslt_alvin_xml) as f:
                         xslt_tree = etree.parse(f, parser)
                         transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
                         metadataalvin_xml = transform(xml_list)	# Transform source XML tree
+
+                elif metadataprefix == 'alvin_rdf':
+
+                    with urlopen(absolute_xslt_alvin_rdf) as f:
+                        xslt_tree = etree.parse(f, parser)
+                        transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
+                        metadataalvin_rdf = transform(xml_list)	# Transform source XML tree
                             
                 else:
 
-                    with urlopen('http://127.0.0.1:8000/static/xsl/metadata-oai_dc.xsl') as f:
+                    with urlopen(absolute_xslt_oai_dc) as f:
                         xslt_tree = etree.parse(f, parser)
                         transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
                         metadataoai_dc = transform(xml_list)	# Transform source XML tree

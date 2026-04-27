@@ -1,4 +1,4 @@
-{% extends "vocabulary/userguidemaster.html" %}
+{% extends "userguidemaster.html" %}
 {% load static %}
 {% load i18n %}
 {% block title %}Alvin - Cora REST-API{% endblock %}
@@ -23,7 +23,7 @@
                     </svg>
                 </button>
 	    </div>
-            <nav class="hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
+            <nav class="pagenav hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#records">{% translate 'Poster i Alvin' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#create">{% translate 'Skapa bibliografisk post' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#read">{% translate 'Läsa bibliografisk post' %}</a>
@@ -34,7 +34,7 @@
 
 	    <!-- Mobile menu -->
 
-            <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4">
+            <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4 pagenav">
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#records">{% translate 'Poster i Alvin' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#create">{% translate 'Skapa bibliografisk post' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#read">{% translate 'Läsa bibliografisk post' %}</a>
@@ -49,17 +49,17 @@
   <main class="w-full md:w-2/4 flex-grow pt-1 px-3 mb-10">
      <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">Cora REST-API</h1>
      <p class="py-2 font-bold">{% translate 'Medlemmar kan läsa, skapa och uppdatera poster i Alvin via ett REST-API som bygger på Cora, ett metadatadrivet generiskt öppet digitalt arkivsystem utformat för att hantera strukturerad metadata och filer.' %}</p> 
-     <p class="py-2">{% translate 'Cora utvecklas av Nationella system vid Uppsala universitetsbibliotek' %}</p>
-     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://cora.alvin-portal.org/rest/">Cora Record API-dokumentation</a> beskriver hur poster och filer hanteras samt hur sökningar görs.</p>
+     <p class="py-2">{% translate 'Cora utvecklas av Nationella system vid Uppsala universitetsbibliotek' %}.</p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://cora.alvin-portal.org/rest/">Cora Record API Documentation</a> {% translate 'beskriver hur poster och filer hanteras samt hur sökningar görs.' %}</p>
  
-   <h2 id="alvin" class="text-3xl md:text-4xl font-bold pt-4">Poster i Alvin</h2>
-    <p class="py-2">För att skapa och uppdatera poster krävs att användaren är registrerad i systemet (endast tillgängligt för personer kopplade till Alvins medlemsorganisationer). Publicerade poster kan däremot läsas av alla och är öppet tillgängliga utan inloggning.</p>
+   <h2 id="alvin" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Poster i Alvin' %}</h2>
+    <p class="py-2">{% translate 'För att skapa och uppdatera poster krävs att användaren är registrerad i systemet (endast tillgängligt för personer kopplade till Alvins medlemsorganisationer). Publicerade poster kan däremot läsas av alla och är öppet tillgängliga utan inloggning.' %}</p>
 
-     <p class="py-2">Poster hanteras via Alvins dataformat i Cora uttryckt som antingen XML eller JSON. Formatbeskrivningen av typer och klasser är tillgänglig i katalogiseringsklienten samt som öppen länkad vokabulär.</p> 
+     <p class="py-2">{% translate 'Poster hanteras via Alvins dataformat i Cora uttryckt som antingen XML eller JSON. Formatbeskrivningen av typer och klasser är tillgänglig i katalogiseringsklienten samt som öppen länkad vokabulär.' %}</p> 
  
      
-     <h3 id="create" class="text-2xl md:text-3xl font-bold pt-4">Skapa bibliografisk post</h3>
-     <p class="py-2">Obligatoriska fält för alla bibliografiska poster (<span class="font-mono">record</span>) är resurstyp (<span class="font-mono">typeOfResource</span>), titel (<span class="font-mono">title</span>) samt arkivinstitution (<span class="font-mono">location</span>). Förutom beskrivande Alvin-metadata kräver Cora ett antal specifika obligatoriska kontrollfält i elementet <span class="font-mono">recordInfo</span>.</p> 
+     <h3 id="create" class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Skapa bibliografisk post' %}</h3>
+     <p class="py-2">{% translate 'Obligatoriska fält för alla bibliografiska poster (<span class="font-mono">record</span>) är resurstyp (<span class="font-mono">typeOfResource</span>), titel (<span class="font-mono">title</span>) samt arkivinstitution (<span class="font-mono">location</span>). Förutom beskrivande Alvin-metadata kräver Cora ett antal specifika obligatoriska kontrollfält i elementet <span class="font-mono">recordInfo</span>.' %}</p> 
 
 <p class="py-2">
 <pre class="text-xs px-4 text-white bg-black overflow-auto">  
@@ -96,15 +96,15 @@
 </pre>
 </p>
 <ul class="py-2 list-disc list-inside">
-<li class="py-2"><span class="font-mono">validationType</span> anger vilken uppsättning metadataelement posten kontrolleras mot. Olika resurstyper har olika tillåtna underelement. Kopplat till resurstypen via länkat id.</li>
-<li class="py-2"><span class="font-mono">dataDivider</span> har ett fast värde alvinData som länkat id.</li>
-<li class="py-2"><span class="font-mono">permissionUnit</span> är för att hantera rättigheter en nödvändig dubblering av id-nummer för den länkade arkivinstitutionen i posten. alvin-location med länkat id 1 i elementet location dubbleras alltså till permissionUnit med värde 1. Endast poster som tillhör användarens egen organisation kan skapas.</li>
-<li class="py-2"><span class="font-mono">visibility</span> anger om posten skall vara publikt tillgänglig eller inte. Poster kan antingen vara published (läsbara för alla) eller unpublished (endast tillgängliga för inloggade användare hos den egna organisationen).</li>
+<li class="py-2"><span class="font-mono">validationType</span> {% translate 'anger vilken uppsättning metadataelement posten kontrolleras mot. Olika resurstyper har olika tillåtna underelement. Kopplat till resurstypen via länkat id.' %}</li>
+<li class="py-2"><span class="font-mono">dataDivider</span> {% translate 'har ett fast värde alvinData som länkat id.' %}</li>
+<li class="py-2"><span class="font-mono">permissionUnit</span> {% translate 'är för att hantera rättigheter en nödvändig dubblering av id-nummer för den länkade arkivinstitutionen i posten. alvin-location med länkat id 1 i elementet location dubbleras alltså till permissionUnit med värde 1. Endast poster som tillhör användarens egen organisation kan skapas.' %}</li>
+<li class="py-2"><span class="font-mono">visibility</span> {% translate 'anger om posten skall vara publikt tillgänglig eller inte. Poster kan antingen vara published (läsbara för alla) eller unpublished (endast tillgängliga för inloggade användare hos den egna organisationen).' %}</li>
 </ul>
 
-<h3 id="read" class="text-2xl md:text-3xl font-bold pt-4">Läsa bibliografisk post</h3>
-<p class="py-2">Poster som läses via API:et innehåller förutom själva den beskrivande metadatan länkar (<span class="font-mono">actionLinks</span>) till de olika möjligheter användaren har att anropa både posten och inlänkade poster i API:et. Ett omgivande Cora-element (<span class="font-mono">record</span>) innehåller (<span class="font-mono">data</span>) som i sin tur innehåller den faktiska metadataposten.</p>
-<p class="py-2">Notera attributet <span class="font-mono">repeatId</span> som är obligatoriskt för alla upprepningsbara fält i Coras API. <span class="font-mono">repeatId</span> måste innehålla ett unikt nummer inom respektive element.</p>
+<h3 id="read" class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Läsa bibliografisk post' %}</h3>
+<p class="py-2">{% translate 'Poster som läses via API:et innehåller förutom själva den beskrivande metadatan länkar (<span class="font-mono">actionLinks</span>) till de olika möjligheter användaren har att anropa både posten och inlänkade poster i API:et. Ett omgivande Cora-element (<span class="font-mono">record</span>) innehåller (<span class="font-mono">data</span>) som i sin tur innehåller den faktiska metadataposten.' %}</p>
+<p class="py-2">{% translate 'Notera attributet <span class="font-mono">repeatId</span> som är obligatoriskt för alla upprepningsbara fält i Coras API. <span class="font-mono">repeatId</span> måste innehålla ett unikt nummer inom respektive element.' %}</p>
 <p class="py-2">
 <pre class="text-xs px-4 text-white bg-black overflow-auto">
 &lt;record&gt;
@@ -212,8 +212,8 @@
 </pre>
 </p>
   
-     <h3 id="update" class="text-2xl md:text-3xl font-bold pt-4">Uppdatera bibliografisk post</h3>
-<p class="py-2">Vid uppdatering av en befintlig post anges även <span class="font-mono">id</span> samt <span class="font-mono">type</span> i <span class="font-mono">recordInfo</span>. <span class="font-mono">inTrashBin</span> sätts till false.</p>
+     <h3 id="update" class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Uppdatera bibliografisk post' %}</h3>
+<p class="py-2">{% translate 'Vid uppdatering av en befintlig post anges även <span class="font-mono">id</span> samt <span class="font-mono">type</span> i <span class="font-mono">recordInfo</span>. <span class="font-mono">inTrashBin</span> sätts till false.' %}</p>
 <p class="py-2">
 <pre class="text-xs px-4 text-white bg-black overflow-auto">  
 &lt;record&gt;
@@ -257,17 +257,14 @@
 
 
 
-  <h3 id="delete" class="text-2xl md:text-3xl font-bold pt-4">Ta bort bibliografisk post</h3>
+  <h3 id="delete" class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Ta bort bibliografisk post' %}</h3>
 
-<p class="py-2">Bibliografiska poster kan av arkivskäl inte tas bort helt från systemet men går att dölja för användare genom att 
-uppdatera posten som ovan och i <span class="font-mono">recordInfo</span> sätta <span class="font-mono">inTrashBin</span> till true.</p>
+<p class="py-2">{% translate 'Bibliografiska poster kan av arkivskäl inte tas bort helt från systemet men går att dölja för användare genom att uppdatera posten som ovan och i <span class="font-mono">recordInfo</span> sätta <span class="font-mono">inTrashBin</span> till true.' %}</p>
 
-  <h3 id="authority" class="text-2xl md:text-3xl font-bold pt-4">Auktoritetsposter</h3>
+  <h3 id="authority" class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Auktoritetsposter' %}</h3>
 
-<p class="py-2">Hanteras på motsvarande sätt som bibliografiska poster men kan skapas och uppdateras oavsett användarens organisationstillhörighet. De är också alltid öppet publicerade. Det innebär att recordInfo för auktoritetsposter varken innehåller elementen permissionUnit eller visibility. 
-Likaså kan auktoritetsposter som inte är länkade från en annan post tas bort från systemet genom ett DELETE anrop varför inte heller inTrashBin finns för auktoritetsposter.</p>
-<p class="py-2">Som beskrivande metadata måste auktoritetsposter för person, organisation och plats innehålla minst ett 
-<span class="font-mono">authority</span>-element och auktoritetsposter för verk <span class="font-mono">title</span> samt <span class="font-mono">formOfWork</span> som obligatoriska element.</p>
+<p class="py-2">{% translate 'Hanteras på motsvarande sätt som bibliografiska poster men kan skapas och uppdateras oavsett användarens organisationstillhörighet. De är också alltid öppet publicerade. Det innebär att recordInfo för auktoritetsposter varken innehåller elementen permissionUnit eller visibility. Likaså kan auktoritetsposter som inte är länkade från en annan post tas bort från systemet genom ett DELETE anrop varför inte heller inTrashBin finns för auktoritetsposter.' %}</p>
+<p class="py-2">{% translate 'Som beskrivande metadata måste auktoritetsposter för person, organisation och plats innehålla minst ett <span class="font-mono">authority</span>-element och auktoritetsposter för verk <span class="font-mono">title</span> samt <span class="font-mono">formOfWork</span> som obligatoriska element.' %}</p>
 
 
 

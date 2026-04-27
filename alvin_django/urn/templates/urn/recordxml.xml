@@ -1,1 +1,0 @@
-{% block content %}{{recordxml|safe}}{% endblock %}

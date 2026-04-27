@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'vocabulary',
-    'urn',
+    'xml',
     'django_oai_pmh',
     'alvin_search',
 ]
@@ -131,6 +131,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
 
 
 # Static files (CSS, JavaScript, Images)

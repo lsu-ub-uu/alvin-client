@@ -9,6 +9,9 @@
     {% if metadataprefix == 'alvin_xml' %}
         {{metadataalvin_xml|safe }}
     {% endif %}
+    {% if metadataprefix == 'alvin_rdf' %}
+    {{metadataalvin_rdf|safe }}
+    {% endif %}
     {% autoescape on %}   
     {% if cursor < completeListSize %}
     <resumptionToken completeListSize="{{completeListSize}}" cursor="{{cursor}}">{{resumptionToken}}</resumptionToken>

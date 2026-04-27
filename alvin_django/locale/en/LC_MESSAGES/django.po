@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-13 09:03+0100\n"
+"POT-Creation-Date: 2026-04-15 09:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: .\alvin_info\templates\alvin_info\about.html:48
 #: .\templates\_partials\_navbar.html:25 .\templates\_partials\_navbar.html:74
 #: .\templates\_partials\_side_nav.html:27
-#: .\templates\_partials\_top_nav.html:43
+#: .\templates\_partials\_top_nav.html:34
 msgid "Om Alvin"
 msgstr "About"
 
@@ -30,7 +30,6 @@ msgstr "About"
 #: .\alvin_info\templates\alvin_info\copyright.html:13
 #: .\alvin_info\templates\alvin_info\help.html:11
 #: .\alvin_info\templates\alvin_info\institutions.html:11
-#: .\vocabulary\templates\vocabulary\api.html:11
 #: .\vocabulary\templates\vocabulary\iiif.html:11
 #: .\vocabulary\templates\vocabulary\oai-pmh.html:11
 #: .\vocabulary\templates\vocabulary\place.html:11
@@ -56,6 +55,7 @@ msgstr "Reference model"
 #: .\alvin_info\templates\alvin_info\about.html:101
 #: .\alvin_info\templates\alvin_info\copyright.html:30
 #: .\alvin_info\templates\alvin_info\copyright.html:37
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_download_menu.html:10
 msgid "Metadata"
 msgstr "Metadata"
 
@@ -389,19 +389,19 @@ msgstr ""
 "standards for libraries and archives, including"
 
 #: .\alvin_info\templates\alvin_info\about.html:109
-#: .\alvin_info\templates\alvin_info\institutions.html:63
+#: .\alvin_info\templates\alvin_info\institutions.html:62
 msgid "och"
 msgstr "and"
 
 #: .\alvin_info\templates\alvin_info\about.html:112
 #: .\vocabulary\templates\vocabulary\vocabulary.html:30
-#: .\vocabulary\templates\vocabulary\vocabulary.html:42
-#: .\vocabulary\templates\vocabulary\vocabulary.html:101
+#: .\vocabulary\templates\vocabulary\vocabulary.html:40
+#: .\vocabulary\templates\vocabulary\vocabulary.html:96
 msgid "Länkad data"
 msgstr "Linked data"
 
 #: .\alvin_info\templates\alvin_info\about.html:113
-#: .\vocabulary\templates\vocabulary\vocabulary.html:102
+#: .\vocabulary\templates\vocabulary\vocabulary.html:97
 msgid ""
 "Modellen är baserad på länkad data och beskrivningen av relationer mellan "
 "olika poster. Länkningen kan vara hierarkisk (värd/del), parallell (olika "
@@ -412,7 +412,7 @@ msgstr ""
 "parallel (different version or format) or to another related record."
 
 #: .\alvin_info\templates\alvin_info\about.html:114
-#: .\vocabulary\templates\vocabulary\vocabulary.html:103
+#: .\vocabulary\templates\vocabulary\vocabulary.html:98
 msgid ""
 "Bibliografiska poster och auktoritetsposter är länkade genom en typ av "
 "relation (roll) för så kallade agenter (personer eller organisationer). En "
@@ -425,7 +425,7 @@ msgstr ""
 "linked to a person through the role \"collector\"."
 
 #: .\alvin_info\templates\alvin_info\about.html:115
-#: .\vocabulary\templates\vocabulary\vocabulary.html:104
+#: .\vocabulary\templates\vocabulary\vocabulary.html:99
 msgid ""
 "En bibliografisk post i Alvin beskriver antingen en enskild resurs (bok, "
 "bild, karta etc.) eller en samling resurser (t.ex. ett arkiv)."
@@ -434,12 +434,12 @@ msgstr ""
 "image, map, etc.) or a collection of resources (e.g. an archive)."
 
 #: .\alvin_info\templates\alvin_info\about.html:118
-#: .\vocabulary\templates\vocabulary\vocabulary.html:107
+#: .\vocabulary\templates\vocabulary\vocabulary.html:102
 msgid "Länkad data, exempel"
 msgstr "Linked data, example"
 
 #: .\alvin_info\templates\alvin_info\about.html:119
-#: .\vocabulary\templates\vocabulary\vocabulary.html:108
+#: .\vocabulary\templates\vocabulary\vocabulary.html:103
 msgid ""
 "Exempel: Länkad data för Uppsala universitetsbiblioteks exemplar av Röda "
 "rummet av August Strindberg."
@@ -497,42 +497,10 @@ msgstr ""
 "aesthetic, scientific or technical interest that are included in collections "
 "managed by cultural institutions."
 
-#: .\alvin_info\templates\alvin_info\alvin-location.html:66
-#: .\alvin_search\templates\alvin_search\alvin_search.html:188
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:103
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:235
-msgid "Arkivinstitution"
-msgstr "Archival institution"
-
-#: .\alvin_info\templates\alvin_info\alvin-location.html:72
-#: .\alvin_info\templates\alvin_info\alvin-location.html:76
-#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:57
-#: .\vocabulary\templates\vocabulary\alvin_viewer_new.html:50
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:198
-msgid "Översikt"
-msgstr "Overview"
-
-#: .\alvin_info\templates\alvin_info\alvin-location.html:84
-#: .\alvin_info\templates\alvin_info\alvin-location.html:87
-#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:79
-msgid "All metadata"
-msgstr "All metadata"
-
-#: .\alvin_info\templates\alvin_info\alvin-location.html:96
-#: .\alvin_info\templates\alvin_info\alvin-location.html:99
-#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:105
-#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:109
-msgid "Relaterat"
-msgstr "Related"
-
-#: .\alvin_info\templates\alvin_info\alvin-location.html:147
-#: .\alvin_viewer\templates\alvin_viewer\_partials\_search_related.html:19
-msgid "Exportera"
-msgstr "Export"
-
 #: .\alvin_info\templates\alvin_info\copyright.html:5
 #: .\alvin_info\templates\alvin_info\copyright.html:44
 #: .\templates\_partials\_navbar.html:27 .\templates\_partials\_navbar.html:76
+#: .\templates\_partials\_side_nav.html:29
 #: .\templates\_partials\_top_nav.html:40
 msgid "Upphovsrätt"
 msgstr "Copyright"
@@ -543,7 +511,6 @@ msgid "Digitala verk"
 msgstr "Digital works"
 
 #: .\alvin_info\templates\alvin_info\copyright.html:45
-#: .\vocabulary\templates\vocabulary\api.html:47
 #: .\vocabulary\templates\vocabulary\iiif.html:44
 msgid ""
 "Nästan allt digitalt material som du hittar i Alvin får användas helt fritt. "
@@ -605,92 +572,21 @@ msgstr ""
 "Anyone can then use the data in any way and for any purpose, including "
 "commercial purposes."
 
-#: .\alvin_info\templates\alvin_info\extended_search.html:6
-#: .\alvin_info\templates\alvin_info\simple_search.html:8
-#: .\alvin_info\templates\alvin_info\start_search.html:6
-msgid "Sök över en halv miljon objekt"
-msgstr "Search half a million+ items"
-
-#: .\alvin_info\templates\alvin_info\extended_search.html:27
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:134
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:204
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:88
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:136
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:220
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:268
-msgid "Post"
-msgstr "Record"
-
-#: .\alvin_info\templates\alvin_info\extended_search.html:35
-#: .\alvin_search\templates\alvin_search\alvin_search.html:5
-#: .\alvin_search\templates\alvin_search\alvin_search.html:28
-#: .\alvin_search\templates\alvin_search\alvin_search.html:192
-#: .\alvin_search\templates\alvin_search\partials\_alvin_person_search.html:3
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:137
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:207
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:91
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:139
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:223
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:271
-msgid "Person"
-msgstr "Person"
-
-#: .\alvin_info\templates\alvin_info\extended_search.html:42
-#: .\alvin_search\templates\alvin_search\alvin_search.html:8
-#: .\alvin_search\templates\alvin_search\alvin_search.html:31
-#: .\alvin_search\templates\alvin_search\alvin_search.html:196
-#: .\alvin_search\templates\alvin_search\partials\_alvin_organisation_search.html:3
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:140
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:210
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:94
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:142
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:226
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:274
-msgid "Organisation"
-msgstr "Organisation"
-
-#: .\alvin_info\templates\alvin_info\extended_search.html:50
-#: .\alvin_search\templates\alvin_search\alvin_search.html:11
-#: .\alvin_search\templates\alvin_search\alvin_search.html:34
-#: .\alvin_search\templates\alvin_search\alvin_search.html:200
-#: .\alvin_search\templates\alvin_search\partials\_alvin_place_search.html:3
-#: .\vocabulary\templates\vocabulary\place.html:4
-#: .\vocabulary\templates\vocabulary\place.html:46
-#: .\vocabulary\templates\vocabulary\place.html:80
-#: .\vocabulary\templates\vocabulary\place.html:101
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:143
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:213
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:97
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:145
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:229
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:277
-msgid "Plats"
-msgstr "Place"
-
-#: .\alvin_info\templates\alvin_info\extended_search.html:58
-#: .\alvin_search\templates\alvin_search\alvin_search.html:14
-#: .\alvin_search\templates\alvin_search\alvin_search.html:37
-#: .\alvin_search\templates\alvin_search\alvin_search.html:204
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:146
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:216
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:100
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:148
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:232
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:280
-msgid "Verk"
-msgstr "Work"
-
 #: .\alvin_info\templates\alvin_info\help.html:4
 #: .\alvin_info\templates\alvin_info\help.html:46
-#: .\templates\_partials\_side_nav.html:33
-#: .\templates\_partials\_top_nav.html:73
+#: .\templates\_partials\_side_nav.html:31
+#: .\templates\_partials\_top_nav.html:46
 msgid "Hjälp"
 msgstr "Help"
 
 #: .\alvin_info\templates\alvin_info\help.html:27
 #: .\alvin_info\templates\alvin_info\help.html:36
 #: .\alvin_info\templates\alvin_info\help.html:47
+#: .\alvin_info\templates\alvin_info\start_search.html:5
+#: .\alvin_info\templates\alvin_info\start_search.html:17
 #: .\alvin_search\templates\alvin_search\alvin_search.html:212
+#: .\templates\_partials\_extended_search.html:5
+#: .\templates\_partials\_extended_search.html:12
 #: .\templates\_partials\_navbar.html:61
 msgid "Sök"
 msgstr "Search"
@@ -717,7 +613,6 @@ msgid "API"
 msgstr "APIs"
 
 #: .\alvin_info\templates\alvin_info\help.html:54
-#: .\vocabulary\templates\vocabulary\api.html:191
 #: .\vocabulary\templates\vocabulary\place.html:141
 msgid "Länkar"
 msgstr "Links"
@@ -725,6 +620,8 @@ msgstr "Links"
 #: .\alvin_info\templates\alvin_info\institutions.html:4
 #: .\alvin_info\templates\alvin_info\institutions.html:44
 #: .\templates\_partials\_navbar.html:26 .\templates\_partials\_navbar.html:75
+#: .\templates\_partials\_side_nav.html:28
+#: .\templates\_partials\_top_nav.html:37
 msgid "Institutioner"
 msgstr "Institutions"
 
@@ -762,7 +659,7 @@ msgstr "There are"
 msgid "arkivinstitutioner i Alvin."
 msgstr "archival institutions in Alvin."
 
-#: .\alvin_info\templates\alvin_info\institutions.html:57
+#: .\alvin_info\templates\alvin_info\institutions.html:56
 msgid "I samarbete med:"
 msgstr "In cooperation with:"
 
@@ -773,6 +670,11 @@ msgstr "Start page"
 #: .\alvin_info\templates\alvin_info\start.html:10
 msgid "nordisk plattform för digitaliserat kulturarv"
 msgstr "Nordic platform for digitised cultural heritage"
+
+#: .\alvin_info\templates\alvin_info\start_search.html:11
+#: .\templates\_partials\_extended_search.html:7
+msgid "Sök över en halv miljon objekt"
+msgstr "Search half a million+ items"
 
 #: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_organisation_list.html:9
 #: .\alvin_list_viewer\templates\alvin_list_viewer\_partials\_alvin_place_list.html:9
@@ -794,6 +696,49 @@ msgstr "Work symbol"
 #: .\alvin_list_viewer\templates\alvin_list_viewer\alvin_list_viewer.html:11
 msgid "Totalt antal träffar:"
 msgstr ""
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:5
+#: .\alvin_search\templates\alvin_search\alvin_search.html:28
+#: .\alvin_search\templates\alvin_search\alvin_search.html:192
+#: .\alvin_search\templates\alvin_search\partials\_alvin_person_search.html:3
+#: .\templates\_partials\_extended_search.html:47
+#: .\templates\_partials\_userguidenavbar.html:127
+#: .\templates\_partials\_userguidenavbar.html:251
+msgid "Person"
+msgstr "Person"
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:8
+#: .\alvin_search\templates\alvin_search\alvin_search.html:31
+#: .\alvin_search\templates\alvin_search\alvin_search.html:196
+#: .\alvin_search\templates\alvin_search\partials\_alvin_organisation_search.html:3
+#: .\templates\_partials\_extended_search.html:60
+#: .\templates\_partials\_userguidenavbar.html:130
+#: .\templates\_partials\_userguidenavbar.html:254
+msgid "Organisation"
+msgstr "Organisation"
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:11
+#: .\alvin_search\templates\alvin_search\alvin_search.html:34
+#: .\alvin_search\templates\alvin_search\alvin_search.html:200
+#: .\alvin_search\templates\alvin_search\partials\_alvin_place_search.html:3
+#: .\templates\_partials\_extended_search.html:73
+#: .\templates\_partials\_userguidenavbar.html:133
+#: .\templates\_partials\_userguidenavbar.html:257
+#: .\vocabulary\templates\vocabulary\place.html:4
+#: .\vocabulary\templates\vocabulary\place.html:46
+#: .\vocabulary\templates\vocabulary\place.html:80
+#: .\vocabulary\templates\vocabulary\place.html:101
+msgid "Plats"
+msgstr "Place"
+
+#: .\alvin_search\templates\alvin_search\alvin_search.html:14
+#: .\alvin_search\templates\alvin_search\alvin_search.html:37
+#: .\alvin_search\templates\alvin_search\alvin_search.html:204
+#: .\templates\_partials\_extended_search.html:86
+#: .\templates\_partials\_userguidenavbar.html:136
+#: .\templates\_partials\_userguidenavbar.html:260
+msgid "Verk"
+msgstr "Work"
 
 #: .\alvin_search\templates\alvin_search\alvin_search.html:26
 msgid "RESULTAT FÖR"
@@ -867,6 +812,10 @@ msgstr "Enter number only"
 msgid "Fler filter"
 msgstr "More filters"
 
+#: .\alvin_search\templates\alvin_search\alvin_search.html:188
+msgid "Arkivinstitution"
+msgstr "Archival institution"
+
 #: .\alvin_search\templates\alvin_search\partials\_alvin_record_search.html:50
 msgid "m.fl."
 msgstr "et al."
@@ -935,47 +884,117 @@ msgstr "Video"
 msgid "Work"
 msgstr ""
 
-#: .\alvin_viewer\templates\alvin_viewer\_partials\_alvin_record.html:129
-#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:93
-msgid "Arkivförteckning"
-msgstr ""
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_alvin_location.html:35
+#, fuzzy
+#| msgid "Beskrivning"
+msgid "Vägbeskrivning"
+msgstr "Description"
 
-#: .\alvin_viewer\templates\alvin_viewer\_partials\_alvin_record.html:131
-#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:95
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_alvin_record.html:133
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:64
+#, fuzzy
+#| msgid "Förvaltning"
+msgid "Förteckning"
+msgstr "Management"
+
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_alvin_record.html:135
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:66
 #, fuzzy
 #| msgid "Beskrivning"
 msgid "Innehållsbeskrivning"
 msgstr "Description"
 
-#: .\alvin_viewer\templates\alvin_viewer\_partials\_search_related.html:4
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_download_menu.html:31
 #, fuzzy
-#| msgid "Relaterat"
-msgid "Relaterade funktioner"
-msgstr "Related"
+#| msgid "filer"
+msgid "Filer"
+msgstr "files"
 
-#: .\alvin_viewer\templates\alvin_viewer\_partials\_search_related.html:7
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_viewer.html:13
+msgid "Fullskärmsläge"
+msgstr ""
+
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_viewer.html:22
+msgid "Zooma in"
+msgstr ""
+
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_viewer.html:25
+msgid "Zooma ut"
+msgstr ""
+
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_viewer.html:29
+msgid "Återställ zoom"
+msgstr ""
+
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_viewer.html:33
 #, fuzzy
-#| msgid "Sök länkade poster"
-msgid "Sökning på länkade poster"
-msgstr "Search linked records"
+#| msgid "Noterad musik"
+msgid "Rotera moturs"
+msgstr "Notated music"
 
-#: .\alvin_viewer\templates\alvin_viewer\_partials\_search_related.html:12
-msgid "Sök länkade poster"
-msgstr "Search linked records"
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_viewer.html:36
+#, fuzzy
+#| msgid "Noterad musik"
+msgid "Rotera medurs"
+msgstr "Notated music"
+
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_viewer.html:42
+msgid "Visa/dölj tumnaglar"
+msgstr ""
+
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_viewer.html:46
+msgid "Visa/dölj översättningar och transkriptioner"
+msgstr ""
+
+#: .\alvin_viewer\templates\alvin_viewer\_partials\_viewer.html:72
+msgid "Stäng tumnagelvy"
+msgstr ""
 
 #: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:27
 #: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:30
 msgid "Tillbaka till sökresultatet"
 msgstr "Back to search results"
 
-#: .\alvin_viewer\views\iiif.py:98
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:49
+msgid "Översikt"
+msgstr "Overview"
+
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:55
+msgid "All metadata"
+msgstr "All metadata"
+
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:77
+msgid "Relaterat"
+msgstr "Related"
+
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:86
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:89
+#, fuzzy
+#| msgid "Ladda ner"
+msgid "Ladda ned"
+msgstr "Download"
+
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:99
+msgid "Sök länkade poster"
+msgstr "Search linked records"
+
+#: .\alvin_viewer\templates\alvin_viewer\alvin_viewer.html:103
+#, fuzzy
+#| msgid "Sök länkade poster"
+msgid "Länkade poster"
+msgstr "Search linked records"
+
+#: .\alvin_viewer\views\iiif.py:22
+msgid "Record not found."
+msgstr ""
+
+#: .\alvin_viewer\views\iiif.py:132
 msgid "No IIIF-capable files found on this record."
 msgstr ""
 
 #: .\django_oai_pmh\apps.py:28 .\django_oai_pmh\apps.py:29
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:76
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:55
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:187
+#: .\templates\_partials\_userguidenavbar.html:50
+#: .\templates\_partials\_userguidenavbar.html:174
 msgid "OAI-PMH"
 msgstr "OAI-PMH"
 
@@ -1013,66 +1032,144 @@ msgstr ""
 "For other questions about Alvin, the consortium or the publishing of "
 "cultural heritage materials, contact Uppsala University Library through"
 
+#: .\templates\_partials\_extended_search.html:15
+msgid "Knapp för sökning"
+msgstr ""
+
+#: .\templates\_partials\_extended_search.html:23
+msgid "Söktyp"
+msgstr ""
+
+#: .\templates\_partials\_extended_search.html:31
+#, fuzzy
+#| msgid "Sök länkade poster"
+msgid "Sök efter poster"
+msgstr "Search linked records"
+
+#: .\templates\_partials\_extended_search.html:34
+#: .\templates\_partials\_userguidenavbar.html:124
+#: .\templates\_partials\_userguidenavbar.html:248
+msgid "Post"
+msgstr "Record"
+
+#: .\templates\_partials\_extended_search.html:44
+msgid "Sök efter personer"
+msgstr ""
+
+#: .\templates\_partials\_extended_search.html:57
+msgid "Sök efter organisationer"
+msgstr ""
+
+#: .\templates\_partials\_extended_search.html:70
+msgid "Sök efter platser"
+msgstr ""
+
+#: .\templates\_partials\_extended_search.html:83
+msgid "Sök efter verk"
+msgstr ""
+
 #: .\templates\_partials\_filters.html:9
 msgid "Alla"
 msgstr "All"
 
-#: .\templates\_partials\_language_switcher.html:6
-#: .\vocabulary\templates\vocabulary\ugfooter.html:23
-#: .\vocabulary\templates\vocabulary\ugfooter2.html:23
-msgid "Byt språk"
-msgstr "Change language"
-
-#: .\templates\_partials\_navbar.html:24 .\templates\_partials\_navbar.html:73
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:25
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:28
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:161
-msgid "För medlemmar"
-msgstr "For members"
-
+#: .\templates\_partials\_help_menu.html:5
 #: .\templates\_partials\_navbar.html:60
 msgid "HJÄLP"
 msgstr "HELP"
 
-#: .\templates\_partials\_search_menu.html:10
-#, fuzzy
-#| msgid "Sök i Alvin"
-msgid "Sök i Alvin..."
-msgstr "Search Alvin"
+#: .\templates\_partials\_language_switcher.html:6
+msgid "Byt språk"
+msgstr "Change language"
 
-#: .\templates\_partials\_search_menu.html:14
-msgid "Bläddra bland resurstyper"
-msgstr ""
-
-#: .\templates\_partials\_side_nav.html:28
-msgid "Copyright"
-msgstr ""
-
-#: .\templates\_partials\_side_nav.html:29
-msgid "Medlemmar"
-msgstr "Members"
-
-#: .\templates\_partials\_side_nav.html:31
-msgid "Avancerad sök"
-msgstr ""
+#: .\templates\_partials\_navbar.html:24 .\templates\_partials\_navbar.html:73
+#: .\templates\_partials\_side_nav.html:33
+#: .\templates\_partials\_userguidenavbar.html:24
+#: .\templates\_partials\_userguidenavbar.html:149
+msgid "För medlemmar"
+msgstr "For members"
 
 #: .\templates\_partials\_top_nav.html:3
 msgid "Huvudmeny"
 msgstr "Main menu"
 
-#: .\templates\_partials\_top_nav.html:9
+#: .\templates\_partials\_top_nav.html:12
 msgid "Mobilmeny"
 msgstr "Mobile menu"
 
-#: .\templates\base.html:9
+#: .\templates\_partials\_userguidenavbar.html:32
+#: .\templates\_partials\_userguidenavbar.html:157
+msgid "API:er"
+msgstr "APIs"
+
+#: .\templates\_partials\_userguidenavbar.html:47
+msgid "Cora REST-API"
+msgstr "Cora REST-API"
+
+#: .\templates\_partials\_userguidenavbar.html:53
+#: .\templates\_partials\_userguidenavbar.html:177
+msgid "IIIF"
+msgstr ""
+
+#: .\templates\_partials\_userguidenavbar.html:65
+#: .\templates\_partials\_userguidenavbar.html:189
+#: .\vocabulary\templates\vocabulary\vocabulary.html:4
+msgid "Vokabulär"
+msgstr "Vocabulary"
+
+#: .\templates\_partials\_userguidenavbar.html:79
+#: .\templates\_partials\_userguidenavbar.html:203
+#: .\vocabulary\templates\vocabulary\vocabulary.html:50
+msgid "vokabulär"
+msgstr "vocabulary"
+
+#: .\templates\_partials\_userguidenavbar.html:82
+#: .\templates\_partials\_userguidenavbar.html:206
+#: .\vocabulary\templates\vocabulary\category.html:4
+msgid "Efter kategori"
+msgstr "By category"
+
+#: .\templates\_partials\_userguidenavbar.html:85
+#: .\templates\_partials\_userguidenavbar.html:209
+#: .\vocabulary\templates\vocabulary\classes.html:4
+msgid "Klasser"
+msgstr "Classes"
+
+#: .\templates\_partials\_userguidenavbar.html:88
+#: .\templates\_partials\_userguidenavbar.html:212
+#: .\vocabulary\templates\vocabulary\properties.html:4
+msgid "Egenskaper"
+msgstr "Properties"
+
+#: .\templates\_partials\_userguidenavbar.html:91
+#: .\templates\_partials\_userguidenavbar.html:215
+msgid "RDF"
+msgstr ""
+
+#: .\templates\_partials\_userguidenavbar.html:103
+#: .\templates\_partials\_userguidenavbar.html:118
+#: .\templates\_partials\_userguidenavbar.html:227
+#: .\templates\_partials\_userguidenavbar.html:242
+msgid "Katalogisering"
+msgstr "Cataloguing"
+
+#: .\templates\_partials\_userguidenavbar.html:121
+#: .\templates\_partials\_userguidenavbar.html:245
+msgid "Katalogiseringsklient"
+msgstr "Cataloguing client"
+
+#: .\templates\_partials\_userguidenavbar.html:171
+msgid "REST-API"
+msgstr "REST-API"
+
+#: .\templates\base.html:10
 msgid "Uppsala universitet"
 msgstr ""
 
-#: .\templates\base.html:10
+#: .\templates\base.html:11
 msgid "Alvin, kulturarv, digitala samlingar, databaser, bibliotek"
 msgstr "Alvin, cultural heritage, digital collections, databases, libraries"
 
-#: .\templates\base.html:11
+#: .\templates\base.html:12
 msgid ""
 "Alvin - nordisk plattform för bevarande och tillgängliggörande av "
 "digitaliserat kulturarv"
@@ -1080,44 +1177,67 @@ msgstr ""
 "Alvin - Nordic platform for preservation and dissemination of digitised "
 "cultural heritage"
 
-#: .\vocabulary\templates\vocabulary\api.html:4
-#: .\vocabulary\templates\vocabulary\api.html:42
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:56
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:36
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:169
-msgid "API:er"
-msgstr "APIs"
+#: .\templates\userguidemaster.html:6
+#: .\vocabulary\templates\vocabulary\userguide.html:4
+msgid "Användarhandbok"
+msgstr "User guide"
 
-#: .\vocabulary\templates\vocabulary\api.html:27
-#: .\vocabulary\templates\vocabulary\api.html:34
 #: .\vocabulary\templates\vocabulary\iiif.html:27
 #: .\vocabulary\templates\vocabulary\iiif.html:34
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:79
 msgid "IIIF Image API"
 msgstr "IIIF Image API"
 
-#: .\vocabulary\templates\vocabulary\api.html:28
-#: .\vocabulary\templates\vocabulary\api.html:35
 #: .\vocabulary\templates\vocabulary\iiif.html:28
 #: .\vocabulary\templates\vocabulary\iiif.html:35
 msgid "IIIF Manifest"
 msgstr ""
 
-#: .\vocabulary\templates\vocabulary\api.html:44
-msgid "AI-genererad översättning"
-msgstr "AI-generated translation"
-
-#: .\vocabulary\templates\vocabulary\api.html:46
 #: .\vocabulary\templates\vocabulary\iiif.html:43
 msgid ""
 "International Image Interoperability Framework (IIIF) definierar universella "
 "standarder för att beskriva och leverera bilder över webben."
 msgstr ""
+"The International Image Interoperability Framework (IIIF) defines universal "
+"standards for describing and delivering images over the web."
 
-#: .\vocabulary\templates\vocabulary\metadata.html:16
-#: .\vocabulary\templates\vocabulary\vocabulary.html:121
-msgid "Standarder"
-msgstr "Standards"
+#: .\vocabulary\templates\vocabulary\iiif.html:46
+msgid ""
+"IIIF Image API specificerar en webbtjänst som returnerar en bild som svar på "
+"en vanlig HTTP- eller HTTPS-förfrågan. URI:n kan specificera region, "
+"storlek, rotation, kvalitet och format för den begärda bilden. Detta API "
+"skapades för att underlätta systematisk återanvändning av bildresurser i "
+"digitala bildarkiv som underhålls av kulturarvsorganisationer."
+msgstr ""
+"The IIIF Image API specifies a web service that returns an image in response "
+"to a standard HTTP or HTTPS request. The URI can specify the region, size, "
+"rotation, quality, and format of the requested image. This API was created "
+"to facilitate the systematic reuse of image resources in digital image "
+"archives maintained by cultural heritage organisations."
+
+#: .\vocabulary\templates\vocabulary\iiif.html:47
+msgid "Alvin stödjer"
+msgstr "Alvin supports"
+
+#: .\vocabulary\templates\vocabulary\iiif.html:49
+msgid ""
+"Välj Region, Size, Rotation, Quality och Format nedan för att skapa en URL "
+"med dessa parametrar och se resultatet från Alvin:"
+msgstr ""
+"Select, Region, Size, Rotation, Quality and Format below to create a URL "
+"with these parameters and see the result from Alvin:"
+
+#: .\vocabulary\templates\vocabulary\iiif.html:182
+msgid ""
+"Ett IIIF-manifest är det paket som innehåller all information relaterad till "
+"ett visst digitalt objekt, inklusive själva bilden och metadata."
+msgstr ""
+"An IIIF manifest is the package that contains all the information related to "
+"a particular digital object, including the image itself and metadata."
+
+#: .\vocabulary\templates\vocabulary\iiif.html:183
+msgid ""
+"Exempel IIIF Manifest från Alvin.</a> (Innehåller endast filinformation)."
+msgstr "Example IIIF Manifest from Alvin.</a> (Contains file information only)"
 
 #: .\vocabulary\templates\vocabulary\oai-pmh.html:27
 #: .\vocabulary\templates\vocabulary\oai-pmh.html:39
@@ -1427,6 +1547,10 @@ msgstr ""
 "As ListRecords but only retrieves <span class=\"italic\">headers</span> "
 "(identifier, set, and datestamp), not the full metadata records."
 
+#: .\vocabulary\templates\vocabulary\partials\_standards.html:2
+msgid "Standarder"
+msgstr "Standards"
+
 #: .\vocabulary\templates\vocabulary\place.html:27
 #: .\vocabulary\templates\vocabulary\place.html:36
 #: .\vocabulary\templates\vocabulary\place.html:58
@@ -1677,37 +1801,39 @@ msgstr ""
 
 #: .\vocabulary\templates\vocabulary\rest-api.html:27
 #: .\vocabulary\templates\vocabulary\rest-api.html:38
-#, fuzzy
-#| msgid "Sök i Alvin"
+#: .\vocabulary\templates\vocabulary\rest-api.html:55
 msgid "Poster i Alvin"
-msgstr "Search Alvin"
+msgstr "Records in Alvin"
 
 #: .\vocabulary\templates\vocabulary\rest-api.html:28
 #: .\vocabulary\templates\vocabulary\rest-api.html:39
+#: .\vocabulary\templates\vocabulary\rest-api.html:61
 msgid "Skapa bibliografisk post"
-msgstr ""
+msgstr "Create bibliographic record"
 
 #: .\vocabulary\templates\vocabulary\rest-api.html:29
 #: .\vocabulary\templates\vocabulary\rest-api.html:40
+#: .\vocabulary\templates\vocabulary\rest-api.html:105
 msgid "Läsa bibliografisk post"
-msgstr ""
+msgstr "Read bibliographic record"
 
 #: .\vocabulary\templates\vocabulary\rest-api.html:30
 #: .\vocabulary\templates\vocabulary\rest-api.html:41
+#: .\vocabulary\templates\vocabulary\rest-api.html:215
 msgid "Uppdatera bibliografisk post"
-msgstr ""
+msgstr "Update bibliographic record"
 
 #: .\vocabulary\templates\vocabulary\rest-api.html:31
 #: .\vocabulary\templates\vocabulary\rest-api.html:42
+#: .\vocabulary\templates\vocabulary\rest-api.html:260
 msgid "Ta bort bibliografisk post"
-msgstr ""
+msgstr "Delete bibliographic record"
 
 #: .\vocabulary\templates\vocabulary\rest-api.html:32
 #: .\vocabulary\templates\vocabulary\rest-api.html:43
-#, fuzzy
-#| msgid "en auktoritetspost för ett verk."
+#: .\vocabulary\templates\vocabulary\rest-api.html:264
 msgid "Auktoritetsposter"
-msgstr "an authority record for a work."
+msgstr "Authority records."
 
 #: .\vocabulary\templates\vocabulary\rest-api.html:51
 msgid ""
@@ -1715,15 +1841,156 @@ msgid ""
 "bygger på Cora, ett metadatadrivet generiskt öppet digitalt arkivsystem "
 "utformat för att hantera strukturerad metadata och filer."
 msgstr ""
+"Members can read, create, and update records in Alvin via a REST API built "
+"on Cora, a metadata-driven generic open digital archive system designed to "
+"manage structured metadata and files."
 
 #: .\vocabulary\templates\vocabulary\rest-api.html:52
 msgid "Cora utvecklas av Nationella system vid Uppsala universitetsbibliotek"
-msgstr ""
+msgstr "Cora is developed by National Systems at Uppsala University Library"
 
-#: .\vocabulary\templates\vocabulary\userguide.html:4
-#: .\vocabulary\templates\vocabulary\userguidemaster.html:6
-msgid "Användarhandbok"
-msgstr "User guide"
+#: .\vocabulary\templates\vocabulary\rest-api.html:53
+msgid "beskriver hur poster och filer hanteras samt hur sökningar görs."
+msgstr ""
+"describes how records and files are managed and how searches are performed."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:56
+msgid ""
+"För att skapa och uppdatera poster krävs att användaren är registrerad i "
+"systemet (endast tillgängligt för personer kopplade till Alvins "
+"medlemsorganisationer). Publicerade poster kan däremot läsas av alla och är "
+"öppet tillgängliga utan inloggning."
+msgstr ""
+"To create and update records, the user must be registered in the system "
+"(only available to people connected to Alvin's member organisations). "
+"Published records, however, can be read by anyone and are openly available "
+"without logging in."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:58
+msgid ""
+"Poster hanteras via Alvins dataformat i Cora uttryckt som antingen XML eller "
+"JSON. Formatbeskrivningen av typer och klasser är tillgänglig i "
+"katalogiseringsklienten samt som öppen länkad vokabulär."
+msgstr ""
+"Records are managed via Alvin's data format in Cora expressed as either XML "
+"or JSON. The format description of types and classes is available in the "
+"cataloguing client and as an open linked vocabulary."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:62
+msgid ""
+"Obligatoriska fält för alla bibliografiska poster (<span class=\"font-"
+"mono\">record</span>) är resurstyp (<span class=\"font-"
+"mono\">typeOfResource</span>), titel (<span class=\"font-mono\">title</"
+"span>) samt arkivinstitution (<span class=\"font-mono\">location</span>). "
+"Förutom beskrivande Alvin-metadata kräver Cora ett antal specifika "
+"obligatoriska kontrollfält i elementet <span class=\"font-mono\">recordInfo</"
+"span>."
+msgstr ""
+"Mandatory fields for all bibliographic records are <span class=\"font-"
+"mono\">typeOfResource</span>, <span class=\"font-mono\">title</span>, and "
+"<span class=\"font-mono\">location</span>. In addition to descriptive Alvin "
+"metadata, Cora requires a number of specific mandatory control fields in the "
+"<span class=\"font-mono\">recordInfo</span> element."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:99
+msgid ""
+"anger vilken uppsättning metadataelement posten kontrolleras mot. Olika "
+"resurstyper har olika tillåtna underelement. Kopplat till resurstypen via "
+"länkat id."
+msgstr "specifies which set of metadata elements the record is checked against. Different resource types have different allowed subelements. Linked to the resource type via linked id."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:100
+msgid "har ett fast värde alvinData som länkat id."
+msgstr "has a fixed value alvinData as linked id."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:101
+msgid ""
+"är för att hantera rättigheter en nödvändig dubblering av id-nummer för den "
+"länkade arkivinstitutionen i posten. alvin-location med länkat id 1 i "
+"elementet location dubbleras alltså till permissionUnit med värde 1. Endast "
+"poster som tillhör användarens egen organisation kan skapas."
+msgstr "is to manage rights a necessary duplication of the ID number for the linked archive institution in the record. alvin-location with linked ID 1 in the location element is thus duplicated to permissionUnit with value 1. Only records that belong to the user's own organisation can be created."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:102
+msgid ""
+"anger om posten skall vara publikt tillgänglig eller inte. Poster kan "
+"antingen vara published (läsbara för alla) eller unpublished (endast "
+"tillgängliga för inloggade användare hos den egna organisationen)."
+msgstr "specifies whether the record should be publicly available or not. Records can be either published (readable by everyone) or unpublished (only available to logged-in users in your organisation)."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:106
+msgid ""
+"Poster som läses via API:et innehåller förutom själva den beskrivande "
+"metadatan länkar (<span class=\"font-mono\">actionLinks</span>) till de "
+"olika möjligheter användaren har att anropa både posten och inlänkade poster "
+"i API:et. Ett omgivande Cora-element (<span class=\"font-mono\">record</"
+"span>) innehåller (<span class=\"font-mono\">data</span>) som i sin tur "
+"innehåller den faktiska metadataposten."
+msgstr "Records read via the API contain, in addition to the descriptive metadata itself, links (<span class=\"font-mono\">actionLinks</span>) to the various possibilities the user has to call both the record and linked records in the API. A surrounding Cora element (<span class=\"font-mono\">record</span>) contains (<span class=\"font-mono\">data</span>) which in turn contains the actual metadata record."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:107
+msgid ""
+"Notera attributet <span class=\"font-mono\">repeatId</span> som är "
+"obligatoriskt för alla upprepningsbara fält i Coras API. <span class=\"font-"
+"mono\">repeatId</span> måste innehålla ett unikt nummer inom respektive "
+"element."
+msgstr "Note the <span class=\"font-mono\">repeatId</span> attribute which is mandatory for all repeatable fields in the Cora API. The <span class=\"font-mono\">repeatId</span> must contain a unique number within each element."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:216
+msgid ""
+"Vid uppdatering av en befintlig post anges även <span class=\"font-"
+"mono\">id</span> samt <span class=\"font-mono\">type</span> i <span "
+"class=\"font-mono\">recordInfo</span>. <span class=\"font-mono\">inTrashBin</"
+"span> sätts till false."
+msgstr ""
+"When updating an existing record, the <span class=\"font-mono\">id</span> "
+"and <span class=\"font-mono\">type</span> are also specified in <span "
+"class=\"font-mono\">recordInfo</span>. <span class=\"font-mono\">inTrashBin</"
+"span> is set to false."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:262
+msgid ""
+"Bibliografiska poster kan av arkivskäl inte tas bort helt från systemet men "
+"går att dölja för användare genom att uppdatera posten som ovan och i <span "
+"class=\"font-mono\">recordInfo</span> sätta <span class=\"font-"
+"mono\">inTrashBin</span> till true."
+msgstr ""
+"Bibliographic records cannot be completely removed from the system for "
+"archival reasons, but can be hidden from users by updating the record as "
+"above and setting <span class=\"font-mono\">inTrashBin</span> to true in "
+"<span class=\"font-mono\">recordInfo</span>."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:266
+msgid ""
+"Hanteras på motsvarande sätt som bibliografiska poster men kan skapas och "
+"uppdateras oavsett användarens organisationstillhörighet. De är också alltid "
+"öppet publicerade. Det innebär att recordInfo för auktoritetsposter varken "
+"innehåller elementen permissionUnit eller visibility. Likaså kan "
+"auktoritetsposter som inte är länkade från en annan post tas bort från "
+"systemet genom ett DELETE anrop varför inte heller inTrashBin finns för "
+"auktoritetsposter."
+msgstr ""
+"Handled in a similar way to bibliographic records but can be created and "
+"updated regardless of the user's organisational affiliation. They are also "
+"always openly published. This means that recordInfo for authority records "
+"does not contain the elements permissionUnit or visibility. Similarly, "
+"authority records that are not linked from another record can be removed "
+"from the system by a DELETE call, which is why inTrashBin does not exist for "
+"authority records either."
+
+#: .\vocabulary\templates\vocabulary\rest-api.html:267
+msgid ""
+"Som beskrivande metadata måste auktoritetsposter för person, organisation "
+"och plats innehålla minst ett <span class=\"font-mono\">authority</span>-"
+"element och auktoritetsposter för verk <span class=\"font-mono\">title</"
+"span> samt <span class=\"font-mono\">formOfWork</span> som obligatoriska "
+"element."
+msgstr ""
+"As descriptive metadata, authority records for person, organisation, and "
+"place must contain at least one <span class=\"font-mono\">authority</span> "
+"element, and authority records for works must contain <span class=\"font-"
+"mono\">title</span> and <span class=\"font-mono\">formOfWork</span> as "
+"mandatory elements."
 
 #: .\vocabulary\templates\vocabulary\userguide.html:10
 msgid "Handbok för katalogisatörer och API-användare i Alvin"
@@ -1733,90 +2000,43 @@ msgstr "Guide for cataloguers and API users in Alvin"
 msgid "Medlemskap krävs för att skapa och ändra poster"
 msgstr "Membership is required to create and modify records"
 
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:73
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:184
-msgid "REST-API"
-msgstr "REST-API"
-
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:114
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:70
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:202
-#: .\vocabulary\templates\vocabulary\vocabulary.html:4
-msgid "Vokabulär"
-msgstr "Vocabulary"
-
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:131
-msgid "Datamodell"
-msgstr "Data model"
-
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:181
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:115
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:130
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:247
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:262
-msgid "Katalogisering"
-msgstr "Cataloguing"
-
-#: .\vocabulary\templates\vocabulary\userguidenavbar.html:201
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:133
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:265
-msgid "Katalogiseringsklient"
-msgstr "Cataloguing client"
-
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:52
-#, fuzzy
-#| msgid "REST-API"
-msgid "Cora REST-API"
-msgstr "REST-API"
-
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:58
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:190
-msgid "IIIF"
-msgstr ""
-
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:85
-#: .\vocabulary\templates\vocabulary\userguidenavbarnew.html:217
-#: .\vocabulary\templates\vocabulary\vocabulary.html:52
-msgid "vokabulär"
-msgstr "vocabulary"
-
 #: .\vocabulary\templates\vocabulary\vocabulary.html:27
-#: .\vocabulary\templates\vocabulary\vocabulary.html:39
-#: .\vocabulary\templates\vocabulary\vocabulary.html:56
+#: .\vocabulary\templates\vocabulary\vocabulary.html:37
+#: .\vocabulary\templates\vocabulary\vocabulary.html:55
 msgid "Basvokabulär"
 msgstr "Core vocabulary"
 
 #: .\vocabulary\templates\vocabulary\vocabulary.html:28
-#: .\vocabulary\templates\vocabulary\vocabulary.html:40
-#: .\vocabulary\templates\vocabulary\vocabulary.html:80
+#: .\vocabulary\templates\vocabulary\vocabulary.html:38
+#: .\vocabulary\templates\vocabulary\vocabulary.html:79
 msgid "Kärnklasser"
 msgstr "Core classes"
 
 #: .\vocabulary\templates\vocabulary\vocabulary.html:29
-#: .\vocabulary\templates\vocabulary\vocabulary.html:41
-#: .\vocabulary\templates\vocabulary\vocabulary.html:94
-msgid "Subklasser och egenskaper"
-msgstr "Subclasses and properties"
+#: .\vocabulary\templates\vocabulary\vocabulary.html:39
+#: .\vocabulary\templates\vocabulary\vocabulary.html:92
+msgid "Klasser och egenskaper"
+msgstr "Classes and properties"
 
 #: .\vocabulary\templates\vocabulary\vocabulary.html:31
-#: .\vocabulary\templates\vocabulary\vocabulary.html:43
-#: .\vocabulary\templates\vocabulary\vocabulary.html:111
+#: .\vocabulary\templates\vocabulary\vocabulary.html:41
+#: .\vocabulary\templates\vocabulary\vocabulary.html:106
 msgid "Objekt"
 msgstr "Object"
 
 #: .\vocabulary\templates\vocabulary\vocabulary.html:32
-#: .\vocabulary\templates\vocabulary\vocabulary.html:44
-#: .\vocabulary\templates\vocabulary\vocabulary.html:113
+#: .\vocabulary\templates\vocabulary\vocabulary.html:42
+#: .\vocabulary\templates\vocabulary\vocabulary.html:108
 msgid "Samling"
 msgstr "Collection"
 
 #: .\vocabulary\templates\vocabulary\vocabulary.html:33
-#: .\vocabulary\templates\vocabulary\vocabulary.html:45
-#: .\vocabulary\templates\vocabulary\vocabulary.html:115
+#: .\vocabulary\templates\vocabulary\vocabulary.html:43
+#: .\vocabulary\templates\vocabulary\vocabulary.html:110
 msgid "Digitala reproduktioner"
 msgstr "Digital reproductions"
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:53
+#: .\vocabulary\templates\vocabulary\vocabulary.html:51
 msgid ""
 "Alvins datamodell är specifikt utformad för beskrivningar av material i "
 "kulturarvssamlingar på bibliotek, museer och arkiv."
@@ -1824,11 +2044,15 @@ msgstr ""
 "Alvin's data model is specifically designed for descriptions of materials in "
 "cultural heritage collections in libraries, museums and archives."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:55
+#: .\vocabulary\templates\vocabulary\vocabulary.html:53
+msgid "Vokabulären i RDF"
+msgstr "The vocabulary in RDF"
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:54
 msgid "Licens"
 msgstr "License"
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:57
+#: .\vocabulary\templates\vocabulary\vocabulary.html:56
 msgid ""
 "För att kunna hantera olika typer av resurser i ett och samma system bygger "
 "den på en kombination av koncept från olika internationella standarder för "
@@ -1838,7 +2062,7 @@ msgstr ""
 "same system, it is based on a combination of concepts from different "
 "international standards for libraries and archives including "
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:61
+#: .\vocabulary\templates\vocabulary\vocabulary.html:59
 msgid ""
 "Grundläggande vokabulär för allmänna egenskaper som titel, språk och "
 "ursprungsinformation."
@@ -1846,73 +2070,73 @@ msgstr ""
 "Basic vocabulary for general properties such as title, language and "
 "publication information."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:64
+#: .\vocabulary\templates\vocabulary\vocabulary.html:62
 msgid "För mer specifika bibliografiska egenskaper som saknas i BIBFRAME."
 msgstr ""
 "For more specific bibliographic properties that are missing from BIBFRAME."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:66
+#: .\vocabulary\templates\vocabulary\vocabulary.html:64
 msgid "För arkivbeskrivningar."
 msgstr "For archive descriptions."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:68
+#: .\vocabulary\templates\vocabulary\vocabulary.html:66
 msgid "För mer specifika egenskaper för handskrifter."
 msgstr "For more specific properties for manuscripts."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:70
+#: .\vocabulary\templates\vocabulary\vocabulary.html:68
 msgid "För specifika egenskaper inom numismatik."
 msgstr "For specific properties in numismatics."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:72
+#: .\vocabulary\templates\vocabulary\vocabulary.html:70
 msgid "För auktoritetposter för person, organisation och plats."
 msgstr "For authority records for person, organisation and place"
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:74
+#: .\vocabulary\templates\vocabulary\vocabulary.html:73
 msgid "För beskrivningar av en posts relaterade digitala filer."
 msgstr "For descriptions of a record's related digital files."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:76
+#: .\vocabulary\templates\vocabulary\vocabulary.html:75
 msgid "För att ange geografiska koordinater (latitud och longitud)."
 msgstr "To enter geographical coordinates (latitude and longitude)."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:78
+#: .\vocabulary\templates\vocabulary\vocabulary.html:77
 msgid "För att ange datum och tid."
 msgstr "To set the date and time."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:81
+#: .\vocabulary\templates\vocabulary\vocabulary.html:80
 msgid ""
 "Modellen är uppbyggd kring fem grundläggande kärnklasser <span "
 "class=\"italic\">(core classes)</span>:"
 msgstr "The model is built around five basic core classes:"
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:83
+#: .\vocabulary\templates\vocabulary\vocabulary.html:82
 msgid ""
 "en bibliografisk post som beskriver ett enskilt objekt eller en samling av "
 "objekt."
 msgstr ""
 "a bibliographic record that describes a single item or a collection of items."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:84
+#: .\vocabulary\templates\vocabulary\vocabulary.html:83
 msgid "en auktoritetspost för en person."
 msgstr "an authority record for a person."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:85
+#: .\vocabulary\templates\vocabulary\vocabulary.html:84
 msgid "en auktoritetspost för en organisation."
 msgstr "an authority record for an organisation."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:86
+#: .\vocabulary\templates\vocabulary\vocabulary.html:85
 msgid "en auktoritetspost för en plats."
 msgstr "an authority record for a place."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:87
+#: .\vocabulary\templates\vocabulary\vocabulary.html:86
 msgid "en auktoritetspost för ett verk."
 msgstr "an authority record for a work."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:89
+#: .\vocabulary\templates\vocabulary\vocabulary.html:88
 msgid "Samt förutom dessa även:"
 msgstr "And, in addition:"
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:91
+#: .\vocabulary\templates\vocabulary\vocabulary.html:90
 msgid ""
 "en särskild organisationspost som beskriver den arkivinstitution som innehar "
 "föremålet eller från vilken det är tillgängligt."
@@ -1920,32 +2144,38 @@ msgstr ""
 "a special organisational record that describes the archival institution that "
 "holds the object or from which it is available."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:95
-msgid "Kärnklasserna innehåller i sin tur olika uppsättningar av:"
-msgstr "The core classes in turn contain different sets of:"
-
-#: .\vocabulary\templates\vocabulary\vocabulary.html:97
+#: .\vocabulary\templates\vocabulary\vocabulary.html:93
 msgid ""
-"en grupp som samlar en eller flera klasser eller egenskaper, till exempel "
-"<span class=\"italic\">title</span> som har egenskaperna <span "
-"class=\"italic\">mainTitle</span> och <span class=\"italic\">subtitle</span>."
+"Vokabulären är en öppen länkad data-version av Alvins lagringsformat. Den "
+"består av RDF-klasser och egenskaper."
 msgstr ""
-"a group that collects one or more classes or properties, for example the "
-"title class which has the properties mainTitle and subtitle."
+"The vocabulary is an open linked data version of the Alvin storage format. "
+"It consists of RDF classes and properties."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:98
-msgid "ett värde som har skrivits in, till exempel en titel."
-msgstr "a value that has been entered, for example a title."
-
-#: .\vocabulary\templates\vocabulary\vocabulary.html:99
-#, fuzzy
-#| msgid ""
-#| "ett värde valt från en kontrollerad lista i Alvin, till exempel språk.."
-msgid "ett värde valt från en kontrollerad lista i Alvin, till exempel språk."
+#: .\vocabulary\templates\vocabulary\vocabulary.html:94
+msgid ""
+"Klasserna inkluderar kärnklasserna som listas ovan samt ytterligare "
+"kompletterande klasser."
 msgstr ""
-"a value selected from a controlled list in Alvin, for example language."
+"The classes include the core classes listed above as well as additional "
+"supplementary classes."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:112
+#: .\vocabulary\templates\vocabulary\vocabulary.html:95
+msgid ""
+"Egenskaperna beskriver egenskaper hos den resurs som beskrivs samt "
+"relationer mellan resurser. Till exempel kan resursen för en plats vara "
+"tillverkningsort för ett objekt. Andra egenskaper beskriver attribut för ett "
+"objekt, till exempel egenskapen <span class=\"italic\">extent</span> (som "
+"antal sidor). Denna typ av egenskap är alltid en textsträng."
+msgstr ""
+"Properties describe characteristics of the resource being described and "
+"relationships between resources. For example, the resource for a location "
+"might be the manufacturing location of an object. Other properties describe "
+"attributes of an object, such as the <span class=\"italic\">extent</span> "
+"property (such as the number of pages). This type of property is always a "
+"text string."
+
+#: .\vocabulary\templates\vocabulary\vocabulary.html:107
 msgid ""
 "Det vanligaste fallet är att ett fysiskt objekt beskrivs. Det kan till "
 "exempel vara en målning, en karta, ett manuskript eller en tryckt bok. "
@@ -1965,7 +2195,7 @@ msgstr ""
 "copy. Provenance, acquisition, signatures, etc. apply to this particular "
 "copy in Alvin."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:114
+#: .\vocabulary\templates\vocabulary\vocabulary.html:109
 msgid ""
 "I Alvin kan, förutom konkreta objekt, även abstrakta resurser beskrivas. "
 "Exempel på detta är främst samlingar eller andra översiktliga beskrivningar. "
@@ -1987,7 +2217,7 @@ msgstr ""
 "choose to upload all images in an image collection to the main/collection "
 "record without describing the different parts individually."
 
-#: .\vocabulary\templates\vocabulary\vocabulary.html:116
+#: .\vocabulary\templates\vocabulary\vocabulary.html:111
 msgid ""
 "Normalfallet i Alvin är också att göra en digital reproduktion av det "
 "fysiska objektet, t.ex. digitalisera en handskrift eller en bok. I dessa "
@@ -2000,6 +2230,56 @@ msgstr ""
 "metadata record still describes the physical object (not the digital "
 "reproduction). The digital files are copies of this particular copy that is "
 "described in the record."
+
+#~ msgid "Exportera"
+#~ msgstr "Export"
+
+#, fuzzy
+#~| msgid "Relaterat"
+#~ msgid "Relaterade funktioner"
+#~ msgstr "Related"
+
+#, fuzzy
+#~| msgid "Sök länkade poster"
+#~ msgid "Sökning på länkade poster"
+#~ msgstr "Search linked records"
+
+#, fuzzy
+#~| msgid "Sök i Alvin"
+#~ msgid "Sök i Alvin..."
+#~ msgstr "Search Alvin"
+
+#~ msgid "Medlemmar"
+#~ msgstr "Members"
+
+#~ msgid "AI-genererad översättning"
+#~ msgstr "AI-generated translation"
+
+#~ msgid "Datamodell"
+#~ msgstr "Data model"
+
+#~ msgid "Kärnklasserna innehåller i sin tur olika uppsättningar av:"
+#~ msgstr "The core classes in turn contain different sets of:"
+
+#~ msgid ""
+#~ "en grupp som samlar en eller flera klasser eller egenskaper, till exempel "
+#~ "<span class=\"italic\">title</span> som har egenskaperna <span "
+#~ "class=\"italic\">mainTitle</span> och <span class=\"italic\">subtitle</"
+#~ "span>."
+#~ msgstr ""
+#~ "a group that collects one or more classes or properties, for example the "
+#~ "title class which has the properties mainTitle and subtitle."
+
+#~ msgid "ett värde som har skrivits in, till exempel en titel."
+#~ msgstr "a value that has been entered, for example a title."
+
+#, fuzzy
+#~| msgid ""
+#~| "ett värde valt från en kontrollerad lista i Alvin, till exempel språk.."
+#~ msgid ""
+#~ "ett värde valt från en kontrollerad lista i Alvin, till exempel språk."
+#~ msgstr ""
+#~ "a value selected from a controlled list in Alvin, for example language."
 
 #, fuzzy
 #~| msgid "Metadata"
@@ -2066,11 +2346,6 @@ msgstr ""
 
 #~ msgid "Alternativa namnformer"
 #~ msgstr "Variant names"
-
-#, fuzzy
-#~| msgid "Alvin - Kontakt"
-#~ msgid "Alvin - Platser"
-#~ msgstr "Alvin - Contact"
 
 #~ msgid "Träff"
 #~ msgstr "Results"

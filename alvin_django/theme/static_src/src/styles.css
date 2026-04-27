@@ -15,7 +15,6 @@
 */
 
 @import "tailwindcss";
-@import "tify/dist/tify.css";
 @source "../../../templates";
 @source "../../../**/*.html";
 @source "../../../**/*.py";

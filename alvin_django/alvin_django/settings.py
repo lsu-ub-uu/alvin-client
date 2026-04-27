@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'vocabulary',
-    'xml',
+    'xml_formats',
     'django_oai_pmh',
     'alvin_search',
 ]

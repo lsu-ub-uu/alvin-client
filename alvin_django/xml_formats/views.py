@@ -66,10 +66,10 @@ def urn(request):
         raise Http404("Record list not found")
   
 # Pass the data to the template
-  return render(request, 'xml/urn.xml', {'records': records}, content_type='text/xml')
+  return render(request, 'xml_formats/urn.xml', {'records': records}, content_type='text/xml')
 
 def alvinrecordschema(request):
-  return render (request, 'xml/alvin-record-schema.xml', content_type='text/xml')
+  return render (request, 'xml_formats/alvin-record-schema.xml', content_type='text/xml')
 
 def metadatardf(request, id):
   api_host = settings.API_HOST
@@ -96,7 +96,7 @@ def metadatardf(request, id):
   transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
   metadatardf = transform(xml_tree, **argDict)	# Transform source XML tree
     
-  return render (request, 'xml/metadata-rdf.xml', {'metadatardf': metadatardf}, content_type='application/rdf+xml')
+  return render (request, 'xml_formats/metadata-rdf.xml', {'metadatardf': metadatardf}, content_type='application/rdf+xml')
 
 def record_viewer(request, record_type, record_id):
   format = request.GET.get('format', 'xml')
@@ -152,16 +152,16 @@ def record_viewer(request, record_type, record_id):
       raise Http404("Format not found")
 
   if format == 'json':
-    return render (request, 'xml/recordjson.json', {'recordjson': recordjson}, content_type='application/ld+json')
+    return render (request, 'xml_formats/recordjson.json', {'recordjson': recordjson}, content_type='application/ld+json')
 
   elif format == 'rdf':
-    return render (request, 'xml/recordxml.xml', {'recordxml': recordxml}, content_type='application/rdf+xml')
+    return render (request, 'xml_formats/recordxml.xml', {'recordxml': recordxml}, content_type='application/rdf+xml')
 
   else:
-    return render (request, 'xml/recordxml.xml', {'recordxml': recordxml}, content_type='text/xml')
+    return render (request, 'xml_formats/recordxml.xml', {'recordxml': recordxml}, content_type='text/xml')
 
 def alvinvocabulary(request):
-  xml_path = static('xml/rdf_properties.xml')
+  xml_path = static('xml_formats/rdf_properties.xml')
   absolute_xml = request.build_absolute_uri(xml_path)
   xslt_path = static('xsl/alvin_vocabulary.xsl')
   absolute_xslt = request.build_absolute_uri(xslt_path)
@@ -181,10 +181,10 @@ def alvinvocabulary(request):
   transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
   alvinvocabulary = transform(xml_tree, **argDict)	# Transform source XML tree
 
-  return render (request, 'xml/alvinvocabulary.xml', {'alvinvocabulary': alvinvocabulary}, content_type='text/xml')
+  return render (request, 'xml_formats/alvinvocabulary.xml', {'alvinvocabulary': alvinvocabulary}, content_type='text/xml')
 
 def alvinrdf(request):
-  return render (request, 'xml/alvin-rdf.xml', content_type='application/rdf+xml')
+  return render (request, 'xml_formats/alvin-rdf.xml', content_type='application/rdf+xml')
 
 def onthologyrdf(request, id):
   id = id
@@ -207,4 +207,4 @@ def onthologyrdf(request, id):
   transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
   onthologyrdf = transform(xml_tree, **argDict)	# Transform source XML tree
 
-  return render (request, 'xml/onthology-rdf.xml', {'onthologyrdf': onthologyrdf, 'id': id}, content_type='application/rdf+xml')
+  return render (request, 'xml_formats/onthology-rdf.xml', {'onthologyrdf': onthologyrdf, 'id': id}, content_type='application/rdf+xml')

@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 urlpatterns = [
     path('i18n/', include("django.conf.urls.i18n")),
-    path('', include('xml.urls')),
+    path('', include('xml_formats.urls')),
     path('oai/', include('django_oai_pmh.urls')),
 ]
 

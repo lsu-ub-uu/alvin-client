@@ -1,22 +1,23 @@
 
-<div class="flex w-full items-center mb-4 max-md:text-sm">
+<div class="w-full items-center mb-4 max-md:text-sm">
     {% if metadata.record_type == 'alvin-work' %}
-            <div class="flex flex-row items-center">
-                <svg class="size-6 z-10" aria-label="{{ metadata.label }}" viewBox="0 0 24 24" stroke-width="2" fill="none">
-                    {% include '../_icons/work.svg' %}
-                </svg>
-                <svg class="size-6" aria-label="{{ metadata.form_of_work.item }}" viewBox="0 0 24 24" stroke-width="2" fill="none">
-                    {% if metadata.form_of_work.code == 'cartography' %}
-                        {% include '../_icons/cartographic.svg' %}
-                    {% elif metadata.form_of_work.code == 'music' %}
-                        {% include '../_icons/music.svg' %}
-                    {% elif metadata.form_of_work.code == 'text' %}
-                        {% include '../_icons/text.svg' %}
-                    {% endif %}
-                </svg>
-                <p class="w-full font-semibold pl-2">{{ metadata.display_label }}</p>
-            </div>
+        <div class="flex flex-row items-center">
+            <svg class="size-6 z-10" aria-label="{{ metadata.label }}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                {% include '../_icons/work.svg' %}
+            </svg>
+            <svg class="size-6" aria-label="{{ metadata.form_of_work.item }}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                {% if metadata.form_of_work.code == 'cartography' %}
+                    {% include '../_icons/cartographic.svg' %}
+                {% elif metadata.form_of_work.code == 'music' %}
+                    {% include '../_icons/music.svg' %}
+                {% elif metadata.form_of_work.code == 'text' %}
+                    {% include '../_icons/text.svg' %}
+                {% endif %}
+            </svg>
+            <p class="w-full font-semibold pl-2">{{ metadata.display_label }}</p>
+        </div>
         {% else %}
+        <div class="flex flex-row">
             <svg class="size-6" aria-label="{{metadata.label}}" viewBox="0 0 24 24" stroke-width="2" fill="none">
                 {% if metadata.type_of_resource.code == 'art' %}
                     {% include '../_icons/artifact.svg' %}
@@ -48,10 +49,19 @@
                     {% include '../_icons/organisation.svg' %}
                 {% endif %}
             </svg>
-        {% if metadata.record_type != 'alvin-record' %}
+            {% if metadata.record_type != 'alvin-record' %}
             <p class="w-full font-semibold pl-2">{{ metadata.label }}</p>
-        {% else %}
+            {% else %}
             <p class="w-full font-semibold pl-2">{{ metadata.display_label }}</p>
+            {% endif %}
+        </div>
+        {% if metadata.collection %}
+        <div class="flex flex-row">
+            <svg class="size-6" aria-label="{{metadata.collection.item}}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                {% include '../_icons/collection.svg' %}
+            </svg>
+            <p class="w-full font-semibold pl-2">{{ metadata.collection.item }}</p>
+        </div>
         {% endif %}
     {% endif %}
 </div>

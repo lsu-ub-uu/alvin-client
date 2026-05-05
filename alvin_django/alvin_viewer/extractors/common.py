@@ -167,7 +167,7 @@ def a_date(node: etree._Element, kind: str) -> DateEntry:
         return None
     return DateEntry(
         label = _get_label(target),
-        year = text(target, "date/year"),
+        year = text(target, "date/year").lstrip("0"),
         month = text(target, "date/month"),
         day = text(target, "date/day"),
         era = _get_value(target, "date/era")

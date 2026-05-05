@@ -1,0 +1,19 @@
+{% load i18n static %}
+
+{% for title in metadata.variant_titles.titles %}
+    {{title}}
+    <div class="md-row">
+        <div class="md-label flex flex-row gap-x-1.5">
+            <dt>
+                {{ title.label }}
+                {% if title.title_type %}
+                ({{ title.title_type }})
+                {% endif %}
+            </dt>
+        </div>
+        <dd dir="{% if value.orientation_code == 'rtl' %}rtl{% else %}ltr{% endif %}" 
+            class="md-value">
+            {{ title.display }}
+        </dd>
+    </div>
+{% endfor %}

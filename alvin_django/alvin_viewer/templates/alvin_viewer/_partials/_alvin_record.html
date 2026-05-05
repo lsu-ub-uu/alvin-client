@@ -2,6 +2,7 @@
 
 <!-- Metadata -->
 <div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_inventory: false, open_related: false }">
+    {{metadata}}
     <section class="mt-4" aria-labelledby="summary-heading">
         {% if metadata.summary %}
         <h2 id="summary-heading" class="sr-only">{{metadata.summary.label}}</h2>
@@ -28,23 +29,25 @@
 
     {% if has_all_metadata %}
     <dl id="allmetadata" class="py-2 px-4 mb-6 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
-        {% for title in metadata.variant_titles.titles %}
-            {% include "./_metadata_row.html" with label=metadata.variant_titles.label extra_label=title.type value=title.display %}
-        {% endfor %}
+        {% include "./_metadata_row_variant_title.html" %}
+        {% include "./_metadata_row.html" with label=metadata.sublocation.label value=metadata.sublocation.text %}
+        {% include "./_metadata_row.html" with label=metadata.shelf_mark.label value=metadata.shelf_mark.text %}
+        {% include "./_metadata_row.html" with label=metadata.former_shelf_mark.label value=metadata.former_shelf_mark.texts|join:"<br>" %}
+        {% include "./_metadata_row.html" with label=metadata.subcollection.label value=metadata.subcollection.items|join:"<br>" %}
+        {% include "./_metadata_row.html" with label=metadata.physical_location_note.combined_label value=metadata.physical_location_note.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.edition_statement.label value=metadata.edition_statement.text %}
         {% include "./_metadata_row.html" with label=metadata.publications.label value=metadata.publications.texts|join:"<br>" %}
         {% for date in metadata.date_other %}
             {% include "./_metadata_row.html" with label=date.dates.type value=date.dates.display|linebreaksbr %}
         {% endfor %}
         {% include "./_metadata_row.html" with label=metadata.languages.label value=metadata.languages.items|join:"<br>"|safe %}
-        {% include "./_metadata_row.html" with label=metadata.sublocation.label value=metadata.sublocation.text %}
-        {% include "./_metadata_row.html" with label=metadata.shelf_mark.label value=metadata.shelf_mark.text %}
-        {% include "./_metadata_row.html" with label=metadata.former_shelf_mark.label value=metadata.former_shelf_mark.texts|join:"<br>" %}
-        {% include "./_metadata_row.html" with label=metadata.subcollection.label value=metadata.subcollection.items|join:"<br>" %}
-        {% include "./_metadata_row.html" with label=metadata.physical_location_note.combined_label value=metadata.physical_location_note.text|linebreaksbr %}
+        {% include "./_metadata_row.html" with label=metadata.description_languages.label value=metadata.description_languages.items|join:"<br>"|safe %}
         {% include "./_metadata_row.html" with label=metadata.base_material.label value=metadata.base_material.display %}
         {% include "./_metadata_row.html" with label=metadata.applied_material.label value=metadata.applied_material.display %}
+        {% include "./_metadata_row.html" with label=metadata.shelf_metres.label value=metadata.shelf_metres.text %}
+        {% include "./_metadata_row.html" with label=metadata.archival_units.label value=metadata.archival_units.text %}
         {% include "./_metadata_row.html" with label=metadata.extent.label value=metadata.extent.text|linebreaksbr %}
+        {% include "./_metadata_row.html" with label=metadata.locus.label value=metadata.locus.text %}
         {% for dimension in metadata.dimensions %}
             {% include "./_metadata_row.html" with label=dimension.combined_label value=dimension.display %}
         {% endfor %}
@@ -52,35 +55,15 @@
         {% for note in metadata.physical_description_notes.texts %}
             {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
         {% endfor %}
-        {% for note in metadata.notes.texts %}
-            {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
-        {% endfor %}
-        {% include "./_metadata_row.html" with label=metadata.transcription.label value=metadata.transcription.text|linebreaksbr %}
-        {% include "./_metadata_row.html" with label=metadata.table_of_contents.label value=metadata.table_of_contents.text|linebreaksbr %}
-        {% include "./_metadata_row.html" with label=metadata.literature.label value=metadata.literature.text|linebreaksbr %}
-        {% include "./_metadata_row.html" with label=metadata.access_policy.label value=metadata.access_policy.text|linebreaksbr %}
-        {% for subject in metadata.subjects.entries %}
-            {% include "./_metadata_row.html" with label=subject.label extra_label=subject.authority value=subject.display %}
-        {% endfor %}
-        {% include "./_metadata_row.html" with label=metadata.genre_form.label value=metadata.genre_form.items|join:"<br>"|safe %}
-        {% for classification in metadata.classifications %}
-            {% include "./_metadata_row.html" with label=classification.label extra_label=classification.type value=classification.text %}
-        {% endfor %}
-        {% for identifier in metadata.identifiers %}
-            {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type value=identifier.identifier %}
-        {% endfor %}
         {% include "./_metadata_row.html" with label=metadata.deco_note.combined_label value=metadata.binding.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.binding.combined_label value=metadata.binding.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.binding_deco_note.combined_label value=metadata.binding_deco_note.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.level.label value=metadata.level.item %}
-        {% include "./_metadata_row.html" with label=metadata.shelf_metres.label value=metadata.shelf_metres.item %}
-        {% include "./_metadata_row.html" with label=metadata.archival_units.label value=metadata.archival_units.text %}
         {% include "./_metadata_row.html" with label=metadata.other_findaid.label value=metadata.other_findaid.texts|join:"<br>" %}
         {% include "./_metadata_row.html" with label=metadata.weeding.label value=metadata.weeding.texts|join:"<br>" %}
         {% include "./_metadata_row.html" with label=metadata.related_material.label value=metadata.related_material.texts|join:"<br>" %}
         {% include "./_metadata_row.html" with label=metadata.arrangement.label value=metadata.arrangement.texts|join:"<br>" %}
         {% include "./_metadata_row.html" with label=metadata.accruals.label value=metadata.accruals.texts|join:"<br>" %}
-        {% include "./_metadata_row.html" with label=metadata.locus.label value=metadata.locus.text %}
         {% include "./_metadata_row.html" with label=metadata.incipit.label value=metadata.incipit.text %}
         {% include "./_metadata_row.html" with label=metadata.explicit.label value=metadata.explicit.text %}
         {% include "./_metadata_row.html" with label=metadata.rubric.label value=metadata.rubric.text %}
@@ -102,6 +85,23 @@
         {% include "./_metadata_row.html" with label=metadata.reverse.description_label value=metadata.reverse.description.text %}
         {% include "./_metadata_row.html" with label=metadata.reverse.legend_label value=metadata.reverse.legend.text %}
         {% include "./_metadata_row.html" with label=metadata.countermark.label value=metadata.countermark.texts|join:"<br>" %}
+        {% for note in metadata.notes.texts %}
+            {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
+        {% endfor %}
+        {% include "./_metadata_row.html" with label=metadata.transcription.label value=metadata.transcription.text|linebreaksbr %}
+        {% include "./_metadata_row.html" with label=metadata.table_of_contents.label value=metadata.table_of_contents.text|linebreaksbr %}
+        {% include "./_metadata_row.html" with label=metadata.literature.label value=metadata.literature.text|linebreaksbr %}
+        {% include "./_metadata_row.html" with label=metadata.access_policy.label value=metadata.access_policy.text|linebreaksbr %}
+        {% include "./_metadata_row.html" with label=metadata.genre_form.label value=metadata.genre_form.items|join:"<br>"|safe %}
+        {% for subject in metadata.subjects.entries %}
+            {% include "./_metadata_row.html" with label=subject.label extra_label=subject.authority value=subject.display %}
+        {% endfor %}
+        {% for classification in metadata.classifications %}
+            {% include "./_metadata_row.html" with label=classification.label extra_label=classification.type value=classification.text %}
+        {% endfor %}
+        {% for identifier in metadata.identifiers %}
+            {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type value=identifier.identifier %}
+        {% endfor %}
     </dl>
     {% endif %}
 
@@ -111,7 +111,7 @@
                 {% include "./_metadata_row.html" with svg_path=agent.icon_path label=agent.display_roles url=agent.url value=agent.display %}
             {% endfor %}
             {% for place in metadata.origin_places.places %}
-                {% include "./_metadata_row.html" with svg_path="../_icons/place.svg" label=place.label url=place.url value=place.name.title extra_value=place.display_countries %}
+                {% include "./_metadata_row.html" with svg_path="../_icons/place.svg" label=place.label url=place.url value=place.display extra_value=place.display_countries %}
             {% endfor %}
             {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
             {% include "./_metadata_row.html" with svg_path="../_icons/location.svg" label=metadata.location.label url=metadata.location.url value=metadata.location.names.title %}

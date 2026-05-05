@@ -35,7 +35,11 @@
       {% include './_partials/_viewer.html' %}
     {% endif %}
     <div class="mx-auto w-full max-w-4xl py-4">
-    <h1 class="text-3xl font-bold py-2">{% firstof metadata.main_title.display metadata.authority_names.title %}</h1>
+    <h1 
+      dir="{% if metadata.main_title.orientation_code == 'rtl' %}rtl{% else %}ltr{% endif %}" 
+      class="text-3xl font-bold py-2 text-start">
+      {% firstof metadata.main_title.display metadata.authority_names.title %}
+    </h1>
     {% include './_partials/_render_record_icon.html' %}
     </div>
     <div class="flex mx-auto w-full max-w-4xl justify-between flex-row py-4 my-4 border-y border-[#D1D9D5] ">

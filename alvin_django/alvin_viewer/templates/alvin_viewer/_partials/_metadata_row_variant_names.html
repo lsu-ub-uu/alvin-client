@@ -1,0 +1,20 @@
+{% load i18n static %}
+
+{% with metadata.variant_names.label as variant_label %}
+    {% for lang, name in metadata.variant_names.names.items %}
+        <div class="md-row">
+        <div class="md-label flex flex-row gap-x-1.5">
+            <dt>
+                {{ variant_label }}
+                {% if name.label_lang %}
+                ({{ name.label_lang }})
+                {% endif %}
+            </dt>
+        </div>
+        <dd dir="{% if value.orientation_code == 'rtl' %}rtl{% else %}ltr{% endif %}" 
+            class="md-value">
+            {{ name.display }}
+        </dd>
+    </div>
+    {% endfor %}
+{% endwith %}

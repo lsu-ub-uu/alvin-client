@@ -16,7 +16,8 @@
             {% endif %}
         </dt>
     </div>
-    <dd class="md-value">
+    <dd dir="{% if value.orientation_code == 'rtl' %}rtl{% else %}ltr{% endif %}" 
+        class="md-value">
         {% if url %}
             <a class="text-blue-800 dark:text-blue-200 underline" href="{{ url }}">{{ value }}</a>{% if extra_value %}{{ extra_value }}{% endif %}
         {% else %}

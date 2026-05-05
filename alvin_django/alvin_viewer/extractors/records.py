@@ -123,6 +123,7 @@ class AlvinRecord(CommonMetadata):
     origin_date: DatesBlock = None
     date_other: List[DatesBlock] = None
     languages: DecoratedList = None
+    description_languages: DecoratedList = None
     extent: DecoratedText = None
     dimensions: List[Dimension] = None
     measure: Measure = None

@@ -21,7 +21,7 @@ def extract(root: etree._Element) -> AlvinOrganisation:
         display_date = decorated_text(root, _xp(rt, "organisationInfo/displayDate")),
         biographical_note = note_and_type(root, _xp(rt, "note[@noteType = 'biographicalHistorical']"), "noteTypeCollection", "biographicalHistorical"),
         general_note = note_and_type(root, _xp(rt, "note[@noteType = 'general']"), "noteTypeCollection", "general"),
-        source_note = note_and_type(root, _xp(rt, "note[@noteType = 'sourceData']"), "noteTypeCollection", "sourceData"),
+        source_note = note_and_type(root, _xp(rt, "note[@noteType = 'sourceData']"), "noteTypeAuthorityCollection", "sourceData"),
         identifiers = identifiers(root, _xp(rt, "identifier")),
         address = address(root, rt),
         electronic_locators = electronic_locators(root, _xp(rt, "electronicLocator")),

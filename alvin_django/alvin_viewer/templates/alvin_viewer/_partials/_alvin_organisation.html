@@ -11,11 +11,7 @@
 
     {% if has_all_metadata %}
     <dl id="allmetadata" class="py-2 px-4 mb-6 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
-        {% with metadata.variant_names.label as variant_label %}
-            {% for lang, name in metadata.variant_names.names.items %}
-                {% include "./_metadata_row.html" with label=variant_label extra_label=name.label_lang value=name.display %}
-            {% endfor %}
-        {% endwith %}
+        {% include "./_metadata_row_variant_names.html" %}
         {% include "./_address.html" with address=metadata.address %}
         {% include "./_metadata_row.html" with label=metadata.general_note.type value=metadata.general_note.text %}
         {% include "./_metadata_row.html" with label=metadata.source_note.type value=metadata.source_note.text %}

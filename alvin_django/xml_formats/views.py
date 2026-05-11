@@ -161,7 +161,7 @@ def record_viewer(request, record_type, record_id):
     return render (request, 'xml_formats/recordxml.xml', {'recordxml': recordxml}, content_type='text/xml')
 
 def alvinvocabulary(request):
-  xml_path = static('xml_formats/rdf_properties.xml')
+  xml_path = static('xml/rdf_properties.xml')
   absolute_xml = request.build_absolute_uri(xml_path)
   xslt_path = static('xsl/alvin_vocabulary.xsl')
   absolute_xslt = request.build_absolute_uri(xslt_path)

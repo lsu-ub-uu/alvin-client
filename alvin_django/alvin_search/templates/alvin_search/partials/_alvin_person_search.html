@@ -1,6 +1,9 @@
 {% load i18n static %}
 <a class="flex items-center flex items-center border-2 border-blue-200 shadow-md shadow-blue-200/70 hover:shadow-lg/100 mt-4 p-4 bg-white dark:bg-gray-800 rounded block px-4 py-2 mt-2 text-sm font-normal text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" href="{% url 'alvin_viewer' 'alvin-person' record.identifier %}?data={{ encoded_link }}">
-    <img class="fill-current bg-white dark:bg-off-white w-6 h-6" alt="{% translate 'Person' %}" src="{% static 'img/authorityTypes/person.svg' %}">
+    <svg class="size-6" aria-label="Person (alvin-person)" viewBox="0 0 24 24" stroke-width="2" fill="none">
+        <path d="M5 20V19C5 15.134 8.13401 12 12 12V12C15.866 12 19 15.134 19 19V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
     <div class="py-2 px-2 font-semibold text-blue-800 dark:text-blue-200 underline text-base {% if view == 'grid' %}md:w-42 md:text-sm{% endif %}">
     {% if record.namefamily != None %}{{record.namefamily}}{% if record.familyName != None %} (family){% endif %}{% if record.namegiven != None %}, {% endif %}{% endif %}
     {% if record.namegiven != None %}{{record.namegiven}}{% endif %}{% if record.namenumeration != None %} {{record.namenumeration}}{% endif %}{% if record.nametermsOfAddress != None %}, {{record.nametermsOfAddress}}{% endif %}{% if record.displaydate != None %}, {{record.displaydate}}{% else %}{% if record.birthyear != None %}, {{record.birthyear}}-{% endif %}{% if record.deathyear != None %}{% if record.birthyear == None %}, -{% endif %}{{record.deathyear}}{% endif %}

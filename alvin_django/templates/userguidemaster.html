@@ -11,10 +11,10 @@
     <meta name="keywords" content="Alvin, cultural heritage, digital collections, databases, libraries, archives">
     <meta name="description" content="Alvin - Nordic platform for preserving and making digitised cultural heritage available">
     {% tailwind_css %}
-    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}/en{{ request.get_full_path|slice:"3:" }}" hreflang="en">
-    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}/no{{ request.get_full_path|slice:"3:" }}" hreflang="no">
-    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}/sv{{ request.get_full_path|slice:"3:" }}" hreflang="sv">
-    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"3:" }}" hreflang="x-default">
+    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"0:12" }}/en/{{ request.get_full_path|slice:"16:" }}" hreflang="en">
+    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"0:12" }}/no/{{ request.get_full_path|slice:"16:" }}" hreflang="no">
+    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"0:12" }}/sv/{{ request.get_full_path|slice:"16:" }}" hreflang="sv">
+    <link rel="alternate" href="{{ request.build_absolute_uri|cut:"en/" |cut:"no/" |cut:"sv/" }}" hreflang="x-default">  
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">

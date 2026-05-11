@@ -1041,7 +1041,7 @@
     <Cell><Data>street</Data></Cell>
     <Cell><Data>Address</Data></Cell>
     <Cell><Data>Literal</Data></Cell>
-    <Cell><Data>TextVar</Data></Cell>
+    <Cell><Data>AlvinTextVar</Data></Cell>
     <Cell><Data>authority</Data></Cell>
    </Row>
    <Row>

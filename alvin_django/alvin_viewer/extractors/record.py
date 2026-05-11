@@ -163,9 +163,11 @@ def files(root: etree._Element, xp: str) -> FilesBlock | None:
         digital_origin = _get_value(target, "./digitalOrigin"),
         file_groups = [
             FileGroup(
+                media_type = text(group, "./internetMediaType"),
                 type = _get_value(group, "./type"),
                 type_code = text(group, "./type"),
                 files = [File(
+                    binary_type = attr(element(file, "./fileLocation/linkedRecord/binary"), "./@type"),
                     type = _get_value(file, "./type"),
                     binary_id = text(file, "./fileLocation/linkedRecordId"),
                     original_name = text(file, "./fileLocation/linkedRecord/binary/master/originalFileName"),

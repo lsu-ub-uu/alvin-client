@@ -204,7 +204,7 @@ https://tailwindcss.com/docs/functions-and-directives#plugin-directive
 [x-cloak] { display: none !important; }
 
 @layer utilities {
-  .scrollbar-alvin-x {
+  .scrollbar-alvin {
     /* Firefox */
     scrollbar-width: auto;
     scrollbar-color: theme(colors.dark.alvin) theme(colors.alvin.grey);

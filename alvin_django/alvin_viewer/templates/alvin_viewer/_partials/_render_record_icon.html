@@ -55,7 +55,7 @@
             <p class="w-full font-semibold pl-2">{{ metadata.display_label }}</p>
             {% endif %}
         </div>
-        {% if metadata.collection %}
+        {% if metadata.collection.code == 'yes' %}
         <div class="flex flex-row">
             <svg class="size-6" aria-label="{{metadata.collection.item}}" viewBox="0 0 24 24" stroke-width="2" fill="none">
                 {% include '../_icons/collection.svg' %}

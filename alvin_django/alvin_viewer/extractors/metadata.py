@@ -692,6 +692,7 @@ class Summary:
 
 @dataclass 
 class File:
+    binary_type: Optional[str] = None
     type: Optional[str] = None
     binary_id: Optional[str] = None
     original_name: Optional[str] = None
@@ -702,9 +703,19 @@ class File:
 
 @dataclass 
 class FileGroup:
+    media_type: str = None
     type: Optional[str] = None
     type_code: Optional[str] = None 
     files: List[File] = None
+
+    @property
+    def images(self) -> List[File]:
+        if self.media_type != "image" or not self.files:
+            return []
+        return [
+            f for f in self.files 
+            if getattr(f, "binary_type", None) == "image"
+        ]
 
 @dataclass 
 class FilesBlock:

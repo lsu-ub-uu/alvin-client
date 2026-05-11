@@ -1,11 +1,10 @@
 {% load i18n static %}
 
 {% for title in metadata.variant_titles.titles %}
-    {{title}}
     <div class="md-row">
         <div class="md-label flex flex-row gap-x-1.5">
             <dt>
-                {{ title.label }}
+                {{ title.type }}
                 {% if title.title_type %}
                 ({{ title.title_type }})
                 {% endif %}

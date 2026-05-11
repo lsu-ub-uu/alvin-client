@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.http import Http404
+from django.core.paginator import Paginator
 from django.shortcuts import render
+
 from lxml import etree
 
 from ..services.alvin_api import AlvinAPI

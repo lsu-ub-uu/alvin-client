@@ -21,14 +21,16 @@
     data-xdata="{ activeTab: 'overview', download: false, share: false }"
     data-xon.click.away="download = false">
     {% if value != None %}
-    <a class="flex w-fit pb-2" href="{{ value }}">
-      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+    <div class="pagination">
+      <a class="flex w-fit pb-2" href="{{ value }}">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="size-6">
-        <title>{% translate 'Tillbaka till sökresultatet' %}</title>
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-      </svg>
-      <span class="pl-2 uppercase">{% translate 'Tillbaka till sökresultatet' %}</span>
-    </a>
+          <title>{% translate 'Tillbaka till sökresultatet' %}</title>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+        <span class="pl-2 uppercase">{% translate 'Tillbaka till sökresultatet' %}</span>
+      </a>
+    </div>
     {% endif %}
     
     {% if metadata.files %}

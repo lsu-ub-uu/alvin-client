@@ -54,10 +54,10 @@
      <p class="py-2">{% translate 'Protokollet består av sex olika typer av förfrågningar <span class="italic">(verb)</span> som anger vilken tjänst som anropas:' %}</p>
      <h2 id="List" class="text-3xl md:text-4xl font-bold pt-4 pb-4">{% translate 'Lista över förfrågningar' %}</h2>
      <h3 id="Identify" class="text-2xl md:text-3xl font-bold pt-4">Identify</h3>
-     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=Identify">https://www.alvin-portal.org/oai/oai?verb=Identify</a></p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'oai2' %}?verb=Identify">https://www.alvin-portal.org/oai/oai?verb=Identify</a></p>
      <p class="py-2">{% translate 'Hämtar grundläggande information om arkivet, som dess namn, URL och protokoll-version.' %}</p>
      <h3 id="ListMetadataFormats" class="text-2xl md:text-3xl font-bold pt-4">ListMetadataFormats</h3>
-     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=ListMetadataFormats">https://www.alvin-portal.org/oai/oai?verb=ListMetadataFormats</a></p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'oai2' %}?verb=ListMetadataFormats">https://www.alvin-portal.org/oai/oai?verb=ListMetadataFormats</a></p>
      <p class="py-2">{% translate 'Returnerar en lista över de metadataformat som arkivet kan tillhandahålla. Poster från Alvin kan hämtas i grundformatet oai_dc (se specifikation av mappning nedan).' %}</p>
      <p class="py-2 font-bold">{% translate 'Dublin Core-mappning mot Alvins format' %}</p>
      <p class="py-2"><span class="font-semibold">&lt;dc:title&gt; {% translate 'Titel' %}</span><br>
@@ -78,7 +78,7 @@
      {% translate 'Anges som i posterna, om specifika årtal YYYY-YYYY, annars som fritext "Visas som".' %}</p>
      <p class="py-2"><span class="font-semibold">&lt;dc:type&gt; {% translate 'Resurstyp' %}</span><br>
      {% translate 'Fasta värden på engelska enligt Library of Congress Resource Types Scheme.' %}<br>
-     <a class="text-blue-800 dark:text-blue-200 underline" href="/vocabulary/typeOfResourceCollection">{% translate 'Lista' %}</a>
+     <a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'metadata' 'typeOfResourceCollection' %}">{% translate 'Lista' %}</a>
      <p class="py-2"><span class="font-semibold">&lt;dc:identifier&gt; {% translate 'Identifikator' %}</span><br>
      <ol class="py-2 list-decimal list-inside">
          <li>{% translate 'Permanent länk, urn:nbn anges som url:' %} http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-1</li>
@@ -93,14 +93,14 @@
      </ol>
      <p class="py-2"><span class="font-semibold">&lt;dc:rights&gt; {% translate 'Rättigheter' %}</span><br>
      {% translate 'Gäller digitalt innehåll (filer). Anges på engelska enligt alternativen för Rättigheter.' %}<br>
-     <a class="text-blue-800 dark:text-blue-200 underline" href="/vocabulary/rightsCollection">{% translate 'Lista' %}</a>
+     <a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'metadata' 'rightsCollection' %}">{% translate 'Lista' %}</a>
      <h3 id="ListSets" class="text-2xl md:text-3xl font-bold pt-4">ListSets</h3>
      <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=ListSets">https://www.alvin-portal.org/oai/oai?verb=ListSets</a></p>
      <p class="py-2">{% translate 'Hämtar arkivets set-struktur som möjliggör gruppering av poster i delmängder. Poster från Alvin kan hämtas i begränsade set utifrån ägande institution.' %}</p>
      <p class="py-2">{% translate 'Id för setSpec motsvarar en arkivinstitutions id i Alvin. ' %}</p>
      <p class="py-2">{% translate '<span class="font-semibold">Exempel:</span> setSpec 3 innehåller alla poster från Uppsala universitetsbibliotek' %} (alvin-location:3).</p>
      <h3 id="GetRecord" class="text-2xl md:text-3xl font-bold pt-4">GetRecord</h3>
-     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=GetRecord&identifier=oai%3AALVIN.org%3A1&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=GetRecord&identifier=oai:ALVIN.org:1&metadataPrefix=oai_dc</a></p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'oai2' %}?verb=GetRecord&identifier=oai%3AALVIN.org%3A1&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=GetRecord&identifier=oai:ALVIN.org:1&metadataPrefix=oai_dc</a></p>
      <p class="py-2">{% translate 'Hämtar en enskild, individuell metadatapost. Obligatoriska parametrar anger identifikatorn (identifier) och formatet (metadataPrefix) för de metadata som ska inkluderas i posten.' %}</p>
      <p class="py-2">{% translate 'En post <span class="italic">(record)</span> är metadata uttryckta i ett enda format. Den identifieras entydigt genom kombinationen av den unika identifikatorn för det objekt från vilket posten är tillgänglig, metadataprefixet som identifierar postens metadataformat samt postens datumstämpel. XML-kodningen av poster är organiserad i följande delar: ' %}
      <ol class="py-2 list-decimal list-inside">
@@ -114,22 +114,22 @@
          <li><span class="italic">metadata</span> -  {% translate 'en enda manifestation av metadata från ett objekt. Den innehåller ett enda rotelement, til exempel oai_dc:dc, med underelement som tillhör motsvarande metadataformat.' %}</li>
      </ol>
      <h3 id="ListRecords" class="text-2xl md:text-3xl font-bold pt-4">ListRecords</h3>
-     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=ListRecords&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=ListRecords&metadataPrefix=oai_dc</a></p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'oai2' %}?verb=ListRecords&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=ListRecords&metadataPrefix=oai_dc</a></p>
      <p class="py-2">{% translate 'Hämtar fullständiga metadataposter från arkivet. Om antalet hämtade poster överstiger 100 returneras en lista över de första 100 posterna + ett resumptionToken-element i slutet av svaret som används för att fortsätta hämtningen av den kompletta listan. Inga andra parametrar kan då användas. Om resumptionToken saknas är metadataPrefix en obligatorisk parameter.' %}</p>
      <h3 id="ListIdentifiers" class="text-2xl md:text-3xl font-bold pt-4">ListIdentifiers</h3>
-     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="/oai/oai?verb=ListIdentifiers&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=ListIdentifiers&metadataPrefix=oai_dc</a></p>
+     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'oai2' %}?verb=ListIdentifiers&metadataPrefix=oai_dc">https://www.alvin-portal.org/oai/oai?verb=ListIdentifiers&metadataPrefix=oai_dc</a></p>
      <p class="py-2">{% translate 'Som ListRecords men hämtar endast <span class="italic">headers</span> (identifikator, set och datumstämpel), inte de fullständiga metadataposterna.' %}</p>
   </main>
   <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
      <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
         <div class="flex justify-center py-4"> 
             <a href="https://www.openarchives.org/">
-                <img class="w-48 object-center" alt="Open Archives Initiative" src="/static/img/OA200.gif">
+                <img class="w-48 object-center" alt="Open Archives Initiative" src="{% static 'img/OA200.gif' %}">
             </a>
         </div>
         <div class="flex justify-center py-4"> 
             <a class="bg-off-white dark:bg-gray-100 p-4 rounded-md" href="https://creativecommons.org/">
-                <img class="w-48 object-center" alt="Creative Commons" src="/static/img/cc.logo.svg">
+                <img class="w-48 object-center" alt="Creative Commons" src="{% static 'img/cc.logo.svg' %}">
             </a>
         </div>
     </div>    

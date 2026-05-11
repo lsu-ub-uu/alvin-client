@@ -21,7 +21,7 @@ from django.urls import path
 from . import views
 
 
-app_name = "oai2"
+#app_name = "oai2"
 urlpatterns = [
     path('oai', views.oai2, name="oai2"),
 ]

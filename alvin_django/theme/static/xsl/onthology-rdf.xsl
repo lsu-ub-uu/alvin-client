@@ -1,9 +1,11 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#"
-    xmlns:alvin="http://127.0.0.1:8000/vocabulary/"
-    xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-    xmlns:dcterms="http://purl.org/dc/terms/" exclude-result-prefixes="rdf rdfs alvin skos owl xsd">
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:alvin="https://www.alvin-portal.org/vocabulary/"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:dcterms="http://purl.org/dc/terms/">
     <xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes"/>
     <xsl:param name="id"/>
     <xsl:strip-space elements="*"/>

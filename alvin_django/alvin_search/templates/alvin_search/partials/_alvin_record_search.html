@@ -1,15 +1,20 @@
 {% load i18n static %}
 <a class="border-2 border-blue-200 shadow-md shadow-blue-200/70 hover:shadow-lg/100 mt-4 p-4 bg-white dark:bg-gray-800 rounded block px-4 py-2 text-sm font-normal text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" href="{% url 'alvin_viewer' 'alvin-record' record.identifier %}?data={{ encoded_link }}">
 {% if view == 'grid' %}
-  <div class="flex flex-col w-full bg-gray-700 md:w-48">
-    <div class="min-h-48">
+  <div class="flex flex-col w-full bg-gray-200 dark:bg-gray-900 md:w-48">
+    <div class="min-h-48 text-white">
       {% if record.file != None %}
         <img alt="{{record.title}}"
            class="w-48 h-48 object-contain mx-auto" src="https://cora.alvin-portal.org/iiif/{{record.file}}/full/300,/0/default.jpg">
              {% else %}
-        <img 
-           alt="{{record.title}}"
-           class="w-48 h-48 p-4 object-contain mx-auto" src="{% static 'img/folder_11769632.png' %}">
+             <div class="p-10 w-full h-48 bg-gray-200 dark:bg-gray-900 flex justify-center items-center break-all">
+                 <svg class="max-w-full max-h-full" aria-label="{{record.title}}" viewBox="0 0 24 24" stroke-width="2" fill="none" preserveAspectRatio="xMidYMid meet">
+                     <path d="M3 16L10 13L14 14.8182" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                     <path d="M16 10C14.8954 10 14 9.10457 14 8C14 6.89543 14.8954 6 16 6C17.1046 6 18 6.89543 18 8C18 9.10457 17.1046 10 16 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                     <path d="M16.8786 21.1213L19 19M21.1213 16.8787L19 19M19 19L16.8786 16.8787M19 19L21.1213 21.1213" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                     <path d="M13 21H3.6C3.26863 21 3 20.7314 3 20.4V3.6C3 3.26863 3.26863 3 3.6 3H20.4C20.7314 3 21 3.26863 21 3.6V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                 </svg>
+            </div>
       {% endif %}
      </div>
      <div class="bg-white dark:bg-gray-800 dark:text-white pt-2">
@@ -59,23 +64,99 @@
                 {% endif %}
             </div>
 
+
             <div class="mt-auto w-full flex pt-2 dark:text-white">
-               {% if record.file_count > 0 %} 
 
-                 <img alt="{{record.rights}}" src="{% static 'img/rights/' %}{{record.rights}}.svg" width="88" height="31"> 
-
-               {% else %} 
-                 <div class="bg-red-500 text-white font-bold uppercase px-4 pt-1">No files</div> 
-               {% endif %} 
-               <div class="pt-1 pl-2 uppercase pr-2">
-                 {{record.file_count}} 
-               {% if record.file_count == 1 %}
-                 {% translate 'fil' %}
-               {% else %} 
-                 {% translate 'filer' %}
+             <div class="pt-1">
+               {% if record.typeofresource == 'col' %}
+                 <svg class="size-6" aria-label="{% translate 'Arkiv' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M7 6L17 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M7 9L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M9 17H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M3 12H2.6C2.26863 12 2 12.2686 2 12.6V21.4C2 21.7314 2.26863 22 2.6 22H21.4C21.7314 22 22 21.7314 22 21.4V12.6C22 12.2686 21.7314 12 21.4 12H21M3 12V2.6C3 2.26863 3.26863 2 3.6 2H20.4C20.7314 2 21 2.26863 21 2.6V12M3 12H21" stroke="currentColor" stroke-width="2"></path>               
+                 </svg>                 
                {% endif %}
-               </div>
-               <div class="pt-1"><img class="fill-current bg-white dark:bg-off-white" alt="
+               {% if record.typeofresource == 'img' %}
+                 <svg class="size-6" aria-label="{% translate 'Bild' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M20.5096 9.54C20.4243 9.77932 20.2918 9.99909 20.12 10.1863C19.9483 10.3735 19.7407 10.5244 19.5096 10.63C18.2796 11.1806 17.2346 12.0745 16.5002 13.2045C15.7659 14.3345 15.3733 15.6524 15.3696 17C15.3711 17.4701 15.418 17.9389 15.5096 18.4C15.5707 18.6818 15.5747 18.973 15.5215 19.2564C15.4682 19.5397 15.3588 19.8096 15.1996 20.05C15.0649 20.2604 14.8877 20.4403 14.6793 20.5781C14.4709 20.7158 14.2359 20.8085 13.9896 20.85C13.4554 20.9504 12.9131 21.0006 12.3696 21C11.1638 21.0006 9.97011 20.7588 8.85952 20.2891C7.74893 19.8194 6.74405 19.1314 5.90455 18.2657C5.06506 17.4001 4.40807 16.3747 3.97261 15.2502C3.53714 14.1257 3.33208 12.9252 3.36959 11.72C3.4472 9.47279 4.3586 7.33495 5.92622 5.72296C7.49385 4.11097 9.60542 3.14028 11.8496 3H12.3596C14.0353 3.00042 15.6777 3.46869 17.1017 4.35207C18.5257 5.23544 19.6748 6.49885 20.4196 8C20.6488 8.47498 20.6812 9.02129 20.5096 9.52V9.54Z" stroke="currentColor" stroke-width="2"></path>
+                   <path d="M8 16.01L8.01 15.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M6 12.01L6.01 11.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M8 8.01L8.01 7.99889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M12 6.01L12.01 5.99889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M16 8.01L16.01 7.99889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>               
+                 </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'mix' %}
+                 <svg class="size-6" aria-label="{% translate 'Blandat innehåll' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M21 13.5V16.5M13.5 21H16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M16.5 9H9.6C9.26863 9 9 9.26863 9 9.6V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M10.5 21H9.6C9.26863 21 9 20.7314 9 20.4V19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M21 19.5V20.4C21 20.7314 20.7314 21 20.4 21H19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M19.5 9H20.4C20.7314 9 21 9.26863 21 9.6V10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M3 10.5V7.5M7.5 3H10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M7.5 15H14.4C14.7314 15 15 14.7314 15 14.4V7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M4.5 15H3.6C3.26863 15 3 14.7314 3 14.4V13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M3 4.5V3.6C3 3.26863 3.26863 3 3.6 3H4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M13.5 3H14.4C14.7314 3 15 3.26863 15 3.6V4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'art' %}
+                 <svg class="size-6" aria-label="{% translate 'Föremål' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M21 7.35304L21 16.647C21 16.8649 20.8819 17.0656 20.6914 17.1715L12.2914 21.8381C12.1102 21.9388 11.8898 21.9388 11.7086 21.8381L3.30861 17.1715C3.11814 17.0656 3 16.8649 3 16.647L2.99998 7.35304C2.99998 7.13514 3.11812 6.93437 3.3086 6.82855L11.7086 2.16188C11.8898 2.06121 12.1102 2.06121 12.2914 2.16188L20.6914 6.82855C20.8818 6.93437 21 7.13514 21 7.35304Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M3.52844 7.29357L11.7086 11.8381C11.8898 11.9388 12.1102 11.9388 12.2914 11.8381L20.5 7.27777" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M12 21L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>             
+                 </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'car' %}
+                 <svg class="size-6" aria-label="{% translate 'Karta' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M9 19L3.78974 20.7368C3.40122 20.8663 3 20.5771 3 20.1675L3 5.43246C3 5.1742 3.16526 4.94491 3.41026 4.86325L9 3M9 19L14.2103 20.7368C14.5988 20.8663 15 20.5771 15 20.1675L15 5.43246C15 5.1742 14.8347 4.94491 14.5897 4.86325L9 3M9 19L9 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M15 5L20.2103 3.26325C20.5988 3.13374 21 3.42292 21 3.83246L21 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M17.1213 22.364L19.2427 20.2427M19.2427 20.2427L21.364 18.1213M19.2427 20.2427L17.1213 18.1213M19.2427 20.2427L21.364 22.364" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                 </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'aud' %}
+                 <svg class="size-6" aria-label="{% translate 'Ljud' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <rect x="9" y="2" width="6" height="12" rx="3" stroke="currentColor" stroke-width="2" stroke-width="1.5"></rect>
+                   <path d="M5 10V11C5 14.866 8.13401 18 12 18V18V18C15.866 18 19 14.866 19 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M12 18V22M12 22H9M12 22H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                 </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'mul' %}
+                 <svg class="size-6" aria-label="{% translate 'Multimedia' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M3.2 14.2222V4C3.2 2.89543 4.09543 2 5.2 2H18.8C19.9046 2 20.8 2.89543 20.8 4V14.2222M3.2 14.2222H20.8M3.2 14.2222L1.71969 19.4556C1.35863 20.7321 2.31762 22 3.64418 22H20.3558C21.6824 22 22.6414 20.7321 22.2803 19.4556L20.8 14.2222" stroke="currentColor" stroke-width="2"></path>
+                   <path d="M11 19L13 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M14 6L16 8L14 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M10 6L8 8L10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+               </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'not' %}
+                 <svg class="size-6" aria-label="{% translate 'Noterad musik' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M7 6L17 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M7 9L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M9 17H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M3 12H2.6C2.26863 12 2 12.2686 2 12.6V21.4C2 21.7314 2.26863 22 2.6 22H21.4C21.7314 22 22 21.7314 22 21.4V12.6C22 12.2686 21.7314 12 21.4 12H21M3 12V2.6C3 2.26863 3.26863 2 3.6 2H20.4C20.7314 2 21 2.26863 21 2.6V12M3 12H21" stroke="currentColor" stroke-width="2"></path>               
+                 </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'txt' %}
+                 <svg class="size-6" aria-label="{% translate 'Text' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M4 19V5C4 3.89543 4.89543 3 6 3H19.4C19.7314 3 20 3.26863 20 3.6V16.7143" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                   <path d="M6 17L20 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                   <path d="M6 21L20 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                   <path d="M6 21C4.89543 21 4 20.1046 4 19C4 17.8954 4.89543 17 6 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M9 7L15 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+               </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'mov' %}
+                 <svg class="size-6" aria-label="{% translate 'Video' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M7 14C8.10457 14 9 13.1046 9 12C9 10.8954 8.10457 10 7 10C5.89543 10 5 10.8954 5 12C5 13.1046 5.89543 14 7 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M17 14C18.1046 14 19 13.1046 19 12C19 10.8954 18.1046 10 17 10C15.8954 10 15 10.8954 15 12C15 13.1046 15.8954 14 17 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M12 9C13.1046 9 14 8.10457 14 7C14 5.89543 13.1046 5 12 5C10.8954 5 10 5.89543 10 7C10 8.10457 10.8954 9 12 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M12 19C13.1046 19 14 18.1046 14 17C14 15.8954 13.1046 15 12 15C10.8954 15 10 15.8954 10 17C10 18.1046 10.8954 19 12 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12ZM2 12V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>             
+                 </svg>                 
+               {% endif %}
+             </div>
+              <div class="pt-1 p-2 uppercase">
                {% if record.typeofresource == 'col' %}
                  {% translate 'Arkiv' %}
                {% endif %}
@@ -105,8 +186,120 @@
                {% endif %} 
                {% if record.typeofresource == 'mov' %}
                  {% translate 'Video' %}
-               {% endif %}"
-                 src="{% static 'img/recordTypes/' %}{{record.typeofresource}}.svg"></div>
+               {% endif %}               
+               </div>
+
+             {% if record.file_count > 0 %} 
+<svg fill="currentcolor" width="31px" height="31px" viewBox="0 0 32 32" stroke-width="2">
+
+<path d="M25.05,7.64,21.36,4a3.21,3.21,0,0,0-2.29-1H9.24A3.25,3.25,0,0,0,6,6.24V25.76A3.25,3.25,0,0,0,9.24,29H22.76A3.25,3.25,0,0,0,26,25.76V9.93A3.21,3.21,0,0,0,25.05,7.64ZM23.59,9H20V5.41ZM24,25.76A1.25,1.25,0,0,1,22.76,27H9.24A1.25,1.25,0,0,1,8,25.76V6.24A1.25,1.25,0,0,1,9.24,5H18v5a1,1,0,0,0,1,1h5Z"></path> 
+<path d="M13,16.29a1,1,0,0,0-1.42,1.42l2.5,2.5a1,1,0,0,0,1.42,0l5-5A1,1,0,0,0,19,13.79l-4.29,4.3Z"></path> 
+
+</svg>
+               {% else %} 
+                 <svg fill="currentcolor" width="30px" height="30px" viewBox="0 0 32 32" stroke-width="2">
+                   <path d="M25.05,7.64,21.36,4a3.21,3.21,0,0,0-2.29-1H9.24A3.25,3.25,0,0,0,6,6.24V25.76A3.25,3.25,0,0,0,9.24,29H22.76A3.25,3.25,0,0,0,26,25.76V9.93A3.21,3.21,0,0,0,25.05,7.64ZM23.59,9H20V5.41ZM24,25.76A1.25,1.25,0,0,1,22.76,27H9.24A1.25,1.25,0,0,1,8,25.76V6.24A1.25,1.25,0,0,1,9.24,5H18v5a1,1,0,0,0,1,1h5Z"></path> 
+                   <path d="M17.79,13.79,16,15.59l-1.79-1.8a1,1,0,0,0-1.42,1.42L14.59,17l-1.8,1.79a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L16,18.41l1.79,1.8a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L17.41,17l1.8-1.79a1,1,0,0,0-1.42-1.42Z"></path> 
+                 </svg>
+               {% endif %} 
+               <div class="pt-1 pl-1 uppercase pr-2">
+                 {{record.file_count}} 
+               {% if record.file_count == 1 %}
+                 {% translate 'fil' %}
+               {% else %} 
+                 {% translate 'filer' %}
+               {% endif %}
+               </div>
+<!--
+             <div class="pt-1">
+               {% if record.typeofresource == 'col' %}
+                 <svg class="size-6" aria-label="{% translate 'Arkiv' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M7 6L17 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M7 9L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M9 17H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M3 12H2.6C2.26863 12 2 12.2686 2 12.6V21.4C2 21.7314 2.26863 22 2.6 22H21.4C21.7314 22 22 21.7314 22 21.4V12.6C22 12.2686 21.7314 12 21.4 12H21M3 12V2.6C3 2.26863 3.26863 2 3.6 2H20.4C20.7314 2 21 2.26863 21 2.6V12M3 12H21" stroke="currentColor" stroke-width="2"></path>               
+                 </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'img' %}
+                 <svg class="size-6" aria-label="{% translate 'Bild' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M20.5096 9.54C20.4243 9.77932 20.2918 9.99909 20.12 10.1863C19.9483 10.3735 19.7407 10.5244 19.5096 10.63C18.2796 11.1806 17.2346 12.0745 16.5002 13.2045C15.7659 14.3345 15.3733 15.6524 15.3696 17C15.3711 17.4701 15.418 17.9389 15.5096 18.4C15.5707 18.6818 15.5747 18.973 15.5215 19.2564C15.4682 19.5397 15.3588 19.8096 15.1996 20.05C15.0649 20.2604 14.8877 20.4403 14.6793 20.5781C14.4709 20.7158 14.2359 20.8085 13.9896 20.85C13.4554 20.9504 12.9131 21.0006 12.3696 21C11.1638 21.0006 9.97011 20.7588 8.85952 20.2891C7.74893 19.8194 6.74405 19.1314 5.90455 18.2657C5.06506 17.4001 4.40807 16.3747 3.97261 15.2502C3.53714 14.1257 3.33208 12.9252 3.36959 11.72C3.4472 9.47279 4.3586 7.33495 5.92622 5.72296C7.49385 4.11097 9.60542 3.14028 11.8496 3H12.3596C14.0353 3.00042 15.6777 3.46869 17.1017 4.35207C18.5257 5.23544 19.6748 6.49885 20.4196 8C20.6488 8.47498 20.6812 9.02129 20.5096 9.52V9.54Z" stroke="currentColor" stroke-width="2"></path>
+                   <path d="M8 16.01L8.01 15.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M6 12.01L6.01 11.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M8 8.01L8.01 7.99889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M12 6.01L12.01 5.99889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M16 8.01L16.01 7.99889" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>               
+                 </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'mix' %}
+                 <svg class="size-6" aria-label="{% translate 'Blandat innehåll' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M21 13.5V16.5M13.5 21H16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M16.5 9H9.6C9.26863 9 9 9.26863 9 9.6V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M10.5 21H9.6C9.26863 21 9 20.7314 9 20.4V19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M21 19.5V20.4C21 20.7314 20.7314 21 20.4 21H19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M19.5 9H20.4C20.7314 9 21 9.26863 21 9.6V10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M3 10.5V7.5M7.5 3H10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M7.5 15H14.4C14.7314 15 15 14.7314 15 14.4V7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M4.5 15H3.6C3.26863 15 3 14.7314 3 14.4V13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M3 4.5V3.6C3 3.26863 3.26863 3 3.6 3H4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M13.5 3H14.4C14.7314 3 15 3.26863 15 3.6V4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'art' %}
+                 <svg class="size-6" aria-label="{% translate 'Föremål' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M21 7.35304L21 16.647C21 16.8649 20.8819 17.0656 20.6914 17.1715L12.2914 21.8381C12.1102 21.9388 11.8898 21.9388 11.7086 21.8381L3.30861 17.1715C3.11814 17.0656 3 16.8649 3 16.647L2.99998 7.35304C2.99998 7.13514 3.11812 6.93437 3.3086 6.82855L11.7086 2.16188C11.8898 2.06121 12.1102 2.06121 12.2914 2.16188L20.6914 6.82855C20.8818 6.93437 21 7.13514 21 7.35304Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M3.52844 7.29357L11.7086 11.8381C11.8898 11.9388 12.1102 11.9388 12.2914 11.8381L20.5 7.27777" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M12 21L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>             
+                 </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'car' %}
+                 <svg class="size-6" aria-label="{% translate 'Karta' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M9 19L3.78974 20.7368C3.40122 20.8663 3 20.5771 3 20.1675L3 5.43246C3 5.1742 3.16526 4.94491 3.41026 4.86325L9 3M9 19L14.2103 20.7368C14.5988 20.8663 15 20.5771 15 20.1675L15 5.43246C15 5.1742 14.8347 4.94491 14.5897 4.86325L9 3M9 19L9 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M15 5L20.2103 3.26325C20.5988 3.13374 21 3.42292 21 3.83246L21 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M17.1213 22.364L19.2427 20.2427M19.2427 20.2427L21.364 18.1213M19.2427 20.2427L17.1213 18.1213M19.2427 20.2427L21.364 22.364" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                 </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'aud' %}
+                 <svg class="size-6" aria-label="{% translate 'Ljud' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <rect x="9" y="2" width="6" height="12" rx="3" stroke="currentColor" stroke-width="2" stroke-width="1.5"></rect>
+                   <path d="M5 10V11C5 14.866 8.13401 18 12 18V18V18C15.866 18 19 14.866 19 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M12 18V22M12 22H9M12 22H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                 </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'mul' %}
+                 <svg class="size-6" aria-label="{% translate 'Multimedia' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M3.2 14.2222V4C3.2 2.89543 4.09543 2 5.2 2H18.8C19.9046 2 20.8 2.89543 20.8 4V14.2222M3.2 14.2222H20.8M3.2 14.2222L1.71969 19.4556C1.35863 20.7321 2.31762 22 3.64418 22H20.3558C21.6824 22 22.6414 20.7321 22.2803 19.4556L20.8 14.2222" stroke="currentColor" stroke-width="2"></path>
+                   <path d="M11 19L13 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M14 6L16 8L14 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M10 6L8 8L10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+               </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'not' %}
+                 <svg class="size-6" aria-label="{% translate 'Noterad musik' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M7 6L17 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M7 9L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M9 17H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M3 12H2.6C2.26863 12 2 12.2686 2 12.6V21.4C2 21.7314 2.26863 22 2.6 22H21.4C21.7314 22 22 21.7314 22 21.4V12.6C22 12.2686 21.7314 12 21.4 12H21M3 12V2.6C3 2.26863 3.26863 2 3.6 2H20.4C20.7314 2 21 2.26863 21 2.6V12M3 12H21" stroke="currentColor" stroke-width="2"></path>               
+                 </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'txt' %}
+                 <svg class="size-6" aria-label="{% translate 'Text' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M4 19V5C4 3.89543 4.89543 3 6 3H19.4C19.7314 3 20 3.26863 20 3.6V16.7143" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                   <path d="M6 17L20 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                   <path d="M6 21L20 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                   <path d="M6 21C4.89543 21 4 20.1046 4 19C4 17.8954 4.89543 17 6 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M9 7L15 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+               </svg>                 
+               {% endif %}
+               {% if record.typeofresource == 'mov' %}
+                 <svg class="size-6" aria-label="{% translate 'Video' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                   <path d="M7 14C8.10457 14 9 13.1046 9 12C9 10.8954 8.10457 10 7 10C5.89543 10 5 10.8954 5 12C5 13.1046 5.89543 14 7 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M17 14C18.1046 14 19 13.1046 19 12C19 10.8954 18.1046 10 17 10C15.8954 10 15 10.8954 15 12C15 13.1046 15.8954 14 17 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M12 9C13.1046 9 14 8.10457 14 7C14 5.89543 13.1046 5 12 5C10.8954 5 10 5.89543 10 7C10 8.10457 10.8954 9 12 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M12 19C13.1046 19 14 18.1046 14 17C14 15.8954 13.1046 15 12 15C10.8954 15 10 15.8954 10 17C10 18.1046 10.8954 19 12 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                   <path d="M2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12ZM2 12V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>             
+                 </svg>                 
+               {% endif %}
+             </div>
                <div class="pt-1 pl-2 uppercase">
                {% if record.typeofresource == 'col' %}
                  {% translate 'Arkiv' %}
@@ -139,17 +332,23 @@
                  {% translate 'Video' %}
                {% endif %}               
                </div>
+-->
             </div>
         </div>
-        <div class="w-full min-w-36 min-h-36 md:h-36 md:w-36 bg-gray-700 text-white ml-auto">
+        <div class="w-full min-w-36 min-h-36 md:h-36 md:w-36 bg-gray-200 dark:bg-gray-900 text-white ml-auto">
             {% if record.file != None %}
                 <img 
                     alt="{{record.title}}"
                     class="w-36 h-36 object-contain mx-auto" src="https://cora.alvin-portal.org/iiif/{{record.file}}/full/300,/0/default.jpg">           
             {% else %}
-                <img 
-                    alt="{{record.title}}"
-                    class="w-36 h-36 p-4 object-contain mx-auto" src="{% static 'img/folder_11769632.png' %}">
+             <div class="p-10 w-full h-36 bg-gray-200 dark:bg-gray-900 flex justify-center items-center">
+                 <svg class="max-w-full max-h-full" aria-label="{{record.title}}" viewBox="0 0 24 24" stroke-width="2" fill="none" preserveAspectRatio="xMidYMid meet">
+                     <path d="M3 16L10 13L14 14.8182" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                     <path d="M16 10C14.8954 10 14 9.10457 14 8C14 6.89543 14.8954 6 16 6C17.1046 6 18 6.89543 18 8C18 9.10457 17.1046 10 16 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                     <path d="M16.8786 21.1213L19 19M21.1213 16.8787L19 19M19 19L16.8786 16.8787M19 19L21.1213 21.1213" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                     <path d="M13 21H3.6C3.26863 21 3 20.7314 3 20.4V3.6C3 3.26863 3.26863 3 3.6 3H20.4C20.7314 3 21 3.26863 21 3.6V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                 </svg>
+            </div>
             {% endif %} 
         </div>
     </div>

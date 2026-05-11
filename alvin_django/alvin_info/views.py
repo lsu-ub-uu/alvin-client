@@ -34,12 +34,17 @@ def institutions(request):
   xslt_path = static('xsl/members.xsl')
   absolute_xslt = request.build_absolute_uri(xslt_path)
 
-  full_url = request.build_absolute_uri('/alvin-location/')
+  request_path = request.get_full_path()
+  full_url = request_path.split('/institutions')[0] + '/alvin-location/'
 
   response = requests.get(list_url, headers=xml_headers_list)
 
+  if response.status_code == 200:
   # Hantera XML
-  list_xml = etree.XML(response.content)
+    list_xml = etree.XML(response.content)
+
+  else:
+    raise Http404("Record not found") 
  
   lang = request.LANGUAGE_CODE
 
@@ -66,7 +71,7 @@ def institutions(request):
   context = {
 	    "member": member,
             "metadata": metadata,
-            "full_url": full_url,
+            "full_url": full_url,        
         }
   
     

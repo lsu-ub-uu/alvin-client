@@ -1,6 +1,9 @@
 {% load i18n static %}
 <a class="flex items-center border-2 border-blue-200 shadow-md shadow-blue-200/70 hover:shadow-lg/100 mt-4 p-4 bg-white dark:bg-gray-800 rounded block px-4 py-2 mt-2 text-sm font-normal text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" href="{% url 'alvin_viewer' 'alvin-work' record.identifier %}?data={{ encoded_link }}">
-    <img class="fill-current bg-white dark:bg-off-white w-6 h-6" alt="{% translate 'Work' %}" src="{% static 'img/authorityTypes/work.svg' %}">
+    <svg class="size-6 z-10" aria-label="Verk (alvin-work)" viewBox="0 0 24 24" stroke-width="2" fill="none">
+        <path d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M13 6.5C16.1338 6.5 17.5 5.18153 17.5 2C17.5 5.18153 18.8567 6.5 22 6.5C18.8567 6.5 17.5 7.85669 17.5 11C17.5 7.85669 16.1338 6.5 13 6.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+    </svg>
     <div class="py-2 px-2 font-semibold text-blue-800 dark:text-blue-200 underline text-base {% if view == 'grid' %}md:w-42 md:text-sm{% endif %}">
         {{record.title|truncatechars:100 }}
     </div>

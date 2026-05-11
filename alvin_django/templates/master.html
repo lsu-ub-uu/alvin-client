@@ -19,10 +19,10 @@
     <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
     <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
     <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
-     <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}/en{{ request.get_full_path|slice:"3:" }}" hreflang="en">
-    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}/no{{ request.get_full_path|slice:"3:" }}" hreflang="no">
-    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}/sv{{ request.get_full_path|slice:"3:" }}" hreflang="sv">
-    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"3:" }}" hreflang="x-default">   
+    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"0:12" }}/en/{{ request.get_full_path|slice:"16:" }}" hreflang="en">
+    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"0:12" }}/no/{{ request.get_full_path|slice:"16:" }}" hreflang="no">
+    <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"0:12" }}/sv/{{ request.get_full_path|slice:"16:" }}" hreflang="sv">
+    <link rel="alternate" href="{{ request.build_absolute_uri|cut:"en/" |cut:"no/" |cut:"sv/" }}" hreflang="x-default">   
     <!-- AlpineJS -->
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="{% static 'js/alpine-validation.js' %}"></script>

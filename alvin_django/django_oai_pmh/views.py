@@ -135,7 +135,7 @@ def oai2(request):
             set = request.GET.get('set', '*')
             metadata_prefix = request.GET.get('metadataPrefix')
             start = request.GET.get('start', 1)         
-            rows = request.GET.get('rows', 100)
+            rows = request.GET.get('rows', 10)
             newstart = start + rows
             if "resumptionToken" in params:  
                 resumption_token = request.GET.get('resumptionToken')                   
@@ -160,7 +160,7 @@ def oai2(request):
                         else:
                             newstart = newstart
                             num = int(newstart)
-                            nextstart = num + 1
+                            nextstart = num + rows
                             start = num
                             if metadataprefix != "" and set != "" and nextstart > 2:                     
                                 resumptionToken = f"{metadataprefix}/{set}/{nextstart}"
@@ -281,7 +281,7 @@ def oai2(request):
             metadata_prefix = request.GET.get('metadataPrefix')
             metadataprefix = metadata_prefix
             start = request.GET.get('start', 1)         
-            rows = request.GET.get('rows', 100)
+            rows = request.GET.get('rows', 10)
             newstart = start + rows
             if "resumptionToken" in params:  
                 resumption_token = request.GET.get('resumptionToken')                   
@@ -302,10 +302,10 @@ def oai2(request):
                         newstart = rt_list[2]
                         if not newstart.isdigit():
                             errors.append(_error("badResumptionToken_resumptionToken"))
-                        else:
+                        else:                         
                             newstart = newstart
                             num = int(newstart)
-                            nextstart = num + 1
+                            nextstart = num + rows
                             start = num
                             if metadataprefix != "" and set != "" and nextstart > 2:                     
                                 resumptionToken = f"{metadataprefix}/{set}/{nextstart}"

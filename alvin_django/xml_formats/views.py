@@ -3,6 +3,7 @@ from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from lxml import etree
+from django.urls import reverse
 
 api_host = settings.API_HOST
 
@@ -35,14 +36,12 @@ from urllib.request import urlopen
 
 def urn(request):
   xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
-   
   start = request.GET.get('start', 1)
-
-  rows = request.GET.get('rows', 1000)
-  
+  rows = request.GET.get('rows', 1000)  
   search = '**'
+  root = request.build_absolute_uri('/')
   
-  list_url = f'https://preview.alvin.cora.epc.ub.uu.se/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"alvinRecordSearchTerm","value":"{search}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
+  list_url = f'{api_host}/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"alvinRecordSearchTerm","value":"{search}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
   response = requests.get(list_url, headers=xml_headers_list)
 
   if response.status_code != 200:
@@ -59,7 +58,7 @@ def urn(request):
       records.append({
          'id': record.findtext('./recordInfo/id', default='N/A'),
          'urn': record.findtext('./recordInfo/urn', default='N/A'),
-	 'base': 'https://www.alvin-portal.org/alvin-record/'
+	 'base': root + 'alvin-record/'
        })
 
   if response.status_code != 200:
@@ -100,7 +99,7 @@ def metadatardf(request, id):
 
 def record_viewer(request, record_type, record_id):
   format = request.GET.get('format', 'xml')
-  baseurl = 'https://cora.alvin-portal.org/rest/record/'
+  baseurl = api_host + '/rest/record/'
   url = baseurl + record_type + '/' + record_id
   xslt_path_xml = static('xsl/record-xml.xsl')
   absolute_xslt_xml = request.build_absolute_uri(xslt_path_xml)
@@ -108,7 +107,9 @@ def record_viewer(request, record_type, record_id):
   absolute_xslt_rdf = request.build_absolute_uri(xslt_path_rdf)
   xslt_path_json = static('xsl/record-json.xsl')
   absolute_xslt_json = request.build_absolute_uri(xslt_path_json)
-  domain_root = request.build_absolute_uri('/')[:-1]  
+  host_url = reverse('record_viewer', kwargs={'record_type': record_type, 'record_id': record_id})
+  relative_url = f"{host_url}?format={format}"
+  domain_root = request.build_absolute_uri(relative_url)
   
   argDict = {}
   argDict["domain_root"] = etree.XSLT.strparam(domain_root)
@@ -188,7 +189,7 @@ def alvinrdf(request):
 
 def onthologyrdf(request, id):
   id = id
-  xml_path = '/onthology/alvin.rdf'
+  xml_path = reverse('alvinrdf')
   absolute_xml = request.build_absolute_uri(xml_path)
   xslt_path = static('xsl/onthology-rdf.xsl')
   absolute_xslt = request.build_absolute_uri(xslt_path)

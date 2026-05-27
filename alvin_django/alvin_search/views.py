@@ -17,24 +17,23 @@ def alvin_search(request):
     xml_headers_list = {'Content-Type':'application/vnd.cora.recordList-decorated+xml','Accept':'application/vnd.cora.recordList-decorated+xml'}
 
     searchType = request.GET.get('searchType', 'alvinRecord')
-    query = request.GET.get('query', '**')  
+    query = request.GET.get('query', '**').strip()  
     if query == '':
         query = '**' 
     json_safe_str = json.dumps(query) 
-    person = request.GET.get('person', '')
-    organisation = request.GET.get('organisation', '')
-    place = request.GET.get('place', '')
-    work = request.GET.get('work', '')
-    location = request.GET.get('location', '')
-    country = request.GET.get('country', '')
-    id = request.GET.get('id', '') 
+    person = request.GET.get('person', '').strip()
+    organisation = request.GET.get('organisation', '').strip()
+    place = request.GET.get('place', '').strip()
+    work = request.GET.get('work', '').strip()
+    location = request.GET.get('location', '').strip()
+    country = request.GET.get('country', '').strip()
+    id = request.GET.get('id', '').strip() 
 
     if id != '':
         placeRecordIdSearchTerm = f',{{"name":"placeRecordIdSearchTerm","value":"{id}"}}'  
         organisationRecordIdSearchTerm = f',{{"name":"organisationRecordIdSearchTerm","value":"{id}"}}' 
         personRecordIdSearchTerm = f',{{"name":"personRecordIdSearchTerm","value":"{id}"}}'
         alvinRecordIdSearchTerm = f',{{"name":"alvinRecordIdSearchTerm","value":"{id}"}}'
-
 
     else:  
         placeRecordIdSearchTerm = ''
@@ -129,6 +128,7 @@ def alvin_search(request):
                     'identifier': record.findtext('./recordInfo/id'),
                     'title': record.findtext('./title/mainTitle'),
                     'subtitle': record.findtext('./title/subtitle'),
+                    'orientationCode': record.findtext('./title/orientationCode'),
                     'namefamily': record.findtext('.agent[1]/person[1]/linkedRecord/person/authority[1]/name/namePart[@type = "family"]'),
                     'namegiven': record.findtext('.agent[1]/person[1]/linkedRecord/person/authority[1]/name/namePart[@type = "given"]'),
                     'namenumeration': record.findtext('.agent[1]/person[1]/linkedRecord/person/authority[1]/name/namePart[@type = "numeration"]'),
@@ -143,9 +143,11 @@ def alvin_search(request):
                     'yeartwo': record.findtext('./originDate/endDate/date/year'),
                     'displaydate': record.findtext('./originDate/displayDate'),
                     'typeofresource': record.findtext('./typeOfResource'),
+                    'collection': record.findtext('./collection'),
                     'rights': record.findtext('./fileSection/rights'),
-                    'file_count': len(record.findall('.//file')),
-                    'file': record.findtext('./fileSection/fileGroup[1]/file[1]/fileLocation/linkedRecordId'),            
+                    'file_count': len(record.findall('.//file/fileLocation/linkedRecord')),
+                    'file': record.findtext('./fileSection/fileGroup[type = "master"][1]/file[1]/fileLocation/linkedRecordId'),
+                    'internetMediaType': record.findtext('./fileSection/fileGroup[type = "master"][1]/internetMediaType'),              
                  })
 
         elif searchType == 'person':
@@ -189,6 +191,7 @@ def alvin_search(request):
                     'identifier': record.findtext('./recordInfo/id'),
                     'title': record.findtext('./title/mainTitle'),
                     'subtitle': record.findtext('./title/subtitle'),
+                    'orientationCode': record.findtext('./title/orientationCode'),
                  })
 
 
@@ -235,7 +238,8 @@ def alvin_search(request):
         "encoded_link":encoded_link,
         "view":view,
         "view_url":view_url,
-        "json_safe_str":json_safe_str, 
+        "json_safe_str":json_safe_str,
+        "api_host":api_host, 
         }
 
     return render(request, 'alvin_search/alvin_search.html', context)

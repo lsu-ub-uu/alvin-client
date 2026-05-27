@@ -3,7 +3,6 @@
     <xsl:param name="domain_root"/>
     <xsl:variable name="host">
         <xsl:value-of select="$domain_root"/>
-        <xsl:text>/</xsl:text>
     </xsl:variable>
     <xsl:template match="/">
         <xsl:apply-templates select="record/data/record | dataList/data/record/data/record | record/data/work | dataList/data/record/data/work | record/data/place | dataList/data/record/data/place | record/data/person | dataList/data/record/data/person | record/data/organisation | dataList/data/record/data/organisation | record/data/location | dataList/data/record/data/location"/>
@@ -62,9 +61,6 @@
     <xsl:template name="id">
         <xsl:text>"id": "</xsl:text>
         <xsl:value-of select="$host"/>
-        <xsl:value-of select="recordInfo/type/linkedRecordId"/>
-        <xsl:text>/</xsl:text>
-        <xsl:value-of select="recordInfo/id"/>
         <xsl:text>",</xsl:text>
     </xsl:template>
     <xsl:template name="record_type">

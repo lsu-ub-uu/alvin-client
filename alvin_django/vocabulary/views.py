@@ -7,6 +7,7 @@ import requests
 import urllib.request
 from urllib.request import urlopen
 parser = etree.XMLParser()
+from django.urls import reverse
 
 def userguide(request):
   return render(request, 'vocabulary/userguide.html', {})
@@ -72,7 +73,7 @@ def metadata(request, id):
 
 def onthology(request, id):
   id = id
-  xml_path = '/onthology/alvin.rdf'
+  xml_path = reverse('alvinrdf')
   absolute_xml = request.build_absolute_uri(xml_path)
   xslt_path = static('xsl/onthology-html.xsl')
   absolute_xslt = request.build_absolute_uri(xslt_path)
@@ -96,7 +97,7 @@ def onthology(request, id):
   return render (request, 'vocabulary/onthology.html', {'onthology': onthology, 'id': id})
 
 def classes(request):
-  xml_path = '/onthology/alvin.rdf'
+  xml_path = reverse('alvinrdf')
   absolute_xml = request.build_absolute_uri(xml_path)
   xslt_path = static('xsl/classes-html.xsl')
   absolute_xslt = request.build_absolute_uri(xslt_path)
@@ -119,7 +120,7 @@ def classes(request):
   return render (request, 'vocabulary/classes.html', {'classes': classes})
 
 def properties(request):
-  xml_path = '/onthology/alvin.rdf'
+  xml_path = reverse('alvinrdf')
   absolute_xml = request.build_absolute_uri(xml_path)
   xslt_path = static('xsl/properties-html.xsl')
   absolute_xslt = request.build_absolute_uri(xslt_path)
@@ -142,7 +143,7 @@ def properties(request):
   return render (request, 'vocabulary/properties.html', {'properties': properties})
 
 def category(request):
-  xml_path = '/onthology/alvin.rdf'
+  xml_path = reverse('alvinrdf')
   absolute_xml = request.build_absolute_uri(xml_path)
   xslt_path = static('xsl/category-html.xsl')
   absolute_xslt = request.build_absolute_uri(xslt_path)

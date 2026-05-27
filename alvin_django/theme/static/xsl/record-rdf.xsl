@@ -2,12 +2,7 @@
     <xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes"/>
     <xsl:param name="domain_root"/>
     <xsl:variable name="host">
-        <xsl:value-of select="$domain_root"/>
-        <xsl:text>/</xsl:text>
-    </xsl:variable>
-    <xsl:variable name="baseURL">
-        <xsl:value-of select="$domain_root"/>
-        <xsl:text>/vocabulary/</xsl:text>
+        <xsl:value-of select="substring-before($domain_root,'data')"/>
     </xsl:variable>
     <xsl:template match="/">
         <xsl:apply-templates select="record/data/record | dataList/data/record/data/record | record/data/work | dataList/data/record/data/work | record/data/place | dataList/data/record/data/place | record/data/person | dataList/data/record/data/person | record/data/organisation | dataList/data/record/data/organisation | record/data/location | dataList/data/record/data/location"/>

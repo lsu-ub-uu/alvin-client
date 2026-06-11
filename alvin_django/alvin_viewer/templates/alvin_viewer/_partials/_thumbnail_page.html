@@ -1,0 +1,90 @@
+{% load i18n %}
+
+<div id="gallery-ajax-container" class="flex-1 flex flex-col min-h-0 w-full">
+    
+    <ul class="flex-1 overflow-y-auto scrollbar-alvin grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4 content-start p-4 mb-6 bg-gray-100 dark:bg-white/10 rounded-md min-h-0">        
+        {% for image in page_obj %}
+        <li class="list-none">
+            <button 
+                type="button"
+                data-xon.click="toggleImage('{{ image.master_url }}')"
+                class="group relative block w-full bg-gray-200 dark:bg-white/5 rounded-md overflow-hidden text-left focus:outline-none transition-all duration-200"
+                data-xbind.class="{
+                    'ring-4 ring-alvin-orange scale-95': isImageSelected('{{ image.master_url }}')
+                }"
+            >
+                {% if image.thumbnail_url %}
+                <img loading="lazy" src="{{ image.thumbnail_url }}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">                {% else %}
+                <div class="w-full h-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                    <svg class="w-12 h-12 text-gray-400" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <title>{% translate 'Tumnagel saknas' %}</title>
+                        {% include '../_icons/no-image.svg' %}
+                    </svg>
+                </div>
+                {% endif %}
+                <div 
+                    data-xshow="isImageSelected('{{ image.master_url }}')" 
+                    data-xcloak
+                    class="absolute top-2 right-2 bg-alvin-orange text-white rounded-full p-1 shadow-md"
+                >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+            </buttons>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="shrink-0 rounded-b-md flex justify-between items-center">
+        
+        {% if page_obj.has_previous %}
+        <button hx-get="{% url 'alvin_viewer' metadata.record_type metadata.id %}?page={{ page_obj.previous_page_number }}&htmx=1"
+                hx-target="#gallery-ajax-container"
+                hx-swap="outerHTML"
+                class="p-3 hover:bg-dark-alvin hover:text-white dark:hover:bg-white/20 rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer"
+                title="{% translate 'Föregående sida' %}">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor">
+                <path d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
+        {% else %}
+        <div class="w-11"></div>
+        {% endif %}
+
+        <span class="flex flex-row items-center gap-x-1 h-full text-sm font-medium dark:text-gray-300">
+            {% translate 'Sida' %} 
+            
+            <form hx-get="{% url 'alvin_viewer' metadata.record_type metadata.id %}?htmx=1"
+                hx-target="#gallery-ajax-container"
+                hx-swap="outerHTML"
+                class="m-0 flex items-center">
+                
+                <input 
+                    class="w-12 rounded-md px-2 text-center text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:ring-alvin-orange focus:border-alvin-orange" 
+                    type="text" 
+                    name="page" 
+                    value="{{ page_obj.number }}" 
+                    required 
+                />
+            </form>
+            
+            {% translate 'av' %} {{ page_obj.paginator.num_pages }}
+        </span>
+
+
+        {% if page_obj.has_next %}
+        <button hx-get="{% url 'alvin_viewer' metadata.record_type metadata.id %}?page={{ page_obj.next_page_number }}&htmx=1"
+                hx-target="#gallery-ajax-container"
+                hx-swap="outerHTML"
+                class="p-3 hover:bg-dark-alvin hover:text-white dark:hover:bg-white/20 rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer"
+                title="{% translate 'Nästa sida' %}">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor">
+                <path d="M3 12L21 12M21 12L12.5 3.5M21 12L12.5 20.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
+        {% else %}
+        <div class="w-11"></div>
+        {% endif %}
+    </div>
+</div>

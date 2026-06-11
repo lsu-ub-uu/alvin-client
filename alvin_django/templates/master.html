@@ -14,7 +14,7 @@
     <meta name="description" content="Alvin - Nordic platform for digitised cultural heritage">
     
     {% tailwind_css %}
-
+    
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
     <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
@@ -25,6 +25,7 @@
     <link rel="alternate" href="{{ request.build_absolute_uri|cut:"en/" |cut:"no/" |cut:"sv/" }}" hreflang="x-default">   
     <!-- AlpineJS -->
     <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script src="{% static 'js/alpine-validation.js' %}"></script>
     <style>
         [x-cloak] {

@@ -33,9 +33,10 @@
     </div>
     {% endif %}
     
-    {% if metadata.files %}
+    {% if metadata.files.has_images %}
       {% include './_partials/_viewer.html' %}
     {% endif %}
+
     <div class="mx-auto w-full max-w-4xl py-4">
     <h1 
       dir="{% if metadata.main_title.orientation_code == 'rtl' %}rtl{% else %}ltr{% endif %}" 
@@ -66,8 +67,8 @@
           </svg>
           <span>{% translate 'Dela' %}</span>
         </button>
-        {% if metadata.record_type != 'alvin-record' %}
 
+        {% if metadata.record_type != 'alvin-record' %}
         <form action="{% url 'alvin_search' %}" method="get">
           <input type="hidden" name="searchType" id="searchType" value="alvinRecord">    
           <input type="hidden" name="{{ metadata.record_type_stripped }}" id="{{ metadata.record_type_stripped }}" value="{{ metadata.id }}">
@@ -85,17 +86,21 @@
       </div>
     </div>
 
+    {% if metadata.files.has_audio_video %}
+      {% include './_partials/_audio_video_player.html' %}
+    {% endif %}
+
     <div class="flex flex-row mx-auto w-full max-w-4xl mt-5 border-b border-[#D1D9D5] ">
-      <nav class="flex flex-wrap gap-x-1 justify-start text-md text-black dark:text-white w-full">
+      <nav class="flex flex-wrap gap-x-1 justify-start w-full text-md">
         <button data-xon.click="activeTab = 'overview'"
-          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
+          class="cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
           data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'overview' }">
           {% include './_icons/overview.svg' with class="size-6 shrink-0" %}
           <span>{% translate 'Översikt' %}</span>
         </button>
         {% if has_all_metadata %}
         <button data-xon.click="activeTab = 'all_metadata'"
-          class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
+          class="cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
           data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'all_metadata' }">
           {% include './_icons/allmetadata.svg' with class="size-6 shrink-0" %}
           <span>{% translate 'All metadata' %}</span>

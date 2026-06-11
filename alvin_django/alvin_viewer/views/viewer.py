@@ -1,3 +1,5 @@
+from importlib.metadata import metadata
+
 from django.conf import settings
 from django.http import Http404
 from django.core.paginator import Paginator
@@ -81,16 +83,53 @@ def has_all_metadata(metadata) -> bool:
     return False
 
 def alvin_viewer(request, record_type: str, record_id: str):
-    value = request.GET.get("data", None)
+    value = request.GET.get("data", None) #Value saved from search
     api = AlvinAPI()
     root = api.get_record_xml(record_type, record_id)
     metadata = extract_metadata(root, record_type)
+    
+    #Thumbnail pagination for the download menu
+    all_images = metadata.files.get_images if record_type == 'alvin-record' and getattr(metadata.files, 'has_images', False) else []
+    paginator = Paginator(all_images, 10)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+    
+    # Download menu tabs configuration
+    download_tabs = {
+        "default_download_tab": "show_metadata",
+        "tabs": []
+    }
+
+    if metadata.record_type == 'alvin-record':
+        if metadata.files and getattr(metadata.files, 'has_images', False):
+            download_tabs["tabs"].append({"id": "show_thumbnails", "label": "Bilder"})
+
+        if getattr(metadata.files, 'has_attachments', False):
+            download_tabs["tabs"].append({"id": "show_attachments", "label": "Dokument"})
+
+        download_tabs["tabs"].append({"id": "show_metadata", "label": "Metadata"})
+
+        if download_tabs["tabs"]:
+            download_tabs["default_download_tab"] = download_tabs["tabs"][0]["id"]
+
+    else:
+        download_tabs["tabs"] = [{"id": "show_metadata", "label": "Metadata"}]
+        download_tabs["default_download_tab"] = "show_metadata"
+
     # Disabled for debugging purposes
     '''try:
         root = api.get_record_xml(record_type, record_id)
         metadata = extract_metadata(root, record_type)
     except Exception as e:
         raise Http404(str(e))'''
-    context = {"metadata": metadata, "value": value, "has_related": has_related(metadata), "has_all_metadata": has_all_metadata(metadata)}
-    return render(request, "alvin_viewer/alvin_viewer.html", context)
+    
+    context = {"metadata": metadata, 
+               "value": value, 
+               "has_related": has_related(metadata),
+               "has_all_metadata": has_all_metadata(metadata),
+               "page_obj": page_obj, 
+               "download_tabs": download_tabs }
 
+    if request.headers.get('HX-Request'):
+        return render(request, 'alvin_viewer/_partials/_thumbnail_page.html', context)
+    return render(request, "alvin_viewer/alvin_viewer.html", context)

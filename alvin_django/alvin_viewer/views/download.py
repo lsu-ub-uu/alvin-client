@@ -1,3 +1,4 @@
+import json
 from django.http import Http404, StreamingHttpResponse
 
 import requests
@@ -6,7 +7,7 @@ from zipstream import ZipStream
 from ..services.alvin_api import AlvinAPI
 from ..extractors.record import extract
 
-def download(request, url_type: str, record_id: int):
+def download(request, url_type: str, record_id: int) -> StreamingHttpResponse:
     
     api = AlvinAPI()
     try:
@@ -17,13 +18,25 @@ def download(request, url_type: str, record_id: int):
     except Exception:
         raise Http404("Could not fetch record")
     
-    file_groups = metadata.files.file_groups if metadata.files else None
-    if file_groups is None:
-        raise Http404("No files available for download")
+    files = metadata.files if metadata.files.has_images else None
+    if files is None:
+        raise Http404("No images available for download")
+    
+    selected_urls = []
+    if request.method == 'POST':
+        urls_json = request.POST.get('selected_urls', '[]')
+        try:
+            selected_urls = json.loads(urls_json)
+        except json.JSONDecodeError:
+            pass
     
     files_to_zip = []
-    for group in file_groups:
+    for group in files.file_groups:
         for file in group.files:
+            if selected_urls:
+                master_url = getattr(file, "master_url", None)
+                if master_url not in selected_urls:
+                    continue
             url = getattr(file, f"{url_type}_url", None)
             if url:
                 file_ending = ""

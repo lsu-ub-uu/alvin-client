@@ -167,6 +167,7 @@ def files(root: etree._Element, xp: str) -> FilesBlock | None:
                 type = _get_value(group, "./type"),
                 type_code = text(group, "./type"),
                 files = [File(
+                    label = text(file, "./label"),
                     binary_type = attr(element(file, "./fileLocation/linkedRecord/binary"), "./@type"),
                     type = _get_value(file, "./type"),
                     binary_id = text(file, "./fileLocation/linkedRecordId"),

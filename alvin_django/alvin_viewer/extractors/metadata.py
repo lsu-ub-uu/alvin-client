@@ -692,6 +692,7 @@ class Summary:
 
 @dataclass 
 class File:
+    label: Optional[str] = None
     binary_type: Optional[str] = None
     type: Optional[str] = None
     binary_id: Optional[str] = None
@@ -713,9 +714,33 @@ class FileGroup:
         if self.media_type != "image" or not self.files:
             return []
         return [
-            f for f in self.files 
+            f for f in self.files
             if getattr(f, "binary_type", None) == "image"
         ]
+    
+    @property
+    def videos(self) -> List[File]:
+        if self.media_type != "video" or not self.files:
+            return []
+        return [
+            f for f in self.files
+            if f.master_type.startswith("video")
+        ]
+    
+    @property
+    def audios(self) -> List[File]:
+        if self.media_type != "audio" or not self.files:
+            return []
+        return [
+            f for f in self.files
+            if f.master_type.startswith("audio")
+        ]
+    
+    @property
+    def attachments(self) -> List[File]:
+        if self.media_type not in ["appendix", "application", "text"] or not self.files:
+            return {}
+        return [f for f in self.files if f.master_type in ['application/pdf', 'application/xml', 'text/plain']]
 
 @dataclass 
 class FilesBlock:
@@ -742,6 +767,74 @@ class FilesBlock:
         license_stub = self.rights_code.replace("CC_","").replace("_","-").lower()
         return f"{cc_base_url}/licenses/{license_stub}/4.0/deed.{current_lang}"
 
+    @property
+    def has_images(self) -> bool:
+        return any(file_group.images for file_group in self.file_groups) if self.file_groups else False
+    
+    @property
+    def get_images(self) -> List[File]:
+        if not self.file_groups:
+            return []
+        images = []
+        for file_group in self.file_groups:
+            images.extend(file_group.images)
+        return images
+    
+    @property
+    def has_audio_video(self) -> bool:
+        return any(file_group.media_type in ["audio", "video"] for file_group in self.file_groups) if self.file_groups else False
+    
+    @property
+    def get_audio_video(self) -> List[File]:
+        if not self.file_groups:
+            return []
+        av_files = []
+        for file_group in self.file_groups:
+            av_files.extend(file_group.audios)
+            av_files.extend(file_group.videos)
+        return av_files
+
+    @property
+    def has_attachments(self) -> bool:
+        if not self.file_groups:
+            return False
+        
+        if any(file_group.type_code in ["appendix","transcription","translation"] for file_group in self.file_groups):
+            return True
+        return False
+    
+    @property
+    def get_attachments(self) -> Dict[Dict[str, Any]] | Dict:
+        attachments = {
+            "appendix": {
+                        "label": "",
+                        "files": []
+                        },
+            "master": {
+                        "label": "",
+                        "files": []
+                        },
+            "transcription": {
+                        "label": "",
+                        "files": []
+                        },
+            "translation": {
+                        "label": "",
+                        "files": []
+                        },
+        }
+
+        if not self.file_groups:
+            return {} 
+
+        for file_group in self.file_groups:
+            if file_group.type_code in attachments:
+                if attachments[file_group.type_code]["label"] == '':
+                    attachments[file_group.type_code]["label"] = file_group.type
+                attachments[file_group.type_code]["files"].extend(file_group.attachments)
+        
+        return attachments
+    
     @property
     def documents(self) -> List[dict]:
         docs_dict = {}

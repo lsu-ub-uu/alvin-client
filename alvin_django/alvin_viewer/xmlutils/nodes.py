@@ -4,6 +4,8 @@ from typing import Iterable, Optional, List
 def attr(node: etree._Element, xpath_attr: str, default: Optional[str] = None) -> Optional[str]:
     if not xpath_attr.startswith("./@"):
         raise ValueError(f"attr() expects XPath like './@attrName' not {xpath_attr}")
+    if node is None:
+        return default
     key = xpath_attr[3:]
     val = node.get(key)
     return val if val not in (None, "") else default

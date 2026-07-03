@@ -35,6 +35,7 @@ def extract(root: etree._Element) -> AlvinRecord:
         physical_location_note = decorated_text(root, _xp(rt, "physicalLocation/note[@noteType='general']"), _xp(rt, "physicalLocation")),
         languages = decorated_list(root, _xp(rt, "language")),
         description_languages = decorated_list(root, _xp(rt, "adminMetadata/descriptionLanguage")),
+        extent = decorated_text(root, _xp(rt, "extent")),
         edition_statement = decorated_text(root, _xp(rt, "editionStatement")),
         origin_places = origin_places(root, _xp(rt, "originPlace")),
         publications = decorated_texts(root, _xp(rt, "publication")),

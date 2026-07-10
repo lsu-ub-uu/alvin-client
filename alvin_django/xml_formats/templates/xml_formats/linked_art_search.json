@@ -1,0 +1,34 @@
+{
+    "@context": [
+        "https://linked.art/ns/v1/linked-art.json",
+        "https://www.w3.org/ns/activitystreams"
+    ],
+    "id": "{{ request.build_absolute_uri|safe }}", 
+    "type": "OrderedCollectionPage",
+    "partOf": {
+        "id": "{{ domain_root }}{{ request.path }}{% if location %}?location={{ location }}{% endif %}",
+        "type": "OrderedCollection",
+        "totalItems": {{completeListSize}}
+    },
+    {% if nextstartnum <= completeListSize %}
+    "next": {
+        "id": "{{domain_root}}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{next_token|safe}}",
+         "type": "OrderedCollectionPage"
+    },
+    {% endif %}
+    {% if startnum > rowsnum %}{% if startnum <= completeListSize %}
+    "prev": {
+        "id": "{{domain_root}}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{prev_token|safe}}",
+       "type": "OrderedCollectionPage"
+    },
+    {% endif %}{% endif %}
+    "startIndex": {{startIndex}},
+    "orderedItems": [
+    {% for record in records %}
+       {
+            "id": "{{domain_root}}{% url 'record_viewer' 'alvin-record' record.identifier %}?format=json",
+            "type": "{% if record.collection == 'yes' %}Set{% else %}HumanMadeObject{% endif %}" 
+        }{% if not forloop.last %}, {% endif %}
+     {% endfor %} 
+    ]
+}

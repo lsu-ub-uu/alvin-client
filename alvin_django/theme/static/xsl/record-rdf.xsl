@@ -1901,14 +1901,14 @@
                                                 <alvin:file>
                                                     <alvin:File>
                                                         <xsl:for-each select="type">
-                                                            <alvin:type>
-                                                                <alvin:Type>
+                                                            <alvin:fileType>
+                                                                <alvin:FileType>
                                                                     <xsl:call-template name="labels"/>
                                                                     <skos:notation>
                                                                         <xsl:value-of select="."/>
                                                                     </skos:notation>
-                                                                </alvin:Type>
-                                                            </alvin:type>
+                                                                </alvin:FileType>
+                                                            </alvin:fileType>
                                                         </xsl:for-each>
                                                         <xsl:for-each select="label">
                                                             <alvin:label>

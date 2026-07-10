@@ -247,7 +247,7 @@
     <xsl:template name="expectedvalue">
         <xsl:for-each select="rdfs:range">
             <xsl:variable name="expected">
-                <xsl:value-of select="substring-after(./@rdf:resource,'onthology/alvin/')"/>
+                <xsl:value-of select="substring-after(./@rdf:resource,'onthology/')"/>
             </xsl:variable>
             <xsl:choose>
                 <xsl:when test="string-length($expected) &gt; 0">

@@ -1,9 +1,10 @@
 {% extends "django_oai_pmh/base.xml" %}
+{{decoded_data}} 
 {% load oai_pmh %}
 
 
 {% block content %}
-<ListIdentifiers>    
+<ListIdentifiers>   
     {% for record in records %}
         {% include "django_oai_pmh/partials/_header.xml"  %}
     {% endfor %}

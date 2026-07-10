@@ -54,7 +54,6 @@
         {% for note in metadata.physical_description_notes.texts %}
             {% include "./_metadata_row.html" with label=note.type value=note.text|linebreaksbr %}
         {% endfor %}
-        {% include "./_metadata_row.html" with label=metadata.deco_note.combined_label value=metadata.binding.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.binding.combined_label value=metadata.binding.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.binding_deco_note.combined_label value=metadata.binding_deco_note.text|linebreaksbr %}
         {% include "./_metadata_row.html" with label=metadata.level.label value=metadata.level.item %}

@@ -10,4 +10,6 @@ urlpatterns = [
     path('onthology', views.alvinvocabulary, name='alvinvocabulary'),
     path('onthology/alvin.rdf', views.alvinrdf, name='alvinrdf'),
     path('onthology/<str:id>.rdf', views.onthologyrdf, name='onthologyrdf'),
+    path('linkedart/v1/<str:tier>', views.linked_art_search_json, name="linked_art_search_json"),
+
 ]

@@ -1,10 +1,20 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="html" encoding="UTF-8" indent="no" omit-xml-declaration="yes"/>
     <xsl:param name="lang"/>
+    <xsl:param name="i18n">
+        <xsl:text>/</xsl:text>
+        <xsl:value-of select="$lang"/>
+        <xsl:text>/</xsl:text>
+    </xsl:param>
     <xsl:param name="domain_root"/>
-    <xsl:variable name="baseURL">
-        <xsl:value-of select="$domain_root"/>
+    <xsl:variable name="base">       
+        <xsl:value-of select="substring-before($domain_root, $i18n)"/> 
         <xsl:text>/vocabulary/</xsl:text>
+    </xsl:variable>
+    <xsl:variable name="baseURL">
+        <xsl:value-of select="substring-before($domain_root, $i18n)"/>
+        <xsl:text>/</xsl:text>
+        <xsl:value-of select="substring-after($domain_root, $i18n)"/>
     </xsl:variable>
     <xsl:template match="/">
         <xsl:apply-templates select="record/data/metadata"/>
@@ -12,11 +22,9 @@
     <xsl:template match="metadata">
         <xsl:variable name="uri">
             <xsl:value-of select="$baseURL"/>
-            <xsl:value-of select="recordInfo/id"/>
         </xsl:variable>
         <xsl:variable name="urirdf">
             <xsl:value-of select="$baseURL"/>
-            <xsl:value-of select="recordInfo/id"/>
             <xsl:text>.rdf</xsl:text>
         </xsl:variable>
         <xsl:variable name="title">
@@ -199,10 +207,10 @@
                     <div class="md:w-3/4 pl-2">
                         <a class="text-blue-800 dark:text-blue-200 underline">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="$baseURL"/>
+                                <xsl:value-of select="$base"/>
                                 <xsl:value-of select="linkedRecordId"/>
                             </xsl:attribute>
-                            <xsl:value-of select="$baseURL"/>
+                            <xsl:value-of select="$base"/>
                             <xsl:value-of select="linkedRecordId"/>
                         </a>
                     </div>
@@ -381,7 +389,7 @@
                 <xsl:attribute name="href">
                     <xsl:value-of select="$urirdf"/>
                 </xsl:attribute>
-                <xsl:text>RDF/XML </xsl:text>
+                <xsl:text>RDF/XML</xsl:text>
             </a>
         </div>
         <xsl:if test="@type = 'itemCollection'">
@@ -427,6 +435,7 @@
                                 <td class="p-2 text-sm break-all">
                                     <a class="text-blue-800 dark:text-blue-200 underline">
                                         <xsl:attribute name="href">
+                                            <xsl:value-of select="$base"/>
                                             <xsl:value-of select="linkedRecordId"/>
                                         </xsl:attribute>
                                         <xsl:value-of select="linkedRecord/metadata/nameInData"/>

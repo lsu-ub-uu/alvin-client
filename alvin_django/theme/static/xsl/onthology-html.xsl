@@ -549,9 +549,13 @@
                 <div class="md:w-3/4 pl-2">
                     <a class="text-blue-800 dark:text-blue-200 underline">
                         <xsl:attribute name="href">
-                            <xsl:value-of select="@rdf:resource"/>
+                            <xsl:value-of select="$rdf_host"/>
+                            <xsl:text>/vocabulary</xsl:text>
+                            <xsl:value-of select="substring-after(@rdf:resource,'vocabulary')"/>
                         </xsl:attribute>
-                        <xsl:value-of select="@rdf:resource"/>
+                        <xsl:value-of select="$rdf_host"/>
+                        <xsl:text>/vocabulary</xsl:text>
+                        <xsl:value-of select="substring-after(@rdf:resource,'vocabulary')"/>
                     </a>
                 </div>
             </div>

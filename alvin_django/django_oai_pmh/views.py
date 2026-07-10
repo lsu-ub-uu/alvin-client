@@ -33,6 +33,13 @@ import urllib.request
 from urllib.request import urlopen
 parser = etree.XMLParser()
 
+from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.utils.encoding import force_str
+import base64
+import json
+
 @csrf_exempt
 def oai2(request):
     """Handels all OAI-PMH v2 requets.
@@ -135,12 +142,16 @@ def oai2(request):
             set = request.GET.get('set', '*')
             metadata_prefix = request.GET.get('metadataPrefix')
             start = request.GET.get('start', 1)         
-            rows = request.GET.get('rows', 10)
+            rows = request.GET.get('rows', 2)
             newstart = start + rows
+
             if "resumptionToken" in params:  
-                resumption_token = request.GET.get('resumptionToken')                   
+                resumption_token = request.GET.get('resumptionToken')
+                decoded_data = urlsafe_base64_decode(resumption_token)
+                string_data = force_str(decoded_data) 
+                cleaned_str = string_data.replace('"', '')                  
                 if resumption_token != "":
-                    rt = request.GET.get('resumptionToken')
+                    rt = cleaned_str
                     if "/" in rt:
                         rt_list = rt.split("/")
                         metadataprefix = rt_list[0] 
@@ -156,14 +167,16 @@ def oai2(request):
                         newstart = rt_list[2]
                         if newstart == "":
                             newstart = 1
-                            nextstart= 1
+                            nextstart = 1
                         else:
                             newstart = newstart
                             num = int(newstart)
                             nextstart = num + rows
                             start = num
                             if metadataprefix != "" and set != "" and nextstart > 2:                     
-                                resumptionToken = f"{metadataprefix}/{set}/{nextstart}"
+                                resumption_string = f"{metadataprefix}/{set}/{nextstart}" 
+                                json_next = json.dumps(resumption_string).encode('utf-8')
+                                resumptionToken = urlsafe_base64_encode(force_bytes(json_next))
                             else:
                                 errors.append(_error("badResumptionToken_resumptionToken"))
                     else:
@@ -199,7 +212,12 @@ def oai2(request):
                 set = request.GET.get('set','')
                 newstart = start + rows
                 num = int(newstart)
-                resumptionToken = f"{metadata_prefix}/{set}/{num}"                
+                resumption_string = f"{metadata_prefix}/{set}/{num}" 
+                json_next = json.dumps(resumption_string).encode('utf-8')
+                resumptionToken = urlsafe_base64_encode(force_bytes(json_next))
+                decoded_data = urlsafe_base64_decode(resumptionToken)
+                string_data = force_str(decoded_data)
+                cleaned_str = string_data.replace('"', '')  
             if "resumptionToken" in params:
                 if not records:
                     errors.append(_error("badResumptionToken_resumptionToken"))                        
@@ -284,9 +302,12 @@ def oai2(request):
             rows = request.GET.get('rows', 10)
             newstart = start + rows
             if "resumptionToken" in params:  
-                resumption_token = request.GET.get('resumptionToken')                   
+                resumption_token = request.GET.get('resumptionToken')
+                decoded_data = urlsafe_base64_decode(resumption_token)
+                string_data = force_str(decoded_data) 
+                cleaned_str = string_data.replace('"', '')                  
                 if resumption_token != "":
-                    rt = request.GET.get('resumptionToken')
+                    rt = cleaned_str
                     if "/" in rt:
                         rt_list = rt.split("/")
                         metadataprefix = rt_list[0] 
@@ -300,15 +321,18 @@ def oai2(request):
                         else:
                            set = set
                         newstart = rt_list[2]
-                        if not newstart.isdigit():
-                            errors.append(_error("badResumptionToken_resumptionToken"))
-                        else:                         
+                        if newstart == "":
+                            newstart = 1
+                            nextstart = 1
+                        else:
                             newstart = newstart
                             num = int(newstart)
                             nextstart = num + rows
                             start = num
                             if metadataprefix != "" and set != "" and nextstart > 2:                     
-                                resumptionToken = f"{metadataprefix}/{set}/{nextstart}"
+                                resumption_string = f"{metadataprefix}/{set}/{nextstart}" 
+                                json_next = json.dumps(resumption_string).encode('utf-8')
+                                resumptionToken = urlsafe_base64_encode(force_bytes(json_next))
                             else:
                                 errors.append(_error("badResumptionToken_resumptionToken"))
                     else:
@@ -372,12 +396,17 @@ def oai2(request):
                 toNo = pages.get("toNo")          
                 cursor = int(toNo) 
 
-                if cursor < completeListSize and not "resumptionToken" in params:  
+                if cursor < completeListSize and not "resumptionToken" in params: 
                     metadata_prefix = request.GET.get('metadataPrefix')
                     set = request.GET.get('set','')
                     newstart = start + rows
                     num = int(newstart)
-                    resumptionToken = f"{metadata_prefix}/{set}/{num}"       
+                    resumption_string = f"{metadata_prefix}/{set}/{num}" 
+                    json_next = json.dumps(resumption_string).encode('utf-8')
+                    resumptionToken = urlsafe_base64_encode(force_bytes(json_next))
+                    decoded_data = urlsafe_base64_decode(resumptionToken)
+                    string_data = force_str(decoded_data)
+                    cleaned_str = string_data.replace('"', '')        
   
             else:
                 records = 0

@@ -20,7 +20,7 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
 
-USER_SETTINGS = getattr(settings, "OAI_PMH", {"REPOSITORY_NAME": "Alvin - Nordic platform for digitised cultural heritage", "BASE_URL": "https://www.alvin-portal.org/oai/oai"})
+USER_SETTINGS = getattr(settings, "OAI_PMH", {"REPOSITORY_NAME": "Alvin - Nordic platform for digitised cultural heritage", "BASE_URL": "https://www.alvin-portal.org/alvin/oai"})
 
 
 if "REPOSITORY_NAME" in USER_SETTINGS:
@@ -28,7 +28,7 @@ if "REPOSITORY_NAME" in USER_SETTINGS:
 else:
     raise ImproperlyConfigured("No value for REPOSITORY_NAME.")
 
-BASE_URL = 'https://www.alvin-portal.org/oai/oai'
+BASE_URL = 'https://www.alvin-portal.org/alvin/oai'
 if "BASE_URL" in USER_SETTINGS:
     BASE_URL = USER_SETTINGS["BASE_URL"]
 else:

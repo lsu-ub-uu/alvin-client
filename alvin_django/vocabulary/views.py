@@ -46,7 +46,8 @@ def metadata(request, id):
   absolute_xslt = request.build_absolute_uri(xslt_path)
   xslt_title_path = static('xsl/title_metadata.xsl')
   absolute_xslt_title = request.build_absolute_uri(xslt_title_path)
-  domain_root = request.build_absolute_uri('/')[:-1] 
+  #domain_root = request.build_absolute_uri('/')[:-1] 
+  domain_root = request.build_absolute_uri()
  
   lang = request.LANGUAGE_CODE
 

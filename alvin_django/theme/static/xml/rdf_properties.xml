@@ -415,6 +415,13 @@
     <Cell><Data>fileSection</Data></Cell>
    </Row>
    <Row>
+    <Cell><Data>fileType</Data></Cell>
+    <Cell><Data>File</Data></Cell>
+    <Cell><Data>FileType</Data></Cell>
+    <Cell><Data>CollectionVar</Data></Cell>
+    <Cell><Data>fileSection</Data></Cell>
+   </Row>
+   <Row>
     <Cell><Data>label</Data></Cell>
     <Cell><Data>File</Data></Cell>
     <Cell><Data>Literal</Data></Cell>

@@ -4,6 +4,16 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from lxml import etree
 from django.urls import reverse
+from django.utils.http import urlencode
+from urllib.parse import quote
+
+from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.utils.encoding import force_str
+
+import base64
+import json
 
 api_host = settings.API_HOST
 
@@ -117,7 +127,9 @@ def record_viewer(request, record_type, record_id):
   req = urllib.request.Request(url)
   if format == 'xml':
     req.add_header('Accept', 'application/vnd.cora.record+xml') 
-  else: 
+  elif format == 'json':
+    req.add_header('Accept', 'application/vnd.cora.record-decorated+xml') 
+  elif format == 'rdf':
     req.add_header('Accept', 'application/vnd.cora.record-decorated+xml')  
 
   response = requests.get(url)
@@ -153,7 +165,15 @@ def record_viewer(request, record_type, record_id):
       raise Http404("Format not found")
 
   if format == 'json':
-    return render (request, 'xml_formats/recordjson.json', {'recordjson': recordjson}, content_type='application/ld+json')
+    #response render (request, 'xml_formats/recordjson.json', {'recordjson': recordjson})
+    response = render(request, 'xml_formats/recordjson.json', {'recordjson': recordjson})
+
+  # 2. Add or modify headers using the .headers dictionary
+    response.headers['Content-Type'] = 'application/ld+json'  # Standard server response type
+    response.headers['Accept'] = 'application/ld+json;profile="https://linked.art/ns/v1/linked-art.json"' # Any custom tracking header
+    
+  # 3. Return the modified response object
+    return response
 
   elif format == 'rdf':
     return render (request, 'xml_formats/recordxml.xml', {'recordxml': recordxml}, content_type='application/rdf+xml')
@@ -166,8 +186,10 @@ def alvinvocabulary(request):
   absolute_xml = request.build_absolute_uri(xml_path)
   xslt_path = static('xsl/alvin_vocabulary.xsl')
   absolute_xslt = request.build_absolute_uri(xslt_path)
-  full_url = request.build_absolute_uri()
-  domain_root = request.build_absolute_uri('/')[:-1] 
+  #full_url = request.build_absolute_uri()
+  full_url = 'https://www.alvin-portal.org/alvin/onthology'
+  #domain_root = request.build_absolute_uri('/')[:-1] 
+  domain_root = 'https://www.alvin-portal.org/alvin'
   
   argDict = {}
   argDict["full_url"] = etree.XSLT.strparam(full_url)
@@ -209,3 +231,114 @@ def onthologyrdf(request, id):
   onthologyrdf = transform(xml_tree, **argDict)	# Transform source XML tree
 
   return render (request, 'xml_formats/onthology-rdf.xml', {'onthologyrdf': onthologyrdf, 'id': id}, content_type='application/rdf+xml')
+
+def linked_art_search_json(request, tier):
+    xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
+    tier = tier
+    searchType = 'alvinRecord'
+    query = '**' 
+    json_safe_str = json.dumps(query) 
+    location = request.GET.get('location', '').strip()
+
+    if location != '':
+        locationInRecordSearchTerm = f',{{"name":"locationInRecordSearchTerm","value":"alvin-location_{location}"}}' 
+    else: 
+        locationInRecordSearchTerm = ''
+
+    params = request.GET.copy()  # make a mutable copy
+    params.pop('page', None)  # remove the parameter if it exists
+    view_url = f"{request.path}?{params.urlencode()}" if params else request.path
+    separator = "/linkedart"
+    current_url = request.build_absolute_uri()
+    domain_root = current_url.split(separator, 1)[0]
+    page_token = request.GET.get('page')
+  
+    if page_token:
+        decoded_data = urlsafe_base64_decode(page_token)
+        params = json.loads(decoded_data.decode('utf-8'))
+        start = params.get('start', 1)
+        rows = params.get('rows', 10)   
+    else:
+        start = 1       
+        rows = 10
+
+    startnum = int(start)
+    rowsnum = int(rows)
+    newstart = startnum + rowsnum
+    newstartnum = int(newstart)
+    prevstart = startnum - rowsnum
+    prevstartnum = int(prevstart)
+    next_params = {'start': newstart, 'rows': rows}       
+    json_next = json.dumps(next_params).encode('utf-8')
+    next_token = urlsafe_base64_encode(force_bytes(json_next))
+    prev_params = {'start': prevstart, 'rows': rows}
+    json_prev = json.dumps(prev_params).encode('utf-8')
+    prev_token = urlsafe_base64_encode(force_bytes(json_prev))
+
+    alvinRecordSearchData = f'{{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"alvinRecordSearchTerm","value":{json_safe_str}}}{locationInRecordSearchTerm},{{"name":"visibilityAlvinSearchTerm","value":"published"}}]}}]}}'
+  
+     # API host
+    api_host = settings.API_HOST
+
+    if searchType == 'alvinRecord':
+        list_url = f'{api_host}/rest/record/searchResult/{searchType}Search?searchData={alvinRecordSearchData},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
+       
+    else:
+        raise Http404("Invalid search") 
+   
+    response = requests.get(list_url, headers=xml_headers_list)
+    
+    if response.status_code == 200:
+        xml_list = etree.fromstring(response.content)         
+        records = []
+        if searchType == 'alvinRecord':
+            for record in xml_list.findall('data/record/data/record'):
+                records.append({
+                    'identifier': record.findtext('./recordInfo/id'),
+                    'collection': record.findtext('./collection'),
+               })
+
+        pages = {
+            "fromNo":xml_list.findtext(".//fromNo"),
+            "toNo":xml_list.findtext(".//toNo"),
+            "totalNo":xml_list.findtext(".//totalNo"),
+            }
+
+        totalNo = pages.get("totalNo")          
+        completeListSize = int(totalNo)     
+        startnum = int(start)
+        rowsnum = int(rows)
+        newstart = startnum + rowsnum
+        nextstartnum = int(newstart) 
+        prevstart = startnum - rowsnum
+        prevstartnum = int(prevstart)
+        startIndex = startnum - 1
+
+    else:
+        raise Http404("Invalid search") 
+  
+    context = {       
+        "location":location,
+        "records":records,
+        "completeListSize":completeListSize,
+        "startnum":startnum,
+        "rowsnum":rowsnum,
+        "nextstartnum":nextstartnum,
+        "prevstartnum":prevstartnum,
+        "view_url":view_url,       
+        "domain_root":domain_root,
+        "next_token":next_token,
+        "prev_token":prev_token,
+        "startIndex":startIndex,
+        }
+
+    response = render(request, 'xml_formats/linked_art_search.json', context)
+
+  # 2. Add or modify headers using the .headers dictionary
+    response.headers['Content-Type'] = 'application/ld+json'  # Standard server response type
+    response.headers['Accept'] = 'application/ld+json;profile="https://linked.art/ns/v1/linked-art.json"' # Any custom tracking header
+    
+  # 3. Return the modified response object
+    return response
+
+ 

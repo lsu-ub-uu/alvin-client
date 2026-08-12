@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import JsonResponse, Http404
 from urllib.parse import urljoin
 from django.utils.translation import gettext as _
@@ -47,23 +48,23 @@ def iiif_manifest(request, record_id: str):
 
         mime_type = file_xml.findtext("data/binary/master/master/mimeType")
 
-        server = file_xml.findtext("otherProtocols/iiif/server")
+        iiif_server = f"{settings.EXTERNAL_ACCESS_URL}/iiif/"
         ident = file_xml.findtext("otherProtocols/iiif/identifier")
         
         # Only build IIIF canvas entries for image binaries
         if binary_type != "Image":
             continue
 
-        if not server or not ident:
+        if not iiif_server or not ident:
             continue
         
-        server = server.strip()
+        iiif_server = iiif_server.strip()
         ident = ident.strip()
 
-        if not server.startswith("http"):
-            server = f"https://{server}"
+        if not iiif_server.startswith("http"):
+            iiif_server = f"https://{iiif_server}"
 
-        image_service_id = f"{server.rstrip('/')}/{ident.strip('/')}"
+        image_service_id = f"{iiif_server.rstrip('/')}/{ident.strip('/')}"
         raster_url = f"{image_service_id}/full/max/0/default.jpg"
 
         idx += 1

@@ -168,3 +168,4 @@ PREFIX_DEFAULT_LANGUAGE = True
 
 # ENV variables
 API_HOST = os.getenv('API_HOST', 'https://cora.alvin-portal.org')
+EXTERNAL_ACCESS_URL = os.getenv('EXTERNAL_ACCESS_URL', 'https://cora.alvin-portal.org')

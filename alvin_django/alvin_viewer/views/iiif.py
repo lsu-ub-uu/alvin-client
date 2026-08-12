@@ -3,6 +3,7 @@ from urllib.parse import urljoin
 from django.utils.translation import gettext as _
 from ..extractors.record import extract
 from ..services.alvin_api import AlvinAPI
+from django.conf import settings
 
 def _to_int(value, default):
     try:
@@ -48,6 +49,7 @@ def iiif_manifest(request, record_id: str):
         mime_type = file_xml.findtext("data/binary/master/master/mimeType")
 
         server = file_xml.findtext("otherProtocols/iiif/server")
+        
         ident = file_xml.findtext("otherProtocols/iiif/identifier")
         
         # Only build IIIF canvas entries for image binaries
@@ -65,6 +67,9 @@ def iiif_manifest(request, record_id: str):
 
         image_service_id = f"{server.rstrip('/')}/{ident.strip('/')}"
         raster_url = f"{image_service_id}/full/max/0/default.jpg"
+
+        # https://cora.alvin-portal.org/iiif/binary:3524849804207157/full/max/0/default.jpg
+        image_url = f"{settings.EXTERNAL_ACCESS_URL}/iiif/{ident}/full/max/0/default.jpg"
 
         idx += 1
 

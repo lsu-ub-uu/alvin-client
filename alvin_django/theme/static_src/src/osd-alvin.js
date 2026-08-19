@@ -174,7 +174,6 @@ function createThumbnails(tileSources, viewer) {
 
         prevBtn.className = "p-1.5 rounded-full text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 hover:text-orange-500 transition-all disabled:opacity-30 disabled:cursor-not-allowed";
         prevBtn.innerHTML = `<svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
-        prevBtn.title = "Föregående bilder";
         prevBtn.disabled = pageIndex === 0;
         prevBtn.onclick = () => renderThumbPage(pageIndex - 1);
 
@@ -187,7 +186,6 @@ function createThumbnails(tileSources, viewer) {
         const nextBtn = document.createElement("button");
         nextBtn.className = "p-1.5 rounded-full text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 hover:text-orange-500 transition-all disabled:opacity-30 disabled:cursor-not-allowed";
         nextBtn.innerHTML = `<svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor"><path d="M3 12L21 12M21 12L12.5 3.5M21 12L12.5 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
-        nextBtn.title = "Nästa bilder";
         nextBtn.disabled = pageIndex === totalPages - 1;
         nextBtn.onclick = () => renderThumbPage(pageIndex + 1);
 

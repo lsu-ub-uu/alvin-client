@@ -8,7 +8,7 @@
         {% if record.file != None %}
           {% if record.internetMediaType == 'image' %}
             <img alt="{{record.title}}" class="w-48 h-48 object-contain mx-auto"
-            src="{{api_host}}/rest/record/binary/{{record.file}}/large">
+            src="{{external_access_url}}/rest/record/binary/{{record.file}}/large">
           {% endif %}
           {% if record.internetMediaType == 'audio' %}
             <div class="p-10 w-full h-48 bg-gray-100 dark:bg-white/10 flex justify-center items-center">
@@ -240,7 +240,7 @@
         {% if record.file != None %}
           {% if record.internetMediaType == 'image' %}
             <img alt="{{record.title}}" class="w-36 h-36 object-contain mx-auto"
-            src="{{api_host}}/rest/record/binary/{{record.file}}/large">
+            src="{{external_access_url}}/rest/record/binary/{{record.file}}/large">
           {% endif %}
           {% if record.internetMediaType == 'audio' %}
             <div class="p-10 w-full h-36 bg-gray-100 dark:bg-white/10 flex justify-center items-center">

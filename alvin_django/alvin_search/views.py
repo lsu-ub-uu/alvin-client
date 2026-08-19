@@ -239,7 +239,8 @@ def alvin_search(request):
         "view":view,
         "view_url":view_url,
         "json_safe_str":json_safe_str,
-        "api_host":api_host, 
+        "api_host":api_host,
+        "external_access_url":settings.EXTERNAL_ACCESS_URL,
         }
 
     return render(request, 'alvin_search/alvin_search.html', context)

@@ -62,7 +62,7 @@
                 <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor"><path d="M3 12L21 12M21 12L12.5 3.5M21 12L12.5 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
         </div>
 
-        <div id="tify-viewer" class="w-full h-full absolute inset-0" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
+        <div id="osd-viewer" class="w-full h-full absolute inset-0" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
 
         <div id="thumb-sidebar" 
              data-xbind.class="sidebarOpen ? 'translate-x-0' : 'translate-x-full'" 
@@ -137,4 +137,4 @@
     {% endif %}
     
 </aside>
-<script src="{% static 'js/tify.js' %}"></script>
+<script src="{% static 'js/osd-alvin.js' %}"></script>

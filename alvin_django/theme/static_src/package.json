@@ -9,8 +9,8 @@
     "build:tailwind": "cross-env NODE_ENV=production tailwindcss --postcss -i ./src/styles.css -o ../static/css/dist/styles.css --minify",
     "dev": "cross-env NODE_ENV=development tailwindcss --postcss -i ./src/styles.css -o ../static/css/dist/styles.css -w",
     "tailwindcss": "node ./node_modules/tailwindcss/lib/cli.js",
-    "build:js": "esbuild ./src/tify.js --bundle --outfile=../static/js/tify.js --format=esm --minify",
-    "dev:js": "esbuild ./src/tify.js --bundle --outfile=../static/js/tify.js --format=esm --watch"
+    "build:js": "esbuild ./src/osd-alvin.js --bundle --outfile=../static/js/osd-alvin.js --format=esm --minify",
+    "dev:js": "esbuild ./src/osd-alvin.js --bundle --outfile=../static/js/osd-alvin.js --format=esm --watch"
   },
   "keywords": [],
   "author": "",

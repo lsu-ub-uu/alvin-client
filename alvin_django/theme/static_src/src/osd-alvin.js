@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", init);
 async function init() {
   patchIIIFTileSourceBaseUrl();
 
-  const container = document.getElementById("tify-viewer");
+  const container = document.getElementById("osd-viewer");
   if (!container) return;
 
   const manifestUrl = container.dataset.manifestUrl;
@@ -106,9 +106,11 @@ function extractV2Service(canvas) {
 Viewer Setup and Thumbnails
 ============================== */
 
+const THUMB_PAGE_SIZE = 1;
+
 function createViewer(tileSources) {
   const viewer = OpenSeadragon({
-    id: "tify-viewer", 
+    id: "osd-viewer", 
     prefixUrl: "/static/openseadragon/images/", 
     tileSources,
     sequenceMode: true,

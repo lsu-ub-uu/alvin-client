@@ -106,12 +106,10 @@ function extractV2Service(canvas) {
 Viewer Setup and Thumbnails
 ============================== */
 
-const THUMB_PAGE_SIZE = 1;
-
 function createViewer(tileSources) {
   const viewer = OpenSeadragon({
     id: "osd-viewer", 
-    prefixUrl: "/static/openseadragon/images/", 
+    prefixUrl: "/static/openseadragon/images/",
     tileSources,
     sequenceMode: true,
     showNavigationControl: false,
@@ -123,51 +121,111 @@ function createViewer(tileSources) {
   return viewer;
 }
 
+const THUMB_PAGE_SIZE = 100;
+
 function createThumbnails(tileSources, viewer) {
   const thumbList = document.getElementById("thumb-list");
-  if (!thumbList) return [];
+  const paginationContainer = document.getElementById("thumb-pagination-top");
+  
+  if (!thumbList) return { thumbnails: [], renderThumbPage: () => {}, total: 0 };
 
-  const fragment = document.createDocumentFragment();
-  const thumbnails = [];
+  const thumbnails = new Array(tileSources.length);
+  const totalPages = Math.ceil(tileSources.length / THUMB_PAGE_SIZE);
 
-  tileSources.forEach((source, index) => {
-    const wrapper = document.createElement("div");
-    wrapper.className = "relative group cursor-pointer mb-2";
+  function renderThumbPage(pageIndex) {
+    thumbList.innerHTML = "";
+    const fragment = document.createDocumentFragment();
 
-    const number = document.createElement("span");
-    number.className = "absolute top-1 left-1 bg-black/70 text-white text-[10px] px-1.5 py-0.5 rounded z-10 border border-white/20 pointer-events-none";
-    number.textContent = index + 1;
+    const startIndex = pageIndex * THUMB_PAGE_SIZE;
+    const endIndex = Math.min(startIndex + THUMB_PAGE_SIZE, tileSources.length);
 
-    const img = document.createElement("img");
-    img.loading = "lazy";
-    img.src = source.replace(/\/info\.json$/, `/full/160,/0/default.jpg`);
-    img.className = `thumb-item w-full rounded border-2 transition-all ${index === 0 ? 'border-orange-500' : 'border-transparent'}`;
+    for (let i = startIndex; i < endIndex; i++) {
+      const source = tileSources[i];
+      const wrapper = document.createElement("div");
+      wrapper.className = "relative group cursor-pointer mb-2";
+
+      const number = document.createElement("span");
+      number.className = "absolute top-1 left-1 bg-black/70 text-white text-[10px] px-1.5 py-0.5 rounded z-10 border border-white/20 pointer-events-none";
+      number.textContent = i + 1;
+
+      const img = document.createElement("img");
+      img.loading = "lazy";
+      img.src = source.replace(/\/info\.json$/, `/full/160,/0/default.jpg`);
+      
+      const isActive = viewer.currentPage ? viewer.currentPage() === i : (i === 0);
+      img.className = `thumb-item w-full rounded border-2 transition-all ${isActive ? 'border-orange-500' : 'border-transparent'}`;
+      
+      wrapper.append(number, img);
+      wrapper.addEventListener("click", () => viewer.goToPage(i));
+
+      fragment.appendChild(wrapper);
+      thumbnails[i] = img; 
+    }
     
-    wrapper.append(number, img);
-    wrapper.addEventListener("click", () => viewer.goToPage(index));
+    thumbList.appendChild(fragment);
 
-    fragment.appendChild(wrapper);
-    thumbnails.push(img);
-  });
+    // Pagination controls
+    if (paginationContainer) {
+      paginationContainer.innerHTML = ""; 
 
-  thumbList.innerHTML = "";
-  thumbList.appendChild(fragment);
-  return thumbnails;
+      if (totalPages > 1) {
+        // Left arrow
+        const prevBtn = document.createElement("button");
+
+        prevBtn.className = "p-1.5 rounded-full text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 hover:text-orange-500 transition-all disabled:opacity-30 disabled:cursor-not-allowed";
+        prevBtn.innerHTML = `<svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
+        prevBtn.title = "Föregående bilder";
+        prevBtn.disabled = pageIndex === 0;
+        prevBtn.onclick = () => renderThumbPage(pageIndex - 1);
+
+        // Page number
+        const pageInfo = document.createElement("span");
+        pageInfo.className = "text-xs md:text-sm font-semibold px-2 text-gray-600 dark:text-gray-300 select-none";
+        pageInfo.textContent = `${pageIndex + 1} / ${totalPages}`;
+
+        // Right arrow
+        const nextBtn = document.createElement("button");
+        nextBtn.className = "p-1.5 rounded-full text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 hover:text-orange-500 transition-all disabled:opacity-30 disabled:cursor-not-allowed";
+        nextBtn.innerHTML = `<svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor"><path d="M3 12L21 12M21 12L12.5 3.5M21 12L12.5 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
+        nextBtn.title = "Nästa bilder";
+        nextBtn.disabled = pageIndex === totalPages - 1;
+        nextBtn.onclick = () => renderThumbPage(pageIndex + 1);
+
+        paginationContainer.append(prevBtn, pageInfo, nextBtn);
+      }
+    }
+  }
+
+  renderThumbPage(0);
+  
+  return { thumbnails, renderThumbPage, total: tileSources.length };
 }
 
-function setupActiveThumbnailSync(viewer, thumbnails) {
-  if (!thumbnails.length) return;
+
+function setupActiveThumbnailSync(viewer, thumbData) {
+  if (!thumbData || thumbData.total === 0) return;
   let currentIndex = 0; 
   const sidebar = document.getElementById("thumb-sidebar");
 
   viewer.addHandler("page", (event) => {
-    thumbnails[currentIndex].classList.replace("border-orange-500", "border-transparent");
-    const activeImg = thumbnails[event.page];
-    activeImg.classList.replace("border-transparent", "border-orange-500");
-    
-    if (sidebar && !sidebar.classList.contains("translate-x-full")) {
-      activeImg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (thumbData.thumbnails[currentIndex]) {
+      thumbData.thumbnails[currentIndex].classList.replace("border-orange-500", "border-transparent");
     }
+    
     currentIndex = event.page;
+    const expectedThumbPage = Math.floor(currentIndex / THUMB_PAGE_SIZE);
+
+    if (!thumbData.thumbnails[currentIndex] || !thumbData.thumbnails[currentIndex].isConnected) {
+      thumbData.renderThumbPage(expectedThumbPage);
+    }
+
+    const activeImg = thumbData.thumbnails[currentIndex];
+    if (activeImg) {
+      activeImg.classList.replace("border-transparent", "border-orange-500");
+      
+      if (sidebar && !sidebar.classList.contains("translate-x-full")) {
+        activeImg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
   });
 }

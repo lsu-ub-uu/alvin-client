@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional, Union
 
 from django.utils.translation import get_language
 from django.urls import reverse
+from django.conf import settings
 
 # ------------------
 # COMMON
@@ -631,7 +632,7 @@ class RelatedRecordsBlock:
     def is_empty(self) -> bool:
         return not self.records
     
-    def ordered_by_type(self) -> Dict[str, List[RelatedRecordEntry]] | None:
+    def ordered_by_type(self) -> Dict[str, List[RelatedRecordsBlock]] | None:
         records = getattr(self, "records", None)
         if records is None:
             return None
@@ -857,7 +858,7 @@ class FilesBlock:
                         if mime in ['application/pdf', 'text/plain']:
                             if f.master_url:
                                 docs_dict[code]["files"].append({
-                                    "url": f.master_url,
+                                    "url": f.master_url.replace('http://apache', settings.EXTERNAL_ACCESS_URL),
                                     "name": f.original_name or "Dokument",
                                     "mime_type": mime
                                 })

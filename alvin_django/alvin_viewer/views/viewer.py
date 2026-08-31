@@ -1,5 +1,3 @@
-from importlib.metadata import metadata
-
 from django.conf import settings
 from django.http import Http404
 from django.core.paginator import Paginator
@@ -116,6 +114,22 @@ def alvin_viewer(request, record_type: str, record_id: str):
         download_tabs["tabs"] = [{"id": "show_metadata", "label": "Metadata"}]
         download_tabs["default_download_tab"] = "show_metadata"
 
+    # Handling HTMX for loading related records by category
+    load_category = request.GET.get('load_category')
+    
+    if load_category and metadata.related_records:
+        target_block = None
+
+        for block in metadata.related_records.ordered_by_type():
+            if block.label == load_category:
+                target_block = block
+                break
+                
+        if target_block:
+            return render(request, 'alvin_viewer/_partials/_load_related_category.html', {
+                'type_block': target_block
+            })
+
     # Disabled for debugging purposes
     '''try:
         root = api.get_record_xml(record_type, record_id)
@@ -130,6 +144,6 @@ def alvin_viewer(request, record_type: str, record_id: str):
                "page_obj": page_obj, 
                "download_tabs": download_tabs }
 
-    if request.headers.get('HX-Request'):
+    if request.headers.get('HX-Request') and 'page' in request.GET:
         return render(request, 'alvin_viewer/_partials/_thumbnail_page.html', context)
     return render(request, "alvin_viewer/alvin_viewer.html", context)

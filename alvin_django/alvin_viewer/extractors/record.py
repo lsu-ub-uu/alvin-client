@@ -1,6 +1,4 @@
-from django.utils import translation
-
-from typing import Callable, Iterable, Optional, Any, Dict, List
+from typing import List
 from lxml import etree
 
 from ..xmlutils.nodes import text, attr, element, elements, first

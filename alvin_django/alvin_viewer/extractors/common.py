@@ -245,6 +245,7 @@ def origin_places(node: etree._Element, xp: str) -> OriginPlaceBlock:
     return block
 
 def related_records(node: etree._Element, xp: str) -> dict | None:
+
     target = element(node, xp)
     if target is None:
         return None

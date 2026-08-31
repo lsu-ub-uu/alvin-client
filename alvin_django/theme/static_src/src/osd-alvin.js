@@ -121,7 +121,7 @@ function createViewer(tileSources) {
   return viewer;
 }
 
-const THUMB_PAGE_SIZE = 100;
+const THUMB_PAGE_SIZE = 1;
 
 function createThumbnails(tileSources, viewer) {
   const thumbList = document.getElementById("thumb-list");

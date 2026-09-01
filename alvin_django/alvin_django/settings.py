@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'alvin_info',
     'alvin_viewer',
-    'alvin_list_viewer',
     'tailwind',
     'theme',
     'vocabulary',

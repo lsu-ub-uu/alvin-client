@@ -8,12 +8,12 @@
             {% if av.master_type|first in 'audio' %}
             <audio controls class="w-full">
                 <source src="{{ av.master_url }}" type="{{ av.mime_type }}">
-                {% translate 'Din webbläsare stödjer inte audio elementet.' %}
+                {% translate 'Din webbläsare stödjer inte audio-elementet.' %}
             </audio>
             {% elif av.master_type|first in 'video' %}
             <video controls class="flex-1 rounded-md">
                 <source src="{{ av.master_url }}" type="{{ av.mime_type }}">
-                {% translate 'Din webbläsare stödjer inte video elementet.' %}
+                {% translate 'Din webbläsare stödjer inte video-elementet.' %}
             </video>
             {% endif %}
         </div>

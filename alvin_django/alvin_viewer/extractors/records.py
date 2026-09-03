@@ -193,15 +193,4 @@ class AlvinRecord(CommonMetadata):
 
     @property
     def display_label(self):
-        tor = getattr(self.type_of_resource, "item", None)
-        prod_method = getattr(self.production_method, "item", None)
-        parts = [tor, prod_method]
-        main_label = ", ".join(filter(None, parts))
-
-        collection = getattr(self.collection, "item", None)
-
-        tor_code = getattr(self.type_of_resource, "code", None)
-        
-        if collection is not None and tor_code != 'col':
-            return f"{main_label} ({collection})"
-        return main_label
+        return getattr(self.type_of_resource, "item", None)

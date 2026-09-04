@@ -1,0 +1,73 @@
+{% load i18n static %}
+
+<div id="{{ htmx_target }}-{{ type_block.label|slugify }}" class="p-4 bg-gray-300/10 dark:bg-white/15 rounded">
+    
+    <ol class="list-decimal list-inside" start="{% if category_page_obj %}{{ category_page_obj.start_index }}{% else %}1{% endif %}">
+        {% if category_page_obj %}
+            {% for record in category_page_obj %}
+            <li class="w-full py-0.5">
+                <a href="{{ record.url }}" class="hover:underline">{{ record.main_title.display }}</a>
+            </li>
+            {% endfor %}
+        {% else %}
+            {% for record in type_block.records|slice:":1" %}
+            <li class="w-full py-0.5">
+                <a href="{{ record.url }}" class="hover:underline">{{ record.main_title.display }}</a>
+            </li>
+            {% endfor %}
+        {% endif %}
+    </ol>
+
+    {% if category_page_obj and category_page_obj.paginator.count > 1 or not category_page_obj and type_block.records|length > 1 %}
+    <div class="mt-4 pt-2 border-t border-gray-200 dark:border-white/10 flex items-center justify-between text-xs text-gray-600 dark:text-gray-300">
+
+        <div class="m-auto flex flex-row justify-center items-center gap-x-2">
+            
+            {% if category_page_obj and category_page_obj.has_previous %}
+            <button 
+                hx-get="?{{ htmx_get }}={{ type_block.label|urlencode }}&rel_page={{ category_page_obj.previous_page_number }}"
+                hx-target="#{{ htmx_target }}-{{ type_block.label|slugify }}"
+                hx-swap="outerHTML"
+                class="p-1.5 rounded-full transition-all hover:text-orange-500 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer">
+                <svg class="size-4" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor">
+                    {% include 'alvin_viewer/_icons/previous.svg' %}
+                </svg>
+            </button>
+            {% else %}
+            <button disabled class="p-1.5 rounded-full transition-all opacity-30 cursor-not-allowed">
+                <svg class="size-4" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor">
+                    {% include 'alvin_viewer/_icons/previous.svg' %}
+                </svg>
+            </button>
+            {% endif %}
+
+            <div>
+                <span class="font-medium">
+                    {% if category_page_obj %}{{ category_page_obj.number }}{% else %}1{% endif %} 
+                    / 
+                    {% if category_page_obj %}{{ category_page_obj.paginator.num_pages }}{% else %}{{ type_block.records|length }}{% endif %}
+                </span>
+            </div>
+
+            {% if category_page_obj and category_page_obj.has_next or not category_page_obj %}
+            <button 
+                hx-get="?{{ htmx_get }}={{ type_block.label|urlencode }}&rel_page={% if category_page_obj %}{{ category_page_obj.next_page_number }}{% else %}2{% endif %}"
+                hx-target="#{{ htmx_target }}-{{ type_block.label|slugify }}"
+                hx-swap="outerHTML"
+                class="p-1.5 rounded-full transition-all hover:text-orange-500 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer">
+                <svg class="size-4" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor">
+                    {% include 'alvin_viewer/_icons/next.svg' %}
+                </svg>
+            </button>
+            {% else %}
+            <button disabled class="p-1.5 rounded-full transition-all opacity-30 cursor-not-allowed">
+                <svg class="size-4" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor">
+                    {% include 'alvin_viewer/_icons/next.svg' %}
+                </svg>
+            </button>
+            {% endif %}
+
+        </div>
+    </div>
+    {% endif %}
+</div>

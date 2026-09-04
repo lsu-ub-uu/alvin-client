@@ -34,8 +34,13 @@ def has_related(metadata) -> bool:
 
     if any(getattr(metadata, attr, None) for attr in attrs):
         return True
-     
+
     def _check_components(components):
+        """
+        Checks recursively if any components has related records 
+        
+        """
+
         for component in components:
             if any(getattr(component, attr, None) for attr in attrs):
                 return True
@@ -117,23 +122,31 @@ def alvin_viewer(request, record_type: str, record_id: str):
     # Handling HTMX for loading related records by category
     load_category = request.GET.get('load_category')
     load_component_category = request.GET.get('load_component_category')
+    category_page_number = request.GET.get('rel_page', 1)
 
-    def _render_category_block(related_records, category_request):
+    def _render_category_block(related_records, category_request, htmx_get_param, htmx_target_name):
         for block in related_records:
             if block.label == category_request:
-                return render(request, 'alvin_viewer/_partials/_load_related_category.html', {
-                    'type_block': block
-                })
+                paginator = Paginator(block.records, 1)
+                # Byt variabelnamnet här för att undvika krock med tumnaglarna
+                category_page_obj = paginator.get_page(category_page_number)
+
+                return render(request, 'alvin_viewer/_partials/_paged_related_category.html', {
+                    'type_block': block,
+                    'category_page_obj': category_page_obj,  # <-- Nytt namn!
+                    'htmx_get': htmx_get_param,
+                    'htmx_target': htmx_target_name,
+                    })
 
         return HttpResponse(status=204)
 
-    if load_category and metadata.related_records:
+    if load_category and hasattr(metadata, 'related_records') and metadata.related_records:
         records = metadata.related_records.ordered_by_type()
-        return _render_category_block(records, load_category)
+        return _render_category_block(records, load_category, 'load_category', 'category')
 
-    if load_component_category and metadata.components.all_related_records:
+    if load_component_category and getattr(metadata, 'components', None) and getattr(metadata.components, 'all_related_records', None):
         component_records = metadata.components.all_related_records.ordered_by_type()
-        return _render_category_block(component_records, load_component_category)
+        return _render_category_block(component_records, load_component_category, 'load_component_category', 'component-category')
 
     # Disabled for debugging purposes
     '''try:

@@ -186,76 +186,15 @@
         </button>
     </div>
 
-    <section data-xshow="open_related" data-xcloak aria-labelledby="related-heading" class="mt-2 mb-4">
+    <section data-xshow="open_related" data-xcloak class="flex flex-col gap-y-4 mt-2 mb-4">
 
         {% if metadata.related_records %}
-        <h2 id="related-heading" class="pb-2 font-bold">
-            {{metadata.related_records.label}}
-        </h2>
-        <div class="flex flex-col gap-y-4 p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
-
-            {% for type_block in metadata.related_records.ordered_by_type %}
-            <div id="category-{{ type_block.label|slugify }}">
-                <h3 class="my-2 font-bold">{{type_block.label}}</h3>
-                <div class="p-4 bg-gray-300/15 dark:bg-white/15 rounded">
-                    <ul class="list-decimal list-inside">
-                        {% for record in type_block.records|slice:":1" %}
-                        <li class="w-full">
-                            <a href="{{ record.url }}">
-                            {{record.main_title.display}}
-                            </a>
-                        </li>
-                        {% endfor %}
-
-                    </ul>
-                    {% if type_block.records|length > 1 %}
-                    <button 
-                        hx-get="?load_category={{ type_block.label|urlencode }}"
-                        hx-target="#category-{{ type_block.label|slugify }}"
-                        hx-swap="outerHTML"
-                        class="mt-2 text-sm bg-light-alvin hover:bg-gray-300 px-3 py-1 rounded transition-colors">
-                        {% translate 'Visa alla'%}: {{ type_block.records|length }}
-                    </button>
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+            {% include 'alvin_viewer/_partials/_related_records.html' with label=metadata.related_records.label related_records_target=metadata.related_records.ordered_by_type htmx_get='load_category' htmx_target='category' %}
         {% endif %}
         
         {% if metadata.components.all_related_records %}
-        <h2 id="related-heading" class="pb-2 font-bold">
-            {% translate 'Relaterade poster från komponenter' %}
-        </h2>
-        <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
-
-            {% for type_block in metadata.components.all_related_records.ordered_by_type %}
-            <div id="component-category-{{ type_block.label|slugify }}">
-                <h3 class="my-2 font-bold">{{type_block.label}}</h3>
-                <div class="p-4 bg-gray-300/15 dark:bg-white/15 rounded">
-                    <ul class="list-decimal list-inside">
-                        {% for record in type_block.records|slice:":1" %}
-                        <li class="w-full">
-                            <a href="{{ record.url }}">
-                            {{record.main_title.display}}
-                            </a>
-                        </li>
-                        {% endfor %}
-
-                    </ul>
-                    {% if type_block.records|length > 1 %}
-                    <button 
-                        hx-get="?load_component_category={{ type_block.label|urlencode }}"
-                        hx-target="#component-category-{{ type_block.label|slugify }}"
-                        hx-swap="outerHTML"
-                        class="mt-2 text-sm bg-light-alvin hover:bg-gray-300 px-3 py-1 rounded transition-colors">
-                        {% translate 'Visa alla'%}: {{ type_block.records|length }}
-                    </button>
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+            {% translate 'Relaterade poster från komponenter' as label_text %}
+            {% include 'alvin_viewer/_partials/_related_records.html' with label=label_text related_records_target=metadata.components.all_related_records.ordered_by_type htmx_get='load_component_category' htmx_target='component-category' %}
         {% endif %}
 
         {% if has_related %}

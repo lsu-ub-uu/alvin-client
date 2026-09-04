@@ -1,0 +1,17 @@
+{% load i18n static %}
+
+<div>
+    <h2 class="pb-2 font-bold">
+        {{ label }}
+    </h2>
+    <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
+        {% for type_block in related_records_target %}
+        <div class="mb-4 last:mb-0">
+            <h3 class="my-2 font-bold">{{ type_block.label }}</h3>
+            
+            <!-- Inkludera delmallen direkt (den ärver htmx_get och htmx_target från föräldern) -->
+            {% include 'alvin_viewer/_partials/_paged_related_category.html' %}
+        </div>
+        {% endfor %}
+    </div>
+</div>

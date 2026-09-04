@@ -1,17 +1,17 @@
 {% load i18n %}
 
-<div id="category-{{ type_block.label|slugify }}" class="bg-alvin">
-    
-    <h3 class="my-2">{{ type_block.label }}</h3>
-    
-    <ul class="list-decimal list-inside">
-        {% for record in type_block.records %}
-        <li class="w-full">
-            <a href="{{ record.url }}">
-                {{ record.main_title.display }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-        
+<div id="category-{{ type_block.label|slugify }}">
+    <h3 class="my-2 font-bold text-lg">{{ type_block.label }}</h3>
+    <div class="p-4 bg-gray-300/15 dark:bg-white/15 rounded">
+
+        <ul class="list-decimal list-inside">
+            {% for record in type_block.records %}
+            <li class="w-full">
+                <a href="{{ record.url }}">
+                    {{ record.main_title.display }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>

@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.core.paginator import Paginator
 from django.shortcuts import render
 
@@ -116,19 +116,24 @@ def alvin_viewer(request, record_type: str, record_id: str):
 
     # Handling HTMX for loading related records by category
     load_category = request.GET.get('load_category')
-    
-    if load_category and metadata.related_records:
-        target_block = None
+    load_component_category = request.GET.get('load_component_category')
 
-        for block in metadata.related_records.ordered_by_type():
-            if block.label == load_category:
-                target_block = block
-                break
-                
-        if target_block:
-            return render(request, 'alvin_viewer/_partials/_load_related_category.html', {
-                'type_block': target_block
-            })
+    def _render_category_block(related_records, category_request):
+        for block in related_records:
+            if block.label == category_request:
+                return render(request, 'alvin_viewer/_partials/_load_related_category.html', {
+                    'type_block': block
+                })
+
+        return HttpResponse(status=204)
+
+    if load_category and metadata.related_records:
+        records = metadata.related_records.ordered_by_type()
+        return _render_category_block(records, load_category)
+
+    if load_component_category and metadata.components.all_related_records:
+        component_records = metadata.components.all_related_records.ordered_by_type()
+        return _render_category_block(component_records, load_component_category)
 
     # Disabled for debugging purposes
     '''try:
@@ -138,7 +143,7 @@ def alvin_viewer(request, record_type: str, record_id: str):
         raise Http404(str(e))'''
     
     context = {"metadata": metadata, 
-               "value": value, 
+               "value": value,
                "has_related": has_related(metadata),
                "has_all_metadata": has_all_metadata(metadata),
                "page_obj": page_obj, 

@@ -160,9 +160,9 @@
                 <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
         </button>
-        <div class="py-4" data-xshow="open_inventory" data-xcloak>
-            {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
-        </div>
+    </div>
+    <div data-xshow="open_inventory" data-xcloak>
+        {% include "alvin_viewer/_partials/_components.html" with components=metadata.components only %}
     </div>
     {% endif %}
 
@@ -170,7 +170,7 @@
     <div class="flex flex-row py-2 border-b border-[#D1D9D5]">
         <button
             data-xon.click="open_related = !open_related"
-            class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin">
+            class="flex gap-x-1 h-full p-2 dark:text-gray-200 text-center cursor-pointer hover:text-alvin">
             {% include '../_icons/related.svg' with class="size-6" %}
             <span>{% translate 'Relaterat' %}</span>
             <svg 
@@ -186,87 +186,74 @@
         </button>
     </div>
 
-    <section data-xshow="open_related" data-xcloak aria-labelledby="related-heading" class="mt-6">
+    <section data-xshow="open_related" data-xcloak aria-labelledby="related-heading" class="mt-2 mb-4">
 
         {% if metadata.related_records %}
-        <h2 id="related-heading" class="py-2 font-bold">
-            {{metadata.related_records.label}}:
+        <h2 id="related-heading" class="pb-2 font-bold">
+            {{metadata.related_records.label}}
         </h2>
-        <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
+        <div class="flex flex-col gap-y-4 p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
 
             {% for type_block in metadata.related_records.ordered_by_type %}
-            <div id="category-{{ type_block.label|slugify }}" class="bg-alvin">
-                <h3 class="my-2">{{type_block.label}}</h3>
-                <ul class="list-decimal list-inside">
-                    {% for record in type_block.records|slice:":1" %}
-                    <li class="w-full">
-                        <a href="{{ record.url }}">
-                        {{record.main_title.display}}
-                        </a>
-                    </li>
-                    {% endfor %}
+            <div id="category-{{ type_block.label|slugify }}">
+                <h3 class="my-2 font-bold">{{type_block.label}}</h3>
+                <div class="p-4 bg-gray-300/15 dark:bg-white/15 rounded">
+                    <ul class="list-decimal list-inside">
+                        {% for record in type_block.records|slice:":1" %}
+                        <li class="w-full">
+                            <a href="{{ record.url }}">
+                            {{record.main_title.display}}
+                            </a>
+                        </li>
+                        {% endfor %}
 
-                </ul>
-            
-                {% if type_block.records|length > 1 %}
-                <button 
-                    hx-get="?load_category={{ type_block.label|urlencode }}"
-                    hx-target="#category-{{ type_block.label|slugify }}"
-                    hx-swap="outerHTML"
-                    class="mt-2 text-sm bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded transition-colors">
-                    Visa alla {{ type_block.records|length }}
-                </button>
-                {% endif %}
+                    </ul>
+                    {% if type_block.records|length > 1 %}
+                    <button 
+                        hx-get="?load_category={{ type_block.label|urlencode }}"
+                        hx-target="#category-{{ type_block.label|slugify }}"
+                        hx-swap="outerHTML"
+                        class="mt-2 text-sm bg-light-alvin hover:bg-gray-300 px-3 py-1 rounded transition-colors">
+                        {% translate 'Visa alla'%}: {{ type_block.records|length }}
+                    </button>
+                    {% endif %}
+                </div>
             </div>
             {% endfor %}
         </div>
         {% endif %}
         
         {% if metadata.components.all_related_records %}
-        <h2 id="related-heading" class="py-2 font-bold">
-            {% translate 'Relaterade poster från komponenter' %}:
+        <h2 id="related-heading" class="pb-2 font-bold">
+            {% translate 'Relaterade poster från komponenter' %}
         </h2>
         <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
 
             {% for type_block in metadata.components.all_related_records.ordered_by_type %}
-            <h3 class="my-2">{{type_block.label}}</h3>
-            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
+            <div id="component-category-{{ type_block.label|slugify }}">
+                <h3 class="my-2 font-bold">{{type_block.label}}</h3>
+                <div class="p-4 bg-gray-300/15 dark:bg-white/15 rounded">
+                    <ul class="list-decimal list-inside">
+                        {% for record in type_block.records|slice:":1" %}
+                        <li class="w-full">
+                            <a href="{{ record.url }}">
+                            {{record.main_title.display}}
+                            </a>
+                        </li>
+                        {% endfor %}
 
-                {% for record in type_block.records %}
-                <li class="w-full h-[240px]">
-                    <a href="{{ record.url }}" 
-                    class="group relative block w-full h-full bg-gray-100 dark:bg-white/10 rounded-md overflow-hidden shadow-md hover:shadow-md transition-shadow duration-300 ease-in-out">
-                        
-                        <div class="w-full h-[240px] overflow-hidden bg-gray-100 dark:bg-white/10">
-                            {% if record.thumbnail_url %}
-                            <img src="{{record.thumbnail_url}}" 
-                                alt="{{record.main_title.display}}"
-                                class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110">
-                            {% else %}
-                            <div class="w-full h-full flex items-center justify-center transition-transform duration-500 ease-in-out group-hover:scale-110">
-                                <svg class="size-20 text-gray-400" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <title>{% translate 'Tumnagel saknas' %}</title>
-                                    {% include '../_icons/no-image.svg' %}
-                                </svg>
-                            </div>
-                            {% endif %}
-                        </div>
-
-                        <div class="absolute bottom-0 w-full p-4 bg-gray-900/90 text-white transition-all duration-300 ease-in-out max-h-[80px] group-hover:max-h-full">
-                            <h3 class="font-medium text-sm leading-tight truncate group-hover:whitespace-normal">
-                                {{record.main_title.display}}
-                            </h3>
-                            <p class="mt-2 text-xs text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                {% translate 'Klicka för att visa detaljer' %}
-                            </p>
-                        </div>
-
-                    </a>
-                </li>
-                {% endfor %}
-
-            </ul>
-
+                    </ul>
+                    {% if type_block.records|length > 1 %}
+                    <button 
+                        hx-get="?load_component_category={{ type_block.label|urlencode }}"
+                        hx-target="#component-category-{{ type_block.label|slugify }}"
+                        hx-swap="outerHTML"
+                        class="mt-2 text-sm bg-light-alvin hover:bg-gray-300 px-3 py-1 rounded transition-colors">
+                        {% translate 'Visa alla'%}: {{ type_block.records|length }}
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
             {% endfor %}
         </div>
         {% endif %}

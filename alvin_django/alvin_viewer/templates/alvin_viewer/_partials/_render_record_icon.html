@@ -17,7 +17,7 @@
         <p class="w-full font-semibold pl-2">{{ metadata.display_label }}</p>
     </div>
     {% else %}
-    <div class="flex flex-row px-4 py-2 bg-dark-alvin rounded-2xl text-white">
+    <div class="flex flex-row px-2 py-1 bg-dark-alvin rounded-2xl text-white">
         <svg class="size-6" aria-label="{{metadata.label}}" viewBox="0 0 24 24" stroke-width="2" fill="none">
             {% if metadata.type_of_resource.code == 'art' %}
                 {% include '../_icons/artifact.svg' %}
@@ -55,20 +55,20 @@
         <p class="w-full font-semibold pl-2">{{ metadata.display_label }}</p>
         {% endif %}
     </div>
-        {% if metadata.collection.code == 'yes' %}
-        <div class="flex flex-row px-4 py-2 bg-light-alvin rounded-2xl">
-            <svg class="size-6" aria-label="{{metadata.collection.item}}" viewBox="0 0 24 24" stroke-width="2" fill="none">
-                {% include '../_icons/collection.svg' %}
-            </svg>
-            <p class="w-full font-semibold pl-2">{{ metadata.collection.item }}</p>
-        </div>
-        {% endif %}
         {% if metadata.production_method.code == 'manuscript' %}
-        <div class="flex flex-row px-4 py-2 bg-blue-400 rounded-2xl text-white">
+        <div class="flex flex-row px-2 py-1 bg-light-alvin rounded-2xl dark:text-[#333333]">
             <svg class="size-6" aria-label="{{metadata.production_method.item}}" viewBox="0 0 24 24" stroke-width="2" fill="none">
                 {% include '../_icons/manuscript.svg' %}
             </svg>
             <p class="w-full font-semibold pl-2">{{ metadata.production_method.item }}</p>
+        </div>
+        {% endif %}
+        {% if metadata.collection.code == 'yes' %}
+        <div class="flex flex-row px-2 py-1 bg-blue-400 rounded-2xl text-white">
+            <svg class="size-6" aria-label="{{metadata.collection.item}}" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                {% include '../_icons/collection.svg' %}
+            </svg>
+            <p class="w-full font-semibold pl-2">{{ metadata.collection.item }}</p>
         </div>
         {% endif %}
     {% endif %}

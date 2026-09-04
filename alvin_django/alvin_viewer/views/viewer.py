@@ -128,7 +128,6 @@ def alvin_viewer(request, record_type: str, record_id: str):
         for block in related_records:
             if block.label == category_request:
                 paginator = Paginator(block.records, 1)
-                # Byt variabelnamnet här för att undvika krock med tumnaglarna
                 category_page_obj = paginator.get_page(category_page_number)
 
                 return render(request, 'alvin_viewer/_partials/_paged_related_category.html', {

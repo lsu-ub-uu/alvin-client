@@ -540,9 +540,15 @@ class OriginPlace(URL):
 
     def is_empty(self) -> bool:
         return not self.name
+
+    @property
+    def display(self):
+        return ", ".join(filter(None, (self.display_title, self.display_countries)))
     
     @property
-    def display(self) -> Optional[str]:
+    def display_title(self) -> Optional[str]:
+        if self.is_empty():
+            return None
         title = self.name.title
         if self.certainty == "uncertain":
             title += "?"
@@ -551,7 +557,7 @@ class OriginPlace(URL):
     @property
     def display_countries(self) -> Optional[str]:
         items = (self.country.items if self.country else []) + (self.historical_country.items if self.historical_country else [])
-        return f", {', '.join(filter(None, (items)))}" if items else None
+        return f"{', '.join(filter(None, (items)))}" if items else None
     
 @dataclass(slots=True)
 class OriginPlaceBlock:

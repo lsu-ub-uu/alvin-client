@@ -92,7 +92,7 @@ def alvin_viewer(request, record_type: str, record_id: str):
     metadata = extract_metadata(root, record_type)
     
     #Thumbnail pagination for the download menu
-    all_images = metadata.files.get_images if record_type == 'alvin-record' and getattr(metadata.files, 'has_images', False) else []
+    all_images = metadata.files.images if record_type == 'alvin-record' and getattr(metadata.files, 'has_images', "") else []
     paginator = Paginator(all_images, 10)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)

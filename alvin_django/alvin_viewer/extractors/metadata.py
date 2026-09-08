@@ -1,7 +1,7 @@
 from __future__ import annotations
-from dataclasses import dataclass, fields
+from dataclasses import dataclass, field
 from importlib.metadata import metadata
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
 
 from django.utils.translation import get_language
 from django.urls import reverse
@@ -697,68 +697,95 @@ class Summary:
 # BINARIES
 # ------------------
 
-@dataclass 
+
+@dataclass(slots=True)
 class File:
-    label: Optional[str] = None
-    binary_type: Optional[str] = None
-    type: Optional[str] = None
-    binary_id: Optional[str] = None
-    original_name: Optional[str] = None
-    master_url: Optional[str] = None
-    master_type: Optional[str] = None
-    jp2_url: Optional[str] = None
-    thumbnail_url: Optional[str] = None
+    binary_id: str | None = None
+    label: str | None = None
+    binary_type: str | None = None
+    type: str | None = None
+    original_name: str | None = None
+    master_url: str | None = None
+    master_type: str | None = None
+    jp2_url: str | None = None
+    thumbnail_url: str | None = None
 
-@dataclass 
+
+@dataclass(slots=True)
 class FileGroup:
-    media_type: str = None
-    type: Optional[str] = None
-    type_code: Optional[str] = None 
-    files: List[File] = None
+    type: str | None = None
+    type_code: str | None = None
+    files: list[File] = field(default_factory=list)
+
+    ATTACHMENT_MIME_TYPES: ClassVar[frozenset[str]] = frozenset(
+        {
+            "application/pdf",
+            "application/xml",
+            "text/plain",
+        }
+    )
+
+    def _filter_by_mime_prefix(self, prefix: str) -> list[File]:
+        return [
+            file
+            for file in self.files
+            if isinstance(file.master_type, str)
+            and file.master_type.startswith(prefix)
+        ]
+
+    def _has_mime_prefix(self, prefix: str) -> bool:
+        return any(
+            isinstance(file.master_type, str)
+            and file.master_type.startswith(prefix)
+            for file in self.files
+        )
 
     @property
-    def images(self) -> List[File]:
-        if self.media_type != "image" or not self.files:
-            return []
-        return [
-            f for f in self.files
-            if getattr(f, "binary_type", None) == "image"
-        ]
-    
-    @property
-    def videos(self) -> List[File]:
-        if self.media_type != "video" or not self.files:
-            return []
-        return [
-            f for f in self.files
-            if f.master_type.startswith("video")
-        ]
-    
-    @property
-    def audios(self) -> List[File]:
-        if self.media_type != "audio" or not self.files:
-            return []
-        return [
-            f for f in self.files
-            if f.master_type.startswith("audio")
-        ]
-    
-    @property
-    def attachments(self) -> List[File]:
-        if self.media_type not in ["appendix", "application", "text"] or not self.files:
-            return {}
-        return [f for f in self.files if f.master_type in ['application/pdf', 'application/xml', 'text/plain']]
+    def images(self) -> list[File]:
+        return self._filter_by_mime_prefix("image")
 
-@dataclass 
+    @property
+    def videos(self) -> list[File]:
+        return self._filter_by_mime_prefix("video")
+
+    @property
+    def audio(self) -> list[File]:
+        return self._filter_by_mime_prefix("audio")
+
+    @property
+    def attachments(self) -> list[File]:
+        return [
+            file
+            for file in self.files
+            if file.master_type in self.ATTACHMENT_MIME_TYPES
+        ]
+
+
+@dataclass(slots=True)
 class FilesBlock:
-    rights: str = None
-    rights_code: str = None
-    rights_label: str = None
-    digital_origin: str = None
-    file_groups: List[FileGroup] = None
+    rights: str | None = None
+    rights_code: str | None = None
+    rights_label: str | None = None
+    digital_origin: str | None = None
+    file_groups: list[FileGroup] = field(default_factory=list)
+
+    DOCUMENT_MIME_TYPES: ClassVar[frozenset[str]] = frozenset(
+        {
+            "application/pdf",
+            "text/plain",
+        }
+    )
+    ATTACHMENT_TARGET_CODES: ClassVar[tuple[str, ...]] = (
+        "appendix",
+        "master",
+        "transcription",
+        "translation",
+    )
 
     @property
-    def rights_url(self):
+    def rights_url(self) -> str:
+        if not self.rights_code:
+            return ""
 
         current_lang = get_language()
         cc_base_url = "https://creativecommons.org"
@@ -771,102 +798,97 @@ class FilesBlock:
             case "in_copyright":
                 return "https://rightsstatements.org/page/InC/1.0/?language=en"
 
-        license_stub = self.rights_code.replace("CC_","").replace("_","-").lower()
+        license_stub = (
+            self.rights_code.replace("CC_", "").replace("_", "-").lower()
+        )
         return f"{cc_base_url}/licenses/{license_stub}/4.0/deed.{current_lang}"
+
+    # --- IMAGES ---
 
     @property
     def has_images(self) -> bool:
-        return any(file_group.images for file_group in self.file_groups) if self.file_groups else False
-    
+        return any(group._has_mime_prefix("image") for group in self.file_groups)
+
     @property
-    def get_images(self) -> List[File]:
-        if not self.file_groups:
-            return []
-        images = []
-        for file_group in self.file_groups:
-            images.extend(file_group.images)
-        return images
-    
+    def images(self) -> list[File]:
+        return [
+            image
+            for group in self.file_groups
+            for image in group.images
+        ]
+
+    # --- AUDIO / VIDEO ---
+
     @property
     def has_audio_video(self) -> bool:
-        return any(file_group.media_type in ["audio", "video"] for file_group in self.file_groups) if self.file_groups else False
-    
+        return any(
+            group._has_mime_prefix("audio") or group._has_mime_prefix("video")
+            for group in self.file_groups
+        )
+
     @property
-    def get_audio_video(self) -> List[File]:
-        if not self.file_groups:
-            return []
-        av_files = []
-        for file_group in self.file_groups:
-            av_files.extend(file_group.audios)
-            av_files.extend(file_group.videos)
-        return av_files
+    def audio_video(self) -> list[File]:
+        return [
+            av_file
+            for group in self.file_groups
+            for av_file in (*group.audio, *group.videos)
+        ]
+
+    # --- ATTACHMENTS ---
 
     @property
     def has_attachments(self) -> bool:
-        if not self.file_groups:
-            return False
-        
-        if any(file_group.type_code in ["appendix","transcription","translation"] for file_group in self.file_groups):
-            return True
-        return False
-    
+        return any(bool(group.attachments) for group in self.file_groups)
+
     @property
-    def get_attachments(self) -> Dict[Dict[str, Any]] | Dict:
-        attachments = {
-            "appendix": {
-                        "label": "",
-                        "files": []
-                        },
-            "master": {
-                        "label": "",
-                        "files": []
-                        },
-            "transcription": {
-                        "label": "",
-                        "files": []
-                        },
-            "translation": {
-                        "label": "",
-                        "files": []
-                        },
+    def attachments(self) -> dict[str, dict[str, Any]]:
+        result = {
+            code: {"label": "", "files": []}
+            for code in self.ATTACHMENT_TARGET_CODES
         }
 
-        if not self.file_groups:
-            return {} 
+        for group in self.file_groups:
+            if group.type_code in result:
+                if not result[group.type_code]["label"]:
+                    result[group.type_code]["label"] = group.type or ""
+                result[group.type_code]["files"].extend(group.attachments)
 
-        for file_group in self.file_groups:
-            if file_group.type_code in attachments:
-                if attachments[file_group.type_code]["label"] == '':
-                    attachments[file_group.type_code]["label"] = file_group.type
-                attachments[file_group.type_code]["files"].extend(file_group.attachments)
-        
-        return attachments
-    
+        return result
+
+    # --- DOCUMENTS ---
+
     @property
-    def documents(self) -> List[dict]:
-        docs_dict = {}
+    def documents(self) -> list[dict[str, Any]]:
+        docs_dict: dict[str, dict[str, Any]] = {}
+        fallback_labels = {
+            "transcription": "Transkription",
+            "translation": "Översättning",
+        }
 
-        if self.file_groups:
-            for group in self.file_groups:
-                if group.type_code in ["transcription", "translation"]:
-                    code = group.type_code
-                    label = group.type or ("Transkription" if code == "transcription" else "Översättning")
-                    
-                    if code not in docs_dict:
-                        docs_dict[code] = {
-                            "label": label,
-                            "type_code": code,
-                            "files": []
-                        }
-                    
-                    for f in group.files:
-                        mime = f.master_type or "application/pdf"
-                        if mime in ['application/pdf', 'text/plain']:
-                            if f.master_url:
-                                docs_dict[code]["files"].append({
-                                    "url": f.master_url.replace('http://apache', settings.EXTERNAL_ACCESS_URL),
-                                    "name": f.original_name or "Dokument",
-                                    "mime_type": mime
-                                })
-                
-        return [group_data for group_data in docs_dict.values() if group_data["files"]]
+        for group in self.file_groups:
+            if group.type_code in fallback_labels:
+                code = group.type_code
+                label = group.type or fallback_labels[code]
+
+                if code not in docs_dict:
+                    docs_dict[code] = {
+                        "label": label,
+                        "type_code": code,
+                        "files": [],
+                    }
+
+                for f in group.files:
+                    mime = f.master_type or "application/pdf"
+                    if mime in self.DOCUMENT_MIME_TYPES and f.master_url:
+                        docs_dict[code]["files"].append(
+                            {
+                                "url": f.master_url.replace(
+                                    "http://apache",
+                                    settings.EXTERNAL_ACCESS_URL,
+                                ),
+                                "name": f.original_name or "Dokument",
+                                "mime_type": mime,
+                            }
+                        )
+
+        return [data for data in docs_dict.values() if data["files"]]

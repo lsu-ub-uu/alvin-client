@@ -42,7 +42,7 @@
                             <xsl:call-template name="organisation"/>
                         </dc:creator>
                     </xsl:for-each>
-                    <xsl:for-each select="genreForm">
+                    <xsl:for-each select="genre">
                         <dc:subject>
                             <xsl:value-of select="@_value_en"/>
                         </dc:subject>

@@ -1,0 +1,70 @@
+{
+    "@context": [
+        "https://linked.art/ns/v1/record-types.json",
+        "http://iiif.io/api/discovery/1/context.json"
+    ],
+    "id": "{{ request.build_absolute_uri|safe }}",
+
+    {% if "page" not in request.GET %} 
+    "type": "OrderedCollection",
+    "first": {
+        "id": "{{domain_root}}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{first_token|safe}}",
+        "type": "OrderedCollectionPage"
+    },
+    "last": {
+        "id": "{{domain_root}}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{last_token|safe}}",
+        "type": "OrderedCollectionPage"
+    },
+    "totalItems": {{completeListSize}}
+   {% endif %}
+
+
+{% if "page" in request.GET %}
+
+    "type": "OrderedCollectionPage",
+    "startIndex": {{ startIndex }},
+    "partOf": {
+        "id": "{{ domain_root }}{{ request.path }}{% if location %}?location={{ location }}{% endif %}",
+        "type": "OrderedCollection"
+       
+    },
+
+    {% if nextstartnum <= completeListSize %}
+    "next": {
+        "id": "{{domain_root}}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{next_token|safe}}",
+         "type": "OrderedCollectionPage"
+    },
+    {% endif %}
+    {% if startnum > rowsnum %}{% if startnum <= completeListSize %}
+    "prev": {
+        "id": "{{domain_root}}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{prev_token|safe}}",
+       "type": "OrderedCollectionPage"
+    },
+    {% endif %}{% endif %}
+    
+    "orderedItems": [
+    {% for record in records %}
+
+    {
+      "type": "Update",
+      "object": {
+        "id": "{{domain_root}}{% url 'record_viewer' record.type record.identifier %}?format=json",
+        "type": 
+        {% if record.type == 'alvin-record' %} 
+            {% if record.collection == 'yes' %}"Set"{% else %}"HumanMadeObject"{% endif %}
+        {% endif %} 
+        {% if record.type == 'alvin-person' %}"Person"{% endif %}
+        {% if record.type == 'alvin-organisation' %}"Group"{% endif %}
+        {% if record.type == 'alvin-place' %}"Place"{% endif %}
+        {% if record.type == 'alvin-work' %}"LinguisticObject"{% endif %}
+        {% if record.type == 'alvin-location' %}"Group"{% endif %}
+      },
+      "endTime": "{{ record.endtime|slice:":19" }}Z"
+    }
+
+
+        {% if not forloop.last %}, {% endif %}
+     {% endfor %} 
+    ]
+{% endif %}
+}

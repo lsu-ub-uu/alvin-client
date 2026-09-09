@@ -408,9 +408,9 @@
     <Cell><Data>description</Data></Cell>
    </Row>
    <Row>
-    <Cell><Data>internetMediaType</Data></Cell>
+    <Cell><Data>use</Data></Cell>
     <Cell><Data>FileGroup</Data></Cell>
-    <Cell><Data>InternetMediaType</Data></Cell>
+    <Cell><Data>Use</Data></Cell>
     <Cell><Data>CollectionVar</Data></Cell>
     <Cell><Data>fileSection</Data></Cell>
    </Row>

@@ -1,7 +1,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"   
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-    xmlns:alvin="https://www.alvin-portal.org/vocabulary/" 
+    xmlns:alvin="https://www.alvin-portal.org/alvin/vocabulary/" 
     xmlns:skos="http://www.w3.org/2004/02/skos/core#" 
     xmlns:owl="http://www.w3.org/2002/07/owl#" 
     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
@@ -9,8 +9,7 @@
     <xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes"/>
     <xsl:param name="domain_root"/>
     <xsl:variable name="host">
-        <xsl:value-of select="$domain_root"/>
-        <xsl:text>/</xsl:text>
+        <xsl:value-of select="substring-before($domain_root,'oai')"/>
     </xsl:variable>
     <xsl:template match="/">
         <xsl:apply-templates select="record/data/record | dataList/data/record/data/record"/>
@@ -1646,39 +1645,29 @@
                             <xsl:if test="file/fileLocation/linkedRecord">
                                 <alvin:fileGroup>
                                     <alvin:FileGroup>
-                                        <xsl:for-each select="internetMediaType">
-                                            <alvin:internetMediaType>
-                                                <alvin:InternetMediaType>
+                                        <xsl:for-each select="use">
+                                            <alvin:use>
+                                                <alvin:Use>
                                                     <xsl:call-template name="labels"/>
                                                     <skos:notation>
                                                         <xsl:value-of select="."/>
                                                     </skos:notation>
-                                                </alvin:InternetMediaType>
-                                            </alvin:internetMediaType>
-                                        </xsl:for-each>
-                                        <xsl:for-each select="type">
-                                            <alvin:type>
-                                                <alvin:Type>
-                                                    <xsl:call-template name="labels"/>
-                                                    <skos:notation>
-                                                        <xsl:value-of select="."/>
-                                                    </skos:notation>
-                                                </alvin:Type>
-                                            </alvin:type>
+                                                </alvin:Use>
+                                            </alvin:use>
                                         </xsl:for-each>
                                         <xsl:for-each select="file">
                                             <xsl:if test="fileLocation/linkedRecord">
                                                 <alvin:file>
                                                     <alvin:File>
-                                                        <xsl:for-each select="type">
-                                                            <alvin:type>
-                                                                <alvin:Type>
+                                                        <xsl:for-each select="fileType">
+                                                            <alvin:fileType>
+                                                                <alvin:FileType>
                                                                     <xsl:call-template name="labels"/>
                                                                     <skos:notation>
                                                                         <xsl:value-of select="."/>
                                                                     </skos:notation>
-                                                                </alvin:Type>
-                                                            </alvin:type>
+                                                                </alvin:FileType>
+                                                            </alvin:fileType>
                                                         </xsl:for-each>
                                                         <xsl:for-each select="label">
                                                             <alvin:label>

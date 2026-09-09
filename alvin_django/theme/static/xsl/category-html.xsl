@@ -234,9 +234,9 @@
                         <a class="text-blue-800 dark:text-blue-200 underline">
                             <xsl:attribute name="href">
                                 <xsl:value-of select="$parent_path"/>
-                                <xsl:value-of select="substring-after(@rdf:resource,'onthology/alvin/')"/>
+                                <xsl:value-of select="substring-after(@rdf:resource,'onthology/')"/>
                             </xsl:attribute>
-                            <xsl:value-of select="substring-after(@rdf:resource,'onthology/alvin/')"/>
+                            <xsl:value-of select="substring-after(@rdf:resource,'onthology/')"/>
                         </a>
                     </div>
 

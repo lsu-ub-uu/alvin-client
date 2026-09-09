@@ -44,39 +44,6 @@ parser.resolvers.add(SafeHTTPResolver())
 import urllib.request
 from urllib.request import urlopen
 
-def urn(request):
-  xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
-  start = request.GET.get('start', 1)
-  rows = request.GET.get('rows', 1000)  
-  search = '**'
-  root = request.build_absolute_uri('/')
-  
-  list_url = f'{api_host}/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"alvinRecordSearchTerm","value":"{search}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
-  response = requests.get(list_url, headers=xml_headers_list)
-
-  if response.status_code != 200:
-        raise Http404("Record list not found")
-
-  # Parse the XML file
-  xml_list = etree.fromstring(response.content)
-
-  headers = []
-
-  # Convert XML data to a list of dictionaries
-  records = []
-  for record in xml_list.findall('data/record/data/record'):
-      records.append({
-         'id': record.findtext('./recordInfo/id', default='N/A'),
-         'urn': record.findtext('./recordInfo/urn', default='N/A'),
-	 'base': root + 'alvin-record/'
-       })
-
-  if response.status_code != 200:
-        raise Http404("Record list not found")
-  
-# Pass the data to the template
-  return render(request, 'xml_formats/urn.xml', {'records': records}, content_type='text/xml')
-
 def alvinrecordschema(request):
   return render (request, 'xml_formats/alvin-record-schema.xml', content_type='text/xml')
 
@@ -341,4 +308,244 @@ def linked_art_search_json(request, tier):
   # 3. Return the modified response object
     return response
 
- 
+def linked_art_activity_stream(request, searchType):
+    xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
+    searchType = searchType
+    query = '**' 
+    json_safe_str = json.dumps(query) 
+    location = request.GET.get('location', '').strip()
+
+    if location != '':
+        locationInRecordSearchTerm = f',{{"name":"locationInRecordSearchTerm","value":"alvin-location_{location}"}}' 
+    else: 
+        locationInRecordSearchTerm = ''
+
+    params = request.GET.copy()  # make a mutable copy
+    params.pop('page', None)  # remove the parameter if it exists
+    view_url = f"{request.path}?{params.urlencode()}" if params else request.path
+    separator = "/linkedart"
+    current_url = request.build_absolute_uri()
+    domain_root = current_url.split(separator, 1)[0]
+    page_token = request.GET.get('page')
+  
+    if page_token:
+        decoded_data = urlsafe_base64_decode(page_token)
+        params = json.loads(decoded_data.decode('utf-8'))
+        start = params.get('start', 1)
+        rows = params.get('rows', 100)   
+    else:
+        start = 1       
+        rows = 100
+
+    startnum = int(start)
+    rowsnum = int(rows)
+    newstart = startnum + rowsnum
+    newstartnum = int(newstart)
+    prevstart = startnum - rowsnum
+    prevstartnum = int(prevstart)
+    next_params = {'start': newstart, 'rows': rows}       
+    json_next = json.dumps(next_params).encode('utf-8')
+    next_token = urlsafe_base64_encode(force_bytes(json_next))
+    prev_params = {'start': prevstart, 'rows': rows}
+    json_prev = json.dumps(prev_params).encode('utf-8')
+    prev_token = urlsafe_base64_encode(force_bytes(json_prev))
+
+    alvinRecordSearchData = f'{{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"alvinRecordSearchTerm","value":{json_safe_str}}}{locationInRecordSearchTerm},{{"name":"visibilityAlvinSearchTerm","value":"published"}}]}}]}}'
+  
+    SearchData = f'{{"name":"{searchType}Search","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"{searchType}SearchTerm","value":{json_safe_str}}}]}}]}}'
+  
+    # API host
+    api_host = settings.API_HOST
+
+    if searchType == 'record':
+        list_url = f'{api_host}/rest/record/searchResult/alvinRecordSearch?searchData={alvinRecordSearchData},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
+    
+    elif searchType != 'record':
+        list_url = f'{api_host}/rest/record/searchResult/{searchType}Search?searchData={SearchData},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
+          
+    else:
+        raise Http404("Invalid search") 
+   
+    response = requests.get(list_url, headers=xml_headers_list)
+    
+    if response.status_code == 200:
+        xml_list = etree.fromstring(response.content)         
+        records = []
+        for record in xml_list.findall(f"data/record/data/{searchType}"):
+            records.append({
+                'type': record.findtext('./recordInfo/type/linkedRecordId'),
+                'identifier': record.findtext('./recordInfo/id'),
+                'collection': record.findtext('./collection'),
+            })  
+
+        pages = {
+            "fromNo":xml_list.findtext(".//fromNo"),
+            "toNo":xml_list.findtext(".//toNo"),
+            "totalNo":xml_list.findtext(".//totalNo"),
+            }
+
+        totalNo = pages.get("totalNo")          
+        completeListSize = int(totalNo)     
+        startnum = int(start)
+        rowsnum = int(rows)
+        newstart = startnum + rowsnum
+        nextstartnum = int(newstart) 
+        prevstart = startnum - rowsnum
+        prevstartnum = int(prevstart)
+        searchType = searchType
+        # Formula for 1-based indexing (1, 2, 3...)
+        start_number_1_based = ((completeListSize - 1) // rowsnum) * rowsnum + 1
+
+    else:
+        raise Http404("Invalid search") 
+  
+    context = { 
+        "searchType":searchType,      
+        "location":location,
+        "records":records,
+        "completeListSize":completeListSize,
+        "startnum":startnum,
+        "rowsnum":rowsnum,
+        "nextstartnum":nextstartnum,
+        "prevstartnum":prevstartnum,
+        "view_url":view_url,       
+        "domain_root":domain_root,
+        "next_token":next_token,
+        "prev_token":prev_token,
+        "start_number_1_based":start_number_1_based,
+        }
+
+    response = render(request, 'xml_formats/linked_art_activity_stream.json', context)
+
+  # 2. Add or modify headers using the .headers dictionary
+    response.headers['Content-Type'] = 'application/ld+json'  # Standard server response type
+    response.headers['Accept'] = 'application/ld+json;profile="https://linked.art/ns/v1/linked-art.json"' # Any custom tracking header
+    
+  # 3. Return the modified response object
+    return response
+
+def linked_art_discovery_stream(request, searchType):
+    xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
+    searchType = searchType
+    query = '**' 
+    json_safe_str = json.dumps(query) 
+    location = request.GET.get('location', '').strip()
+
+    if location != '':
+        locationInRecordSearchTerm = f',{{"name":"locationInRecordSearchTerm","value":"alvin-location_{location}"}}' 
+    else: 
+        locationInRecordSearchTerm = ''
+
+    params = request.GET.copy()  # make a mutable copy
+    params.pop('page', None)  # remove the parameter if it exists
+    view_url = f"{request.path}?{params.urlencode()}" if params else request.path
+    separator = "/linkedart"
+    current_url = request.build_absolute_uri()
+    domain_root = current_url.split(separator, 1)[0]
+    page_token = request.GET.get('page')
+  
+    if page_token:
+        decoded_data = urlsafe_base64_decode(page_token)
+        params = json.loads(decoded_data.decode('utf-8'))
+        start = params.get('start', 1)
+        rows = params.get('rows', 100)   
+    else:
+        start = 1       
+        rows = 100
+
+    startnum = int(start)
+    rowsnum = int(rows)
+    newstart = startnum + rowsnum
+    newstartnum = int(newstart)
+    prevstart = startnum - rowsnum
+    prevstartnum = int(prevstart)
+    next_params = {'start': newstart, 'rows': rows}       
+    json_next = json.dumps(next_params).encode('utf-8')
+    next_token = urlsafe_base64_encode(force_bytes(json_next))
+    prev_params = {'start': prevstart, 'rows': rows}
+    json_prev = json.dumps(prev_params).encode('utf-8')
+    prev_token = urlsafe_base64_encode(force_bytes(json_prev))
+    first_params = {'start': start, 'rows': rows}
+    json_first = json.dumps(first_params).encode('utf-8')
+    first_token = urlsafe_base64_encode(force_bytes(json_first))
+
+    alvinRecordSearchData = f'{{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"alvinRecordSearchTerm","value":{json_safe_str}}}{locationInRecordSearchTerm},{{"name":"visibilityAlvinSearchTerm","value":"published"}}]}}]}}'
+  
+    SearchData = f'{{"name":"{searchType}Search","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"{searchType}SearchTerm","value":{json_safe_str}}}]}}]}}'
+  
+    # API host
+    api_host = settings.API_HOST
+
+    if searchType == 'record':
+        list_url = f'{api_host}/rest/record/searchResult/alvinRecordSearch?searchData={alvinRecordSearchData},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
+    
+    elif searchType != 'record':
+        list_url = f'{api_host}/rest/record/searchResult/{searchType}Search?searchData={SearchData},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
+          
+    else:
+        raise Http404("Invalid search") 
+   
+    response = requests.get(list_url, headers=xml_headers_list)
+    
+    if response.status_code == 200:
+        xml_list = etree.fromstring(response.content)         
+        records = []
+        for record in xml_list.findall(f"data/record/data/{searchType}"):
+            records.append({
+                'type': record.findtext('./recordInfo/type/linkedRecordId'),
+                'identifier': record.findtext('./recordInfo/id'),
+                'collection': record.findtext('./collection'),
+                'endtime': record.findtext('./recordInfo/updated/tsUpdated'),
+            })  
+
+        pages = {
+            "fromNo":xml_list.findtext(".//fromNo"),
+            "toNo":xml_list.findtext(".//toNo"),
+            "totalNo":xml_list.findtext(".//totalNo"),
+            }
+
+        totalNo = pages.get("totalNo")          
+        completeListSize = int(totalNo)     
+        startnum = int(start)
+        rowsnum = int(rows)
+        newstart = startnum + rowsnum
+        nextstartnum = int(newstart) 
+        prevstart = startnum - rowsnum
+        prevstartnum = int(prevstart)
+        searchType = searchType
+        start_number_1_based = ((completeListSize - 1) // rowsnum) * rowsnum + 1
+        last_params = {'start': start_number_1_based, 'rows': rows}
+        json_last = json.dumps(last_params).encode('utf-8')
+        last_token = urlsafe_base64_encode(force_bytes(json_last))
+        startIndex = startnum - 1
+
+    else:
+        raise Http404("Invalid search") 
+  
+    context = { 
+        "searchType":searchType,      
+        "location":location,
+        "records":records,
+        "completeListSize":completeListSize,
+        "startnum":startnum,
+        "rowsnum":rowsnum,
+        "nextstartnum":nextstartnum,
+        "prevstartnum":prevstartnum,
+        "view_url":view_url,       
+        "domain_root":domain_root,
+        "next_token":next_token,
+        "prev_token":prev_token,
+        "first_token":first_token,
+        "last_token":last_token,
+        "startIndex":startIndex,
+        }
+
+    response = render(request, 'xml_formats/linked_art_discovery.json', context)
+
+  # 2. Add or modify headers using the .headers dictionary
+    response.headers['Content-Type'] = 'application/ld+json'  # Standard server response type
+    response.headers['Accept'] = 'application/ld+json;profile="http://iiif.io/api/discovery/1/context.json"' # Any custom tracking header
+    
+  # 3. Return the modified response object
+    return response
+

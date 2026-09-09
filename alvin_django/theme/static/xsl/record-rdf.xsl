@@ -1876,31 +1876,21 @@
                             <xsl:if test="file/fileLocation/linkedRecord">
                                 <alvin:fileGroup>
                                     <alvin:FileGroup>
-                                        <xsl:for-each select="internetMediaType">
-                                            <alvin:internetMediaType>
-                                                <alvin:InternetMediaType>
+                                        <xsl:for-each select="use">
+                                            <alvin:use>
+                                                <alvin:Use>
                                                     <xsl:call-template name="labels"/>
                                                     <skos:notation>
                                                         <xsl:value-of select="."/>
                                                     </skos:notation>
-                                                </alvin:InternetMediaType>
-                                            </alvin:internetMediaType>
-                                        </xsl:for-each>
-                                        <xsl:for-each select="type">
-                                            <alvin:type>
-                                                <alvin:Type>
-                                                    <xsl:call-template name="labels"/>
-                                                    <skos:notation>
-                                                        <xsl:value-of select="."/>
-                                                    </skos:notation>
-                                                </alvin:Type>
-                                            </alvin:type>
+                                                </alvin:Use>
+                                            </alvin:use>
                                         </xsl:for-each>
                                         <xsl:for-each select="file">
                                             <xsl:if test="fileLocation/linkedRecord">
                                                 <alvin:file>
                                                     <alvin:File>
-                                                        <xsl:for-each select="type">
+                                                        <xsl:for-each select="fileType">
                                                             <alvin:fileType>
                                                                 <alvin:FileType>
                                                                     <xsl:call-template name="labels"/>

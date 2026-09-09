@@ -27,7 +27,7 @@
                 </setSpec>
             </header>
             <metadata>
-                <record xmlns="https://www.alvin-portal.org/vocabulary" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.alvin-portal.org/vocabulary https://www.alvin-portal.org/schema/alvin-record.xsd">
+                <record xmlns="https://www.alvin-portal.org/vocabulary" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.alvin-portal.org/alvin/vocabulary https://www.alvin-portal.org/alvin/schema/alvin-record.xsd">
                     <xsl:apply-templates select="@*|node()"/>
                 </record>
             </metadata>

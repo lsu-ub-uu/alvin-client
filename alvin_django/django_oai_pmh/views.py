@@ -60,6 +60,8 @@ def oai2(request):
     # API host
     api_host = settings.API_HOST
 
+    domain_root = request.build_absolute_uri(request.path)
+
     if "verb" in params:
         verb = params.pop("verb")[-1]
         if verb == "GetRecord":
@@ -76,7 +78,8 @@ def oai2(request):
                             _error("cannotDisseminateFormat", metadata_prefix)
                         )
                     if "identifier" in params:
-                        identifier = request.GET.get('identifier', '')
+                        identifier = params.pop("identifier")[-1]
+                        #identifier = request.GET.get('identifier', '')
                         recordId = identifier.split("org:")
                         record = str(recordId[1])
                         if record.isdigit():
@@ -104,8 +107,7 @@ def oai2(request):
                                   metadataalvin_xml = transform(xml_record)	# Transform source XML tree
 
                             elif metadata_prefix == 'alvin_rdf':
-                                domain_root = request.build_absolute_uri('/')[:-1]  
-  
+                                 
                                 argDict = {}
                                 argDict["domain_root"] = etree.XSLT.strparam(domain_root)
 
@@ -142,11 +144,12 @@ def oai2(request):
             set = request.GET.get('set', '*')
             metadata_prefix = request.GET.get('metadataPrefix')
             start = request.GET.get('start', 1)         
-            rows = request.GET.get('rows', 2)
+            rows = request.GET.get('rows', 100)
             newstart = start + rows
 
-            if "resumptionToken" in params:  
-                resumption_token = request.GET.get('resumptionToken')
+            if "resumptionToken" in params: 
+                resumption_token = params.pop("resumptionToken")[-1]               
+                #resumption_token = request.GET.get('resumptionToken')
                 decoded_data = urlsafe_base64_decode(resumption_token)
                 string_data = force_str(decoded_data) 
                 cleaned_str = string_data.replace('"', '')                  
@@ -159,6 +162,7 @@ def oai2(request):
                             metadataprefix = ""
                         else:
                             metadataprefix = metadataprefix
+                           
                         set = rt_list[1]
                         if set == "":
                            set = "*"
@@ -184,7 +188,7 @@ def oai2(request):
                         errors.append(_error("badResumptionToken_resumptionToken"))                             
                 else:
                     resumptionToken = "//"  
-                    errors.append(_error("badResumptionToken_resumptionToken"))                                
+                    errors.append(_error("badResumptionToken_resumptionToken"))                
             list_url = f'{api_host}/rest/record/searchResult/alvinRecordSearch?searchData={{"name":"alvinRecordSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"permissionUnitSearchTerm","value":"permissionUnit_{set}"}}]}}]}},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
             response = requests.get(list_url)
             if response.status_code == 200:
@@ -217,8 +221,8 @@ def oai2(request):
                 resumptionToken = urlsafe_base64_encode(force_bytes(json_next))
                 decoded_data = urlsafe_base64_decode(resumptionToken)
                 string_data = force_str(decoded_data)
-                cleaned_str = string_data.replace('"', '')  
-            if "resumptionToken" in params:
+                cleaned_str = string_data.replace('"', '') 
+            elif "resumptionToken" in params:
                 if not records:
                     errors.append(_error("badResumptionToken_resumptionToken"))                        
             elif "metadataPrefix" in params:
@@ -256,10 +260,14 @@ def oai2(request):
                         _error("badArgument_single", ";".join(metadata_prefix))
                     )
                     metadata_prefix = None
+                  
+
             else:
-               errors.append(_error("badArgument", "metadataPrefix"))
-            _check_bad_arguments(params, errors)
+                #errors.append(_error("badArgument", "metadataPrefix")) 
+                _check_bad_arguments(params, errors) 
+
         elif verb == "ListMetadataFormats":
+
             template = "django_oai_pmh/listmetadataformats.xml"
 
             xml_headers_list = {'Content-Type':'application/vnd.cora.record-decorated+xml','Accept':'application/vnd.cora.record-decorated+xml'}
@@ -299,10 +307,11 @@ def oai2(request):
             metadata_prefix = request.GET.get('metadataPrefix')
             metadataprefix = metadata_prefix
             start = request.GET.get('start', 1)         
-            rows = request.GET.get('rows', 10)
+            rows = request.GET.get('rows', 100)
             newstart = start + rows
             if "resumptionToken" in params:  
-                resumption_token = request.GET.get('resumptionToken')
+                resumption_token = params.pop("resumptionToken")[-1] 
+                #resumption_token = request.GET.get('resumptionToken')
                 decoded_data = urlsafe_base64_decode(resumption_token)
                 string_data = force_str(decoded_data) 
                 cleaned_str = string_data.replace('"', '')                  
@@ -374,10 +383,13 @@ def oai2(request):
 
                 elif metadataprefix == 'alvin_rdf':
 
+                    argDict = {}
+                    argDict["domain_root"] = etree.XSLT.strparam(domain_root)
+
                     with urlopen(absolute_xslt_alvin_rdf) as f:
                         xslt_tree = etree.parse(f, parser)
                         transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
-                        metadataalvin_rdf = transform(xml_list)	# Transform source XML tree
+                        metadataalvin_rdf = transform(xml_list, **argDict) # Transform source XML tree
                             
                 else:
 
@@ -450,8 +462,8 @@ def oai2(request):
                     )
                     metadata_prefix = None
             else:
-               errors.append(_error("badArgument", "metadataPrefix"))
-            _check_bad_arguments(params, errors)
+               #errors.append(_error("badArgument", "metadataPrefix"))
+               _check_bad_arguments(params, errors)
         elif verb == "ListSets":
             template = "django_oai_pmh/listsets.xml"
 
@@ -489,8 +501,16 @@ def oai2(request):
 
 
 def _check_bad_arguments(params, errors, msg=None):
-    for k, v in params.copy().items():
 
+    for k, v in params.copy().items():
+        errors.append(
+            {
+                "code": "badArgument",
+                "msg": f'The argument "{k}" (value="{v}") included in the request is '
+                + "not valid."
+                + (f" {msg}" if msg else ""),
+            }
+        )
         params.pop(k)
 
 

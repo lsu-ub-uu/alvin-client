@@ -146,8 +146,8 @@ def alvin_search(request):
                     'collection': record.findtext('./collection'),
                     'rights': record.findtext('./fileSection/rights'),
                     'file_count': len(record.findall('.//file/fileLocation/linkedRecord')),
-                    'file': record.findtext('./fileSection/fileGroup[type = "master"][1]/file[1]/fileLocation/linkedRecordId'),
-                    'internetMediaType': record.findtext('./fileSection/fileGroup[type = "master"][1]/internetMediaType'),              
+                    'file': record.findtext('./fileSection/fileGroup/file/fileLocation/linkedRecord/binary/thumbnail[1]/thumbnail/linkedRecordId'),
+            
                  })
 
         elif searchType == 'person':

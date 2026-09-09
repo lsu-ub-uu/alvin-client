@@ -25,10 +25,19 @@
     
     "orderedItems": [
     {% for record in records %}
-       {
-            "id": "{{domain_root}}{% url 'record_viewer' 'alvin-record' record.identifier %}?format=json",
-            "type": "{% if record.collection == 'yes' %}Set{% else %}HumanMadeObject{% endif %}" 
-        }{% if not forloop.last %}, {% endif %}
+        { "id": "{{domain_root}}{% url 'record_viewer' record.type record.identifier %}?format=json",
+        "type": 
+        {% if record.type == 'alvin-record' %} 
+            {% if record.collection == 'yes' %}"Set"{% else %}"HumanMadeObject"{% endif %}
+        {% endif %} 
+        {% if record.type == 'alvin-person' %}"Person"{% endif %}
+        {% if record.type == 'alvin-organisation' %}"Group"{% endif %}
+        {% if record.type == 'alvin-place' %}"Place"{% endif %}
+        {% if record.type == 'alvin-work' %}"LinguisticObject"{% endif %}
+        {% if record.type == 'alvin-location' %}"Group"{% endif %}
+       }
+
+        {% if not forloop.last %}, {% endif %}
      {% endfor %} 
     ]
 }

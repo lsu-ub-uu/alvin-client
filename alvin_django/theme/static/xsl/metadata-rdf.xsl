@@ -15,9 +15,9 @@
             <xsl:value-of select="recordInfo/id"/>
         </xsl:variable>
         <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#">
-           <xsl:attribute name="xml:base">
-               <xsl:value-of select="$baseURL"/>
-           </xsl:attribute>
+            <xsl:attribute name="xml:base">
+                <xsl:value-of select="$baseURL"/>
+            </xsl:attribute>
             <xsl:choose>
                 <xsl:when test="@type = 'group'">
                     <owl:Class>
@@ -67,7 +67,7 @@
             </xsl:choose>
         </rdf:RDF>
     </xsl:template>
- 
+
     <xsl:template name="rdf">
         <xsl:param name="uri"/>
         <xsl:attribute name="rdf:about">
@@ -94,7 +94,13 @@
                 </rdfs:label>
             </xsl:if>
         </xsl:for-each>
-
+        <xsl:if test="@type = 'collectionItem'">
+            <xsl:for-each select="nameInData">
+                <skos:notation>
+                    <xsl:value-of select="."/>
+                </skos:notation>
+            </xsl:for-each>
+        </xsl:if>
         <xsl:for-each select="defTextId/linkedRecord/text/textPart[@lang = 'en'] | linkedRecord/metadata/defTextId/linkedRecord/text/textPart[@lang = 'en']">
             <xsl:if test="string-length(.) &gt; 0">
                 <skos:definition xml:lang="en">
@@ -128,6 +134,11 @@
         <xsl:attribute name="rdf:about">
             <xsl:value-of select="$uri"/>
         </xsl:attribute>
+        <rdfs:domain>
+            <xsl:attribute name="rdf:resource">
+                <xsl:value-of select="$baseURL"/><xsl:value-of select="$sub"/>
+            </xsl:attribute>
+        </rdfs:domain>
         <xsl:for-each select="textId/linkedRecord/text/textPart[@lang = 'en'] | linkedRecord/metadata/textId/linkedRecord/text/textPart[@lang = 'en']">
             <xsl:if test="string-length(.) &gt; 0">
                 <rdfs:label xml:lang="en">

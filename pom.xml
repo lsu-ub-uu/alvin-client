@@ -81,8 +81,8 @@
                                 <argument>-m</argument>
                                 <argument>pip</argument>
                                 <argument>install</argument>
-                                <argument>-r</argument>
-                                <argument>requirements.txt</argument>
+                                <!-- <argument>-r</argument>
+                                <argument>requirements.txt</argument>-->
                             </arguments>
                         </configuration>
                     </execution>

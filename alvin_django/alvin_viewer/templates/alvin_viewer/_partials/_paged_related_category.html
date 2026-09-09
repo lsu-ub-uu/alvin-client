@@ -10,7 +10,7 @@
             </li>
             {% endfor %}
         {% else %}
-            {% for record in type_block.records|slice:":1" %}
+            {% for record in type_block.records|slice:":20" %}
             <li class="w-full py-0.5">
                 <a href="{{ record.url }}" class="hover:underline">{{ record.main_title.display }}</a>
             </li>
@@ -18,7 +18,7 @@
         {% endif %}
     </ol>
 
-    {% if category_page_obj and category_page_obj.paginator.count > 1 or not category_page_obj and type_block.records|length > 1 %}
+    {% if category_page_obj and category_page_obj.paginator.count > 20 %}
     <div class="mt-4 pt-2 border-t border-gray-200 dark:border-white/10 flex items-center justify-between text-xs text-gray-600 dark:text-gray-300">
 
         <div class="m-auto flex flex-row justify-center items-center gap-x-2">

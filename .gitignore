@@ -12,3 +12,4 @@
 # Python bytecode
 *.pyc
 __pycache__/
+/node_modules/

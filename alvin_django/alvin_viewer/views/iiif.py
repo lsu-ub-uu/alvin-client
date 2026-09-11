@@ -11,9 +11,8 @@ def _to_int(value, default):
     except (TypeError, ValueError):
         return int(default)
 
-
 def iiif_manifest(request, record_id: str):
-    api = AlvinAPI()
+    """api = AlvinAPI()
     try:
         record_xml = api.get_record_xml("alvin-record", record_id)
     except Exception as e:
@@ -73,7 +72,7 @@ def iiif_manifest(request, record_id: str):
         anno_page_id = urljoin(canvas_id + "/", "page")
         anno_id = urljoin(anno_page_id + "/", "anno")
         
-        original_url = f.findtext("fileLocation/linkedRecord/binary/master/master/actionLinks/read/url")
+        original_url = f.findtext("fileLocation/linkedRecord/binary/jp2/jp2/actionLinks/read/url")
                 
         body = {
             "id": raster_url,
@@ -137,8 +136,9 @@ def iiif_manifest(request, record_id: str):
         "label": {"none": [main_label]} if main_label else {"none": [str(record_id)]},
         "items": canvases,
     }
-
+"""
+    kex = {"kex": "kex"}
     return JsonResponse(
-        manifest,
+        kex,
         json_dumps_params={"ensure_ascii": False},
     )

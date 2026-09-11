@@ -27,7 +27,28 @@ export function buildPrefixedManifestUrl({ manifestUrl, currentPath, viewerPath,
   return new URL(`${deploymentBasePath}${manifestUrl}`, origin).toString();
 }
 
-export async function fetchManifestResponse({
+function getResponseError(response) {
+  return response.ok ? new Error("Invalid manifest response") : new Error(`HTTP ${response.status}`);
+}
+
+async function readManifest(response) {
+  if (!response.ok) {
+    return null;
+  }
+
+  const contentType = response.headers?.get?.("content-type");
+  if (contentType && !contentType.includes("json")) {
+    return null;
+  }
+
+  try {
+    return await response.json();
+  } catch {
+    return null;
+  }
+}
+
+export async function loadManifestData({
   manifestUrl,
   currentHref,
   currentPath,
@@ -35,10 +56,15 @@ export async function fetchManifestResponse({
   fetchImpl = fetch,
 }) {
   const primaryUrl = new URL(manifestUrl, currentHref).toString();
-  let response = await fetchImpl(primaryUrl);
+  const primaryResponse = await fetchImpl(primaryUrl);
+  const primaryManifest = await readManifest(primaryResponse);
 
-  if (response.status !== 404 || !manifestUrl.startsWith("/")) {
-    return response;
+  if (primaryManifest) {
+    return primaryManifest;
+  }
+
+  if (!manifestUrl.startsWith("/")) {
+    throw getResponseError(primaryResponse);
   }
 
   const fallbackUrl = buildPrefixedManifestUrl({
@@ -49,8 +75,15 @@ export async function fetchManifestResponse({
   });
 
   if (!fallbackUrl || fallbackUrl === primaryUrl) {
-    return response;
+    throw getResponseError(primaryResponse);
   }
 
-  return fetchImpl(fallbackUrl);
+  const fallbackResponse = await fetchImpl(fallbackUrl);
+  const fallbackManifest = await readManifest(fallbackResponse);
+
+  if (fallbackManifest) {
+    return fallbackManifest;
+  }
+
+  throw getResponseError(fallbackResponse);
 }

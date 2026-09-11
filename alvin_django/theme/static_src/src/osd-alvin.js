@@ -1,5 +1,5 @@
 import OpenSeadragon from "openseadragon";
-import { fetchManifestResponse } from "./manifest-url.mjs";
+import { loadManifestData } from "./manifest-url.mjs";
 
 /* ==============================
 Entry
@@ -59,14 +59,12 @@ Data Loading and IIIF
 ============================== */
 
 async function loadManifest(url, viewerPath) {
-  const response = await fetchManifestResponse({
+  return loadManifestData({
     manifestUrl: url,
     currentHref: window.location.href,
     currentPath: window.location.pathname,
     viewerPath,
   });
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  return await response.json();
 }
 
 function patchIIIFTileSourceBaseUrl() {

@@ -80,21 +80,14 @@ async function fetchManifest(url) {
 
 function buildPrefixedManifestUrl(url) {
   const currentPathSegments = window.location.pathname.split("/").filter(Boolean);
-  const targetPathSegments = url.split("/").filter(Boolean);
-  const firstTargetSegment = targetPathSegments[0];
-
-  if (!firstTargetSegment) {
-    return null;
-  }
-
-  const prefixEndIndex = currentPathSegments.indexOf(firstTargetSegment);
-  if (prefixEndIndex <= 0) {
+  const deploymentBaseSegments = currentPathSegments.slice(0, -3);
+  if (!deploymentBaseSegments.length) {
     return null;
   }
 
   const prefixedPath = [
-    ...currentPathSegments.slice(0, prefixEndIndex),
-    ...targetPathSegments,
+    ...deploymentBaseSegments,
+    ...url.split("/").filter(Boolean),
   ].join("/");
 
   return new URL(`/${prefixedPath}`, window.location.origin).toString();

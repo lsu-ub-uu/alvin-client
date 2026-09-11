@@ -65,7 +65,7 @@
             </button>
         </div>
 
-        <div id="osd-viewer" class="w-full h-full absolute inset-0" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
+        <div id="osd-viewer" class="w-full h-full absolute inset-0" data-manifest-url="../iiif/manifest/{{ metadata.id }}"></div>
 
         <aside id="thumb-sidebar" 
              data-xbind.class="sidebarOpen ? 'translate-x-0' : 'translate-x-full'" 

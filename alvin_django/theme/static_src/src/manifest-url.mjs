@@ -3,6 +3,10 @@ export function normalizePathname(pathname) {
   return normalizedPath || "/";
 }
 
+export function isAbsoluteUrl(url) {
+  return /^(?:[a-z][a-z\d+\-.]*:)?\/\//i.test(url);
+}
+
 export function getDeploymentBasePath(currentPath, viewerPath) {
   const normalizedCurrentPath = normalizePathname(currentPath);
   const normalizedViewerPath = normalizePathname(viewerPath);
@@ -14,8 +18,12 @@ export function getDeploymentBasePath(currentPath, viewerPath) {
   return normalizedCurrentPath.slice(0, -normalizedViewerPath.length);
 }
 
+export function normalizeManifestPath(manifestUrl, viewerPath) {
+  return new URL(manifestUrl, `https://example.invalid${normalizePathname(viewerPath)}`).pathname;
+}
+
 export function buildPrefixedManifestUrl({ manifestUrl, currentPath, viewerPath, origin }) {
-  if (!manifestUrl.startsWith("/")) {
+  if (isAbsoluteUrl(manifestUrl)) {
     return null;
   }
 
@@ -24,7 +32,7 @@ export function buildPrefixedManifestUrl({ manifestUrl, currentPath, viewerPath,
     return null;
   }
 
-  return new URL(`${deploymentBasePath}${manifestUrl}`, origin).toString();
+  return new URL(`${deploymentBasePath}${normalizeManifestPath(manifestUrl, viewerPath)}`, origin).toString();
 }
 
 function getResponseError(response) {
@@ -61,10 +69,6 @@ export async function loadManifestData({
 
   if (primaryManifest) {
     return primaryManifest;
-  }
-
-  if (!manifestUrl.startsWith("/")) {
-    throw getResponseError(primaryResponse);
   }
 
   const fallbackUrl = buildPrefixedManifestUrl({

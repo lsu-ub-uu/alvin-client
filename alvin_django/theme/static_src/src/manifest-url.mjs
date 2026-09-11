@@ -19,7 +19,7 @@ export function getDeploymentBasePath(currentPath, viewerPath) {
 }
 
 export function normalizeManifestPath(manifestUrl, viewerPath) {
-  return new URL(manifestUrl, `https://example.invalid${normalizePathname(viewerPath)}`).pathname;
+  return new URL(manifestUrl, `https://example.invalid${normalizePathname(viewerPath)}/`).pathname;
 }
 
 export function buildPrefixedManifestUrl({ manifestUrl, currentPath, viewerPath, origin }) {

@@ -17,7 +17,7 @@ test("buildPrefixedManifestUrl prepends the deployment base path", () => {
 test("normalizeManifestPath resolves relative manifest URLs against the viewer route", () => {
   const manifestPath = normalizeManifestPath("iiif/manifest/1", "/en/alvin-record/1");
 
-  assert.equal(manifestPath, "/en/alvin-record/iiif/manifest/1");
+  assert.equal(manifestPath, "/en/alvin-record/1/iiif/manifest/1");
 });
 
 test("loadManifestData retries with a prefixed manifest URL after a 404", async () => {

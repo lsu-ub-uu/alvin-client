@@ -57,9 +57,47 @@ Data Loading and IIIF
 ============================== */
 
 async function loadManifest(url) {
-  const response = await fetch(url);
+  const response = await fetchManifest(url);
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   return await response.json();
+}
+
+async function fetchManifest(url) {
+  const primaryUrl = new URL(url, window.location.href).toString();
+  let response = await fetch(primaryUrl);
+
+  if (response.status !== 404 || !url.startsWith("/")) {
+    return response;
+  }
+
+  const fallbackUrl = buildPrefixedManifestUrl(url);
+  if (!fallbackUrl || fallbackUrl === primaryUrl) {
+    return response;
+  }
+
+  return fetch(fallbackUrl);
+}
+
+function buildPrefixedManifestUrl(url) {
+  const currentPathSegments = window.location.pathname.split("/").filter(Boolean);
+  const targetPathSegments = url.split("/").filter(Boolean);
+  const firstTargetSegment = targetPathSegments[0];
+
+  if (!firstTargetSegment) {
+    return null;
+  }
+
+  const prefixEndIndex = currentPathSegments.indexOf(firstTargetSegment);
+  if (prefixEndIndex <= 0) {
+    return null;
+  }
+
+  const prefixedPath = [
+    ...currentPathSegments.slice(0, prefixEndIndex),
+    ...targetPathSegments,
+  ].join("/");
+
+  return new URL(`/${prefixedPath}`, window.location.origin).toString();
 }
 
 function patchIIIFTileSourceBaseUrl() {

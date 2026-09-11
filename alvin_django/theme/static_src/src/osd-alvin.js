@@ -1,4 +1,5 @@
 import OpenSeadragon from "openseadragon";
+import { fetchManifestResponse } from "./manifest-url.mjs";
 
 /* ==============================
 Entry
@@ -13,13 +14,14 @@ async function init() {
   if (!container) return;
 
   const manifestUrl = container.dataset.manifestUrl;
+  const viewerPath = container.dataset.viewerPath;
   if (!manifestUrl) {
     console.error("Missing data-manifest-url attribute.");
     return;
   }
 
   try {
-    const manifest = await loadManifest(manifestUrl);
+    const manifest = await loadManifest(manifestUrl, viewerPath);
     const tileSources = extractTileSources(manifest);
 
     if (!tileSources.length) return;
@@ -56,41 +58,15 @@ async function init() {
 Data Loading and IIIF
 ============================== */
 
-async function loadManifest(url) {
-  const response = await fetchManifest(url);
+async function loadManifest(url, viewerPath) {
+  const response = await fetchManifestResponse({
+    manifestUrl: url,
+    currentHref: window.location.href,
+    currentPath: window.location.pathname,
+    viewerPath,
+  });
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   return await response.json();
-}
-
-async function fetchManifest(url) {
-  const primaryUrl = new URL(url, window.location.href).toString();
-  let response = await fetch(primaryUrl);
-
-  if (response.status !== 404 || !url.startsWith("/")) {
-    return response;
-  }
-
-  const fallbackUrl = buildPrefixedManifestUrl(url);
-  if (!fallbackUrl || fallbackUrl === primaryUrl) {
-    return response;
-  }
-
-  return fetch(fallbackUrl);
-}
-
-function buildPrefixedManifestUrl(url) {
-  const currentPathSegments = window.location.pathname.split("/").filter(Boolean);
-  const deploymentBaseSegments = currentPathSegments.slice(0, -3);
-  if (!deploymentBaseSegments.length) {
-    return null;
-  }
-
-  const prefixedPath = [
-    ...deploymentBaseSegments,
-    ...url.split("/").filter(Boolean),
-  ].join("/");
-
-  return new URL(`/${prefixedPath}`, window.location.origin).toString();
 }
 
 function patchIIIFTileSourceBaseUrl() {

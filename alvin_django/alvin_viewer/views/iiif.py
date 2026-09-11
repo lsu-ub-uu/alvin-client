@@ -1,3 +1,4 @@
+import traceback
 from django.conf import settings
 from django.http import JsonResponse, Http404
 from urllib.parse import urljoin
@@ -13,13 +14,20 @@ def _to_int(value, default):
 
 def iiif_manifest(request, record_id: str):
     try:
+        debug_log = []
+        
         api = AlvinAPI()
         try:
             record_xml = api.get_record_xml("alvin-record", record_id)
         except Exception as e:
-            raise Http404(str(e))
+            debug_log.append(f"Krasch vid hämtning av post: {str(e)}")
+            return JsonResponse({
+                "error": "Gick inte att hämta posten från Alvin.",
+                "traceback": traceback.format_exc(),
+                "debug_log": debug_log
+            }, status=500)
         if record_xml is None:
-            raise Http404(_("Record not found."))
+            return JsonResponse({"error": "Record not found.", "debug_log": debug_log}, status=404)
 
         manifest_base = request.build_absolute_uri(request.path)
         if not manifest_base.endswith("/"):
@@ -32,36 +40,42 @@ def iiif_manifest(request, record_id: str):
         canvases = []
         idx = 0
 
-        for f in record_xml.xpath("data/record/fileSection/fileGroup/file"):
+        files = record_xml.xpath("data/record/fileSection/fileGroup/file")
+        debug_log.append(f"Hittade {len(files)} filer i posten att iterera över.")
+
+        for f in files:
+            file_url = f.findtext("fileLocation/actionLinks/read/url")
+            if not file_url:
+                debug_log.append("Hoppar över en fil: Saknar read/url.")
+                continue
             try:
-                file_xml = api.fetch_file_xml(
-                    f.findtext("fileLocation/actionLinks/read/url")
-                )
+                    file_xml = api.fetch_file_xml(file_url)
             except Exception as e:
-                raise Http404(_(f"Could not fetch xml: {e}"))
-                # continue
+                debug_log.append(f"Kunde inte hämta XML för {file_url}. Fel: {str(e)}")
+                continue
+            
             if file_xml is None:
-                raise Http404(_(f"The file xml is empty: {e}"))
-                # continue
+                debug_log.append(f"Hoppar över {file_url}: XML-svaret var tomt.")
+                continue
             
             binary = file_xml.find("data/binary")
             raw_binary_type = binary.get("type") if binary is not None else None
             binary_type = raw_binary_type.strip().capitalize() if raw_binary_type else None
 
-            mime_type = file_xml.findtext("data/binary/master/master/mimeType")
-
-            iiif_server = f"{settings.EXTERNAL_ACCESS_URL}/iiif/"
-            ident = file_xml.findtext("otherProtocols/iiif/identifier")
-            
             # Only build IIIF canvas entries for image binaries
             if binary_type != "Image":
-                raise Http404(_(f"Not an image: {binary_type}"))
-                #continue
+                debug_log.append(f"Hoppar över {file_url}: typ är '{binary_type}', inte 'Image'.")
+                continue
+
+            mime_type = file_xml.findtext("data/binary/master/master/mimeType")
+
+            iiif_server = getattr(settings, "EXTERNAL_ACCESS_URL", None)
+            ident = file_xml.findtext("otherProtocols/iiif/identifier")
 
             if not iiif_server or not ident:
-                raise Http404(_(f"No server or no id: {iiif_server}, {ident}"))
-                #continue
-            
+                debug_log.append(f"Hoppar över {file_url}: Saknar iiif_server ({iiif_server}) eller identifier ({ident}).")
+                continue
+                    
             iiif_server = iiif_server.strip()
             ident = ident.strip()
 
@@ -126,23 +140,31 @@ def iiif_manifest(request, record_id: str):
                 ] if original_url else [],
             }
 
-            if binary_type == "Image":
-                canvas.update(measures)
-
+            canvas.update(measures)
             canvases.append(canvas)
+            debug_log.append(f"Canvas skapad framgångsrikt för {file_url}.")
 
-        if not canvases:
-            raise Http404(_("No IIIF-capable files found on this record."))
+            if not canvases:
+                return JsonResponse({
+                    "error": "Inga IIIF-kompatibla filer hittades på denna post.",
+                    "debug_log": debug_log
+                }, status=404)
 
         manifest = {
             "@context": "http://iiif.io/api/presentation/3/context.json",
             "id": request.build_absolute_uri(),
             "type": "Manifest",
-            "label": {"none": [main_label]} if main_label else {"none": [str(record_id)]},
+            "label": {"none": [main_label]},
             "items": canvases,
+            "_debug_log": debug_log,
         }
     except Exception as e:
-        raise Http404(_(f"Something went wrong: {e}"))
+        return JsonResponse({
+            "error": "Ett oväntat kodfel inträffade.",
+            "exception_message": str(e),
+            "traceback": traceback.format_exc(),
+            "debug_log": debug_log
+        }, status=500)
 
     return JsonResponse(
         manifest,

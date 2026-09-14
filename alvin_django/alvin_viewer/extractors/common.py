@@ -29,9 +29,18 @@ ITEMS_DICT = get_item_dict()
 
 # Helper to standardize XPath construction for record types
 def _xp(rt: str, xpath: str, absolute: bool = False) -> str:
+    """
+    Makes reuse of extractor functions possible between resource types.
+    The absolute argument makes the xpath absolute if set to True.
+
+    """
     return xpath if absolute else f"data/{rt}/{xpath}"
 
 def _norm_rt(record_type: str) -> str:
+    """
+    Normalizes record type by cutting alvin- from string
+
+    """
     return record_type.replace("alvin-", "") if record_type.startswith("alvin-") else record_type
 
 def collect(root: etree._Element, xpath: str, map_fn: Callable[[etree._Element], Optional[dict]]) -> List[dict]:

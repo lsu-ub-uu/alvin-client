@@ -1,5 +1,8 @@
 from typing import List
 from lxml import etree
+from urllib.parse import urlparse
+
+from django.conf import settings
 
 from ..xmlutils.nodes import text, attr, element, elements, first
 from .common import (_get_label, _get_value, _norm_rt, _xp, _get_attribute_item)
@@ -8,6 +11,27 @@ from .records import AlvinRecord
 from .metadata import Appraisal, Axis, Classification, Coin, Dimension, FilesBlock, FileGroup, File, Measure, SubjectMiscBlock, SubjectMiscEntry
 
 rt = _norm_rt("alvin-record")
+
+def _to_external_url(url: str) -> str:
+    """
+    Forces external access url for fetched data
+
+    """
+
+    if not url:
+        return url
+
+    base_url = getattr(settings, "EXTERNAL_ACCESS_URL", "").rstrip("/")
+    parsed = urlparse(url)
+    
+    path_and_query = parsed.path
+    if parsed.query:
+        path_and_query += f"?{parsed.query}"
+
+    if base_url:
+        return f"{base_url}{path_and_query}"
+
+    return path_and_query
 
 def extract(root: etree._Element) -> AlvinRecord:
     
@@ -173,7 +197,7 @@ def files(root: etree._Element, xp: str) -> FilesBlock | None:
                     master_url = text(file, "./fileLocation/linkedRecord/binary/master/master/actionLinks/read/url"),
                     master_type = text(file, "./fileLocation/linkedRecord/binary/master/master/mimeType"),
                     jp2_url = text(file, "./fileLocation/linkedRecord/binary/jp2/jp2/actionLinks/read/url"),
-                    thumbnail_url = text(file, "./fileLocation/linkedRecord/binary/thumbnail/thumbnail/actionLinks/read/url"),
+                    thumbnail_url = _to_external_url(text(file, "./fileLocation/linkedRecord/binary/thumbnail/thumbnail/actionLinks/read/url")),
                 )
                 for file in elements(group, "file")],
             )

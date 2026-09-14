@@ -73,6 +73,11 @@ class AlvinAPI:
 
     def fetch_file_xml(self, url: str) -> etree._Element:
         base = f"{settings.EXTERNAL_ACCESS_URL}/"
-        if not url.startswith(base):
+        allowed_bases = (
+            f"{settings.EXTERNAL_ACCESS_URL}/",
+            "http://apache/" 
+        )
+        if not url.startswith(allowed_bases):
             raise ValueError("Blocked external URL (potential SSRF)")
         return self.fetch_xml(url)
+    

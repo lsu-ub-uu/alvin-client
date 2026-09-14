@@ -111,14 +111,6 @@ def iiif_manifest(request, record_id: str):
                     ],
                 }
             ],
-            "rendering": [
-                {
-                    "id": original_url,
-                    "type": binary_type,
-                    "format": mime_type,
-                    "label": {"none": ["Download original"]},
-                }
-            ] if original_url else [],
         }
 
         if binary_type == "Image":

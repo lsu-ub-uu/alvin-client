@@ -23,10 +23,9 @@
     <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"0:6" }}/no/{{ request.get_full_path|slice:"10:" }}" hreflang="no">
     <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"0:6" }}/sv/{{ request.get_full_path|slice:"10:" }}" hreflang="sv">
     <link rel="alternate" href="{{ request.build_absolute_uri|cut:"en/" |cut:"no/" |cut:"sv/" }}" hreflang="x-default">   
-    <!-- AlpineJS -->
-    <script src="//unpkg.com/alpinejs" defer></script>
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="{% static 'js/alpine-init.js' %}" defer></script>
     <script src="{% static 'js/alpine-validation.js' %}"></script>
+    <script src="{% static 'js/htmx-init.js' %}"></script>
     <style>
         [x-cloak] {
             display: none !important; /* Important to override any default */

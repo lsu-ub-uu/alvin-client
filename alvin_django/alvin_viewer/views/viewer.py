@@ -93,7 +93,7 @@ def alvin_viewer(request, record_type: str, record_id: str):
     
     #Thumbnail pagination for the download menu
     all_images = metadata.files.images if record_type == 'alvin-record' and getattr(metadata.files, 'has_images', "") else []
-    paginator = Paginator(all_images, 20)
+    paginator = Paginator(all_images, 1)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
     
@@ -127,7 +127,7 @@ def alvin_viewer(request, record_type: str, record_id: str):
     def _render_category_block(related_records, category_request, htmx_get_param, htmx_target_name):
         for block in related_records:
             if block.label == category_request:
-                paginator = Paginator(block.records, 20)
+                paginator = Paginator(block.records, 1)
                 category_page_obj = paginator.get_page(category_page_number)
 
                 return render(request, 'alvin_viewer/_partials/_paged_related_category.html', {

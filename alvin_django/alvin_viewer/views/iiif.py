@@ -12,7 +12,7 @@ def _to_int(value, default):
         return int(default)
 
 def iiif_manifest(request, record_id: str):
-    """api = AlvinAPI()
+    api = AlvinAPI()
     try:
         record_xml = api.get_record_xml("alvin-record", record_id)
     except Exception as e:
@@ -136,9 +136,8 @@ def iiif_manifest(request, record_id: str):
         "label": {"none": [main_label]} if main_label else {"none": [str(record_id)]},
         "items": canvases,
     }
-"""
-    kex = {"kex": "kex"}
+
     return JsonResponse(
-        kex,
+        manifest,
         json_dumps_params={"ensure_ascii": False},
     )

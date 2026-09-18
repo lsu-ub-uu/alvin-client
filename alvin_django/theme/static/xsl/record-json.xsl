@@ -17,16 +17,22 @@
         <xsl:call-template name="record_type"/>
         <xsl:call-template name="labelTitle"/>
         <xsl:call-template name="classified_as"/>
-        <xsl:call-template name="language"/>
         <xsl:call-template name="current_owner"/>
         <xsl:call-template name="current_location"/>
         <xsl:call-template name="member_of"/>
-        <xsl:call-template name="Production"/>
+        <xsl:call-template name="ProductionCreation"/>
         <xsl:call-template name="publication"/>
         <xsl:call-template name="made_of"/>
         <xsl:call-template name="referred_to_by"/>
         <xsl:call-template name="subject_of"/>
-        <xsl:call-template name="carries"/>
+        <xsl:choose>
+            <xsl:when test="collection = 'yes'">
+                <xsl:call-template name="members_exemplified_by"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="carries"/>  
+            </xsl:otherwise>
+        </xsl:choose>
         <xsl:call-template name="shows"/>
         <xsl:call-template name="identified_by"/>
         <xsl:text>}</xsl:text>
@@ -38,9 +44,8 @@
         <xsl:call-template name="linguisticObject_type"/>
         <xsl:call-template name="labelTitle"/>
         <xsl:call-template name="classified_as"/>
-        <xsl:call-template name="Production"/>
+        <xsl:call-template name="ProductionCreation"/>
         <xsl:call-template name="referred_to_by"/>
-        <xsl:call-template name="defined_by"/>
         <xsl:call-template name="identified_by"/>
         <xsl:text>}</xsl:text>
     </xsl:template>
@@ -343,7 +348,8 @@
     </xsl:template>
     <xsl:template name="title">
         <xsl:for-each select="title">
-            <xsl:text>{ "type": "Name", "classified_as": [ { "id": "http://vocab.getty.edu/aat/300404670", "type": "Type", "_label": "Primary Name" } ], "content": "</xsl:text>
+            <xsl:text>{ "type": "Name", "classified_as": [ { "id": "http://vocab.getty.edu/aat/300404670", "type": "Type", "_label": "Primary Name" },</xsl:text>
+            <xsl:text>{ "id": "http://vocab.getty.edu/aat/300417193", "type": "Type", "_label": "Title (general, names)" } ], "content": "</xsl:text>
             <xsl:value-of select="normalize-space(translate(mainTitle, $dq, ''))"/>
             <xsl:text>"  },</xsl:text>
             <xsl:for-each select="subtitle">
@@ -823,6 +829,835 @@
                 <xsl:text>"part": [ </xsl:text>
                 <xsl:for-each select="agent">
                     <xsl:text>{ "type": "Production", "classified_as": [ </xsl:text>
+                    <xsl:for-each select="role">
+                        <xsl:text>{ "id": "</xsl:text>
+                        <xsl:value-of select="$host"/>
+                        <xsl:text>vocabulary/</xsl:text>
+                        <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                        <xsl:text>MarcRelatorItem</xsl:text>
+                        <xsl:text>", "type": "Type", "_label": "</xsl:text>
+                        <xsl:value-of select="@_value_en"/>
+                        <xsl:text>","notation": "</xsl:text>
+                        <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                        <xsl:text>"</xsl:text>
+                        <xsl:text> }</xsl:text>
+                        <xsl:if test="position() != last()">
+                            <xsl:text>,</xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+                    <xsl:text>], </xsl:text>
+                    <xsl:text> "carried_out_by": [</xsl:text>
+                    <xsl:text> { </xsl:text>
+                    <xsl:for-each select="person | organisation">
+                        <xsl:call-template name="linkedid"/>
+                        <xsl:choose>
+                            <xsl:when test="linkedRecordType = 'alvin-organisation'">
+                                <xsl:call-template name="group_type"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:call-template name="person_type"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:for-each select="linkedRecord/person | linkedRecord/organisation">
+                            <xsl:for-each select="authority[1]">
+                                <xsl:text>"_label": "</xsl:text>
+                                <xsl:call-template name="labelPerson"/>
+                                <xsl:call-template name="labelOrganisation"/>
+                                <xsl:if test="../../../../certainty = 'uncertain'">
+                                    <xsl:text> (uncertain)</xsl:text>
+                                </xsl:if>
+                                <xsl:text>"</xsl:text>
+                            </xsl:for-each>
+                        </xsl:for-each>
+                    </xsl:for-each>
+                    <xsl:text>} ] }</xsl:text>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:text>]</xsl:text>
+            </xsl:if>
+            <xsl:if test="originPlace">
+                <xsl:text>,</xsl:text>
+            </xsl:if>
+            <xsl:if test="originPlace">
+                <xsl:text>"took_place_at": [ </xsl:text>
+                <xsl:for-each select="originPlace">
+                    <xsl:text>{ </xsl:text>
+                    <xsl:for-each select="place">
+                        <xsl:call-template name="linkedid"/>
+                        <xsl:text>"type": "Place", "_label": "</xsl:text>
+                        <xsl:for-each select="linkedRecord/place">
+                            <xsl:for-each select="authority[1]/geographic">
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:if test="../../../certainty = 'uncertain'">
+                                <xsl:text> (uncertain)</xsl:text>
+                            </xsl:if>
+                            <xsl:text>"</xsl:text>
+                        </xsl:for-each>
+                        <xsl:if test="../country or ../historicalCountry">
+                            <xsl:text>, "part_of": [ </xsl:text>
+                            <xsl:for-each select="../country">
+                                <xsl:text>{ "id": "</xsl:text>
+                                <xsl:value-of select="$host"/>
+                                <xsl:text>vocabulary/</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                                <xsl:text>MarcCountryItem</xsl:text>
+                                <xsl:text>",</xsl:text>
+                                <xsl:text>"type": "Place", "_label": "</xsl:text>
+                                <xsl:value-of select="@_value_en"/>
+                                <xsl:if test="../certainty = 'uncertain'">
+                                    <xsl:text> (uncertain)</xsl:text>
+                                </xsl:if>
+                                <xsl:text>","notation": "</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                                <xsl:text>",</xsl:text>
+                                <xsl:text>"classified_as": [ { "id": "http://vocab.getty.edu/aat/300387506", "type": "Type", "_label": "Country" } ] } </xsl:text>
+                                <xsl:if test="../historicalCountry">
+                                    <xsl:text>,</xsl:text>
+                                </xsl:if>
+                            </xsl:for-each>
+                            <xsl:for-each select="../historicalCountry">
+                                <xsl:text>{ "id": "</xsl:text>
+                                <xsl:value-of select="$host"/>
+                                <xsl:text>vocabulary/</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                                <xsl:text>HistoricalCountryItem</xsl:text>
+                                <xsl:text>",</xsl:text>
+                                <xsl:text>"type": "Place", "_label": "</xsl:text>
+                                <xsl:value-of select="@_value_en"/>
+                                <xsl:if test="../certainty = 'uncertain'">
+                                    <xsl:text> (uncertain)</xsl:text>
+                                </xsl:if>
+                                <xsl:text>",</xsl:text>
+                                <xsl:text>"classified_as": [ { "id": "http://vocab.getty.edu/aat/300387356", "type": "Type", "_label": "Former primary political entity" } ] } </xsl:text>
+                            </xsl:for-each>
+                            <xsl:text>]</xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+                    <xsl:if test="not(place)">
+                        <xsl:for-each select="country">
+                            <xsl:text>"id": "</xsl:text>
+                            <xsl:value-of select="$host"/>
+                            <xsl:text>vocabulary/</xsl:text>
+                            <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            <xsl:text>MarcCountryItem</xsl:text>
+                            <xsl:text>",</xsl:text>
+                            <xsl:text>"type": "Place", "_label": "</xsl:text>
+                            <xsl:value-of select="@_value_en"/>
+                            <xsl:if test="../certainty = 'uncertain'">
+                                <xsl:text> (uncertain)</xsl:text>
+                            </xsl:if>
+                            <xsl:text>","notation": "</xsl:text>
+                            <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            <xsl:text>",</xsl:text>
+                            <xsl:text>"classified_as": [ { "id": "http://vocab.getty.edu/aat/300387506", "type": "Type", "_label": "Country" } ]</xsl:text>
+                            <xsl:if test="../historicalCountry">
+                                <xsl:text>}, {</xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                        <xsl:for-each select="historicalCountry">
+                            <xsl:text>"id": "</xsl:text>
+                            <xsl:value-of select="$host"/>
+                            <xsl:text>vocabulary/</xsl:text>
+                            <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            <xsl:text>HistoricalCountryItem</xsl:text>
+                            <xsl:text>",</xsl:text>
+                            <xsl:text>"type": "Place", "_label": "</xsl:text>
+                            <xsl:value-of select="@_value_en"/>
+                            <xsl:if test="../certainty = 'uncertain'">
+                                <xsl:text> (uncertain)</xsl:text>
+                            </xsl:if>
+                            <xsl:text>",</xsl:text>
+                            <xsl:text>"classified_as": [ { "id": "http://vocab.getty.edu/aat/300387356", "type": "Type", "_label": "Former primary political entity" } ]</xsl:text>
+                        </xsl:for-each>
+                    </xsl:if>
+                    <xsl:text> } </xsl:text>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:text>]</xsl:text>
+            </xsl:if>
+            <xsl:text>},</xsl:text>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template name="Creation">
+        <xsl:if test="appliedMaterial or editionStatement or originDate or agent or originPlace">
+            <xsl:text>"created_by": { "type": "Creation",</xsl:text>
+            <xsl:if test="appliedMaterial">
+                <xsl:text>"technique": [ </xsl:text>
+                <xsl:for-each select="appliedMaterial">
+                    <xsl:text>{ "id": "</xsl:text>
+                    <xsl:value-of select="$host"/>
+                    <xsl:text>vocabulary/</xsl:text>
+                    <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                    <xsl:text>Item</xsl:text>
+                    <xsl:text>", "type": "Type", "_label": "</xsl:text>
+                    <xsl:value-of select="@_value_en"/>
+                    <xsl:text>" }</xsl:text>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:text>]</xsl:text>
+                <xsl:if test="editionStatement or originDate or agent or originPlace">
+                    <xsl:text>,</xsl:text>
+                </xsl:if>
+            </xsl:if>
+            <xsl:if test="editionStatement">
+                <xsl:text>"referred_to_by": [ { "type": "LinguisticObject", "classified_as": [ { "id": "http://vocab.getty.edu/aat/300435435", "type": "Type", "_label": "Edition description" }  ], "content": "</xsl:text>
+                <xsl:value-of select="editionStatement"/>
+                <xsl:text>"}]</xsl:text>
+                <xsl:if test="originDate or agent or originPlace">
+                    <xsl:text>,</xsl:text>
+                </xsl:if>
+            </xsl:if>
+            <xsl:if test="originDate">
+                <xsl:for-each select="originDate">
+                    <xsl:for-each select="displayDate">
+                        <xsl:text>"referred_to_by": [ { "type": "LinguisticObject", "classified_as": [ { "id": "http://vocab.getty.edu/aat/300435447", "type": "Type", "_label": "Creation date description" } ], "content": "</xsl:text>
+                        <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                        <xsl:text>" } ]</xsl:text>
+                        <xsl:if test="../startDate or ../endDate">
+                            <xsl:text>,</xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+                    <xsl:if test="startDate or endDate">
+                        <xsl:text>"timespan": { "type": "TimeSpan", "_label": "</xsl:text>
+                        <xsl:for-each select="startDate/date">
+                            <xsl:for-each select="year">
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:for-each select="month">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:for-each select="day">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:if test="era = 'bc'">
+                                <xsl:text> BC</xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                        <xsl:for-each select="endDate/date">
+                            <xsl:text>-</xsl:text>
+                            <xsl:for-each select="year">
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:for-each select="month">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:for-each select="day">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:if test="era = 'bc'">
+                                <xsl:text> BC</xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                        <xsl:text>", "begin_of_the_begin": "</xsl:text>
+                        <xsl:choose>
+                            <xsl:when test="startDate">
+                                <xsl:for-each select="startDate/date">
+                                    <xsl:if test="era = 'bc'">
+                                        <xsl:text>-</xsl:text>
+                                    </xsl:if>
+                                    <xsl:choose>
+                                        <xsl:when test="year">
+                                            <xsl:value-of select="year"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>0001</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="month">
+                                            <xsl:value-of select="month"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>01</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="day">
+                                            <xsl:value-of select="day"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>01</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:for-each>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:for-each select="endDate/date">
+                                    <xsl:if test="era = 'bc'">
+                                        <xsl:text>-</xsl:text>
+                                    </xsl:if>
+                                    <xsl:choose>
+                                        <xsl:when test="year">
+                                            <xsl:value-of select="year"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>0001</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="month">
+                                            <xsl:value-of select="month"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>01</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="day">
+                                            <xsl:value-of select="day"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>01</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:for-each>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:text>T00:00:00Z</xsl:text>
+                        <xsl:text>", "end_of_the_end": "</xsl:text>
+                        <xsl:choose>
+                            <xsl:when test="endDate">
+                                <xsl:for-each select="endDate/date">
+                                    <xsl:if test="era = 'bc'">
+                                        <xsl:text>-</xsl:text>
+                                    </xsl:if>
+                                    <xsl:choose>
+                                        <xsl:when test="year">
+                                            <xsl:value-of select="year"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>0001</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="month">
+                                            <xsl:value-of select="month"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>12</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="day">
+                                            <xsl:value-of select="day"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:choose>
+                                                <xsl:when test="month = '02'">
+                                                    <xsl:text>28</xsl:text>
+                                                </xsl:when>
+                                                <xsl:when test="month = '04' or month = '06' or month = '09' or month = '11'">
+                                                    <xsl:text>30</xsl:text>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:text>31</xsl:text>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:for-each>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:for-each select="startDate/date">
+                                    <xsl:if test="era = 'bc'">
+                                        <xsl:text>-</xsl:text>
+                                    </xsl:if>
+                                    <xsl:choose>
+                                        <xsl:when test="year">
+                                            <xsl:value-of select="year"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>0001</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="month">
+                                            <xsl:value-of select="month"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>12</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="day">
+                                            <xsl:value-of select="day"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:choose>
+                                                <xsl:when test="month = '02'">
+                                                    <xsl:text>28</xsl:text>
+                                                </xsl:when>
+                                                <xsl:when test="month = '04' or month = '06' or month = '09' or month = '11'">
+                                                    <xsl:text>30</xsl:text>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:text>31</xsl:text>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:for-each>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:text>T23:59:59Z</xsl:text>
+                        <xsl:text>" }</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:if test="agent or originPlace">
+                    <xsl:text>,</xsl:text>
+                </xsl:if>
+            </xsl:if>
+            <xsl:if test="agent">
+                <xsl:text>"part": [ </xsl:text>
+                <xsl:for-each select="agent">
+                    <xsl:text>{ "type": "Creation", "classified_as": [ </xsl:text>
+                    <xsl:for-each select="role">
+                        <xsl:text>{ "id": "</xsl:text>
+                        <xsl:value-of select="$host"/>
+                        <xsl:text>vocabulary/</xsl:text>
+                        <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                        <xsl:text>MarcRelatorItem</xsl:text>
+                        <xsl:text>", "type": "Type", "_label": "</xsl:text>
+                        <xsl:value-of select="@_value_en"/>
+                        <xsl:text>","notation": "</xsl:text>
+                        <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                        <xsl:text>"</xsl:text>
+                        <xsl:text> }</xsl:text>
+                        <xsl:if test="position() != last()">
+                            <xsl:text>,</xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+                    <xsl:text>], </xsl:text>
+                    <xsl:text> "carried_out_by": [</xsl:text>
+                    <xsl:text> { </xsl:text>
+                    <xsl:for-each select="person | organisation">
+                        <xsl:call-template name="linkedid"/>
+                        <xsl:choose>
+                            <xsl:when test="linkedRecordType = 'alvin-organisation'">
+                                <xsl:call-template name="group_type"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:call-template name="person_type"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:for-each select="linkedRecord/person | linkedRecord/organisation">
+                            <xsl:for-each select="authority[1]">
+                                <xsl:text>"_label": "</xsl:text>
+                                <xsl:call-template name="labelPerson"/>
+                                <xsl:call-template name="labelOrganisation"/>
+                                <xsl:if test="../../../../certainty = 'uncertain'">
+                                    <xsl:text> (uncertain)</xsl:text>
+                                </xsl:if>
+                                <xsl:text>"</xsl:text>
+                            </xsl:for-each>
+                        </xsl:for-each>
+                    </xsl:for-each>
+                    <xsl:text>} ] }</xsl:text>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:text>]</xsl:text>
+            </xsl:if>
+            <xsl:if test="originPlace">
+                <xsl:text>,</xsl:text>
+            </xsl:if>
+            <xsl:if test="originPlace">
+                <xsl:text>"took_place_at": [ </xsl:text>
+                <xsl:for-each select="originPlace">
+                    <xsl:text>{ </xsl:text>
+                    <xsl:for-each select="place">
+                        <xsl:call-template name="linkedid"/>
+                        <xsl:text>"type": "Place", "_label": "</xsl:text>
+                        <xsl:for-each select="linkedRecord/place">
+                            <xsl:for-each select="authority[1]/geographic">
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:if test="../../../certainty = 'uncertain'">
+                                <xsl:text> (uncertain)</xsl:text>
+                            </xsl:if>
+                            <xsl:text>"</xsl:text>
+                        </xsl:for-each>
+                        <xsl:if test="../country or ../historicalCountry">
+                            <xsl:text>, "part_of": [ </xsl:text>
+                            <xsl:for-each select="../country">
+                                <xsl:text>{ "id": "</xsl:text>
+                                <xsl:value-of select="$host"/>
+                                <xsl:text>vocabulary/</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                                <xsl:text>MarcCountryItem</xsl:text>
+                                <xsl:text>",</xsl:text>
+                                <xsl:text>"type": "Place", "_label": "</xsl:text>
+                                <xsl:value-of select="@_value_en"/>
+                                <xsl:if test="../certainty = 'uncertain'">
+                                    <xsl:text> (uncertain)</xsl:text>
+                                </xsl:if>
+                                <xsl:text>","notation": "</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                                <xsl:text>",</xsl:text>
+                                <xsl:text>"classified_as": [ { "id": "http://vocab.getty.edu/aat/300387506", "type": "Type", "_label": "Country" } ] } </xsl:text>
+                                <xsl:if test="../historicalCountry">
+                                    <xsl:text>,</xsl:text>
+                                </xsl:if>
+                            </xsl:for-each>
+                            <xsl:for-each select="../historicalCountry">
+                                <xsl:text>{ "id": "</xsl:text>
+                                <xsl:value-of select="$host"/>
+                                <xsl:text>vocabulary/</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                                <xsl:text>HistoricalCountryItem</xsl:text>
+                                <xsl:text>",</xsl:text>
+                                <xsl:text>"type": "Place", "_label": "</xsl:text>
+                                <xsl:value-of select="@_value_en"/>
+                                <xsl:if test="../certainty = 'uncertain'">
+                                    <xsl:text> (uncertain)</xsl:text>
+                                </xsl:if>
+                                <xsl:text>",</xsl:text>
+                                <xsl:text>"classified_as": [ { "id": "http://vocab.getty.edu/aat/300387356", "type": "Type", "_label": "Former primary political entity" } ] } </xsl:text>
+                            </xsl:for-each>
+                            <xsl:text>]</xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+                    <xsl:if test="not(place)">
+                        <xsl:for-each select="country">
+                            <xsl:text>"id": "</xsl:text>
+                            <xsl:value-of select="$host"/>
+                            <xsl:text>vocabulary/</xsl:text>
+                            <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            <xsl:text>MarcCountryItem</xsl:text>
+                            <xsl:text>",</xsl:text>
+                            <xsl:text>"type": "Place", "_label": "</xsl:text>
+                            <xsl:value-of select="@_value_en"/>
+                            <xsl:if test="../certainty = 'uncertain'">
+                                <xsl:text> (uncertain)</xsl:text>
+                            </xsl:if>
+                            <xsl:text>","notation": "</xsl:text>
+                            <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            <xsl:text>",</xsl:text>
+                            <xsl:text>"classified_as": [ { "id": "http://vocab.getty.edu/aat/300387506", "type": "Type", "_label": "Country" } ]</xsl:text>
+                            <xsl:if test="../historicalCountry">
+                                <xsl:text>}, {</xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                        <xsl:for-each select="historicalCountry">
+                            <xsl:text>"id": "</xsl:text>
+                            <xsl:value-of select="$host"/>
+                            <xsl:text>vocabulary/</xsl:text>
+                            <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            <xsl:text>HistoricalCountryItem</xsl:text>
+                            <xsl:text>",</xsl:text>
+                            <xsl:text>"type": "Place", "_label": "</xsl:text>
+                            <xsl:value-of select="@_value_en"/>
+                            <xsl:if test="../certainty = 'uncertain'">
+                                <xsl:text> (uncertain)</xsl:text>
+                            </xsl:if>
+                            <xsl:text>",</xsl:text>
+                            <xsl:text>"classified_as": [ { "id": "http://vocab.getty.edu/aat/300387356", "type": "Type", "_label": "Former primary political entity" } ]</xsl:text>
+                        </xsl:for-each>
+                    </xsl:if>
+                    <xsl:text> } </xsl:text>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:text>]</xsl:text>
+            </xsl:if>
+            <xsl:text>},</xsl:text>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template name="ProductionCreation">
+        <xsl:variable name="collection">
+            <xsl:choose>
+                <xsl:when test="collection = 'yes'">
+                    <xsl:text>yes</xsl:text>
+                </xsl:when>
+                <xsl:when test="recordInfo/type/linkedRecordId = 'alvin-work'">
+                    <xsl:text>yes</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>no</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:if test="appliedMaterial or editionStatement or originDate or agent or originPlace">
+            <xsl:choose>
+                <xsl:when test="$collection = 'yes'">
+                    <xsl:text>"created_by": { "type": "Creation",</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>"produced_by": { "type": "Production",</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:if test="appliedMaterial">
+                <xsl:text>"technique": [ </xsl:text>
+                <xsl:for-each select="appliedMaterial">
+                    <xsl:text>{ "id": "</xsl:text>
+                    <xsl:value-of select="$host"/>
+                    <xsl:text>vocabulary/</xsl:text>
+                    <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                    <xsl:text>Item</xsl:text>
+                    <xsl:text>", "type": "Type", "_label": "</xsl:text>
+                    <xsl:value-of select="@_value_en"/>
+                    <xsl:text>" }</xsl:text>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:text>]</xsl:text>
+                <xsl:if test="editionStatement or originDate or agent or originPlace">
+                    <xsl:text>,</xsl:text>
+                </xsl:if>
+            </xsl:if>
+            <xsl:if test="editionStatement">
+                <xsl:text>"referred_to_by": [ { "type": "LinguisticObject", "classified_as": [ { "id": "http://vocab.getty.edu/aat/300435435", "type": "Type", "_label": "Edition description" }  ], "content": "</xsl:text>
+                <xsl:value-of select="editionStatement"/>
+                <xsl:text>"}]</xsl:text>
+                <xsl:if test="originDate or agent or originPlace">
+                    <xsl:text>,</xsl:text>
+                </xsl:if>
+            </xsl:if>
+            <xsl:if test="originDate">
+                <xsl:for-each select="originDate">
+                    <xsl:for-each select="displayDate">
+                        <xsl:text>"referred_to_by": [ { "type": "LinguisticObject", "classified_as": [ { "id": "http://vocab.getty.edu/aat/300435447", "type": "Type", "_label": "Creation date description" } ], "content": "</xsl:text>
+                        <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                        <xsl:text>" } ]</xsl:text>
+                        <xsl:if test="../startDate or ../endDate">
+                            <xsl:text>,</xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+                    <xsl:if test="startDate or endDate">
+                        <xsl:text>"timespan": { "type": "TimeSpan", "_label": "</xsl:text>
+                        <xsl:for-each select="startDate/date">
+                            <xsl:for-each select="year">
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:for-each select="month">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:for-each select="day">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:if test="era = 'bc'">
+                                <xsl:text> BC</xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                        <xsl:for-each select="endDate/date">
+                            <xsl:text>-</xsl:text>
+                            <xsl:for-each select="year">
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:for-each select="month">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:for-each select="day">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="normalize-space(translate(., $dq, ''))"/>
+                            </xsl:for-each>
+                            <xsl:if test="era = 'bc'">
+                                <xsl:text> BC</xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                        <xsl:text>", "begin_of_the_begin": "</xsl:text>
+                        <xsl:choose>
+                            <xsl:when test="startDate">
+                                <xsl:for-each select="startDate/date">
+                                    <xsl:if test="era = 'bc'">
+                                        <xsl:text>-</xsl:text>
+                                    </xsl:if>
+                                    <xsl:choose>
+                                        <xsl:when test="year">
+                                            <xsl:value-of select="year"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>0001</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="month">
+                                            <xsl:value-of select="month"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>01</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="day">
+                                            <xsl:value-of select="day"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>01</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:for-each>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:for-each select="endDate/date">
+                                    <xsl:if test="era = 'bc'">
+                                        <xsl:text>-</xsl:text>
+                                    </xsl:if>
+                                    <xsl:choose>
+                                        <xsl:when test="year">
+                                            <xsl:value-of select="year"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>0001</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="month">
+                                            <xsl:value-of select="month"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>01</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="day">
+                                            <xsl:value-of select="day"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>01</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:for-each>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:text>T00:00:00Z</xsl:text>
+                        <xsl:text>", "end_of_the_end": "</xsl:text>
+                        <xsl:choose>
+                            <xsl:when test="endDate">
+                                <xsl:for-each select="endDate/date">
+                                    <xsl:if test="era = 'bc'">
+                                        <xsl:text>-</xsl:text>
+                                    </xsl:if>
+                                    <xsl:choose>
+                                        <xsl:when test="year">
+                                            <xsl:value-of select="year"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>0001</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="month">
+                                            <xsl:value-of select="month"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>12</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="day">
+                                            <xsl:value-of select="day"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:choose>
+                                                <xsl:when test="month = '02'">
+                                                    <xsl:text>28</xsl:text>
+                                                </xsl:when>
+                                                <xsl:when test="month = '04' or month = '06' or month = '09' or month = '11'">
+                                                    <xsl:text>30</xsl:text>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:text>31</xsl:text>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:for-each>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:for-each select="startDate/date">
+                                    <xsl:if test="era = 'bc'">
+                                        <xsl:text>-</xsl:text>
+                                    </xsl:if>
+                                    <xsl:choose>
+                                        <xsl:when test="year">
+                                            <xsl:value-of select="year"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>0001</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="month">
+                                            <xsl:value-of select="month"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>12</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>-</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="day">
+                                            <xsl:value-of select="day"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:choose>
+                                                <xsl:when test="month = '02'">
+                                                    <xsl:text>28</xsl:text>
+                                                </xsl:when>
+                                                <xsl:when test="month = '04' or month = '06' or month = '09' or month = '11'">
+                                                    <xsl:text>30</xsl:text>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:text>31</xsl:text>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:for-each>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:text>T23:59:59Z</xsl:text>
+                        <xsl:text>" }</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:if test="agent or originPlace">
+                    <xsl:text>,</xsl:text>
+                </xsl:if>
+            </xsl:if>
+            <xsl:if test="agent">
+                <xsl:text>"part": [ </xsl:text>
+                <xsl:for-each select="agent">
+                    <xsl:choose>
+                        <xsl:when test="$collection = 'yes'">
+                            <xsl:text>{ "type": "Creation", "classified_as": [ </xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text>{ "type": "Production", "classified_as": [ </xsl:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <xsl:for-each select="role">
                         <xsl:text>{ "id": "</xsl:text>
                         <xsl:value-of select="$host"/>
@@ -1550,7 +2385,7 @@
         </xsl:if>
     </xsl:template>
     <xsl:template name="carries">
-        <xsl:if test="work">
+        <xsl:if test="work or language">
             <xsl:text>"carries": [</xsl:text>
             <xsl:for-each select="work">
                 <xsl:variable name="url">
@@ -1564,13 +2399,26 @@
                 <xsl:text>", "type": "LinguisticObject", "_label": "</xsl:text>
                 <xsl:value-of select="normalize-space(translate(linkedRecord/work/title/mainTitle, $dq, ''))"/>
                 <xsl:text>" }</xsl:text>
-                <xsl:if test="position() != last()">
+                <xsl:if test="position() != last() and not(../language)">
+                    <xsl:text>,</xsl:text>
+                </xsl:if>
+                <xsl:if test="../language">
                     <xsl:text>,</xsl:text>
                 </xsl:if>
             </xsl:for-each>
+            <xsl:if test="string-length(language) &gt; 0">
+                <xsl:text>{ "type": "LinguisticObject", "_label": "The text carried by the object", "language": [ </xsl:text>
+                <xsl:call-template name="languageLink"/>
+                <xsl:text>] }</xsl:text>
+                <xsl:if test="position() != last()">
+                    <xsl:text>,</xsl:text>
+                </xsl:if>
+            </xsl:if>
             <xsl:text>], </xsl:text>
         </xsl:if>
     </xsl:template>
+
+
     <xsl:template name="born">
         <xsl:for-each select="personInfo">
             <xsl:if test="birthDate or birthPlace">
@@ -2167,10 +3015,17 @@
                 <xsl:for-each select="digitalOrigin">
                     <xsl:text>"classified_as": [ { "id": "http://vocab.getty.edu/page/aat/300404764", "type": "Type", "_label": "Source: </xsl:text>
                     <xsl:value-of select="@_value_en"/>
-                    <xsl:text>" } ] </xsl:text> 
+                    <xsl:text>" } ] </xsl:text>
                 </xsl:for-each>
             </xsl:for-each>
             <xsl:text> } ],</xsl:text>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template name="members_exemplified_by">
+        <xsl:if test="string-length(language) &gt; 0">
+            <xsl:text>"members_exemplified_by": [ { "type": "LinguisticObject", "_label": "The text carried by the object", "language": [ </xsl:text>
+            <xsl:call-template name="languageLink"/>
+            <xsl:text>] } ],</xsl:text>
         </xsl:if>
     </xsl:template>
 </xsl:stylesheet>

@@ -1,0 +1,107 @@
+{% extends "userguidemaster.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Alvin - Linked Art{% endblock %}
+{% block content %}
+<div class="bg-white dark:bg-gray-800 dark:text-white w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+  <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="md:flex flex-col md:flex-row">
+      <div class="flex flex-col w-full flex-shrink-0">
+        <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+          <div class="text-lg font-semibold tracking-widest text-gray-900 dark:text-gray-100 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+                <!-- Mobile menu button-->
+                <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+                    <span class="absolute -inset-0.5"></span>
+                    <span class="sr-only">Open main menu</span>
+                    <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <title>Mobile-menu is not open</title>
+                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
+                        <title>Mobile-menu is open</title>
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+	    </div>
+            <nav class="pagenav hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#records">{% translate 'Poster i Alvin' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#mapping">{% translate 'Mappning av huvudtyper' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#activity">Activity streams API</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#discovery">IIIF Change Discovery API</a>
+            </nav> 
+
+	    <!-- Mobile menu -->
+
+            <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4 pagenav">
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#records">{% translate 'Poster i Alvin' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#mapping">{% translate 'Mappning av huvudtyper' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#activity">Activity streams API</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#discovery">IIIF Change Discovery API</a>
+            </div>
+        </div>
+    </div>
+  </div>
+  <span id="main-content-marker"></span>
+  <main class="w-full md:w-2/4 flex-grow pt-1 px-3 mb-10">
+     <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">Linked Art</h1>
+     <p class="py-2 font-bold"><a href=" https://linked.art/about/ ">Linked Art</a> {% translate 'är en applikationsprofil baserad på relevanta internationella standarder som kan användas för att beskriva kulturarvsresurser med fokus på konst och museirelaterad verksamhet.' %}</p> 
+     <p class="py-2">{% translate 'Den definierar gemensamma mönster och termer för att säkerställa att resulterande data enkelt kan återanvändas. I enlighet med etablerad praxis inom området utgår modellen från följande grundläggande standarder:' %}</p>
+     <ol class="py-2 list-decimal list-inside">
+         <li><a href="https://cidoc-crm.org/">CIDOC-CRM</a> {% translate 'som den centrala konceptuella modellen. Linked Art använder en förenklad delmängd (CIDOC-CRM 7.1.3) för att säkerställa konsekvens och begriplighet.' %}</li>
+         <li><a href="https://www.getty.edu/research/tools/vocabularies/">Getty Vocabularies</a> {% translate 'som centrala källor för identifiering av domänspecifik terminologi.' %}</li>
+     </ol>
+     <p class="py-2">{% translate 'Modellen serialiseras som JSON-LD (JavaScript Object Notation for Linked Data) som är ett lättviktigt dataformat som används för att strukturera information på webben.' %}</p>
+     <h2 id="records" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Poster i Alvin' %}</h2> 
+     <p class="py-2">{% translate 'Poster av samtliga huvudtyper i Alvin (record, person, organisation, place, work samt location) kan hämtas i Linked Arts datamodell antingen via de olika hämtnings-API:erna eller direkt från den enskilda posten i Alvin via Ladda ner-funktionen.' %}</p>     
+     <p class="py-2"><span class="font-semibold">Exempel:</span> <a href="{% url 'record_viewer' 'alvin-record' '1' %}?format=json">https://www.alvin-portal.org/alvin/data/alvin-record/1?format=json</a></p>
+     <p class="py-2">{% translate 'Ingen API-nyckel krävs. Metadataposter från Alvin är fritt tillgängliga enligt' %} <a class="text-blue-800 dark:text-blue-200 underline" href="https://creativecommons.org/public-domain/cc0/">Creative Commons CC0</a>.
+     <h2 id="mapping" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Mappning av huvudtyper' %}</h2> 
+     <p class="py-2">{% translate 'En bibliografisk post i Alvin beskriver antingen ett fysiskt objekt (som en bok) eller en samling av objekt (som ett arkiv). Fysiska objekt mappas mot typen <span class="font-mono">HumanMadeObject</span> och samlingar mot typen <span class="font-mono">Set</span>.' %}</p>
+     <p class="py-2">{% translate 'Auktoritetsposter för personer mappas mot typen <span class="font-mono">Person</span>, för platser mot typen <span class="font-mono">Place</span>, för verk mot typen <span class="font-mono">LinguisticObject</span> samt för organisationer eller arkivinstitutioner mot typen <span class="font-mono">Group</span>.' %}</p>
+     <p class="py-2">{% translate 'Alla poster innehåller de obligatoriska egenskaperna <span class="font-mono">@context</span>, <span class="font-mono">id</span>, <span class="font-mono">type</span> och <span class="font-mono">_label</span> samt <span class="font-mono">identified_by</span> som innehåller det primära namnet (huvudtitel för bibliografiska poster och verk eller den auktoriserade namnformen för personer, organisationer, platser och arkivinstitutioner), eventuella alternativa namn, postens unika id i Alvin samt i förekommande fall externa identifierare som t.ex. VIAF eller ISSN.' %}</p>
+     <p class="py-2">{% translate 'Poster av typen <span class="font-mono">HumanMadeObject</span> eller <span class="font-mono">Set</span> kan även innehålla egenskaperna <span class="font-mono">classified_as</span> (kontrollerade former för resurstyp eller genre samt olika typer av ämnesord), <span class="font-mono">current_owner</span> (ägaren eller den som tillhandahåller objektet/samlingen), <span class="font-mono">current_location</span> (fysisk placering), <span class="font-mono">member_of</span> (underordnad samling), <span class="font-mono">made_of</span> (material), <span class="font-mono">referred_to_by</span> (alla typer av textbeskrivningar som anmärkningar, sammanfattning, litteraturreferenser etc.), <span class="font-mono">subject_of</span> (länkar till andra relaterade resurser) samt tillkomstinformation i <span class="font-mono">produced_by</span> för fysiska objekt och <span class="font-mono">created_by</span> för samlingar. För fysiska objekt anges språk- och verksinformation i <span class="font-mono">carries</span> och för samlingar i <span class="font-mono">members_exemplified_by</span>.' %}</p>
+     <p class="py-2">{% translate 'Notera att de digitala avbildningarna inte beskrivs som egna objekt i Alvin utan betraktas som digitala surrogat av de beskrivna objekten och är åtkomliga via objektets landningssida från egenskapen <span class="font-mono">shows</span>.' %}</p>
+     <p class="py-2">{% translate 'För auktoritetsposter innehåller de olika typerna förutom de obligatoriska egenskaperna och <span class="font-mono">identified_by</span> även <span class="font-mono">classified_as</span> och <span class="font-mono">referred_to_by</span> (alla typer utom <span class="font-mono">Place</span>), <span class="font-mono">part_of</span> och <span class="font-mono">defined_by</span> (<span class="font-mono">Place</span>), <span class="font-mono">born</span> och <span class="font-mono">died</span> (<span class="font-mono">Person</span>), <span class="font-mono">formed_by</span>, <span class="font-mono">dissolved_by</span> och <span class="font-mono">contact_point</span> (<span class="font-mono">Group</span>), <span class="font-mono">subject_of</span> (<span class="font-mono">Person</span> och <span class="font-mono">Group</span>) samt tillkomstinformation för <span class="font-mono">LinguisticObject</span> i <span class="font-mono">created_by</span>.' %}</p>
+     <p class="py-2">{% translate 'Definitioner i Alvins egen vokabulär mappas mot <a href="https://www.getty.edu/research/tools/vocabularies/">Getty Vocabularies</a> för bättre generell interoperabilitet via Linked Art. Exempelvis egenskapen subtitle i Alvin mappas i Linked Art-posten mot begreppet subtitles (<a href="https://vocab.getty.edu/aat/300312006">https://vocab.getty.edu/aat/300312006</a>) i Getty Vocabularies etc.' %}</p>
+     <h2 id="activity" class="text-3xl md:text-4xl font-bold pt-4">Activity streams API</h2> 
+     <p class="py-2">{% translate 'Genom att använda W3C-standarden <a href="https://www.w3.org/TR/activitystreams-core/">Activity Streams</a> i kombination med Linked Art Data är det möjligt att hämta samtliga poster från Alvin i detta format med utgångspunkt i Alvins huvudtyper record, person, organisation, place, work samt location. Denna parameter läggs till sist i url:en.' %}</p>
+     <p class="py-2"><span class="font-semibold">Exempel:</span> <a href="{% url 'linked_art_activity_stream' 'record' %}">https://www.alvin-portal.org/alvin/linkedart/activitystream/record</a></p>
+     <p class="py-2">{% translate 'hämtar alla bibliografiska poster som är publicerade vid hämtningstillfället. Eventuellt borttagna poster försvinner från listan och dess <span class="font-mono">id</span> kommer inte att återanvändas.' %}</p>
+     <p class="py-2">{% translate 'API:et levererar sidor som innehåller högst hundra ordnade poster i taget. Varje post innehåller <span class="font-mono">id</span> (länken till Linked Art-metadataposten) samt <span class="font-mono">type</span>. Metadataposten innehåller i sin tur den beständiga identifieraren för den resurs som posten beskriver som leder till posten i Alvin.' %}</p>
+     <p class="py-2">{% translate 'Med hjälp av egenskapen <span class="font-mono">next</span> kan följande 100 poster i taget hämtas fram till och med sista sidan.' %}</p>
+     <h2 id="discovery" class="text-3xl md:text-4xl font-bold pt-4">IIIF Change Discovery API</h2>
+     <p class="py-2"><a href="https://iiif.io/api/discovery/1.0/">IIIF Change Discovery API 1.0</a> {% translate 'används i Alvin för att underlätta identifieringen av ändringar i metadata för de olika huvudtyperna.' %}</p>
+     <p class="py-2"><a href="https://www.w3.org/TR/activitystreams-core/">Activity Streams</a> {% translate 'används för att beskriva dessa ändringar genom en <span class="font-mono">OrderedCollection</span> (en sammankopplad uppsättning sidor) där varje underliggande <span class="font-mono">OrderedCollectionPage</span> innehåller en lista över när en post senast ändrades.' %}</p>
+     <p class="py-2">{% translate '<span class="font-mono">OrderedCollection</span> fungerar som en navigeringsmässig utgångspunkt för att upptäcka ändringar och innehåller en referens till den sista <span class="font-mono">OrderedCollectionPage</span> i samlingen. Den sista sidan innehåller de senaste händelserna medan föregående sidor innehåller äldre händelser. Dessutom finns en referens till föregående sida i samlingen. Observera att API-specifikationen rekommenderar att bearbetningen påbörjas med den sista sidan.' %}</p>
+     <p class="py-2">{% translate 'Poster hämtas från Alvin via de grundläggande typerna record, person, organisation, place, work samt location som sista parameter i länken.' %}</p>     
+     <p class="py-2"><span class="font-semibold">Exempel:</span> <a href="{% url 'linked_art_discovery_stream' 'record' %}">https://www.alvin-portal.org/alvin/linkedart/discovery/record</a></p>
+     <p class="py-2">{% translate 'hämtar alla bibliografiska poster som är publicerade vid hämtningstillfället och datum/tid i <span class="font-mono">endTime</span> anger tidpunkt för senaste uppdateringen av posten.' %}</p>
+     <p class="py-2">{% translate 'API:et levererar sidor som innehåller högst hundra ordnade händelser i taget efter senaste uppdateringsdatum. För att göra Linked Arts typer tillgängliga i flödet läggs <a href=”https://linked.art/ns/v1/record-types.json”>https://linked.art/ns/v1/record-types.json</a> som en <span class="font-mono">extension</span> i <span class="font-mono">@context</span>. Varje post ligger i ett <span class="font-mono">object</span> som innehåller <span class="font-mono">id</span> (länken till Linked Art-metadataposten) samt Linked Art-<span class="font-mono">type</span>. Metadataposten innehåller i sin tur den beständiga identifieraren för den resurs som posten beskriver som leder till posten i Alvin.' %}</p>
+     <p class="py-2">{% translate 'Listan innehåller endast typen <span class="font-mono">Update</span> och en och samma post förekommer endast en gång. Alvin stödjer inte Level 2 i specifikationen. Eventuellt borttagna poster försvinner från listan och dess <span class="font-mono">id</span> kommer inte att återanvändas. Nyskapade poster får ett Update-datum som motsvarar den initiala registreringen.' %}</p>
+  </main>
+ <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+     <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
+         <div class="flex justify-center py-4"> 
+             <a class="text-blue-800 dark:text-blue-200 underline" href="https://linked.art/">
+                 <img class="w-48 object-center" alt="Linked Art" src="{% static 'img/linkedart.png' %}">
+             </a>
+         </div>
+         <div class="flex justify-center py-4"> 
+             <a class="text-blue-800 dark:text-blue-200 underline" href="https://iiif.io/">
+                 <img class="w-48 object-center" alt="International Image Interoperability Framework (IIIF)" src="{% static 'img/International_Image_Interoperability_Framework_logo.png' %}">
+             </a>
+         </div>
+         <div class="flex justify-center py-4"> 
+             <a class="text-blue-800 dark:text-blue-200 underline" href="https://www.getty.edu/research/tools/vocabularies/lod/index.html">
+                 <img class="w-48 object-center" alt="Getty Vocabularies as Linked Open Data" src="{% static 'img/lod_logo.jpg' %}">
+             </a>
+         </div>
+         <div class="flex justify-center py-4"> 
+             <a class="bg-off-white dark:bg-gray-100 p-4 rounded-md" href="https://creativecommons.org/">
+                 <img class="w-48 object-center" alt="Creative Commons" src="{% static 'img/cc.logo.svg' %}">
+             </a>
+         </div>
+      </div>  
+  </div>
+</div>
+{% endblock %}

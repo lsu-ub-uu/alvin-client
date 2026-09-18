@@ -39,6 +39,7 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 import base64
 import json
+import unicodedata
 
 @csrf_exempt
 def oai2(request):
@@ -113,9 +114,12 @@ def oai2(request):
 
                                 with urlopen(absolute_xslt_alvin_rdf) as f:
                                   xslt_tree = etree.parse(f, parser)
-                                  transform = etree.XSLT(xslt_tree)     	        # Create the XSLT transformer
-                                  metadataalvin_rdf = transform(xml_record, **argDict)	# Transform source XML tree
-                            
+                                  transform = etree.XSLT(xslt_tree)
+                                  xml = transform(xml_record, **argDict)	# Transform source XML tree
+        
+                                  xml_str = etree.tostring(xml, encoding='unicode')
+                                  metadataalvin_rdf = unicodedata.normalize('NFC', xml_str)
+                        
                             else:
 
                                 with urlopen(absolute_xslt_oai_dc) as f:
@@ -389,8 +393,12 @@ def oai2(request):
                     with urlopen(absolute_xslt_alvin_rdf) as f:
                         xslt_tree = etree.parse(f, parser)
                         transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
-                        metadataalvin_rdf = transform(xml_list, **argDict) # Transform source XML tree
-                            
+                        #metadataalvin_rdf = transform(xml_list, **argDict) # Transform source XML tree
+                        xml = transform(xml_list, **argDict)	# Transform source XML tree
+        
+                        xml_str = etree.tostring(xml, encoding='unicode')
+                        metadataalvin_rdf = unicodedata.normalize('NFC', xml_str)
+       
                 else:
 
                     with urlopen(absolute_xslt_oai_dc) as f:

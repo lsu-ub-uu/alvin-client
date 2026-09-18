@@ -15,6 +15,8 @@ from django.utils.encoding import force_str
 import base64
 import json
 
+import unicodedata
+
 api_host = settings.API_HOST
 
 class SafeHTTPResolver(etree.Resolver):
@@ -112,7 +114,10 @@ def record_viewer(request, record_type, record_id):
       with urlopen(absolute_xslt_rdf) as f:
         xslt_tree = etree.parse(f, parser)
         transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
-        recordxml = transform(xml_tree, **argDict)	# Transform source XML tree
+        xml = transform(xml_tree, **argDict)	# Transform source XML tree
+        
+        xml_str = etree.tostring(xml, encoding='unicode')
+        recordxml = unicodedata.normalize('NFC', xml_str)
 
     elif format == 'xml':
 

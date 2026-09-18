@@ -15,6 +15,9 @@ def userguide(request):
 def rest_api(request):
   return render(request, 'vocabulary/rest-api.html', {})
 
+def linkedart(request):  
+  return render(request, 'vocabulary/linkedart.html', {})
+
 def oai_pmh(request):
   return render(request, 'vocabulary/oai-pmh.html', {})
 

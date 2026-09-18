@@ -25,7 +25,7 @@
                 </div>
                 <nav class="pagenav hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
                     <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#search">{% translate 'Sök' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#download">{% translate 'Ladda ner' %}</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#download">{% translate 'Ladda ner och använd' %}</a>
                     <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#imageviewer">{% translate 'Bildvisare' %}</a>
                     <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#apis">{% translate 'API' %}</a>
                 </nav> 
@@ -34,7 +34,7 @@
                 
                 <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="pagenav block sm:hidden flex-grow px-4 pb-4">
                     <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#search">{% translate 'Sök' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#download">{% translate 'Ladda ner' %}</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#download">{% translate 'Ladda ner och använd' %}</a>
                     <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#imageviewer">{% translate 'Bildvisare' %}</a>
                     <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#apis">{% translate 'API' %}</a>               
                 </div>     
@@ -45,14 +45,83 @@
     <main class="w-full md:w-2/4 flex-grow pt-1 px-3">
         <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">{% translate 'Hjälp' %}</h1>
         <h2 id="search" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Sök' %}</h2>
-        <h2 id="download" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Ladda ner' %}</h2>
+        <h3 class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Trunkering, maskering och fraser' %}</h3>
+        <p class="py-2 font-bold">{% translate 'Trunkering' %}</p>
+        <p class="py-2">{% translate 'Trunkera med asterisk (*) för att hitta ord med varierande ändelser och avledningar. Högertrunkering är vanligast. Sökningen hittar alla ord som börjar med den inskrivna ordstammen.' %}</p>
+        <p class="py-2">{% translate '<span class="font-semibold">Exempel:</span> catalog*' %}</p>
+        <p class="py-2">{% translate '<span class="font-semibold">Resultat:</span> Sökningen hittar poster som innehåller ordet catalog, catalogue, catalogues, cataloging, cataloguing etc.' %}</p>
+        <p class="py-2">{% translate 'Trunkeringstecknet kan också användas inuti ett sökord' %}</p>
+        <p class="py-2">{% translate '<span class="font-semibold">Exempel:</span> johans*on' %}</p>
+        <p class="py-2">{% translate '<span class="font-semibold">Resultat:</span> Sökningen hittar poster som innehåller både Johanson och Johansson.' %}</p>
+        <p class="py-2 font-bold">{% translate 'Maskering' %}</p>
+        <p class="py-2">{% translate 'Använd frågetecken (?) för att hitta stavningsvarianter. Varje frågetecken motsvarar ett tecken.' %}</p>
+        <p class="py-2">{% translate '<span class="font-semibold">Exempel:</span> lind??ist' %}</p>
+        <p class="py-2">{% translate '<span class="font-semibold">Resultat:</span> Sökningen hittar poster som innehåller Lindkvist, Lindqvist, Lindquist etc.' %}</p>
+        <p class="py-2">{% translate 'Maskeringstecknet kan användas tillsammans med trunkeringstecken (i samma sökord). I så fall måste maskeringsstecknet komma före trunkeringen.' %}</p>
+        <p class="py-2">{% translate '<span class="font-semibold">Exempel:</span> e?onom*' %}</p>
+        <p class="py-2">{% translate '<span class="font-semibold">Resultat:</span> Sökningen hittar poster som innehåller ordet ekonom, ekonomi, ekonomisk, economist, economy économique etc.' %}</p>
+        <p class="py-2 font-bold">{% translate 'Fraser' %}</p>
+        <p class="py-2">{% translate 'Använd citationstecken (") för att söka på exakta fraser.' %}</p>
+        <p class="py-2">{% translate '<span class="font-semibold">Exempel:</span> "teknisk fysik"' %}</p>
+        <p class="py-2">{% translate '<span class="font-semibold">Resultat:</span> Sökningen ger träff på orden ihop och i angiven ordning.' %}</p>
+        <h3 class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Fulltextsökning' %}</h3>
+<p class="py-2">{% translate 'Enkel och utökad sökning i Alvin söker i all registrerad metadata (titlar, beskrivningar, ämnesord etc.) men inte i själva den inskannade dokument-texten eller transkriptioner av den.' %}</p>
+ <p class="py-2">{% translate 'Eftersom en stor del av de tryckta textdokumenten i Alvin även publiceras som OCR (object character recognition)-tolkade PDF-filer är det dock möjligt att i viss utsträckning göra sådana sökningar i sökmotorer som indexerar PDF-filer, som t.ex. Google.' %}</p>
+
+ <p class="py-2">{% translate 'Ange då ett eller flera sökord i Googles sökruta samt lägg till avgränsningarna site:www.alvin-portal.org respektive filetype:pdf för att söka specifikt i PDF-filer i Alvin.' %}</p>
+
+<p class="py-2">{% translate '<span class="font-semibold">Exempel:</span> <a href="https://www.google.com/search?q=mynt+site%3Awww.alvin-portal.org+filetype%3Apdf">mynt site:www.alvin-portal.org filetype:pdf</a>' %}</p>
+
+   <p class="py-2">{% translate 'för att hitta texter i Alvin med sökordet "mynt".' %}</p>
+
+   <p class="py-2">{% translate 'Observera att alla PDF-filer i Alvin inte garanterat är indexerade i Google..' %}</p>
+
+
+
+
+        <h2 id="download" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Ladda ner och använd' %}</h2>
+        <p class="py-2 font-bold">{% translate 'Hur laddar jag ner en högupplöst fil?' %}</p>
+        <p class="py-2">{% translate 'Klicka på knappen "Ladda ned" under bildvisaren i posten. Då öppnas ett nytt fönster. Under fliken "Bilder" gå till "Ladda ner enskilda bilder" och klicka på den eller de bilder du vill hämta. Välj "Original" och klicka på "Ladda ned". De valda bilderna sparas i en zip-fil på din enhet. '%}</p>
+        <p class="py-2 font-bold">{% translate 'Hur laddar jag ner en lågupplöst fil?' %}</p>
+        <p class="py-2">{% translate 'Klicka på knappen "Ladda ned" under bildvisaren i posten. Då öppnas ett nytt fönster. Under fliken "Bilder" gå till "Ladda ner enskilda bilder" och klicka på den eller de bilder du vill hämta. Välj "JP2" och klicka på "Ladda ned". De valda bilderna sparas i en zip-fil på din enhet. '%}</p>
+        <p class="py-2 font-bold">{% translate 'Hur laddar jag ner en hel bok?' %}</p>
+        <p class="py-2">{% translate 'Klicka på knappen "Ladda ned" under bildvisaren i posten. Då öppnas ett nytt fönster. För att hämta originalbilderna under fliken "Bilder" gå till "Ladda ner alla bilder". Välj "Original" (högupplösta) eller "JP2" (komprimerade) och klicka på "Ladda ned". Bilderna sparas i en zip-fil på din enhet.' %}</p> 
+        <p class="py-2">{% translate 'De flesta böcker/texter publiceras förutom som högupplösta bilder per sida som en bilaga i form av en sammanhållen PDF-fil med alla ingående sidor. Om det är ett tryckt original är denna fil ofta också OCR-tolkad, dvs. det är möjligt att söka på text i själva dokumentet. Bilagor visas i under fliken "Dokument" i "Ladda ned"-fönstret och öppnas när man klickar på länken.'%}</p>
+        <p class="py-2 font-bold">{% translate 'Vilken länk ska jag använda när jag vill dela/skicka en post i Alvin?' %}</p>
+        <p class="py-2">{% translate 'Klicka på knappen "Dela" under postens rubrik. Det finns två länkar till varje bibliografisk post. Vi rekommenderar den "Permanenta länken" som länk till en Alvin-post när du vill att den ska fungera i ett längre perspektiv. Den går via en resolver på Kungliga biblioteket. Direktlänken går direkt till Alvin-posten och fungerar utmärkt på kort sikt, men har inte samma stabilitet som den permanenta länken. Auktoritetsposter har däremot inga länkar via Kungliga biblioteket utan "Direktlänk" måste alltid användas. Klicka på Kopiera-ikonen för att spara länken i urklipp.' %}</p>
+        <p class="py-2 font-bold">{% translate 'Får jag publicera allt som jag hittar i Alvin?' %}</p>
+        <p class="py-2">{% translate 'Nästan allt som du hittar i Alvin får du använda helt fritt. Var dock uppmärksam på att en del modernare material kan vara upphovsrättskyddat. Rättighetslicensen längst ner på postsidan talar om vad som gäller.' %}</p>
+        <p class="py-2 font-bold">{% translate 'Vad betyder rättighetslicenserna?' %}</p>
+        <p class="py-2">{% translate 'Klicka på "Information om licensen" för att se en förklarande text. Den mest förekommande licensen Public Domain Mark betyder att upphovsrätten har gått ut och att verket får användas helt fritt.' %}</p>
+        <p class="py-2 font-bold">{% translate 'Jag vill publicera en bild som jag hittat i Alvin, vad ska jag skriva i bildtexten?' %}</p>
+        <p class="py-2">{% translate 'Om möjligt ska upphovspersonens namn alltid anges. Den ägande institutionens namn och eventuellt signum eller liknande bör också framgå. Exempel: "ödet ger vika", Manuskript av Karin Boye. Originalet tillhör Uppsala universitetsbibliotek, K. Boye 4.' %}</p>
         <h2 id="imageviewer" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Bildvisare' %}</h2>
+        <p class="py-2">{% translate 'Filer i bildformat som .tif, .jpg eller .gif öppnas i Alvins särskilda bildvisare som öppnas överst på postsidan' %}</p>
+        <p class="py-2">{% translate 'I bildvisaren kan du zooma in och ut i bilden genom att antingen klicka direkt på den eller använda + och - i navigeringen till vänster. Hur långt det går att zooma in i bilden beror på dess upplösning; ju högre upplösning desto djupare. Zoomningen återställs till utgångsläget varje gång du väljer en ny bild.' %}</p>
+        <p class="py-2">{% translate 'Det är också möjligt att rotera bilden till höger eller vänster med hjälp av pilarna i vänsternavigeringen.' %}</p>
+        <p class="py-2">{% translate 'Genom att välja Tumnagel-ikonen (fyra rutor) uppe till höger i bildvisaren får du snabbt en överblick över samtliga bilder som är kopplade till posten, exempelvis alla sidor i en bok, för att enkelt kunna navigera till en viss sida eller bild. Alternativt går det att hoppa ett eller flera steg framåt och bakåt i navigeringen längst upp i tumnagelfältet.' %}</p>
+        <p class="py-2">{% translate 'Välj Dokument-ikonen under Tumnagel-ikonen för att i förekommande fall se transkriptioner eller översättningar parallellt med bilderna i bildvisaren.' %}</p>
+        <p class="py-2">{% translate 'Klicka på ikonen med fyra pilar längst upp i vänsternavigeringen för att öppna bildvisaren i helskärmsläge och tryck ESC för att avsluta det.' %}</p>
+        <p class="py-2">{% translate 'Hem-ikonen (huset) i vänsternavigeringen återställer zoomingen till utgångsläget.' %}</p>
         <h2 id="apis" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'API' %}</h2> 
+        <p class="py-2">{% translate 'Metadata och filer i Alvin kan nås på flera olika sätt:' %}</p>
+        <dl>
+            <dt class="font-bold"><a href="{% url 'rest-api' %}">Cora REST-API</a></dt>
+            <dd class="py-2">{% translate 'Medlemmar kan läsa, skapa och uppdatera poster i Alvin via ett REST-API som bygger på Cora, ett metadatadrivet generiskt öppet digitalt arkivsystem utformat för att hantera strukturerad metadata och filer.' %}</dd>
+            <dt class="font-bold"><a href="{% url 'linkedart' %}">Linked Art</a></dt>
+            <dd class="py-2">Linked Art {% translate 'är en applikationsprofil baserad på relevanta internationella standarder som kan användas för att beskriva kulturarvsresurser med fokus på konst och museirelaterad verksamhet.' %}</dd>
+            <dt class="font-bold"><a href="{% url 'oai-pmh' %}">OAI-PMH</a></dt>
+            <dd class="py-2">{% translate 'Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH) är ett protokoll som utvecklats för att samla in metadatabeskrivningar av poster i ett arkiv så att tjänster kan byggas med hjälp av metadata från flera arkiv. Metadataposter från Alvin kan hämtas via protokollet' %} OAI-PMH, Version 2.</dd>
+            <dt class="font-bold"><a href="{% url 'iiif' %}">IIIF</a></dt>
+            <dd class="py-2">{% translate 'International Image Interoperability Framework (IIIF) definierar universella standarder för att beskriva och leverera bilder över webben.' %}</dd>
+        </dl>
     </main>
-    <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+  <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
         <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
-            <h2 class="text-3xl md:text-4xl font-bold pb-4">{% translate 'Länkar' %}</h2>    
-        </div>    
-    </div>
+            <div class="flex justify-center py-4"> 
+                <img class="w-48 object-center" alt="Looking for help" src="{% static 'img/soktips.jpg' %}">
+            </div>
+      </div>   
+  </div>
 </div>
 {% endblock %}

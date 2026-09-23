@@ -214,6 +214,11 @@
                             <xsl:value-of select="rights/@_value_en"/>
                         </dc:rights>
                     </xsl:for-each>
+                    <xsl:for-each select="fileSection/fileGroup[use = 'master'][1]/file[1]/fileLocation/linkedRecord/binary/thumbnail[1]/thumbnail/actionLinks/read/url">
+                        <dc:relation>
+                            <xsl:value-of select="."/>
+                        </dc:relation>
+                    </xsl:for-each>
                 </oai_dc:dc>
             </metadata>
         </record>

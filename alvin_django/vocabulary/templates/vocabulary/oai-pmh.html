@@ -56,6 +56,7 @@
      <h3 id="Identify" class="text-2xl md:text-3xl font-bold pt-4">Identify</h3>
      <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'oai2' %}?verb=Identify">https://www.alvin-portal.org/alvin/oai?verb=Identify</a></p>
      <p class="py-2">{% translate 'Hämtar grundläggande information om arkivet, som dess namn, URL och protokoll-version.' %}</p>
+     <p class="py-2">{% translate 'Observera att Alvin inte stödjer <a href="https://www.openarchives.org/OAI/openarchivesprotocol.html#DeletedRecords">deleted records</a> varför selektiv hämtning via tidsstämplar inte är möjlig. För att uppdatera en samling poster till aktuell status måste alltid en fullständig omhämtning av alla poster göras. Borttagna poster kommer då att försvinna från resultatet.' %}</p>
      <h3 id="ListMetadataFormats" class="text-2xl md:text-3xl font-bold pt-4">ListMetadataFormats</h3>
      <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'oai2' %}?verb=ListMetadataFormats">https://www.alvin-portal.org/alvin/oai?verb=ListMetadataFormats</a></p>
      <p class="py-2">{% translate 'Returnerar en lista över de metadataformat som arkivet kan tillhandahålla. Poster från Alvin kan hämtas i grundformatet oai_dc (se specifikation av mappning nedan).' %}</p>
@@ -94,6 +95,7 @@
      <p class="py-2"><span class="font-semibold">&lt;dc:rights&gt; {% translate 'Rättigheter' %}</span><br>
      {% translate 'Gäller digitalt innehåll (filer). Anges på engelska enligt alternativen för Rättigheter.' %}<br>
      <a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'metadata' 'rightsCollection' %}">{% translate 'Lista' %}</a>
+     <p class="py-2"><span class="font-semibold">&lt;dc:relation&gt; {% translate 'URL till tumnagel som visas i träfflistan' %}</span></p>
      <h3 id="ListSets" class="text-2xl md:text-3xl font-bold pt-4">ListSets</h3>
      <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'oai2' %}?verb=ListSets">https://www.alvin-portal.org/alvin/oai?verb=ListSets</a></p>
      <p class="py-2">{% translate 'Hämtar arkivets set-struktur som möjliggör gruppering av poster i delmängder. Poster från Alvin kan hämtas i begränsade set utifrån ägande institution.' %}</p>

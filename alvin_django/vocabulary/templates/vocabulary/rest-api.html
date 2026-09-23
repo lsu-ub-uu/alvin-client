@@ -25,6 +25,8 @@
 	    </div>
             <nav class="pagenav hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#records">{% translate 'Poster i Alvin' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#helper">API helper</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#overview">{% translate 'Översikt' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#create">{% translate 'Skapa bibliografisk post' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#read">{% translate 'Läsa bibliografisk post' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#update">{% translate 'Uppdatera bibliografisk post' %}</a>
@@ -36,6 +38,8 @@
 
             <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4 pagenav">
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#records">{% translate 'Poster i Alvin' %}</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#helper">API helper</a>
+                <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#overview">{% translate 'Översikt' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#create">{% translate 'Skapa bibliografisk post' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#read">{% translate 'Läsa bibliografisk post' %}</a>
                 <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#update">{% translate 'Uppdatera bibliografisk post' %}</a>
@@ -50,14 +54,14 @@
      <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">Cora REST-API</h1>
      <p class="py-2 font-bold">{% translate 'Medlemmar kan läsa, skapa och uppdatera poster i Alvin via ett REST-API som bygger på Cora, ett metadatadrivet generiskt öppet digitalt arkivsystem utformat för att hantera strukturerad metadata och filer.' %}</p> 
      <p class="py-2">{% translate 'Cora utvecklas av Nationella system vid Uppsala universitetsbibliotek' %}.</p>
-     <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://cora.alvin-portal.org/rest/">Cora Record API Documentation</a> {% translate 'beskriver hur poster och filer hanteras samt hur sökningar görs.' %}</p>
- 
-   <h2 id="alvin" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Poster i Alvin' %}</h2>
-    <p class="py-2">{% translate 'För att skapa och uppdatera poster krävs att användaren är registrerad i systemet (endast tillgängligt för personer kopplade till Alvins medlemsorganisationer). Publicerade poster kan däremot läsas av alla och är öppet tillgängliga utan inloggning.' %}</p>
-
-     <p class="py-2">{% translate 'Poster hanteras via Alvins dataformat i Cora uttryckt som antingen XML eller JSON. Formatbeskrivningen av typer och klasser är tillgänglig i katalogiseringsklienten samt som öppen länkad vokabulär.' %}</p> 
- 
-     
+     <h2 id="alvin" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Poster i Alvin' %}</h2>
+     <p class="py-2">{% translate 'För att skapa och uppdatera poster krävs att användaren är registrerad i systemet (endast tillgängligt för personer kopplade till Alvins medlemsorganisationer). Publicerade poster kan däremot läsas av alla och är öppet tillgängliga utan inloggning.' %}</p>
+     <p class="py-2">{% translate 'Poster hanteras via Alvins dataformat i Cora uttryckt som antingen XML eller JSON. Dataformatet i Cora är baserat på posttyper motsvarande Alvins huvudtyper post (bibliografiska poster för olika resurstyper) samt plats, organisation, person, arkivinstitution och verk (auktoritetsposter).' %}</p> 
+     <p class="py-2">{% translate 'Bibliografiska poster samt verksposter kräver dessutom en specificering av en så kallad valideringstyp vilket innebär att fälten i posten anpassas till särskilda profiler för respektive resurstyp, dvs. att Arkiv har en uppsättning fält och Bild en annan.' %}</p>
+     <h2 id="helper" class="text-3xl md:text-4xl font-bold pt-4">API helper</h2>
+     <p class="py-2"><a href="https://preview.alvin.cora.epc.ub.uu.se/api-helper"><span class="font-bold">API helper</a> är ett hjälpmedel för att få en fullständig beskrivning över dataformatet för olika posttyper i API:et och hur anropen hanteras.</p>
+     <h2 id="overview" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Översikt' %}</h2>
+     <p class="py-2">Översiktlig presentation av de olika anropen och dess data:</p>
      <h3 id="create" class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Skapa bibliografisk post' %}</h3>
      <p class="py-2">{% translate 'Obligatoriska fält för alla bibliografiska poster (<span class="font-mono">record</span>) är resurstyp (<span class="font-mono">typeOfResource</span>), titel (<span class="font-mono">title</span>) samt arkivinstitution (<span class="font-mono">location</span>). Förutom beskrivande Alvin-metadata kräver Cora ett antal specifika obligatoriska kontrollfält i elementet <span class="font-mono">recordInfo</span>.' %}</p> 
 

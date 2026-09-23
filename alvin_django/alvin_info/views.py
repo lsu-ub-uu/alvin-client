@@ -11,6 +11,24 @@ from urllib.request import urlopen
 parser = etree.XMLParser()
 #from alvin_viewer.extractors.common import dates
 
+api_host = settings.API_HOST
+
+class SafeHTTPResolver(etree.Resolver):
+    def resolve(self, url, pubid, context):
+        # Allow only HTTP/HTTPS URLs from trusted domains
+        if url.startswith("http://") or url.startswith("https://"):
+            # Example: restrict to example.com
+            if api_host not in url:
+                raise ValueError(f"Blocked external URL: {url}")
+            
+            # Fetch the content
+            resp = requests.get(url, timeout=5)
+            resp.raise_for_status()
+            return self.resolve_string(resp.text, context)
+        
+        # Fallback to default resolution
+        return None
+
 def start(request):
   return render(request, 'alvin_info/start.html', {})
 

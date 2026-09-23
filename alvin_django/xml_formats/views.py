@@ -115,7 +115,7 @@ def record_viewer(request, record_type, record_id):
         xslt_tree = etree.parse(f, parser)
         transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
         xml = transform(xml_tree, **argDict)	# Transform source XML tree
-        
+        etree.indent(xml, space="    ")
         xml_str = etree.tostring(xml, encoding='unicode')
         recordxml = unicodedata.normalize('NFC', xml_str)
 

@@ -27,14 +27,14 @@
                 </setSpec>
             </header>
             <metadata>
-                <record xmlns="https://www.alvin-portal.org/vocabulary" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.alvin-portal.org/alvin/vocabulary https://www.alvin-portal.org/alvin/schema/alvin-record.xsd">
+                <record xmlns="https://www.alvin-portal.org/alvin/vocabulary" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.alvin-portal.org/alvin/vocabulary https://www.alvin-portal.org/alvin/schema/alvin-record.xsd">
                     <xsl:apply-templates select="@*|node()"/>
                 </record>
             </metadata>
         </record>
     </xsl:template>
     <xsl:template match="*">
-        <xsl:element name="{local-name()}" namespace="https://www.alvin-portal.org/vocabulary">
+        <xsl:element name="{local-name()}" namespace="https://www.alvin-portal.org/alvin/vocabulary">
             <xsl:apply-templates select="@*|node()"/>
         </xsl:element>
     </xsl:template>

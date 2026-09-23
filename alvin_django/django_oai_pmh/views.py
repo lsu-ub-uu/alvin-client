@@ -116,7 +116,7 @@ def oai2(request):
                                   xslt_tree = etree.parse(f, parser)
                                   transform = etree.XSLT(xslt_tree)
                                   xml = transform(xml_record, **argDict)	# Transform source XML tree
-        
+                                  etree.indent(xml, space="    ")
                                   xml_str = etree.tostring(xml, encoding='unicode')
                                   metadataalvin_rdf = unicodedata.normalize('NFC', xml_str)
                         
@@ -393,11 +393,8 @@ def oai2(request):
                     with urlopen(absolute_xslt_alvin_rdf) as f:
                         xslt_tree = etree.parse(f, parser)
                         transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
-                        #metadataalvin_rdf = transform(xml_list, **argDict) # Transform source XML tree
-                        xml = transform(xml_list, **argDict)	# Transform source XML tree
-        
-                        xml_str = etree.tostring(xml, encoding='unicode')
-                        metadataalvin_rdf = unicodedata.normalize('NFC', xml_str)
+                        metadataalvin_rdf = transform(xml_list, **argDict) # Transform source XML tree
+
        
                 else:
 

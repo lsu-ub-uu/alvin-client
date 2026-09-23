@@ -44,45 +44,7 @@
         <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">{% translate 'Institutioner' %}</h1>
         <p class="py-2 font-bold">{% translate 'Alvin är ett samarbete mellan många olika organisationer inom den nordiska arkiv-, biblioteks- och museisektorn. Detta är de enheter som innehar originalföremålet eller från vilka det är tillgängligt.' %}</p>
         <p class="py2">{% translate 'Det finns' %} <span class="font-bold">{{ metadata.totalNo }}</span> {% translate 'arkivinstitutioner i Alvin.' %}</p>
-        <h2 id="consortium" class="text-3xl md:text-4xl font-bold pt-4">
-              {% translate 'Alvinkonsortiet' %}
-        </h2>
-        <h3 class="text-2xl font-bold pt-4">
-              {% translate 'Alvins ursprungliga medlemmar och styrgrupp' %}
-        </h3>
-        {% for record in records|dictsortreversed:"nameone" %}
-        {% if record.member == 'consortium' %} 
-        <ul class="py-2 list-disc list-inside">
-          <li><a href="{% url 'alvin_viewer' 'alvin-location' record.identifier %}">{{record.nameone}}</a></li>
-        </ul> 
-        {% endif %}
-        {% endfor %} 
-        <h2 id="members" class="text-3xl md:text-4xl font-bold pt-4">
-              {% translate 'Övriga medlemmar i Alvin' %}
-        </h2>
-        <h3 class="text-2xl font-bold pt-4">
-              {% translate 'Institutioner som använder Alvin regelbundet' %}
-        </h3>
-        {% for record in records|dictsort:"nameone" %}
-        {% if record.member == 'member' %} 
-        <ul class="py-2 list-disc list-inside">
-          <li><a href="{% url 'alvin_viewer' 'alvin-location' record.identifier %}">{{record.nameone}}</a></li>
-        </ul> 
-        {% endif %}
-        {% endfor %}
-        <h2 id="other" class="text-3xl md:text-4xl font-bold pt-4">
-              {% translate 'Andra institutioner' %}
-        </h2>
-        <h3 class="text-2xl font-bold pt-4">
-              {% translate 'Underordnade enheter till medlemmar eller institutioner med material relaterat till projekt' %}
-        </h3>
-        {% for record in records|dictsort:"nameone" %}
-        {% if record.member == 'other' %} 
-        <ul class="py-2 list-disc list-inside">
-          <li><a href="{% url 'alvin_viewer' 'alvin-location' record.identifier %}">{{record.nameone}}</a></li>
-        </ul> 
-        {% endif %}
-        {% endfor %}
+        {{ member }}
     </main>
     <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
         <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">

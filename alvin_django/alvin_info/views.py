@@ -41,7 +41,7 @@ def copyright(request):
 def help(request):
   return render(request, 'alvin_info/help.html', {})
 
-def institutions(request):
+def institutionsold(request):
   xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
     
   # API host
@@ -93,4 +93,47 @@ def institutions(request):
         }
   
     
+  return render(request, 'alvin_info/institutionsold.html', context)
+
+
+def institutions(request):
+  xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
+    
+  # API host
+  api_host = settings.API_HOST
+
+  list_url = f'{api_host}/rest/record/alvin-location'
+
+  response = requests.get(list_url, headers=xml_headers_list)
+
+  if response.status_code == 200:
+
+    list_url = etree.XML(response.content)
+
+  if response.status_code == 200:
+      list_xml = etree.fromstring(response.content)         
+      records = []
+      for record in list_url.findall('data/record/data/location'):
+        records.append({
+          'identifier': record.findtext('./recordInfo/id'),
+          'nameone': record.findtext('./authority[1]/name/namePart[1]'),
+          'nametwo': record.findtext('./authority[2]/name/namePart[1]'),
+          'namethree': record.findtext('./authority[3]/name/namePart[1]'),
+          'member': record.findtext('./organisationInfo/descriptor'),
+          }) 
+  
+  else:
+    raise Http404("Record not found")  
+
+  metadata = {
+            "fromNo":list_xml.findtext(".//fromNo"),
+            "toNo":list_xml.findtext(".//toNo"),
+            "totalNo":list_xml.findtext(".//totalNo"),
+        }
+
+  context = {
+            "metadata": metadata,
+            "records":records,    
+        } 
+
   return render(request, 'alvin_info/institutions.html', context)

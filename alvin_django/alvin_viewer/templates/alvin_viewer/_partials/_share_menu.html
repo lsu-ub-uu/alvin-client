@@ -1,46 +1,176 @@
 {% load i18n %}
-<dialog data-xshow="share" data-xtransition:enter="transition ease-out duration-150"
-    data-xtransition:enter-start="opacity-0" data-xtransition:enter-end="opacity-100"
-    data-xtransition:leave="transition ease-in duration-150" data-xtransition:leave-start="opacity-100"
+
+<dialog 
+    data-xshow="share" 
+    data-xtransition:enter="transition ease-out duration-150"
+    data-xtransition:enter-start="opacity-0" 
+    data-xtransition:enter-end="opacity-100"
+    data-xtransition:leave="transition ease-in duration-150" 
+    data-xtransition:leave-start="opacity-100"
     data-xtransition:leave-end="opacity-0"
-    class="fixed inset-0 z-50 flex items-center justify-center w-screen h-screen bg-black/80 dark:bg-gray-900/80 focus:outline-none"
-    data-xon.click="share = false" data-xon.keydown.escape.window="share = false" data-xcloak>
-    <div class="w-10/12 h-10/12 p-10 bg-alvin-grey dark:bg-gray-800 shadow-xl flex flex-col gap-4" data-xon.click.stop>
-        <div>
-            <h2 class="text-2xl font-bold mb-4">{% translate 'Dela' %}</h2>
-            <div class="flex flex-col justify-start">
-                <div class="md-row">
-                    <dt class="md-label">URI</dt>
-                    <dd data-xdata="{ copied: false }" class="md-value flex flex-row gap-x-1 justify-start" id="uri">
-                    <span data-xref="uri_text" class="truncate">{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}</span>
-                    <button
-                    data-xon.click="navigator.clipboard.writeText($refs.uri_text.innerText.trim()); copied = true; setTimeout(() => copied = false, 2000)"
-                    class="btn flex items-right justify-end">
-                        <span data-xshow="!copied">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-6 float-right">
-                                <title>Copy</title>
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
-                            </svg>
-                        </span>
-                        <span data-xshow="copied">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-green-500">
-                                <title>Copied!</title>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                            </svg>
-                        </span>
-                    </button>
-                    </dd>
+    class="fixed inset-0 z-50 flex items-center justify-center w-screen h-screen p-4 sm:p-6 bg-black/80 dark:bg-gray-900/80 focus:outline-none"
+    data-xon.click="share = false" 
+    data-xon.keydown.escape.window="share = false" 
+    data-xcloak>
+    
+    <!-- Modal container -->
+    <div class="relative w-full max-w-md bg-gray-100 dark:bg-gray-800 rounded-lg shadow-xl flex flex-col overflow-hidden" data-xon.click.stop>
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+            <h2 class="text-xl font-bold text-[#333333] dark:text-off-white">{% translate 'Dela' %}</h2>
+            <button
+                data-xon.click="share = false" 
+                class="flex items-center justify-center size-8 rounded-full text-gray-500 hover:bg-gray-200 hover:text-alvin-orange dark:hover:bg-gray-700 dark:text-gray-400 transition-all duration-200 shrink-0"
+                aria-label="{% translate 'Stäng' %}">
+                <svg class="size-5" stroke-width="2" viewBox="0 0 24 24" fill="none">
+                    <path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="p-6 flex flex-col gap-5 text-[#333333] dark:text-off-white bg-gray-50 dark:bg-gray-700/50">
+            
+            <!-- Link and id:s -->
+            <div class="flex flex-col gap-4">
+                
+                <!-- URI -->
+                <div class="flex flex-col gap-2" data-xdata="{ copied: false }">
+                    <label class="text-sm font-semibold text-gray-600 dark:text-gray-300">{% translate 'Direktlänk' %}</label>
+                    <div class="flex items-center gap-2">
+                        <div class="flex-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm truncate font-mono" data-xref="uri_text">
+                            {{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}
+                        </div>
+                        <button 
+                            data-xon.click="navigator.clipboard.writeText($refs.uri_text.innerText.trim()); copied = true; setTimeout(() => copied = false, 2000)"
+                            class="flex items-center justify-center p-2 text-gray-500 hover:text-alvin-orange bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md transition-colors shrink-0"
+                            title="{% translate 'Kopiera' %}">
+                            <span data-xshow="!copied">
+                                <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                                </svg>
+                            </span>
+                            <span data-xshow="copied" data-xcloak>
+                                <svg class="size-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
                 </div>
-                {% include "./_metadata_row.html" with label=metadata.urn_nbn.label value=metadata.urn_nbn.text %}
-                <div class="md-row">
-                    <dt class="md-label">Alvin-ID</dt>
-                    <dd class="md-value">
-                        {{ metadata.record_type }}:{{ metadata.id }}
-                    </dd>
+
+                <!-- URN:NBN -->
+                {% if metadata.urn_nbn.text %}
+                <div class="flex flex-col gap-2" data-xdata="{ copied: false }">
+                    <label class="text-sm font-semibold text-gray-600 dark:text-gray-300">{% translate 'Permanent länk' %}</label>
+                    <div class="flex items-center gap-2">
+                        <div class="flex-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm truncate font-mono" data-xref="urn_text">
+                            {{ metadata.urn_nbn.text }}
+                        </div>
+                        <button 
+                            data-xon.click="navigator.clipboard.writeText($refs.urn_text.innerText.trim()); copied = true; setTimeout(() => copied = false, 2000)"
+                            class="flex items-center justify-center p-2 text-gray-500 hover:text-alvin-orange bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md transition-colors shrink-0"
+                            title="{% translate 'Kopiera' %}">
+                            <span data-xshow="!copied">
+                                <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                                </svg>
+                            </span>
+                            <span data-xshow="copied" data-xcloak>
+                                <svg class="size-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Alvin-ID -->
+                <div class="flex flex-col gap-2" data-xdata="{ copied: false }">
+                    <label class="text-sm font-semibold text-gray-600 dark:text-gray-300">Alvin-ID</label>
+                    <div class="flex items-center gap-2">
+                        <div class="flex-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm truncate font-mono" data-xref="alvin_id_text">
+                            {{ metadata.record_type }}:{{ metadata.id }}
+                        </div>
+                        <button 
+                            data-xon.click="navigator.clipboard.writeText($refs.alvin_id_text.innerText.trim()); copied = true; setTimeout(() => copied = false, 2000)"
+                            class="flex items-center justify-center p-2 text-gray-500 hover:text-alvin-orange bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md transition-colors shrink-0"
+                            title="{% translate 'Kopiera' %}">
+                            <span data-xshow="!copied">
+                                <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                                </svg>
+                            </span>
+                            <span data-xshow="copied" data-xcloak>
+                                <svg class="size-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Social media share buttons -->
+            <div class="pt-4 border-t border-gray-200 dark:border-gray-600">
+                <label class="text-sm font-semibold text-gray-600 dark:text-gray-300 block mb-3">{% translate 'Dela på sociala medier' %}</label>
+                <div class="flex flex-wrap items-center gap-3">
+                    
+                    <!-- X -->
+                    <a href="https://twitter.com/intent/tweet?url={{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}" 
+                       target="_blank" rel="noopener noreferrer" 
+                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-black dark:hover:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
+                       title="{% translate 'Dela på X' %}">
+                        <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+
+                    <!-- Bluesky -->
+                    <a href="https://bsky.app/intent/compose?text={{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}" 
+                       target="_blank" rel="noopener noreferrer" 
+                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#0285FF] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
+                       title="{% translate 'Dela på Bluesky' %}">
+                        <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566 1.137 0 2.816 0 5.132c0 2.15 1.573 9.492 2.222 10.518.89 1.402 2.66 1.705 4.385 1.42 2.274-.374 4.887-1.427 5.393-1.427.506 0 3.119 1.053 5.393 1.427 1.725.285 3.495-.018 4.385-1.42.649-1.026 2.222-8.368 2.222-10.518 0-2.316-2.566-3.995-5.202-2.673-2.752 1.942-5.711 5.881-6.798 7.995z"/></svg>
+                    </a>
+                    
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}" 
+                       target="_blank" rel="noopener noreferrer" 
+                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#1877F2] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
+                       title="{% translate 'Dela på Facebook' %}">
+                        <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/" 
+                       target="_blank" rel="noopener noreferrer" 
+                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#E1306C] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
+                       title="{% translate 'Gå till Instagram (Kopiera länken först)' %}">
+                        <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}" 
+                        target="_blank" rel="noopener noreferrer" 
+                        class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#0A66C2] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"                       title="{% translate 'Dela på LinkedIn' %}">
+                        <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    
+                    <!-- E-mail -->
+                    <a href="mailto:?subject={% translate 'Länk från Alvin' %}&body={{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}" 
+                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-alvin-orange bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
+                       title="{% translate 'Dela via E-post' %}">
+                        <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                    </a>
                 </div>
             </div>
+
         </div>
     </div>
 </dialog>

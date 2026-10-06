@@ -39,6 +39,7 @@
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
+    --container-md: 28rem;
     --container-4xl: 56rem;
     --container-7xl: 80rem;
     --text-xs: 0.75rem;
@@ -519,6 +520,10 @@
     width: calc(var(--spacing) * 7);
     height: calc(var(--spacing) * 7);
   }
+  .size-8 {
+    width: calc(var(--spacing) * 8);
+    height: calc(var(--spacing) * 8);
+  }
   .size-9 {
     width: calc(var(--spacing) * 9);
     height: calc(var(--spacing) * 9);
@@ -542,9 +547,6 @@
   }
   .h-10 {
     height: calc(var(--spacing) * 10);
-  }
-  .h-10\/12 {
-    height: calc(10/12 * 100%);
   }
   .h-12 {
     height: calc(var(--spacing) * 12);
@@ -627,9 +629,6 @@
   .w-10 {
     width: calc(var(--spacing) * 10);
   }
-  .w-10\/12 {
-    width: calc(10/12 * 100%);
-  }
   .w-11 {
     width: calc(var(--spacing) * 11);
   }
@@ -662,6 +661,9 @@
   }
   .max-w-10 {
     max-width: calc(var(--spacing) * 10);
+  }
+  .max-w-md {
+    max-width: var(--container-md);
   }
   .min-w-0 {
     min-width: calc(var(--spacing) * 0);
@@ -837,6 +839,9 @@
   }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
+  }
+  .gap-5 {
+    gap: calc(var(--spacing) * 5);
   }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
@@ -1187,6 +1192,9 @@
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
+  .p-2\.5 {
+    padding: calc(var(--spacing) * 2.5);
+  }
   .p-3 {
     padding: calc(var(--spacing) * 3);
   }
@@ -1222,6 +1230,9 @@
   }
   .px-5 {
     padding-inline: calc(var(--spacing) * 5);
+  }
+  .px-6 {
+    padding-inline: calc(var(--spacing) * 6);
   }
   .px-8 {
     padding-inline: calc(var(--spacing) * 8);
@@ -1899,6 +1910,34 @@
       }
     }
   }
+  .hover\:text-\[\#0A66C2\] {
+    &:hover {
+      @media (hover: hover) {
+        color: #0A66C2;
+      }
+    }
+  }
+  .hover\:text-\[\#0285FF\] {
+    &:hover {
+      @media (hover: hover) {
+        color: #0285FF;
+      }
+    }
+  }
+  .hover\:text-\[\#1877F2\] {
+    &:hover {
+      @media (hover: hover) {
+        color: #1877F2;
+      }
+    }
+  }
+  .hover\:text-\[\#E1306C\] {
+    &:hover {
+      @media (hover: hover) {
+        color: #E1306C;
+      }
+    }
+  }
   .hover\:text-alvin {
     &:hover {
       @media (hover: hover) {
@@ -1910,6 +1949,13 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-alvin-orange);
+      }
+    }
+  }
+  .hover\:text-black {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-black);
       }
     }
   }
@@ -2119,6 +2165,12 @@
       --tw-ring-inset: inset;
     }
   }
+  .active\:translate-y-0 {
+    &:active {
+      --tw-translate-y: calc(var(--spacing) * 0);
+      translate: var(--tw-translate-x) var(--tw-translate-y);
+    }
+  }
   .active\:bg-orange-800 {
     &:active {
       background-color: var(--color-orange-800);
@@ -2260,6 +2312,11 @@
   .sm\:justify-start {
     @media (width >= 40rem) {
       justify-content: flex-start;
+    }
+  }
+  .sm\:p-6 {
+    @media (width >= 40rem) {
+      padding: calc(var(--spacing) * 6);
     }
   }
   .sm\:px-6 {
@@ -2670,6 +2727,14 @@
       background-color: var(--color-gray-700);
     }
   }
+  .dark\:bg-gray-700\/50 {
+    @media (prefers-color-scheme: dark) {
+      background-color: color-mix(in srgb, oklch(37.3% 0.034 259.733) 50%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-gray-700) 50%, transparent);
+      }
+    }
+  }
   .dark\:bg-gray-700\/98 {
     @media (prefers-color-scheme: dark) {
       background-color: color-mix(in srgb, oklch(37.3% 0.034 259.733) 98%, transparent);
@@ -2935,6 +3000,24 @@
       }
     }
   }
+  .dark\:hover\:text-light-alvin {
+    @media (prefers-color-scheme: dark) {
+      &:hover {
+        @media (hover: hover) {
+          color: var(--color-light-alvin);
+        }
+      }
+    }
+  }
+  .dark\:hover\:text-white {
+    @media (prefers-color-scheme: dark) {
+      &:hover {
+        @media (hover: hover) {
+          color: var(--color-white);
+        }
+      }
+    }
+  }
   .dark\:focus\:\!text-white {
     @media (prefers-color-scheme: dark) {
       &:focus {
@@ -3063,13 +3146,6 @@ html {
     width: calc(3/5 * 100%);
   }
 }
-a {
-  color: var(--color-blue-800);
-  text-decoration-line: underline;
-  @media (prefers-color-scheme: dark) {
-    color: var(--color-blue-200);
-  }
-}
 #inventory-metadata .md-value, #inventory-metadata-first .md-value {
   flex-grow: 1;
   @media (width >= 40rem) {
@@ -3133,6 +3209,15 @@ a {
 }
 [x-cloak] {
   display: none !important;
+}
+@layer base {
+  a {
+    color: var(--color-blue-800);
+    text-decoration-line: underline;
+    @media (prefers-color-scheme: dark) {
+      color: var(--color-blue-200);
+    }
+  }
 }
 @layer utilities {
   .scrollbar-alvin {

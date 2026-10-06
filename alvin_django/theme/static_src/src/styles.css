@@ -112,9 +112,6 @@ Alvin viewer
   /* Låt värdet ta resten av platsen (3/5 eller flex-1) */
   @apply sm:w-3/5 pl-4 flex-grow;
 }
-a { 
-  @apply text-blue-800 dark:text-blue-200 underline;
-}
 
 #inventory-metadata .md-value,
 #inventory-metadata-first .md-value {
@@ -202,6 +199,12 @@ https://tailwindcss.com/docs/functions-and-directives#plugin-directive
 */
 
 [x-cloak] { display: none !important; }
+
+@layer base {
+  a { 
+    @apply text-blue-800 dark:text-blue-200 underline;
+  }
+}
 
 @layer utilities {
   .scrollbar-alvin {

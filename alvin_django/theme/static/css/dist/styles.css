@@ -3000,15 +3000,6 @@
       }
     }
   }
-  .dark\:hover\:text-light-alvin {
-    @media (prefers-color-scheme: dark) {
-      &:hover {
-        @media (hover: hover) {
-          color: var(--color-light-alvin);
-        }
-      }
-    }
-  }
   .dark\:hover\:text-white {
     @media (prefers-color-scheme: dark) {
       &:hover {

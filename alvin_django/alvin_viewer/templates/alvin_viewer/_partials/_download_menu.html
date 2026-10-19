@@ -209,7 +209,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 
                 <a href="{% url 'record_viewer' metadata.record_type metadata.id %}?format=xml" 
-                class="group p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex max-sm:flex-col items-center gap-4 hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200">
+                class="group p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex max-sm:flex-col items-center gap-4 hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200 no-underline">
                     <div class="p-3 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-md group-hover:scale-105 transition-transform">
                         <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             {% include "../_icons/xml.svg" %}
@@ -222,7 +222,7 @@
                 </a>
 
                 <a href="{% url 'record_viewer' metadata.record_type metadata.id %}?format=rdf" 
-                class="group p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex max-sm:flex-col items-center gap-4 hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200">
+                class="group p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex max-sm:flex-col items-center gap-4 hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200 no-underline">
                     <div class="p-3 bg-light-alvin dark:bg-dark-alvin text-dark-alvin dark:text-light-alvin rounded-md group-hover:scale-105 transition-transform">
                         <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             {% include "../_icons/xml.svg" %}
@@ -235,7 +235,7 @@
                 </a>
 
                 <a href="{% url 'record_viewer' metadata.record_type metadata.id %}?format=json" 
-                class="group p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex max-sm:flex-col items-center gap-4 hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200">
+                class="group p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex max-sm:flex-col items-center gap-4 hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200 no-underline">
                     <div class="p-3 bg-blue-50 dark:bg-blue-700/30 text-blue-600 dark:text-blue-400 rounded-md group-hover:scale-105 transition-transform">
                         <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             {% include '../_icons/json.svg' %}

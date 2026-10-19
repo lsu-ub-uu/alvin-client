@@ -68,7 +68,6 @@ Alvin viewer
 */ 
 
 .md-row {
-  /* Använd display: flex och w-full för att tvinga ut raden */
   @apply w-full flex;
 }
 
@@ -95,7 +94,6 @@ Alvin viewer
 
 
 #allmetadata .md-label {
-  /* Ändra från md: till sm: så den matchar när raden blir en rad */
   @apply sm:w-2/5 pl-4 shrink-0; 
 }
 
@@ -109,7 +107,6 @@ Alvin viewer
 }
 
 #allmetadata .md-value {
-  /* Låt värdet ta resten av platsen (3/5 eller flex-1) */
   @apply sm:w-3/5 pl-4 flex-grow;
 }
 

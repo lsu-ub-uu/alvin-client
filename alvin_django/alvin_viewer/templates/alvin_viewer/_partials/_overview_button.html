@@ -1,0 +1,21 @@
+{% load i18n static %}
+
+<div class="flex flex-col justify-baseline py-2 border-b border-[#D1D9D5]">
+    <button data-xon.click="overview = !overview"
+        class="flex gap-x-1 h-full p-2 dark:text-gray-200 text-center cursor-pointer hover:text-alvin">
+        {% include '../_icons/overview.svg' with class="size-6" %}
+        <div class="flex flex-row">
+            {% translate 'Översikt' %}
+        </div>
+        <svg 
+            class="size-6 inline-block transition-transform duration-100 ease-in-out origin-center" 
+            data-xbind:class="overview ? 'rotate-90' : 'rotate-0'"
+            stroke-width="2" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            color="currentColor"
+            >
+            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+    </button>
+</div>

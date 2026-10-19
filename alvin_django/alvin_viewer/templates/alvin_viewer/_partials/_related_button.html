@@ -1,0 +1,20 @@
+{% load i18n static %}
+
+<div class="flex flex-row py-2 border-b border-[#D1D9D5]">
+    <button
+        data-xon.click="related = ! related"
+        class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin">
+        {% include '../_icons/related.svg' with class="size-6" %}
+        <span>{% translate 'Relaterat' %}</span>
+        <svg 
+            class="size-6 inline-block transition-transform duration-100 ease-in-out origin-center" 
+            data-xbind:class="related ? 'rotate-90' : 'rotate-0'"
+            stroke-width="2" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            color="currentColor"
+            >
+            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+    </button>
+</div>

@@ -67,16 +67,16 @@ html {
 Alvin viewer 
 */ 
 
+.metadata {
+  @apply py-2 px-6 mb-2 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl;
+}
+
 .md-row {
-  @apply w-full flex;
+  @apply w-full flex py-4 flex-col sm:flex-row not-last:border-b border-[#D1D9D5] items-baseline;
 }
 
-#overview .md-row {
-  @apply flex-col py-2;
-}
-
-#allmetadata .md-row {
-  @apply py-4 flex-col sm:flex-row not-last:border-b border-[#D1D9D5] items-baseline;
+dl.updated > .md-row {
+  @apply flex flex-row w-fit text-sm text-gray-300;
 }
 
 #inventory-metadata .md-row {
@@ -88,13 +88,7 @@ Alvin viewer
 } 
 
 .md-label {
-  @apply w-full font-bold;
-}
-
-
-
-#allmetadata .md-label {
-  @apply sm:w-2/5 pl-4 shrink-0; 
+  @apply w-full font-bold sm:w-2/5 pl-4 shrink-0;
 }
 
 #inventory-metadata .md-label,
@@ -103,11 +97,7 @@ Alvin viewer
 }
 
 .md-value {
-  @apply w-full;
-}
-
-#allmetadata .md-value {
-  @apply sm:w-3/5 pl-4 flex-grow;
+  @apply w-full sm:w-3/5 pl-4 flex-grow;
 }
 
 #inventory-metadata .md-value,

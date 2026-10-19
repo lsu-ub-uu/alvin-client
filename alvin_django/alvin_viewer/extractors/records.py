@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Optional
 
-from .metadata import Address, Agent, Appraisal, Axis, Classification, Coin, CommonMetadata, Component, ComponentsBlock, DateEntry, DatesBlock, DecoratedList, DecoratedListItem, DecoratedTextWithType, Edge, DecoratedText, DecoratedTexts, DecoratedTextsWithType, Dimension, ElectronicLocator, FilesBlock, Identifier, Location, Measure, NamesBlock, OriginPlace, RelatedAuthoritiesBlock, RelatedRecordsBlock, SubjectMiscEntry, TitlesBlock
+from .metadata import Address, Agent, Appraisal, Axis, Classification, Coin, CommonMetadata, Component, ComponentsBlock, DateEntry, DatesBlock, DecoratedList, DecoratedListItem, DecoratedTextWithType, Edge, DecoratedText, DecoratedTexts, DecoratedTextsWithType, Dimension, ElectronicLocator, FilesBlock, Identifier, Location, Measure, NamesBlock, OriginPlace, RelatedAuthoritiesBlock, RelatedRecordsBlock, SubjectMiscEntry, Summary, TitlesBlock
 
 @dataclass(slots=True)
 class AlvinPlace(CommonMetadata):
@@ -59,7 +59,7 @@ class AlvinLocation(CommonMetadata):
     display_date: DecoratedText = None
     member_type: DecoratedListItem = None
     email: DecoratedText = None
-    summary: DecoratedTextsWithType = None
+    summary: Summary = None
     address: Address = None
     latitude: DecoratedText = None
     longitude: DecoratedText = None

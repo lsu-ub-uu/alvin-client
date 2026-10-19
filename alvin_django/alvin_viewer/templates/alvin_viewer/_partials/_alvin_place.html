@@ -1,16 +1,23 @@
 {% load i18n static %}
 
 <!-- Metadata -->
-<div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_related: false }">
-    <section class="mt-4" aria-labelledby="summary-heading">
-        {% if metadata.biographical_note %}
-        <h2 id="summary-heading" class="sr-only">{{metadata.biographical_note.type}}</h2>
-        <p class="text-lg">{{metadata.biographical_note.text|linebreaksbr}}</p>
-        {% endif %}
-    </section>
+<div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]">
+    
+    <!-- Overview -->
+    {% include './_overview_button.html' %}
+    <dl class="metadata" data-xshow="overview">
+        {% with metadata.authority_names.label as authority_label %}
+            {% for lang, name in metadata.authority_names.names.items %}
+                {% include "./_metadata_row.html" with svg_path="../_icons/placename.svg" label=authority_label extra_label=name.label_lang value=name.display %}
+            {% endfor %}
+        {% endwith %}
+        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
+        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
+    </dl>
 
+    <!-- All metadata -->
     {% if has_all_metadata %}
-    <dl id="allmetadata" class="py-2 px-4 mb-6 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
+    <dl class="metadata" data-xshow="allmetadata" data-xcloak>
         {% include "./_metadata_row_variant_names.html" %}
         {% include "./_metadata_row.html" with label=metadata.country.label value=metadata.country.item %}
         {% if metadata.longitude and metadata.latitude %}
@@ -20,18 +27,6 @@
     </dl>
     {% endif %}
 
-    <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
-        <dl id="overview">
-        {% with metadata.authority_names.label as authority_label %}
-            {% for lang, name in metadata.authority_names.names.items %}
-                {% include "./_metadata_row.html" with svg_path="../_icons/placename.svg" label=authority_label extra_label=name.label_lang value=name.display %}
-            {% endfor %}
-        {% endwith %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
-        </dl>
-
-    </section>
 </div>
 
 <!-- Map -->

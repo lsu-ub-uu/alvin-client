@@ -1,33 +1,44 @@
 {% load i18n static %}
 
 <!-- Metadata -->
-<div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_inventory: false, open_related: false }">
-    <section class="mt-4" aria-labelledby="summary-heading">
-        {% if metadata.summary %}
-        <h2 id="summary-heading" class="sr-only">{{metadata.summary.label}}</h2>
-        <p class="text-lg">{{metadata.summary.text|linebreaksbr}}</p>
-        {% endif %}
-        {% if metadata.subjects %}
-        <div class="flex flex-col my-5 dark:text-gray-200">
-            <div class="flex gap-x-1 mb-2">
-                <svg aria-hidden="true" focusable="false" class="size-6" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
-                    <path d="M3 17.4V6.6C3 6.26863 3.26863 6 3.6 6H16.6789C16.8795 6 17.0668 6.10026 17.1781 6.26718L20.7781 11.6672C20.9125 11.8687 20.9125 12.1313 20.7781 12.3328L17.1781 17.7328C17.0668 17.8997 16.8795 18 16.6789 18H3.6C3.26863 18 3 17.7314 3 17.4Z" stroke="currentColor" stroke-width="2"></path>
+<div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_inventory: false }">
+    
+    <!-- Overview -->
+    {% include './_overview_button.html' %}
+    <dl class="metadata" data-xshow="overview">
+        {% for agent in metadata.agents %}
+            {% include "./_metadata_row.html" with svg_path=agent.icon_path label=agent.display_roles url=agent.url value=agent.display %}
+        {% endfor %}
+        {% for place in metadata.origin_places.places %}
+            {% include "./_metadata_row.html" with svg_path="../_icons/place.svg" label=place.label url=place.url value=place.display %}
+        {% endfor %}
+        {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
+        {% include "./_metadata_row.html" with svg_path="../_icons/location.svg" label=metadata.location.label url=metadata.location.url value=metadata.location.names.title %}
+        {% if metadata.files.rights_code %}
+        <section class="border-t border-[#D1D9D5] mt-4 py-4" aria-labelledby="licensing-heading">
+            <div class="flex flex-row gap-x-2 items-center">
+                <svg class="size-9 mx-4" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
+                    <title>{{metadata.files.rights_label}}</title>
+                    <path d="M12 7L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M12 16.01L12.01 15.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M5 18L3.13036 4.91253C3.05646 4.39524 3.39389 3.91247 3.90398 3.79912L11.5661 2.09641C11.8519 2.03291 12.1481 2.03291 12.4339 2.09641L20.096 3.79912C20.6061 3.91247 20.9435 4.39524 20.8696 4.91252L19 18C18.9293 18.495 18.5 21.5 12 21.5C5.5 21.5 5.07071 18.495 5 18Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
-                <h2 class="text-md font-bold" id="subject-words-heading">{{metadata.subjects.label}}</h2>
+                
+                <div>
+                    <h2 class="font-bold" id="licensing-heading">{{metadata.files.rights_label}}</h2>
+                    <p>{{metadata.files.rights}}</p>
+                    <a href="{{metadata.files.rights_url}}">{%translate 'Information om licensen' %}</a>
+                </div>
+                
             </div>
-            <ul class="flex gap-x-2 gap-y-2 flex-wrap list-none" aria-labelledby="subject-words-heading">
-            {% for subject_group in metadata.subjects.entries %}
-                {% for subject in subject_group.collect_subjects %}
-                <li class="dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 dark:text-off-white hover:bg-light-alvin hover:text-dark-alvin shadow-sm px-4 py-2 rounded-md cursor-pointer">{{subject}}</li>
-                {% endfor %}
-            {% endfor %}
-            </ul>
-        </div>
+        </section>
         {% endif %}
-    </section>
-
+    </dl>
+    
+    <!-- All metadata -->
     {% if has_all_metadata %}
-    <dl id="allmetadata" class="py-2 px-4 mb-6 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
+    {% include './_all_metadata_button.html' %}
+    <dl class="metadata" data-xshow="all_metadata" data-xcloak>
         {% include "./_metadata_row_variant_title.html" %}
         {% include "./_metadata_row.html" with label=metadata.sublocation.label value=metadata.sublocation.text %}
         {% include "./_metadata_row.html" with label=metadata.shelf_mark.label value=metadata.shelf_mark.text %}
@@ -103,40 +114,7 @@
     </dl>
     {% endif %}
 
-    <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
-        <dl id="overview">
-            {% for agent in metadata.agents %}
-                {% include "./_metadata_row.html" with svg_path=agent.icon_path label=agent.display_roles url=agent.url value=agent.display %}
-            {% endfor %}
-            {% for place in metadata.origin_places.places %}
-                {% include "./_metadata_row.html" with svg_path="../_icons/place.svg" label=place.label url=place.url value=place.display %}
-            {% endfor %}
-            {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
-            {% include "./_metadata_row.html" with svg_path="../_icons/location.svg" label=metadata.location.label url=metadata.location.url value=metadata.location.names.title %}
-            {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
-            {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
-            {% if metadata.files.rights_code %}
-            <section class="border-t border-[#D1D9D5] mt-4 py-4" aria-labelledby="licensing-heading">
-                <div class="flex flex-row gap-x-2 items-center">
-                    <svg class="size-9 mx-4" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
-                        <title>{{metadata.files.rights_label}}</title>
-                        <path d="M12 7L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M12 16.01L12.01 15.9989" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M5 18L3.13036 4.91253C3.05646 4.39524 3.39389 3.91247 3.90398 3.79912L11.5661 2.09641C11.8519 2.03291 12.1481 2.03291 12.4339 2.09641L20.096 3.79912C20.6061 3.91247 20.9435 4.39524 20.8696 4.91252L19 18C18.9293 18.495 18.5 21.5 12 21.5C5.5 21.5 5.07071 18.495 5 18Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                    
-                    <div>
-                        <h2 class="font-bold" id="licensing-heading">{{metadata.files.rights_label}}</h2>
-                        <p>{{metadata.files.rights}}</p>
-                        <a href="{{metadata.files.rights_url}}">{%translate 'Information om licensen' %}</a>
-                    </div>
-                    
-                </div>
-            </section>
-            {% endif %}
-        </dl>
-    </section>
-
+    <!-- Components -->
     {% if metadata.components %}
     <div class="flex flex-col justify-baseline py-2 border-b border-[#D1D9D5]">
         <button data-xon.click="open_inventory = !open_inventory"
@@ -166,41 +144,25 @@
     </div>
     {% endif %}
 
+    <!-- Related -->
     {% if has_related or metadata.related_records or metadata.components.all_related_records %}
-    <div class="flex flex-row py-2 border-b border-[#D1D9D5]">
-        <button
-            data-xon.click="open_related = !open_related"
-            class="flex gap-x-1 h-full p-2 dark:text-gray-200 text-center cursor-pointer hover:text-alvin">
-            {% include '../_icons/related.svg' with class="size-6" %}
-            <span>{% translate 'Relaterat' %}</span>
-            <svg 
-                class="size-6 inline-block transition-transform duration-100 ease-in-out origin-center" 
-                data-xbind:class="open_related ? 'rotate-90' : 'rotate-0'"
-                stroke-width="2" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                color="currentColor"
-                >
-                <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-        </button>
-    </div>
+    {% include './_related_button.html' %}
+    <section data-xshow="related" data-xcloak class="flex flex-col gap-y-4">
 
-    <section data-xshow="open_related" data-xcloak class="flex flex-col gap-y-4 mt-2 mb-4">
-
+        <!-- Related records -->
         {% if metadata.related_records %}
             {% include 'alvin_viewer/_partials/_related_records.html' with label=metadata.related_records.label related_records_target=metadata.related_records.ordered_by_type htmx_get='load_category' htmx_target='category' %}
         {% endif %}
-        
         {% if metadata.components.all_related_records %}
             {% translate 'Relaterade poster från komponenter' as label_text %}
             {% include 'alvin_viewer/_partials/_related_records.html' with label=label_text related_records_target=metadata.components.all_related_records.ordered_by_type htmx_get='load_component_category' htmx_target='component-category' %}
         {% endif %}
-
+        
+        <!-- Other related-->
         {% if has_related %}
         <h2 class="py-2 font-bold">{% translate 'Övrigt relaterat' %}:</h2>
         <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
-            <dl id="allmetadata">
+            <dl id="metadata">
                 {% include "./_authority_links.html" with label=metadata.subject_person.label link_type="alvin-person" authority_links=metadata.subject_person %}
                 {% include "./_authority_links.html" with label=metadata.subject_organisation.label link_type="alvin-organisation" authority_links=metadata.subject_organisation %}
                 {% include "./_authority_links.html" with label=metadata.subject_place.label link_type="alvin-place" authority_links=metadata.subject_place %}

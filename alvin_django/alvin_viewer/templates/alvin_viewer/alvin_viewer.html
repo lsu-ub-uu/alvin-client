@@ -18,8 +18,9 @@
 {% block content %}
   <main
     class="min-h-screen w-full flex flex-col lg:flex-1 pt-4 pb-8 px-2 md:px-8"
-    data-xdata="{ activeTab: 'overview', download: false, share: false }"
-    data-xon.click.away="download = false">
+    data-xdata="{ overview: true, all_metadata: false, download: false, share: false, related: false }">
+
+    <!-- Saved search -->
     {% if value != None %}
     <div class="pagination">
       <a class="flex items-center w-fit pb-2 outline-none focus:outline-none focus:ring-0 active:translate-y-0 select-none" href="{{ value }}">
@@ -32,20 +33,23 @@
     </div>
     {% endif %}
     
+    <!-- Image viewer -->
     {% if metadata.files.has_images %}
       {% include './_partials/_viewer.html' %}
     {% endif %}
 
+    <!-- Title -->
     <div class="mx-auto w-full max-w-4xl py-4">
-    <h1 
-      dir="{% if metadata.main_title.orientation_code == 'rtl' %}rtl{% else %}ltr{% endif %}" 
-      class="text-3xl font-bold py-2 text-start">
-      {% firstof metadata.main_title.display metadata.authority_names.title %}
-    </h1>
-    {% include './_partials/_render_record_icon.html' %}
+      <h1 
+        dir="{% if metadata.main_title.orientation_code == 'rtl' %}rtl{% else %}ltr{% endif %}" 
+        class="text-3xl font-bold py-2 text-start">
+        {% firstof metadata.main_title.display metadata.authority_names.title %}
+      </h1>
+      {% include './_partials/_render_record_icon.html' %}
     </div>
+
+    <!-- Download och search tools -->
     <div class="flex mx-auto w-full max-w-4xl justify-between flex-row py-4 my-4 border-y border-[#D1D9D5] ">
-      <!-- Download och search tools -->
       <div class="flex flex-row gap-x-1">
         <button class="flex flex-row gap-x-1 items-center h-10 dark:text-gray-200 bg-gray-100 dark:bg-white/10 border border-[#D1D9D5] rounded-md cursor-pointer p-2 text-center hover:bg-gray-300 hover:dark:bg-white/15 shadow-sm transition ease-in-out duration-150" data-xon.click="download = !download">
           <svg class="size-5" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor">
@@ -85,31 +89,45 @@
       </div>
     </div>
 
+    <!-- Summary and subjects -->
+    <section class="mx-auto w-full max-w-4xl" aria-labelledby="summary-heading">
+      
+        {% firstof metadata.summary.label metadata.biographical_note.type as summary_label %}
+        {% firstof metadata.summary.display metadata.summary.text metadata.biographical_note.text as summary %}
+
+        {% if summary %}
+        <div class="my-6">
+          <h2 id="summary-heading" class="sr-only">{{ summary_label }}</h2>
+          <p class="text-lg">{{ summary|linebreaksbr }}</p>
+        </div>
+        {% endif %}
+
+        {% if metadata.subjects %}
+        <div class="flex flex-col my-5 dark:text-gray-200">
+            <div class="flex gap-x-1 mb-2">
+                <svg aria-hidden="true" focusable="false" class="size-6" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
+                    <path d="M3 17.4V6.6C3 6.26863 3.26863 6 3.6 6H16.6789C16.8795 6 17.0668 6.10026 17.1781 6.26718L20.7781 11.6672C20.9125 11.8687 20.9125 12.1313 20.7781 12.3328L17.1781 17.7328C17.0668 17.8997 16.8795 18 16.6789 18H3.6C3.26863 18 3 17.7314 3 17.4Z" stroke="currentColor" stroke-width="2"></path>
+                </svg>
+                <h2 class="text-md font-bold" id="subject-words-heading">{{metadata.subjects.label}}</h2>
+            </div>
+            <ul class="flex gap-x-2 gap-y-2 flex-wrap list-none" aria-labelledby="subject-words-heading">
+            {% for subject_group in metadata.subjects.entries %}
+                {% for subject in subject_group.collect_subjects %}
+                <li class="dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 dark:text-off-white hover:bg-light-alvin hover:text-dark-alvin shadow-sm px-4 py-2 rounded-md cursor-pointer">{{subject}}</li>
+                {% endfor %}
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- AV content -->
     {% if metadata.files.has_audio_video %}
       {% include './_partials/_audio_video_player.html' %}
     {% endif %}
-
-    <div class="flex flex-row mx-auto w-full max-w-4xl mt-5 border-b border-[#D1D9D5] ">
-      <nav class="flex flex-wrap gap-x-1 justify-start w-full text-md">
-        <button data-xon.click="activeTab = 'overview'"
-          class="cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
-          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'overview' }">
-          {% include './_icons/overview.svg' with class="size-6 shrink-0" %}
-          <span>{% translate 'Översikt' %}</span>
-        </button>
-        {% if has_all_metadata %}
-        <button data-xon.click="activeTab = 'all_metadata'"
-          class="cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin"
-          data-xbind.class="{ 'border-b-4 border-alvin': activeTab === 'all_metadata' }">
-          {% include './_icons/allmetadata.svg' with class="size-6 shrink-0" %}
-          <span>{% translate 'All metadata' %}</span>
-        </button>
-        {% endif %}
-      </nav>
-    </div>
     
     <!-- Metadata -->
-    <div class="w-full">
+    <section class="w-full">
       {% if metadata.record_type == 'alvin-place' %}
       {% include './_partials/_alvin_place.html' %}
       {% elif metadata.record_type == 'alvin-person' %}
@@ -123,8 +141,14 @@
       {% elif metadata.record_type == 'alvin-record' %}
       {% include './_partials/_alvin_record.html' %}
       {% endif %}
-    </div>
-
+      <dl class="updated mx-auto max-w-4xl flex justify-end mt-4">
+        {% translate 'Senast ändrad' as change_date_label %}
+        {% firstof metadata.last_updated.text metadata.created.text as display_date %}
+        {% include "./_partials/_metadata_row.html" with label=change_date_label value=display_date %}
+      </dl>
+    </section>
+    
+    <!-- Open Street Map-->
     {% block jsbody %}
     <script>
       document.addEventListener("DOMContentLoaded", function() {
@@ -144,6 +168,8 @@
           }
       });
     </script>
+
+    <!-- Document viewer -->
     <script>
       document.addEventListener('alpine:init', () => {
         Alpine.data('documentViewer', () => ({
@@ -272,8 +298,6 @@
                 </div>`;
             }
           },
-
-          
           
           cleanup() {
             if (this.currentBlobUrl) URL.revokeObjectURL(this.currentBlobUrl);

@@ -1,17 +1,28 @@
 {% load i18n static %}
 
 <!-- Metadata -->
-<div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ open_related: false }">
-    <section class="mt-4" aria-labelledby="summary-heading">
-        {% if metadata.biographical_note %}
-        <h2 id="summary-heading" class="sr-only">{{metadata.biographical_note.type}}</h2>
-        <p class="text-lg">{{metadata.biographical_note.text|linebreaksbr}}</p>
-        {% endif %}
-    </section>
+<div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]">
 
+    <!-- Overview -->
+    {% include './_overview_button.html' %}
+    <dl class="metadata" data-xshow="overview">
+        {% with metadata.authority_names.label as authority_label %}
+            {% for lang, name in metadata.authority_names.names.items %}
+                {% include "./_metadata_row.html" with svg_path='../_icons/personname.svg' label=authority_label extra_label=name.label_lang value=name.display %}
+            {% endfor %}
+        {% endwith %}
+        {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.birth_date.label value=metadata.birth_date.display %}
+        {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.death_date.label value=metadata.death_date.display %}
+        {% include "./_metadata_row.html" with svg_path='../_icons/place.svg' label=metadata.birth_place.label url=metadata.birth_place.url value=metadata.birth_place.display %}
+        {% include "./_metadata_row.html" with svg_path='../_icons/place.svg' label=metadata.death_place.label url=metadata.death_place.url value=metadata.death_place.display %}
+        {% include "./_metadata_row.html" with svg_path='../_icons/clock.svg' label=metadata.created.label value=metadata.created.text %}
+        {% include "./_metadata_row.html" with svg_path='../_icons/clock.svg' label=metadata.last_updated.label value=metadata.last_updated.text %}
+    </dl>
 
+    <!-- All metadata -->
     {% if has_all_metadata %}
-    <dl id="allmetadata" class="py-2 px-4 mb-6 dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl" data-xshow="activeTab === 'all_metadata'" data-xcloak>
+    {% include './_all_metadata_button.html' %}
+    <dl class="metadata" data-xshow="all_metadata" data-xcloak>
         {% include "./_metadata_row_variant_names.html" %}
         {% include "./_metadata_row.html" with label=metadata.nationality.label value=metadata.nationality.country.display %}
         {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}
@@ -25,61 +36,23 @@
     </dl>
     {% endif %}
 
-    <section class="py-2 px-4 dark:border dark:border-white/10 bg-gray-100 dark:bg-white/15 shadow-sm rounded-xl">
-        <dl id="overview">
-
-            {% with metadata.authority_names.label as authority_label %}
-                {% for lang, name in metadata.authority_names.names.items %}
-                    {% include "./_metadata_row.html" with svg_path='../_icons/personname.svg' label=authority_label extra_label=name.label_lang value=name.display %}
-                {% endfor %}
-            {% endwith %}
-            {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.birth_date.label value=metadata.birth_date.display %}
-            {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.death_date.label value=metadata.death_date.display %}
-            {% include "./_metadata_row.html" with svg_path='../_icons/place.svg' label=metadata.birth_place.label url=metadata.birth_place.url value=metadata.birth_place.display %}
-            {% include "./_metadata_row.html" with svg_path='../_icons/place.svg' label=metadata.death_place.label url=metadata.death_place.url value=metadata.death_place.display %}
-            {% include "./_metadata_row.html" with svg_path='../_icons/clock.svg' label=metadata.created.label value=metadata.created.text %}
-            {% include "./_metadata_row.html" with svg_path='../_icons/clock.svg' label=metadata.last_updated.label value=metadata.last_updated.text %}
-        </dl>
-    </section>
-
+    <!-- Related -->
     {% if has_related %}
-    <div class="flex flex-row py-2 border-b border-[#D1D9D5]">
-        <button
-            data-xon.click="open_related = ! open_related"
-            class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin">
-            {% include '../_icons/related.svg' with class="size-6" %}
-            <span>{% translate 'Relaterat' %}</span>
-            <svg 
-                class="size-6 inline-block transition-transform duration-100 ease-in-out origin-center" 
-                data-xbind:class="open_related ? 'rotate-90' : 'rotate-0'"
-                stroke-width="2" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                color="currentColor"
-                >
-                <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-        </button>
-    </div>
+    {% include './_related_button.html' %}
+    <section data-xshow="related" data-xcloak aria-labelledby="related-heading" class="mt-6">
 
-    <section data-xshow="open_related" data-xcloak aria-labelledby="related-heading" class="mt-6">
-
+        <!-- Related persons -->
         {% if metadata.related_persons %}
-        
         <h2 id="related-heading" class="py-2 font-bold">
             {{metadata.related_persons.label}}:
         </h2>
         <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
-
-
-           
             <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
-
+            
             {% for person in metadata.related_persons.records %}
                 <li class="w-full h-[240px]">
                     <a href="{{ person.url }}" 
                     class="group relative block w-full h-full bg-gray-100 dark:bg-white/10 rounded-md overflow-hidden shadow-md hover:shadow-md transition-shadow duration-300 ease-in-out">
-                        
                         <div class="w-full h-[240px] overflow-hidden bg-gray-100 dark:bg-white/10">
                             <div class="w-full h-full flex items-center justify-center transition-transform duration-500 ease-in-out group-hover:scale-110">
                                 <svg class="size-20 text-gray-400" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -101,22 +74,20 @@
                     </a>
                 </li>
             {% endfor %}
+
             </ul>
 
         </div>
         {% endif %}
 
+        <!-- Related organisations -->
         {% if metadata.related_organisations %}
-        
         <h2 id="related-heading" class="py-2 font-bold">
             {{metadata.related_organisations.label}}:
         </h2>
         <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
-
-
-           
             <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
-
+            
             {% for organisation in metadata.related_organisations.records %}
                 <li class="w-full h-[240px]">
                     <a href="{{ organisation.url }}" 
@@ -143,15 +114,17 @@
                     </a>
                 </li>
             {% endfor %}
+
             </ul>
 
         </div>
         {% endif %}
 
+        <!-- External URL:s -->
         {% if metadata.electronic_locators %}
         <h2 class="py-2 font-bold">{% translate 'Övrigt relaterat' %}:</h2>
         <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
-            <dl id="allmetadata">
+            <dl class="metadata">
                 {% for electronic_locator in metadata.electronic_locators %}
                     {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
                 {% endfor %}

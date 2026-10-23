@@ -18,7 +18,7 @@
 {% block content %}
   <main
     class="min-h-screen w-full flex flex-col lg:flex-1 pt-4 pb-8 px-2 md:px-8"
-    data-xdata="{ overview: true, all_metadata: false, download: false, share: false, related: false }">
+    data-xdata="{ overview: true, details: false, download: false, share: false, related: false }">
 
     <!-- Saved search -->
     {% if value != None %}
@@ -141,11 +141,6 @@
       {% elif metadata.record_type == 'alvin-record' %}
       {% include './_partials/_alvin_record.html' %}
       {% endif %}
-      <dl class="updated mx-auto max-w-4xl flex justify-end mt-4">
-        {% translate 'Senast ändrad' as change_date_label %}
-        {% firstof metadata.last_updated.text metadata.created.text as display_date %}
-        {% include "./_partials/_metadata_row.html" with label=change_date_label value=display_date %}
-      </dl>
     </section>
     
     <!-- Open Street Map-->
@@ -330,7 +325,7 @@
     {% endblock %}
 
     <!-- Hidden tool menus -->
-    {% include './_partials/_download_menu.html' %}
+    {% include './_partials/_download_menu_alt.html' %}
     {% include './_partials/_share_menu.html' %}
 
   </main>

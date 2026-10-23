@@ -14,14 +14,15 @@
         {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.start_date.label value=metadata.start_date.display %}
         {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.end_date.label value=metadata.end_date.display %} 
         {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.display_date.label value=metadata.display_date.text %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
+        {% translate 'Senast ändrad' as change_date_label %}
+        {% firstof metadata.last_updated.text metadata.created.text as display_date %}
+        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=change_date_label value=display_date %}
     </dl>
 
     <!-- All metadata -->
-    {% if has_all_metadata %}
-    {% include './_all_metadata_button.html' %}
-    <dl class="metadata" data-xshow="all_metadata" data-xcloak>
+    {% if has_details %}
+    {% include './_details_button.html' %}
+    <dl class="metadata" data-xshow="details" data-xcloak>
         {% include "./_metadata_row_variant_names.html" %}
         {% include "./_address.html" with address=metadata.address %}
         {% include "./_metadata_row.html" with label=metadata.general_note.type value=metadata.general_note.text %}
@@ -44,7 +45,7 @@
         </h2>
         <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
            
-            {% for type_block in metadata.related_organisations.ordered_by_type %}
+            {% for type_block in metadata.related_organisations.order_by_type %}
             <h3 class="my-2">{{type_block.label}}</h3>
             <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
                 

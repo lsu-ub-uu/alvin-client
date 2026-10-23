@@ -1,9 +1,7 @@
 {% load i18n static %}
 
-<div class="flex flex-row py-2 border-b border-[#D1D9D5]">
-    <button
-        data-xon.click="related = ! related"
-        class="dark:text-gray-200 cursor-pointer flex gap-x-1 h-full p-2 text-center hover:text-alvin">
+<div class="md-toggle-closed" data-xbind:class="{ 'md-toggle-open': related }">
+    <button data-xon.click="related = !related">
         {% include '../_icons/related.svg' with class="size-6" %}
         <span>{% translate 'Relaterat' %}</span>
         <svg 

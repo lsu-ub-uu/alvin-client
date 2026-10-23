@@ -24,9 +24,9 @@
     </dl>
 
     <!-- All metadata -->
-    {% if has_all_metadata %}
-        {% include './_all_metadata_button.html' %}
-        <dl class="metadata" data-xshow="all_metadata" data-xcloak>
+    {% if has_details %}
+        {% include './_details_button.html' %}
+        <dl class="metadata" data-xshow="details" data-xcloak>
             {% include "./_metadata_row_variant_names.html" %}
             {% include "./_metadata_row.html" with label=metadata.member_type.label value=metadata.member_type.item %}
             {% include "./_address.html" with address=metadata.address %}
@@ -44,13 +44,11 @@
         {% if metadata.electronic_locators %}
         <div data-xshow="related" data-xcloak> 
             <h2 class="py-2 font-bold">{% translate 'Övrigt relaterat' %}:</h2>
-            <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
-                <dl id="metadata">
-                    {% for electronic_locator in metadata.electronic_locators %}
-                        {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
-                    {% endfor %}
-                </dl>
-            </div>
+            <dl id="metadata">
+                {% for electronic_locator in metadata.electronic_locators %}
+                    {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
+                {% endfor %}
+            </dl>
         </div>   
         {% endif %}
     {% endif %}

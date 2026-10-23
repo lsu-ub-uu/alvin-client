@@ -1,6 +1,6 @@
 {% load i18n static %}
 
-<div id="{{ htmx_target }}-{{ type_block.label|slugify }}" class="p-4 bg-gray-300/10 dark:bg-white/15 rounded">
+<div id="{{ htmx_target }}-{{ type_block.label|slugify }}" class="p-4">
     
     <ol class="list-decimal list-inside" start="{% if category_page_obj %}{{ category_page_obj.start_index }}{% else %}1{% endif %}">
         {% if category_page_obj %}

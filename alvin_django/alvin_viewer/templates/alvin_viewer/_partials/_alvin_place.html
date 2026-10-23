@@ -11,12 +11,13 @@
                 {% include "./_metadata_row.html" with svg_path="../_icons/placename.svg" label=authority_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
+        {% translate 'Senast ändrad' as change_date_label %}
+        {% firstof metadata.last_updated.text metadata.created.text as display_date %}
+        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=change_date_label value=display_date %}
     </dl>
 
     <!-- All metadata -->
-    {% if has_all_metadata %}
+    {% if has_details %}
     <dl class="metadata" data-xshow="allmetadata" data-xcloak>
         {% include "./_metadata_row_variant_names.html" %}
         {% include "./_metadata_row.html" with label=metadata.country.label value=metadata.country.item %}

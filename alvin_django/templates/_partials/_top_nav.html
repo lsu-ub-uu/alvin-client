@@ -2,7 +2,7 @@
 
 <header aria-label="{% trans 'Huvudmeny' %}" class="sticky top-0 z-50"
     data-xdata="{ activeMenu: null }" data-xon.keydown.escape="activeMenu = null" data-xon.click.away="activeMenu = null">
-    <nav class="topnav flex justify-between w-full h-16 bg-white/98 dark:bg-gray-800/98 shadow-md z-10 select-none">
+    <nav class="topnav flex justify-between w-full h-16 bg-gray-50/98 dark:bg-gray-900/98 z-10 select-none">
         <nav class="flex flex-shrink-0 justify-center items-center h-full">
             
             <!-- Hamburger menu -->
@@ -63,7 +63,7 @@
                 :class="{'bg-dark-alvin': activeMenu === 'search'}">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6"
                     data-xshow="activeMenu !== 'search'">
-                    <title>Open search bar</title>
+                    <title>{% translate 'Sökfält' %}</title>
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>

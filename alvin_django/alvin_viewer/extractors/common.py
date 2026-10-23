@@ -1,7 +1,6 @@
 from typing import Any, Dict, List, Callable, Optional, Union
-from collections import defaultdict
 from lxml import etree
-import requests
+
 from django.utils import translation
 from django.core.cache import cache
 

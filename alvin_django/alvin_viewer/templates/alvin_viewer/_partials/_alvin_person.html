@@ -15,14 +15,15 @@
         {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.death_date.label value=metadata.death_date.display %}
         {% include "./_metadata_row.html" with svg_path='../_icons/place.svg' label=metadata.birth_place.label url=metadata.birth_place.url value=metadata.birth_place.display %}
         {% include "./_metadata_row.html" with svg_path='../_icons/place.svg' label=metadata.death_place.label url=metadata.death_place.url value=metadata.death_place.display %}
-        {% include "./_metadata_row.html" with svg_path='../_icons/clock.svg' label=metadata.created.label value=metadata.created.text %}
-        {% include "./_metadata_row.html" with svg_path='../_icons/clock.svg' label=metadata.last_updated.label value=metadata.last_updated.text %}
+        {% translate 'Senast ändrad' as change_date_label %}
+        {% firstof metadata.last_updated.text metadata.created.text as display_date %}
+        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=change_date_label value=display_date %}
     </dl>
 
     <!-- All metadata -->
-    {% if has_all_metadata %}
-    {% include './_all_metadata_button.html' %}
-    <dl class="metadata" data-xshow="all_metadata" data-xcloak>
+    {% if has_details %}
+    {% include './_details_button.html' %}
+    <dl class="metadata" data-xshow="details" data-xcloak>
         {% include "./_metadata_row_variant_names.html" %}
         {% include "./_metadata_row.html" with label=metadata.nationality.label value=metadata.nationality.country.display %}
         {% include "./_metadata_row.html" with label=metadata.display_date.label value=metadata.display_date.text %}

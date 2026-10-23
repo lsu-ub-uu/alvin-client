@@ -13,14 +13,15 @@
         {% for place in metadata.origin_places.places %}
             {% include "./_metadata_row.html" with svg_path="../_icons/place.svg" label=place.label url=place.url value=place.display %}
         {% endfor %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.last_updated.label value=metadata.last_updated.text %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=metadata.created.label value=metadata.created.text %}
+        {% translate 'Senast ändrad' as change_date_label %}
+        {% firstof metadata.last_updated.text metadata.created.text as display_date %}
+        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=change_date_label value=display_date %}
     </dl>
 
     <!-- All metadata -->
-    {% if has_all_metadata %}
-    {% include './_all_metadata_button.html'%}
-    <dl class="metadata" data-xshow="all_metadata" data-xcloak>
+    {% if has_details %}
+    {% include './_details_button.html'%}
+    <dl class="metadata" data-xshow="details" data-xcloak>
         {% include "./_metadata_row_variant_title.html" %}
         {% for date in metadata.date_other %}
             {% include "./_metadata_row.html" with label=date.type value=date.dates.display|linebreaksbr %}

@@ -26,6 +26,7 @@ session = _session()
 
 COLLECTIONS = [
     #common
+    "typeOfResourceCollection",
     "languageCodeCollection",
     "identifierTypeAuthorityCollection",
 
@@ -101,5 +102,5 @@ def get_item_dict() -> Optional[dict]:
         if d is None:
             _reload_items()
             d = cache.get(CACHE_DICT_KEY)
+        print(d)
         return d or None
-    

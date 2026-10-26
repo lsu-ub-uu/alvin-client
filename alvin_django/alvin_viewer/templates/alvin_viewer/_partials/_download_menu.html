@@ -14,6 +14,7 @@
     class="fixed inset-0 z-50 flex items-center justify-center w-screen h-screen bg-black/80 dark:bg-gray-900/80 focus:outline-none"
 >
     <div 
+        @open-attachments.window="open = true"    
         data-xdata="{ 
             activeDownloadTab: '{{ download_tabs.default_download_tab }}',
             loading: false,

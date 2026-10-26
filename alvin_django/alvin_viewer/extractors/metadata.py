@@ -838,6 +838,7 @@ class FilesBlock:
         license_stub = (
             self.rights_code.replace("CC_", "").replace("_", "-").lower()
         )
+
         return f"{cc_base_url}/licenses/{license_stub}/4.0/deed.{current_lang}"
 
     # --- IMAGES ---

@@ -97,28 +97,6 @@ def alvin_viewer(request, record_type: str, record_id: str):
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
     
-    # Download menu tabs configuration
-    download_tabs = {
-        "default_download_tab": "show_metadata",
-        "tabs": []
-    }
-
-    if metadata.record_type == 'alvin-record':
-        if metadata.files and getattr(metadata.files, 'has_images', False):
-            download_tabs["tabs"].append({"id": "show_thumbnails", "label": "Bilder"})
-
-        if getattr(metadata.files, 'has_attachments', False):
-            download_tabs["tabs"].append({"id": "show_attachments", "label": "Dokument"})
-
-        download_tabs["tabs"].append({"id": "show_metadata", "label": "Metadata"})
-
-        if download_tabs["tabs"]:
-            download_tabs["default_download_tab"] = download_tabs["tabs"][0]["id"]
-
-    else:
-        download_tabs["tabs"] = [{"id": "show_metadata", "label": "Metadata"}]
-        download_tabs["default_download_tab"] = "show_metadata"
-
     # Handling HTMX for loading related records by category
     load_category = request.GET.get('load_category')
     load_component_category = request.GET.get('load_component_category')
@@ -158,8 +136,8 @@ def alvin_viewer(request, record_type: str, record_id: str):
                "value": value,
                "has_related": has_related(metadata),
                "has_details": has_details(metadata),
-               "page_obj": page_obj, 
-               "download_tabs": download_tabs }
+               "page_obj": page_obj,
+            }
 
     if request.headers.get('HX-Request') and 'page' in request.GET:
         return render(request, 'alvin_viewer/_partials/_thumbnail_page.html', context)

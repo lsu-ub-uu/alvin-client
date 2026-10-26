@@ -1,32 +1,32 @@
 {% load i18n %}
-<div class="w-full p-6 shadow-md bg-gray-50/98 dark:bg-gray-900/98">
-    <form action="{% url 'alvin_search'%}" method="get" role="search">
-        <div class="sticky top-0 z-10 mb-5 flex w-full items-center justify-between rounded-full bg-white p-2 shadow-lg dark:bg-gray-700">
+<div class="p-6">
+    <form class="flex flex-col items-center justify-center" action="{% url 'alvin_search'%}" method="get" role="search">
+        <div class="bg-gray-50 dark:bg-gray-900  border-2 border-black dark:border-gray-200 z-10 mb-5 flex w-full md:w-2/3 lg:1/2 rounded-full p-2 shadow-md">
             <label for="alvinsearch" class="sr-only">{% translate 'Sök' %}</label>
-            <input name="query" id="alvinsearch" x-ref="alvinsearch" class="w-full rounded-full bg-gray-100 py-4 pl-6 text-sm leading-tight text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:text-gray-100 dark:focus:ring-blue-400 lg:text-base"
+            <input name="query" id="alvinsearch" x-ref="alvinsearch" class="w-full rounded-full bg-gray-50 py-4 pl-6 text-sm leading-tight text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:text-gray-100 dark:focus:ring-blue-400 lg:text-base"
                 type="search" placeholder="{% translate 'Sök över en halv miljon objekt' %}"
                 {% if query %}
                 value="{{ query }}"
                 {% endif %}>
-            <button type="submit" class="mx-2 rounded-full bg-gray-900 p-3 text-white hover:bg-dark-alvin focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-blue-400">
+            <button type="submit" class="mx-2 rounded-full bg-gray-900 dark:bg-gray-500 p-4 text-white hover:bg-dark-alvin focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-blue-400">
                 <span class="sr-only">{% translate 'Sök' %}</span>
                 <svg class="size-6" viewBox="0 0 20 20"
                     fill="currentColor" aria-hidden="true">
-			                <title>{% translate 'Knapp för sökning' %}</title>
-                            <path fill-rule="evenodd"
-                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clip-rule="evenodd"/>
-                        </svg>
+                    <title>{% translate 'Knapp för sökning' %}</title>
+                    <path fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd"/>
+                </svg>
             </button>
         </div>
-        <fieldset class="flex flex-wrap justify-center gap-2 text-sm dark:text-white md:text-base">
+        <fieldset class="flex flex-wrap justify-center gap-2 text-sm bg-gray-50 dark:bg-gray-900  border-2 border-black dark:border-gray-200 p-4 rounded-full p-2 shadow-md">
             <legend class="sr-only">{% translate 'Söktyp' %}</legend>
             <div>
                 <input type="radio" id="alvinRecord" name="searchType" value="alvinRecord"
                 {% if searchType == 'alvinRecord' or not searchType %} checked {% endif %}
                 class="peer sr-only">
                 <label for="alvinRecord"
-                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-alvin-grey px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500 dark:bg-gray-700">
+                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-gray-50 dark:bg-gray-900 px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500">
                     <svg class="size-6" stroke-width="2" fill="none">
                         <title>{% translate 'Sök efter poster' %}</title>
                         {% include "../alvin_viewer/_icons/allmetadata.svg" %}
@@ -39,7 +39,7 @@
                 {% if searchType == 'person' %} checked {% endif %}
                 class="peer sr-only">
                 <label for="person"
-                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-alvin-grey px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500 dark:bg-gray-700">
+                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-gray-50 dark:bg-gray-900 px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500">
                     <svg class="size-6" stroke-width="2" fill="none">
                         <title>{% translate 'Sök efter personer' %}</title>
                         {% include "../alvin_viewer/_icons/person.svg" %}
@@ -52,7 +52,7 @@
                 {% if searchType == 'organisation' %} checked {% endif %}
                 class="peer sr-only">
                 <label for="organisation"
-                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-alvin-grey px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500 dark:bg-gray-700">
+                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-gray-50 dark:bg-gray-900 px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500">
                     <svg class="size-6" stroke-width="2" fill="none">
                         <title>{% translate 'Sök efter organisationer' %}</title>
                         {% include "../alvin_viewer/_icons/organisation.svg" %}
@@ -65,7 +65,7 @@
                 {% if searchType == 'place' %} checked {% endif %}
                 class="peer sr-only">
                 <label for="place"
-                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-alvin-grey px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500 dark:bg-gray-700">
+                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-gray-50 dark:bg-gray-900 px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500">
                     <svg class="size-6" stroke-width="2" fill="none">
                         <title>{% translate 'Sök efter platser' %}</title>
                         {% include "../alvin_viewer/_icons/place.svg" %}
@@ -78,7 +78,7 @@
                 {% if searchType == 'work' %} checked {% endif %}
                 class="peer sr-only">
                 <label for="work"
-                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-alvin-grey px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500 dark:bg-gray-700">
+                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-gray-50 dark:bg-gray-900 px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500">
                     <svg class="size-6" stroke-width="2" fill="none">
                         <title>{% translate 'Sök efter verk' %}</title>
                         {% include "../alvin_viewer/_icons/work.svg" %}

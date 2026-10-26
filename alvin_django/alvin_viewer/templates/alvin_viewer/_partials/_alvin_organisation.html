@@ -36,62 +36,19 @@
     <!-- Related -->
     {% if has_related %}
     {% include './_related_button.html' %}
-    <section data-xshow="related" data-xcloak aria-labelledby="related-heading" class="mt-6">
+    <dl data-xshow="related" data-xcloak class="metadata">
 
         <!-- Related organisations -->
+        
         {% if metadata.related_organisations %}
-        <h2 id="related-heading" class="py-2 font-bold">
-            {{metadata.related_organisations.label}}:
-        </h2>
-        <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
-           
-            {% for type_block in metadata.related_organisations.order_by_type %}
-            <h3 class="my-2">{{type_block.label}}</h3>
-            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
-                
-                {% for organisation in type_block.records %}
-                <li class="w-full h-[240px]">
-                    <a href="{{ organisation.url }}" 
-                    class="group relative block w-full h-full bg-gray-100 dark:bg-white/10 rounded-md overflow-hidden shadow-md hover:shadow-md transition-shadow duration-300 ease-in-out">
-                        
-                        <div class="w-full h-[240px] overflow-hidden bg-gray-100 dark:bg-white/10">
-                            <div class="w-full h-full flex items-center justify-center transition-transform duration-500 ease-in-out group-hover:scale-110">
-                                <svg class="size-20 text-gray-400" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <title>Organisation</title>
-                                    {% include '../_icons/organisation.svg' %}
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="absolute bottom-0 w-full p-4 bg-gray-900/90 text-white transition-all duration-300 ease-in-out max-h-[80px] group-hover:max-h-full">
-                            <h3 class="font-medium text-sm leading-tight truncate group-hover:whitespace-normal">
-                                {{organisation.name.title}}
-                            </h3>
-                            <p class="mt-2 text-xs text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                {% translate 'Klicka för att visa detaljer' %}
-                            </p>
-                        </div>
-
-                    </a>
-                </li>
-                {% endfor %}
-            {% endfor %}
-            </ul>
-        </div>
+            {% include "./_authority_links.html" with label=metadata.related_organisations.label link_type="alvin-organisation" authority_links=metadata.related_organisations %}
         {% endif %}
         
         <!-- External URL:s -->
-        {% if metadata.electronic_locators %}
-        <h2 class="py-2 font-bold">{% translate 'Övrigt relaterat' %}:</h2>
-        <div class="p-4 mb-4 bg-gray-100 dark:bg-white/10 rounded-md shadow-md">
-            <dl id="metadata">
-                {% for electronic_locator in metadata.electronic_locators %}
-                    {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
-                {% endfor %}
-            </dl>
-        </div>
-        {% endif %}
+        {% for electronic_locator in metadata.electronic_locators %}
+            {% include "./_metadata_row.html" with label=electronic_locator.label url=electronic_locator.url value=electronic_locator.display_label %}
+        {% endfor %}
 
-    </section>
+    </dl>
     {% endif %}
 </div>

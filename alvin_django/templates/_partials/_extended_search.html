@@ -19,73 +19,22 @@
                 </svg>
             </button>
         </div>
-        <fieldset class="flex flex-wrap justify-center gap-2 text-sm bg-gray-50 dark:bg-gray-900  border-2 border-black dark:border-gray-200 p-4 rounded-full p-2 shadow-md">
+        <fieldset class="flex flex-wrap justify-center gap-2 text-sm bg-gray-50 dark:bg-gray-900 border-2 border-black dark:border-gray-200 p-2 rounded-full shadow-md">
             <legend class="sr-only">{% translate 'Söktyp' %}</legend>
+            
+            {% for key, label, icon_path in search_types %}
             <div>
-                <input type="radio" id="alvinRecord" name="searchType" value="alvinRecord"
-                {% if searchType == 'alvinRecord' or not searchType %} checked {% endif %}
-                class="peer sr-only">
-                <label for="alvinRecord"
-                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-gray-50 dark:bg-gray-900 px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500">
-                    <svg class="size-6" stroke-width="2" fill="none">
-                        <title>{% translate 'Sök efter poster' %}</title>
-                        {% include "../alvin_viewer/_icons/allmetadata.svg" %}
+                <input type="radio" id="{{ key }}" name="searchType" value="{{ key }}"
+                    {% if searchType == key or not searchType and forloop.first %} checked {% endif %}
+                    class="peer sr-only" aria-label="{{ label }}">
+                <label for="{{ key }}" class="search-type-radio">
+                    <svg class="size-6" stroke-width="2" fill="none" aria-hidden="true">
+                        {% include icon_path %}
                     </svg>
-                    <span class="select-none max-sm:hidden">{% translate 'Post' %}</span>
+                    <span class="select-none max-sm:hidden">{{ label }}</span>
                 </label>
             </div>
-            <div>
-                <input type="radio" id="person" name="searchType" value="person"
-                {% if searchType == 'person' %} checked {% endif %}
-                class="peer sr-only">
-                <label for="person"
-                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-gray-50 dark:bg-gray-900 px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500">
-                    <svg class="size-6" stroke-width="2" fill="none">
-                        <title>{% translate 'Sök efter personer' %}</title>
-                        {% include "../alvin_viewer/_icons/person.svg" %}
-                    </svg>
-                    <span class="select-none max-sm:hidden">{% translate 'Person' %}</span>
-                </label>
-            </div>
-            <div>
-                <input type="radio" id="organisation" name="searchType" value="organisation"
-                {% if searchType == 'organisation' %} checked {% endif %}
-                class="peer sr-only">
-                <label for="organisation"
-                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-gray-50 dark:bg-gray-900 px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500">
-                    <svg class="size-6" stroke-width="2" fill="none">
-                        <title>{% translate 'Sök efter organisationer' %}</title>
-                        {% include "../alvin_viewer/_icons/organisation.svg" %}
-                    </svg>
-                    <span class="select-none max-sm:hidden">{% translate 'Organisation' %}</span>
-                </label>
-            </div>
-            <div>
-                <input type="radio" id="place" name="searchType" value="place"
-                {% if searchType == 'place' %} checked {% endif %}
-                class="peer sr-only">
-                <label for="place"
-                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-gray-50 dark:bg-gray-900 px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500">
-                    <svg class="size-6" stroke-width="2" fill="none">
-                        <title>{% translate 'Sök efter platser' %}</title>
-                        {% include "../alvin_viewer/_icons/place.svg" %}
-                    </svg>
-                    <span class="select-none max-sm:hidden">{% translate 'Plats' %}</span>
-                </label>
-            </div>
-            <div>
-                <input type="radio" id="work" name="searchType" value="work"
-                {% if searchType == 'work' %} checked {% endif %}
-                class="peer sr-only">
-                <label for="work"
-                        class="group flex cursor-pointer items-center gap-1 rounded-full bg-gray-50 dark:bg-gray-900 px-4 py-2 transition-all duration-200 peer-checked:text-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 peer-focus:ring-2 peer-focus:ring-blue-500">
-                    <svg class="size-6" stroke-width="2" fill="none">
-                        <title>{% translate 'Sök efter verk' %}</title>
-                        {% include "../alvin_viewer/_icons/work.svg" %}
-                    </svg>
-                    <span class="select-none max-sm:hidden">{% translate 'Verk' %}</span>
-                </label>
-            </div>
+            {% endfor %}
         </fieldset>
         <input type="hidden" name="view" value="list">
     </form>

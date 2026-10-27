@@ -1,7 +1,6 @@
 {% load i18n %}
-<div class="w-full flex flex-col p-8 py-6">
-    <form action="{% url 'alvin_search' %}" method="get" class="w-full">
-        <div class="relative bg-white dark:bg-gray-600 flex items-center rounded-full shadow-lg p-2 mb-5">
+<form class="flex flex-col items-center justify-center" action="{% url 'alvin_search'%}" method="get" role="search">
+        <div class="bg-gray-50 dark:bg-gray-900  border-2 border-black dark:border-gray-200 z-10 mb-5 flex w-full md:w-2/3 lg:1/2 rounded-full p-2 shadow-md m-4">
             <label for="search-query" class="sr-only">{% translate 'Sök' %}</label>
             <input 
                 id="search-query"
@@ -11,17 +10,19 @@
                 placeholder="{% translate 'Sök över en halv miljon objekt' %}" 
                 value="{{ user_input|default:'' }}">
             
-            <button 
-                type="submit"
-                class="bg-gray-900 p-2 hover:bg-dark-alvin mx-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                aria-label="{% translate 'Sök' %}">
-                <svg class="size-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+            <button type="submit" class="mx-2 rounded-full bg-gray-900 dark:bg-gray-500 p-4 text-white hover:bg-dark-alvin focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-blue-400">
+                <span class="sr-only">{% translate 'Sök' %}</span>
+                <svg class="size-6" viewBox="0 0 20 20"
+                    fill="currentColor" aria-hidden="true">
+                    <title>{% translate 'Knapp för sökning' %}</title>
+                    <path fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd"/>
                 </svg>
             </button>
         </div>
 
         <input type="hidden" name="searchType" value="alvinRecord">
         <input type="hidden" name="view" value="list">
-    </form>
-</div>
+    </div>
+</form>

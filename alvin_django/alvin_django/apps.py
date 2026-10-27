@@ -13,7 +13,7 @@ class AlvinAppConfig(AppConfig):
     def ready(self):
 
         def _init():
-            from alvin_viewer.services.text_collector import get_item_dict
+            from services.text_collector import get_item_dict
             logger.info("Collecting collection items...")
             try:
                 get_item_dict()

@@ -1,13 +1,12 @@
 from typing import Any, Dict, List, Callable, Optional, Union
-from collections import defaultdict
 from lxml import etree
-import requests
+
 from django.utils import translation
 from django.core.cache import cache
 
 from ..xmlutils.nodes import attr, element, elements, first, text, texts
 from .mappings import person, place, organisation
-from ..services.text_collector import get_item_dict
+from services.text_collector import get_item_dict
 from .metadata import (Address, Address, Agent, Component, ComponentsBlock, DateEntry, DatesBlock, 
                        DatesValue, DecoratedList, DecoratedText, 
                        DecoratedListItem, DecoratedTextWithType, DecoratedTexts, 

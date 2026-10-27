@@ -4,7 +4,7 @@ from django.http import Http404, StreamingHttpResponse
 import requests
 from zipstream import ZipStream
 
-from ..services.alvin_api import AlvinAPI
+from services.alvin_api import AlvinAPI
 from ..extractors.record import extract
 
 def download(request, url_type: str, record_id: int) -> StreamingHttpResponse:

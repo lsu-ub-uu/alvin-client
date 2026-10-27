@@ -45,13 +45,37 @@ class Axis:
         return not self.clock.item
 
 @dataclass(slots=True)
-class Classification:
+class ClassificationEntry:
     label: Optional[str] = None
     type: Optional[str] = None
     text: Optional[str] = None
 
     def is_empty(self) -> bool:
         return not self.text
+
+@dataclass(slots=True)
+class ClassificationsBlock:
+    label: Optional[str] = None
+    entries: List[ClassificationEntry] = None
+
+    def is_empty(self) -> bool:
+        return not self.entries
+
+    def order_by_type(self) -> List[ClassificationsBlock] | None:
+        if not self.entries:
+            return None
+        
+        ordered = {}
+        for entry in self.entries:
+            entry_type = entry.type
+            if entry_type not in ordered:
+                ordered[entry_type] = []
+            ordered[entry_type].append(entry.text)
+
+        return [ClassificationsBlock(
+            label=f"{self.label} ({cl_type})",
+            entries = ordered_entries
+        ) for cl_type, ordered_entries in ordered.items()]
 
 @dataclass(slots=True)
 class Coin:
@@ -113,7 +137,7 @@ class Component:
 @dataclass
 class ComponentsBlock:
     items: List[Component] = None
-
+    
     @property
     def all_related_records(self) -> Optional[RelatedRecordsBlock]:
         def crawl(components: List[Component]):
@@ -301,12 +325,27 @@ class SubjectMiscBlock:
 
     def is_empty(self) -> bool:
         return not self.entries
+
+    def order_by_authority(self) -> List[SubjectMiscBlock] | None:
+        if self.entries is None:
+            return None
+        
+        ordered = {}
+        for entry in self.entries:
+            subject_auth = entry.authority
+            if subject_auth not in ordered:
+                ordered[subject_auth] = []
+            ordered[subject_auth].extend(entry.collect_subjects)
+
+        return [SubjectMiscBlock(
+            label=f"{self.label} ({authority})",
+            entries = ordered_subj
+        ) for authority, ordered_subj in ordered.items()]
     
     @property
     def display(self) -> str:
         return " ; ".join(e.display for e in self.entries if e.display)
-
-
+        
 # ------------------
 # NAMES AND TITLES BLOCKS 
 # ------------------
@@ -585,15 +624,14 @@ class RelatedAuthoritiesBlock:
 
     def is_empty(self) -> bool:
         return not self.records
-    
-    def ordered_by_type(self) -> Dict[str, List[RelatedAuthorityEntry]] | None:
-        records = getattr(self, "records", None)
-        if records is None:
+
+    def order_by_type(self) -> List[RelatedAuthoritiesBlock] | None:
+        if self.records is None:
             return None
         
         ordered = {}
-        for record in records:
-            record_type = getattr(record, "type", None)
+        for record in self.records:
+            record_type = record.type
             if record_type not in ordered:
                 ordered[record_type] = []
             ordered[record_type].append(record)
@@ -638,14 +676,13 @@ class RelatedRecordsBlock:
     def is_empty(self) -> bool:
         return not self.records
     
-    def ordered_by_type(self) -> Dict[str, List[RelatedRecordsBlock]] | None:
-        records = getattr(self, "records", None)
-        if records is None:
+    def order_by_type(self) -> Dict[str, List[RelatedRecordsBlock]] | None:
+        if self.records is None:
             return None
         
         ordered = {}
-        for record in records:
-            record_type = getattr(record, "type", None)
+        for record in self.records:
+            record_type = record.type
             if record_type not in ordered:
                 ordered[record_type] = []
             ordered[record_type].append(record)
@@ -801,6 +838,7 @@ class FilesBlock:
         license_stub = (
             self.rights_code.replace("CC_", "").replace("_", "-").lower()
         )
+
         return f"{cc_base_url}/licenses/{license_stub}/4.0/deed.{current_lang}"
 
     # --- IMAGES ---

@@ -5,12 +5,13 @@
         data-xon.beforeunload.window="cleanup()"
         data-xon.osd-loaded.window="totalPages = $event.detail.totalPages; currentPage = 1"
         data-xon.osd-page-changed.window="currentPage = $event.detail.page + 1"
-        class="w-full h-[60vh] lg:h-[80vh] flex relative overflow-hidden rounded-sm">
+        class="w-full h-[60vh] lg:h-[80vh] flex relative overflow-hidden rounded-t-sm border-b">
     
     <div id="osd-wrapper" class="flex-1 relative overflow-hidden bg-gray-200 dark:bg-black">
-    
+        
+        <!-- OSD toolbar -->
         <div class="absolute top-1/2 -translate-y-1/2 left-4 z-40 bg-black/70 md:p-0.5 rounded-full flex flex-col items-center gap-1 text-white border border-white/20 shadow-xl backdrop-blur-xs">
-            <button data-xon.click="toggleFullscreen()" class="p-2 hover:text-orange-500 hover:bg-white/10 rounded-full transition-all" title="{% translate 'Fullskärmsläge' %}">
+            <button data-xon.click="toggleFullscreen()" class="osd-tools" title="{% translate 'Fullskärmsläge' %}">
                 <svg class="w-4 h-4 md:w-5 md:h-5" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
                     <path d="M9 9L4 4M4 4V8M4 4H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                     <path d="M15 9L20 4M20 4V8M20 4H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -19,36 +20,30 @@
                 </svg>
             </button>
             <div class="w-5 h-px bg-white/40 my-0.5"></div>
-            <button data-xon.click="osdZoomIn()" class="p-2 hover:text-orange-500 hover:bg-white/10 rounded-full transition-all" title="{% translate 'Zooma in' %}">
+            <button data-xon.click="osdZoomIn()" class="osd-tools" title="{% translate 'Zooma in' %}">
                 <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M8 11H11M14 11H11M11 11V8M11 11V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17 17L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 11C3 15.4183 6.58172 19 11 19C13.213 19 15.2161 18.1015 16.6644 16.6493C18.1077 15.2022 19 13.2053 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
-            <button data-xon.click="osdZoomOut()" class="p-2 hover:text-orange-500 hover:bg-white/10 rounded-full transition-all" title="{% translate 'Zooma ut' %}">
+            <button data-xon.click="osdZoomOut()" class="osd-tools" title="{% translate 'Zooma ut' %}">
                 <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 11C3 15.4183 6.58172 19 11 19C13.213 19 15.2161 18.1015 16.6644 16.6493C18.1077 15.2022 19 13.2053 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 11L14 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
+
             <div class="w-5 h-px bg-white/40 my-0.5"></div>
-            <button data-xon.click="osdHome()" class="p-2 hover:text-orange-500 hover:bg-white/10 rounded-full transition-all" title="{% translate 'Återställ zoom' %}">
+            
+            <button data-xon.click="osdHome()" class="osd-tools" title="{% translate 'Återställ zoom' %}">
                 <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor"><path d="M2 8L11.7317 3.13416C11.9006 3.04971 12.0994 3.0497 12.2683 3.13416L22 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20 11V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
+
             <div class="w-5 h-px bg-white/40 my-0.5"></div>
-            <button data-xon.click="osdRotateLeft()" class="p-2 hover:text-orange-500 hover:bg-white/10 rounded-full transition-all" title="{% translate 'Rotera moturs' %}">
+
+            <button data-xon.click="osdRotateLeft()" class="osd-tools" title="{% translate 'Rotera moturs' %}">
                 <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M4.5 8C8.5 8 11 8 15 8C15 8 15 8 15 8C15 8 20 8 20 12.7059C20 18 15 18 15 18C11.5714 18 9.71429 18 6.28571 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7.5 11.5C6.13317 10.1332 5.36683 9.36683 4 8C5.36683 6.63317 6.13317 5.86683 7.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
-            <button data-xon.click="osdRotateRight()" class="p-2 hover:text-orange-500 hover:bg-white/10 rounded-full transition-all" title="{% translate 'Rotera medurs' %}">
+            <button data-xon.click="osdRotateRight()" class="osd-tools" title="{% translate 'Rotera medurs' %}">
                 <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M19.5 8C15.5 8 13 8 9 8C9 8 9 8 9 8C9 8 4 8 4 12.7059C4 18 9 18 9 18C12.4286 18 14.2857 18 17.7143 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16.5 11.5C17.8668 10.1332 18.6332 9.36683 20 8C18.6332 6.63317 17.8668 5.86683 16.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
         </div>
-
-        <div data-xbind.class="sidebarOpen ? 'right-full md:right-[416px]' : 'right-4 md:right-4'" class="absolute top-4 z-40 flex flex-col items-end gap-2 transition-all duration-300">
-            <button data-xon.click="toggleSidebar()" class="bg-black/70 hover:bg-black text-white hover:text-orange-500 hover:dark:bg-white/10 p-2 md:p-3 rounded-full shadow-xl border border-white/20 backdrop-blur-xs transition-all flex items-center gap-2" title="{% translate 'Visa/dölj tumnaglar' %}">
-                <svg class="w-4 h-4 md:w-5 md:h-5" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor"><path d="M14 20.4V14.6C14 14.2686 14.2686 14 14.6 14H20.4C20.7314 14 21 14.2686 21 14.6V20.4C21 20.7314 20.7314 21 20.4 21H14.6C14.2686 21 14 20.7314 14 20.4Z" stroke="currentColor" stroke-width="2"></path><path d="M3 20.4V14.6C3 14.2686 3.26863 14 3.6 14H9.4C9.73137 14 10 14.2686 10 14.6V20.4C10 20.7314 9.73137 21 9.4 21H3.6C3.26863 21 3 20.7314 3 20.4Z" stroke="currentColor" stroke-width="2"></path><path d="M14 9.4V3.6C14 3.26863 14.2686 3 14.6 3H20.4C20.7314 3 21 3.26863 21 3.6V9.4C21 9.73137 20.7314 10 20.4 10H14.6C14.2686 10 14 9.73137 14 9.4Z" stroke="currentColor" stroke-width="2"></path><path d="M3 9.4V3.6C3 3.26863 3.26863 3 3.6 3H9.4C9.73137 3 10 3.26863 10 3.6V9.4C10 9.73137 9.73137 10 9.4 10H3.6C3.26863 10 3 9.73137 3 9.4Z" stroke="currentColor" stroke-width="2"></path></svg>
-            </button>
-            {% if metadata.files.documents %}
-            <button data-xon.click="toggleDoc()" class="bg-black/70 hover:bg-black text-white hover:text-orange-500 hover:dark:bg-white/10 p-2 md:p-3 rounded-full shadow-xl border border-white/20 backdrop-blur-xs transition-all flex items-center gap-2" title="{% translate 'Visa/dölj översättningar och transkriptioner' %}">
-                <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M4 21.4V2.6C4 2.26863 4.26863 2 4.6 2H16.2515C16.4106 2 16.5632 2.06321 16.6757 2.17574L19.8243 5.32426C19.9368 5.43679 20 5.5894 20 5.74853V21.4C20 21.7314 19.7314 22 19.4 22H4.6C4.26863 22 4 21.7314 4 21.4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 2V5.4C16 5.73137 16.2686 6 16.6 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            </button>
-            {% endif %}
-        </div>
-
+        
+        <!-- Pagination -->
         <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 bg-black/70 md:py-1 md:px-1.5 rounded-full flex items-center md:gap-1 text-white border border-white/20 shadow-xl backdrop-blur-xs">
             <button data-xon.click="prevPage()" data-xbind.disabled="currentPage <= 1" data-xbind.class="currentPage <= 1 ? 'opacity-30 cursor-not-allowed' : 'hover:text-orange-500 hover:bg-white/10'" class="p-1.5 rounded-full transition-all">
                 <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor">
@@ -64,9 +59,23 @@
                 </svg>
             </button>
         </div>
+        
+        <!-- Side bar toggles -->
+        <div data-xbind.class="sidebarOpen ? 'right-full md:right-[416px]' : 'right-4 md:right-4'" class="absolute top-4 z-40 flex flex-col items-end gap-2 transition-all duration-300">
+            <button data-xon.click="toggleSidebar()" class="bg-black/70 hover:bg-black text-white hover:text-orange-500 hover:dark:bg-white/10 p-2 md:p-3 rounded-full shadow-xl border border-white/20 backdrop-blur-xs transition-all flex items-center gap-2" title="{% translate 'Visa/dölj tumnaglar' %}">
+                <svg class="w-4 h-4 md:w-5 md:h-5" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor"><path d="M14 20.4V14.6C14 14.2686 14.2686 14 14.6 14H20.4C20.7314 14 21 14.2686 21 14.6V20.4C21 20.7314 20.7314 21 20.4 21H14.6C14.2686 21 14 20.7314 14 20.4Z" stroke="currentColor" stroke-width="2"></path><path d="M3 20.4V14.6C3 14.2686 3.26863 14 3.6 14H9.4C9.73137 14 10 14.2686 10 14.6V20.4C10 20.7314 9.73137 21 9.4 21H3.6C3.26863 21 3 20.7314 3 20.4Z" stroke="currentColor" stroke-width="2"></path><path d="M14 9.4V3.6C14 3.26863 14.2686 3 14.6 3H20.4C20.7314 3 21 3.26863 21 3.6V9.4C21 9.73137 20.7314 10 20.4 10H14.6C14.2686 10 14 9.73137 14 9.4Z" stroke="currentColor" stroke-width="2"></path><path d="M3 9.4V3.6C3 3.26863 3.26863 3 3.6 3H9.4C9.73137 3 10 3.26863 10 3.6V9.4C10 9.73137 9.73137 10 9.4 10H3.6C3.26863 10 3 9.73137 3 9.4Z" stroke="currentColor" stroke-width="2"></path></svg>
+            </button>
+            {% if metadata.files.documents %}
+            <button data-xon.click="toggleDoc()" class="bg-black/70 hover:bg-black text-white hover:text-orange-500 hover:dark:bg-white/10 p-2 md:p-3 rounded-full shadow-xl border border-white/20 backdrop-blur-xs transition-all flex items-center gap-2" title="{% translate 'Visa/dölj översättningar och transkriptioner' %}">
+                <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M4 21.4V2.6C4 2.26863 4.26863 2 4.6 2H16.2515C16.4106 2 16.5632 2.06321 16.6757 2.17574L19.8243 5.32426C19.9368 5.43679 20 5.5894 20 5.74853V21.4C20 21.7314 19.7314 22 19.4 22H4.6C4.26863 22 4 21.7314 4 21.4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 2V5.4C16 5.73137 16.2686 6 16.6 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </button>
+            {% endif %}
+        </div>
 
+        <!-- Viewer -->
         <div id="osd-viewer" class="w-full h-full absolute inset-0" data-manifest-url="{% url 'iiif_manifest' metadata.id %}"></div>
-
+        
+        <!-- Thumbnails -->
         <aside id="thumb-sidebar" 
              data-xbind.class="sidebarOpen ? 'translate-x-0' : 'translate-x-full'" 
              class="flex flex-col absolute inset-y-0 right-0 w-full md:w-[400px] bg-gray-300/95 dark:bg-gray-900/95 shadow-md overflow-y-auto ease-in-out duration-300 transition-transform z-40">
@@ -88,10 +97,12 @@
                 </div>
             </div>
 
+            <!-- List of thumbnails -->
             <div id="thumb-list" class="grid grid-cols-3 max-sm:grid-cols-2 gap-4 p-4"></div>
         </aside>
     </div>
     
+    <!-- Document viewer -->
     {% if metadata.files.documents %}
     <div id="pdf-container" 
          data-xshow="docOpen" 
@@ -104,43 +115,54 @@
          data-xtransition:leave-end="translate-x-full md:translate-x-0 md:-mr-[500px]"
          style="display: none;" 
          class="flex flex-col md:w-1/2 absolute md:relative right-0 inset-y-0 w-full h-full shadow-2xl z-40 bg-white dark:bg-gray-900">
-    
-        <div id="pdf-header" class="flex flex-col min-w-0 shrink-0 pr-1 text-[#333333] dark:text-off-white bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700">
-            <div class="flex flex-row items-center justify-between">
-                <nav class="flex flex-row" aria-label="Dokumenttyper">
+
+        <!-- Header -->
+        <div id="pdf-header" class="flex flex-col shrink-0 pr-1 text-[#333333] dark:text-off-white bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700">
+            <div class="flex flex-row items-center justify-between p-2">
+
+                <!-- Type selection -->
+                <nav class="flex flex-col" aria-label="Dokumenttyper">
+                    <div class="flex p-2 bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-md" role="group">
                     {% for group in metadata.files.documents %}
-                    <button data-xon.click="selectedCategory = '{{ group.type_code }}'"
-                            class="relative px-4 py-3 text-sm hover:text-orange-500 hover:bg-gray-300/50 dark:hover:bg-white/10 hover:shadow-sm focus:outline-none transition-all cursor-pointer"
-                            data-xbind.class="selectedCategory === '{{ group.type_code }}' 
-                                ? 'text-orange-600' 
-                                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'">
-                        {{ group.label }}
-                        <div data-xshow="selectedCategory === '{{ group.type_code }}'" class="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-600 transition-all"></div>
-                    </button>
+                        <button data-xon.click="selectedCategory = '{{ group.type_code }}'"
+                            type="button"
+                            class="flex-1 sm:flex-none px-4 py-2 text-sm font-semibold rounded transition-all duration-150 cursor-pointer"
+                            data-xbind.class="selectedCategory === '{{ group.type_code }}'
+                                ? 'bg-white dark:bg-gray-800 text-alvin-orange shadow-xs' 
+                                : 'text-gray-600 dark:text-gray-400 hover:text-[#333333] dark:hover:text-off-white'">
+                                {{ group.label }}
+                        </button>
                     {% endfor %}
+                    </div>
                 </nav>
+
+                <!-- Close button -->
                 <button data-xon.click="docOpen = false" class="p-2 rounded-full text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 hover:text-orange-500 transition-all shrink-0">
                     <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke="currentColor">
                         <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
                 </button>
             </div>
-            <div>
-                {% for group in metadata.files.documents %}
-                <select id="file-select-{{ group.type_code }}" 
-                        data-xshow="selectedCategory === '{{ group.type_code }}'" 
-                        data-xon.change="renderDoc($event.target.value, $event.target.options[$event.target.selectedIndex].dataset.mime)" 
-                        autocomplete="off" 
-                        style="display: none;"
-                        class="w-full bg-white dark:bg-gray-800 text-[#333333] dark:text-off-white border-b-2 border-gray-300 dark:border-gray-600 focus:border-orange-600 pl-2 text-sm truncate outline-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-all shadow-sm">
-                        {% for file in group.files %}
-                        <option value="{{ file.url }}" data-mime="{{ file.mime_type }}" class="bg-white dark:bg-gray-800 text-[#333333] dark:text-off-white rounded-b truncate">{{ file.name }}</option>
-                        {% endfor %}
-                </select>
-                {% endfor %}
-            </div>
         </div>
+
+        <!-- Viewer -->
         <div id="pdf-iframe-wrapper" class="flex-1 min-h-0 w-full relative bg-[#F7F9F8] dark:bg-gray-800 text-[#333333] dark:text-off-white"></div>
+
+        <!-- Select document -->
+        <div class="flex flex-row justify-center items-center gap-x-2 p-2 bg-black text-off-white">
+            {% for group in metadata.files.documents %}
+            <select id="file-select-{{ group.type_code }}"
+                data-xshow="selectedCategory === '{{ group.type_code }}'" 
+                data-xon.change="renderDoc($event.target.value, $event.target.options[$event.target.selectedIndex].dataset.mime)" 
+                autocomplete="off" 
+                style="display: none;"
+                class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-[#333333] text-sm dark:text-off-white truncate rounded-md outline-none cursor-pointer transition-all shadow-sm">
+                {% for file in group.files %}
+                <option value="{{ file.url }}" data-mime="{{ file.mime_type }}" class="bg-white dark:bg-gray-800 text-[#333333] dark:text-off-white rounded-b truncate">{{ file.name }}</option>
+                {% endfor %}
+            </select>
+            {% endfor %}
+        </div>
     </div>
     {% endif %}
     

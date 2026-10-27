@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 from lxml import etree
 
-from ..services.alvin_api import AlvinAPI
+from services.alvin_api import AlvinAPI
 from ..extractors import location, person, place, organisation, record, work 
 
 EXTRACTORS = {
@@ -55,7 +55,7 @@ def has_related(metadata) -> bool:
             
     return False
 
-def has_all_metadata(metadata) -> bool:
+def has_details(metadata) -> bool:
     attrs = [
         # Common, AlvinRecord
         "variant_titles", "edition_statement", "publications", "date_other",
@@ -93,32 +93,10 @@ def alvin_viewer(request, record_type: str, record_id: str):
     
     #Thumbnail pagination for the download menu
     all_images = metadata.files.images if record_type == 'alvin-record' and getattr(metadata.files, 'has_images', "") else []
-    paginator = Paginator(all_images, 20)
+    paginator = Paginator(all_images, 24)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
     
-    # Download menu tabs configuration
-    download_tabs = {
-        "default_download_tab": "show_metadata",
-        "tabs": []
-    }
-
-    if metadata.record_type == 'alvin-record':
-        if metadata.files and getattr(metadata.files, 'has_images', False):
-            download_tabs["tabs"].append({"id": "show_thumbnails", "label": "Bilder"})
-
-        if getattr(metadata.files, 'has_attachments', False):
-            download_tabs["tabs"].append({"id": "show_attachments", "label": "Dokument"})
-
-        download_tabs["tabs"].append({"id": "show_metadata", "label": "Metadata"})
-
-        if download_tabs["tabs"]:
-            download_tabs["default_download_tab"] = download_tabs["tabs"][0]["id"]
-
-    else:
-        download_tabs["tabs"] = [{"id": "show_metadata", "label": "Metadata"}]
-        download_tabs["default_download_tab"] = "show_metadata"
-
     # Handling HTMX for loading related records by category
     load_category = request.GET.get('load_category')
     load_component_category = request.GET.get('load_component_category')
@@ -140,11 +118,11 @@ def alvin_viewer(request, record_type: str, record_id: str):
         return HttpResponse(status=204)
 
     if load_category and hasattr(metadata, 'related_records') and metadata.related_records:
-        records = metadata.related_records.ordered_by_type()
+        records = metadata.related_records.order_by_type()
         return _render_category_block(records, load_category, 'load_category', 'category')
 
     if load_component_category and getattr(metadata, 'components', None) and getattr(metadata.components, 'all_related_records', None):
-        component_records = metadata.components.all_related_records.ordered_by_type()
+        component_records = metadata.components.all_related_records.order_by_type()
         return _render_category_block(component_records, load_component_category, 'load_component_category', 'component-category')
 
     # Disabled for debugging purposes
@@ -157,9 +135,9 @@ def alvin_viewer(request, record_type: str, record_id: str):
     context = {"metadata": metadata, 
                "value": value,
                "has_related": has_related(metadata),
-               "has_all_metadata": has_all_metadata(metadata),
-               "page_obj": page_obj, 
-               "download_tabs": download_tabs }
+               "has_details": has_details(metadata),
+               "page_obj": page_obj,
+            }
 
     if request.headers.get('HX-Request') and 'page' in request.GET:
         return render(request, 'alvin_viewer/_partials/_thumbnail_page.html', context)

@@ -1,9 +1,10 @@
 from django.conf import settings
 from django.http import JsonResponse, Http404
 from urllib.parse import urljoin
+import lxml.etree as etree 
 from django.utils.translation import gettext as _
 from ..extractors.record import extract
-from ..services.alvin_api import AlvinAPI
+from services.alvin_api import AlvinAPI
 
 def _to_int(value, default):
     try:
@@ -44,7 +45,7 @@ def iiif_manifest(request, record_id: str):
         binary = file_xml.find("data/binary")
         raw_binary_type = binary.get("type") if binary is not None else None
         binary_type = raw_binary_type.strip().capitalize() if raw_binary_type else None
-
+        
         mime_type = file_xml.findtext("data/binary/master/master/mimeType")
 
         iiif_server = f"{settings.EXTERNAL_ACCESS_URL}/iiif/"

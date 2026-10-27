@@ -25,6 +25,7 @@ def extract(root: etree._Element) -> AlvinPerson:
         id=text(root, _xp(rt, "recordInfo/id")),
         record_type = "alvin-person",
         created = decorated_text(root, _xp(rt, "recordInfo/tsCreated")),
+        last_updated = decorated_text(root, _xp(rt, "recordInfo/updated/tsUpdated")),
         label = _get_label(element(root, "data/person")),
         authority_names = names(root, _xp(rt, "authority"), person["AUTH_NAME"]),
         variant_names = names(root, _xp(rt, "variant"), person["AUTH_NAME"], "variantPersonNameTypeCollection"),

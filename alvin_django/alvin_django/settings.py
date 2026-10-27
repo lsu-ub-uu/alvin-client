@@ -35,12 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'alvin_info',
     'alvin_viewer',
-    'tailwind',
-    'theme',
+    'alvin_search',
+    'django_oai_pmh',
     'vocabulary',
     'xml_formats',
-    'django_oai_pmh',
-    'alvin_search',
+    'tailwind',
+    'theme',
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'alvin_django.context_processors.search_types',
             ],
         },
     },

@@ -25,7 +25,7 @@ def clear_cache_and_tree():
 
 	# Reset module-level ITEM_TREE if present
 	try:
-		import alvin_viewer.services.text_collector as tc
+		import alvin_django.services.text_collector as tc
 
 		tc.ITEM_TREE = None
 	except Exception:

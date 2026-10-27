@@ -22,13 +22,13 @@ def test_collect_texts_stores_bytes_in_cache(monkeypatch, sample_xml_bytes):
     mock_resp.content = sample_xml_bytes
     mock_resp.raise_for_status = lambda: None
 
-    monkeypatch.setattr("alvin_viewer.services.text_collector.requests.get", lambda *a, **k: mock_resp)
+    monkeypatch.setattr("text_collector.requests.get", lambda *a, **k: mock_resp)
 
     # Ensure cache is empty
     cache.delete("collection_item_cache")
 
     # Act
-    from alvin_viewer.services import text_collector as tc
+    from alvin_djago.services import text_collector as tc
 
     tc.collect_texts()
 
@@ -40,7 +40,7 @@ def test_get_tree_and_xpath_returns_values(monkeypatch, sample_xml_bytes):
     # Put XML into cache and ensure tree parses
     cache.set("collection_item_cache", sample_xml_bytes)
 
-    from alvin_viewer.services import text_collector as tc
+    from alvin_djago.services import text_collector as tc
 
     # Ensure ITEM_TREE is None so reload happens
     tc.ITEM_TREE = None
@@ -58,7 +58,7 @@ def test_xpath_returns_empty_when_no_tree(monkeypatch):
     # Ensure cache is empty
     cache.delete("collection_item_cache")
 
-    from alvin_viewer.services import text_collector as tc
+    from alvin_djago.services import text_collector as tc
 
     tc.ITEM_TREE = None
     values = tc.xpath_value("//record/title/text()")

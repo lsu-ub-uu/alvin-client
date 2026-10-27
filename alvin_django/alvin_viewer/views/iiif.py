@@ -4,7 +4,7 @@ from urllib.parse import urljoin
 import lxml.etree as etree 
 from django.utils.translation import gettext as _
 from ..extractors.record import extract
-from ..services.alvin_api import AlvinAPI
+from services.alvin_api import AlvinAPI
 
 def _to_int(value, default):
     try:

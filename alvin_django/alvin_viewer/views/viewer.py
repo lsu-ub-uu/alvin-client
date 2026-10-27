@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 from lxml import etree
 
-from ..services.alvin_api import AlvinAPI
+from services.alvin_api import AlvinAPI
 from ..extractors import location, person, place, organisation, record, work 
 
 EXTRACTORS = {

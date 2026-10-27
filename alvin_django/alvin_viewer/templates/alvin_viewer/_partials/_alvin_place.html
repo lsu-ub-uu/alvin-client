@@ -18,7 +18,7 @@
 
     <!-- All metadata -->
     {% if has_details %}
-    <dl class="metadata" data-xshow="allmetadata" data-xcloak>
+    <dl class="metadata" data-xshow="details" data-xcloak>
         {% include "./_metadata_row_variant_names.html" %}
         {% include "./_metadata_row.html" with label=metadata.country.label value=metadata.country.item %}
         {% if metadata.longitude and metadata.latitude %}

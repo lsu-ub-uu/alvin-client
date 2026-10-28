@@ -32,8 +32,10 @@
 
 <!-- Map -->
 {% if metadata.longitude and metadata.latitude %}
+
 <div id="alvin-map" class="w-full h-96 max-w-4xl mx-auto rounded-xl mt-10"
-    data-latitude="{{ metadata.latitude.text }}"
-    data-longitude="{{ metadata.longitude.text }}">
+     data-latitude="{{ metadata.latitude.text }}" 
+     data-longitude="{{ metadata.longitude.text }}"
+     data-leaflet-assets="{% static 'js/leaflet/images/' %}">
 </div>
 {% endif %}

@@ -26,10 +26,21 @@ session = _session()
 
 COLLECTIONS = [
     #common
+    "countryCollection",
     "languageCodeCollection",
+    "languageCollection",
     "identifierTypeAuthorityCollection",
 
     #alvin-record
+    "typeOfResourceCollection",
+    "rightsCollection",
+    "productionMethodCollection",
+    "genreCollection",
+    "appliedMaterialCollection",
+    "baseMaterialCollection",
+    "historicalCountryCollection",
+    "subcollectionCollection",
+    "roleCollection",
     "identifierTypeCollection",
     "classificationSchemeCollection",
     "variantTitleTypeCollection",
@@ -40,10 +51,14 @@ COLLECTIONS = [
     "physicalDescriptionNoteTypeCollection",
     "relatedToTypeCollection",
     "subjectHeadingSchemaCollection",
+
+    #alvin-work
+    "formOfWorkCollection",
     
     #alvin-person
     "variantPersonNameTypeCollection",
     "noteTypeAuthorityCollection",
+    "genderCollection",
 
     #alvin-organisation
     "variantOrganisationNameTypeCollection",

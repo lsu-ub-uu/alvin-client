@@ -21,9 +21,9 @@
     data-xdata="{ activeTab: 'overview', download: false, share: false }"
     data-xon.click.away="download = false">
     {% if value != None %}
-    <div class="pagination">
+    <div>
       <a class="flex w-fit pb-2" href="{{ value }}">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        <svg fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="size-6">
           <title>{% translate 'Tillbaka till sökresultatet' %}</title>
           <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
@@ -54,7 +54,7 @@
               <path d="M6 20L18 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
               <path d="M12 4V16M12 16L15.5 12.5M12 16L8.5 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
-          <span>{% translate 'Ladda ned' %}</span>
+          <span>{% translate 'Ladda ner' %}</span>
         </button>
         <button class="flex flex-row gap-x-1 items-center h-10 dark:text-gray-200 bg-gray-100 dark:bg-white/10 border border-[#D1D9D5] rounded-md cursor-pointer p-2 text-center hover:bg-gray-300 hover:dark:bg-white/15 shadow-sm transition ease-in-out duration-150" data-xon.click="share = !share">
           <svg class="size-5" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor">

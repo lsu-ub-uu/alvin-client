@@ -52,7 +52,7 @@
         </h3>
         {% for record in records|dictsortreversed:"nameone" %}
         {% if record.member == 'consortium' %} 
-        <ul class="py-2 list-disc list-inside">
+        <ul class="py-1 list-disc list-inside">
           <li><a href="{% url 'alvin_viewer' 'alvin-location' record.identifier %}">{{record.nameone}}</a></li>
         </ul> 
         {% endif %}
@@ -65,7 +65,7 @@
         </h3>
         {% for record in records|dictsort:"nameone" %}
         {% if record.member == 'member' %} 
-        <ul class="py-2 list-disc list-inside">
+        <ul class="py-1 list-disc list-inside">
           <li><a href="{% url 'alvin_viewer' 'alvin-location' record.identifier %}">{{record.nameone}}</a></li>
         </ul> 
         {% endif %}
@@ -78,7 +78,7 @@
         </h3>
         {% for record in records|dictsort:"nameone" %}
         {% if record.member == 'other' %} 
-        <ul class="py-2 list-disc list-inside">
+        <ul class="py-1 list-disc list-inside">
           <li><a href="{% url 'alvin_viewer' 'alvin-location' record.identifier %}">{{record.nameone}}</a></li>
         </ul> 
         {% endif %}

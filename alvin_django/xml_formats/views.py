@@ -6,6 +6,7 @@ from lxml import etree
 from django.urls import reverse
 from django.utils.http import urlencode
 from urllib.parse import quote
+from django.utils.safestring import mark_safe
 
 from django.utils.http import urlsafe_base64_encode
 from django.utils.http import urlsafe_base64_decode
@@ -131,14 +132,13 @@ def record_viewer(request, record_type, record_id):
       with urlopen(absolute_xslt_json) as f:
         xslt_tree = etree.parse(f, parser)
         transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
-        recordjson = transform(xml_tree, **argDict)	# Transform source XML tree
-                           
+        #recordjson = transform(xml_tree, **argDict)	# Transform source XML tree
+        recordjson = str(transform(xml_tree, **argDict))	# Transform source XML tree                  
     else:
       raise Http404("Format not found")
 
   if format == 'json':
-    #response render (request, 'xml_formats/recordjson.json', {'recordjson': recordjson})
-    response = render(request, 'xml_formats/recordjson.json', {'recordjson': recordjson})
+    response = render(request, 'xml_formats/recordjson.json', {'recordjson': mark_safe(recordjson)})
 
   # 2. Add or modify headers using the .headers dictionary
     response.headers['Content-Type'] = 'application/ld+json'  # Standard server response type
@@ -330,7 +330,7 @@ def linked_art_activity_stream(request, searchType):
     view_url = f"{request.path}?{params.urlencode()}" if params else request.path
     separator = "/linkedart"
     current_url = request.build_absolute_uri()
-    domain_root = current_url.split(separator, 1)[0]
+    domain_root = current_url.split('/linkedart')[0] 
     page_token = request.GET.get('page')
   
     if page_token:
@@ -415,6 +415,7 @@ def linked_art_activity_stream(request, searchType):
         "prevstartnum":prevstartnum,
         "view_url":view_url,       
         "domain_root":domain_root,
+        "current_url":current_url,
         "next_token":next_token,
         "prev_token":prev_token,
         "start_number_1_based":start_number_1_based,
@@ -444,9 +445,10 @@ def linked_art_discovery_stream(request, searchType):
     params = request.GET.copy()  # make a mutable copy
     params.pop('page', None)  # remove the parameter if it exists
     view_url = f"{request.path}?{params.urlencode()}" if params else request.path
-    separator = "/linkedart"
     current_url = request.build_absolute_uri()
-    domain_root = current_url.split(separator, 1)[0]
+
+
+    domain_root = current_url.split('/linkedart')[0]
     page_token = request.GET.get('page')
   
     if page_token:

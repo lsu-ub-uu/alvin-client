@@ -41,61 +41,6 @@ def copyright(request):
 def help(request):
   return render(request, 'alvin_info/help.html', {})
 
-def institutionsold(request):
-  xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
-    
-  # API host
-  api_host = settings.API_HOST
-
-  list_url = f'{api_host}/rest/record/alvin-location'
-
-  xslt_path = static('xsl/members.xsl')
-  absolute_xslt = request.build_absolute_uri(xslt_path)
-
-  request_path = request.get_full_path()
-  full_url = request_path.split('/institutions')[0] + '/alvin-location/'
-
-  response = requests.get(list_url, headers=xml_headers_list)
-
-  if response.status_code == 200:
-  # Hantera XML
-    list_xml = etree.XML(response.content)
-
-  else:
-    raise Http404("Record not found") 
- 
-  lang = request.LANGUAGE_CODE
-
-  argDict = {}
-  argDict["lang"] = etree.XSLT.strparam(lang)
-  argDict["full_url"] = etree.XSLT.strparam(full_url)
-  
-  with urlopen(absolute_xslt) as f:
-    xslt_tree = etree.parse(f, parser)
-    
-    xslt = etree.XSLT(xslt_tree)
-    
-    result = xslt(list_xml, **argDict)
-
-  member = format_html(etree.tostring(result, encoding='unicode', pretty_print=True))
-
-
-  metadata = {
-            "fromNo":list_xml.findtext(".//fromNo"),
-            "toNo":list_xml.findtext(".//toNo"),
-            "totalNo":list_xml.findtext(".//totalNo"),
-        }
-
-  context = {
-	    "member": member,
-            "metadata": metadata,
-            "full_url": full_url,        
-        }
-  
-    
-  return render(request, 'alvin_info/institutionsold.html', context)
-
-
 def institutions(request):
   xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
     
@@ -117,8 +62,6 @@ def institutions(request):
         records.append({
           'identifier': record.findtext('./recordInfo/id'),
           'nameone': record.findtext('./authority[1]/name/namePart[1]'),
-          'nametwo': record.findtext('./authority[2]/name/namePart[1]'),
-          'namethree': record.findtext('./authority[3]/name/namePart[1]'),
           'member': record.findtext('./organisationInfo/descriptor'),
           }) 
   

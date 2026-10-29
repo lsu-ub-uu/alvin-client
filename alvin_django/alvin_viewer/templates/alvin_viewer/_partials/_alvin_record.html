@@ -18,7 +18,7 @@
             <ul class="flex gap-x-2 gap-y-2 flex-wrap list-none" aria-labelledby="subject-words-heading">
             {% for subject_group in metadata.subjects.entries %}
                 {% for subject in subject_group.collect_subjects %}
-                <li class="dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 dark:text-off-white hover:bg-light-alvin hover:text-dark-alvin shadow-sm px-4 py-2 rounded-md cursor-pointer">{{subject}}</li>
+                   <a href="{% url 'alvin_search' %}?searchType=alvinRecord&subject={{subject}}"><li class="dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 dark:text-off-white hover:bg-light-alvin hover:text-dark-alvin shadow-sm px-4 py-2 rounded-md cursor-pointer">{{ subject }}</li></a>
                 {% endfor %}
             {% endfor %}
             </ul>

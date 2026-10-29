@@ -8,11 +8,11 @@
     "type": "OrderedCollection",
         {% if completeListSize > 0 %}
         "first": {
-            "id": "{{domain_root}}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{first_token|safe}}",
+            "id": "{{ request.scheme }}://{{ request.get_host }}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{first_token|safe}}",
             "type": "OrderedCollectionPage"
         },
         "last": {
-            "id": "{{domain_root}}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{last_token|safe}}",
+            "id": "{{ request.scheme }}://{{ request.get_host }}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{last_token|safe}}",
             "type": "OrderedCollectionPage"
         },
         {% endif %}
@@ -22,7 +22,7 @@
     "type": "OrderedCollectionPage",
     "startIndex": {{ startIndex }},
     "partOf": {
-        "id": "{{ domain_root }}{{ request.path }}{% if location %}?location={{ location }}{% endif %}",
+        "id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% if location %}?location={{ location }}{% endif %}",
         "type": "OrderedCollection"
        
     },
@@ -34,7 +34,7 @@
         {% endif %}
         {% if startnum > rowsnum %}{% if startnum <= completeListSize %}
         "prev": {
-            "id": "{{domain_root}}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{prev_token|safe}}",
+            "id": "{{ request.scheme }}://{{ request.get_host }}{{view_url|safe}}{% if location %}&{% else %}?{% endif %}page={{prev_token|safe}}",
             "type": "OrderedCollectionPage"
         },
         {% endif %}    
@@ -45,7 +45,7 @@
     {
         "type": "Update",
         "object": {
-            "id": "{{domain_root}}{% url 'record_viewer' record.type record.identifier %}?format=json",
+            "id": "{{ request.scheme }}://{{ request.get_host }}{% url 'record_viewer' record.type record.identifier %}?format=json",
             "type": 
             {% if record.type == 'alvin-record' %} 
             {% if record.collection == 'yes' %}"Set"{% else %}"HumanMadeObject"{% endif %}

@@ -2,7 +2,7 @@ from lxml import etree
 
 from .records import AlvinLocation
 from .metadata import Summary
-from .common import _get_label, _norm_rt, _xp, address, attr, date, decorated_list_item, decorated_text, electronic_locators, element, elements, identifiers, names, origin_place, related_authority, text
+from .common import _get_label, _norm_rt, _xp, address, attr, date, decorated_list_item, decorated_text, electronic_locators, element, elements, names, text
 from .mappings import organisation
 
 rt = _norm_rt("alvin-location")

@@ -146,7 +146,7 @@ def names(node: etree._Element, xp: str, name_parts: Dict[str, str], variant_col
             variant_type = _get_attribute_item(variant_collection, attr(target, "./@variantType"))
 
         entry = NameEntry(parts=parts, variant_type=variant_type, label_lang=label_lang)
-
+        
         if lang not in per_lang_raw:
             per_lang_raw[lang] = entry
         else:

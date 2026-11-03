@@ -277,9 +277,23 @@ class ElectronicLocator:
 
 @dataclass(slots=True)
 class Identifier:
+    
+    BASE_URLS = { 
+        # Key is identifier.type
+        "VIAF": "https://viaf.org/viaf/",
+        "LIBRIS": "https://libris.kb.se/",
+    }
+
     label: Optional[str] = None
     type: Optional[str] = None
     identifier: Optional[str] = None
+
+    @property
+    def url(self) -> Optional[str]:
+        base_url = self.BASE_URLS.get(self.type)
+        if not base_url or not self.identifier:
+            return None
+        return f"{base_url}{self.identifier}"
 
 @dataclass(slots=True)
 class Measure:
@@ -840,6 +854,13 @@ class FilesBlock:
         )
 
         return f"{cc_base_url}/licenses/{license_stub}/4.0/deed.{current_lang}"
+
+    @property
+    def rights_icon(self) -> str:
+        if not self.rights_code:
+            return ""
+
+        return f"./_icons/{self.rights_code}.svg"
 
     # --- IMAGES ---
 

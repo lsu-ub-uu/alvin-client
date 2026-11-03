@@ -28,7 +28,7 @@
         {% include "./_metadata_row.html" with label=metadata.general_note.type value=metadata.general_note.text %}
         {% include "./_metadata_row.html" with label=metadata.source_note.type value=metadata.source_note.text %}
         {% for identifier in metadata.identifiers %}
-            {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type value=identifier.identifier %}
+            {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type url=identifier.url value=identifier.identifier %}
         {% endfor %}
     </dl>
     {% endif %}

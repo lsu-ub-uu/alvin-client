@@ -14,7 +14,7 @@ from urllib.parse import quote
 
 import json
 
-from alvin_viewer.services.text_collector import get_item_dict
+from services.text_collector import get_item_dict
 
 ITEMS_DICT = get_item_dict()
 

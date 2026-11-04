@@ -1476,6 +1476,9 @@
   .text-green-500 {
     color: var(--color-green-500);
   }
+  .text-inherit {
+    color: inherit;
+  }
   .text-off-white {
     color: var(--color-off-white);
   }
@@ -3104,9 +3107,6 @@ html {
   @media (width >= 40rem) {
     width: calc(2/5 * 100%);
   }
-}
-.subject-link a {
-  text-decoration-line: none;
 }
 #inventory-metadata .md-label, #inventory-metadata-first .md-label {
   flex-shrink: 0;

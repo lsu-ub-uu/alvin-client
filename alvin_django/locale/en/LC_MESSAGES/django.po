@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-29 15:33+0100\n"
+"POT-Creation-Date: 2026-11-02 16:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -586,7 +586,7 @@ msgstr "Help"
 #: .\alvin_info\templates\alvin_info\help.html:47
 #: .\alvin_info\templates\alvin_info\start_search.html:5
 #: .\alvin_info\templates\alvin_info\start_search.html:17
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:348
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:356
 #: .\templates\_partials\_extended_search.html:5
 #: .\templates\_partials\_extended_search.html:12
 #: .\templates\_partials\_navbar.html:61
@@ -1064,7 +1064,7 @@ msgstr "Work symbol"
 #: .\alvin_search\templates\alvin_search\alvin_search.html:7
 #: .\alvin_search\templates\alvin_search\alvin_search.html:40
 #: .\alvin_search\templates\alvin_search\alvin_search.html:93
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:229
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:237
 #: .\templates\_partials\_extended_search.html:47
 #: .\templates\_partials\_userguidenavbar.html:130
 #: .\templates\_partials\_userguidenavbar.html:257
@@ -1077,7 +1077,7 @@ msgstr "Person"
 #: .\alvin_search\templates\alvin_search\alvin_search.html:10
 #: .\alvin_search\templates\alvin_search\alvin_search.html:48
 #: .\alvin_search\templates\alvin_search\alvin_search.html:107
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:233
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:241
 #: .\templates\_partials\_extended_search.html:60
 #: .\templates\_partials\_userguidenavbar.html:133
 #: .\templates\_partials\_userguidenavbar.html:260
@@ -1090,7 +1090,7 @@ msgstr "Organisation"
 #: .\alvin_search\templates\alvin_search\alvin_search.html:13
 #: .\alvin_search\templates\alvin_search\alvin_search.html:56
 #: .\alvin_search\templates\alvin_search\alvin_search.html:115
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:237
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:245
 #: .\templates\_partials\_extended_search.html:73
 #: .\templates\_partials\_userguidenavbar.html:136
 #: .\templates\_partials\_userguidenavbar.html:263
@@ -1107,7 +1107,7 @@ msgstr "Place"
 #: .\alvin_search\templates\alvin_search\alvin_search.html:16
 #: .\alvin_search\templates\alvin_search\alvin_search.html:64
 #: .\alvin_search\templates\alvin_search\alvin_search.html:123
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:241
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:249
 #: .\templates\_partials\_extended_search.html:86
 #: .\templates\_partials\_userguidenavbar.html:139
 #: .\templates\_partials\_userguidenavbar.html:266
@@ -1127,50 +1127,55 @@ msgid "Digital version"
 msgstr "Digital version"
 
 #: .\alvin_search\templates\alvin_search\alvin_search.html:82
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:124
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:132
 msgid "Samlingspost"
 msgstr "Collection"
 
-#: .\alvin_search\templates\alvin_search\alvin_search.html:335
+#: .\alvin_search\templates\alvin_search\alvin_search.html:138
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:63
+msgid "Släkt"
+msgstr "Family"
+
 #: .\alvin_search\templates\alvin_search\alvin_search.html:338
+#: .\alvin_search\templates\alvin_search\alvin_search.html:341
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:155
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:158
 msgid "FÖREGÅENDE"
 msgstr "PREVIOUS"
 
-#: .\alvin_search\templates\alvin_search\alvin_search.html:347
+#: .\alvin_search\templates\alvin_search\alvin_search.html:350
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:167
 msgid "Fel startnummer"
 msgstr "Wrong start number"
 
-#: .\alvin_search\templates\alvin_search\alvin_search.html:349
+#: .\alvin_search\templates\alvin_search\alvin_search.html:352
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:169
 msgid "AV"
 msgstr "OF"
 
-#: .\alvin_search\templates\alvin_search\alvin_search.html:356
-#: .\alvin_search\templates\alvin_search\alvin_search.html:358
+#: .\alvin_search\templates\alvin_search\alvin_search.html:359
+#: .\alvin_search\templates\alvin_search\alvin_search.html:361
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:176
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:178
 msgid "NÄSTA"
 msgstr "NEXT"
 
-#: .\alvin_search\templates\alvin_search\alvin_search.html:368
+#: .\alvin_search\templates\alvin_search\alvin_search.html:371
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:188
 msgid "Din sökning gav inget resultat"
 msgstr "Your search returned no results."
 
-#: .\alvin_search\templates\alvin_search\alvin_search.html:369
+#: .\alvin_search\templates\alvin_search\alvin_search.html:372
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:189
 msgid "Några söktips:"
 msgstr "Some search tips:"
 
-#: .\alvin_search\templates\alvin_search\alvin_search.html:370
+#: .\alvin_search\templates\alvin_search\alvin_search.html:373
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:190
 msgid "Kontrollera stavningen."
 msgstr "Check the spelling."
 
-#: .\alvin_search\templates\alvin_search\alvin_search.html:371
+#: .\alvin_search\templates\alvin_search\alvin_search.html:374
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:191
 msgid ""
 "Ange färre sökord. Ange t.ex. bara ett eller ett par ord ur en titel "
@@ -1270,20 +1275,20 @@ msgstr "Archival institution"
 
 #: .\alvin_search\templates\alvin_search\partials\_search_filters.html:23
 #: .\alvin_search\templates\alvin_search\partials\_search_filters.html:37
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:78
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:93
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:137
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:149
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:161
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:173
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:190
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:208
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:220
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:256
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:268
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:286
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:308
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:324
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:86
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:101
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:145
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:157
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:169
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:181
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:198
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:216
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:228
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:264
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:276
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:294
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:316
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:332
 msgid "Välj"
 msgstr "Select"
 
@@ -1293,8 +1298,8 @@ msgid "Resurstyp"
 msgstr "Resource type"
 
 #: .\alvin_search\templates\alvin_search\partials\_search_filters.html:45
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:68
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:104
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:76
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:112
 msgid "År"
 msgstr "Year"
 
@@ -1302,102 +1307,102 @@ msgstr "Year"
 msgid "Namn"
 msgstr "Name"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:63
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:128
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:71
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:136
 #: .\vocabulary\templates\vocabulary\oai-pmh.html:64
 msgid "Titel"
 msgstr "Title"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:74
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:82
 msgid "Verkets form"
 msgstr "Form of work"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:89
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:157
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:320
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:97
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:165
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:328
 #: .\templates\_partials\_filters.html:7
 #: .\vocabulary\templates\vocabulary\place.html:123
 msgid "Land"
 msgstr "Country"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:112
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:120
 msgid "Öppna/Stäng"
 msgstr "Open/Close"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:117
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:125
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:220
 msgid "Fler filter"
 msgstr "More filters"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:133
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:141
 msgid "Handskrift/Tryck"
 msgstr "Manuscript/Print"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:145
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:153
 #: .\vocabulary\templates\vocabulary\oai-pmh.html:88
 msgid "Språk"
 msgstr "Language"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:169
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:177
 msgid "Historiskt land"
 msgstr "Historical country"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:181
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:189
 msgid "Förlag, impressum"
 msgstr "Publisher, imprint"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:186
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:194
 msgid "Genre/Form"
 msgstr "Genre/Form"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:198
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:206
 msgid "Ämne"
 msgstr "Subject"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:204
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:212
 msgid "Teknik"
 msgstr "Technique"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:216
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:224
 msgid "Material"
 msgstr "Material"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:252
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:260
 msgid "Roll"
 msgstr "Role"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:264
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:272
 msgid "Samlingar"
 msgstr "Collections"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:276
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:284
 msgid "Signum"
 msgstr "Shelf mark"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:282
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:290
 #: .\vocabulary\templates\vocabulary\oai-pmh.html:95
 msgid "Rättigheter"
 msgstr "Rights"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:299
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:307
 msgid "Yrke/Verksamhetsområde"
 msgstr "Occupation/Field of activity"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:304
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:312
 msgid "Kön"
 msgstr "Gender"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:335
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:343
 #: .\vocabulary\templates\vocabulary\oai-pmh.html:83
 msgid "Identifikator"
 msgstr "Identifier"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:341
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:349
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:208
 msgid "Alvin-ID"
 msgstr "Alvin ID"
 
-#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:343
+#: .\alvin_search\templates\alvin_search\partials\_search_filters.html:351
 #: .\xml_formats\templates\xml_formats\linked_art_search.html:210
 msgid "Ange endast nummer"
 msgstr "Enter number only"
@@ -1985,7 +1990,21 @@ msgid ""
 "objektets fysisk placering och <span class=\"font-mono\">carries</span> "
 "verksinformation."
 msgstr ""
-"Records of the type <span class=\"font-mono\">HumanMadeObject</span> or <span class=\"font-mono\">Set</span> may also include the properties <span class=\"font-mono\">classified_as</span> (controlled terms for resource type or genre, as well as various types of subject headings, <span class=\"font-mono\">member_of</span> (subordinate collection), <span class=\"font-mono\">made_of</span> (material), <span class=\"font-mono\">referred_to_by</span> (all types of text descriptions such as notes, summaries, bibliographic references, etc.), <span class=\"font-mono\">subject_of</span> (links to other related resources), as well as creation information in <span class=\"font-mono\">produced_by</span> for physical objects and <span class=\"font-mono\">created_by</span> for collections. For physical objects, <span class=\"font-mono\">current_owner</span> indicates the owner or provider of the object, <span class=\"font-mono\">current_location</span> the physical location of the object, and <span class=\"font-mono\">carries</span> the work information."
+"Records of the type <span class=\"font-mono\">HumanMadeObject</span> or "
+"<span class=\"font-mono\">Set</span> may also include the properties <span "
+"class=\"font-mono\">classified_as</span> (controlled terms for resource type "
+"or genre, as well as various types of subject headings, <span class=\"font-"
+"mono\">member_of</span> (subordinate collection), <span class=\"font-"
+"mono\">made_of</span> (material), <span class=\"font-mono\">referred_to_by</"
+"span> (all types of text descriptions such as notes, summaries, "
+"bibliographic references, etc.), <span class=\"font-mono\">subject_of</span> "
+"(links to other related resources), as well as creation information in <span "
+"class=\"font-mono\">produced_by</span> for physical objects and <span "
+"class=\"font-mono\">created_by</span> for collections. For physical objects, "
+"<span class=\"font-mono\">current_owner</span> indicates the owner or "
+"provider of the object, <span class=\"font-mono\">current_location</span> "
+"the physical location of the object, and <span class=\"font-mono\">carries</"
+"span> the work information."
 
 #: .\vocabulary\templates\vocabulary\linkedart.html:63
 msgid ""

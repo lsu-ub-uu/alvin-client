@@ -57,6 +57,14 @@
 
     {% endif %}
 
+    {% if searchType == 'person' %} 
+
+    <div class="flex items-center gap-2 pt-4 pb-1">
+        <input class="dark:bg-gray-800 dark:text-white text-gray-900 border border-blue-200 rounded" type="checkbox" id="family" name="family" value="yes" {% if request.GET.family == 'yes' %}checked{% endif %}> <label for="family" class="text-sm uppercase font-semibold text-gray-700 dark:text-gray-300">{% translate 'Släkt' %}</label>
+    </div>
+
+    {% endif %}
+
     {% if searchType == 'work' %}
 
     <div class="py-2">

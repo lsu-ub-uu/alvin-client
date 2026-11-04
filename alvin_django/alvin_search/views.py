@@ -479,7 +479,8 @@ def alvin_search(request):
     year = request.GET.get('year', '').strip()
     subcollection = request.GET.get('subcollection', '').strip() 
     occupation = request.GET.get('occupation', '').strip() 
-    gender = request.GET.get('gender', '').strip() 
+    gender = request.GET.get('gender', '').strip()
+    family = request.GET.get('family', '').strip()  
     identifier = request.GET.get('identifier', '').strip()
     shelfmark = request.GET.get('shelfmark', '').strip()
     publication = request.GET.get('publication', '').strip() 
@@ -516,11 +517,12 @@ def alvin_search(request):
 # Shared params
 
     if id != '':
-        placeRecordIdSearchTerm = f',{{"name":"placeRecordIdSearchTerm","value":"{id}"}}'  
-        organisationRecordIdSearchTerm = f',{{"name":"organisationRecordIdSearchTerm","value":"{id}"}}' 
-        personRecordIdSearchTerm = f',{{"name":"personRecordIdSearchTerm","value":"{id}"}}'
-        alvinRecordIdSearchTerm = f',{{"name":"alvinRecordIdSearchTerm","value":"{id}"}}'
-        workRecordIdSearchTerm = f',{{"name":"workRecordIdSearchTerm","value":"{id}"}}'
+        escaped_id = id.replace('"', '\\"')
+        placeRecordIdSearchTerm = f',{{"name":"placeRecordIdSearchTerm","value":"{escaped_id}"}}'  
+        organisationRecordIdSearchTerm = f',{{"name":"organisationRecordIdSearchTerm","value":"{escaped_id}"}}' 
+        personRecordIdSearchTerm = f',{{"name":"personRecordIdSearchTerm","value":"{escaped_id}"}}'
+        alvinRecordIdSearchTerm = f',{{"name":"alvinRecordIdSearchTerm","value":"{escaped_id}"}}'
+        workRecordIdSearchTerm = f',{{"name":"workRecordIdSearchTerm","value":"{escaped_id}"}}'
 
     else:  
         placeRecordIdSearchTerm = ''
@@ -551,9 +553,10 @@ def alvin_search(request):
         placeInPersonSearchTerm = ''
 
     if identifier != '':
-        identifierSearchTerm = f',{{"name":"identifierSearchTerm","value":"{identifier}"}}' 
-        identifierPersonSearchTerm = f',{{"name":"identifierPersonSearchTerm","value":"{identifier}"}}' 
-        identifierOrganisationSearchTerm = f',{{"name":"identifierOrganisationSearchTerm","value":"{identifier}"}}' 
+        escaped_identifier = identifier.replace('"', '\\"')
+        identifierSearchTerm = f',{{"name":"identifierSearchTerm","value":"{escaped_identifier}"}}' 
+        identifierPersonSearchTerm = f',{{"name":"identifierPersonSearchTerm","value":"{escaped_identifier}"}}' 
+        identifierOrganisationSearchTerm = f',{{"name":"identifierOrganisationSearchTerm","value":"{escaped_identifier}"}}' 
 
     else: 
         identifierSearchTerm = ''
@@ -561,17 +564,19 @@ def alvin_search(request):
         identifierOrganisationSearchTerm = ''
 
     if title != '':
-        alvinRecordTitleSearchTerm = f',{{"name":"alvinRecordTitleSearchTerm","value":"{title}"}}'  
-        workTitleSearchTerm = f',{{"name":"workTitleSearchTerm","value":"{title}"}}' 
+        escaped_title = title.replace('"', '\\"')
+        alvinRecordTitleSearchTerm = f',{{"name":"alvinRecordTitleSearchTerm","value":"{escaped_title}"}}'  
+        workTitleSearchTerm = f',{{"name":"workTitleSearchTerm","value":"{escaped_title}"}}' 
  
     else:  
         alvinRecordTitleSearchTerm = ''
         workTitleSearchTerm = ''
 
     if name != '':
-        placeNameSearchTerm = f',{{"name":"placeNameSearchTerm","value":"{name}"}}' 
-        organisationNameSearchTerm = f',{{"name":"organisationNameSearchTerm","value":"{name}"}}' 
-        personNameSearchTerm = f',{{"name":"personNameSearchTerm","value":"{name}"}}' 
+        escaped_name = name.replace('"', '\\"')
+        placeNameSearchTerm = f',{{"name":"placeNameSearchTerm","value":"{escaped_name}"}}' 
+        organisationNameSearchTerm = f',{{"name":"organisationNameSearchTerm","value":"{escaped_name}"}}' 
+        personNameSearchTerm = f',{{"name":"personNameSearchTerm","value":"{escaped_name}"}}' 
 
     else: 
         placeNameSearchTerm = ''
@@ -579,10 +584,11 @@ def alvin_search(request):
         personNameSearchTerm = ''
 
     if year != '':
-        workCreationDateSearchTerm = f',{{"name":"workCreationDateSearchTerm","value":"{year}"}}' 
-        yearSearchTerm = f',{{"name":"yearSearchTerm","value":"{year}"}}'
-        yearPersonSearchTerm = f',{{"name":"yearPersonSearchTerm","value":"{year}"}}'
-        yearOrganisationSearchTerm = f',{{"name":"yearOrganisationSearchTerm","value":"{year}"}}'
+        escaped_year = year.replace('"', '\\"')
+        workCreationDateSearchTerm = f',{{"name":"workCreationDateSearchTerm","value":"{escaped_year}"}}' 
+        yearSearchTerm = f',{{"name":"yearSearchTerm","value":"{escaped_year}"}}'
+        yearPersonSearchTerm = f',{{"name":"yearPersonSearchTerm","value":"{escaped_year}"}}'
+        yearOrganisationSearchTerm = f',{{"name":"yearOrganisationSearchTerm","value":"{escaped_year}"}}'
     else:  
         workCreationDateSearchTerm = ''
         yearSearchTerm = ''
@@ -639,7 +645,8 @@ def alvin_search(request):
         historicalCountrySearchTerm = ''
 
     if publication != '':
-        publicationSearchTerm = f',{{"name":"publicationSearchTerm","value":"{publication}"}}' 
+        escaped_publication = publication.replace('"', '\\"')
+        publicationSearchTerm = f',{{"name":"publicationSearchTerm","value":"{escaped_publication}"}}' 
     else: 
         publicationSearchTerm = ''
 
@@ -649,7 +656,8 @@ def alvin_search(request):
         genreFormSearchTerm = ''
 
     if subject != '':
-        subjectSearchTerm = f',{{"name":"subjectSearchTerm","value":"{subject}"}}' 
+        escaped_subject = subject.replace('"', '\\"')
+        subjectSearchTerm = f',{{"name":"subjectSearchTerm","value":"{escaped_subject}"}}' 
     else: 
         subjectSearchTerm = ''
 
@@ -674,7 +682,8 @@ def alvin_search(request):
         subcollectionSearchTerm = ''
 
     if shelfmark != '':
-        shelfmarkSearchTerm = f',{{"name":"shelfmarkSearchTerm","value":"{shelfmark}"}}' 
+        escaped_shelfmark = shelfmark.replace('"', '\\"')
+        shelfmarkSearchTerm = f',{{"name":"shelfmarkSearchTerm","value":"{escaped_shelfmark}"}}' 
     else: 
         shelfmarkSearchTerm = ''
 
@@ -690,8 +699,14 @@ def alvin_search(request):
 
 # For alvin-person
 
+    if family == 'yes':
+        familyNameSearchTerm = f',{{"name":"familyNameSearchTerm","value":"yes"}}' 
+    else: 
+        familyNameSearchTerm = ''
+
     if occupation != '':
-        personOccupationSearchTerm = f',{{"name":"personOccupationSearchTerm","value":"{occupation}"}}' 
+        escaped_occupation = occupation.replace('"', '\\"')
+        personOccupationSearchTerm = f',{{"name":"personOccupationSearchTerm","value":"{escaped_occupation}"}}' 
     else: 
         personOccupationSearchTerm = ''
 
@@ -725,7 +740,7 @@ def alvin_search(request):
 
 # Creating Cora searchData for each recordType
 
-    personSearchData = f'{{"name":"personSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"personSearchTerm","value":{json_safe_str}}}{personNameSearchTerm}{personNationalitySearchTerm}{personRecordIdSearchTerm}{yearPersonSearchTerm}{placeInPersonSearchTerm}{personOccupationSearchTerm}{personSexSearchTerm}{identifierPersonSearchTerm}]}}]}}'
+    personSearchData = f'{{"name":"personSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"personSearchTerm","value":{json_safe_str}}}{personNameSearchTerm}{personNationalitySearchTerm}{personRecordIdSearchTerm}{yearPersonSearchTerm}{placeInPersonSearchTerm}{personOccupationSearchTerm}{personSexSearchTerm}{identifierPersonSearchTerm}{familyNameSearchTerm}]}}]}}'
     
     organisationSearchData = f'{{"name":"organisationSearch","children":[{{"name":"include","children":[{{"name":"includePart","children":[{{"name":"organisationSearchTerm","value":{json_safe_str}}}{organisationNameSearchTerm}{organisationRecordIdSearchTerm}{organisationCountrySearchTerm}{identifierOrganisationSearchTerm}{yearOrganisationSearchTerm}]}}]}}'
 
@@ -892,6 +907,7 @@ def alvin_search(request):
         "work":work,
         "subject":subject,
         "occupation":occupation,
+        "family":family,
         "gender":gender,
         "records":records,
         "completeListSize":completeListSize,

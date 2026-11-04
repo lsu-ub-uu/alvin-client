@@ -134,6 +134,9 @@
             {{ name }} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'name' %}">❌</a></div>
           {% endif %}
 
+          {% if family %}
+            {% translate 'Släkt' %} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'family' %}">❌</a></div>
+          {% endif %}
 
           {% if form %} 
            {% for key, translations in forms.items %}

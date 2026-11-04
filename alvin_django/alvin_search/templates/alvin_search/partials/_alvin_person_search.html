@@ -3,8 +3,7 @@
     <svg class="size-6" aria-label="Person" viewBox="0 0 24 24" stroke-width="2" fill="none">
         {% include '../../alvin_viewer/_icons/person.svg' %}   </svg>
     <div class="py-2 px-2 font-semibold text-blue-800 dark:text-blue-200 underline text-base {% if view == 'grid' %}md:w-42 md:text-sm{% endif %}">
-    {% if record.namefamily != None %}{{record.namefamily}}{% if record.familyName != None %} (family){% endif %}{% if record.namegiven != None %}, {% endif %}{% endif %}
-    {% if record.namegiven != None %}{{record.namegiven}}{% endif %}{% if record.namenumeration != None %} {{record.namenumeration}}{% endif %}{% if record.nametermsOfAddress != None %}, {{record.nametermsOfAddress}}{% endif %}{% if record.displaydate != None %}, {{record.displaydate}}{% else %}{% if record.birthyear != None %}, {{record.birthyear}}-{% endif %}{% if record.deathyear != None %}{% if record.birthyear == None %}, -{% endif %}{{record.deathyear}}{% endif %}
+    {% if record.namefamily != None %}{{record.namefamily}}{% if record.familyName != None %} (family){% endif %}{% if record.namegiven != None %}, {% endif %}{% endif %}{% if record.namegiven != None %}{{record.namegiven}}{% endif %}{% if record.namenumeration != None %} {{record.namenumeration}}{% endif %}{% if record.nametermsOfAddress != None %}, {{record.nametermsOfAddress}}{% endif %}{% if record.displaydate != None %}, {{record.displaydate}}{% else %}{% if record.birthyear != None %}, {{record.birthyear}}-{% endif %}{% if record.deathyear != None %}{% if record.birthyear == None %}, -{% endif %}{{record.deathyear}}{% endif %}
     {% endif %} 
     </div>
 </a>

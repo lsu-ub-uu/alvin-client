@@ -28,7 +28,7 @@
 
     </div>
     <div class="bg-white dark:bg-gray-800 pt-2">
-      {{record.title|truncatechars:100 }}
+      {{record.title|truncatechars:92 }}
     </div>
   </div>
   {% else %}
@@ -57,13 +57,10 @@
       <div 
         {% if record.orientationCode == 'rtl' %}dir="rtl" {% endif %}
         class="flex pt-2 font-semibold text-blue-800 dark:text-blue-200 underline text-base w-full">
-        {{record.title|truncatechars:96 }}
+        {{record.title|truncatechars:92 }}
       </div>
       <div class="flex">
-        {% if record.namegiven != None %}{{record.namegiven}}{% endif %}
-        {% if record.namenumeration != None %}{{record.namenumeration}}{% endif %}
-        {% if record.namefamily != None %} {% endif %}
-        {% if record.namefamily != None %}{{record.namefamily}}{% if record.familyName != None %} (family){% endif %}{% endif %}{% if record.nametermsOfAddress != None %}, {{record.nametermsOfAddress}}{% endif %}
+        {% if record.namegiven != None %}{{record.namegiven}}{% endif %}{% if record.namenumeration != None %}{{record.namenumeration}}{% endif %}{% if record.namefamily != None %} {% endif %}{% if record.namefamily != None %}{{record.namefamily}}{% if record.familyName != None %} (family){% endif %}{% endif %}{% if record.nametermsOfAddress != None %}, {{record.nametermsOfAddress}}{% endif %}
         {% if record.namefamilytwo != None %}{% translate 'm.fl.' %}{% endif %}
       </div>
       <div class="flex">

@@ -15,10 +15,9 @@
 <div class="min-h-screen w-full flex flex-col lg:flex-row gap-8 pt-4 pb-8 px-2 md:px-8">
   <span id="main-content-marker" class="sr-only"></span>
 
-  <!-- Huvudinnehåll / Träfflista -->
   <main class="w-full lg:w-3/4 flex flex-col">
 
-    <!-- Rubrik, sökkategori och vy-växlare (samma border-y-ram som verktygsraden i alvin_viewer) -->
+    <!-- Search header and category -->
     <div class="flex flex-col gap-y-3 pb-4 mb-6 border-b border-[#D1D9D5] dark:border-white/10">
       <div class="flex flex-row items-center justify-between gap-4">
         
@@ -54,7 +53,7 @@
           {% endif %}
         </div>
 
-        <!-- Vy-växlare (stylade som verktygsknapparna i alvin_viewer) -->
+        <!-- View selector -->
         {% if completeListSize > 0 %}
         <div class="flex flex-row gap-x-1 shrink-0">
           <a href="{{ view_url|safe }}&view=list"
@@ -77,7 +76,7 @@
         {% endif %}
       </div>
 
-      <!-- Aktiva filter-brickor (drivna helt från views.py) -->
+      <!-- Active filters -->
       <div class="flex flex-wrap gap-2 items-center">
         {% for filter in active_filters %}
           <a href="{{ filter.remove_url }}"
@@ -94,7 +93,7 @@
         {% endfor %}
       </div>
 
-    <!-- Träfflista -->
+    <!-- Search result -->
     <div class="hitlist {% if view == 'grid' %}grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4{% else %}flex flex-col gap-y-3{% endif %}">
       {% for record in records %}
         {% if searchType == 'person' %}
@@ -111,7 +110,7 @@
       {% endfor %}
     </div>
 
-    <!-- Paginering / Noll resultat -->
+    <!-- Pagination -->
     {% if completeListSize > 0 %}
     <nav aria-label="{% translate 'Sidnavigering' %}" class="mt-8 pt-4 border-t border-[#D1D9D5] dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="w-full sm:w-auto flex justify-center sm:justify-start">
@@ -146,9 +145,10 @@
         {% endif %}
       </div>
     </nav>
+
     {% else %}
     
-    <!-- Noll resultat (harmoniserad med alvin_viewer istället för bg-red-500) -->
+    <!-- No results -->
     <div class="my-6 p-6 rounded-md border border-[#D1D9D5] dark:border-white/10 bg-gray-100 dark:bg-white/5 text-[#333333] dark:text-off-white">
       <h2 class="text-xl md:text-2xl font-bold pb-3 border-b border-[#D1D9D5] dark:border-white/10">
         {% translate 'Din sökning gav inget resultat' %}
@@ -163,7 +163,7 @@
 
   </main>
 
-  <!-- Sidopanel för filter -->
+  <!-- Filter panel -->
   <aside class="w-full lg:w-1/4 shrink-0">
     <div class="sticky top-4 p-4 bg-gray-100/80 dark:bg-white/5 border border-[#D1D9D5] dark:border-white/10 rounded-md w-full">
       {% include "alvin_search/partials/_search_filters.html" %}

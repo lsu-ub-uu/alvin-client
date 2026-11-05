@@ -130,7 +130,8 @@ def get_active_filters(request, locations, resourceTypes, productions, genres, t
 
 # Huvudvy för sökning
 def alvin_search(request):
-    # Städa bort tomma parametrar ur URL:en direkt
+
+    # Remove empty params
     has_empty_params = any(v == '' or (k == 'query' and v == '**') for k, v in request.GET.items())
     if has_empty_params:
         cleaned_params = request.GET.copy()
@@ -147,7 +148,7 @@ def alvin_search(request):
     searchType = request.GET.get('searchType', 'alvinRecord')
     query = request.GET.get('query', '**').strip()  
     if query == '':
-        query = '**' 
+        query = '**'
     json_safe_str = json.dumps(query) 
 
     person = request.GET.get('person', '').strip()

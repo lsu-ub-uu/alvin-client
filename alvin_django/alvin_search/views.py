@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 
 import requests
@@ -446,9 +446,104 @@ def get_genders(request):
 
     return genders
 
+def get_active_filters(request, locations, resourceTypes, productions, genres, techniques, materials, rights, forms, languages, countries, historicalCountries, subcollections, roles, genders):
+    active_filters = []
+    
+    # Ignorera dessa parametrar
+    ignored_params = {'searchType', 'view', 'start', 'rows', 'page'}
+    
+    for key, value in request.GET.items():
+        if not value or key in ignored_params:
+            continue
+            
+        # Skippa fritexten om den är standard '**'
+        if key == 'query' and value == '**':
+            continue
+
+        # Skapa en kopia av GET-parametrarna för att kunna bygga "ta bort"-länken
+        params = request.GET.copy()
+        params.pop(key, None)
+        remove_url = f"{request.path}?{params.urlencode()}" if params else request.path
+
+        label = value
+        prefix = None
+
+        # Sätt prefix och översätt koder till läsbara namn beroende på filtertyp
+        if key == 'person':
+            prefix = 'Person'
+        elif key == 'organisation':
+            prefix = 'Organisation'
+        elif key == 'place':
+            prefix = 'Plats'
+        elif key == 'work':
+            prefix = 'Verk'
+        elif key == 'id':
+            prefix = 'ID'
+        elif key == 'digital':
+            label = 'Digital version'
+        elif key == 'collection':
+            label = 'Samlingspost'
+        elif key == 'family':
+            label = 'Släkt'
+        elif key == 'location':
+            # Slå upp namnet på arkivinstitutionen
+            for loc in locations:
+                if loc.get('identifier') == value:
+                    label = loc.get('nameone')
+                    break
+        elif key == 'type' and resourceTypes:
+            label = resourceTypes.get(value, {}).get(translation.get_language(), value)
+        elif key == 'form' and forms:
+            label = forms.get(value, {}).get(translation.get_language(), value)
+        elif key == 'production' and productions:
+            label = productions.get(value, {}).get(translation.get_language(), value)
+        elif key == 'language' and languages:
+            label = languages.get(value, {}).get(translation.get_language(), value)
+        elif key == 'country' and countries:
+            label = countries.get(value, {}).get(translation.get_language(), value)
+        elif key == 'historical' and historicalCountries:
+            label = historicalCountries.get(value, {}).get(translation.get_language(), value)
+        elif key == 'genre' and genres:
+            label = genres.get(value, {}).get(translation.get_language(), value)
+        elif key == 'technique' and techniques:
+            label = techniques.get(value, {}).get(translation.get_language(), value)
+        elif key == 'material' and materials:
+            label = materials.get(value, {}).get(translation.get_language(), value)
+        elif key == 'role' and roles:
+            label = roles.get(value, {}).get(translation.get_language(), value)
+        elif key == 'subcollection' and subcollections:
+            label = subcollections.get(value, {}).get(translation.get_language(), value)
+        elif key == 'right' and rights:
+            label = rights.get(value, {}).get(translation.get_language(), value)
+        elif key == 'gender' and genders:
+            label = genders.get(value, {}).get(translation.get_language(), value)
+
+        active_filters.append({
+            'key': key,
+            'prefix': prefix,
+            'label': label,
+            'remove_url': remove_url
+        })
+        
+    return active_filters
+
 # Search from REST-API
 
 def alvin_search(request):
+    # Rensa bort tomma parametrar från URL:en direkt om de existerar
+    has_empty_params = any(v == '' or (k == 'query' and v == '**') for k, v in request.GET.items())
+    if has_empty_params:
+        cleaned_params = request.GET.copy()
+        for k, v in list(cleaned_params.items()):
+            if v == '' or (k == 'query' and v == '**'):
+                cleaned_params.pop(k)
+
+        query_string = cleaned_params.urlencode()
+        redirect_url = request.path
+        if query_string:
+            redirect_url += f"?{query_string}"
+        return redirect(redirect_url)
+    
     xml_headers_list = {'Content-Type':'application/vnd.cora.recordList-decorated+xml','Accept':'application/vnd.cora.recordList-decorated+xml'}
 
 # Setting all params
@@ -875,6 +970,12 @@ def alvin_search(request):
 
     else:
         raise Http404("Invalid search")
+
+    active_filters = get_active_filters(
+        request, locations, resourceTypes, productions, genres, 
+        techniques, materials, rights, forms, languages, countries, 
+        historicalCountries, subcollections, roles, genders
+    )
   
     context = {
         "searchType":searchType,
@@ -942,6 +1043,7 @@ def alvin_search(request):
         "genders":genders,
         "lang":lang,
         "current_lang": current_lang,
+        "active_filters": active_filters,
         }
 
     return render(request, 'alvin_search/alvin_search.html', context)

@@ -1,0 +1,12 @@
+{% load i18n query_tags %}
+{% if value %}
+<a href="?{% remove_filter request filter_key %}"
+   class="inline-flex items-center gap-x-1.5 text-sm font-normal dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 text-[#333333] dark:text-off-white hover:bg-light-alvin hover:text-dark-alvin shadow-sm px-3 py-1 rounded-md cursor-pointer no-underline transition ease-in-out duration-150"
+   title="{% translate 'Ta bort filter' %}: {% if prefix %}{{ prefix }}: {% endif %}{{ value }}">
+  {% if prefix %}<span class="font-semibold">{{ prefix }}:</span>{% endif %}
+  <span>{{ value }}</span>
+  <svg class="size-4 opacity-70 hover:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+  </svg>
+</a>
+{% endif %}

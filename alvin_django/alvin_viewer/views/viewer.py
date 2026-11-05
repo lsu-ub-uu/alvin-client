@@ -2,6 +2,7 @@ from django.conf import settings
 from django.http import Http404, HttpResponse
 from django.core.paginator import Paginator
 from django.shortcuts import render
+from django.urls import reverse
 
 from lxml import etree
 
@@ -85,6 +86,10 @@ def has_details(metadata) -> bool:
         return True
     return False
 
+def uri(request, record_type, record_id):
+    relative_url = reverse('alvin_viewer', kwargs={'record_type': record_type, 'record_id': record_id})
+    return request.build_absolute_uri(relative_url)
+
 def alvin_viewer(request, record_type: str, record_id: str):
     value = request.GET.get("data", None) #Value saved from search
     api = AlvinAPI()
@@ -131,12 +136,13 @@ def alvin_viewer(request, record_type: str, record_id: str):
         metadata = extract_metadata(root, record_type)
     except Exception as e:
         raise Http404(str(e))'''
-    
+
     context = {"metadata": metadata, 
                "value": value,
                "has_related": has_related(metadata),
                "has_details": has_details(metadata),
                "page_obj": page_obj,
+               "uri": uri(request, record_type, record_id)
             }
 
     if request.headers.get('HX-Request') and 'page' in request.GET:

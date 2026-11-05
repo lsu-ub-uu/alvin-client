@@ -40,7 +40,7 @@
                     <label class="text-sm font-semibold text-gray-600 dark:text-gray-300">{% translate 'Direktlänk' %}</label>
                     <div class="flex items-center gap-2">
                         <div class="flex-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm truncate font-mono" data-xref="uri_text">
-                            {{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}
+                            {{ uri }}
                         </div>
                         <button 
                             data-xon.click="navigator.clipboard.writeText($refs.uri_text.innerText.trim()); copied = true; setTimeout(() => copied = false, 2000)"

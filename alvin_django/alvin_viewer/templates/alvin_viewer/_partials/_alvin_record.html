@@ -94,7 +94,7 @@
             {% include "./_metadata_row.html" with label=classification_group.label value=classification_group.entries|join:"<br>" %}
         {% endfor %}
         {% for identifier in metadata.identifiers %}
-            {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type value=identifier.identifier %}
+            {% include "./_metadata_row.html" with label=identifier.label extra_label=identifier.type url=identifier.url value=identifier.identifier %}
         {% endfor %}
     </dl>
     {% endif %}

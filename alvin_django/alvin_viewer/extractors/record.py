@@ -4,8 +4,9 @@ from urllib.parse import urlparse
 
 from django.conf import settings
 
-from ..xmlutils.nodes import text, attr, element, elements, first
-from .common import (_get_label, _get_value, _norm_rt, _xp, _get_attribute_item)
+from services.nodes import text, attr, element, elements, first
+from services.metadata import _get_label, _get_value, _get_attribute_item
+from .common import _norm_rt, _xp
 from .common import *
 from .records import AlvinRecord
 from .metadata import Appraisal, Axis, ClassificationEntry, ClassificationsBlock, Coin, Dimension, FilesBlock, FileGroup, File, Measure, SubjectMiscBlock, SubjectMiscEntry

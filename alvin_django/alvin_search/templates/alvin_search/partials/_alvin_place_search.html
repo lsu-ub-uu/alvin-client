@@ -6,7 +6,10 @@
             {% include '../../alvin_viewer/_icons/place.svg' %}
         </svg>
     </span>
-    <div class="font-semibold text-base group-hover:underline leading-snug {% if view == 'grid' %}text-sm{% endif %}">
-        {{ record.nameone }}{% if record.nametwo != None %}; {{ record.nametwo }}{% endif %}{% if record.namethree != None %}; {{ record.namethree }}{% endif %}
+    <div class="flex flex-col font-semibold text-base group-hover:underline leading-snug {% if view == 'grid' %}text-sm{% endif %}">
+        <h3>{{ record.title }}</h3>
+        {% for entries in record.variants.names.values %}
+        <p class="text-gray-500 dark:text-gray-400">{{ entries.display_without_variant }}</p>
+        {% endfor %}
     </div>
 </a>

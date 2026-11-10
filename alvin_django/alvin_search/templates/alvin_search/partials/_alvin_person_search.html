@@ -6,7 +6,11 @@
             {% include '../../alvin_viewer/_icons/person.svg' %}
         </svg>
     </span>
-    <div class="font-semibold text-base group-hover:underline leading-snug {% if view == 'grid' %}text-sm{% endif %}">
-        {% if record.namefamily != None %}{{ record.namefamily }}{% if record.familyName != None %} (family){% endif %}{% if record.namegiven != None %}, {% endif %}{% endif %}{% if record.namegiven != None %}{{ record.namegiven }}{% endif %}{% if record.namenumeration != None %} {{ record.namenumeration }}{% endif %}{% if record.nametermsOfAddress != None %}, {{ record.nametermsOfAddress }}{% endif %}{% if record.displaydate != None %}, {{ record.displaydate }}{% else %}{% if record.birthyear != None %}, {{ record.birthyear }}-{% endif %}{% if record.deathyear != None %}{% if record.birthyear == None %}, -{% endif %}{{ record.deathyear }}{% endif %}{% endif %}
+    <div class="flex flex-col font-semibold text-base group-hover:underline leading-snug {% if view == 'grid' %}text-sm{% endif %}">
+        <h3>{{ record.title }}</h3>
+        {% for entries in record.variants.names.values %}
+        <p class="text-gray-500 dark:text-gray-400">{{ entries.display_without_variant }}</p>
+        {% endfor %}
+        {{ record.person_info.display }}
     </div>
 </a>

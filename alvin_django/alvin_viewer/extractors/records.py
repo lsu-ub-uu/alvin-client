@@ -2,7 +2,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Optional
 
-from .metadata import Address, Agent, Appraisal, Axis, ClassificationEntry, ClassificationsBlock, Coin, CommonMetadata, Component, ComponentsBlock, DateEntry, DatesBlock, DecoratedList, DecoratedListItem, DecoratedTextWithType, Edge, DecoratedText, DecoratedTexts, DecoratedTextsWithType, Dimension, ElectronicLocator, FilesBlock, Identifier, Location, Measure, NamesBlock, OriginPlace, RelatedAuthoritiesBlock, RelatedRecordsBlock, SubjectMiscEntry, Summary, TitlesBlock
+from services.metadata import DateEntry, DatesBlock, NamesBlock, TitlesBlock
+from .metadata import Address, Agent, Appraisal, Axis, ClassificationEntry, ClassificationsBlock, Coin, CommonMetadata, Component, ComponentsBlock, DecoratedList, DecoratedListItem, DecoratedTextWithType, Edge, DecoratedText, DecoratedTexts, DecoratedTextsWithType, Dimension, ElectronicLocator, FilesBlock, Identifier, Location, Measure, OriginPlace, RelatedAuthoritiesBlock, RelatedRecordsBlock, SubjectMiscEntry, Summary
 
 @dataclass(slots=True)
 class AlvinPlace(CommonMetadata):

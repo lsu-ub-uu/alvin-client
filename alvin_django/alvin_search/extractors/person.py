@@ -2,7 +2,6 @@ from dataclasses import dataclass, field
 from typing import Optional
 from services.metadata import DatesValue, NamesBlock, names, date_range
 from services.mappings import person
-from ..metadata import DateRange
 
 
 @dataclass(frozen=True)
@@ -15,6 +14,7 @@ class AlvinPerson:
     @property
     def title(self) -> str:
         return self.authority_names.title
+
 
 def extract_alvin_person(node) -> AlvinPerson:
     identifier = node.findtext('./recordInfo/id')

@@ -2,20 +2,6 @@ from dataclasses import dataclass, asdict
 from typing import Optional
 from django.http import QueryDict
 
-@dataclass(frozen=True)
-class DateRange:
-    start_year: Optional[str] = None
-    end_year: Optional[str] = None
-    display_date: Optional[str] = None
-
-
-@dataclass(frozen=True)
-class HeldByLocation:
-    sv: Optional[str] = None
-    en: Optional[str] = None
-    no: Optional[str] = None
-    shelfmark: Optional[str] = None
-
 
 @dataclass
 class SearchParams:

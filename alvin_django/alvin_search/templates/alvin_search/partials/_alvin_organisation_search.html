@@ -11,5 +11,6 @@
         {% for entries in record.variants.names.values %}
         <p class="text-gray-500 dark:text-gray-400">{{ entries.display_without_variant }}</p>
         {% endfor %}
+        <p>{{ record.organisation_info.display }}</p>
     </div>
 </a>

@@ -168,7 +168,6 @@ def alvin_search(request):
 
     # Build Cora URL and get XML
     list_url = build_cora_search_url(api_host, search_params, startnum, rowsnum, view)
-    print(list_url)
     xml_headers_search = {
         'Content-Type': 'application/vnd.cora.recordList-decorated+xml',
         'Accept': 'application/vnd.cora.recordList-decorated+xml',

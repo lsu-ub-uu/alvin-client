@@ -2,11 +2,148 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Optional, Dict, List, Union
+
 from django.utils.translation import get_language
+from django.urls import reverse
+
+from services.mappings import person, place, organisation
 from services.nodes import attr, element, elements, first, text, texts
 from services.text_collector import get_item_dict
 
 ITEMS_DICT = get_item_dict()
+
+# -------------------
+# DECORATED
+# -------------------
+
+@dataclass(slots=True)
+class DecoratedText:
+    label: Optional[str] = None
+    parent_label: Optional[str] = None
+    text: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not self.text
+    
+    @property
+    def combined_label(self):
+        return f"{self.parent_label}, {self.label}".capitalize() if self.parent_label is not None else self.label
+
+@dataclass(slots=True)
+class DecoratedTexts:
+    label: Optional[str] = None
+    texts: List[str] = None
+
+    def is_empty(self) -> bool:
+        return not self.texts
+    
+    @property
+    def display(self) -> str:
+        return ", ".join(self.texts) if self.texts else ""
+
+@dataclass(slots=True)
+class DecoratedTextWithType:
+    type: Optional[str] = None
+    text: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not self.text
+
+@dataclass(slots=True)
+class DecoratedTextsWithType:
+    label: Optional[str] = None
+    texts: List[DecoratedTextWithType] = None
+
+    def is_empty(self) -> bool:
+        return not self.texts
+
+@dataclass(slots=True)
+class DecoratedList:
+    label: Optional[str] = None
+    items: List[str] = None
+    code: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not self.items
+    
+    @property
+    def display(self) -> str:
+        return ", ".join(self.items) if self.items else ""
+
+@dataclass(slots=True)
+class DecoratedListItem:
+    label: Optional[str] = None
+    item: Optional[str] = None
+    code: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not (self.label or self.item or self.code)
+
+# -------------------
+# LINKED DATA
+# -------------------
+
+@dataclass(slots=True)
+class URL:
+    record_type_field: str = "record_type"
+    fixed_record_type: Optional[str] = None
+    id_field: str = "id"
+
+    @property
+    def url(self) -> Optional[str]:
+        id_ = getattr(self, self.id_field, None)
+        if not id_:
+            return None
+
+        record_type = self.fixed_record_type or getattr(self, self.record_type_field, None)
+        if not record_type:
+            return None
+
+        return reverse("alvin_viewer", args=[record_type, id_])
+
+
+@dataclass(slots=True)
+class Agent(URL):
+    record_type_field: str = "agent_type"
+    roles: Optional[DecoratedList] = None
+    label: Optional[str] = None
+    agent_type: Optional[str] = None
+    id: Optional[str] = None
+    names: Optional[NamesBlock] = None
+    certainty: Optional[str] = None
+
+    def is_empty(self) -> bool:
+        return not self.names
+    
+    @property
+    def display(self) -> str | None:
+        title = self.names.title if self.names else ""
+        if self.certainty == "uncertain":
+            title += "?"
+        return title
+    
+    @property
+    def display_roles(self) -> str | None:
+        return ", ".join(self.roles.items) if self.roles and self.roles.items else None
+    
+    @property
+    def icon_path(self) -> str | None:
+        if self.agent_type == "alvin-person":
+            return "../_icons/person.svg"
+        return "../_icons/organisation.svg"
+
+
+@dataclass(slots=True)
+class Location(URL):
+    fixed_record_type: str = "alvin-location"
+    label: Optional[str] = None
+    id: Optional[str] = None
+    names: Optional[NamesBlock] = None
+
+    @property
+    def display(self) -> Optional[str]:
+        return self.names.title if self.names else None
+
 
 # ------------------
 # NAMES AND TITLES BLOCKS 
@@ -147,6 +284,7 @@ class DateEntry:
 
     @property
     def display(self) -> str:
+        date_str = "-".join(filter(None, (self.year, self.month, self.day)))
         if self.era:
             date_str += f" {self.era}"
         return date_str
@@ -289,6 +427,7 @@ def titles(root: etree._Element, xp: str) -> TitlesBlock:
             orientation_code = text(target, "orientationCode"),
         )
 
+
 # -------------------
 # DATES FUNCTIONS
 # -------------------
@@ -337,6 +476,127 @@ def dates(node: etree._Element, xp: str, start_tag: str, end_tag: str) -> Dict:
             date_note = text(target, "note"),
             display_date = text(target, "displayDate")
         )
+    )
+
+
+# -------------------
+# DECORATED METADATA FUNCTIONS
+# -------------------
+
+def decorated_text(node: etree._Element | None, xp: str | None, parent_xp: str | None = None) -> DecoratedText | None:
+    target = _get_target(node, xp)
+    if target is None:
+        return None
+    
+    dt = DecoratedText(
+        label=_get_label(target),
+        parent_label = _get_label(element(node, parent_xp)) if parent_xp else None,
+        text=text(node, xp),
+    )
+
+    if dt.is_empty():
+        return None
+    
+    return dt
+
+
+def decorated_texts(node: etree._Element | None, xp: str | None = None) -> DecoratedTexts | None:
+    target = _get_target(node, xp)
+    if target is None:
+        return None
+    
+    dts = DecoratedTexts(
+        label = _get_label(target),
+        texts = texts(node, xp)
+    )
+
+    if dts.is_empty():
+        return None
+    return dts
+
+
+def decorated_texts_with_type(node: etree.Element, xp: str, tag: str, typeCollection: str, textType: str | None = None) -> DecoratedTextsWithType | None:
+    target = _get_target(node, xp)
+    if target is None:
+        return None
+    
+    dtwt = DecoratedTextsWithType(
+        label = _get_label(target),
+        texts = [DecoratedTextWithType(
+            type = _get_attribute_item(typeCollection, attr(e, textType)),
+            text = text(e, "."),
+            ) for e in elements(node, f"{xp}/{tag}")]
+    )
+
+    if dtwt.is_empty():
+        return None
+    return dtwt
+
+
+def decorated_list(node: etree._Element, xp: str) -> DecoratedList | None:
+    target = _get_target(node, xp)
+    if target is None:
+        return None
+    
+    dl = DecoratedList(
+            label = _get_label(target),
+            items = [_get_value(e) for e in elements(node, xp)],
+            code = text(node, xp),
+    )
+
+    if dl.is_empty():
+        return None
+    return dl
+
+
+def decorated_list_item(node: etree._Element, xp: str = None) -> DecoratedListItem | None:
+    target = _get_target(node, xp)
+    if target is None:
+        return None
+    
+    li = DecoratedListItem(
+        label=_get_label(target),
+        item=_get_value(element(node, xp)),
+        code=text(node, xp),
+    )
+    
+    if li.is_empty():
+        return None
+    return li
+
+# -------------------
+# LINKED DATA FUNCTIONS
+# -------------------
+
+def agents(node: etree._Element, xp: str) -> List[Agent]:
+    target = element(node, xp)
+    if target is None:
+        return None
+    
+    agents = [Agent(
+        label = _get_label(agent),
+        agent_type = f"alvin-{attr(agent, './@type')}",
+        id = text(agent, f"./{attr(agent, './@type')}/linkedRecordId"),
+        names = names(agent, ".//authority", person["AUTH_NAME"] if attr(agent, './@type') == 'person' else organisation["AUTH_NAME"]),
+        roles = decorated_list(agent, "role"),
+        certainty = text(agent, "certainty"),
+        ) for agent in elements(node, xp)]
+    
+    if all(a.is_empty() for a in agents):
+        return None
+    return agents
+
+
+def location(node: etree._Element, xp: str) -> Location | None:
+    if node is None:
+        return None
+
+    loc = element(node, xp)
+    
+    return Location(
+        label = _get_label(loc),
+        id = text(loc, "linkedRecordId"),
+        names = names(loc, ".//authority", organisation["AUTH_NAME"]),
     )
 
 # -------------------

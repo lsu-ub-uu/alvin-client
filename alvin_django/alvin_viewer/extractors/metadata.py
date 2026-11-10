@@ -4,10 +4,9 @@ from importlib.metadata import metadata
 from typing import Any, ClassVar, Dict, List, Optional, Union
 
 from django.utils.translation import get_language
-from django.urls import reverse
 from django.conf import settings
 
-from services.metadata import DatesBlock, NamesBlock, TitlesBlock
+from services.metadata import Agent, DatesBlock, NamesBlock, TitlesBlock, URL, DecoratedList, DecoratedListItem, DecoratedText, DecoratedTexts, DecoratedTextsWithType, DecoratedTextWithType
 
 # ------------------
 # COMMON
@@ -161,69 +160,6 @@ class ComponentsBlock:
         return iter(self.items)
 
 @dataclass(slots=True)
-class DecoratedText:
-    label: Optional[str] = None
-    parent_label: Optional[str] = None
-    text: Optional[str] = None
-
-    def is_empty(self) -> bool:
-        return not self.text
-    
-    @property
-    def combined_label(self):
-        return f"{self.parent_label}, {self.label}".capitalize() if self.parent_label is not None else self.label
-
-@dataclass(slots=True)
-class DecoratedTexts:
-    label: Optional[str] = None
-    texts: List[str] = None
-
-    def is_empty(self) -> bool:
-        return not self.texts
-    
-    @property
-    def display(self) -> str:
-        return ", ".join(self.texts) if self.texts else ""
-
-@dataclass(slots=True)
-class DecoratedTextWithType:
-    type: Optional[str] = None
-    text: Optional[str] = None
-
-    def is_empty(self) -> bool:
-        return not self.text
-
-@dataclass(slots=True)
-class DecoratedTextsWithType:
-    label: Optional[str] = None
-    texts: List[DecoratedTextWithType] = None
-
-    def is_empty(self) -> bool:
-        return not self.texts
-
-@dataclass(slots=True)
-class DecoratedList:
-    label: Optional[str] = None
-    items: List[str] = None
-    code: Optional[str] = None
-
-    def is_empty(self) -> bool:
-        return not self.items
-    
-    @property
-    def display(self) -> str:
-        return ", ".join(self.items) if self.items else ""
-
-@dataclass(slots=True)
-class DecoratedListItem:
-    label: Optional[str] = None
-    item: Optional[str] = None
-    code: Optional[str] = None
-
-    def is_empty(self) -> bool:
-        return not (self.label or self.item or self.code)
-
-@dataclass(slots=True)
 class Edge:
     label: Optional[str]
     item: Optional[str]
@@ -367,63 +303,6 @@ class SubjectMiscBlock:
 # LINKED RECORDS
 # ------------------
 
-class URL:
-    record_type_field: str = "record_type"
-    fixed_record_type: Optional[str] = None
-    id_field: str = "id"
-
-    @property
-    def url(self) -> Optional[str]:
-        id_ = getattr(self, self.id_field, None)
-        if not id_:
-            return None
-
-        record_type = self.fixed_record_type or getattr(self, self.record_type_field, None)
-        if not record_type:
-            return None
-
-        return reverse("alvin_viewer", args=[record_type, id_])
-
-@dataclass(slots=True)
-class Agent(URL):
-    record_type_field = "agent_type"
-    roles: DecoratedList
-    label: Optional[str] = None
-    agent_type: Optional[str] = None
-    id: Optional[str] = None
-    names: NamesBlock = None
-    certainty: Optional[str] = None
-
-    def is_empty(self) -> bool:
-        return not self.names
-    
-    @property
-    def display(self) -> str | None:
-        title = self.names.title
-        if self.certainty == "uncertain":
-            title += "?"
-        return title
-    
-    @property
-    def display_roles(self) -> str | None:
-        return ", ".join(self.roles.items) if self.roles.items else None
-    
-    @property
-    def icon_path(self) -> str | None:
-        if self.agent_type == "alvin-person":
-            return "../_icons/person.svg"
-        return "../_icons/organisation.svg"  
-
-@dataclass(slots=True)
-class Location(URL):
-    fixed_record_type = "alvin-location"
-    label: Optional[str] = None
-    id: Optional[str] = None
-    names: NamesBlock = None
-
-    @property
-    def display(self) -> Optional[str]:
-        return self.names.title if self.names else None
 
 @dataclass(slots=True)
 class OriginPlace(URL):

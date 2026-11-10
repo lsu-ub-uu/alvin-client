@@ -1,5 +1,5 @@
 <div class="flex flex-row flex-wrap gap-2 w-full items-center text-sm">
-    {% if metadata.record_type == 'alvin-work' %}
+    {% if metadata.form_of_work %}
     <div class="flex flex-row items-center px-2 py-1 bg-dark-alvin rounded-2xl text-white">
         <svg class="size-5 shrink-0 z-10" aria-label="{{ metadata.label }}" viewBox="0 0 24 24" stroke-width="2" fill="none">
             {% include '_icons/work.svg' %}
@@ -13,7 +13,9 @@
                 {% include '_icons/text.svg' %}
             {% endif %}
         </svg>
-        <p class="font-semibold leading-none pl-1.5">{{ metadata.display_label }}</p>
+        <p class="font-semibold leading-none pl-1.5">
+            {% firstof metadata.display_label metadata.form_of_work.item metadata.form_of_work.label metadata.type_of_resource.item %}
+        </p>
     </div>
     {% else %}
     <div class="flex flex-row items-center px-2 py-1 bg-dark-alvin rounded-2xl text-white">

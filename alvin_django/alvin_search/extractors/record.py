@@ -21,7 +21,7 @@ def extract_alvin_record(node) -> AlvinRecord:
 
     return AlvinRecord(
         identifier=node.findtext('./recordInfo/id'),
-        type_of_resource = decorated_list_item(node, './typeOfResource'),
+        type_of_resource = decorated_list_item(node, "./typeOfResource"),
         collection = decorated_list_item(node, "./collection"),
         main_title=titles(node, './title'),
         agents = agents(node, "./agent"),

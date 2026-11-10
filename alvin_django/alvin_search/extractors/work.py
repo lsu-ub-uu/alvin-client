@@ -1,27 +1,27 @@
 from dataclasses import dataclass, field
-from typing import Optional
-from services.metadata import TitleEntry
+from typing import List, Optional
+from services.metadata import Agent, DatesBlock, DecoratedListItem, TitleEntry, TitlesBlock, agents, dates, decorated_list_item, titles
 
 
 @dataclass(frozen=True)
 class AlvinWork:
     identifier: Optional[str] = None
-    title_info: TitleEntry = field(default_factory=TitleEntry)
+    type_of_resource: DecoratedListItem = None
+    form_of_work: DecoratedListItem = None
+    main_title: TitleEntry = field(default_factory=TitleEntry)
+    variant_titles: TitlesBlock = field(default_factory=TitlesBlock)
 
-    @property
-    def title(self) -> Optional[str]: return self.title_info.main_title
-    @property
-    def subtitle(self) -> Optional[str]: return self.title_info.subtitle
-    @property
-    def orientationCode(self) -> Optional[str]: return self.title_info.orientation_code
+    agents: List[Agent] = None
+    origin_date: DatesBlock = field(default_factory=DatesBlock)
 
 
 def extract_alvin_work(node) -> AlvinWork:
     return AlvinWork(
-        identifier=node.findtext('./recordInfo/id'),
-        title_info=TitleEntry(
-            main_title=node.findtext('./title/mainTitle'),
-            subtitle=node.findtext('./title/subtitle'),
-            orientation_code=node.findtext('./title/orientationCode'),
-        ),
+        identifier = node.findtext('./recordInfo/id'),
+        type_of_resource = decorated_list_item(node, "./typeOfResource"),
+        form_of_work = decorated_list_item(node, "./formOfWork"),
+        main_title=titles(node, './title'),
+        variant_titles = titles(node, "./variantTitle"),
+        agents = agents(node, "./agent"),
+        origin_date = dates(node, "./originDate", "start", "end"),
     )

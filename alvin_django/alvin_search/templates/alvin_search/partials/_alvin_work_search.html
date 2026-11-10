@@ -1,13 +1,113 @@
 {% load i18n static %}
-<a {% if record.orientationCode == "rtl" %}dir="rtl"{% endif %}
-   class="group flex items-center gap-x-3 p-4 bg-gray-100/60 dark:bg-white/5 hover:bg-gray-200/80 dark:hover:bg-white/10 border border-[#D1D9D5] dark:border-white/10 rounded-md shadow-sm transition ease-in-out duration-150 no-underline text-[#333333] dark:text-off-white focus:outline-none focus:ring-2 focus:ring-dark-alvin"
+<!-- Använder Alpine.js x-data för att hantera eventuell framtida card-state (t.ex. image preloading eller quick view) -->
+<a x-data="{ hovered: false }"
+   @mouseenter="hovered = true"
+   @mouseleave="hovered = false"
+   class="group block p-4 bg-gray-100/60 dark:bg-white/5 hover:bg-gray-200/80 dark:hover:bg-white/10 border border-[#D1D9D5] dark:border-white/10 rounded-md shadow-sm transition-all duration-200 ease-in-out no-underline text-[#333333] dark:text-off-white focus:outline-none focus:ring-2 focus:ring-dark-alvin focus:ring-offset-2 dark:focus:ring-offset-gray-900"
    href="{% url 'alvin_viewer' 'alvin-work' record.identifier %}?data={{ encoded_link }}">
-    <span class="shrink-0 text-gray-700 dark:text-gray-300 group-hover:text-dark-alvin dark:group-hover:text-light-alvin transition-colors">
-        <svg class="size-6" aria-label="{% translate 'Verk' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
-            {% include '../../alvin_viewer/_icons/work.svg' %}
+
+  {% if view == 'grid' %}
+  <!-- ================= GRID VIEW ================= -->
+  <div class="flex flex-col h-full w-full gap-y-3">
+    <!-- Thumbnail Container -->
+    <div class="relative w-full h-48 bg-white dark:bg-white/5 border border-[#D1D9D5]/60 dark:border-white/5 rounded flex justify-center items-center overflow-hidden p-2 transition-colors duration-200"
+         :class="hovered ? 'border-gray-400 dark:border-gray-500' : ''">
+      {% if record.file != None %}
+        <img alt="{{ record.main_title.display }}"
+             class="max-w-full max-h-full object-contain mx-auto transition-transform duration-300"
+             :class="hovered ? 'scale-[1.03]' : 'scale-100'"
+             src="{{ external_access_url }}/rest/record/binary/{{ record.file }}/medium">
+      {% else %}
+        <!-- Fallback SVG -->
+        <svg class="size-16 text-gray-400 dark:text-gray-500 transition-colors duration-200" 
+             :class="hovered ? 'text-gray-500 dark:text-gray-400' : ''"
+             viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <title>{{ record.main_title.display }}</title>
+          <path d="M3 16L10 13L14 14.8182" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M16 10C14.8954 10 14 9.10457 14 8C14 6.89543 14.8954 6 16 6C17.1046 6 18 6.89543 18 8C18 9.10457 17.1046 10 16 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M16.8786 21.1213L19 19M21.1213 16.8787L19 19M19 19L16.8786 16.8787M19 19L21.1213 21.1213" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M13 21H3.6C3.26863 21 3 20.7314 3 20.4V3.6C3 3.26863 3.26863 3 3.6 3H20.4C20.7314 3 21 3.26863 21 3.6V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
-    </span>
-    <div class="font-semibold text-base group-hover:underline leading-snug {% if view == 'grid' %}text-sm{% endif %}">
-        {{ record.title|truncatechars:100 }}
+      {% endif %}
     </div>
+
+
+    <!-- Title -->
+    <h3 {% if record.main_title.orientation_code == 'rtl' %}dir="rtl"{% endif %}
+        class="font-semibold text-sm leading-snug line-clamp-3 transition-colors duration-200"
+        :class="hovered ? 'text-dark-alvin dark:text-light-alvin underline decoration-2 underline-offset-2' : ''">
+      {{ record.main_title.display|truncatechars:92 }}
+    </h3>
+  </div>
+
+  {% else %}
+  <!-- ================= LIST VIEW ================= -->
+  <div class="flex flex-col-reverse sm:flex-row items-start sm:items-stretch justify-between w-full gap-4">
+    
+    <!-- Left Column: Metadata & Icons -->
+    <div class="flex flex-col flex-1 min-w-0">
+
+      <!-- Title -->
+        <h3 {% if record.main_title.orientation_code == 'rtl' %}dir="rtl"{% endif %}
+            class="pt-1 font-bold text-lg leading-snug transition-colors duration-200"
+            :class="hovered ? 'text-dark-alvin dark:text-light-alvin underline decoration-2 underline-offset-2' : ''">
+            {{ record.main_title.display|truncatechars:92 }}
+        </h3>
+
+        <!-- Variant titles -->
+        {% if record.variant_titles %}
+        <div class="pt-1 text-sm text-gray-800 dark:text-gray-200 space-y-0.5">
+            {% for title in record.variant_titles.titles %}
+            <p class="italic truncate">{{ title.main_title|truncatechars:92 }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Agents -->
+        {% if record.agents %}
+        <div class="pt-1 text-sm text-gray-800 dark:text-gray-200 space-y-0.5">
+            {% for agent in record.agents %}
+            <p class="truncate">{{ agent.names.title }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Origin Date -->
+        {% if record.origin_date and not record.origin_date.is_empty %}
+        <div class="text-sm text-gray-600 dark:text-gray-400 pt-1">
+            {{ record.origin_date.dates.display }}
+        </div>
+        {% endif %}
+
+        <!-- Form of Work -->
+        <div class="mt-auto pt-3 flex flex-wrap items-center gap-4 text-xs font-semibold tracking-wide text-gray-700 dark:text-gray-300">
+            
+            <div class="flex-shrink-0">
+            {% include '_partials/_render_record_icon.html' with metadata=record %}
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Right Column: Thumbnail -->
+    <div class="w-full sm:w-36 h-36 shrink-0 bg-white dark:bg-white/5 border border-[#D1D9D5]/60 dark:border-white/5 rounded flex justify-center items-center overflow-hidden p-1.5 transition-colors duration-200"
+         :class="hovered ? 'border-gray-400 dark:border-gray-500' : ''">
+      {% if record.file != None %}
+        <img alt="{% translate 'Tumnagel för' %} {{ record.main_title.display }}"
+             class="max-w-full max-h-full object-contain mx-auto transition-transform duration-300"
+             :class="hovered ? 'scale-[1.05]' : 'scale-100'"
+             src="{{ external_access_url }}/rest/record/binary/{{ record.file }}/thumbnail">
+      {% else %}
+        <svg class="size-14 text-gray-400 dark:text-gray-500 transition-colors duration-200" 
+             :class="hovered ? 'text-gray-500 dark:text-gray-400' : ''"
+             viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 16L10 13L14 14.8182" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M16 10C14.8954 10 14 9.10457 14 8C14 6.89543 14.8954 6 16 6C17.1046 6 18 6.89543 18 8C18 9.10457 17.1046 10 16 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M16.8786 21.1213L19 19M21.1213 16.8787L19 19M19 19L16.8786 16.8787M19 19L21.1213 21.1213" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M13 21H3.6C3.26863 21 3 20.7314 3 20.4V3.6C3 3.26863 3.26863 3 3.6 3H20.4C20.7314 3 21 3.26863 21 3.6V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
 </a>

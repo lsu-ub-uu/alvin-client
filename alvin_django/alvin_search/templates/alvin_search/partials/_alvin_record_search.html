@@ -32,7 +32,7 @@
     </div>
 
     <!-- Title -->
-    <h3 {% if record.orientationCode == 'rtl' %}dir="rtl"{% endif %}
+    <h3 {% if record.orientation_code == 'rtl' %}dir="rtl"{% endif %}
         class="font-semibold text-sm leading-snug line-clamp-3 transition-colors duration-200"
         :class="hovered ? 'text-dark-alvin dark:text-light-alvin underline decoration-2 underline-offset-2' : ''">
       {{ record.main_title.display|truncatechars:92 }}
@@ -52,7 +52,7 @@
       </div>
 
       <!-- Title -->
-      <h3 {% if record.orientationCode == 'rtl' %}dir="rtl"{% endif %}
+      <h3 {% if record.orientation_code == 'rtl' %}dir="rtl"{% endif %}
           class="pt-1 font-bold text-lg leading-snug transition-colors duration-200"
           :class="hovered ? 'text-dark-alvin dark:text-light-alvin underline decoration-2 underline-offset-2' : ''">
         {{ record.main_title.display|truncatechars:92 }}
@@ -95,7 +95,7 @@
               <path d="M17.79,13.79,16,15.59l-1.79-1.8a1,1,0,0,0-1.42,1.42L14.59,17l-1.8,1.79a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L16,18.41l1.79,1.8a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L17.41,17l1.8-1.79a1,1,0,0,0-1.42-1.42Z"></path>
             </svg>
           {% endif %}
-          <span :class="hovered ? 'text-gray-900 dark:text-gray-100' : ''" class="transition-colors duration-200">
+          <span :class="hovered ? 'text-gray-900 dark:text-gray-100' : ''" class="uppercase transition-colors duration-200">
             {{ record.file_count }} {% if record.file_count == 1 %}{% translate 'fil' %}{% else %}{% translate 'filer' %}{% endif %}
           </span>
         </div>

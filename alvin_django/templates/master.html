@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
   <head>
+    {% tailwind_css %}
+    
     <title>{% block title %}Alvin - {% translate 'Startsida' %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -13,7 +15,6 @@
     <meta name="keywords" content="Alvin, cultural heritage, digital collections, databases, libraries, archives">
     <meta name="description" content="Alvin - Nordic platform for digitised cultural heritage">
     
-    {% tailwind_css %}
     
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
@@ -22,7 +23,20 @@
     <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"0:6" }}/en/{{ request.get_full_path|slice:"10:" }}" hreflang="en">
     <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"0:6" }}/no/{{ request.get_full_path|slice:"10:" }}" hreflang="no">
     <link rel="alternate" href="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path|slice:"0:6" }}/sv/{{ request.get_full_path|slice:"10:" }}" hreflang="sv">
-    <link rel="alternate" href="{{ request.build_absolute_uri|cut:"en/" |cut:"no/" |cut:"sv/" }}" hreflang="x-default">   
+    <link rel="alternate" href="{{ request.build_absolute_uri|cut:"en/" |cut:"no/" |cut:"sv/" }}" hreflang="x-default">
+    
+    <!-- Scripts -->
+
+      <!-- FOUC Fix -->
+     <script>
+      document.documentElement.style.visibility = 'hidden';
+      
+      // Show When Ready
+      const revealPage = () => document.documentElement.style.visibility = 'visible';
+      document.addEventListener("DOMContentLoaded", revealPage);
+      setTimeout(revealPage, 500); 
+    </script>
+
     <script src="{% static 'js/alpine-init.js' %}" defer></script>
     <script src="{% static 'js/alpine-validation.js' %}"></script>
     <script src="{% static 'js/htmx-init.js' %}"></script>
@@ -49,7 +63,6 @@
     {% block content %}
     {% endblock %}
 
-    {% include '_partials/_back_to_top.html' %}
     {% include "_partials/_footer.html" %}
   </body>
 

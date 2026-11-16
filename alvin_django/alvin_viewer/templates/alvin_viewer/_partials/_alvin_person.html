@@ -2,22 +2,21 @@
 
 <!-- Metadata -->
 <div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]">
-
     <!-- Overview -->
     {% include './_overview_button.html' %}
     <dl class="metadata" data-xshow="overview">
         {% with metadata.authority_names.label as authority_label %}
             {% for lang, name in metadata.authority_names.names.items %}
-                {% include "./_metadata_row.html" with svg_path='../_icons/personname.svg' label=authority_label extra_label=name.label_lang value=name.display %}
+                {% include "./_metadata_row.html" with svg_path='_icons/personname.svg' label=authority_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
-        {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.birth_date.label value=metadata.birth_date.display %}
-        {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.death_date.label value=metadata.death_date.display %}
-        {% include "./_metadata_row.html" with svg_path='../_icons/place.svg' label=metadata.birth_place.label url=metadata.birth_place.url value=metadata.birth_place.display %}
-        {% include "./_metadata_row.html" with svg_path='../_icons/place.svg' label=metadata.death_place.label url=metadata.death_place.url value=metadata.death_place.display %}
+        {% include "./_metadata_row.html" with svg_path='_icons/origindate.svg' label=metadata.birth_date.label value=metadata.birth_date.display %}
+        {% include "./_metadata_row.html" with svg_path='_icons/origindate.svg' label=metadata.death_date.label value=metadata.death_date.display %}
+        {% include "./_metadata_row.html" with svg_path='_icons/place.svg' label=metadata.birth_place.label url=metadata.birth_place.url value=metadata.birth_place.display %}
+        {% include "./_metadata_row.html" with svg_path='_icons/place.svg' label=metadata.death_place.label url=metadata.death_place.url value=metadata.death_place.display %}
         {% translate 'Senast ändrad' as change_date_label %}
         {% firstof metadata.last_updated.text metadata.created.text as display_date %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=change_date_label value=display_date %}
+        {% include "./_metadata_row.html" with svg_path="_icons/clock.svg" label=change_date_label value=display_date %}
     </dl>
 
     <!-- All metadata -->

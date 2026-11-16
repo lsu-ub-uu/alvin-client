@@ -1,387 +1,205 @@
 {% extends "master.html" %}
+
 {% load i18n static %}
-{% load query_tags %}
-{% load dict_extras %}
-{% block title %}Alvin -         
-  {% if searchType == 'person' %} 
-    {% translate 'Person' %}: 
-  {% endif %}
-  {% if searchType == 'organisation' %} 
-    {% translate 'Organisation' %}: 
-  {% endif %}
-  {% if searchType == 'place' %} 
-    {% translate 'Plats' %}: 
-  {% endif %}
-  {% if searchType == 'work' %} 
-    {% translate 'Verk' %}: 
-  {% endif %}
-  {% if query != '**' %}
-    {{ query }}
-  {% endif %}
+
+{% block title %}Alvin - 
+  {% if searchType == 'person' %}{% translate 'Person' %}: {% endif %}
+  {% if searchType == 'organisation' %}{% translate 'Organisation' %}: {% endif %}
+  {% if searchType == 'place' %}{% translate 'Plats' %}: {% endif %}
+  {% if searchType == 'work' %}{% translate 'Verk' %}: {% endif %}
+  {% if query != '**' %}{{ query }}{% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="bg-white dark:bg-gray-800 dark:text-white flex-grow w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4">
-  <span id="main-content-marker"></span>
-  <main class="w-full md:w-3/4 pt-1 px-3">
-    <div class="flex flex-row">
+<div class="h-[calc(100vh-4rem)] w-full flex flex-col lg:flex-row gap-8 py-4 px-2 md:px-8 overflow-hidden"
+     data-xdata="{ view: '{{ view|default:'list' }}', showFilters: false }"
+     data-xon.keydown.escape.window="showFilters = false">
+  <span id="main-content-marker" class="sr-only"></span>
 
-      <h1 class="flex items-center flex-wrap">
-
-
-        <span class="font-bold pr-2 whitespace-nowrap">{{completeListSize}} {% translate 'RESULTAT FÖR' %} </span>  
-        {% if searchType != 'alvinRecord' %}
-        <div class="pr-2">   
-          {% if searchType == 'person' %}
-          <div class="flex flex-row px-2 py-1 bg-dark-alvin rounded-2xl text-white">           
-            <svg class="size-6" aria-label="Person" viewBox="0 0 24 24" stroke-width="2" fill="none">
-              {% include '../alvin_viewer/_icons/person.svg' %}
-            </svg> 
-            <p class="w-full font-semibold pl-2">{% translate 'Person' %}</p>    
-          </div>   
-          {% endif %}
-          {% if searchType == 'organisation' %}
-          <div class="flex flex-row px-2 py-1 bg-dark-alvin rounded-2xl text-white">           
-            <svg class="size-6" aria-label="Organisation" viewBox="0 0 24 24" stroke-width="2" fill="none">
-              {% include '../alvin_viewer/_icons/organisation.svg' %}
-            </svg> 
-            <p class="w-full font-semibold pl-2">{% translate 'Organisation' %}</p>    
-          </div>   
-          {% endif %}
-          {% if searchType == 'place' %}
-          <div class="flex flex-row px-2 py-1 bg-dark-alvin rounded-2xl text-white">           
-            <svg class="size-6" aria-label="Place" viewBox="0 0 24 24" stroke-width="2" fill="none">
-              {% include '../alvin_viewer/_icons/place.svg' %}
-            </svg> 
-            <p class="w-full font-semibold pl-2">{% translate 'Plats' %}</p>    
-          </div>   
-          {% endif %}
-          {% if searchType == 'work' %}
-          <div class="flex flex-row px-2 py-1 bg-dark-alvin rounded-2xl text-white">           
-            <svg class="size-6" aria-label="Work" viewBox="0 0 24 24" stroke-width="2" fill="none">
-              {% include '../alvin_viewer/_icons/work.svg' %}
-            </svg> 
-            <p class="w-full font-semibold pl-2">{% translate 'Verk' %}</p>    
-          </div>   
-          {% endif %}
-         </div>
-         {% endif %}
-
-         {% if query != '**' %}
-           {{ query }} 
-           <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'query' %}">❌</a></div>
-          {% endif %}
-
-
-          {% if digital %}
-            {% translate 'Digital version' %} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'digital' %}">❌</a></div>
-          {% endif %}
-
-
-          {% if collection %}
-            {% translate 'Samlingspost' %} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'collection' %}">❌</a></div>
-          {% endif %}
-
-          {% if location %} 
-            {% for location in locations %}
-              {% if request.GET.location == location.identifier|slugify %}
-                {{ location.nameone }}
-              {% endif %}
-            {% endfor %} 
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'location' %}">❌</a></div>
-          {% endif %}
-          {% if person %} {% translate 'Person' %}:
-            {% for person in persons %}
-              {% if person.namegiven != None %}
-                {{ person.namegiven }} 
-              {% endif %}
-              {% if person.namenumeration != None %}
-                {{ person.namenumeration }} 
-              {% endif %}
-              {% if person.namefamily != None %}
-                {{ person.namefamily }} 
-              {% endif %}
-            {% endfor %}  
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'person' %}">❌</a></div>
-          {% endif %}
-          {% if organisation %} {% translate 'Organisation' %}:
-            {% for organisation in organisations %}
-              {% if organisation.name != None %}
-                {{ organisation.name }} 
-              {% endif %}
-            {% endfor %}  
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'organisation' %}">❌</a></div>
-          {% endif %}
-          {% if place %} {% translate 'Plats' %}:
-            {% for place in places %}
-              {% if place.name != None %}
-                {{ place.name }} 
-              {% endif %}
-            {% endfor %}  
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'place' %}">❌</a></div>
-          {% endif %}
-          {% if work %} {% translate 'Verk' %}:
-            {% for work in works %}
-              {% if work.title != None %}
-                {{ work.title }} 
-              {% endif %}
-            {% endfor %}  
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'work' %}">❌</a></div>
-          {% endif %}
-
-
-          {% if name %}
-            {{ name }} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'name' %}">❌</a></div>
-          {% endif %}
-
-          {% if family %}
-            {% translate 'Släkt' %} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'family' %}">❌</a></div>
-          {% endif %}
-
-          {% if form %} 
-           {% for key, translations in forms.items %}
-              {% if request.GET.form == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %} 
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'form' %}">❌</a></div>
-          {% endif %}  
-
-          {% if occupation %}
-            {{ occupation }} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'occupation' %}">❌</a></div>
-          {% endif %} 
-
-          {% if gender %} 
-            {% for key, translations in genders.items %}
-              {% if request.GET.gender == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %} 
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'gender' %}">❌</a></div>
-          {% endif %}   
- 
-
-          {% if type %} 
-            {% for key, translations in resourceTypes.items %}
-              {% if request.GET.type == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %}            
-          <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'type' %}">❌</a></div>
-          {% endif %}  
-
-          {% if year %}
-            {{ year }} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'year' %}">❌</a></div>
-          {% endif %} 
-
-          {% if title %}
-            {{ title }} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'title' %}">❌</a></div> 
-          {% endif %}
-
-          {% if production %} 
-            {% for key, translations in productions.items %}
-              {% if request.GET.production == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %}  
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'production' %}">❌</a></div>
-          {% endif %}
-          {% if language %} 
-            {% for key, translations in languages.items %}
-              {% if request.GET.language == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %}  
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'language' %}">❌</a></div>
-          {% endif %} 
-          {% if country %} 
-            {% for key, translations in countries.items %}
-              {% if request.GET.country == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %}  
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'country' %}">❌</a></div>
-          {% endif %} 
-          {% if historical %} 
-            {% for key, translations in historicalCountries.items %}
-              {% if request.GET.historical == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %}  
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'historical' %}">❌</a></div>
-          {% endif %}  
-          {% if publication %}
-            {{ publication}} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'publication' %}">❌</a></div>
-          {% endif %}      
-          {% if genre %} 
-            {% for key, translations in genres.items %}
-              {% if request.GET.genre == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %}  
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'genre' %}">❌</a></div>
-          {% endif %} 
-          {% if subject %} 
-            {{ subject }} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'subject' %}">❌</a></div>
-          {% endif %}  
-          {% if technique %} 
-            {% for key, translations in techniques.items %}
-              {% if request.GET.technique == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %}  
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'technique' %}">❌</a></div>
-          {% endif %} 
-          {% if material %} 
-            {% for key, translations in materials.items %}
-              {% if request.GET.material == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %} 
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'material' %}">❌</a></div>
-          {% endif %}    
-
-          {% if role %} 
-            {% for key, translations in roles.items %}
-              {% if request.GET.role == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %}
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'role' %}">❌</a></div>
-          {% endif %} 
- 
-          {% if subcollection %} 
-            {% for key, translations in subcollections.items %}
-              {% if request.GET.subcollection == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %}
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'subcollection' %}">❌</a></div>
-          {% endif %} 
-
-          {% if shelfmark %}
-            {{ shelfmark }} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'shelfmark' %}">❌</a></div>
-          {% endif %}
- 
-          {% if right %} 
-            {% for key, translations in rights.items %}
-              {% if request.GET.right == key %}
-                {{ translations|get_item:current_lang }}
-              {% endif %}   
-            {% endfor %}
-            <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'right' %}">❌</a></div>
-          {% endif %}  
-
-
-         
-       
+  <main class="w-full h-full min-h-0 lg:w-3/4 flex flex-col">
+    
+    <!-- Search header and category -->
+    <div class="shrink-0 flex flex-col gap-y-3 w-full pb-4 mb-2 border-b border-[#D1D9D5] dark:border-white/10">
+      <div class="flex flex-row justify-center md:justify-end lg:justify-between items-cente gap-4">
         
+        <div class="max-lg:hidden flex items-center flex-wrap gap-2">
+          <h1 class="text-2xl font-bold uppercase tracking-wide">
+            {{ completeListSize }} {% translate 'resultat' %}
+          </h1>
 
-
-          {% if identifier %}
-            {{ identifier }} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'identifier' %}">❌</a></div>
+          {% if searchType != 'alvinRecord' %}
+            <div class="inline-flex items-center gap-x-2 px-3 py-1 bg-dark-alvin text-off-white rounded-full text-sm font-semibold shadow-sm">
+              {% if searchType == 'person' %}
+                <svg class="size-5" aria-hidden="true" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                  {% include '_icons/person.svg' %}
+                </svg>
+                <span>{% translate 'Person' %}</span>
+              {% elif searchType == 'organisation' %}
+                <svg class="size-5" aria-hidden="true" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                  {% include '_icons//organisation.svg' %}
+                </svg>
+                <span>{% translate 'Organisation' %}</span>
+              {% elif searchType == 'place' %}
+                <svg class="size-5" aria-hidden="true" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                  {% include '_icons//place.svg' %}
+                </svg>
+                <span>{% translate 'Plats' %}</span>
+              {% elif searchType == 'work' %}
+                <svg class="size-5" aria-hidden="true" viewBox="0 0 24 24" stroke-width="2" fill="none">
+                  {% include '_icons//work.svg' %}
+                </svg>
+                <span>{% translate 'Verk' %}</span>
+              {% endif %}
+            </div>
           {% endif %}
-          {% if id %}
-            ID: 
-            {{ id }} <div class="footer"><a class="pr-2 no-underline" href="?{% remove_filter request 'id' %}">❌</a></div>
-          {% endif %}
+        </div>
 
-    </h1>
+        <!-- Buttons -->
+        <div class="flex gap-2 shrink-0">
 
-      <div class="flex flex-row pr-2 ml-auto"> 
-        {% if completeListSize > 0 %}
-          <div class="pl-2">
-            <a href="{{ view_url|safe }}&view=list">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.5" fill="currentColor" class="size-6 text-gray-800 dark:text-white">
-                <path class="st0" d="M12.56,87.39c6.93,0,12.56,5.62,12.56,12.56c0,6.93-5.62,12.56-12.56,12.56C5.62,112.5,0,106.88,0,99.95 C0,93.01,5.62,87.39,12.56,87.39L12.56,87.39z M35.07,88.24h86.38c0.79,0,1.43,0.64,1.43,1.43v19.93c0,0.79-0.64,1.43-1.43,1.43 H35.07c-0.79,0-1.43-0.64-1.43-1.43V89.67C33.64,88.88,34.29,88.24,35.07,88.24L35.07,88.24z M35.07,44.7h86.38 c0.79,0,1.43,0.64,1.43,1.43v19.93c0,0.79-0.64,1.43-1.43,1.43H35.07c-0.79,0-1.43-0.64-1.43-1.43V46.13 C33.64,45.34,34.29,44.7,35.07,44.7L35.07,44.7z M35.07,1.16h86.38c0.79,0,1.43,0.64,1.43,1.43v19.93c0,0.79-0.64,1.43-1.43,1.43 H35.07c-0.79,0-1.43-0.64-1.43-1.43V2.59C33.64,1.8,34.29,1.16,35.07,1.16L35.07,1.16z M12.56,43.69c6.93,0,12.56,5.62,12.56,12.56 c0,6.93-5.62,12.56-12.56,12.56C5.62,68.81,0,63.19,0,56.25C0,49.32,5.62,43.69,12.56,43.69L12.56,43.69z M12.56,0 c6.93,0,12.56,5.62,12.56,12.56c0,6.93-5.62,12.56-12.56,12.56C5.62,25.11,0,19.49,0,12.56C0,5.62,5.62,0,12.56,0L12.56,0z"/>
-              </svg>
-            </a>
-          </div> 
-          <div class="pl-2">
-            <a href="{{ view_url|safe }}&view=grid">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 121.74" fill="currentColor" class="size-6 text-gray-800 dark:text-white">
-                <title>Grid</title>
-                <path d="M5,0H49.39a5,5,0,0,1,3.53,1.47A5,5,0,0,1,54.4,5V49.19a5,5,0,0,1-5,5H5a5,5,0,0,1-3.55-1.47l-.09-.11A5,5,0,0,1,0,49.19V5A5,5,0,0,1,5,0ZM73.49,67.53h44.37a5.05,5.05,0,0,1,5,5v44.17a5,5,0,0,1-5,5H73.49A5,5,0,0,1,70,120.27l-.09-.11a4.94,4.94,0,0,1-1.38-3.44V72.55A5,5,0,0,1,70,69l.1-.1a5,5,0,0,1,3.44-1.38ZM5,67.53H49.39A5,5,0,0,1,52.92,69a4.94,4.94,0,0,1,1.48,3.54v44.17a5,5,0,0,1-5,5H5a5,5,0,0,1-3.55-1.47l-.09-.11A5,5,0,0,1,0,116.72V72.55a5,5,0,0,1,5-5ZM73.49,0h44.37a5,5,0,0,1,5,5V49.19a5,5,0,0,1-5,5H73.49a5,5,0,0,1-5-5V5A5,5,0,0,1,70,1.47l.1-.09A5,5,0,0,1,73.49,0Z"/>
-              </svg>   
-             </a> 
+            <button type="button"
+                  class="inline-flex items-center justify-center gap-x-1.5 px-3.5 py-2 text-sm font-semibold rounded-md bg-gray-100 dark:bg-gray-900 border border-[#D1D9D5] dark:border-white/10 text-[#333333] dark:text-off-white hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors cursor-pointer">
+            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              {% include '_icons/sort.svg' %}
+            </svg>
+            <span class="max-sm:hidden">{% translate 'Sortera' %}</span>
+          </button>
+
+          <!-- View Selector -->
+          {% if completeListSize > 0 %}
+          <div class="inline-flex shrink-0 p-1 bg-gray-100 dark:bg-gray-900 border border-[#D1D9D5] dark:border-white/10 rounded-md" role="group">
+              <button 
+                  type="button"
+                  data-xon.click="view = 'list'; const url = new URL(window.location); url.searchParams.set('view', 'list'); window.history.replaceState({}, '', url);"
+                  class="flex items-center justify-center gap-x-1.5 px-4 py-1.5 text-sm font-semibold rounded transition-all duration-150 cursor-pointer"
+                  data-xbind:class="view === 'list' 
+                      ? 'bg-white dark:bg-gray-800 text-dark-alvin dark:text-light-alvin shadow-xs' 
+                      : 'text-gray-600 dark:text-gray-400 hover:text-[#333333] dark:hover:text-off-white'">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.5" fill="currentColor" class="size-6">
+                    <title>{% translate 'Listvy' %}</title>
+                    {% include '_icons/details.svg' %}
+                  </svg>
+                  <span class="sr-only sm:not-sr-only">{% translate 'Lista' %}</span>
+              </button>
+              <button 
+                  type="button"
+                  data-xon.click="view = 'grid'; const url = new URL(window.location); url.searchParams.set('view', 'grid'); window.history.replaceState({}, '', url);"
+                  class="flex items-center justify-center gap-x-1.5 px-4 py-1.5 text-sm font-semibold rounded transition-colors duration-100 cursor-pointer"
+                  data-xbind:class="view === 'grid' 
+                      ? 'bg-white dark:bg-gray-800 text-dark-alvin dark:text-light-alvin shadow-xs' 
+                      : 'text-gray-600 dark:text-gray-400 hover:text-[#333333] dark:hover:text-off-white'">
+                  <svg viewBox="0 0 24 24" fill="none" class="size-6"
+                      xmlns="http://www.w3.org/2000/svg" color="currentColor">
+                      <title>{% translate 'Rutnätsvy' %}</title>
+                      {% include '_icons/grid.svg' %}
+                  </svg>
+                  <span class="sr-only sm:not-sr-only">{% translate 'Rutnät' %}</span>
+              </button>
           </div>
-        {% endif %}
-      </div>
-    </div>
-    <div class="hitlist flex {% if view == 'grid' %}flex-col md:flex-row flex-wrap gap-4 md:justify-start{% else %}flex-col gap-4{% endif %}">
-    {% for record in records %}
-      {% if searchType == 'person' %}    
-        {% include "alvin_search/partials/_alvin_person_search.html"  %}
-      {% endif %} 
-      {% if searchType == 'organisation' %}    
-         {% include "alvin_search/partials/_alvin_organisation_search.html"  %}
-       {% endif %} 
-       {% if searchType == 'place' %}    
-          {% include "alvin_search/partials/_alvin_place_search.html"  %}
-        {% endif %}  
-        {% if searchType == 'work' %}    
-          {% include "alvin_search/partials/_alvin_work_search.html"  %}
-        {% endif %}  
-        {% if searchType == 'alvinRecord' %}    
-          {% include "alvin_search/partials/_alvin_record_search.html"  %}
-        {% endif %}         
-      {% endfor %} 
-    </div>      
-    {% if completeListSize > 0 %}
-    <div class="py-4 pt-8 mx-auto flex flex-col md:flex-row justify-center">
-      <div class="flex flex-col md:flex-row">
-        <div class="flex justify-between items-center max-lg:justify-start max-md:justify-center max-sm:justify-center max-sm:pb-4">
-        {% if startnum > rowsnum %}
-          {% if startnum <= completeListSize %}
-            <a class="flex" href="{{view_url|safe}}&start={{prevstartnum}}&view={{view}}">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <title>{% translate 'FÖREGÅENDE' %}</title>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-              </svg>
-              <span class="pl-2">{% translate 'FÖREGÅENDE' %}</span>
-            </a>                
           {% endif %}
-        {% endif %}
-        </div>           
+
+          <!-- Mobile Filter Button -->
+          <button type="button"
+                  data-xon.click="showFilters = true"
+                  class="lg:hidden inline-flex items-center justify-center gap-x-1.5 px-3.5 py-2 text-sm font-semibold rounded-md bg-gray-100 dark:bg-gray-900 border border-[#D1D9D5] dark:border-white/10 text-[#333333] dark:text-off-white hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors cursor-pointer">
+            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              {% include '_icons/filter.svg' %}
+            </svg>
+            <span class="max-sm:hidden">{% translate 'Filtrera' %}</span>
+            {% if active_filters %}
+              <span class="ml-0.5 px-1.5 py-0.2 text-xs rounded-full bg-alvin-orange text-off-white">
+                {{ active_filters|length }}
+              </span>
+            {% endif %}
+          </button>
+        </div>
       </div>
-      <div class="flex flex-col md:flex-row justify-center">
-        <div class="font-bold px-2 flex justify-between content-center items-center max-lg:justify-start max-md:justify-center max-sm:justify-center max-sm:pb-4">
+
+      <!-- Active Filters -->
+      {% if active_filters %}
+      <div class="flex flex-wrap gap-2 items-center">
+        {% for filter in active_filters %}
+          <a href="{{ filter.remove_url }}"
+             class="inline-flex items-center gap-x-1.5 text-sm font-normal dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 text-[#333333] dark:text-off-white hover:bg-alvin-orange hover:text-white shadow-sm px-3 py-1 rounded-md cursor-pointer no-underline transition ease-in-out duration-150"
+             title="{% translate 'Ta bort filter' %}: {% if filter.prefix %}{{ filter.prefix }}: {% endif %}{{ filter.label }}">
+            {% if filter.prefix %}
+              <span class="font-semibold uppercase text-xs">{{ filter.prefix }}:</span>
+            {% endif %}
+            <span>{{ filter.label }}</span>
+            <svg class="size-4 opacity-70 hover:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              {% include '_icons/x.svg' %}
+            </svg>
+          </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Search Result Wrapper -->
+    <div class="flex-1 min-h-0 hitlist transition-all duration-200 overflow-y-auto pr-2 scrollbar-alvin" 
+         data-xbind:class="view === 'grid' ? 'grid grid-cols-2 md:grid-cols-4 gap-4 content-start' : 'flex flex-col gap-y-3'">
+      {% for record in records %}
+        {% if searchType == 'person' %}
+          {% include "./_partials/_alvin_person_search.html" %}
+        {% elif searchType == 'organisation' %}
+          {% include "./_partials/_alvin_organisation_search.html" %}
+        {% elif searchType == 'place' %}
+          {% include "./_partials/_alvin_place_search.html" %}
+        {% elif searchType == 'work' %}
+          {% include "./_partials/_alvin_work_search.html" %}
+        {% elif searchType == 'alvinRecord' %}
+          {% include "./_partials/_alvin_record_search.html" %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if completeListSize > 0 %}
+    <nav aria-label="{% translate 'Sidnavigering' %}" class="shrink-0 pt-4 mt-2 border-t border-[#D1D9D5] dark:border-white/10 flex justify-between items-center">
+      
+      <!-- Previous -->
+      {% if startnum > rowsnum and startnum <= completeListSize %}
+        <a class="p-3 hover:bg-dark-alvin hover:text-white rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer shadow-sm border border-[#D1D9D5] dark:border-white/15"
+           data-xbind:href="'{{ view_url|safe }}&start={{ prevstartnum }}&view=' + view"
+           title="{% translate 'Föregående' %}">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor">
+              <path d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </a>
+      {% else %}
+
+        <!-- Empty Placeholder for Spacing -->
+        <div class="w-12"></div>
+        
+      {% endif %}
+
+      <!-- Centered Text -->
+      <span class="flex flex-row items-center gap-x-1 h-full text-sm font-medium dark:text-gray-300">
         {% if startnum > completeListSize %}
           {% translate 'Fel startnummer' %}
-          {% else %}                   
-            {{startnum}} - {{cursor}} {% translate 'AV' %} {{completeListSize}}
-        {% endif %}    		
-	</div>  
-      </div>
-      <div class="flex flex-col md:flex-row">
-        <div class="flex justify-between content-center items-center max-lg:justify-start max-md:justify-center max-sm:justify-center max-sm:pb-4">
-        {% if nextstartnum <= completeListSize %}
-          <a class="flex" href="{{view_url|safe}}&start={{nextstartnum}}&view={{view}}"><span class="pr-2">{% translate 'NÄSTA' %}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <title>{% translate 'NÄSTA' %}</title>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-            </svg>
-          </a>	
-        {% endif %}	
-	</div>  
-      </div>
-    </div>
-    {% else %}
-    <div class="py-2">
-      <h2 class="text-3xl md:text-4xl font-bold py-4 px-4 text-white bg-red-500">{% translate 'Din sökning gav inget resultat' %}</h2>
-      <div class="py-2 font-bold">{% translate 'Några söktips:' %}</div>
-      <div class="py-2">{% translate 'Kontrollera stavningen.' %}</div>
-      <div class="py-2">{% translate 'Ange färre sökord. Ange t.ex. bara ett eller ett par ord ur en titel istället för hela titeln.' %}</div>
-    </div>
-   {% endif %}
-   </main>
-   <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
-     <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
-     {% include "alvin_search/partials/_search_filters.html"  %}
-     </div>
-    </div>
+        {% else %}
+          {{ startnum }} – {{ cursor }} {% translate 'av' %} {{ completeListSize }}
+        {% endif %}
+      </span>
+
+      <!-- Next -->
+      {% if nextstartnum <= completeListSize %}
+        <a class="p-3 hover:bg-dark-alvin hover:text-white rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer shadow-sm border border-[#D1D9D5] dark:border-white/15"
+           data-xbind:href="'{{ view_url|safe }}&start={{ nextstartnum }}&view=' + view"
+           title="{% translate 'Nästa' %}">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor">
+              <path d="M3 12L21 12M21 12L12.5 3.5M21 12L12.5 20.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </a>
+      {% else %}
+        <div class="w-12"></div>
+      {% endif %}
+
+    </nav>
+    {% endif %}
+
+  </main>
+  {% include "./_partials/_search_filters.html" %}
+
 </div>
 {% endblock %}
-
-
-

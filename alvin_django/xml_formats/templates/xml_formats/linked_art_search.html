@@ -128,19 +128,19 @@ start {{start}} rows {{rows}} next params {{next_params}} json_next {{json_next}
     <div class="hitlist flex {% if view == 'grid' %}flex-col md:flex-row flex-wrap gap-4 md:justify-start{% else %}flex-col gap-4{% endif %}">
     {% for record in records %}
       {% if searchType == 'person' %}    
-        {% include "alvin_search/partials/_alvin_person_search.html"  %}
+        {% include "alvin_search/_partials/_alvin_person_search.html"  %}
       {% endif %} 
       {% if searchType == 'organisation' %}    
-         {% include "alvin_search/partials/_alvin_organisation_search.html"  %}
+         {% include "alvin_search/_partials/_alvin_organisation_search.html"  %}
        {% endif %} 
        {% if searchType == 'place' %}    
-          {% include "alvin_search/partials/_alvin_place_search.html"  %}
+          {% include "alvin_search/_partials/_alvin_place_search.html"  %}
         {% endif %}  
         {% if searchType == 'work' %}    
-          {% include "alvin_search/partials/_alvin_work_search.html"  %}
+          {% include "alvin_search/_partials/_alvin_work_search.html"  %}
         {% endif %}  
         {% if searchType == 'alvinRecord' %}    
-          {% include "alvin_search/partials/_alvin_record_search.html"  %}
+          {% include "alvin_search/_partials/_alvin_record_search.html"  %}
         {% endif %}         
       {% endfor %} 
     </div>      

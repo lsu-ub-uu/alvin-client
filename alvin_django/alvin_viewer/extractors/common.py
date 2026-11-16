@@ -4,17 +4,14 @@ from lxml import etree
 from django.utils import translation
 from django.core.cache import cache
 
-from ..xmlutils.nodes import attr, element, elements, first, text, texts
-from .mappings import person, place, organisation
-from services.text_collector import get_item_dict
-from .metadata import (Address, Address, Agent, Component, ComponentsBlock, DateEntry, DatesBlock, 
-                       DatesValue, DecoratedList, DecoratedText, 
-                       DecoratedListItem, DecoratedTextWithType, DecoratedTexts, 
-                       DecoratedTextsWithType, Edge, ElectronicLocator, Identifier, Location,
-                       NameEntry, NameValue, NamesBlock,
+from services.nodes import attr, element, elements, first, text, texts
+from services.mappings import person, place, organisation
+from services.metadata import _get_label, _get_value, _get_target, _get_attribute_item, dates, decorated_list, decorated_list_item, decorated_text, decorated_texts, decorated_texts_with_type, agents, names, titles, DecoratedTextWithType
+from .metadata import (Address, Address, Component, ComponentsBlock, 
+                       Edge, ElectronicLocator, Identifier,
                        OriginPlace, OriginPlaceBlock, RelatedAuthoritiesBlock,
                        RelatedAuthorityEntry, RelatedRecordsBlock, RelatedRecordEntry, 
-                       RelatedRecordPart, RelatedWorksBlock, RelatedWorkEntry, Summary, TitlesBlock, TitleEntry)
+                       RelatedRecordPart, RelatedWorksBlock, RelatedWorkEntry)
 
 
 # ------------------
@@ -23,10 +20,6 @@ from .metadata import (Address, Address, Agent, Component, ComponentsBlock, Date
 
 # HELPERS ----------
 
-# Cache for collection items to avoid repeated API calls
-ITEMS_DICT = get_item_dict()
-
-# Helper to standardize XPath construction for record types
 def _xp(rt: str, xpath: str, absolute: bool = False) -> str:
     """
     Makes reuse of extractor functions possible between resource types.
@@ -42,26 +35,10 @@ def _norm_rt(record_type: str) -> str:
     """
     return record_type.replace("alvin-", "") if record_type.startswith("alvin-") else record_type
 
-def collect(root: etree._Element, xpath: str, map_fn: Callable[[etree._Element], Optional[dict]]) -> List[dict]:
-    out: List[dict] = []
-    for n in root.xpath(xpath) or []:
-        try:
-            item = map_fn(n)
-            if item:
-                out.append(item)
-        except Exception:
-            continue
-    return out
-
-def compact(d: Dict[str, Any]) -> Dict[str, Any]:
-    return {k: v for k, v in d.items() if v not in (None, "", [], {}, ())}
-
-
 # COMMON -----------
 
 def address(root: etree._Element, resource_type: str) -> Address:
     target = element(root, _xp(resource_type, ".//address"))
-    print(target)
     if target is None:
         return None
     
@@ -93,115 +70,6 @@ def identifiers(root: etree._Element, xp: str) -> List[Identifier]:
         type = _get_attribute_item("identifierTypeCollection", attr(t, "./@type")), 
         identifier = text(t, ".")
     ) for t in targets]
-
-# TITLES / NAMES ---
-
-def titles(root: etree._Element, xp: str) -> TitlesBlock:
-    target = element(root, xp)
-    if target is None:
-        return None
-    
-    if "variantTitle" in xp:
-        targets = elements(root, xp)
-
-        return TitlesBlock(
-            label = _get_label(target),
-            titles = [TitleEntry(
-                type = _get_attribute_item("variantTitleTypeCollection", attr(t, "./@variantType")),
-                main_title = text(t, "mainTitle"),
-                subtitle = text(t, "subtitle"),
-                orientation_code = text(t, "orientationCode"),
-            ) for t in targets]
-        )
-
-    return TitleEntry(
-            label = _get_label(target),
-            type = _get_attribute_item("variantTitleTypeCollection", attr(target, "./@variantType")),
-            main_title = text(target, "mainTitle"),
-            subtitle = text(target, "subtitle"),
-            orientation_code = text(target, "orientationCode"),
-        )
-
-def names(node: etree._Element, xp: str, name_parts: Dict[str, str], variant_collection: str = None) -> NamesBlock | None:
-    targets = elements(node, xp)
-    if not targets:
-        return None
-    
-    per_lang_raw: Dict[str, Union[NameEntry, List[NameEntry]]] = {}
-    label: Optional[str] = None
-
-    for target in targets:
-        label = _get_label(element(target, "name")) or _get_label(element(target, "geographic")) or label
-
-        parts: Dict[str, str] = {}
-        for key, xpath in name_parts.items():
-            el = element(target, xpath)
-            parts[key] = (el.text or "").strip() if el is not None else ""
-            
-        lang = attr(target, "./@lang")
-        label_lang = _get_attribute_item("languageCodeCollection", attr(target, "./@lang")) or None
-        
-        variant_type = None
-        if variant_collection:
-            variant_type = _get_attribute_item(variant_collection, attr(target, "./@variantType"))
-
-        entry = NameEntry(parts=parts, variant_type=variant_type, label_lang=label_lang)
-        
-        if lang not in per_lang_raw:
-            per_lang_raw[lang] = entry
-        else:
-            existing = per_lang_raw[lang]
-            if isinstance(existing, list):
-                existing.append(entry)
-            else:
-                per_lang_raw[lang] = [existing, entry]
-    
-    per_lang: Dict[str, NameValue] = {
-        lang: NameValue.from_any(value)
-        for lang, value in per_lang_raw.items()
-    }
-
-    block = NamesBlock(label=_get_label(element(node, xp)),
-                       names=per_lang)
-    if not block.label and not block.names:
-        return None
-    return block
-
-# DATES ------------
-
-def a_date(node: etree._Element, kind: str) -> DateEntry:
-    target = _get_target(node, f"{kind}Date")
-    if target is None:
-        return None
-    return DateEntry(
-        label = _get_label(target),
-        year = text(target, "date/year").lstrip("0"),
-        month = text(target, "date/month"),
-        day = text(target, "date/day"),
-        era = _get_value(target, "date/era")
-    )
-
-def date(root: etree._ElementTree, xp: str, kind: str) -> DateEntry:
-    target = _get_target(root, xp)
-    if target is None:
-        return None
-    return a_date(target, kind)
-
-def dates(node: etree._Element, xp: str, start_tag: str, end_tag: str) -> Dict:
-    target = element(node, xp)
-    if target is None:
-        return None
-    return DatesBlock(
-        label = _get_label(target),
-        type = _get_attribute_item("dateTypeCollection",attr(target, "./@type")),
-        dates = DatesValue(
-            type = _get_attribute_item("dateTypeCollection", attr(target, "./@type")),
-            start_date = a_date(target, f"{start_tag}"),
-            end_date = a_date(target, f"{end_tag}"),
-            date_note = text(target, "note"),
-            display_date = text(target, "displayDate")
-        )
-    )
 
 # LINKED DATA ------
 
@@ -293,37 +161,6 @@ def related_works(node: etree._Element, xp: str) -> List[Dict[str, str]] | None:
     if all(rw.is_empty() for rw in rws.records):
         return None
     return rws
-
-
-def location(node: etree._Element, xp: str) -> Location | None:
-    if node is None:
-        return None
-
-    loc = element(node, _xp("record", xp))
-    
-    return Location(
-        label = _get_label(loc),
-        id = text(loc, "linkedRecordId"),
-        names = names(loc, ".//authority", organisation["AUTH_NAME"]),
-        )
-
-def agents(node: etree._Element, xp: str) -> NamesBlock:
-    target = element(node, xp)
-    if target is None:
-        return None
-    
-    agents = [Agent(
-        label = _get_label(agent),
-        agent_type = f"alvin-{attr(agent, './@type')}",
-        id = text(agent, f"./{attr(agent, './@type')}/linkedRecordId"),
-        names = names(agent, ".//authority", person["AUTH_NAME"] if attr(agent, './@type') == 'person' else organisation["AUTH_NAME"]),
-        roles = decorated_list(agent, "role"),
-        certainty = text(agent, "certainty"),
-        ) for agent in elements(node, xp)]
-    
-    if all(a.is_empty() for a in agents):
-        return None
-    return agents
 
 def related_authority(node: etree._Element, xp: str, authority: str, collection: str = None, alternative_label_xp: str = None) -> RelatedAuthoritiesBlock | None:
     target = element(node, xp)
@@ -420,107 +257,6 @@ def components(nodes: List[etree._Element]) -> ComponentsBlock | None:
 # DECORATED METADATA
 # ------------------
 
-def _get_value(node: etree._Element | None = None, xp: str = "") -> str:
-    if node is None:
-        return {}
-    if xp != "":
-        target = element(node, xp)
-        return target.get(f"_value_{_get_lang()}") if target is not None else node.get(f"_value_{_get_lang()}")
-    
-    return node.get(f"_value_{_get_lang()}")
-    
-def _get_label(node: etree._Element | None = None) -> str:
-    if node is None:
-        return {}
-    label = node.get(f"_{_get_lang()}")
-    return label if label not in (None, "") else None
-
-def _get_lang():
-    return translation.get_language()
-
-def _get_target(node, xp):
-    if node is None:
-        return {}
-    target = element(node, xp)
-    return target
-
-def decorated_text(node: etree._Element | None, xp: str | None, parent_xp: str | None = None) -> DecoratedText | None:
-    target = _get_target(node, xp)
-    if target is None:
-        return None
-    
-    dt = DecoratedText(
-        label=_get_label(target),
-        parent_label = _get_label(element(node, parent_xp)) if parent_xp else None,
-        text=text(node, xp),
-    )
-
-    if dt.is_empty():
-        return None
-    
-    return dt
-
-
-def decorated_texts(node: etree._Element | None, xp: str | None = None) -> DecoratedTexts | None:
-    target = _get_target(node, xp)
-    if target is None:
-        return None
-    
-    dts = DecoratedTexts(
-        label = _get_label(target),
-        texts = texts(node, xp)
-    )
-
-    if dts.is_empty():
-        return None
-    return dts
-
-def decorated_texts_with_type(node: etree.Element, xp: str, tag: str, typeCollection: str, textType: str | None = None) -> DecoratedTextsWithType | None:
-    target = _get_target(node, xp)
-    if target is None:
-        return None
-    
-    dtwt = DecoratedTextsWithType(
-        label = _get_label(target),
-        texts = [DecoratedTextWithType(
-            type = _get_attribute_item(typeCollection, attr(e, textType)),
-            text = text(e, "."),
-            ) for e in elements(node, f"{xp}/{tag}")]
-    )
-
-    if dtwt.is_empty():
-        return None
-    return dtwt
-
-def decorated_list(node: etree._Element, xp: str) -> DecoratedList | None:
-    target = _get_target(node, xp)
-    if target is None:
-        return None
-    
-    dl = DecoratedList(
-            label = _get_label(target),
-            items = [_get_value(e) for e in elements(node, xp)],
-            code = text(node, xp),
-    )
-
-    if dl.is_empty():
-        return None
-    return dl
-
-def decorated_list_item(node: etree._Element, xp: str = None) -> DecoratedListItem | None:
-    target = _get_target(node, xp)
-    if target is None:
-        return None
-    
-    li = DecoratedListItem(
-        label=_get_label(target),
-        item=_get_value(element(node, xp)),
-        code=text(node, xp),
-    )
-    
-    if li.is_empty():
-        return None
-    return li
 
 def edge(node: etree._Element, xp: str, item: str, item_text: str) -> Edge:
     target = _get_target(node, xp)
@@ -536,16 +272,3 @@ def edge(node: etree._Element, xp: str, item: str, item_text: str) -> Edge:
     if li.is_empty():
         return None
     return li
-    
-
-# -------------------
-# ATTRIBUTE COLLECTION ITEMS
-# -------------------
-
-def _get_attribute_item(collection: str, item: str) -> str:
-    if item is None:
-        return None
-    try:
-        return ITEMS_DICT.get(collection, {}).get(item, {}).get(_get_lang(), None) or f"Item not in cache: {item}"
-    except Exception as e:
-        return f"Error retrieving item: {item} ({str(e)})"

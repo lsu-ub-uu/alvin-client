@@ -1,12 +1,14 @@
 from lxml import etree
 
 from .records import AlvinPerson
-from ..xmlutils.nodes import text
-from .common import (_get_label, _get_target, _norm_rt, _xp, date,
+from services.metadata import _get_label, _get_target, names
+from services.nodes import text
+from services.metadata import date
+from services.mappings import person
+from .common import (_norm_rt, _xp,
                      decorated_list_item, electronic_locators, element, decorated_list, note_and_type,
-                     decorated_text, decorated_texts, identifiers, names, origin_place, 
+                     decorated_text, decorated_texts, identifiers, origin_place, 
                      related_authority)
-from .mappings import person
 
 rt = _norm_rt("alvin-person")
 

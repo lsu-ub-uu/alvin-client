@@ -1,11 +1,14 @@
 from lxml import etree
 
+from services.metadata import date
+from services.mappings import organisation
+
 from .records import AlvinLocation
+from .common import _get_label, _norm_rt, _xp, address, attr, decorated_list_item, decorated_text, electronic_locators, element, elements, names, text
 from .metadata import Summary
-from .common import _get_label, _norm_rt, _xp, address, attr, date, decorated_list_item, decorated_text, electronic_locators, element, elements, names, text
-from .mappings import organisation
 
 rt = _norm_rt("alvin-location")
+
 
 def summary(root: etree.Element, xp: str) -> Summary | None:
     targets = elements(root, xp)
@@ -24,6 +27,7 @@ def summary(root: etree.Element, xp: str) -> Summary | None:
     if summary.is_empty():
         return None
     return summary
+
 
 def extract(root: etree._Element) -> AlvinLocation:
 

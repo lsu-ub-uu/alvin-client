@@ -4,8 +4,9 @@ from urllib.parse import urlparse
 
 from django.conf import settings
 
-from ..xmlutils.nodes import text, attr, element, elements, first
-from .common import (_get_label, _get_value, _norm_rt, _xp, _get_attribute_item)
+from services.nodes import text, attr, element, elements, first
+from services.metadata import _get_label, _get_value, _get_attribute_item, agents, dates, location
+from .common import _norm_rt, _xp
 from .common import *
 from .records import AlvinRecord
 from .metadata import Appraisal, Axis, ClassificationEntry, ClassificationsBlock, Coin, Dimension, FilesBlock, FileGroup, File, Measure, SubjectMiscBlock, SubjectMiscEntry
@@ -49,7 +50,7 @@ def extract(root: etree._Element) -> AlvinRecord:
         main_title = titles(root, _xp(rt, "title")),
         variant_titles = titles(root, _xp(rt, "variantTitle")),
         agents = agents(root, _xp(rt, "agent")),
-        location = location(root, "physicalLocation/heldBy/location"),
+        location = location(root, _xp("record", "physicalLocation/heldBy/location")),
         sublocation = decorated_text(root, _xp(rt, "physicalLocation/sublocation")),
         shelf_mark = decorated_text(root, _xp(rt, "physicalLocation/shelfMark")),
         former_shelf_mark = decorated_texts(root, _xp(rt, "physicalLocation/formerShelfMark")),

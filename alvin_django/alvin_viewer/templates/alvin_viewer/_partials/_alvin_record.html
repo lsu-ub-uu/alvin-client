@@ -3,7 +3,6 @@
 <!-- Metadata -->
 
 <div class="flex flex-col gap-y-4 w-full max-w-4xl mx-auto leading-[1.5]" data-xdata="{ inventory: false }">
-    
     <!-- Overview -->
     {% include './_overview_button.html' %}
     <dl class="metadata" data-xshow="overview">
@@ -11,13 +10,13 @@
             {% include "./_metadata_row.html" with svg_path=agent.icon_path label=agent.display_roles url=agent.url value=agent.display %}
         {% endfor %}
         {% for place in metadata.origin_places.places %}
-            {% include "./_metadata_row.html" with svg_path="../_icons/place.svg" label=place.label url=place.url value=place.display %}
+            {% include "./_metadata_row.html" with svg_path="_icons/place.svg" label=place.label url=place.url value=place.display %}
         {% endfor %}
-        {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/location.svg" label=metadata.location.label url=metadata.location.url value=metadata.location.names.title %}
+        {% include "./_metadata_row.html" with svg_path='_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
+        {% include "./_metadata_row.html" with svg_path="_icons/location.svg" label=metadata.location.label url=metadata.location.url value=metadata.location.names.title %}
         {% translate 'Senast ändrad' as change_date_label %}
         {% firstof metadata.last_updated.text metadata.created.text as display_date %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=change_date_label value=display_date %}
+        {% include "./_metadata_row.html" with svg_path="_icons/clock.svg" label=change_date_label value=display_date %}
     </dl>
     
     <!-- All metadata -->
@@ -103,7 +102,7 @@
     {% if metadata.components %}
     <div class="md-toggle-closed" data-xbind:class="{ 'md-toggle-open': inventory }">
         <button data-xon.click="inventory = !inventory">
-            {% include '../_icons/inventory.svg' with class="size-6" %}
+            {% include '_icons/inventory.svg' with class="size-6" %}
             <div class="flex flex-row">
                 {% if metadata.type_of_resource.code == 'col' %}
                     {% translate 'Förteckning' %}

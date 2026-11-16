@@ -1843,6 +1843,13 @@
       }
     }
   }
+  .hover\:bg-alvin {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-alvin);
+      }
+    }
+  }
   .hover\:bg-alvin-orange {
     &:hover {
       @media (hover: hover) {

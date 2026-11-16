@@ -6,6 +6,7 @@ from django.conf import settings
 from django.utils import translation
 from django.core.cache import cache
 
+from services.metadata import Location, LocationsBlock, location
 from services.text_collector import get_item_dict
 from services.alvin_api import AlvinAPI
 
@@ -68,47 +69,55 @@ PARAM_TO_COLLECTION = {
 }
 
 
-def get_locations() -> list:
-    cached_locations = cache.get('alvin_locations_list')
+def cached_locations() -> LocationsBlock:
+
+    cache_key = "alvin_locations"
+    cached_locations = cache.get(cache_key)
+
     if cached_locations is not None:
         return cached_locations
+        
     list_url = f'{api_host}/rest/record/alvin-location'
     xml_headers_list = {
         'Content-Type': 'application/vnd.cora.recordList+xml',
         'Accept': 'application/vnd.cora.recordList+xml',
     }
+
     try:
         resp = api.session.get(list_url, headers=xml_headers_list, timeout=(3, 15))
         resp.raise_for_status()
         xml_list = api._parse_xml(resp.content)
-        return [
-            {
-                'identifier': loc.findtext('./recordInfo/id'),
-                'nameone': loc.findtext('./authority[1]/name/namePart[1]'),
-            }
-            for loc in xml_list.findall('data/record/data/location')
-        ]
-    except Exception:
-        raise Http404("Locations not found")
+
+        all_locations = LocationsBlock(
+            locations = [location(loc, ".", linked=False) for loc in xml_list.findall('data/record/data/location')]
+        )
+
+        cache.set(cache_key, all_locations, timeout=86400)
+
+        return all_locations
+    
+    except Exception as e:
+        raise Http404(f"Locations not found: {e}")
 
 
-def item_collector(collection: str) -> dict:
+def item_collector(collection: str, lang: str) -> dict[str, str]:
     data = ITEMS_DICT.get(collection)
     if not data:
         raise Http404(f"No list found for {collection}.")
-    current_lang = translation.get_language()
-    if current_lang not in ('sv', 'en', 'no'):
-        current_lang = 'sv'
-    return dict(sorted(data.items(), key=lambda item: item[1].get(current_lang, '').strip()))
+
+    resolved = {
+        key: translations.get(lang) or translations.get("sv", key)
+        for key, translations in data.items()
+    }
+    return dict(sorted(resolved.items(), key=lambda item: item[1].strip().casefold()))
 
 
-def get_active_filters(request, locations: list, collections: dict) -> list:
+def get_active_filters(request, locations: LocationsBlock, collections: dict) -> list:
     active_filters = []
     ignored_params = {'searchType', 'view', 'start', 'rows', 'page'}
-    lang = translation.get_language()
-
-    location_map = {loc.get('identifier'): loc.get('nameone') for loc in locations}
-
+    
+    location_map = {loc.id: loc.names.title for loc in locations.locations}
+    
     for key, value in request.GET.items():
         if not value or key in ignored_params or (key == 'query' and value == '**'):
             continue
@@ -124,7 +133,7 @@ def get_active_filters(request, locations: list, collections: dict) -> list:
             label = location_map.get(value, value)
         elif key in PARAM_TO_COLLECTION:
             col_dict = collections.get(PARAM_TO_COLLECTION[key], {})
-            label = col_dict.get(value, {}).get(lang, value)
+            label = col_dict.get(value, value)
 
         active_filters.append({
             'key': key,
@@ -134,7 +143,6 @@ def get_active_filters(request, locations: list, collections: dict) -> list:
         })
 
     return active_filters
-
 
 def alvin_search(request):
     
@@ -152,10 +160,17 @@ def alvin_search(request):
     if search_params.searchType not in EXTRACTOR_REGISTRY:
         raise Http404("Invalid search type")
 
-    # Get list filters
-    locations = get_locations()
-    collections = {key: item_collector(col_name) for key, col_name in COLLECTION_KEYS.items()}
+    current_lang = translation.get_language()
+    if current_lang not in ('sv', 'en', 'no'):
+        current_lang = 'sv'
 
+    # Get list filters
+    locations = cached_locations()
+    collections = {
+        key: item_collector(col_name, current_lang)
+        for key, col_name in COLLECTION_KEYS.items()
+    }
+    
     # Pagination
     startnum = int(request.GET.get('start') or 1)
     rowsnum = int(request.GET.get('rows') or 20)
@@ -179,10 +194,8 @@ def alvin_search(request):
     except Exception as e:
         raise Http404(f"Invalid search: {e}")
 
-    # 6. Extrahera poster till dataklasser via vårt registry
     records = extract_records_from_xml(search_params.searchType, xml_list)
 
-    # 7. Beräkna träffar och sidnumrering
     complete_list_size = int(xml_list.findtext(".//totalNo") or 0)
     cursor = int(xml_list.findtext(".//toNo") or 0)
 
@@ -204,7 +217,7 @@ def alvin_search(request):
         "api_host": api_host,
         "external_access_url": settings.EXTERNAL_ACCESS_URL,
         "lang": request.LANGUAGE_CODE,
-        "current_lang": translation.get_language(),
+        "current_lang": current_lang,
         "active_filters": get_active_filters(request, locations, collections),
     }
 

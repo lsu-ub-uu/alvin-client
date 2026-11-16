@@ -35,18 +35,6 @@ def _norm_rt(record_type: str) -> str:
     """
     return record_type.replace("alvin-", "") if record_type.startswith("alvin-") else record_type
 
-def collect(root: etree._Element, xpath: str, map_fn: Callable[[etree._Element], Optional[dict]]) -> List[dict]:
-    out: List[dict] = []
-    for n in root.xpath(xpath) or []:
-        try:
-            item = map_fn(n)
-            if item:
-                out.append(item)
-        except Exception:
-            continue
-    return out
-
-
 # COMMON -----------
 
 def address(root: etree._Element, resource_type: str) -> Address:

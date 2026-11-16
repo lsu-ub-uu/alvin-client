@@ -1,6 +1,6 @@
-<div class="flex flex-row flex-wrap gap-2 w-full items-center text-sm">
+<div class="flex flex-row flex-wrap shrink-0 gap-2 items-center text-sm">
     {% if metadata.form_of_work %}
-    <div class="flex flex-row items-center px-2 py-1 bg-dark-alvin rounded-2xl text-white">
+    <div class="flex flex-row items-center px-2.5 py-1.5 bg-dark-alvin rounded-2xl text-white">
         <svg class="size-5 shrink-0 z-10" aria-label="{{ metadata.label }}" viewBox="0 0 24 24" stroke-width="2" fill="none">
             {% include '_icons/work.svg' %}
         </svg>
@@ -18,7 +18,7 @@
         </p>
     </div>
     {% else %}
-    <div class="flex flex-row items-center px-2 py-1 bg-dark-alvin rounded-2xl text-white">
+    <div class="flex flex-row items-center px-2.5 py-1.5 bg-dark-alvin rounded-2xl text-white">
         <svg class="size-5 shrink-0" aria-label="{{metadata.label}}" viewBox="0 0 24 24" stroke-width="2" fill="none">
             {% if metadata.type_of_resource.code == 'art' %}
                 {% include '_icons/artifact.svg' %}
@@ -51,25 +51,34 @@
             {% endif %}
         </svg>
         {% if metadata.record_type != 'alvin-record' %}
-            <p class="font-semibold leading-none pl-1.5">{% firstof metadata.label record.type_of_resource.item %}</p>
+            <p class="font-semibold leading-none pl-1.5"
+            data-xbind:class="view === 'grid' ? 'hidden' : ''">
+                {% firstof metadata.label record.type_of_resource.item %}
+            </p>
         {% else %}
             <p class="font-semibold leading-none pl-1.5">{% firstof metadata.display_label record.type_of_resource.item %}</p>
         {% endif %}
     </div>
         {% if metadata.production_method.code == 'manuscript' %}
-        <div class="flex flex-row items-center px-2 py-1 bg-light-alvin rounded-2xl dark:text-[#333333]">
+        <div class="flex flex-row items-center px-2.5 py-1.5 bg-light-alvin rounded-2xl dark:text-[#333333]">
             <svg class="size-5 shrink-0" aria-label="{{metadata.production_method.item}}" viewBox="0 0 24 24" stroke-width="2" fill="none">
                 {% include '_icons/manuscript.svg' %}
             </svg>
-            <p class="font-semibold leading-none pl-1.5">{{ metadata.production_method.item }}</p>
+            <p class="font-semibold leading-none pl-1.5"
+            data-xbind:class="view === 'grid' ? 'hidden' : ''">
+                {{ metadata.production_method.item }}
+            </p>
         </div>
         {% endif %}
         {% if metadata.collection.code == 'yes' %}
-        <div class="flex flex-row items-center px-2 py-1 bg-blue-400 rounded-2xl text-white">
+        <div class="flex flex-row items-center px-2.5 py-1.5 bg-blue-400 rounded-2xl text-white">
             <svg class="size-5 shrink-0" aria-label="{{metadata.collection.item}}" viewBox="0 0 24 24" stroke-width="2" fill="none">
                 {% include '_icons/collection.svg' %}
             </svg>
-            <p class="font-semibold leading-none pl-1.5">{{ metadata.collection.item }}</p>
+            <p class="font-semibold leading-none pl-1.5"
+            data-xbind:class="view === 'grid' ? 'hidden' : ''">
+                {{ metadata.collection.item }}
+            </p>
         </div>
         {% endif %}
     {% endif %}

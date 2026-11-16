@@ -5,9 +5,13 @@ from django.utils.translation import gettext as _
 from django.utils.html import format_html
 from django.templatetags.static import static
 from django.conf import settings
+
 import requests
+import random
+
 from lxml import etree
 from urllib.request import urlopen
+
 parser = etree.XMLParser()
 #from alvin_viewer.extractors.common import dates
 
@@ -30,7 +34,34 @@ class SafeHTTPResolver(etree.Resolver):
         return None
 
 def start(request):
-  return render(request, 'alvin_info/start.html', {})
+  HERO_BACKGROUNDS = [
+    {
+        "file": "img/cartamarina.webp",
+        "title": "Carta Marina",
+        "url": "https://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-88495",
+    },
+    {
+        "file": "img/historia_natvralis.webp",
+        "title": "Historia natvralis ranarvm nostrativm",
+        "url": "http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-83600",
+    },
+    {
+        "file": "img/okand_dam.webp",
+        "title": "Okänd dam, tidigare kallad Cecilia Vasa",
+        "url": "http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-98114",
+    },
+    {
+        "file": "img/universitetsbiblioteket.webp",
+        "title": "Universitetsbiblioteket i Lund, läsesalen ca 1900",
+        "url": "http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-71343",
+    },
+  ]
+
+  context = {
+     "hero_bg": random.choice(HERO_BACKGROUNDS),
+  }
+
+  return render(request, 'alvin_info/start.html', context)
 
 def about(request):
   return render(request, 'alvin_info/about.html', {})

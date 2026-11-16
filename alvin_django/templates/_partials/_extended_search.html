@@ -8,7 +8,7 @@
                 {% if query != '**' %}
                 value="{{ query }}"
                 {% endif %}>
-            <button type="submit" class="mx-2 rounded-full bg-gray-900 dark:bg-gray-500 p-4 text-white hover:bg-dark-alvin focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-blue-400">
+            <button type="submit" class="mx-2 p-4 rounded-full bg-dark-alvin text-off-white hover:bg-light-alvin hover:text-dark-alvin focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-blue-400">
                 <span class="sr-only">{% translate 'Sök' %}</span>
                 <svg class="size-6" viewBox="0 0 20 20"
                     fill="currentColor" aria-hidden="true">
@@ -19,7 +19,7 @@
                 </svg>
             </button>
         </div>
-        <fieldset class="flex flex-wrap justify-center gap-2 text-sm bg-gray-50 dark:bg-gray-900 border-2 border-black dark:border-gray-200 p-2 rounded-full shadow-md">
+        <fieldset class="flex flex-wrap justify-center gap-1 text-sm bg-gray-50 dark:bg-gray-900 border-2 border-black dark:border-gray-200 p-2 rounded-full shadow-md">
             <legend class="sr-only">{% translate 'Söktyp' %}</legend>
             
             {% for key, label, icon_path in search_types %}

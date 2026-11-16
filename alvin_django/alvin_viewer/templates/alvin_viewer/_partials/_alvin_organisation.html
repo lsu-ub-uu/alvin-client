@@ -8,15 +8,15 @@
     <dl class="metadata" data-xshow="overview">
         {% with metadata.authority_names.label as authority_label %}
             {% for lang, name in metadata.authority_names.names.items %}
-                {% include "./_metadata_row.html" with svg_path="../_icons/organisationname.svg" label=authority_label extra_label=name.label_lang value=name.display %}
+                {% include "./_metadata_row.html" with svg_path="_icons/organisationname.svg" label=authority_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.start_date.label value=metadata.start_date.display %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.end_date.label value=metadata.end_date.display %} 
-        {% include "./_metadata_row.html" with svg_path="../_icons/origindate.svg" label=metadata.display_date.label value=metadata.display_date.text %}
+        {% include "./_metadata_row.html" with svg_path="_icons/origindate.svg" label=metadata.start_date.label value=metadata.start_date.display %}
+        {% include "./_metadata_row.html" with svg_path="_icons/origindate.svg" label=metadata.end_date.label value=metadata.end_date.display %} 
+        {% include "./_metadata_row.html" with svg_path="_icons/origindate.svg" label=metadata.display_date.label value=metadata.display_date.text %}
         {% translate 'Senast ändrad' as change_date_label %}
         {% firstof metadata.last_updated.text metadata.created.text as display_date %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=change_date_label value=display_date %}
+        {% include "./_metadata_row.html" with svg_path="_icons/clock.svg" label=change_date_label value=display_date %}
     </dl>
 
     <!-- All metadata -->
@@ -39,7 +39,6 @@
     <dl data-xshow="related" data-xcloak class="metadata">
 
         <!-- Related organisations -->
-        
         {% if metadata.related_organisations %}
             {% include "./_authority_links.html" with label=metadata.related_organisations.label link_type="alvin-organisation" authority_links=metadata.related_organisations %}
         {% endif %}

@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional, Dict, List, Union
 
+from django.core.cache import cache
 from django.utils.translation import get_language
 from django.urls import reverse
 
@@ -129,8 +130,8 @@ class Agent(URL):
     @property
     def icon_path(self) -> str | None:
         if self.agent_type == "alvin-person":
-            return "../_icons/person.svg"
-        return "../_icons/organisation.svg"
+            return "_icons/person.svg"
+        return "_icons/organisation.svg"
 
 
 @dataclass(slots=True)
@@ -139,10 +140,34 @@ class Location(URL):
     label: Optional[str] = None
     id: Optional[str] = None
     names: Optional[NamesBlock] = None
+    member_type: Optional[str] = None
 
     @property
     def display(self) -> Optional[str]:
         return self.names.title if self.names else None
+
+    
+@dataclass(slots=True)
+class LocationsBlock:
+    locations: List[Location]
+
+    def sorted_by_title(self) -> List[Location] | None:
+        if self.locations is None:
+            return None
+        
+        return sorted(self.locations, key=lambda x: x.names.title)
+
+    def sorted_by_type(self) -> dict[str, list] | None:
+        if self.locations is None:
+            return None
+
+        sorted_by_type = {}
+        for location in self.locations:
+            if location.member_type not in sorted_by_type:
+                sorted_by_type[location.member_type] = [location]
+            sorted_by_type[location.member_type].append(location)
+
+        return sorted_by_type
 
 
 # ------------------
@@ -327,27 +352,32 @@ class DatesBlock:
 # DECORATED METADATA
 # ------------------
 
-def _get_value(node: etree._Element | None = None, xp: str = "") -> str:
+def _get_value(node: etree._Element | None = None, xp: str = "") -> str | None:
     if node is None:
-        return {}
+        return None
+
+    lang = _get_lang() 
+    attr_name = f"_value_{lang}"
+
     if xp != "":
         target = element(node, xp)
-        return target.get(f"_value_{_get_lang()}") if target is not None else node.get(f"_value_{_get_lang()}")
+        if target is not None:
+            return target.get(attr_name) 
     
-    return node.get(f"_value_{_get_lang()}")
+    return node.get(attr_name)
     
-def _get_label(node: etree._Element | None = None) -> str:
+def _get_label(node: etree._Element | None = None) -> str | None:
     if node is None:
-        return {}
+        return None
     label = node.get(f"_{_get_lang()}")
     return label if label not in (None, "") else None
 
-def _get_lang():
+def _get_lang() -> str:
     return get_language()
 
-def _get_target(node, xp):
+def _get_target(node, xp) -> str | None:
     if node is None:
-        return {}
+        return None
     target = element(node, xp)
     return target
 
@@ -587,16 +617,18 @@ def agents(node: etree._Element, xp: str) -> List[Agent]:
     return agents
 
 
-def location(node: etree._Element, xp: str) -> Location | None:
+def location(node: etree._Element, xp: str, linked=True) -> Location | None:
     if node is None:
         return None
 
     loc = element(node, xp)
-    
+    id_element = "linkedRecordId" if linked else "recordInfo/id"
+
     return Location(
         label = _get_label(loc),
-        id = text(loc, "linkedRecordId"),
+        id = text(loc, id_element),
         names = names(loc, ".//authority", organisation["AUTH_NAME"]),
+        member_type = text(loc, "organisationInfo/descriptor"),
     )
 
 # -------------------

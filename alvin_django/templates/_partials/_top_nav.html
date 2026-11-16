@@ -5,7 +5,7 @@
     <nav class="relative topnav flex justify-between w-full h-16 bg-gray-50/98 dark:bg-gray-900/98 z-20 select-none">
         <div class="flex flex-shrink-0 justify-center items-center h-full">
             
-            <!-- Hamburger menu -->
+            <!-- Hamburger Menu -->
             <button data-xon.click="activeMenu = activeMenu === 'sidenav' ? null : 'sidenav'"
                 class="flex w-full h-full justify-between items-center dark:text-white p-4 hover:text-blue-500">
                 <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none">
@@ -22,8 +22,8 @@
                 </svg>
             </button>
 
-            <!-- Start -->
-            <a class="h-full text-center py-4 px-2 border-b-6 border-alvin text-4xl !text-black dark:!text-white" href="{% url 'start' %}">
+            <!-- Logotype -->
+            <a class="h-full text-center pt-4 px-2 border-b-6 mt-1 border-alvin text-4xl !text-black dark:!text-white" href="{% url 'start' %}">
                 ALVIN
             </a>
 
@@ -40,7 +40,7 @@
                 {% translate 'Upphovsrätt' %}
             </a>
 
-            <!-- Hjälp -->
+            <!-- Help -->
             <a  href="{% url 'help' %}" class="flex w-full h-full justify-between items-center p-2 dark:text-white">
                 <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none">
                     <title>{% translate 'Hjälp' %}</title>
@@ -57,7 +57,7 @@
                 </svg>
             </a>
             
-            <!-- Sök -->
+            <!-- Search -->
             <button type="button" data-xon.click="activeMenu = activeMenu === 'search' ? null : 'search'; if(activeMenu === 'search') { setTimeout(() => document.getElementById('alvinsearch')?.focus(), 50); }"
                 class="flex w-full h-full justify-between items-center p-2 mr-2 dark:text-white hover:text-blue-500">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6"
@@ -79,7 +79,7 @@
         
     </nav>
 
-    <!-- Extended search -->
+    <!-- Extended Search -->
     <div class="absolute top-16 left-0 w-full transform transition-transform duration-200 ease-out z-10"
         data-xshow="activeMenu === 'search'"
         data-xtransition:enter="transition-all duration-200 ease-out"

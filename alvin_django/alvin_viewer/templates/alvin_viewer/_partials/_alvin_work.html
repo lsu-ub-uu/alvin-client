@@ -9,13 +9,13 @@
         {% for agent in metadata.agents %}
             {% include "./_metadata_row.html" with svg_path=agent.icon_path label=agent.display_roles url=agent.url value=agent.display %}
         {% endfor %}
-        {% include "./_metadata_row.html" with svg_path='../_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
+        {% include "./_metadata_row.html" with svg_path='_icons/origindate.svg' label=metadata.origin_date.label value=metadata.origin_date.dates.display %}
         {% for place in metadata.origin_places.places %}
-            {% include "./_metadata_row.html" with svg_path="../_icons/place.svg" label=place.label url=place.url value=place.display %}
+            {% include "./_metadata_row.html" with svg_path="_icons/place.svg" label=place.label url=place.url value=place.display %}
         {% endfor %}
         {% translate 'Senast ändrad' as change_date_label %}
         {% firstof metadata.last_updated.text metadata.created.text as display_date %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=change_date_label value=display_date %}
+        {% include "./_metadata_row.html" with svg_path="_icons/clock.svg" label=change_date_label value=display_date %}
     </dl>
 
     <!-- All metadata -->

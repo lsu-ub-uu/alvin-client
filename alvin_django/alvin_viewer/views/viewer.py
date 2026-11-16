@@ -78,7 +78,7 @@ def has_details(metadata) -> bool:
         "variant_names", "nationality", "gender",
         "fields_of_endeavor", "address", "dates", "member_type", "email",
         "serial_number", "opus_number", "thematic_number",
-        "country", "latitude", "longitude"
+        "country", "latitude", "longitude", "general_note", "bibliographical_note", "source_note"
     ]
 
     if any(getattr(metadata, attr, None) for attr in attrs):

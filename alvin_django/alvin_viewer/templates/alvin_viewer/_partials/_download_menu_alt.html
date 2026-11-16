@@ -123,7 +123,7 @@
                         data-xon.click="images = !images"
                         class="flex items-center gap-2 font-semibold transition-colors cursor-pointer">
                         <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            {% include "../_icons/image-files.svg" %}
+                            {% include "_icons/image-files.svg" %}
                         </svg>
                         <span>{% translate 'Bilder' %}</span>
                         <svg 
@@ -149,7 +149,7 @@
                             data-xon.click="loading = true; setTimeout(() => loading = false, 3000)"
                             class="flex items-center gap-2 px-4 h-10.5 text-sm font-semibold bg-white dark:bg-gray-800 text-[#333333] dark:text-off-white border border-gray-300 dark:border-gray-600 rounded-md shadow-2xs hover:border-alvin-orange hover:text-alvin-orange dark:hover:border-alvin-orange transition-all duration-200 no-underline cursor-pointer">
                             <svg class="size-4 shrink-0" stroke-width="2" viewBox="0 0 24 24" fill="none">
-                                {% include '../_icons/download.svg' %}
+                                {% include '_icons/download.svg' %}
                             </svg>
                             <span>Original</span>
                         </a>
@@ -159,7 +159,7 @@
                             data-xon.click="loading = true; setTimeout(() => loading = false, 3000)"
                             class="flex items-center gap-2 px-4 h-10.5 text-sm font-semibold bg-white dark:bg-gray-800 text-[#333333] dark:text-off-white border border-gray-300 dark:border-gray-600 rounded-md shadow-2xs hover:border-alvin-orange hover:text-alvin-orange dark:hover:border-alvin-orange transition-all duration-200 no-underline cursor-pointer">
                             <svg class="size-4 shrink-0" stroke-width="2" viewBox="0 0 24 24" fill="none">
-                                {% include '../_icons/download.svg' %}
+                                {% include '_icons/download.svg' %}
                             </svg>
                             <span>JP2</span>
                         </a>
@@ -215,7 +215,7 @@
                         }"
                     >
                         <svg class="size-4 shrink-0" stroke-width="2" viewBox="0 0 24 24" fill="none">
-                            {% include '../_icons/download.svg' %}
+                            {% include '_icons/download.svg' %}
                         </svg>
                         <span>{% translate 'Ladda ner valda' %} (<span data-xtext="selectedImages.length">0</span>)</span>
                     </button>
@@ -238,7 +238,7 @@
                         data-xon.click="attachments = !attachments"
                         class="flex items-center gap-2 font-semibold transition-colors cursor-pointer">
                         <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            {% include "../_icons/attachments.svg" %}
+                            {% include "_icons/attachments.svg" %}
                         </svg>
                         <span>{% translate 'Bilagor' %}</span>
                         <svg 
@@ -264,7 +264,7 @@
                                 class="group flex items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200 no-underline">
                                 <div class="p-2.5 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-md group-hover:scale-105 transition-transform shrink-0">
                                     <svg class="size-5" viewBox="0 0 24 24" stroke-width="2" fill="none">
-                                        {% include '../_icons/document.svg' %}
+                                        {% include '_icons/document.svg' %}
                                     </svg>
                                 </div>
                                 <h4 class="font-semibold text-[#333333] dark:text-off-white group-hover:text-alvin-orange transition-colors truncate">
@@ -287,7 +287,7 @@
                         data-xon.click="metadata = !metadata"
                         class="flex items-center gap-2 font-semibold transition-colors cursor-pointer">
                         <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            {% include "../_icons/xml.svg" %}
+                            {% include "_icons/xml.svg" %}
                         </svg>
                         <span>{% translate 'Metadata' %}</span>
                         <svg 
@@ -310,7 +310,7 @@
                         class="group flex sm:flex-row max-sm:flex-col items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200 no-underline">
                         <div class="p-3 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-md group-hover:scale-105 transition-transform shrink-0">
                             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                {% include "../_icons/xml.svg" %}
+                                {% include "_icons/xml.svg" %}
                             </svg>
                         </div>
                         <div class="text-center sm:text-left">
@@ -324,7 +324,7 @@
                         class="group flex sm:flex-row max-sm:flex-col items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200 no-underline">
                         <div class="p-3 bg-light-alvin dark:bg-dark-alvin text-dark-alvin dark:text-light-alvin rounded-md group-hover:scale-105 transition-transform shrink-0">
                             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                {% include "../_icons/xml.svg" %}
+                                {% include "_icons/xml.svg" %}
                             </svg>
                         </div>
                         <div class="text-center sm:text-left">
@@ -338,7 +338,7 @@
                         class="group flex sm:flex-row max-sm:flex-col items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200 no-underline">
                         <div class="p-3 bg-blue-50 dark:bg-blue-700/30 text-blue-600 dark:text-blue-400 rounded-md group-hover:scale-105 transition-transform shrink-0">
                             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                {% include '../_icons/json.svg' %}
+                                {% include '_icons/json.svg' %}
                             </svg>
                         </div>
                         <div class="text-center sm:text-left">

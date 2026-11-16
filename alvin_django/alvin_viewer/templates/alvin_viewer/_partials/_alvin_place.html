@@ -8,12 +8,12 @@
     <dl class="metadata" data-xshow="overview">
         {% with metadata.authority_names.label as authority_label %}
             {% for lang, name in metadata.authority_names.names.items %}
-                {% include "./_metadata_row.html" with svg_path="../_icons/placename.svg" label=authority_label extra_label=name.label_lang value=name.display %}
+                {% include "./_metadata_row.html" with svg_path="_icons/placename.svg" label=authority_label extra_label=name.label_lang value=name.display %}
             {% endfor %}
         {% endwith %}
         {% translate 'Senast ändrad' as change_date_label %}
         {% firstof metadata.last_updated.text metadata.created.text as display_date %}
-        {% include "./_metadata_row.html" with svg_path="../_icons/clock.svg" label=change_date_label value=display_date %}
+        {% include "./_metadata_row.html" with svg_path="_icons/clock.svg" label=change_date_label value=display_date %}
     </dl>
 
     <!-- All metadata -->
@@ -34,7 +34,7 @@
 <!-- Map -->
 {% if metadata.longitude and metadata.latitude %}
 
-<div id="alvin-map" class="w-full h-96 max-w-4xl mx-auto rounded-xl mt-10"
+<div id="alvin-map" class="w-full h-96 max-w-4xl mx-auto rounded-xl mt-10 z-30"
      data-latitude="{{ metadata.latitude.text }}" 
      data-longitude="{{ metadata.longitude.text }}"
      data-leaflet-assets="{% static 'js/leaflet/images/' %}">

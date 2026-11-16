@@ -583,7 +583,7 @@ class FilesBlock:
         if not self.rights_code:
             return ""
 
-        return f"./_icons/{self.rights_code}.svg"
+        return f"_icons/{self.rights_code}.svg"
 
     # --- IMAGES ---
 

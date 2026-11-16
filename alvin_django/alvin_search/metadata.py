@@ -54,5 +54,4 @@ class SearchParams:
         return cls(**kwargs)
 
     def to_context_dict(self) -> dict:
-        """For easy unpacking of filter variables in the Django context."""
         return asdict(self)

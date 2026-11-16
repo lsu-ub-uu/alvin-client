@@ -56,7 +56,7 @@
                     {% if metadata.files.rights_code == 'in_copyright' %}
                         <p>In copyright</p>
                     {% endif %}
-                    {% with './_icons/'|add:metadata.files.rights_code|add:'.svg' as icon_path %}
+                    {% with '_icons/'|add:metadata.files.rights_code|add:'.svg' as icon_path %}
                         {% include icon_path %}
                     {% endwith %}
                 </a>
@@ -96,7 +96,7 @@
           >
           <svg class="size-5" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor">
               <title>{% translate 'Ladda ned' %}</title>
-              {% include './_icons/download.svg' %}
+              {% include '_icons/download.svg' %}
           </svg>
           <span>{% translate 'Ladda ned' %}</span>
         </button>
@@ -133,7 +133,7 @@
       <button data-xon.click="download = !download; $dispatch('open-attachments')" class="p-2 hover:text-blue-800 dark:hover:text-blue-200">
         <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor">
           <title>{% translate 'Bilagor' %}</title>
-          {% include './_icons/attachments.svg' %}
+          {% include '_icons/attachments.svg' %}
         </svg>
       </button>
       {% endif %}

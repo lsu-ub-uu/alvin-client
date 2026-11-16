@@ -1,0 +1,162 @@
+{% load i18n static %}
+
+<aside class="lg:static fixed flex lg:flex-col items-center justify-center lg:h-full lg:w-1/4 inset-0 p-4 bg-black/60 backdrop-blur-xs lg:bg-transparent lg:backdrop-blur-none lg:p-0 shrink-0  min-h-0 z-50  lg:z-auto"
+      style="display: none;"
+      data-xbind:style="showFilters ? 'display: flex;' : ''"
+      data-xbind:class="showFilters ? 'flex' : 'hidden lg:flex'"
+      data-xon.click.self="showFilters = false">
+    
+  <!-- Filter Box Container -->
+  <div class="relative flex flex-col w-full max-w-lg lg:max-w-none max-h-[85vh] lg:max-h-none lg:h-[calc(100vh-6rem)] border-[#D1D9D5] dark:border-white/10  bg-white dark:bg-gray-900 lg:bg-gray-100/80 lg:dark:bg-white/5 border rounded-lg lg:rounded-md shadow-xl lg:shadow-none overflow-hidden ">
+    
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between px-4 py-3 border-b border-[#D1D9D5] dark:border-white/10 lg:hidden shrink-0">
+      <h2 class="text-lg font-bold tracking-wide text-[#333333] dark:text-off-white">
+        {% translate 'Sökfilter' %}
+      </h2>
+      <button type="button"
+              data-xon.click="showFilters = false"
+              class="p-1.5 rounded-md text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-200/60 dark:hover:bg-white/10 transition-colors cursor-pointer"
+              aria-label="{% translate 'Stäng filter' %}">
+        <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Main Form -->
+    <form action="{% url 'alvin_search' %}" method="get" class="flex flex-col flex-1 min-h-0 relative">
+      <input type="hidden" name="searchType" id="searchType" value="{{ searchType }}">
+      <input type="hidden" name="view" id="view" value="{{ view }}">
+
+      <!-- Scrollable Filters -->
+      <h2 class="p-4 text-lg font-bold uppercase tracking-wide pb-3 mb-4 border-b border-[#D1D9D5] dark:border-white/10 hidden lg:block text-[#333333] dark:text-off-white">
+          {% translate 'Sökfilter' %}
+      </h2>
+      <div class="px-3 py-2 overflow-y-auto scrollbar-alvin flex-1">
+
+
+        <div class="flex flex-col gap-y-4">
+          
+          <!-- Free Text -->
+          {% include './_filter_text_input.html' with name="query" label="Fritext" value=query|default_if_none:""|stringformat:"s"|slice:"**" %} 
+
+          <!-- Primary Filter -->
+          {% if searchType == 'alvinRecord' %}
+
+            <!-- Digital Version -->
+            <div class="flex items-center gap-x-2.5 pt-1">
+              <input type="checkbox" id="digital" name="digital" value="yes" {% if request.GET.digital == 'yes' %}checked{% endif %}
+                    class="size-4 accent-dark-alvin dark:bg-white/5 border border-[#D1D9D5] dark:border-white/20 rounded cursor-pointer focus:ring-2 focus:ring-dark-alvin">
+              <label for="digital" class="text-xs uppercase font-semibold tracking-wide text-gray-700 dark:text-gray-300 cursor-pointer select-none">
+                {% translate 'Med digital version' %}
+              </label>
+            </div>
+
+            <!-- Location -->
+            <div class="flex flex-col gap-y-1.5">
+              <label for="location" class="text-xs uppercase font-semibold tracking-wide text-gray-700 dark:text-gray-300">{% translate 'Arkivinstitution' %}</label>
+              <select id="location" name="location" class="bg-white dark:bg-gray-800 text-[#333333] dark:text-off-white p-2 w-full rounded-md text-sm border border-[#D1D9D5] dark:border-white/15 shadow-sm focus:outline-none focus:ring-2 focus:ring-dark-alvin dark:focus:ring-light-alvin transition ease-in-out duration-150">
+                <option value="" class="text-gray-400">-- {% translate 'Välj' %} --</option>
+                {% for location in locations.sorted_by_title %}
+                  <option value="{{ location.id }}"{% if request.GET.location == location.id %}selected{% endif %}>{{ location.names.title }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            {% include './_filter_select_input.html' with name="type" label="Resurstyp" options=resourceTypes request_value=request.GET.type %}
+            {% include './_filter_text_input.html' with name="year" label="År" value=year %}
+          {% endif %}
+
+          {% if searchType == 'place' or searchType == 'person' or searchType == 'organisation' %}
+            {% include './_filter_text_input.html' with name="name" label="Namn" value=name %}
+          {% endif %}
+          
+          {% if searchType == 'person' %}
+            <div class="flex items-center gap-x-2.5 pt-1">
+              <input type="checkbox" id="family" name="family" value="yes" {% if request.GET.family == 'yes' %}checked{% endif %} class="size-4 accent-dark-alvin dark:bg-white/5 border border-[#D1D9D5] dark:border-white/20 rounded cursor-pointer focus:ring-2 focus:ring-dark-alvin">
+              <label for="family" class="text-xs uppercase font-semibold tracking-wide text-gray-700 dark:text-gray-300 cursor-pointer select-none">{% translate 'Släkt' %}</label>
+            </div>
+          {% endif %}
+
+          {% if searchType == 'work' %}
+            {% include './_filter_text_input.html' with name="title" label="Titel" value=title %}
+            {% include './_filter_text_input.html' with name="year" label="År" value=year %}
+            {% include './_filter_select_input.html' with name="form" label="Verkets form" options=forms request_value=request.GET.form %}
+          {% endif %}
+
+          <!-- Filter Accordion -->
+          <details id="other" class="group border-t border-[#D1D9D5] dark:border-white/10 my-1 text-[#333333] dark:text-off-white">
+            <summary class="flex items-center justify-between py-3 font-bold text-sm uppercase tracking-wide marker:content-none cursor-pointer select-none hover:text-dark-alvin dark:hover:text-light-alvin transition-colors">
+              <span>{% translate 'Fler filter' %}</span>
+              <svg class="size-5 transition-transform duration-150 ease-in-out group-open:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 6L15 12L9 18" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </summary>
+
+            <div class="flex flex-col gap-y-4 pt-2 pb-4">
+              
+              {% if searchType == 'alvinRecord' %}
+              
+                <!-- Collection -->
+                <div class="flex items-center gap-x-2.5">
+                  <input type="checkbox" id="collection" name="collection" value="yes" {% if request.GET.collection == 'yes' %}checked{% endif %} class="size-4 accent-dark-alvin dark:bg-white/5 border border-[#D1D9D5] dark:border-white/20 rounded cursor-pointer focus:ring-2 focus:ring-dark-alvin">
+                  <label for="collection" class="text-xs uppercase font-semibold tracking-wide text-gray-700 dark:text-gray-300 cursor-pointer select-none">{% translate 'Samlingspost' %}</label>
+                </div>
+
+                {% include './_filter_text_input.html' with name="title" label="Titel" value=title %}
+                {% include './_filter_select_input.html' with name="production" label="Handskrift/Tryck" options=productions request_value=request.GET.production %}
+                {% include './_filter_select_input.html' with name="language" label="Språk" options=languages request_value=request.GET.language %}
+                {% include './_filter_select_input.html' with name="country" label="Land" options=countries request_value=request.GET.country %}
+                {% include './_filter_select_input.html' with name="historical" label="Historiskt land" options=historicalCountries request_value=request.GET.historical %}
+                {% include './_filter_text_input.html' with name="publication" label="Förlag, impressum" value=publication %}
+                {% include './_filter_select_input.html' with name="genre" label="Genre/Form" options=genres request_value=request.GET.genre %}
+                {% include './_filter_text_input.html' with name="subject" label="Ämne" value=subject %}
+                {% include './_filter_select_input.html' with name="technique" label="Teknik" options=techniques request_value=request.GET.technique %}
+                {% include './_filter_select_input.html' with name="material" label="Material" options=materials request_value=request.GET.material %}
+                
+                <!-- Hidden Search Fields -->
+                <input id="person_id" type="hidden" name="person" value="{{ person }}">
+                <input id="organisation_id" type="hidden" name="organisation" value="{{ organisation }}">
+                <input id="place_id" type="hidden" name="place" value="{{ place }}">
+                <input id="work_id" type="hidden" name="work" value="{{ work }}">
+
+                {% include './_filter_select_input.html' with name="role" label="Roll" options=roles request_value=request.GET.role %}
+                {% include './_filter_select_input.html' with name="subcollection" label="Samlingar" options=subcollections request_value=request.GET.subcollection %}
+                {% include './_filter_text_input.html' with name="shelfmark" label="Signum" value=shelfmark %}
+                {% include './_filter_select_input.html' with name="right" label="Rättigheter" options=rights request_value=request.GET.right %}
+              {% endif %}
+
+              {% if searchType == 'person' %}
+                {% include './_filter_text_input.html' with name="occupation" label="Yrke/Verksamhetsområde" value=occupation %}
+                {% include './_filter_select_input.html' with name="gender" label="Kön" options=genders request_value=request.GET.gender %}
+              {% endif %}
+
+              {% if searchType == 'person' or searchType == 'organisation' or searchType == 'work' %}
+                {% include './_filter_select_input.html' with name="country" label="Land" options=countries request_value=request.GET.country %}
+              {% endif %}
+
+              {% if searchType == 'person' or searchType == 'organisation' or searchType == 'alvinRecord' %}
+                {% include './_filter_text_input.html' with name="identifier" label="Identifikator" value=identifier %}
+              {% endif %}
+              
+              <!-- Alvin ID -->
+              {% include './_filter_text_input.html' with name="id" label="Alvin-ID" value=id placeholder="Ange endast nummer" %}
+            </div>
+          </details>
+
+        </div>
+      </div>
+
+      <!-- Search Button -->
+      <div class="p-4 border-t border-[#D1D9D5] dark:border-white/10 bg-gray-50 lg:bg-transparent dark:bg-gray-800 lg:dark:bg-transparent shrink-0">
+        <button type="submit" class="w-full h-10 flex items-center justify-center gap-x-2 bg-dark-alvin text-off-white hover:bg-light-alvin hover:text-dark-alvin font-semibold text-sm uppercase tracking-wide px-4 rounded-md shadow-sm cursor-pointer transition ease-in-out duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-alvin">
+          <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+          </svg>
+          <span>{% translate 'Sök' %}</span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+</aside>

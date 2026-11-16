@@ -60,6 +60,11 @@ def start(request):
         "title": "Bilderbok för vuxna",
         "url": "http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-120757",
     },
+    {
+        "file": "img/heroBackground/80893.webp",
+        "title": "Corporum Coelestium Magnitudines",
+        "url": "http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-80893",
+    },
   ]
 
   context = {

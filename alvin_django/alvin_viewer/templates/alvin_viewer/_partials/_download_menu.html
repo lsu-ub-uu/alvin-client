@@ -73,7 +73,7 @@
         }"
         data-xon:open-attachments.window="images = false ; attachments = true ; metadata = false"
         data-xon:open-downloads.window="images = true ; attachments = false ; metadata = true"
-        class="relative flex flex-col w-full h-full md:w-2/3 md:max-w-5xl md:h-5/6 bg-gray-100 dark:bg-gray-800 md:rounded-xl shadow-2xl overflow-hidden"
+        class="relative flex flex-col w-11/12  md:w-10/12 md:max-w-5xl h-5/6 bg-gray-100 dark:bg-gray-900 rounded-xl shadow-2xl overflow-hidden"
         data-xon.click.stop>
 
         <!-- Spinner Overlay -->
@@ -105,13 +105,13 @@
                 class="flex items-center justify-center size-8 rounded-full text-gray-500 hover:bg-gray-200 hover:text-alvin-orange dark:hover:bg-gray-700 dark:text-gray-400 transition-colors duration-200 shrink-0 cursor-pointer"
                 aria-label="{% translate 'Stäng' %}">
                 <svg class="size-5" stroke-width="2" viewBox="0 0 24 24" fill="none">
-                    <path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    {% include '_icons/x.svg' %}
                 </svg>
             </button>
         </div>
 
         <!-- Scrollable Body -->
-        <div class="flex-1 flex flex-col overflow-y-auto last:mb-4">
+        <div class="flex-1 flex flex-col overflow-y-auto last:mb-4 scrollbar-alvin">
 
             {% if metadata.files.has_images %}
 
@@ -262,7 +262,7 @@
                             {% for file in attachments.files %}
                             <a href="{{ file.master_url }}" 
                                 class="group flex items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200 no-underline">
-                                <div class="p-2.5 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-md group-hover:scale-105 transition-transform shrink-0">
+                                <div class="p-2.5 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-md transition-transform shrink-0">
                                     <svg class="size-5" viewBox="0 0 24 24" stroke-width="2" fill="none">
                                         {% include '_icons/document.svg' %}
                                     </svg>
@@ -308,7 +308,7 @@
                     <!-- Cora / XML -->
                     <a href="{% url 'record_viewer' metadata.record_type metadata.id %}?format=xml" 
                         class="group flex sm:flex-row max-sm:flex-col items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200 no-underline">
-                        <div class="p-3 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-md group-hover:scale-105 transition-transform shrink-0">
+                        <div class="p-3 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-md transition-transform shrink-0">
                             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 {% include "_icons/xml.svg" %}
                             </svg>
@@ -322,7 +322,7 @@
                     <!-- RDF / XML -->
                     <a href="{% url 'record_viewer' metadata.record_type metadata.id %}?format=rdf" 
                         class="group flex sm:flex-row max-sm:flex-col items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200 no-underline">
-                        <div class="p-3 bg-light-alvin dark:bg-dark-alvin text-dark-alvin dark:text-light-alvin rounded-md group-hover:scale-105 transition-transform shrink-0">
+                        <div class="p-3 bg-light-alvin dark:bg-dark-alvin text-dark-alvin dark:text-light-alvin rounded-md transition-transform shrink-0">
                             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 {% include "_icons/xml.svg" %}
                             </svg>
@@ -336,7 +336,7 @@
                     <!-- JSON -->
                     <a href="{% url 'record_viewer' metadata.record_type metadata.id %}?format=json" 
                         class="group flex sm:flex-row max-sm:flex-col items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-alvin-orange dark:hover:border-alvin-orange hover:shadow-md transition-all duration-200 no-underline">
-                        <div class="p-3 bg-blue-50 dark:bg-blue-700/30 text-blue-600 dark:text-blue-400 rounded-md group-hover:scale-105 transition-transform shrink-0">
+                        <div class="p-3 bg-blue-50 dark:bg-blue-700/30 text-blue-600 dark:text-blue-400 rounded-md transition-transform shrink-0">
                             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 {% include '_icons/json.svg' %}
                             </svg>

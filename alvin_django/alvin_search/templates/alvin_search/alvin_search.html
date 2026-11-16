@@ -127,7 +127,7 @@
             {% endif %}
             <span>{{ filter.label }}</span>
             <svg class="size-4 opacity-70 hover:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              {% include '_icons/x.svg' %}
             </svg>
           </a>
         {% endfor %}
@@ -170,6 +170,7 @@
 
         <!-- Empty Placeholder for Spacing -->
         <div class="w-12"></div>
+        
       {% endif %}
 
       <!-- Centered Text -->

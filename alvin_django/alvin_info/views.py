@@ -36,24 +36,29 @@ class SafeHTTPResolver(etree.Resolver):
 def start(request):
   HERO_BACKGROUNDS = [
     {
-        "file": "img/cartamarina.webp",
+        "file": "img/heroBackground/88495.webp",
         "title": "Carta Marina",
         "url": "https://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-88495",
     },
     {
-        "file": "img/historia_natvralis.webp",
+        "file": "img/heroBackground/83600.webp",
         "title": "Historia natvralis ranarvm nostrativm",
         "url": "http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-83600",
     },
     {
-        "file": "img/okand_dam.webp",
+        "file": "img/heroBackground/98114.webp",
         "title": "Okänd dam, tidigare kallad Cecilia Vasa",
         "url": "http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-98114",
     },
     {
-        "file": "img/universitetsbiblioteket.webp",
+        "file": "img/heroBackground/71343.webp",
         "title": "Universitetsbiblioteket i Lund, läsesalen ca 1900",
         "url": "http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-71343",
+    },
+    {
+        "file": "img/heroBackground/120757.webp",
+        "title": "Bilderbok för vuxna",
+        "url": "http://urn.kb.se/resolve?urn=urn:nbn:se:alvin:portal:record-120757",
     },
   ]
 

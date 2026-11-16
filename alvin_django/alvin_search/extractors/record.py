@@ -8,6 +8,7 @@ class AlvinRecord:
     identifier: Optional[str] = None
     type_of_resource: Optional[str] = None
     collection: DecoratedListItem = None
+    production_method: DecoratedListItem = None
     main_title: TitleEntry = field(default_factory=TitleEntry)
     agents: List[Agent] = None
     location: Location = field(default_factory=NamesBlock)
@@ -23,6 +24,7 @@ def extract_alvin_record(node) -> AlvinRecord:
         identifier=node.findtext('./recordInfo/id'),
         type_of_resource = decorated_list_item(node, "./typeOfResource"),
         collection = decorated_list_item(node, "./collection"),
+        production_method = decorated_list_item(node, "./productionMethod"),
         main_title=titles(node, './title'),
         agents = agents(node, "./agent"),
         location = location(node, "./physicalLocation/heldBy/location"),

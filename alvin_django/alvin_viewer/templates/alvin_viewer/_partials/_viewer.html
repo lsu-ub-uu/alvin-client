@@ -1,52 +1,104 @@
 {% load i18n static %}
 
 <aside id="viewer-fullscreen-container" 
-        data-xdata="documentViewer" 
+        data-xdata="documentViewer"
         data-xon.beforeunload.window="cleanup()"
         data-xon.osd-loaded.window="totalPages = $event.detail.totalPages; currentPage = 1"
         data-xon.osd-page-changed.window="currentPage = $event.detail.page + 1"
         class="w-full h-[60vh] lg:h-[80vh] flex relative overflow-hidden rounded-t-sm border-b">
+
+    <!-- Licensing  -->
+    {% if metadata.files.rights_code %}
+        <div 
+          data-xshow="overview"
+          class="absolute bottom-2 right-2 flex justify-end z-20 opacity-50 hover:opacity-100"
+          aria-label="{{ metadata.files.rights_label }}"
+        >
+            <div
+              data-xdata="{ tooltip: false }"
+              data-xon.mouseenter="tooltip = true"
+              data-xon.mouseleave="tooltip = false"
+              data-xon.focus="tooltip = true"
+              data-xon.blur="tooltip = false"
+              class="relative flex flex-col"
+            >
+                <a href="{{ metadata.files.rights_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex flex-row items-center gap-x-2 text-[#333333] dark:text-off-white no-underline {% if metadata.files.rights_code == 'in_copyright' %}[&_svg]:w-20{% endif %}">
+                    {% with '_icons/'|add:metadata.files.rights_code|add:'.svg' as icon_path %}
+                        {% include icon_path %}
+                    {% endwith %}
+                </a>
+
+                <div
+                    data-xshow="tooltip"
+                    data-xtransition:enter="transition ease-out duration-200"
+                    data-xtransition:enter-start="opacity-0 translate-y-1"
+                    data-xtransition:enter-end="opacity-100 translate-y-0"
+                    data-xtransition:leave="transition ease-in duration-150"
+                    data-xtransition:leave-start="opacity-100 translate-y-0"
+                    data-xtransition:leave-end="opacity-0 translate-y-1"
+                    data-xcloak
+                    class="absolute bottom-full right-0 mb-3 z-50 w-max max-w-xs px-3.5 py-2.5 text-xs font-medium leading-relaxed bg-gray-900 text-off-white dark:bg-gray-50 dark:text-[#333333] rounded-lg shadow-md pointer-events-none">
+                    
+                    <p>{% translate 'Klicka för mer information om licenseringen av filerna.' %}</p>
+                    <p class="mt-1.5">{% translate 'All metadata i Alvin är tillgänglig enligt CC0.' %}</p>
+
+                    <span class="absolute -bottom-1 right-3 size-2.5 rotate-45 bg-gray-900 dark:bg-gray-50"></span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     
     <div id="osd-wrapper" class="flex-1 relative overflow-hidden bg-gray-200 dark:bg-black">
         
         <!-- OSD toolbar -->
-        <div class="absolute top-1/2 -translate-y-1/2 left-4 z-40 bg-black/70 md:p-0.5 rounded-full flex flex-col items-center gap-1 text-white border border-white/20 shadow-xl backdrop-blur-xs">
+        <div class="absolute top-1/2 -translate-y-1/2 left-4 z-40 bg-black/70 md:p-0.5 rounded-full flex flex-col items-center gap-1 text-white border border-white/20 shadow-xl backdrop-blur-xs opacity-70 hover:opacity-100 transition-opacity duration-100">
+
+            <!-- Fullscreen -->
             <button data-xon.click="toggleFullscreen()" class="osd-tools" title="{% translate 'Fullskärmsläge' %}">
-                <svg class="w-4 h-4 md:w-5 md:h-5" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
+                <svg class="size-5" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
                     <path d="M9 9L4 4M4 4V8M4 4H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                     <path d="M15 9L20 4M20 4V8M20 4H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                     <path d="M9 15L4 20M4 20V16M4 20H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                     <path d="M15 15L20 20M20 20V16M20 20H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             </button>
+
             <div class="w-5 h-px bg-white/40 my-0.5"></div>
+
+            <!-- Zoom -->
             <button data-xon.click="osdZoomIn()" class="osd-tools" title="{% translate 'Zooma in' %}">
-                <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M8 11H11M14 11H11M11 11V8M11 11V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17 17L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 11C3 15.4183 6.58172 19 11 19C13.213 19 15.2161 18.1015 16.6644 16.6493C18.1077 15.2022 19 13.2053 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <svg class="size-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M8 11H11M14 11H11M11 11V8M11 11V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17 17L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 11C3 15.4183 6.58172 19 11 19C13.213 19 15.2161 18.1015 16.6644 16.6493C18.1077 15.2022 19 13.2053 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
             <button data-xon.click="osdZoomOut()" class="osd-tools" title="{% translate 'Zooma ut' %}">
-                <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 11C3 15.4183 6.58172 19 11 19C13.213 19 15.2161 18.1015 16.6644 16.6493C18.1077 15.2022 19 13.2053 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 11L14 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <svg class="size-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 11C3 15.4183 6.58172 19 11 19C13.213 19 15.2161 18.1015 16.6644 16.6493C18.1077 15.2022 19 13.2053 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 11L14 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
 
             <div class="w-5 h-px bg-white/40 my-0.5"></div>
             
+            <!-- Home -->
             <button data-xon.click="osdHome()" class="osd-tools" title="{% translate 'Återställ zoom' %}">
-                <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor"><path d="M2 8L11.7317 3.13416C11.9006 3.04971 12.0994 3.0497 12.2683 3.13416L22 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20 11V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <svg class="size-5" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor"><path d="M2 8L11.7317 3.13416C11.9006 3.04971 12.0994 3.0497 12.2683 3.13416L22 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20 11V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
 
             <div class="w-5 h-px bg-white/40 my-0.5"></div>
 
+            <!-- Rotation -->
             <button data-xon.click="osdRotateLeft()" class="osd-tools" title="{% translate 'Rotera moturs' %}">
-                <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M4.5 8C8.5 8 11 8 15 8C15 8 15 8 15 8C15 8 20 8 20 12.7059C20 18 15 18 15 18C11.5714 18 9.71429 18 6.28571 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7.5 11.5C6.13317 10.1332 5.36683 9.36683 4 8C5.36683 6.63317 6.13317 5.86683 7.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <svg class="size-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M4.5 8C8.5 8 11 8 15 8C15 8 15 8 15 8C15 8 20 8 20 12.7059C20 18 15 18 15 18C11.5714 18 9.71429 18 6.28571 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7.5 11.5C6.13317 10.1332 5.36683 9.36683 4 8C5.36683 6.63317 6.13317 5.86683 7.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
             <button data-xon.click="osdRotateRight()" class="osd-tools" title="{% translate 'Rotera medurs' %}">
-                <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M19.5 8C15.5 8 13 8 9 8C9 8 9 8 9 8C9 8 4 8 4 12.7059C4 18 9 18 9 18C12.4286 18 14.2857 18 17.7143 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16.5 11.5C17.8668 10.1332 18.6332 9.36683 20 8C18.6332 6.63317 17.8668 5.86683 16.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <svg class="size-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M19.5 8C15.5 8 13 8 9 8C9 8 9 8 9 8C9 8 4 8 4 12.7059C4 18 9 18 9 18C12.4286 18 14.2857 18 17.7143 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16.5 11.5C17.8668 10.1332 18.6332 9.36683 20 8C18.6332 6.63317 17.8668 5.86683 16.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
+
         </div>
         
         <!-- Pagination -->
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 bg-black/70 md:py-1 md:px-1.5 rounded-full flex items-center md:gap-1 text-white border border-white/20 shadow-xl backdrop-blur-xs">
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 bg-black/70 md:py-1 md:px-1.5 rounded-full flex items-center md:gap-1 text-white border border-white/20 shadow-xl backdrop-blur-xs opacity-70 hover:opacity-100 transition-opacity duration-100">
             <button data-xon.click="prevPage()" data-xbind.disabled="currentPage <= 1" data-xbind.class="currentPage <= 1 ? 'opacity-30 cursor-not-allowed' : 'hover:text-orange-500 hover:bg-white/10'" class="p-1.5 rounded-full transition-all">
-                <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor">
+                <svg class="size-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor">
                     <path d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             </button>
@@ -55,19 +107,21 @@
                 <span class="text-xs md:text-sm font-semibold text-gray-300">/ <span data-xtext="totalPages"></span></span>
             </div>
             <button data-xon.click="nextPage()" data-xbind.disabled="currentPage >= totalPages" data-xbind.class="currentPage >= totalPages ? 'opacity-30 cursor-not-allowed' : 'hover:text-orange-500 hover:bg-white/10'" class="p-1.5 rounded-full transition-all">
-                <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor"><path d="M3 12L21 12M21 12L12.5 3.5M21 12L12.5 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <svg class="size-5" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor"><path d="M3 12L21 12M21 12L12.5 3.5M21 12L12.5 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             </button>
         </div>
         
         <!-- Side bar toggles -->
-        <div data-xbind.class="sidebarOpen ? 'right-full md:right-[416px]' : 'right-4 md:right-4'" class="absolute top-4 z-40 flex flex-col items-end gap-2 transition-all duration-300">
-            <button data-xon.click="toggleSidebar()" class="bg-black/70 hover:bg-black text-white hover:text-orange-500 hover:dark:bg-white/10 p-2 md:p-3 rounded-full shadow-xl border border-white/20 backdrop-blur-xs transition-all flex items-center gap-2" title="{% translate 'Visa/dölj tumnaglar' %}">
-                <svg class="w-4 h-4 md:w-5 md:h-5" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor"><path d="M14 20.4V14.6C14 14.2686 14.2686 14 14.6 14H20.4C20.7314 14 21 14.2686 21 14.6V20.4C21 20.7314 20.7314 21 20.4 21H14.6C14.2686 21 14 20.7314 14 20.4Z" stroke="currentColor" stroke-width="2"></path><path d="M3 20.4V14.6C3 14.2686 3.26863 14 3.6 14H9.4C9.73137 14 10 14.2686 10 14.6V20.4C10 20.7314 9.73137 21 9.4 21H3.6C3.26863 21 3 20.7314 3 20.4Z" stroke="currentColor" stroke-width="2"></path><path d="M14 9.4V3.6C14 3.26863 14.2686 3 14.6 3H20.4C20.7314 3 21 3.26863 21 3.6V9.4C21 9.73137 20.7314 10 20.4 10H14.6C14.2686 10 14 9.73137 14 9.4Z" stroke="currentColor" stroke-width="2"></path><path d="M3 9.4V3.6C3 3.26863 3.26863 3 3.6 3H9.4C9.73137 3 10 3.26863 10 3.6V9.4C10 9.73137 9.73137 10 9.4 10H3.6C3.26863 10 3 9.73137 3 9.4Z" stroke="currentColor" stroke-width="2"></path></svg>
+        <div data-xbind.class="sidebarOpen ? 'right-full md:right-[416px]' : 'right-4 md:right-4'" class="absolute top-4 z-40 flex flex-col items-end gap-2 transition-all duration-300 opacity-70 hover:opacity-100 transition-opacity duration-100">
+            <button data-xon.click="toggleSidebar()" class="bg-black/70 hover:bg-black text-white hover:text-orange-500 hover:dark:bg-white/10 p-3 rounded-full shadow-xl border border-white/20 backdrop-blur-xs transition-all flex items-center gap-2" title="{% translate 'Visa/dölj tumnaglar' %}">
+                <svg class="size-5" stroke-width="2" viewBox="0 0 24 24" fill="none" color="currentColor">
+                    {% include '_icons/grid.svg' %}
+                </svg>
             </button>
             {% if metadata.files.documents %}
-            <button data-xon.click="toggleDoc()" class="bg-black/70 hover:bg-black text-white hover:text-orange-500 hover:dark:bg-white/10 p-2 md:p-3 rounded-full shadow-xl border border-white/20 backdrop-blur-xs transition-all flex items-center gap-2" title="{% translate 'Visa/dölj översättningar och transkriptioner' %}">
-                <svg class="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M4 21.4V2.6C4 2.26863 4.26863 2 4.6 2H16.2515C16.4106 2 16.5632 2.06321 16.6757 2.17574L19.8243 5.32426C19.9368 5.43679 20 5.5894 20 5.74853V21.4C20 21.7314 19.7314 22 19.4 22H4.6C4.26863 22 4 21.7314 4 21.4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 2V5.4C16 5.73137 16.2686 6 16.6 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <button data-xon.click="toggleDoc()" class="bg-black/70 hover:bg-black text-white hover:text-orange-500 hover:dark:bg-white/10 p-3 rounded-full shadow-xl border border-white/20 backdrop-blur-xs transition-all flex items-center gap-2" title="{% translate 'Visa/dölj översättningar och transkriptioner' %}">
+                <svg class="size-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor"><path d="M4 21.4V2.6C4 2.26863 4.26863 2 4.6 2H16.2515C16.4106 2 16.5632 2.06321 16.6757 2.17574L19.8243 5.32426C19.9368 5.43679 20 5.5894 20 5.74853V21.4C20 21.7314 19.7314 22 19.4 22H4.6C4.26863 22 4 21.7314 4 21.4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 2V5.4C16 5.73137 16.2686 6 16.6 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
             {% endif %}
         </div>
@@ -87,7 +141,7 @@
 
                 <div class="p-1 flex justify-end">
                     <button data-xon.click="sidebarOpen = false" class="p-2 text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 hover:text-orange-500 transition-all shrink-0 rounded-full" title="{% translate 'Stäng tumnagelvy' %}">
-                        <svg class="w-4 h-4 md:w-5 md:h-5" stroke-width="2" viewBox="0 0 24 24" fill="none">
+                        <svg class="size-5" stroke-width="2" viewBox="0 0 24 24" fill="none">
                             {% include '_icons/x.svg' %}
                         </svg>
                     </button>

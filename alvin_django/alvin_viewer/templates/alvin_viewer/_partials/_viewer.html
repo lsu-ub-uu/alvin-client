@@ -54,7 +54,7 @@
     <div id="osd-wrapper" class="flex-1 relative overflow-hidden bg-gray-200 dark:bg-black">
         
         <!-- OSD toolbar -->
-        <div class="absolute top-1/2 -translate-y-1/2 left-4 z-40 bg-black/70 md:p-0.5 rounded-full flex flex-col items-center gap-1 text-white border border-white/20 shadow-xl backdrop-blur-xs opacity-70 hover:opacity-100 active:opacity-100 transition-opacity duration-100">
+        <div class="absolute top-1/2 -translate-y-1/2 left-4 z-40 bg-black/70 md:p-0.5 rounded-full flex flex-col items-center gap-1 text-white border border-white/20 shadow-xl backdrop-blur-xs opacity-70 hover:opacity-100 transition-opacity duration-100">
 
             <!-- Fullscreen -->
             <button data-xon.click="toggleFullscreen()" class="osd-tools" title="{% translate 'Fullskärmsläge' %}">
@@ -96,7 +96,7 @@
         </div>
         
         <!-- Pagination -->
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 bg-black/70 md:py-1 md:px-1.5 rounded-full flex items-center md:gap-1 text-white border border-white/20 shadow-xl backdrop-blur-xs opacity-70 hover:opacity-100 active:opacity-100 transition-opacity duration-100">
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 bg-black/70 md:py-1 md:px-1.5 rounded-full flex items-center md:gap-1 text-white border border-white/20 shadow-xl backdrop-blur-xs opacity-70 hover:opacity-100 transition-opacity duration-100">
             <button data-xon.click="prevPage()" data-xbind.disabled="currentPage <= 1" data-xbind.class="currentPage <= 1 ? 'opacity-30 cursor-not-allowed' : 'hover:text-orange-500 hover:bg-white/10 active:text-orange-500 active:bg-white/10 active:scale-[0.98]'" class="p-1.5 rounded-full transition-all">
                 <svg class="size-5" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor">
                     <path d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>

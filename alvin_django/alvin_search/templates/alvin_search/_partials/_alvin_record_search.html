@@ -89,10 +89,10 @@
   <!-- Thumbnail -->
   <div data-xshow="count > 0" 
     class="relative bg-white dark:bg-white/5 border border-[#D1D9D5]/60 dark:border-white/5 rounded flex justify-center items-center overflow-hidden transition-colors duration-200 shrink-0"
-    data-xbind:class="view === 'grid' ? 'w-full h-48 p-2 order-1' : 'w-full sm:w-36 h-36 p-1.5 order-1 sm:order-2'">
+    data-xbind:class="view === 'grid' ? 'w-full h-48 order-1' : 'w-full sm:w-36 h-36 order-1 sm:order-2'">
     <img 
       alt="{% translate 'Tumnagel för' %} {{ record.main_title.display }}"
-      class="max-w-full max-h-full object-contain mx-auto transition-transform duration-300"
+      class="w-full h-full object-cover transition-transform duration-300"
       src="{{ external_access_url }}/rest/record/binary/{{ record.file }}/thumbnail">
   </div>
 

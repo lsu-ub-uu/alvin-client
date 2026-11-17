@@ -7,7 +7,7 @@
             
             <!-- Hamburger Menu -->
             <button data-xon.click="activeMenu = activeMenu === 'sidenav' ? null : 'sidenav'"
-                class="flex w-full h-full justify-between items-center dark:text-white p-4 hover:text-blue-500">
+                class="flex w-full h-full justify-between items-center dark:text-white p-4 hover:text-blue-500 active:text-blue-500 active:scale-[0.98]">
                 <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none">
                     <title>{% translate 'Mobilmeny' %}</title>
                     <path d="M3 5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -59,7 +59,7 @@
             
             <!-- Search -->
             <button type="button" data-xon.click="activeMenu = activeMenu === 'search' ? null : 'search'; if(activeMenu === 'search') { setTimeout(() => document.getElementById('alvinsearch')?.focus(), 50); }"
-                class="flex w-full h-full justify-between items-center p-2 mr-2 dark:text-white hover:text-blue-500">
+                class="flex w-full h-full justify-between items-center p-2 mr-2 dark:text-white hover:text-blue-500 active:text-blue-500 active:scale-[0.98]">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6"
                     data-xshow="activeMenu !== 'search'">
                     <title>{% translate 'Sökfält' %}</title>

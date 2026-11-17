@@ -16,7 +16,7 @@
       </h2>
       <button type="button"
               data-xon.click="showFilters = false"
-              class="p-2 text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 hover:text-alvin-orange shrink-0 rounded-full transition-colors cursor-pointer"
+              class="p-2 text-gray-500 hover:bg-black/5 dark:hover:bg-white/10 hover:text-alvin-orange active:bg-black/5 dark:active:bg-white/10 active:text-alvin-orange active:scale-[0.98] shrink-0 rounded-full transition-colors cursor-pointer"
               aria-label="{% translate 'Stäng filter' %}">
         <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           {% include '_icons/x.svg' %}
@@ -86,7 +86,7 @@
 
           <!-- Filter Accordion -->
           <details id="other" class="group border-t border-[#D1D9D5] dark:border-white/10 my-1 text-[#333333] dark:text-off-white">
-            <summary class="flex items-center justify-between py-3 font-bold text-sm uppercase tracking-wide marker:content-none cursor-pointer select-none hover:text-dark-alvin dark:hover:text-light-alvin transition-colors">
+            <summary class="flex items-center justify-between py-3 font-bold text-sm uppercase tracking-wide marker:content-none cursor-pointer select-none hover:text-dark-alvin dark:hover:text-light-alvin active:text-dark-alvin dark:active:text-light-alvin transition-colors">
               <span>{% translate 'Fler filter' %}</span>
               <svg class="size-5 transition-transform duration-150 ease-in-out group-open:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <path d="M9 6L15 12L9 18" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -149,7 +149,7 @@
 
       <!-- Search Button -->
       <div class="p-4 border-t border-[#D1D9D5] dark:border-white/10 bg-gray-50 lg:bg-transparent dark:bg-gray-800 lg:dark:bg-transparent shrink-0">
-        <button type="submit" class="w-full h-10 flex items-center justify-center gap-x-2 bg-dark-alvin text-off-white hover:bg-light-alvin hover:text-dark-alvin font-semibold text-sm uppercase tracking-wide px-4 rounded-md shadow-sm cursor-pointer transition ease-in-out duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-alvin">
+        <button type="submit" class="w-full h-10 flex items-center justify-center gap-x-2 bg-dark-alvin text-off-white hover:bg-light-alvin hover:text-dark-alvin active:bg-light-alvin/90 active:text-dark-alvin active:scale-[0.98] font-semibold text-sm uppercase tracking-wide px-4 rounded-md shadow-sm cursor-pointer transition-all ease-in-out duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-dark-alvin">
           <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
           </svg>

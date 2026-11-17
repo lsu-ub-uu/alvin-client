@@ -43,7 +43,7 @@
         <button hx-get="{% url 'alvin_viewer' metadata.record_type metadata.id %}?page={{ page_obj.previous_page_number }}&htmx=1"
                 hx-target="#gallery-ajax-container"
                 hx-swap="outerHTML"
-                class="p-3 hover:bg-dark-alvin hover:text-white dark:hover:bg-white/20 rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer"
+                class="p-3 hover:bg-dark-alvin hover:text-white dark:hover:bg-white/20 active:bg-dark-alvin active:text-white dark:active:bg-white/20 active:scale-[0.98] rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer"
                 title="{% translate 'Föregående sida' %}">
             <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor">
                 <path d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -78,7 +78,7 @@
         <button hx-get="{% url 'alvin_viewer' metadata.record_type metadata.id %}?page={{ page_obj.next_page_number }}&htmx=1"
                 hx-target="#gallery-ajax-container"
                 hx-swap="outerHTML"
-                class="p-3 hover:bg-dark-alvin hover:text-white dark:hover:bg-white/20 rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer"
+                class="p-3 hover:bg-dark-alvin hover:text-white dark:hover:bg-white/20 active:bg-dark-alvin active:text-white dark:active:bg-white/20 active:scale-[0.98] rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer"
                 title="{% translate 'Nästa sida' %}">
             <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor">
                 <path d="M3 12L21 12M21 12L12.5 3.5M21 12L12.5 20.5" stroke-linecap="round" stroke-linejoin="round"></path>

@@ -1,7 +1,8 @@
 {% load i18n static %}
-<a class="group flex items-center gap-x-3 p-4 bg-gray-100/60 dark:bg-white/5 hover:bg-gray-200/80 dark:hover:bg-white/10 border border-[#D1D9D5] dark:border-white/10 rounded-md shadow-sm transition ease-in-out duration-150 no-underline text-[#333333] dark:text-off-white"
-   href="{% url 'alvin_viewer' 'alvin-place' record.identifier %}?data={{ encoded_link }}">
-    <span class="shrink-0 text-gray-700 dark:text-gray-300 group-hover:text-dark-alvin dark:group-hover:text-light-alvin transition-colors">
+
+<a class="group flex items-center gap-x-3 p-4 bg-gray-100/60 dark:bg-white/5 hover:bg-gray-200/80 dark:hover:bg-white/10 active:bg-gray-200/80 dark:active:bg-white/10 border border-[#D1D9D5] dark:border-white/10 rounded-md shadow-sm transition ease-in-out duration-150 no-underline text-[#333333] dark:text-off-white"
+   href="{% url 'alvin_viewer' 'alvin-organisation' record.identifier %}?data={{ encoded_link }}">
+    <span class="shrink-0 text-gray-700 dark:text-gray-300 group-hover:text-dark-alvin dark:group-hover:text-light-alvin group-active:text-dark-alvin dark:group-active:text-light-alvin transition-colors">
         <svg class="size-6" aria-label="{% translate 'Place' %}" viewBox="0 0 24 24" stroke-width="2" fill="none">
             {% include '_icons/place.svg' %}
         </svg>

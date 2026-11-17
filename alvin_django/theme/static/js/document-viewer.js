@@ -115,7 +115,7 @@ document.addEventListener('alpine:init', () => {
         } catch (error) {
             wrapper.innerHTML = `<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
                 <p class="mb-2">{% translate 'Kunde inte ladda dokumentet direkt i webbläsaren'%}.</p>
-                <a href="${url}" download class="flex flex-row gap-x-1 items-center px-5 py-2 bg-gray-100 border border-[#D1D9D5] rounded-md cursor-pointer text-center hover:bg-gray-300 shadow-sm transition ease-in-out duration-150">
+                <a href="${url}" download class="flex flex-row gap-x-1 items-center px-5 py-2 bg-gray-100 border border-[#D1D9D5] rounded-md cursor-pointer text-center hover:bg-gray-300 active:bg-gray-300 shadow-sm transition ease-in-out duration-150">
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <title>{% translate 'Ladda ned' %}</title>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />

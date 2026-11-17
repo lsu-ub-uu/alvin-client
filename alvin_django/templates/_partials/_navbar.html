@@ -4,7 +4,7 @@
     <div class="flex h-20 items-center justify-center px-14">
         <!-- Mobile menu button-->
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            <button data-xon.click="mobileMenuIsOpen = !mobileMenuIsOpen" data-xbind.aria-expanded="mobileMenuIsOpen" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+            <button data-xon.click="mobileMenuIsOpen = !mobileMenuIsOpen" data-xbind.aria-expanded="mobileMenuIsOpen" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 active:bg-gray-100 dark:active:text-gray-700 active:scale-[0.98] focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
                 <span class="absolute -inset-0.5"></span>
                 <span class="sr-only">Open main menu</span>
                 <svg data-xcloak data-xshow="!mobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -18,13 +18,13 @@
             </button>
         </div>
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <a href="{% url 'start' %}" class="font-[Universalis] text-4xl !text-black dark:!text-white no-underline hover:!text-black focus:!text-black dark:hover:!text-white dark:focus:!text-white">ALVIN</a>
+            <a href="{% url 'start' %}" class="font-[Universalis] text-4xl !text-black dark:!text-white no-underline hover:!text-black active:!text-black focus:!text-black dark:hover:!text-white dark:active:!text-white dark:focus:!text-white">ALVIN</a>
             <div class="hidden sm:ml-6 sm:block">
                 <div class="flex space-x-4">       
                     <a href="{% url 'userguide' %}" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-base font-normal text-white">{% translate 'För medlemmar' %}</a>
-                    <a href="/about" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 {% if '/about' in request.get_full_path %}bg-blue-800 text-white{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white dark:text-gray-300">{% translate 'Om Alvin' %}</a>
-                    <a href="/institutions" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 {% if '/institutions' in request.get_full_path %}bg-blue-800 text-white{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white dark:text-gray-300">{% translate 'Institutioner' %}</a>
-                    <a href="/copyright" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 {% if '/copyright' in request.get_full_path %}bg-blue-800 text-white{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white dark:text-gray-300">{% translate 'Upphovsrätt' %}</a>
+                    <a href="/about" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 {% if '/about' in request.get_full_path %}bg-blue-800 text-white{% endif %} hover:bg-dark-alvin hover:text-whit active:bg-dark-alvin active:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white dark:text-gray-300">{% translate 'Om Alvin' %}</a>
+                    <a href="/institutions" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 {% if '/institutions' in request.get_full_path %}bg-blue-800 text-white{% endif %} hover:bg-dark-alvin hover:text-white active:bg-dark-alvin active:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white dark:text-gray-300">{% translate 'Institutioner' %}</a>
+                    <a href="/copyright" class="rounded-md px-3 py-2 text-base font-normal text-gray-700 {% if '/copyright' in request.get_full_path %}bg-blue-800 text-white{% endif %} hover:bg-dark-alvin hover:text-white active:bg-dark-alvin active:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white dark:text-gray-300">{% translate 'Upphovsrätt' %}</a>
                 </div>
             </div>
         </div>
@@ -58,10 +58,10 @@
                 <div id="myHelp"
                     class="absolute top-11 right-0 flex w-fit min-w-48 flex-col overflow-hidden origin-top-right rounded-md bg-white shadow-lg outline outline-black/5 z-10 max-h-0" role="menu">
                     <div class="block px-4 py-2 text-base text-orange-400 bg-white font-bold">{% translate 'HJÄLP' %}</div>     
-                    <a href="/help#search" class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white focus:outline-hidden">{% translate 'Sök' %}</a>
-                    <a href="/help#download" class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white focus:outline-hidden">{% translate 'Ladda ner' %}</a>
-                    <a href="/help#imageviewer" class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white focus:outline-hidden">{% translate 'Bildvisare' %}</a>
-                    <a href="/help#apis" class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white focus:outline-hidden">{% translate 'API' %}</a>
+                    <a href="/help#search" class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white active:bg-gray-700 active:text-white focus:outline-hidden">{% translate 'Sök' %}</a>
+                    <a href="/help#download" class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white active:bg-gray-700 active:text-white focus:outline-hidden">{% translate 'Ladda ner' %}</a>
+                    <a href="/help#imageviewer" class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white active:bg-gray-700 active:text-white focus:outline-hidden">{% translate 'Bildvisare' %}</a>
+                    <a href="/help#apis" class="block px-4 py-2 text-base text-gray-700 bg-white hover:bg-gray-700 hover:text-white active:bg-gray-700 active:text-white focus:outline-hidden">{% translate 'API' %}</a>
                 </div>
 
             </div>             
@@ -71,9 +71,9 @@
             <div class="space-y-1 px-2 pt-2 pb-3">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
                 <a href="{% url 'userguide' %}" aria-current="page" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-normal text-white">{% translate 'För medlemmar' %}</a>
-                <a href="{% url 'about' %}" class="block rounded-md px-3 py-2 text-base font-normal text-white {% if '/about' in request.get_full_path %}bg-blue-800{% else %}bg-gray-700{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Om Alvin' %}</a>
-                <a href="{% url 'institutions' %}" class="block rounded-md px-3 py-2 text-base font-normal text-white {% if '/institutions' in request.get_full_path %}bg-blue-800{% else %}bg-gray-700{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Institutioner' %}</a>
-                <a href="{% url 'copyright' %}" class="block rounded-md px-3 py-2 text-base font-normal text-white {% if '/copyright' in request.get_full_path %}bg-blue-800{% else %}bg-gray-700{% endif %} hover:bg-dark-alvin hover:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Upphovsrätt' %}</a>
+                <a href="{% url 'about' %}" class="block rounded-md px-3 py-2 text-base font-normal text-white {% if '/about' in request.get_full_path %}bg-blue-800{% else %}bg-gray-700{% endif %} hover:bg-dark-alvin hover:text-white active:bg-dark-alvin active:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Om Alvin' %}</a>
+                <a href="{% url 'institutions' %}" class="block rounded-md px-3 py-2 text-base font-normal text-white {% if '/institutions' in request.get_full_path %}bg-blue-800{% else %}bg-gray-700{% endif %} hover:bg-dark-alvin hover:text-white active:bg-dark-alvin active:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Institutioner' %}</a>
+                <a href="{% url 'copyright' %}" class="block rounded-md px-3 py-2 text-base font-normal text-white {% if '/copyright' in request.get_full_path %}bg-blue-800{% else %}bg-gray-700{% endif %} hover:bg-dark-alvin hover:text-white active:bg-dark-alvin active:text-white focus:bg-blue-800 focus:outline-hidden focus:text-white">{% translate 'Upphovsrätt' %}</a>
             </div>
         </div>
     </div>

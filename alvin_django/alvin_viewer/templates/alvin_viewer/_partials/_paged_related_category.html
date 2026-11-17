@@ -6,13 +6,13 @@
         {% if category_page_obj %}
             {% for record in category_page_obj %}
             <li class="w-full py-0.5">
-                <a href="{{ record.url }}" class="hover:underline">{{ record.main_title.display }}</a>
+                <a href="{{ record.url }}" class="hover:underline active:underline">{{ record.main_title.display }}</a>
             </li>
             {% endfor %}
         {% else %}
             {% for record in type_block.records|slice:":20" %}
             <li class="w-full py-0.5">
-                <a href="{{ record.url }}" class="hover:underline">{{ record.main_title.display }}</a>
+                <a href="{{ record.url }}" class="hover:underline active:underline">{{ record.main_title.display }}</a>
             </li>
             {% endfor %}
         {% endif %}
@@ -28,7 +28,7 @@
                 hx-get="?{{ htmx_get }}={{ type_block.label|urlencode }}&rel_page={{ category_page_obj.previous_page_number }}"
                 hx-target="#{{ htmx_target }}-{{ type_block.label|slugify }}"
                 hx-swap="outerHTML"
-                class="p-1.5 rounded-full transition-all hover:text-orange-500 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer">
+                class="p-1.5 rounded-full transition-all hover:text-orange-500 hover:bg-gray-300 dark:hover:bg-white/10 active:text-orange-500 active:bg-gray-300 dark:active:bg-white/10 active:scale-[0.98] cursor-pointer">
                 <svg class="size-4" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor">
                     {% include '_icons//previous.svg' %}
                 </svg>
@@ -54,7 +54,7 @@
                 hx-get="?{{ htmx_get }}={{ type_block.label|urlencode }}&rel_page={% if category_page_obj %}{{ category_page_obj.next_page_number }}{% else %}2{% endif %}"
                 hx-target="#{{ htmx_target }}-{{ type_block.label|slugify }}"
                 hx-swap="outerHTML"
-                class="p-1.5 rounded-full transition-all hover:text-orange-500 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer">
+                class="p-1.5 rounded-full transition-all hover:text-orange-500 hover:bg-gray-300 dark:hover:bg-white/10 active:text-orange-500 active:bg-gray-300 dark:active:bg-white/10 active:scale-[0.98] cursor-pointer">
                 <svg class="size-4" viewBox="0 0 24 24" stroke-width="2" fill="none" color="currentColor">
                     {% include '_icons//next.svg' %}
                 </svg>

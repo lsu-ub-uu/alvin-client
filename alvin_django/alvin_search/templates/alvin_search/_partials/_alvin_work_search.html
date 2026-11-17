@@ -1,6 +1,6 @@
 {% load i18n static %}
 
-<a class="flex border border-[#D1D9D5] dark:border-white/10 bg-gray-100/60 dark:bg-white/5 hover:bg-gray-200/80 dark:hover:bg-white/10 rounded-md shadow-sm transition-all duration-200 ease-in-out"
+<a class="flex border border-[#D1D9D5] dark:border-white/10 bg-gray-100/60 dark:bg-white/5 hover:bg-gray-200/80 dark:hover:bg-white/10 active:bg-gray-200/80 dark:active:bg-white/10 rounded-md shadow-sm transition-all duration-200 ease-in-out"
    data-xbind:class="view === 'grid' ? 'flex-col p-4 gap-y-3' : 'flex-col-reverse sm:flex-row p-4 gap-4 items-start sm:items-stretch justify-between w-full'"
    href="{% url 'alvin_viewer' 'alvin-work' record.identifier %}?data={{ encoded_link }}">
 

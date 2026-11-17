@@ -21,7 +21,7 @@
             <h2 class="text-xl font-bold text-[#333333] dark:text-off-white">{% translate 'Dela' %}</h2>
             <button
                 data-xon.click="share = false" 
-                class="flex items-center justify-center size-8 rounded-full text-gray-500 hover:bg-gray-200 hover:text-alvin-orange dark:hover:bg-gray-700 dark:text-gray-400 transition-all duration-200 shrink-0"
+                class="flex items-center justify-center size-8 rounded-full text-gray-500 hover:bg-gray-200 hover:text-alvin-orange dark:hover:bg-gray-700 active:bg-gray-200 active:text-alvin-orange dark:active:bg-gray-700 active:scale-[0.98] dark:text-gray-400 transition-all duration-200 shrink-0"
                 aria-label="{% translate 'Stäng' %}">
                 <svg class="size-5" stroke-width="2" viewBox="0 0 24 24" fill="none">
                     {% include '_icons/x.svg' %}
@@ -44,7 +44,7 @@
                         </div>
                         <button 
                             data-xon.click="navigator.clipboard.writeText($refs.uri_text.innerText.trim()); copied = true; setTimeout(() => copied = false, 2000)"
-                            class="flex items-center justify-center p-2 text-gray-500 hover:text-alvin-orange bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md transition-colors shrink-0"
+                            class="flex items-center justify-center p-2 text-gray-500 hover:text-alvin-orange active:text-alvin-orange active:scale-[0.98] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md transition-colors shrink-0"
                             title="{% translate 'Kopiera' %}">
                             <span data-xshow="!copied">
                                 <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -70,7 +70,7 @@
                         </div>
                         <button 
                             data-xon.click="navigator.clipboard.writeText($refs.urn_text.innerText.trim()); copied = true; setTimeout(() => copied = false, 2000)"
-                            class="flex items-center justify-center p-2 text-gray-500 hover:text-alvin-orange bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md transition-colors shrink-0"
+                            class="flex items-center justify-center p-2 text-gray-500 hover:text-alvin-orange active:text-alvin-orange active:scale-[0.98] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md transition-colors shrink-0"
                             title="{% translate 'Kopiera' %}">
                             <span data-xshow="!copied">
                                 <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -96,7 +96,7 @@
                         </div>
                         <button 
                             data-xon.click="navigator.clipboard.writeText($refs.alvin_id_text.innerText.trim()); copied = true; setTimeout(() => copied = false, 2000)"
-                            class="flex items-center justify-center p-2 text-gray-500 hover:text-alvin-orange bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md transition-colors shrink-0"
+                            class="flex items-center justify-center p-2 text-gray-500 hover:text-alvin-orange active:text-alvin-orange active:scale-[0.98] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md transition-colors shrink-0"
                             title="{% translate 'Kopiera' %}">
                             <span data-xshow="!copied">
                                 <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -122,7 +122,7 @@
                     <!-- X -->
                     <a href="https://twitter.com/intent/tweet?url={{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}" 
                        target="_blank" rel="noopener noreferrer" 
-                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-black dark:hover:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
+                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-black dark:hover:text-white active:text-black active:hover:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
                        title="{% translate 'Dela på X' %}">
                         <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     </a>
@@ -130,7 +130,7 @@
                     <!-- Bluesky -->
                     <a href="https://bsky.app/intent/compose?text={{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}" 
                        target="_blank" rel="noopener noreferrer" 
-                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#0285FF] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
+                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#0285FF] active:text-[#0285FF] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
                        title="{% translate 'Dela på Bluesky' %}">
                         <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 10.8c-1.087 -2.114 -4.046 -6.053 -6.798 -7.995C2.566 0.944 1.561 1.266 0.902 1.565 0.139 1.908 0 3.08 0 3.768c0 0.69 0.378 5.65 0.624 6.479 0.815 2.736 3.713 3.66 6.383 3.364 0.136 -0.02 0.275 -0.039 0.415 -0.056 -0.138 0.022 -0.276 0.04 -0.415 0.056 -3.912 0.58 -7.387 2.005 -2.83 7.078 5.013 5.19 6.87 -1.113 7.823 -4.308 0.953 3.195 2.05 9.271 7.733 4.308 4.267 -4.308 1.172 -6.498 -2.74 -7.078a8.741 8.741 0 0 1 -0.415 -0.056c0.14 0.017 0.279 0.036 0.415 0.056 2.67 0.297 5.568 -0.628 6.383 -3.364 0.246 -0.828 0.624 -5.79 0.624 -6.478 0 -0.69 -0.139 -1.861 -0.902 -2.206 -0.659 -0.298 -1.664 -0.62 -4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z" stroke-width="1"></path></svg>
                     </a>
@@ -138,7 +138,7 @@
                     <!-- Facebook -->
                     <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}" 
                        target="_blank" rel="noopener noreferrer" 
-                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#1877F2] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
+                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#1877F2] active:text-[#0285FF] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
                        title="{% translate 'Dela på Facebook' %}">
                         <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     </a>
@@ -146,7 +146,7 @@
                     <!-- Instagram -->
                     <a href="https://www.instagram.com/" 
                        target="_blank" rel="noopener noreferrer" 
-                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#E1306C] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
+                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#E1306C] active:text-[#E1306C] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
                        title="{% translate 'Gå till Instagram (Kopiera länken först)' %}">
                         <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -158,13 +158,13 @@
                     <!-- LinkedIn -->
                     <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}" 
                         target="_blank" rel="noopener noreferrer" 
-                        class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#0A66C2] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"                       title="{% translate 'Dela på LinkedIn' %}">
+                        class="flex items-center justify-center p-2.5 text-gray-500 hover:text-[#0A66C2] active:text-[#0A66C2] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"                       title="{% translate 'Dela på LinkedIn' %}">
                         <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     </a>
                     
                     <!-- E-mail -->
                     <a href="mailto:?subject={% translate 'Länk från Alvin' %}&body={{ request.scheme }}://{{ request.get_host }}/{{ metadata.record_type }}/{{ metadata.id }}" 
-                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-alvin-orange bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
+                       class="flex items-center justify-center p-2.5 text-gray-500 hover:text-alvin-orange active:text-alvin-orange bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full transition-colors shadow-sm"
                        title="{% translate 'Dela via E-post' %}">
                         <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
                     </a>

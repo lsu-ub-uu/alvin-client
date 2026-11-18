@@ -120,22 +120,22 @@
               	                    <a href="/cataloguing" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                     {% translate 'Katalogisering' %}
                                     </a>  
-              	                    <a href="/cataloguing" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+              	                    <a href="https://{{ request.get_host }}/jsclient" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                     {% translate 'Katalogiseringsklient' %}
                                     </a>                     
-				    <a href="/cataloguing/record" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+				    <a href="{% url 'record' %}" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                     {% translate 'Post' %}
                                     </a>
-                                    <a href="/cataloguing/person" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <a href="{% url 'person' %}" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                     {% translate 'Person' %}
                                     </a>
-                                    <a href="/cataloguing/organisation" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <a href="{% url 'organisation' %}" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                     {% translate 'Organisation' %}
                                     </a>
-                                    <a href="/cataloguing/place" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <a href="{% url 'place' %}" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                     {% translate 'Plats' %}
                                     </a>
-                                    <a href="/cataloguing/work" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <a href="{% url 'work' %}" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                     {% translate 'Verk' %}
                                     </a>
                                 </div>               
@@ -247,22 +247,22 @@
                             <a href="#new" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                            	{% translate 'Katalogisering' %}
                             </a>
-                            <a href="/cataloguing" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            <a href="https://{{ request.get_host }}/jsclient" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                 {% translate 'Katalogiseringsklient' %}
                             </a>
-                            <a href="/cataloguing" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            <a href="{% url 'record' %}" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                 {% translate 'Post' %}
                             </a>
-                            <a href="/cataloguing/person" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            <a href="{% url 'person' %}" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                            	{% translate 'Person' %}
                             </a>
-                            <a href="/cataloguing/organisation" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            <a href="{% url 'organisation' %}" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                 {% translate 'Organisation' %}
                             </a>
-                            <a href="/cataloguing/place" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            <a href="{% url 'place' %}" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                 {% translate 'Plats' %}
                             </a>
-                            <a href="/cataloguing/work" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                            <a href="{% url 'work' %}" class="block px-2 py-2 w-full flex items-center text-base bg-gray-800 hover:bg-gray-700 hover:text-white focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed">
                                 {% translate 'Verk' %}
                             </a>
                         </div>               

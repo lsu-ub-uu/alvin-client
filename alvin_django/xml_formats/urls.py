@@ -8,7 +8,7 @@ urlpatterns = [
     path('onthology', views.alvinvocabulary, name='alvinvocabulary'),
     path('onthology/alvin.rdf', views.alvinrdf, name='alvinrdf'),
     path('onthology/<str:id>.rdf', views.onthologyrdf, name='onthologyrdf'),
-    path('linkedart/v1/<str:tier>', views.linked_art_search_json, name="linked_art_search_json"),
+    path('linkedart/v1/<str:raa_code>/batch', views.linked_art_ksamsok_json, name="linked_art_ksamsok_json"),
     path('linkedart/activitystream/<str:searchType>', views.linked_art_activity_stream, name="linked_art_activity_stream"),
     path('linkedart/discovery/<str:searchType>', views.linked_art_discovery_stream, name="linked_art_discovery_stream"),
 

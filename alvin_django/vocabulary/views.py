@@ -39,6 +39,12 @@ def person(request):
 def organisation(request):
   return render(request, 'vocabulary/organisation.html', {})
 
+def work(request):
+  return render(request, 'vocabulary/work.html', {})
+
+def record(request):
+  return render(request, 'vocabulary/record.html', {})
+
 def metadata(request, id):
   api_host = settings.API_HOST
   base_url = api_host + '/rest/record/metadata/'

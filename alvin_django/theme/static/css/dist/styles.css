@@ -397,15 +397,6 @@
   .order-2 {
     order: 2;
   }
-  .col-span-1 {
-    grid-column: span 1 / span 1;
-  }
-  .col-span-2 {
-    grid-column: span 2 / span 2;
-  }
-  .float-right {
-    float: right;
-  }
   .container {
     width: 100%;
     @media (width >= 40rem) {
@@ -606,9 +597,6 @@
   .h-10\.5 {
     height: calc(var(--spacing) * 10.5);
   }
-  .h-11\/12 {
-    height: calc(11/12 * 100%);
-  }
   .h-12 {
     height: calc(var(--spacing) * 12);
   }
@@ -621,17 +609,8 @@
   .h-36 {
     height: calc(var(--spacing) * 36);
   }
-  .h-38 {
-    height: calc(var(--spacing) * 38);
-  }
   .h-48 {
     height: calc(var(--spacing) * 48);
-  }
-  .h-50 {
-    height: calc(var(--spacing) * 50);
-  }
-  .h-56 {
-    height: calc(var(--spacing) * 56);
   }
   .h-96 {
     height: calc(var(--spacing) * 96);
@@ -644,9 +623,6 @@
   }
   .h-dvh {
     height: 100dvh;
-  }
-  .h-fit {
-    height: fit-content;
   }
   .h-full {
     height: 100%;
@@ -663,20 +639,11 @@
   .max-h-\[85vh\] {
     max-height: 85vh;
   }
-  .max-h-\[90svh\] {
-    max-height: 90svh;
-  }
   .max-h-\[calc\(100\%-2rem\)\] {
     max-height: calc(100% - 2rem);
   }
-  .max-h-\[calc\(100dvh-4rem\)\] {
-    max-height: calc(100dvh - 4rem);
-  }
   .min-h-0 {
     min-height: calc(var(--spacing) * 0);
-  }
-  .min-h-1\/5 {
-    min-height: calc(1/5 * 100%);
   }
   .min-h-dvh {
     min-height: 100dvh;
@@ -765,9 +732,6 @@
   .flex-1 {
     flex: 1;
   }
-  .flex-auto {
-    flex: auto;
-  }
   .flex-shrink {
     flex-shrink: 1;
   }
@@ -782,9 +746,6 @@
   }
   .flex-grow-0 {
     flex-grow: 0;
-  }
-  .basis-\[45\%\] {
-    flex-basis: 45%;
   }
   .origin-center {
     transform-origin: center;
@@ -871,12 +832,6 @@
   }
   .list-none {
     list-style-type: none;
-  }
-  .grid-flow-row-dense {
-    grid-auto-flow: row dense;
-  }
-  .auto-rows-\[minmax\(20\%\,auto\)\] {
-    grid-auto-rows: minmax(20%,auto);
   }
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -1021,23 +976,14 @@
   .overflow-hidden {
     overflow: hidden;
   }
-  .overflow-x-hidden {
-    overflow-x: hidden;
-  }
   .overflow-y-auto {
     overflow-y: auto;
-  }
-  .overscroll-contain {
-    overscroll-behavior: contain;
   }
   .rounded {
     border-radius: 0.25rem;
   }
   .rounded-2xl {
     border-radius: var(--radius-2xl);
-  }
-  .rounded-\[2rem\] {
-    border-radius: 2rem;
   }
   .rounded-full {
     border-radius: calc(infinity * 1px);
@@ -1304,9 +1250,6 @@
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-white) 95%, transparent);
     }
-  }
-  .bg-\[url\(\.\.\/\.\.\/img\/cartamarina\.webp\)\] {
-    background-image: url(../../img/cartamarina.webp);
   }
   .bg-cover {
     background-size: cover;
@@ -1654,10 +1597,6 @@
   }
   .not-italic {
     font-style: normal;
-  }
-  .ordinal {
-    --tw-ordinal: ordinal;
-    font-variant-numeric: var(--tw-ordinal,) var(--tw-slashed-zero,) var(--tw-numeric-figure,) var(--tw-numeric-spacing,) var(--tw-numeric-fraction,);
   }
   .no-underline {
     text-decoration-line: none;
@@ -2691,16 +2630,6 @@
       right: 416px;
     }
   }
-  .md\:col-span-1 {
-    @media (width >= 48rem) {
-      grid-column: span 1 / span 1;
-    }
-  }
-  .md\:col-span-2 {
-    @media (width >= 48rem) {
-      grid-column: span 2 / span 2;
-    }
-  }
   .md\:-mr-\[500px\] {
     @media (width >= 48rem) {
       margin-right: calc(500px * -1);
@@ -2729,11 +2658,6 @@
   .md\:h-5 {
     @media (width >= 48rem) {
       height: calc(var(--spacing) * 5);
-    }
-  }
-  .md\:max-h-none {
-    @media (width >= 48rem) {
-      max-height: none;
     }
   }
   .md\:w-1\/2 {
@@ -2791,11 +2715,6 @@
       max-width: var(--container-5xl);
     }
   }
-  .md\:basis-1\/5 {
-    @media (width >= 48rem) {
-      flex-basis: calc(1/5 * 100%);
-    }
-  }
   .md\:translate-x-0 {
     @media (width >= 48rem) {
       --tw-translate-x: calc(var(--spacing) * 0);
@@ -2810,11 +2729,6 @@
   .md\:grid-cols-4 {
     @media (width >= 48rem) {
       grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-  }
-  .md\:grid-cols-5 {
-    @media (width >= 48rem) {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
   }
   .md\:flex-row {
@@ -3086,57 +3000,6 @@
     @media (width >= 80rem) {
       font-size: var(--text-5xl);
       line-height: var(--tw-leading, var(--text-5xl--line-height));
-    }
-  }
-  .max-sm\:landscape\:top-4 {
-    @media (width < 40rem) {
-      @media (orientation: landscape) {
-        top: calc(var(--spacing) * 4);
-      }
-    }
-  }
-  .max-sm\:landscape\:left-1\/2 {
-    @media (width < 40rem) {
-      @media (orientation: landscape) {
-        left: calc(1/2 * 100%);
-      }
-    }
-  }
-  .max-sm\:landscape\:-translate-x-1\/2 {
-    @media (width < 40rem) {
-      @media (orientation: landscape) {
-        --tw-translate-x: calc(calc(1/2 * 100%) * -1);
-        translate: var(--tw-translate-x) var(--tw-translate-y);
-      }
-    }
-  }
-  .max-sm\:landscape\:-translate-y-0 {
-    @media (width < 40rem) {
-      @media (orientation: landscape) {
-        --tw-translate-y: calc(var(--spacing) * -0);
-        translate: var(--tw-translate-x) var(--tw-translate-y);
-      }
-    }
-  }
-  .max-sm\:landscape\:flex-row {
-    @media (width < 40rem) {
-      @media (orientation: landscape) {
-        flex-direction: row;
-      }
-    }
-  }
-  .max-sm\:landscape\:px-2 {
-    @media (width < 40rem) {
-      @media (orientation: landscape) {
-        padding-inline: calc(var(--spacing) * 2);
-      }
-    }
-  }
-  .max-sm\:landscape\:py-1 {
-    @media (width < 40rem) {
-      @media (orientation: landscape) {
-        padding-block: calc(var(--spacing) * 1);
-      }
     }
   }
   .dark\:border {
@@ -4253,26 +4116,6 @@ html {
   syntax: "*";
   inherits: false;
 }
-@property --tw-ordinal {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-slashed-zero {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-numeric-figure {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-numeric-spacing {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-numeric-fraction {
-  syntax: "*";
-  inherits: false;
-}
 @property --tw-shadow {
   syntax: "*";
   inherits: false;
@@ -4465,11 +4308,6 @@ html {
       --tw-leading: initial;
       --tw-font-weight: initial;
       --tw-tracking: initial;
-      --tw-ordinal: initial;
-      --tw-slashed-zero: initial;
-      --tw-numeric-figure: initial;
-      --tw-numeric-spacing: initial;
-      --tw-numeric-fraction: initial;
       --tw-shadow: 0 0 #0000;
       --tw-shadow-color: initial;
       --tw-shadow-alpha: 100%;

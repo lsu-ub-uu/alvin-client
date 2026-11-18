@@ -8,11 +8,11 @@ from django.utils.http import urlencode
 from urllib.parse import quote
 from django.utils.safestring import mark_safe
 
+# For tokens in page-navigation
 from django.utils.http import urlsafe_base64_encode
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
-
 import base64
 import json
 
@@ -20,6 +20,7 @@ import unicodedata
 
 api_host = settings.API_HOST
 
+# Custom resolver
 class SafeHTTPResolver(etree.Resolver):
     def resolve(self, url, pubid, context):
         # Allow only HTTP/HTTPS URLs from trusted domains
@@ -47,9 +48,12 @@ parser.resolvers.add(SafeHTTPResolver())
 import urllib.request
 from urllib.request import urlopen
 
+# This is a fake schema used to validate Cora XML format in OAI-PMH 
+#(Schema is required in ListMetadataFormats and Cora do not have one).
 def alvinrecordschema(request):
   return render (request, 'xml_formats/alvin-record-schema.xml', content_type='text/xml')
 
+# Shows Cora collections and items in RDF in the vocabulary.
 def metadatardf(request, id):
   api_host = settings.API_HOST
   base_url = api_host + '/rest/record/metadata/'
@@ -77,6 +81,7 @@ def metadatardf(request, id):
     
   return render (request, 'xml_formats/metadata-rdf.xml', {'metadatardf': metadatardf}, content_type='application/rdf+xml')
 
+#Exports a record (record + authorities) to Cora XML, Alvin RDF/XML or Linked Art JSON.
 def record_viewer(request, record_type, record_id):
   format = request.GET.get('format', 'xml')
   baseurl = api_host + '/rest/record/'
@@ -153,6 +158,10 @@ def record_viewer(request, record_type, record_id):
   else:
     return render (request, 'xml_formats/recordxml.xml', {'recordxml': recordxml}, content_type='text/xml')
 
+#For creating the Alvin RDF Onthology file dynamically from the basic Excel-file rdf_properties.xml listing the elements.
+#Could be used for bigger updates of the Cora format
+#The result should be saved as the static file alvin-rdf.xml
+
 def alvinvocabulary(request):
   xml_path = static('xml/rdf_properties.xml')
   absolute_xml = request.build_absolute_uri(xml_path)
@@ -178,9 +187,11 @@ def alvinvocabulary(request):
 
   return render (request, 'xml_formats/alvinvocabulary.xml', {'alvinvocabulary': alvinvocabulary}, content_type='text/xml')
 
+#The static onthology based on the above transformation.
 def alvinrdf(request):
   return render (request, 'xml_formats/alvin-rdf.xml', content_type='application/rdf+xml')
 
+#Shows the individual classes and properties of the onthology above in RDF.
 def onthologyrdf(request, id):
   id = id
   xml_path = reverse('alvinrdf')
@@ -204,13 +215,18 @@ def onthologyrdf(request, id):
 
   return render (request, 'xml_formats/onthology-rdf.xml', {'onthologyrdf': onthologyrdf, 'id': id}, content_type='application/rdf+xml')
 
-def linked_art_search_json(request, tier):
-    xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
-    tier = tier
+#Specific endpoint for K-samsok batch.
+def linked_art_ksamsok_json(request, raa_code):
+    xml_headers_list = {'Content-Type':'application/vnd.cora.recordList-decorated+xml','Accept':'application/vnd.cora.recordList-decorated+xml'}
+    raa_code = raa_code
+    location = ''
+    if raa_code == 'uub':
+        location = '3'
+    else:
+        location = ''
     searchType = 'alvinRecord'
     query = '**' 
     json_safe_str = json.dumps(query) 
-    location = request.GET.get('location', '').strip()
 
     if location != '':
         locationInRecordSearchTerm = f',{{"name":"locationInRecordSearchTerm","value":"alvin-location_{location}"}}' 
@@ -224,6 +240,7 @@ def linked_art_search_json(request, tier):
     current_url = request.build_absolute_uri()
     domain_root = current_url.split(separator, 1)[0]
     page_token = request.GET.get('page')
+    ksamsok = 'yes'
   
     if page_token:
         decoded_data = urlsafe_base64_decode(page_token)
@@ -254,7 +271,6 @@ def linked_art_search_json(request, tier):
 
     if searchType == 'alvinRecord':
         list_url = f'{api_host}/rest/record/searchResult/{searchType}Search?searchData={alvinRecordSearchData},{{"name":"start","value":"{start}"}},{{"name":"rows","value":"{rows}"}}]}}'
-       
     else:
         raise Http404("Invalid search") 
    
@@ -262,13 +278,19 @@ def linked_art_search_json(request, tier):
     
     if response.status_code == 200:
         xml_list = etree.fromstring(response.content)         
-        records = []
-        if searchType == 'alvinRecord':
-            for record in xml_list.findall('data/record/data/record'):
-                records.append({
-                    'identifier': record.findtext('./recordInfo/id'),
-                    'collection': record.findtext('./collection'),
-               })
+
+        xslt_path_json = static('xsl/record-json.xsl')
+        absolute_xslt_json = request.build_absolute_uri(xslt_path_json)
+                    
+        argDict = {}
+        argDict["ksamsok"] = etree.XSLT.strparam(ksamsok)
+        argDict["raa_code"] = etree.XSLT.strparam(raa_code)
+        argDict["domain_root"] = etree.XSLT.strparam(domain_root)
+
+        with urlopen(absolute_xslt_json) as f:
+          xslt_tree = etree.parse(f, parser)
+          transform = etree.XSLT(xslt_tree)     	# Create the XSLT transformer
+          recordjson = str(transform(xml_list, **argDict))	# Transform source XML tree                  
 
         pages = {
             "fromNo":xml_list.findtext(".//fromNo"),
@@ -291,7 +313,7 @@ def linked_art_search_json(request, tier):
   
     context = {       
         "location":location,
-        "records":records,
+        "recordjson": mark_safe(recordjson),
         "completeListSize":completeListSize,
         "startnum":startnum,
         "rowsnum":rowsnum,
@@ -304,7 +326,7 @@ def linked_art_search_json(request, tier):
         "startIndex":startIndex,
         }
 
-    response = render(request, 'xml_formats/linked_art_search.json', context)
+    response = render(request, 'xml_formats/linked_art_ksamsok.json', context)
 
   # 2. Add or modify headers using the .headers dictionary
     response.headers['Content-Type'] = 'application/ld+json'  # Standard server response type
@@ -313,6 +335,7 @@ def linked_art_search_json(request, tier):
   # 3. Return the modified response object
     return response
 
+#Linked Art general activity stream in Linked Art API Search Response format. 
 def linked_art_activity_stream(request, searchType):
     xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
     searchType = searchType
@@ -430,6 +453,7 @@ def linked_art_activity_stream(request, searchType):
   # 3. Return the modified response object
     return response
 
+#Linked Art Change stream in IIIF Change Discovery format
 def linked_art_discovery_stream(request, searchType):
     xml_headers_list = {'Content-Type':'application/vnd.cora.recordList+xml','Accept':'application/vnd.cora.recordList+xml'}
     searchType = searchType

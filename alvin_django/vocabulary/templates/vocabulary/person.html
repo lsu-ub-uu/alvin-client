@@ -1,192 +1,261 @@
-{% extends "vocabulary/darkmaster.html" %}
+{% extends "userguidemaster.html" %}
 {% load static %}
-{% block title %}Person{% endblock %}
+{% load i18n %}
+{% block title %}Alvin - {% translate 'Person' %}{% endblock %}
 {% block content %}
-    <div class="maincontent">
-      <h1><a href="https://www.alvin-portal.org" class="logo">ALVIN</a> : Cataloguing</h1>
-      <div class="menu">
-        <a href="#person">Person</a>
-        <a href="#sections">Sections</a>
-        <a href="#authority">Authority information</a>
-	<a href="#personinfo">Dates, places, nationality, gender</a>
-        <a href="#variant">Variant forms</a>
-        <a href="#other">Other information</a>
-	<a href="#related">Related information</a>
+<div class="bg-white dark:bg-gray-800 dark:text-white w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+  <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="md:flex flex-col md:flex-row">
+      <div class="flex flex-col w-full flex-shrink-0">
+        <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+          <div class="text-lg font-semibold tracking-widest text-gray-900 dark:text-gray-100 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+          <!-- Mobile menu button-->
+            <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+              <span class="absolute -inset-0.5"></span>
+              <span class="sr-only">Open main menu</span>
+              <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <title>Mobile-menu is not open</title>
+                <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
+                <title>Mobile-menu is open</title>
+                <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+               </svg>
+             </button>
+	   </div>
+           <nav class="pagenav hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#person">{% translate 'Person' %}</a>
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#sections">{% translate 'Sektioner i formuläret' %}</a>
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#authority">{% translate 'Auktoritetsinformation' %}</a>
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#personInfo">{% translate 'Personinformation' %}</a>       
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#variant">{% translate 'Variantformer' %}</a>   
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#other">{% translate 'Övrig information' %}</a>   
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#related">{% translate 'Relaterad information' %}</a>   
+           </nav> 
+
+	   <!-- Mobile menu -->
+
+           <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4 pagenav">
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#person">{% translate 'Person' %}</a>
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#sections">{% translate 'Sektioner i formuläret' %}</a>
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#authority">{% translate 'Auktoritetsinformation' %}</a>
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#personInfo">{% translate 'Personinformation' %}</a>       
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#variant">{% translate 'Variantformer' %}</a>   
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#other">{% translate 'Övrig information' %}</a>   
+             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#related">{% translate 'Relaterad information' %}</a>
+  	   </div>
+         </div>
+       </div>
      </div>
+     <span id="main-content-marker"></span>
+     <main class="w-full md:w-2/4 flex-grow pt-1 px-3">
+       <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="person">{% translate 'Person' %}</h1>
+       <p class="py-2 font-bold">{% translate 'Auktoritetsposter för personer används i Alvin för att:' %}</p>
+       <ul class="py-2 font-bold list-disc list-inside">
+         <li>{% translate 'Koppla en person i egenskap av agent och via en roll till ett objekt eller en samling' %}</li>
+         <li>{% translate 'Koppla en person till ett objekt eller en samling som dess ämne (resursen handlar om organisationen)' %}</li>
+       </ul>
+       <p class="py-2">{% translate 'Auktoritetsarbete innebär att skapa poster som länkade enheter. Detta betyder att välja ett föredraget namn och, i vissa fall, distinkta tillägg för att göra namnet unikt. En viktig del av arbetet är att söka efter och kontrollera om en befintlig namnform redan finns som en länkbar enhet och i så fall länka till den.' %}</p>
+       <p class="py-2">{% translate 'En person definieras som en individ eller en identitet som skapats av en individ. Begreppet omfattar även personer i heliga skrifter, fiktiva karaktärer samt icke-mänskliga entiteter, såsom djur som agerar i en roll. Det är även möjligt att registrera en post för en hel släkt. Sammanslutningar av personer, såsom juridiska personer och musikgrupper, hanteras som organisationer.' %}</p>
+       <p class="py-2">{% translate 'Textinformation i anmärkningar etc. kan vara på valfritt språk.' %}</p>
+       <p class="py-2">{% translate 'Som ett komplement till de länkade entiteterna kan information om bidragsgivare, så som den framgår av själva objektet, läggas till i de bibliografiska posterna i form av fritext – närmare bestämt som en anmärkning av typen Upphovsinformation.' %}</p>
+       <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Kevin Wicker ; with a foreword by David Pritchard ; illustrated by Karel Feuerstein.' %}</p>    
+       <h2 id="sections" class="text-3xl md:text-4xl font-bold pt-4 pb-4">{% translate 'Sektioner i formuläret' %}</h2> 
+       <details id="authority" class="group pb-4">
+         <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+           <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+             <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+           </svg>
+           <span class="text-2xl">{% translate 'Auktoritetsinformation' %}</span>
+         </summary>
+         <div class="px-4 pb-4 pt-2 border-l border-r border-b">
+           <p class="py-2">{% translate 'Minst en föredragen namnform måste anges för webbsidorna på engelska, svenska eller norska. Detta språk anger vilken språkversion av webbsidan det gäller, snarare än språket för själva namnformen. Om endast en namnform anges kommer den att visas på alla språkversioner av webbsidorna.' %}</p>
+           <p class="py-2">{% translate 'Vissa namn har en språkspecifik form. Detta gäller till exempel helgon, kungligheter, påvar, biskopar och liknande, personer från den klassiska grekiska, romerska och bysantinska tiden, samt personer som var verksamma före år 1400.' %}</p>
+           <p class="py-2">{% translate 'Det föredragna namnet är det namn som personen är mest känd under. För att fastställa detta, använd följande källor (i prioritetsordning):' %}</p>
+           <ol class="py-2 list-decimal list-inside">
+	     <li class="py-2">{% translate 'föredragna informationskällor i material som är kopplat till personen, såsom titelsidor' %}</li>
+             <li class="py-2">{% translate 'andra formella uppgifter som förekommer i material kopplat till personen' %}</li>
+             <li class="py-2">{% translate 'andra källor (inklusive referenskällor såsom VIAF eller Wikipedia)' %}</li>
+           </ol>
+           <p class="py-2">{% translate 'För personer som byter namn väljs i regel det senaste namnet som det föredragna namnet.' %}</p>
+           <p class="py-2">{% translate 'En person kan ha mer än en identitet. I så fall skapas flera poster som sammankopplade entiteter.' %}</p>
+           <p class="py-2">{% translate 'Det är möjligt, men inte obligatoriskt, att ange den auktoriserade formen på alla tre visningsspråk i de fall då dessa skiljer sig åt, t.ex. Chekhov, Anton/Tsjekhov, Anton/Tjechov, Anton.' %}</p>
+           <p class="py-2">{% translate 'Den föredragna namnformen måste vara skriven med latinska bokstäver.' %}</p>
+           <p class="py-2">{% translate 'Ange inte mer än ett namn för samma språk.' %}</p>
+           <p class="py-2">{% translate 'Ange inte alternativa namnformer i det här avsnittet.' %}</p>
+           <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Namn' %}</h3>
+           <p class="italic py-2">{% translate 'Visningsspråk' %}:</p>
+           <p class="py-2">{% translate 'Välj det språk som motsvarar namnformen, normalt baserat på personens hemvist.' %}</p>
+           <p class="font-bold py-2">{% translate 'Efternamn' %}:</p>
+           <p class="py-2">{% translate 'Ange den vedertagna formen av personens efternamn som motsvarar det valda språket.' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Chekhov (engelska). (Ange inte Чехов).' %}</p>
+           <p class="py-2">{% translate 'Lämna tomt för personer som saknar efternamn, t.ex. kungligheter eller påvar.' %}</p>
+           <p class="font-bold py-2">{% translate 'Förnamn' %}:</p>
+           <p class="py-2">{% translate 'Ange den vedertagna formen av personens förnamn som motsvarar det valda språket.' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Anton (engelska). (Ange inte Антон).' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Charles (för Charles II, King of England, inget efternamn).' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Socrates (engelska, inget efternamn).' %}</p>
+           <p class="font-bold py-2">{% translate 'Nummer' %}:</p>
+           <p class="py-2">{% translate 'Ange ordningstal för kungligheter, påvar och biskopar med romerska siffror.' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'II (för Charles II, King of England).' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'II Adolf (för Gustav II Adolf, King of Sweden).' %}</p>
+           <p class="font-bold py-2">{% translate 'Tillägg' %}:</p>
+           <p class="py-2">{% translate 'För kungliga titlar, adelstitlar, titlar som anger kyrklig rang och religiösa titlar. Alla andra titlar läggs endast till om de behövs för att skilja en person från en annan med samma namn.' %}</p>
+           <p class="py-2">{% translate 'Ange kunglig eller adlig titel samt namnet på den stat eller det folk som personen härskar eller har härskat över, på det valda språket.' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'King of England (för Charles II, King of England).' %}</p>
+           <p class="py-2">{% translate 'Lägg till titlar för påvar, biskopar, andra religiösa yrkesroller och helgon på det valda språket.' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Pope (engelska)' %}</p>
+           <p class="py-2">{% translate 'Lägg till ord osv. som anger relation.' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Jr.' %}</p>
+           <p class="py-2">{% translate 'Ange inte yrke eller sysselsättning, såvida det inte behövs för att skilja personer med samma namn åt. Lägg i stället till sådan information i fältet "Verksamhetsområde" nedan.' %}</p>
+           <p class="font-bold py-2">{% translate 'Släkt' %}:</p>
+           <p class="py-2">{% translate 'Välj endast om posten beskriver en hel släkt. Lämna annars omarkerad.' %}</p>
+           <p class="py-2">{% translate 'Ange släktens namn i fältet för efternamn. Fältet för förnamn måste lämnas tomt.' %}</p>
+         </div>
+       </details>
 
-     <div class="main">
-      <h2 class="cat" id="person">Person</h2>
-      <p>Authority records for persons are used in Alvin for:</p>
-      <ul>
-        <li>Connecting the person as an agent via a role to an object or collection</li>
-        <li>Connecting the person as the subject of an object or collection</li>
-      </ul>
-      <p>Authority work means controlled and structured handling of name forms. Users should be able to search for name forms in a uniform way. When persons change their name or act under a pseudonym, the user should be able to find the correct one from different name forms.</p>
-      <p>It means creating records as linked entities. This involves choosing a preferred name and, in some cases, distinctive additions to make the name unique. An important part of the work is to search for and check if an existing name form already exists as a linkable entity and, if so, link to it.</p>
-      <p>A person is defined as an individual or identity established by an individual (either alone or in collaboration with one or more other individuals). The term also includes people in sacred scriptures, fictional characters, and non-human entities, such as animal actors. It is also possible to register a record for an entire family. Associations of persons, such as legal entities and musical groups, are treated as Organisations.</p>
-      <p>Text information in notes etc. can be in any language.</p>
-      <p>To supplement the linked entities information about contributors as it appears on the item can be added in bibliographical records in free text as a note of the type Statement of responsibility.</p> 
-      <p>Example: Kevin Wicker ; with a foreword by David Pritchard ; illustrated by Karel Feuerstein.</p>
-     
-      <h2 id="sections">Sections in the registration form</h2>
+       <details id="personInfo" class="group pb-4">
+         <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+           <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+             <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+           </svg>
+           <span class="text-2xl">{% translate 'Personinformation' %}</span>
+         </summary>
+         <div class="px-4 pb-4 pt-2 border-l border-r border-b">
+           <p class="font-bold py-2">{% translate 'Födelsedatum' %}:</p>
+           <p class="italic py-2">{% translate 'och/eller' %}:</p>
+           <p class="font-bold py-2">{% translate 'Dödsdatum' %}:</p>
+           <p class="py-2">{% translate 'Ange födelsedatum och/eller dödsdatum.' %}</p>
+           <p class="py-2">{% translate 'Alla typer av datum anges enligt standarden ISO 8601 i enlighet med mönstren yyyy (år), yyyy-mm (år och månad) samt yyyy-mm-dd (år, månad och dag).' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '1707 (år) 05 (månad) 13 (dag).' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '0470 (år)' %}</p>
+           <p class="font-bold">{% translate 'Era (f.Kr.)' %}:</p>
+           <p class="py-2">{% translate 'Ange för år före Kristus. Lämna annars omarkerat.' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '0470 (år) +  Era (f.Kr.) (= år 470 f.Kr.).' %}</p>
+           <p class="font-bold py-2">{% translate 'År/datum' %}:</p>
+           <p class="py-2">{% translate 'Ange osäker och ungefärlig tidsinformation som fritext. I förekommande fall kan även kontrollerade datum anges ovan för bättre sökbarhet.' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '1717? (? används för sannolikt årtal).' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '1717 eller 1718 ("eller" används för alternativa och direkt på varandra följande år).' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'ca 1717 ("ca" används för ett ungefärligt årtal. Här är tidsangivelsen mer flytande och kan omfatta ett tidsspann på upp till tio år).' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'ca 1717–1767 (för ungefärlig tidsperiod).' %}</p>
+           <p class="py-2">{% translate 'I samtliga dessa fall kan 1717 även anges som ett numeriskt år ovan, vilket innebär att 1717 också blir sökbart som ett årtal.' %}</p>
+           <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Mellan 510 och 323 f.Kr. (som tidsperiod).' %}</p>
+           <p class="py-2">{% translate 'Använd inte detta element om det exakta datumet är känt.' %}</p>
+           <p class="font-bold py-2">{% translate 'Födelseort' %}:</p>
+           <p class="italic py-2">{% translate 'och/eller' %}:</p>
+           <p class="font-bold py-2">{% translate 'Dödsort' %}:</p>
+           <p class="py-2">{% translate 'Sök och länka till motsvarande auktoritetspost för plats. Om denna saknas skapas en ny post för platsen som sedan länkas.' %}</p>
+           <p class="font-bold py-2">{% translate 'Osäker uppgift' %}:</p>
+           <p class="py-2">{% translate 'Ange "Osäker uppgift" om uppgifterna är sannolika men inte verifierade. Lämna annars omarkerat.' %}</p>
+           <p class="font-bold py-2">{% translate 'Nationalitet' %}:</p>
+           <p class="py-2">{% translate 'Välj det land där den beskrivna platsen för närvarande ligger. De 20 vanligaste alternativen listas först. Efter dessa följer de andra alfabetiskt.' %}</p>
+           <p class="py-2">{% translate 'Länder och kungadömen som inte längre existerar som självständiga stater kan inte anges här.' %}</p>
+           <p class="font-bold py-2">{% translate 'Kön' %}:</p>
+           <p class="py-2">{% translate 'Välj personens kön från listan. Om fler än ett väljs det senaste.' %}</p> 
+         </div>
+       </details>
 
-      <button class="accordion" id="authority">Authority information</button>
-      <div class="panel">
-       <p>At least one preferred name form of the person must be specified for the web pages in English, Swedish or Norwegian. This language specifies the language version of the web page rather than the language of the name form. If only one name form is specified, it will be displayed on all language versions of the web pages.</p>
-        <p>Some names have a language-specific form. This applies, for example, to saints, royalty, popes, bishops, etc., classical Greek, Roman and Byzantine persons, and people active before the year 1400.</p>
-        <p>The preferred name is the name by which the person is best known. To determine it, use the following sources (in order of priority):</p>
-	<ol>
-	  <li>the preferred sources of information in items associated with the person, such as title pages</li>
-          <li>other formal statements appearing in items associated with the person</li>
-          <li>other sources (including reference sources such as VIAF or Wikipedia).</li>
-        </ol>	
-	<p>For people who change their name, the most recent name is generally chosen as the preferred name.</p>
-        <p>A person can have more than one identity, in which case multiple records are created as linked entities.</p>
-        <p>It is possible, but not mandatory, to specify the authorised form in all three display languages ​​in cases where they are different, eg. Chekhov, Anton/Tsjekhov, Anton/Tjechov, Anton.</p>
-  	<p>The preferred name form must be in Latin script.</p>
-	<p>Do not enter more than one name for the same language.</p>      
-	<p>Do not enter alternative name forms in this section.</p>
-	<h3 class="cat">Authority</h3>
-        <p class="catlabelcode">Language code, display language:</p>
-	<p>At least one preferred name form of the person must be specified for the web pages in English, Swedish or Norwegian. This language specifies the language version of the web page rather than the language of the name form. If only one name form is specified, it will be displayed on all language versions of the web pages.</p>
-	<p class="catlabeltext">Family name:</p>
-	<p>Enter the authoritative family name form of the person corresponding to the selected language.</p>
-     	<p>Example: Chekhov (in English). (Do not enter Чехов).</p>
-	<p>Leave empty for persons without a family name, eg. royalty or popes.</p>
-	<p class="catlabeltext">Given name:</p>
-	<p>Enter the authoritative given name form of the person corresponding to the selected language.</p>
-     	<p>Example: Anton (in English). (Do not enter Антон).</p>
-        <p>Example: Charles (for Charles II, King of England, no family name).</p>
-	<p>Example: Socrates (classical Greek, no family name).</p>
-	<p class="catlabeltext">Numeration:</p>
-	<p>Enter ordinal numbers for royalty, popes, and bishops using Roman numerals.</p>
-        <p>Example: II (for Charles II, King of England).</p>
-        <p>Example: II Adolf (for Gustav II Adolf, King of Sweden).</p>
-	<p class="catlabeltext">Addition:</p>
-        <p>For royal titles, titles of nobility, titles denoting ecclesiastical rank, and religious titles. All other titles are only added if they are needed to distinguish one person from another with the same name.</p>
-	<p>Enter the title of royalty or nobility and the name of the state or people over whom the person rules or has ruled in the corresponding selected language.</p>        
-        <p>Example: King of England (for Charles II, King of England).</p>
-        <p>Add titles for popes, bishops, other religious professions and saints in the corresponding selected language.</p>
-        <p>Example: Pope.</p>
-        <p>Add words etc. indicating relationship.</p>
-        <p>Example: Jr.</p>
-	<p>Do not enter a profession or occupation unless it is needed to distinguish people with the same name. Add such information in Field of Endeavour below instead.</p>
-        <p class="catlabeltext">Family:</p>
-	<p>Select Yes only if the record describes an entire family. Otherwise leave it unselected.</p>
-	<p>Enter the name of the family in the Family name field. Given name must be left empty.</p>
+       <details id="variant" class="group pb-4">
+         <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+           <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+             <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+           </svg>
+           <span class="text-2xl">{% translate 'Variantformer' %}</span>
+         </summary>
+         <div class="px-4 pb-4 pt-2 border-l border-r border-b">
+         <p class="py-2">{% translate 'Ett namn som inte anses vara den auktoriserade formen, t.ex. alternativa stavningar, tidigare varianter eller andra språk. Genom att ange alternativa namn blir resursen sökbar med hjälp av dessa.' %}</p>
+         <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Variant' %}</h3>
+         <p class="italic py-2">{% translate 'Språkkod' %}:</p>
+         <p class="py-2">{% translate 'Välj det språk som motsvarar namnformen. Vilket språk som helst kan anges. De 20 vanligaste alternativen listas först. Efter dessa följer de andra i alfabetisk ordning.' %}</p>
+         <p class="italic py-2">{% translate 'Variant' %}:</p>
+         <p class="py-2">{% translate 'Välj typ av variantform. "Alternativt namn" väljs om inget av de mer specifika alternativen är tillämpligt.' %}</p>
+         <p class="font-bold py-2">{% translate 'Efternamn' %}:</p>
+         <p class="py-2">{% translate 'Ange den alternativa formen av personens efternamn som motsvarar det valda språket.' %}</p>
+         <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Чехов (på ryska, kyrilliska bokstäver).' %}</p>
+         <p class="font-bold py-2">{% translate 'Förnamn' %}:</p>
+         <p class="py-2">{% translate 'Ange den alternativa formen av personens förnamn som motsvarar det valda språket.' %}</p>
+         <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Антон (på ryska, kyrilliska bokstäver).' %}</p>
+         <p class="font-bold py-2">{% translate 'Nummer' %}:</p>
+         <p class="py-2">{% translate 'Ange ordningstal för kungligheter, påvar och biskopar med romerska siffror.' %}</p>
+         <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'II (för Oscar II, roi de Suède et de Norvège, på franska).' %}</p>
+         <p class="font-bold py-2">{% translate 'Tillägg' %}:</p>
+         <p class="py-2">{% translate 'För kungliga titlar, adelstitlar, titlar som anger kyrklig rang och religiösa titlar. Alla andra titlar läggs endast till om de behövs för att skilja en person från en annan med samma namn.' %}</p>
+         <p class="py-2">{% translate 'Ange kunglig eller adlig titel samt namnet på den stat eller det folk som personen härskar eller har härskat över, på det valda språket.' %}</p>
+         <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'roi de Suède et de Norvège (för Oscar II, roi de Suède et de Norvège, på franska)' %}</p>
+         <p class="py-2">{% translate 'Lägg till ord osv. som anger relation.' %}</p>
+         <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Jr.' %}</p>
+         <p class="font-bold">{% translate 'Textriktning' %}:</p>
+         <p class="py-2">{% translate 'Välj Höger till vänster endast om namnet ska visas från höger till vänster, t.ex. namn på arabiska eller hebreiska. Annars lämnas det omarkerat.' %}</p>
+       </div>
+     </details>
+
+     <details id="other" class="group pb-4">
+       <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+         <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+           <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+         </svg>
+         <span class="text-2xl">{% translate 'Övrig information' %}</span>
+       </summary>
+       <div class="px-4 pb-4 pt-2 border-l border-r border-b">
+       <p class="font-bold py-2">{% translate 'Verksamhetsområde' %}:</p>
+       <p class="py-2">{% translate 'Ord eller fraser som beskriver en persons yrke eller sysselsättning. De behöver inte vara kopplade till yrkesutövning.' %}</p> 
+       <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'poet' %}</p>
+       <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'artist' %}</p>
+       <p class="py-2">{% translate 'Ange endast en term i varje fält.' %}</p>   
+       <p class="font-bold py-2">{% translate 'Anmärkning' %}:</p>
+       <p class="italic py-2">{% translate 'Typ' %}:</p>
+       <p class="py-2">{% translate 'Välj typ av anmärkning från listan. Ange endast en anmärkning för varje typ (all information i ett enda element).' %}</p>
+       <ul class="py-2 list-disc list-inside">
+         <li class="py-2">{% translate 'Allmän anmärkning – Allmän information för vilken inget särskilt anmärkningsfält har definierats.' %}</li>
+         <li class="py-2">{% translate 'Biografisk/historisk – Biografisk information om en individ eller historisk information om en institution.' %}</li>
+         <li class="py-2">{% translate 'Källa – Hänvisning till en källa där det finns information som på något sätt rör den entitet som beskrivs i auktoritetsposten, eller närliggande entiteter; till exempel en bibliografisk referens eller en webbadress (URL).' %}</li>
+       </ul>
+       <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Born in Skogs socken, Hälsingland, the son of chaplain Pehr Ahl and Elisabeth Grönlund. Doctor of medicine 1789, town physician in Sala from 1796.' %}</p>
+       <p class="font-bold py-2">{% translate 'Identifikator' %}:</p>
+       <p class="italic py-2">{% translate 'Typ' %}:</p>
+       <p class="py-2">{% translate 'Välj typ av identifikator från listan.' %}</p>
+       <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '34594730 (VIAF för Carl von Linné).' %}</p>
+       <p class="py-2">{% translate 'Ange endast numret/koden, inte hela URL:en. En länk till källan skapas automatiskt på webbsidan.' %}</p> 
+     </div>
+   </details>
+
+   <details id="related" class="group pb-4">
+     <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+       <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+         <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+       </svg>
+       <span class="text-2xl">{% translate 'Relaterad information' %}</span>
+     </summary>
+     <div class="px-4 pb-4 pt-2 border-l border-r border-b">
+       <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Relaterad person' %}</h3>
+       <p class="py-2">{% translate 'Sök efter auktoritetsposten för den relaterade personen och länka till den person som beskrivs i posten. Skapa en ny personpost vid behov.' %}</p>
+       <p class="py-2">{% translate 'Typ av relation kan inte anges här utan kan läggas till som en allmän anmärkning, till exempel Gift med Ingeborg Abbott (f. Stephens) (som en anmärkning).' %}</p>
+       <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Relaterad organisation' %}</h3>
+       <p class="py-2">{% translate 'Sök efter auktoritetsposten för den relaterade organisationen och länka till den person som beskrivs i posten. Skapa en ny organisationspost vid behov.' %}</p>
+       <p class="py-2">{% translate 'Typ av relation kan inte anges här, men kan läggas till som en allmän anmärkning, till exempel: doktor i historia och statskunskap vid Uppsala. Bibliotekarie vid universitetsbiblioteket. (Uppsala universitet).' %}</p>
+       <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Extern länk (URL)' %}</h3>
+       <p class="py-2">{% translate 'En extern länk som är relevant för den beskrivna posten.' %}</p>
+       <p class="font-bold py-2">{% translate 'URL' %}:</p>
+       <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> https://www.uu.se</p>
+       <p class="py-2">{% translate 'URL:en måste vara korrekt kodad enligt standarden RFC 3986 och börja med http:// eller https://.' %}</p>
+       <p class="py-2">{% translate 'Det rekommenderas att alla webbadresser som används tillsammans med elementet är beständiga.' %}</p>
+       <p class="font-bold py-2">{% translate 'Länktext' %}:</p>
+       <p class="py-2">{% translate 'En beskrivande etikett som visas på webbsidan.' %}</p>
+     </div>
+   </details>
+  </main>
+  <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+    <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
+      <div class="flex flex-col justify-center">  
+        <h2 class="text-2xl md:text-3xl font-bold pb-2">{% translate 'Länkar' %}</h2> 
+        <p class="py-2"><a href="https://www.loc.gov/standards/mads/">MADS</a></p>
+        <p class="py-2"><a href="https://www.ifla.org/g/cataloguing/names-of-persons/">Names of Persons</a></p>
+        <p class="py-2"><a href="https://viaf.org/">VIAF</a></p>
+        <p class="py-2"><a href="https://id.loc.gov/authorities/names.html">Library of Congress Names</a></p>
+        <p class="py-2"><a href="https://data.cerl.org/thesaurus">CERL Thesaurus</a></p>
+        <p class="py-2"><a href="https://www.wikipedia.org/">Wikipedia</a></p>
       </div>
-      <button class="accordion" id="personinfo">Dates, places, nationality, gender</button>
-      <div class="panel">
-        <p class="catlabeltext">Date of birth:</p>
-        <p class="catlabeltext">Date of death:</p>
-	<p>Enter date of birth and/or date of death.</p>
-        <p>All types of time data are specified according to the ISO 8601 standard according to the pattern yyyy (year), yyyy-mm (year and month) and yyyy-mm-dd (year, month and day).</p>
-	<p>Example: 1707 (year) 05 (month) 13 (day).</p>
-	<p>Example: 0470 (year).</p>
-	<p class="catlabeltext">Era (BC):</p>
-        <p>Enter BC for years before Christ. Otherwise leave unselected.</p>
-        <p>Example: 0470 (year) + BC (the year 470 BC).</p>
-        <p class="catlabeltext">Year/date displayed</p>
-        <p>Enter uncertain and approximate time information as free text. Where applicable, the year of birth/death can also be entered above for better searchability.</p>
-        <p>Example: 1717? (? is used for probable year).</p>
-	<p>Example: 1717 or 1718 (or is used for alternative and immediately following years).</p>
-	<p>Example: ca 1717 (ca is used for approximate year. Here the time is more fluid and can cover a time span of up to ten years).</p>
-        <p>Example: ca 1717-1767 (for approximate lifetime).</p>
-	<p>In all these cases, 1717 can also be entered as a numerical year of birth above, which means that 1717 will also be searchable as a year.</p>
-	<p>Example: Between 510 and 323 BC (as a time period).</p>
-	<p>Do not use this element if the exact date is known.</p>
-        <p class="catlabeltext">Place of birth:</p>
-        <p class="catlabeltext">Place of death:</p>    
-	<p>Search for the authority record for the place of birth and/or death and link to the person. Create a new place record if needed.</p>   
-        <p class="catlabeltext">Uncertain information:</p> 
-        <p>Enter Uncertain information if the information is probable but not verfied. Otherwise leave unselected.</p>
-        <p class="catlabeltext">Nationality:</p> 
-        <p>From the list, select nationality (country) or country of operation associated with the person. The 20 most common options are listed first. After these the others follow alphabetically.</p>
-	<p>Countries and kingdoms that no longer exist as independent states cannot be specified here.</p>
-        <p>More than one country may be selected.</p>
-        <p class="catlabeltext">Gender:</p>        
-        <p>Select the person's gender from the list. If more than one, the most recent one is chosen.</p>
-      </div>
-      <button class="accordion" id="variant">Variant forms</button>
-      <div class="panel">
-	<p>A name that is not considered the authoritative form, e.g. alternative spellings, previous variants or other languages. Specifying alternative names makes the resource searchable using these. More than one alternative may be added.</p>
-	<h3 class="cat">Variant</h3>
-        <p class="catlabelcode">Language code:</p>
-	<p>Select the language corresponding to the name form. Any language can be specified. The 20 most common options are listed first. After these the others follow alphabetically.</p>
-	<p class="catlabelcode">Variant:</p>
-	<p>Select the type of variant form. Alternative name is selected if none of the more specified ones are applicable.</p>	
-	<p class="catlabeltext">Family name:</p>
-	<p>Enter the variant family name form of the person corresponding to the selected language.</p>
-     	<p>Example: Чехов (in Russian, Cyrillic script).</p>
-	<p class="catlabeltext">Given name:</p>
-	<p>Enter the variant given name form of the person corresponding to the selected language.</p>
-     	<p>Example: Антон (in Russian, Cyrillic script).</p>
-	<p class="catlabeltext">Numeration:</p>
-	<p>Enter ordinal numbers for royalty, popes, and bishops using Roman numerals.</p>
-        <p>Example: II (for Oscar II, roi de Suède et de Norvège, in French).</p>
-	<p class="catlabeltext">Addition:</p>
-        <p>Enter the title of royalty or nobility and the name of the state or people over whom the person rules or has ruled in the corresponding selected language.</p>        
-	<p>Example: roi de Suède et de Norvège (for Oscar II, roi de Suède et de Norvège, in French)</p>
-        <p>Add words etc. indicating relationship.</p>
-        <p>Example: Jr.</p>
-	<p class="catlabeltext">Text direction:</p>
-	<p>Select Right-to-left only if the name should be displayed from right to left, e.g, names in Arabic or Hebrew. Otherwise leave it unselected.</p>
-      </div>
-      <button class="accordion" id="other">Other information</button>
-      <div class="panel">
-        <p class="catlabeltext">Field of activity:</p>
-	<p>Words or phrases that describe a person's profession or occupation. They do not have to be related to professional practice.</p>
-	<p>Example: poet</p>
-	<p>Example: amateur archaeologist</p>
-	<p>Example: artist</p>
-        <p class="catlabeltext">Note:</p>
-	<p class="catlabelcode">Type:</p>
-	<p>Select the type of note from the list. Enter only one note for each type (all information in one element).</p>
-	<ul>
-	  <li>General - General information for which a specialised note field has not been defined.</li>  
-	  <li>Biographical/historical - Biographical information about an individual or historical information about an institution.</li>
-	  <li>Source - Citation for a consulted source in which information is found related in some manner to the entity represented by the authority record or related entities, for example a bibliographic reference or a URL.</li>
-        </ul>
-	<p>Example: Born in Skogs socken, Hälsingland, the son of chaplain Pehr Ahl and Elisabeth Grönlund. Doctor of medicine 1789, town physician in Sala from 1796 (biographical).</p>
-        <p class="catlabeltext">Identifier:</p>
-	<p class="catlabelcode">Type:</p>
-	<p>Select the type of identifier from the list.</p>
-        <p>Example: 34594730 (VIAF for Carl von Linné).</p>
-        <p>Enter the number/code only, not the full URL. A link to the source will automatically be created on the web page.</p>
-      </div> 
-
-      <button class="accordion" id="related">Related information</button>
-      <div class="panel">
-	<h3 class="cat">Related person</h3>
-        <p>Search for the authority record for the related person and link to the person described in the record. Create a new person record if needed.</p>   
-        <p>Type of relation cannot be specified here but can be added as a general note, for example Married to Ingeborg Abbott (b. Stephens) (as a note).</p>
-	<h3 class="cat">Related organisation</h3>
-        <p>Search for the authority record for the related organisation and link to the person described in the record. Create a new organisation record if needed.</p>   
-        <p>Type of relation cannot be specified here but can be added as a general note, for example Doctor of history and political science at Uppsala. Librarian at the university library. (Uppsala university).</p>
-        <h3 class="cat">External electronic location (URL)</h3>
-        <p class="catlabeltext">URL:</p>
-	<p>An external link that is relevant to the record described.</p>        
-	<p>The URL must be correctly encoded according to the RFC 3986 standard and start with http:// or https://.</p>
-        <p>Example: https://en.wikipedia.org/wiki/Carl_Linnaeus</p>
-        <p>It is recommended that all URLs used with the element are persistent.</p>
-        <p class="catlabeltext">Display label:</p>
-	<p>A descriptive label displayed on the web page.</p>
-        <p>Example: Wikipedia</p>
-      </div> 
-      <script src="/static/js/accordion.js"></script>
-    </div>
-    <div class="right">
-      <h2>Links</h2>
-      <p><a href="https://www.loc.gov/standards/mads/">MADS</a></p>
-      <p><a href="https://www.ifla.org/g/cataloguing/names-of-persons/">Names of Persons</a></p>
-      <p><a href="https://viaf.org/">VIAF</a></p>
-      <p><a href="https://id.loc.gov/authorities/names.html">Library of Congress Names</a></p>
-      <p><a href="https://data.cerl.org/thesaurus">CERL Thesaurus</a></p>
-      <p><a href="https://www.wikipedia.org/">Wikipedia</a></p>
-    </div>
-
-  </div>  
-  
+    </div>    
+  </div>
 </div>
 {% endblock %}
-

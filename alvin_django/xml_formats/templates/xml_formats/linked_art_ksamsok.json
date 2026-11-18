@@ -1,0 +1,21 @@
+{
+    "@context": [
+        "https://linked.art/ns/v1/linked-art.json",
+        "https://www.w3.org/ns/activitystreams"
+    ],
+    "id": "{{ request.build_absolute_uri|safe }}", 
+    "type": "OrderedCollectionPage",
+    "partOf": {
+        "id": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+        "type": "OrderedCollection"
+    },
+    {% if nextstartnum <= completeListSize %}
+    "next": {
+        "id": "{{ request.scheme }}://{{ request.get_host }}{{ view_url|safe }}?page={{next_token|safe}}",
+         "type": "OrderedCollectionPage"
+    },
+    {% endif %}       
+    "orderedItems": [
+    {{recordjson|safe }}
+    ]
+}

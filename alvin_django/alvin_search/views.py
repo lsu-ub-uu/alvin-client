@@ -1,12 +1,16 @@
 import json
 from urllib.parse import quote
+import hashlib
+
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.conf import settings
 from django.utils import translation
 from django.core.cache import cache
+from django.utils.translation import gettext_lazy as _
 
-from services.metadata import Location, LocationsBlock, location
+from services.metadata import LocationsBlock, location, names, titles
+from services.mappings import organisation, person, place 
 from services.text_collector import get_item_dict
 from services.alvin_api import AlvinAPI
 
@@ -36,19 +40,27 @@ COLLECTION_KEYS = {
 }
 
 
+AUTHORITY_RECORD_TYPES = {
+    'person': 'alvin-person',
+    'organisation': 'alvin-organisation',
+    'place': 'alvin-place',
+    'work': 'alvin-work',
+}
+
+
 FILTER_PREFIXES = {
-    'person': 'Person',
-    'organisation': 'Organisation',
-    'place': 'Plats',
-    'work': 'Verk',
-    'id': 'ID',
+    'person': _('Person'),
+    'organisation': _('Organisation'),
+    'place': _('Plats'),
+    'work': _('Verk'),
+    'id': _('ID'),
 }
 
 
 STATIC_FILTER_LABELS = {
-    'digital': 'Digital version',
-    'collection': 'Samlingspost',
-    'family': 'Släkt',
+    'digital': _('Digital version'),
+    'collection': _('Samlingspost'),
+    'family': _('Släkt'),
 }
 
 # Maps get param to key in collection dictionary
@@ -112,6 +124,38 @@ def item_collector(collection: str, lang: str) -> dict[str, str]:
     return dict(sorted(resolved.items(), key=lambda item: item[1].strip().casefold()))
 
 
+def resolve_authority_label(key: str, record_id: str) -> str:
+    record_type = AUTHORITY_RECORD_TYPES[key]
+    cache_key = f"alvin_auth_label_{record_type}_{record_id}"
+    
+    cached_label = cache.get(cache_key)
+    if cached_label:
+        return cached_label
+
+    mapping = {
+        "organisation": organisation["AUTH_NAME"],
+        "person": person["AUTH_NAME"],
+        "place": place["AUTH_NAME"],
+    }
+
+    try:
+        root = api.get_record_xml(record_type, record_id)
+
+        label = ""
+        if key in ["place", "organisation", "person"]:
+            authority_names = names(root, f"data/{key}/authority", mapping[key])
+            label = authority_names.title
+        else:
+            main_title = titles(root, f"data/{key}/title")
+            label = main_title.display
+
+        cache.set(cache_key, label, timeout=86400)
+        return label
+    except Exception as e:
+        print(e)
+        return record_id
+
+
 def get_active_filters(request, locations: LocationsBlock, collections: dict) -> list:
     active_filters = []
     ignored_params = {'searchType', 'view', 'start', 'rows', 'page'}
@@ -134,6 +178,8 @@ def get_active_filters(request, locations: LocationsBlock, collections: dict) ->
         elif key in PARAM_TO_COLLECTION:
             col_dict = collections.get(PARAM_TO_COLLECTION[key], {})
             label = col_dict.get(value, value)
+        elif key in AUTHORITY_RECORD_TYPES:
+            label = resolve_authority_label(key, value)
 
         active_filters.append({
             'key': key,
@@ -143,6 +189,7 @@ def get_active_filters(request, locations: LocationsBlock, collections: dict) ->
         })
 
     return active_filters
+
 
 def alvin_search(request):
     
@@ -183,21 +230,33 @@ def alvin_search(request):
 
     # Build Cora URL and get XML
     list_url = build_cora_search_url(api_host, search_params, startnum, rowsnum, view)
-    xml_headers_search = {
-        'Content-Type': 'application/vnd.cora.recordList-decorated+xml',
-        'Accept': 'application/vnd.cora.recordList-decorated+xml',
-    }
-    try:
-        resp = api.session.get(list_url, headers=xml_headers_search, timeout=(3, 15))
-        resp.raise_for_status()
-        xml_list = api._parse_xml(resp.content)
-    except Exception as e:
-        raise Http404(f"Invalid search: {e}")
 
-    records = extract_records_from_xml(search_params.searchType, xml_list)
+    # Cache
+    key_material = f"{current_lang}:{list_url}".encode("utf-8")
+    search_cache_key = f"alvin_search_{hashlib.md5(key_material).hexdigest()}"
+    cached_result = cache.get(search_cache_key)
 
-    complete_list_size = int(xml_list.findtext(".//totalNo") or 0)
-    cursor = int(xml_list.findtext(".//toNo") or 0)
+    if cached_result is not None:
+        records, complete_list_size, cursor = cached_result
+
+    else:
+        xml_headers_search = {
+            'Content-Type': 'application/vnd.cora.recordList-decorated+xml',
+            'Accept': 'application/vnd.cora.recordList-decorated+xml',
+        }
+        try:
+            resp = api.session.get(list_url, headers=xml_headers_search, timeout=(3, 15))
+            resp.raise_for_status()
+            xml_list = api._parse_xml(resp.content)
+        except Exception as e:
+            raise Http404(f"Invalid search: {e}")
+
+        records = extract_records_from_xml(search_params.searchType, xml_list)
+
+        complete_list_size = int(xml_list.findtext(".//totalNo") or 0)
+        cursor = int(xml_list.findtext(".//toNo") or 0)
+
+        cache.set(search_cache_key, (records, complete_list_size, cursor), timeout=600)
 
     context = {
         **search_params.to_context_dict(),

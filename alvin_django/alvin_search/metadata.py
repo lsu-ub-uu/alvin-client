@@ -6,7 +6,7 @@ from django.http import QueryDict
 @dataclass
 class SearchParams:
     searchType: str = 'alvinRecord'
-    query: str = '**'
+    query: str = ''
     person: str = ''
     organisation: str = ''
     place: str = ''
@@ -47,7 +47,7 @@ class SearchParams:
                 kwargs[field_name] = val
         
         if not kwargs.get('query'):
-            kwargs['query'] = '**'
+            kwargs['query'] = ''
         if not kwargs.get('searchType'):
             kwargs['searchType'] = 'alvinRecord'
             

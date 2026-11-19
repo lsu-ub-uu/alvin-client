@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Optional, Dict, List, Union
+from typing import ClassVar, Dict, List, Optional, Union
 
 from django.core.cache import cache
 from django.utils.translation import get_language
 from django.urls import reverse
 
-from services.mappings import person, place, organisation
-from services.nodes import attr, element, elements, first, text, texts
+from services.mappings import person, organisation
+from services.nodes import attr, element, elements, text, texts
 from services.text_collector import get_item_dict
 
 ITEMS_DICT = get_item_dict()
@@ -86,9 +86,9 @@ class DecoratedListItem:
 
 @dataclass(slots=True)
 class URL:
-    record_type_field: str = "record_type"
-    fixed_record_type: Optional[str] = None
-    id_field: str = "id"
+    record_type_field: ClassVar[str] = "record_type"
+    fixed_record_type: ClassVar[Optional[str]] = None
+    id_field: ClassVar[str] = "id"
 
     @property
     def url(self) -> Optional[str]:
@@ -105,7 +105,7 @@ class URL:
 
 @dataclass(slots=True)
 class Agent(URL):
-    record_type_field: str = "agent_type"
+    record_type_field: ClassVar[str] = "agent_type"
     roles: Optional[DecoratedList] = None
     label: Optional[str] = None
     agent_type: Optional[str] = None
@@ -136,7 +136,7 @@ class Agent(URL):
 
 @dataclass(slots=True)
 class Location(URL):
-    fixed_record_type: str = "alvin-location"
+    fixed_record_type: ClassVar[str] = "alvin-location"
     label: Optional[str] = None
     id: Optional[str] = None
     names: Optional[NamesBlock] = None

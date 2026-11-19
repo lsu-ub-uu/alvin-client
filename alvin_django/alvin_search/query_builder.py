@@ -11,10 +11,11 @@ def _build_children(raw_terms: List[Tuple[str, str]]) -> List[dict]:
 
 def build_cora_search_url(api_host: str, params: SearchParams, start: int, rows: int, view: str) -> str:
     p = params
+    cora_query = (p.query or "").strip() or "**"
 
     search_configs = {
         'alvinRecord': [
-            ("alvinRecordSearchTerm", p.query),
+            ("alvinRecordSearchTerm", cora_query),
             ("locationInRecordSearchTerm", f"alvin-location_{p.location}" if p.location else ""),
             ("personInRecordSearchTerm", f"alvin-person_{p.person}" if p.person else ""),
             ("organisationInRecordSearchTerm", f"alvin-organisation_{p.organisation}" if p.organisation else ""),
@@ -43,7 +44,7 @@ def build_cora_search_url(api_host: str, params: SearchParams, start: int, rows:
             ("visibilityAlvinSearchTerm", "published"),
         ],
         'person': [
-            ("personSearchTerm", p.query),
+            ("personSearchTerm", cora_query),
             ("personNameSearchTerm", p.name),
             ("personNationalitySearchTerm", p.country),
             ("personRecordIdSearchTerm", p.id),
@@ -55,7 +56,7 @@ def build_cora_search_url(api_host: str, params: SearchParams, start: int, rows:
             ("familyNameSearchTerm", "yes" if p.family == "yes" else ""),
         ],
         'organisation': [
-            ("organisationSearchTerm", p.query),
+            ("organisationSearchTerm", cora_query),
             ("organisationNameSearchTerm", p.name),
             ("organisationRecordIdSearchTerm", p.id),
             ("organisationCountrySearchTerm", p.country),
@@ -63,13 +64,13 @@ def build_cora_search_url(api_host: str, params: SearchParams, start: int, rows:
             ("yearOrganisationSearchTerm", p.year),
         ],
         'place': [
-            ("placeSearchTerm", p.query),
+            ("placeSearchTerm", cora_query),
             ("placeNameSearchTerm", p.name),
             ("placeCountrySearchTerm", p.country),
             ("placeRecordIdSearchTerm", p.id),
         ],
         'work': [
-            ("workSearchTerm", p.query),
+            ("workSearchTerm", cora_query),
             ("workFormOfWorkSearchTerm", p.form),
             ("workTitleSearchTerm", p.title),
             ("workCreationDateSearchTerm", p.year),

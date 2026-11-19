@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 from importlib.metadata import metadata
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing import Any, ClassVar, Dict, List, Optional
 
 from django.utils.translation import get_language
 from django.conf import settings
@@ -219,7 +219,7 @@ class Identifier:
     BASE_URLS = { 
         # Key is identifier.type
         "VIAF": "https://viaf.org/viaf/",
-        "LIBRIS": "https://libris.kb.se/",
+        "LIBRIS": "https://libris.kb.se/bib/",
     }
 
     label: Optional[str] = None

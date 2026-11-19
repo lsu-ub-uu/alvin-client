@@ -7,7 +7,7 @@
       data-xon.click.self="showFilters = false">
     
   <!-- Filter Box Container -->
-  <div class="relative flex flex-col w-full max-w-lg lg:max-w-none max-h-[85vh] lg:max-h-none lg:h-[calc(100vh-6rem)] border-[#D1D9D5] dark:border-white/10  bg-gray-100 dark:bg-gray-900 lg:bg-gray-100/80 lg:dark:bg-white/5 border rounded-lg lg:rounded-md shadow-xl lg:shadow-none overflow-hidden ">
+  <div class="relative flex flex-col w-full max-w-lg lg:max-w-none max-h-[85dvh] lg:max-h-none lg:h-[calc(100dvh-6rem)] border-[#D1D9D5] dark:border-white/10  bg-gray-100 dark:bg-gray-900 lg:bg-gray-100/80 lg:dark:bg-white/5 border rounded-lg lg:rounded-md shadow-xl lg:shadow-none overflow-hidden ">
     
     <!-- Modal Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 lg:hidden shrink-0">
@@ -39,7 +39,7 @@
         <div class="flex flex-col gap-y-4">
           
           <!-- Free Text -->
-          {% include './_filter_text_input.html' with name="query" label="Fritext" value=query|default_if_none:""|stringformat:"s"|slice:"**" %} 
+          {% include './_filter_text_input.html' with name="query" label="Fritext" value=query|default_if_none:""|stringformat:"s" %} 
 
           <!-- Primary Filter -->
           {% if searchType == 'alvinRecord' %}

@@ -3,11 +3,12 @@
 {% load i18n static %}
 
 {% block title %}Alvin - 
-  {% if searchType == 'person' %}{% translate 'Person' %}: {% endif %}
-  {% if searchType == 'organisation' %}{% translate 'Organisation' %}: {% endif %}
-  {% if searchType == 'place' %}{% translate 'Plats' %}: {% endif %}
-  {% if searchType == 'work' %}{% translate 'Verk' %}: {% endif %}
-  {% if query != '**' %}{{ query }}{% endif %}
+  {% if searchType == 'person' %}{% translate 'Person' %}
+  {% elif searchType == 'organisation' %}{% translate 'Organisation' %}
+  {% elif searchType == 'place' %}{% translate 'Plats' %}
+  {% elif searchType == 'work' %}{% translate 'Verk' %}
+  {% else %}{% translate 'Sökning' %}{% endif %}
+  {% if query %}: {{ query }}{% endif %}
 {% endblock %}
 
 {% block content %}

@@ -636,6 +636,9 @@
   .max-h-0 {
     max-height: calc(var(--spacing) * 0);
   }
+  .max-h-\[85dvh\] {
+    max-height: 85dvh;
+  }
   .max-h-\[85vh\] {
     max-height: 85vh;
   }
@@ -2853,6 +2856,11 @@
   .lg\:h-\[80vh\] {
     @media (width >= 64rem) {
       height: 80vh;
+    }
+  }
+  .lg\:h-\[calc\(100dvh-6rem\)\] {
+    @media (width >= 64rem) {
+      height: calc(100dvh - 6rem);
     }
   }
   .lg\:h-\[calc\(100vh-6rem\)\] {

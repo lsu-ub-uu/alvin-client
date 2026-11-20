@@ -224,6 +224,15 @@
         {% elif searchType == 'alvinRecord' %}
           {% include "./_partials/_alvin_record_search.html" %}
         {% endif %}
+        {% empty %}
+        <div class="col-span-full flex flex-col items-center justify-center text-center py-16 px-4 text-gray-600 dark:text-gray-400">
+          <p class="text-lg font-semibold text-[#333333] dark:text-off-white">
+            {% translate 'Inga resultat hittades' %}
+          </p>
+          <p class="text-sm mt-1 max-w-md">
+            {% translate 'Prova att ändra sökordet eller ta bort ett eller flera aktiva filter.' %}
+          </p>
+        </div>
       {% endfor %}
     </div>
 

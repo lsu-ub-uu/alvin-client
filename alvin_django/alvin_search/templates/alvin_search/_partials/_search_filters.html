@@ -1,15 +1,13 @@
 {% load i18n static %}
 
-<aside class="lg:static fixed flex lg:flex-col items-center justify-center lg:h-full lg:w-1/4 inset-0 p-4 bg-black/60 backdrop-blur-xs lg:bg-transparent lg:backdrop-blur-none lg:p-0 shrink-0  min-h-0 z-50  lg:z-auto"
+<aside class="fixed inset-0 z-50 flex flex-col items-stretch justify-center p-4 bg-black/60 backdrop-blur-xs shrink-0 min-h-0 lg:static lg:z-auto lg:w-1/4 lg:h-full lg:self-stretch lg:p-0 lg:bg-transparent lg:backdrop-blur-none"
       style="display: none;"
       data-xbind:style="showFilters ? 'display: flex;' : ''"
       data-xbind:class="showFilters ? 'flex' : 'hidden lg:flex'"
       data-xon.click.self="showFilters = false">
     
   <!-- Filter Box Container -->
-  <div class="relative flex flex-col w-full max-w-lg lg:max-w-none max-h-[85dvh] lg:max-h-none lg:h-[calc(100dvh-6rem)] border-[#D1D9D5] dark:border-white/10  bg-gray-100 dark:bg-gray-900 lg:bg-gray-100/80 lg:dark:bg-white/5 border rounded-lg lg:rounded-md shadow-xl lg:shadow-none overflow-hidden ">
-    
-    <!-- Modal Header -->
+  <div class="relative flex flex-col flex-1 min-h-0 h-full w-full max-w-lg mx-auto lg:mx-0 lg:max-w-none border-[#D1D9D5] dark:border-white/10 bg-gray-100 dark:bg-gray-900 lg:bg-gray-100/80 lg:dark:bg-white/5 border rounded-lg lg:rounded-md shadow-xl lg:shadow-none overflow-hidden">    <!-- Modal Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 lg:hidden shrink-0">
       <h2 class="text-lg font-bold tracking-wide text-[#333333] dark:text-off-white">
         {% translate 'Sökfilter' %}

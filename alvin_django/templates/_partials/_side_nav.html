@@ -1,33 +1,52 @@
 {% load i18n static %}
 
-<nav class="sidenav fixed top-0 left-0 flex flex-col w-2/3 md:w-2/4 lg:w-2/5 h-full bg-gray-50/98 dark:bg-gray-900/98 z-50 
-            transform transition-transform duration-200 ease-out" 
-            data-xshow="activeMenu === 'sidenav'" 
-            data-xtransition:enter="transition-transform duration-200 ease-out" 
-            data-xtransition:enter-start="-translate-x-full" 
-            data-xtransition:enter-end="translate-x-0" 
-            data-xtransition:leave="transition-transform duration-150 ease-in" 
-            data-xtransition:leave-start="translate-x-0" 
-            data-xtransition:leave-end="-translate-x-full" 
-            data-xcloak>
-    <button data-xon.click="activeMenu = null" class="absolute top-0 left-0 p-2 text-black dark:text-white hover:text-blue-500 active:text-blue-500">
-        <svg width="40px" height="40px" stroke-width="2" viewBox="0 0 24 24" fill="none" data-xcloak>
-            <title>{% translate 'Stäng' %}</title>
-            {% include '_icons/x.svg' %}
-        </svg>
-    </button>
-    
-    <div class="h-full overflow-y-auto scrollbar-alvin flex">
-        <div class="m-auto flex flex-col justify-start items-start p-10 gap-8">
-            <a href="{% url 'about' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin active:text-alvin">{% trans 'Om Alvin' %}</a>
-            <a href="{% url 'institutions' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin active:text-alvin">{% trans 'Institutioner' %}</a>
-            <a href="{% url 'copyright' %}" class="font-universalis text-3xl text-black visited:text-black max-sm:text-3xl hover:text-alvin active:text-alvin">{% trans 'Upphovsrätt' %}</a>
-            <hr class="w-20 bg-black border-alvin border-2">
-            <a href="{% url 'help' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin-orange active:text-alvin-orange">{% trans 'Hjälp' %}</a>
-            <hr class="w-20 border-alvin border-2">
-            <a href="{% url 'userguide' %}" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin active:text-alvin">{% trans 'För medlemmar' %}</a>
-            <hr class="w-20 border-alvin border-2">
-            <a href="mailto:alvin-support@ub.uu.se" class="font-universalis text-3xl max-sm:text-3xl text-black visited:text-black hover:text-alvin active:text-alvin">{% trans 'Kontakt' %}</a>
+
+<dialog
+    data-xshow="activeMenu === 'sidenav'"
+    data-xtransition:enter="transition ease-out duration-200"
+    data-xtransition:enter-start="opacity-0"
+    data-xtransition:enter-end="opacity-100"
+    data-xtransition:leave="transition ease-in duration-150"
+    data-xtransition:leave-start="opacity-100"
+    data-xtransition:leave-end="opacity-0"
+    data-xon.click="activeMenu = null"
+    data-xon.keydown.escape.window="activeMenu = null"
+    data-xcloak
+    aria-label="{% translate 'Sidnavigering' %}"
+    class="fixed inset-0 z-50 flex items-stretch justify-start w-screen h-dvh m-0 p-0 bg-black/80 dark:bg-gray-900/80 backdrop-blur-xs border-none focus:outline-none">
+
+    <nav class="sidenav relative flex flex-col w-2/3 md:w-2/4 lg:w-2/5 max-w-md h-full bg-gray-50/98 dark:bg-gray-900/98 shadow-2xl transform transition-transform duration-200 ease-out"
+         data-xshow="activeMenu === 'sidenav'"
+         data-xon.click.stop
+         data-xtransition:enter="transition-transform duration-200 ease-out"
+         data-xtransition:enter-start="-translate-x-full"
+         data-xtransition:enter-end="translate-x-0"
+         data-xtransition:leave="transition-transform duration-150 ease-in"
+         data-xtransition:leave-start="translate-x-0"
+         data-xtransition:leave-end="-translate-x-full">
+
+        <button type="button"
+                data-xon.click="activeMenu = null"
+                class="absolute top-2 right-2 p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 hover:text-alvin-orange dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                aria-label="{% translate 'Stäng' %}">
+            <svg class="size-7" stroke-width="2" viewBox="0 0 24 24" fill="none">
+                <title>{% translate 'Stäng' %}</title>
+                {% include '_icons/x.svg' %}
+            </svg>
+        </button>
+        
+        <div class="h-full overflow-y-auto scrollbar-alvin flex">
+            <div class="m-auto flex flex-col justify-start items-start p-10 gap-8">
+                <a href="{% url 'about' %}" class="font-universalis text-3xl text-black dark:text-off-white visited:text-black dark:visited:text-off-white hover:text-alvin active:text-alvin">{% trans 'Om Alvin' %}</a>
+                <a href="{% url 'institutions' %}" class="font-universalis text-3xl text-black dark:text-off-white visited:text-black dark:visited:text-off-white hover:text-alvin active:text-alvin">{% trans 'Institutioner' %}</a>
+                <a href="{% url 'copyright' %}" class="font-universalis text-3xl text-black dark:text-off-white visited:text-black dark:visited:text-off-white hover:text-alvin active:text-alvin">{% trans 'Upphovsrätt' %}</a>
+                <hr class="w-20 bg-black border-alvin border-2">
+                <a href="{% url 'help' %}" class="font-universalis text-3xl text-black dark:text-off-white visited:text-black dark:visited:text-off-white hover:text-alvin-orange active:text-alvin-orange">{% trans 'Hjälp' %}</a>
+                <hr class="w-20 border-alvin border-2">
+                <a href="{% url 'userguide' %}" class="font-universalis text-3xl text-black dark:text-off-white visited:text-black dark:visited:text-off-white hover:text-alvin active:text-alvin">{% trans 'För medlemmar' %}</a>
+                <hr class="w-20 border-alvin border-2">
+                <a href="mailto:alvin-support@ub.uu.se" class="font-universalis text-3xl text-black dark:text-off-white visited:text-black dark:visited:text-off-white hover:text-alvin active:text-alvin">{% trans 'Kontakt' %}</a>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</dialog>

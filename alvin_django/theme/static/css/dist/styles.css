@@ -93,7 +93,6 @@
     --color-light-alvin: #BAE2B6;
     --color-dark-alvin: #355F51;
     --color-alvin-orange: #bf7125;
-    --color-alvin-grey: #f5f5f5;
     --color-off-white: #faf9f6;
   }
 }
@@ -1150,9 +1149,6 @@
   .bg-\[\#F7F9F8\] {
     background-color: #F7F9F8;
   }
-  .bg-alvin-grey {
-    background-color: var(--color-alvin-grey);
-  }
   .bg-alvin-orange {
     background-color: var(--color-alvin-orange);
   }
@@ -1553,6 +1549,9 @@
   }
   .text-nowrap {
     text-wrap: nowrap;
+  }
+  .break-all {
+    word-break: break-all;
   }
   .whitespace-nowrap {
     white-space: nowrap;

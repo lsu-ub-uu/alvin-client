@@ -3,162 +3,112 @@
 {% load i18n %}
 {% block title %}Alvin - {% translate 'Verk' %}{% endblock %}
 {% block content %}
-<div class="bg-white dark:bg-gray-800 dark:text-white w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
-  <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
-    <div class="md:flex flex-col md:flex-row">
-      <div class="flex flex-col w-full flex-shrink-0">
-        <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
-          <div class="text-lg font-semibold tracking-widest text-gray-900 dark:text-gray-100 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
-          <!-- Mobile menu button-->
-            <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
-              <span class="absolute -inset-0.5"></span>
-              <span class="sr-only">Open main menu</span>
-              <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <title>Mobile-menu is not open</title>
-                <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
-                <title>Mobile-menu is open</title>
-                <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
-               </svg>
-             </button>
-	         </div>
-           <nav class="pagenav hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#work">{% translate 'Verk' %}</a>
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#sections">{% translate 'Sektioner i formuläret' %}</a>
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#title">{% translate 'Titelinformation' %}</a> 
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#agent">{% translate 'Person/organisation' %}</a>       
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#origin">{% translate 'Tillkomstinformation' %}</a>   
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#other">{% translate 'Övrig information' %}</a>   
-           </nav> 
+<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+{% include "vocabulary/partials/_sidebar.html" %}
+<span id="main-content-marker"></span>
+<main class="w-full md:w-2/4 flex-grow pt-1 px-3">
+	<h1 class="text-4xl md:text-5xl mb-4 font-bold" id="work">{% translate 'Verk' %}</h1>
+	<h2 id="sections" class="text-3xl md:text-4xl font-bold pt-4 pb-4">{% translate 'Sektioner' %}</h2> 
+	<details id="title" class="group pb-4">
+		<summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+			<svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+				<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+			</svg>
+			<span class="text-2xl">{% translate 'Titelinformation' %}</span>
+		</summary>
+		<div class="px-4 pb-4 pt-2 border-l border-r border-b">
+			<h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Titel' %}</h3>
+			<p class="font-bold py-2">{% translate 'Huvudtitel' %}:</p>
+			<p class="font-bold py-2">{% translate 'Undertitel' %}:</p>
+			<p class="font-bold py-2">{% translate 'Textriktning' %}:</p>
+			<h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Varianttitel' %}</h3>
+			<p class="italic py-2">{% translate 'Typ' %}:</p>
+			<p class="font-bold py-2">{% translate 'Huvudtitel' %}:</p>
+			<p class="font-bold py-2">{% translate 'Undertitel' %}:</p>
+			<p class="font-bold py-2">{% translate 'Textriktning' %}:</p>
+		</div>
+	</details>
+	<details id="agent" class="group pb-4">
+		<summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+			<svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+				<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+			</svg>
+			<span class="text-2xl">{% translate 'Person/organisation' %}</span>
+		</summary>
+		<div class="px-4 pb-4 pt-2 border-l border-r border-b">
+			<h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Person' %}</h3>
+			<p class="font-bold py-2">{% translate 'Person' %}:</p>
+			<p class="font-bold py-2">{% translate 'Roll' %}:</p>
+			<p class="font-bold py-2">{% translate 'Osäker uppgift' %}:</p>
+			<h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Organisation' %}</h3>
+			<p class="font-bold py-2">{% translate 'Organisation' %}:</p>
+			<p class="font-bold py-2">{% translate 'Roll' %}:</p>
+			<p class="font-bold py-2">{% translate 'Osäker uppgift' %}:</p>
+		</div>
+	</details>
+	<details id="origin" class="group pb-4">
+		<summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+			<svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+				<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+			</svg>
+			<span class="text-2xl">{% translate 'Tillkomstinformation' %}</span>
+		</summary>
+		<div class="px-4 pb-4 pt-2 border-l border-r border-b">
+			<h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Utgivnings- eller tillverkningsplats' %}</h3>
+			<p class="font-bold py-2">{% translate 'Plats' %}:</p>
+			<p class="font-bold py-2">{% translate 'Land' %}:</p>
+			<p class="font-bold py-2">{% translate 'Historiska länder' %}:</p>
+			<p class="font-bold py-2">{% translate 'Osäker uppgift' %}:</p>
+			<h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Tillkomsttid' %}</h3>
+			<p class="font-bold py-2">{% translate 'Startdatum/ett datum' %}:</p>
+			<p class="italic py-2">{% translate 'och/eller' %}:</p>
+			<p class="font-bold py-2">{% translate 'Slutdatum' %}:</p>
+			<p class="py-2">{% translate 'Ange tid med ett enkelt datum eller en period med startdatum och slutdatum. Normalt sett anges endast årtal.' %}</p>
+			<p class="py-2">{% translate 'Alla typer av datum anges enligt standarden ISO 8601 i enlighet med mönstren yyyy (år), yyyy-mm (år och månad) samt yyyy-mm-dd (år, månad och dag).' %}</p>
+			<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '1707 (år) 05 (månad) 13 (dag).' %}</p>
+			<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '0470 (år)' %}</p>
+			<p class="font-bold">{% translate 'Era (f.Kr.)' %}:</p>
+			<p class="py-2">{% translate 'Ange för år före Kristus. Lämna annars omarkerat.' %}</p>
+			<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '0470 (år) +  Era (f.Kr.) (= år 470 f.Kr.).' %}</p>
+			<p class="font-bold py-2">{% translate 'År/datum' %}:</p>
+			<p class="py-2">{% translate 'Ange osäker och ungefärlig tidsinformation som fritext. I förekommande fall kan även kontrollerade datum anges ovan för bättre sökbarhet.' %}</p>
+			<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '1717? (? används för sannolikt årtal).' %}</p>
+			<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '1717 eller 1718 ("eller" används för alternativa och direkt på varandra följande år).' %}</p>
+			<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'ca 1717 ("ca" används för ett ungefärligt årtal. Här är tidsangivelsen mer flytande och kan omfatta ett tidsspann på upp till tio år).' %}</p>
+			<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'ca 1717–1767 (för ungefärlig tidsperiod).' %}</p>
+			<p class="py-2">{% translate 'I samtliga dessa fall kan 1717 även anges som ett numeriskt år ovan, vilket innebär att 1717 också blir sökbart som ett årtal.' %}</p>
+			<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Mellan 510 och 323 f.Kr. (som tidsperiod).' %}</p>
+			<p class="py-2">{% translate 'Använd inte detta element om det exakta datumet är känt.' %}</p>
+			<h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Övriga år/datum' %}</h3>
+			<p class="italic py-2">{% translate 'Typ' %}:</p>
+			<p class="font-bold py-2">{% translate 'Anmärkning' %}:</p>
+		</div>
+	</details>
+	<details id="other" class="group pb-4">
+		<summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+			<svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+				<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+			</svg>
+			<span class="text-2xl">{% translate 'Övrig information' %}</span>
+		</summary>
+		<div class="px-4 pb-4 pt-2 border-l border-r border-b">
+			<p class="font-bold py-2">{% translate 'Incipit (inledande ord)' %}:</p>
+			<p class="font-bold py-2">{% translate 'Anmärkning' %}:</p>
+			<p class="font-bold py-2">{% translate 'Litteratur' %}:</p>
 
-	   <!-- Mobile menu -->
+			<p class="font-bold py-2">{% translate 'Besättning' %}:</p>
+			<p class="font-bold py-2">{% translate 'Besättning, övrig' %}:</p>
+			<p class="font-bold py-2">{% translate 'Tonart' %}:</p>
+			<p class="font-bold py-2">{% translate 'Tonart, övrig' %}:</p>
 
-           <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="block sm:hidden flex-grow px-4 pb-4 pagenav">
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#work">{% translate 'Verk' %}</a>
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#sections">{% translate 'Sektioner i formuläret' %}</a>
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#title">{% translate 'Titelinformation' %}</a> 
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#agent">{% translate 'Person/organisation' %}</a>       
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#origin">{% translate 'Tillkomstinformation' %}</a>   
-             <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#other">{% translate 'Övrig information' %}</a>   
-           </div>
-         </div>
-       </div>
-     </div>
-     <span id="main-content-marker"></span>
-     <main class="w-full md:w-2/4 flex-grow pt-1 px-3">
-       <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="work">{% translate 'Verk' %}</h1>
-       <h2 id="sections" class="text-3xl md:text-4xl font-bold pt-4 pb-4">{% translate 'Sektioner i formuläret' %}</h2> 
-       <details id="title" class="group pb-4">
-         <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
-           <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-             <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
-           </svg>
-           <span class="text-2xl">{% translate 'Titelinformation' %}</span>
-         </summary>
-         <div class="px-4 pb-4 pt-2 border-l border-r border-b">
-         <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Titel' %}</h3>
-         <p class="font-bold py-2">{% translate 'Huvudtitel' %}:</p>
-         <p class="font-bold py-2">{% translate 'Undertitel' %}:</p>
-         <p class="font-bold py-2">{% translate 'Textriktning' %}:</p>
-         <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Varianttitel' %}</h3>
-         <p class="italic py-2">{% translate 'Typ' %}:</p>
-         <p class="font-bold py-2">{% translate 'Huvudtitel' %}:</p>
-         <p class="font-bold py-2">{% translate 'Undertitel' %}:</p>
-         <p class="font-bold py-2">{% translate 'Textriktning' %}:</p>
-       </div>
-     </details>
-     <details id="agent" class="group pb-4">
-        <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
-          <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
-          </svg>
-           <span class="text-2xl">{% translate 'Person/organisation' %}</span>
-        </summary>
-        <div class="px-4 pb-4 pt-2 border-l border-r border-b">
-          <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Person' %}</h3>
-          <p class="font-bold py-2">{% translate 'Person' %}:</p>
-          <p class="font-bold py-2">{% translate 'Roll' %}:</p>
-          <p class="font-bold py-2">{% translate 'Osäker uppgift' %}:</p>
-          <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Organisation' %}</h3>
-          <p class="font-bold py-2">{% translate 'Organisation' %}:</p>
-          <p class="font-bold py-2">{% translate 'Roll' %}:</p>
-          <p class="font-bold py-2">{% translate 'Osäker uppgift' %}:</p>
-       </div>
-     </details>
-     <details id="origin" class="group pb-4">
-        <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
-          <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
-          </svg>
-           <span class="text-2xl">{% translate 'Tillkomstinformation' %}</span>
-        </summary>
-        <div class="px-4 pb-4 pt-2 border-l border-r border-b">
-          <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Utgivnings- eller tillverkningsplats' %}</h3>
-          <p class="font-bold py-2">{% translate 'Plats' %}:</p>
-          <p class="font-bold py-2">{% translate 'Land' %}:</p>
-          <p class="font-bold py-2">{% translate 'Historiska länder' %}:</p>
-          <p class="font-bold py-2">{% translate 'Osäker uppgift' %}:</p>
-          <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Tillkomsttid' %}</h3>
-          <p class="font-bold py-2">{% translate 'Startdatum/ett datum' %}:</p>
-          <p class="italic py-2">{% translate 'och/eller' %}:</p>
-          <p class="font-bold py-2">{% translate 'Slutdatum' %}:</p>
-          <p class="py-2">{% translate 'Ange tid med ett enkelt datum eller en period med startdatum och slutdatum. Normalt sett anges endast årtal.' %}</p>
-          <p class="py-2">{% translate 'Alla typer av datum anges enligt standarden ISO 8601 i enlighet med mönstren yyyy (år), yyyy-mm (år och månad) samt yyyy-mm-dd (år, månad och dag).' %}</p>
-          <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '1707 (år) 05 (månad) 13 (dag).' %}</p>
-          <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '0470 (år)' %}</p>
-          <p class="font-bold">{% translate 'Era (f.Kr.)' %}:</p>
-          <p class="py-2">{% translate 'Ange för år före Kristus. Lämna annars omarkerat.' %}</p>
-          <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '0470 (år) +  Era (f.Kr.) (= år 470 f.Kr.).' %}</p>
-          <p class="font-bold py-2">{% translate 'År/datum' %}:</p>
-          <p class="py-2">{% translate 'Ange osäker och ungefärlig tidsinformation som fritext. I förekommande fall kan även kontrollerade datum anges ovan för bättre sökbarhet.' %}</p>
-          <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '1717? (? används för sannolikt årtal).' %}</p>
-          <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate '1717 eller 1718 ("eller" används för alternativa och direkt på varandra följande år).' %}</p>
-          <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'ca 1717 ("ca" används för ett ungefärligt årtal. Här är tidsangivelsen mer flytande och kan omfatta ett tidsspann på upp till tio år).' %}</p>
-          <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'ca 1717–1767 (för ungefärlig tidsperiod).' %}</p>
-          <p class="py-2">{% translate 'I samtliga dessa fall kan 1717 även anges som ett numeriskt år ovan, vilket innebär att 1717 också blir sökbart som ett årtal.' %}</p>
-          <p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Mellan 510 och 323 f.Kr. (som tidsperiod).' %}</p>
-          <p class="py-2">{% translate 'Använd inte detta element om det exakta datumet är känt.' %}</p>
-          <h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Övriga år/datum' %}</h3>
-          <p class="italic py-2">{% translate 'Typ' %}:</p>
-          <p class="font-bold py-2">{% translate 'Anmärkning' %}:</p>
-        </div>
-     </details>
-     <details id="other" class="group pb-4">
-        <summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
-          <svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
-          </svg>
-           <span class="text-2xl">{% translate 'Övrig information' %}</span>
-        </summary>
-        <div class="px-4 pb-4 pt-2 border-l border-r border-b">
-          <p class="font-bold py-2">{% translate 'Incipit (inledande ord)' %}:</p>
-          <p class="font-bold py-2">{% translate 'Anmärkning' %}:</p>
-          <p class="font-bold py-2">{% translate 'Litteratur' %}:</p>
+			<p class="font-bold py-2">{% translate 'Form/genre' %}:</p>
+			<p class="font-bold py-2">{% translate 'Numerisk beteckning' %}:</p>
 
-          <p class="font-bold py-2">{% translate 'Besättning' %}:</p>
-          <p class="font-bold py-2">{% translate 'Besättning, övrig' %}:</p>
-          <p class="font-bold py-2">{% translate 'Tonart' %}:</p>
-          <p class="font-bold py-2">{% translate 'Tonart, övrig' %}:</p>
-
-          <p class="font-bold py-2">{% translate 'Form/genre' %}:</p>
-          <p class="font-bold py-2">{% translate 'Numerisk beteckning' %}:</p>
-
-          <p class="font-bold py-2">{% translate 'Anmärkning, avhandling' %}:</p>
-          <p class="font-bold py-2">{% translate 'Geografisk punkt' %}:</p>
-       </div>
-     </details>
-  </main>
-  <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
-    <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
-      <div class="flex flex-col justify-center">  
-        <h2 class="text-2xl md:text-3xl font-bold pb-2">{% translate 'Länkar' %}</h2>  
-        <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/bibframe/">BIBFRAME</a></p>
-        <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/standards/mods/">MODS</a></p>
-        <p class="py-2"><a class="text-blue-800 dark:text-blue-200 underline" href="https://www.loc.gov/marc/">MARC</a></p>
-        <p class="py-2"><a href="https://www.wikipedia.org/">Wikipedia</a></p>
-      </div>
-    </div>    
-  </div>
+			<p class="font-bold py-2">{% translate 'Anmärkning, avhandling' %}:</p>
+			<p class="font-bold py-2">{% translate 'Geografisk punkt' %}:</p>
+		</div>
+	</details>
+</main>
+{% include "vocabulary/partials/_right.html" %}
 </div>
 {% endblock %}

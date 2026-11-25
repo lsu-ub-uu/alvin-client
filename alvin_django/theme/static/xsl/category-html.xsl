@@ -26,7 +26,7 @@
             <xsl:text>Administrative information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'Administrative information'] | owl:ObjectProperty[skos:example = 'Administrative information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -40,7 +40,7 @@
             <xsl:text>Agent information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'Agent information'] | owl:ObjectProperty[skos:example = 'Agent information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -54,7 +54,7 @@
             <xsl:text>Authority information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'Authority information'] | owl:ObjectProperty[skos:example = 'Authority information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -68,7 +68,7 @@
             <xsl:text>Carrier information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'Carrier information'] | owl:ObjectProperty[skos:example = 'Carrier information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -82,7 +82,7 @@
             <xsl:text>Description information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'Description information'] | owl:ObjectProperty[skos:example = 'Description information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -96,7 +96,7 @@
             <xsl:text>File information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'File information'] | owl:ObjectProperty[skos:example = 'File information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -110,7 +110,7 @@
             <xsl:text>General property</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'General property'] | owl:ObjectProperty[skos:example = 'General property']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -124,7 +124,7 @@
             <xsl:text>Language information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'Language information'] | owl:ObjectProperty[skos:example = 'Language information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -138,7 +138,7 @@
             <xsl:text>Location information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'Location information'] | owl:ObjectProperty[skos:example = 'Location information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -152,7 +152,7 @@
             <xsl:text>Origin information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'Origin information'] | owl:ObjectProperty[skos:example = 'Origin information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -166,7 +166,7 @@
             <xsl:text>Related information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'Related information'] | owl:ObjectProperty[skos:example = 'Related information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -180,7 +180,7 @@
             <xsl:text>Subject term, category and classification information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'Subject term, category and classification information'] | owl:ObjectProperty[skos:example = 'Subject term, category and classification information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -194,7 +194,7 @@
             <xsl:text>Title information</xsl:text>
         </div>
         <xsl:call-template name="divheader"/>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800">
             <xsl:for-each select="owl:DatatypeProperty[skos:example = 'Title information'] | owl:ObjectProperty[skos:example = 'Title information']">
                 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                     <xsl:call-template name="name"/>
@@ -365,7 +365,7 @@
         </xsl:choose>
     </xsl:template>
     <xsl:template name="divheader">
-        <div class="w-full flex md:flex-row py-2 border-b border-alvin max-sm:hidden">
+        <div class="bg-gray-100 w-full flex md:flex-row py-2 border-b border-alvin max-sm:hidden">
             <div class="md:w-1/4 font-bold pl-2 break-all">
                 <xsl:call-template name="nametext"/>
             </div>

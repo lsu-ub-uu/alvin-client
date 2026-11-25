@@ -27,8 +27,8 @@ def iiif(request):
 def vocabulary(request):
   return render(request, 'vocabulary/vocabulary.html', {})
 
-def cataloguing(request):
-  return render(request, 'vocabulary/cataloguing.html', {})
+def manual(request):
+  return render(request, 'vocabulary/manual.html', {})
 
 def place(request):
   return render(request, 'vocabulary/place.html', {})

@@ -22,7 +22,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </h1>
-        <div class=" [&amp;>*:nth-child(odd)]:bg-off-white [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800"> </div>
+        <div class=" [&amp;>*:nth-child(odd)]:bg-gray-50 [&amp;>*:nth-child(even)]:bg-white pb-4 dark:[&amp;>*:nth-child(odd)]:bg-gray-700 dark:[&amp;>*:nth-child(even)]:bg-gray-800"> </div>
         <xsl:for-each select="owl:DatatypeProperty | owl:ObjectProperty">
             <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-2 flex-grow border-b border-alvin">
                 <div class="md:w-1/4 font-bold pl-2 break-all">

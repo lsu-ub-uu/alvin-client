@@ -1,0 +1,16 @@
+{% load i18n %}
+<aside class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+	<div class="sticky top-0 p-4 bg-white dark:bg-gray-800 rounded-xl w-full h-full">
+		{% with url_name=request.resolver_match.url_name %}
+			{% if url_name == 'about' %}
+				{% include 'alvin_info/partials/_about_right.html' %}
+			{% elif url_name == 'institutions' %}
+				{% include 'alvin_info/partials/_institutions_right.html' %}
+			{% elif url_name == 'copyright' %}
+				{% include 'alvin_info/partials/_copyright_right.html' %}
+			{% elif url_name == 'help' %}
+				{% include 'alvin_info/partials/_help_right.html' %}
+			{% endif %}
+		{% endwith %}   
+	</div>    
+</aside>

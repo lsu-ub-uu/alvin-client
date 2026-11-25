@@ -225,13 +225,13 @@
           {% include "./_partials/_alvin_record_search.html" %}
         {% endif %}
         {% empty %}
-        <div class="col-span-full flex flex-col items-center justify-center text-center py-16 px-4 text-gray-600 dark:text-gray-400">
-          <p class="text-lg font-semibold text-[#333333] dark:text-off-white">
-            {% translate 'Inga resultat hittades' %}
-          </p>
-          <p class="text-sm mt-1 max-w-md">
-            {% translate 'Prova att ändra sökordet eller ta bort ett eller flera aktiva filter.' %}
-          </p>
+        <div class="py-2">
+          <h2 class="text-3xl md:text-4xl font-bold py-4">{% translate 'Din sökning gav inget resultat' %}</h2>
+          <p class="py-2 font-bold">{% translate 'Några söktips:' %}</p>
+          <ul class="list-disc pl-5">
+            <li>{% translate 'Kontrollera stavningen.' %}</li>
+            <li>{% translate 'Ange färre sökord. Ange t.ex. bara ett eller ett par ord ur en titel istället för hela titeln.' %}</li>
+          </ul>
         </div>
       {% endfor %}
     </div>

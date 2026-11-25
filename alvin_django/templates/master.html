@@ -56,9 +56,12 @@
     {% endblock %}
 
   </head>
-  <body class="bg-gray-50 dark:bg-gray-900 text-[#333333] dark:text-off-white min-h-dvh flex flex-col">
+  <body class="bg-gray-50 dark:bg-gray-900 text-[#333333] dark:text-off-white min-h-dvh flex flex-col"
+    data-xdata="{ activeMenu: null }"
+    data-xon.keydown.escape.window="activeMenu = null">
     
     {% include "_partials/_top_nav.html" %}
+    {% include '_partials/_side_nav.html' %}
     
     {% block content %}
     {% endblock %}

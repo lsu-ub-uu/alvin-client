@@ -12,15 +12,87 @@
 {% endblock %}
 
 {% block content %}
-<div class="h-[calc(100dvh-4rem)] w-full flex flex-col lg:flex-row gap-8 py-4 px-2 md:px-8 overflow-hidden"
-     data-xdata="{ view: '{{ view|default:'list' }}', showFilters: false }"
-     data-xon.keydown.escape.window="showFilters = false">
+<div class="w-full flex flex-col lg:flex-row gap-8 pt-4 pb-2 px-2 md:px-8 overflow-hidden duration-200 ease-out"
+     data-xbind:class="controlsHidden ? '-mt-16 h-dvh' : 'mt-0 h-[calc(100dvh-4rem)]'"
+     data-xdata="{
+      view: '{{ view|default:'list' }}',
+      showFilters: false,
+      controlsHidden: false,
+      lastScrollTop: 0,
+      accumulatedDelta: 0,
+      lastDirection: 0,
+      cooldownUntil: 0,
+      emitState(showTopNav) {
+        window.dispatchEvent(new CustomEvent('alvin:search-state', {
+          detail: {
+            controlsHidden: this.controlsHidden,
+            showTopNav
+          }
+        }));
+      },
+      onListScroll(el) {
+        const now = performance.now();
+        const currentTop = Math.max(el.scrollTop, 0);
+        const rawDelta = currentTop - this.lastScrollTop;
+        this.lastScrollTop = currentTop;
+
+        const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 16;
+
+        if (currentTop <= 16) {
+          this.accumulatedDelta = 0;
+          this.lastDirection = 0;
+          if (this.controlsHidden) {
+            this.controlsHidden = false;
+            this.cooldownUntil = now + 280;
+          }
+          this.emitState(true);
+          return;
+        }
+
+        if (atBottom || atBottom) {
+          this.accumulatedDelta = 0;
+          this.lastDirection = 1;
+          if (this.controlsHidden) {
+            this.controlsHidden = false;
+            this.cooldownUntil = now + 300;
+          }
+          this.emitState(true);
+          return;
+        }
+
+        if (now < this.cooldownUntil || Math.abs(rawDelta) < 2) return;
+
+        const dir = rawDelta > 0 ? 1 : -1;
+        if (dir !== this.lastDirection) {
+          this.accumulatedDelta = rawDelta;
+          this.lastDirection = dir;
+        } else {
+          this.accumulatedDelta += rawDelta;
+        }
+
+        const threshold = 36;
+        if (this.accumulatedDelta >= threshold) {
+          this.accumulatedDelta = 0;
+          this.cooldownUntil = now + 280;
+          this.controlsHidden = true;
+          this.emitState(false);
+        } else if (this.accumulatedDelta <= -threshold) {
+          // Scroll uppåt: visa kontroller och topnav
+          this.accumulatedDelta = 0;
+          this.cooldownUntil = now + 280;
+          this.controlsHidden = false;
+          this.emitState(true);
+        }
+      }
+    }"
+    data-xon.keydown.escape.window="showFilters = false">
   <span id="main-content-marker" class="sr-only"></span>
 
   <main class="w-full h-full min-h-0 lg:w-3/4 flex flex-col">
     
     <!-- Search header and category -->
-    <div class="shrink-0 flex flex-col gap-y-3 w-full pb-4 mb-2 border-b border-[#D1D9D5] dark:border-white/10">
+    <div class="shrink-0 flex flex-col w-full transition-all duration-200 ease-out overflow-hidden lg:!max-h-none lg:!opacity-100 lg:!mb-2"
+        data-xbind:class="controlsHidden ? 'max-h-0 opacity-0 pb-0 mb-0 pointer-events-none' : 'max-h-96 opacity-100 mb-2'">
       <div class="flex flex-row justify-center md:justify-end lg:justify-between items-cente gap-4">
         
         <div class="max-lg:hidden flex items-center flex-wrap gap-2">
@@ -29,7 +101,7 @@
           </h1>
 
           {% if searchType != 'alvinRecord' %}
-            <div class="inline-flex items-center gap-x-2 px-3 py-1 bg-dark-alvin text-off-white rounded-full text-sm font-semibold shadow-sm">
+            <div class="inline-flex items-center gap-x-2 px-3 py-1 bg-dark-alvin text-off-white rounded-full text-sm font-semibold">
               {% if searchType == 'person' %}
                 <svg class="size-5" aria-hidden="true" viewBox="0 0 24 24" stroke-width="2" fill="none">
                   {% include '_icons/person.svg' %}
@@ -59,7 +131,7 @@
         <div class="flex gap-2 shrink-0">
 
             <button type="button"
-                  class="inline-flex items-center justify-center gap-x-1.5 px-3.5 py-2 text-sm font-semibold rounded-md bg-gray-100 dark:bg-gray-900 border border-[#D1D9D5] dark:border-white/10 text-[#333333] dark:text-off-white hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-800 transition-colors cursor-pointer">
+                  class="inline-flex items-center justify-center gap-x-1.5 px-3 py-1 text-sm font-semibold rounded-md bg-gray-100 dark:bg-gray-900 border border-[#D1D9D5] dark:border-white/10 text-[#333333] dark:text-off-white hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-800 transition-colors cursor-pointer">
             <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               {% include '_icons/sort.svg' %}
             </svg>
@@ -72,11 +144,11 @@
               <button 
                   type="button"
                   data-xon.click="view = 'list'; const url = new URL(window.location); url.searchParams.set('view', 'list'); window.history.replaceState({}, '', url);"
-                  class="flex items-center justify-center gap-x-1.5 px-4 py-1.5 text-sm font-semibold rounded transition-all duration-150 cursor-pointer"
+                  class="flex items-center justify-center gap-x-1.5 px-3 py-1 text-sm font-semibold rounded transition-all duration-150 cursor-pointer"
                   data-xbind:class="view === 'list' 
-                      ? 'bg-white dark:bg-gray-800 text-dark-alvin dark:text-light-alvin shadow-xs' 
+                      ? 'bg-white dark:bg-gray-800 text-dark-alvin dark:text-light-alvin' 
                       : 'text-gray-600 dark:text-gray-400 hover:text-[#333333] dark:hover:text-off-white active:text-[#333333] dark:active:text-off-white'">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.5" fill="currentColor" class="size-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.5" fill="currentColor" class="size-4">
                     <title>{% translate 'Listvy' %}</title>
                     {% include '_icons/details.svg' %}
                   </svg>
@@ -85,11 +157,11 @@
               <button 
                   type="button"
                   data-xon.click="view = 'grid'; const url = new URL(window.location); url.searchParams.set('view', 'grid'); window.history.replaceState({}, '', url);"
-                  class="flex items-center justify-center gap-x-1.5 px-4 py-1.5 text-sm font-semibold rounded transition-colors duration-100 cursor-pointer"
+                  class="flex items-center justify-center gap-x-1.5 px-3 py-1 text-sm font-semibold rounded transition-colors duration-100 cursor-pointer"
                   data-xbind:class="view === 'grid' 
-                      ? 'bg-white dark:bg-gray-800 text-dark-alvin dark:text-light-alvin shadow-xs' 
+                      ? 'bg-white dark:bg-gray-800 text-dark-alvin dark:text-light-alvin' 
                       : 'text-gray-600 dark:text-gray-400 hover:text-[#333333] dark:hover:text-off-white active:text-[#333333] dark:active:text-off-white'">
-                  <svg viewBox="0 0 24 24" fill="none" class="size-6"
+                  <svg viewBox="0 0 24 24" fill="none" class="size-4"
                       xmlns="http://www.w3.org/2000/svg" color="currentColor">
                       <title>{% translate 'Rutnätsvy' %}</title>
                       {% include '_icons/grid.svg' %}
@@ -102,7 +174,7 @@
           <!-- Mobile Filter Button -->
           <button type="button"
                   data-xon.click="showFilters = true"
-                  class="lg:hidden inline-flex items-center justify-center gap-x-1.5 px-3.5 py-2 text-sm font-semibold rounded-md bg-gray-100 dark:bg-gray-900 border border-[#D1D9D5] dark:border-white/10 text-[#333333] dark:text-off-white hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-800 transition-colors cursor-pointer">
+                  class="lg:hidden inline-flex items-center justify-center gap-x-1.5 px-3 py-1 text-sm font-semibold rounded-md bg-gray-100 dark:bg-gray-900 border border-[#D1D9D5] dark:border-white/10 text-[#333333] dark:text-off-white hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-800 transition-colors cursor-pointer">
             <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               {% include '_icons/filter.svg' %}
             </svg>
@@ -118,10 +190,10 @@
 
       <!-- Active Filters -->
       {% if active_filters %}
-      <div class="flex flex-wrap gap-2 items-center">
+      <div class="flex flex-wrap gap-2 mt-2 items-center">
         {% for filter in active_filters %}
           <a href="{{ filter.remove_url }}"
-             class="inline-flex items-center gap-x-1.5 text-sm font-normal dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 text-[#333333] dark:text-off-white hover:bg-alvin-orange hover:text-white active:bg-alvin-orange active:text-white active:scale-[0.98] shadow-sm px-3 py-1 rounded-md cursor-pointer no-underline transition ease-in-out duration-150"
+             class="inline-flex items-center gap-x-1.5 text-sm font-normal dark:border dark:border-white/5 bg-gray-200 dark:bg-white/10 text-[#333333] dark:text-off-white hover:bg-alvin-orange hover:text-white active:bg-alvin-orange active:text-white active:scale-[0.98] px-3 py-1 rounded-md cursor-pointer no-underline transition ease-in-out duration-150"
              title="{% translate 'Ta bort filter' %}: {% if filter.prefix %}{{ filter.prefix }}: {% endif %}{{ filter.label }}">
             {% if filter.prefix %}
               <span class="font-semibold uppercase text-xs">{{ filter.prefix }}:</span>
@@ -137,8 +209,9 @@
     </div>
 
     <!-- Search Result Wrapper -->
-    <div class="flex-1 min-h-0 hitlist transition-all duration-200 overflow-y-auto pr-2 scrollbar-alvin" 
-         data-xbind:class="view === 'grid' ? 'grid grid-cols-2 md:grid-cols-4 gap-4 content-start' : 'flex flex-col gap-y-3'">
+    <div class="flex-1 min-h-0 hitlist overflow-y-auto overscroll-none pr-2 scrollbar-alvin"
+        data-xon.scroll.passive="onListScroll($el)"
+        data-xbind:class="view === 'grid' ? 'grid grid-cols-2 md:grid-cols-4 gap-4 content-start' : 'flex flex-col gap-y-3'">
       {% for record in records %}
         {% if searchType == 'person' %}
           {% include "./_partials/_alvin_person_search.html" %}
@@ -151,16 +224,27 @@
         {% elif searchType == 'alvinRecord' %}
           {% include "./_partials/_alvin_record_search.html" %}
         {% endif %}
+        {% empty %}
+        <div class="py-2">
+          <h2 class="text-3xl md:text-4xl font-bold py-4">{% translate 'Din sökning gav inget resultat' %}</h2>
+          <p class="py-2 font-bold">{% translate 'Några söktips:' %}</p>
+          <ul class="list-disc pl-5">
+            <li>{% translate 'Kontrollera stavningen.' %}</li>
+            <li>{% translate 'Ange färre sökord. Ange t.ex. bara ett eller ett par ord ur en titel istället för hela titeln.' %}</li>
+          </ul>
+        </div>
       {% endfor %}
     </div>
 
     <!-- Pagination -->
     {% if completeListSize > 0 %}
-    <nav aria-label="{% translate 'Sidnavigering' %}" class="shrink-0 pt-4 mt-2 border-t border-[#D1D9D5] dark:border-white/10 flex justify-between items-center">
+    <nav aria-label="{% translate 'Sidnavigering' %}"
+      class="shrink-0 flex justify-between items-center transition-all duration-200 ease-out overflow-hidden lg:!max-h-none lg:!opacity-100 lg:!pt-2 lg:!mt-2 lg:!border-t"
+      data-xbind:class="controlsHidden ? 'max-h-0 opacity-0 pt-0 mt-0 border-t-0 pointer-events-none' : 'max-h-20 opacity-100 pt-2 mt-2 border-t border-[#D1D9D5] dark:border-white/10'">
       
       <!-- Previous -->
       {% if startnum > rowsnum and startnum <= completeListSize %}
-        <a class="p-3 hover:bg-dark-alvin hover:text-white active:bg-dark-alvin active:text-white rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer shadow-sm border border-[#D1D9D5] dark:border-white/15"
+        <a class="p-2 hover:bg-dark-alvin hover:text-white active:bg-dark-alvin active:text-white rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer border border-[#D1D9D5] dark:border-white/15"
            data-xbind:href="'{{ view_url|safe }}&start={{ prevstartnum }}&view=' + view"
            title="{% translate 'Föregående' %}">
           <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor">
@@ -185,7 +269,7 @@
 
       <!-- Next -->
       {% if nextstartnum <= completeListSize %}
-        <a class="p-3 hover:bg-dark-alvin hover:text-white active:bg-dark-alvin active:text-white rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer shadow-sm border border-[#D1D9D5] dark:border-white/15"
+        <a class="p-2 hover:bg-dark-alvin hover:text-white active:bg-dark-alvin active:text-white rounded-full transition duration-150 text-gray-700 dark:text-gray-300 cursor-pointer border border-[#D1D9D5] dark:border-white/15"
            data-xbind:href="'{{ view_url|safe }}&start={{ nextstartnum }}&view=' + view"
            title="{% translate 'Nästa' %}">
           <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor">

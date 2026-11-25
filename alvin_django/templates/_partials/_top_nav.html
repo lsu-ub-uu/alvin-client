@@ -1,7 +1,59 @@
 {% load i18n static %}
 
-<header aria-label="{% translate 'Huvudmeny' %}" class="sticky top-0 z-50"
-    data-xdata="{ activeMenu: null }" data-xon.keydown.escape="activeMenu = null" data-xon.click.away="activeMenu = null">
+<header aria-label="{% translate 'Huvudmeny' %}"
+    class="sticky top-0 z-50 transition-transform duration-200 ease-out will-change-transform"
+    data-xdata="{
+      navHidden: false,
+      lastY: 0,
+      accumulatedDelta: 0,
+      lastDirection: 0,
+      cooldownUntil: 0,
+      setHidden(hide) {
+        const now = performance.now();
+        if (this.navHidden !== hide) {
+          this.navHidden = hide;
+          this.cooldownUntil = now + 280;
+          if (hide) this.activeMenu = null;
+        }
+      },
+      onWindowScroll() {
+        const now = performance.now();
+        const y = Math.max(window.scrollY, 0);
+        const rawDelta = y - this.lastY;
+        this.lastY = y;
+
+        if (y <= 16) {
+          this.accumulatedDelta = 0;
+          this.lastDirection = 0;
+          this.setHidden(false);
+          return;
+        }
+
+        if (now < this.cooldownUntil || Math.abs(rawDelta) < 2) return;
+
+        const dir = rawDelta > 0 ? 1 : -1;
+        if (dir !== this.lastDirection) {
+          this.accumulatedDelta = rawDelta;
+          this.lastDirection = dir;
+        } else {
+          this.accumulatedDelta += rawDelta;
+        }
+
+        const threshold = 36;
+        if (this.accumulatedDelta >= threshold) {
+          this.accumulatedDelta = 0;
+          this.setHidden(true);
+        } else if (this.accumulatedDelta <= -threshold) {
+          this.accumulatedDelta = 0;
+          this.setHidden(false);
+        }
+      }
+    }"
+    data-xon.scroll.window.passive="onWindowScroll()"
+    data-xon.alvin:search-state.window="setHidden(!$event.detail.showTopNav)"
+    data-xbind:class="navHidden ? '-translate-y-full pointer-events-none' : 'translate-y-0'"
+    data-xon.keydown.escape="activeMenu = null"
+    data-xon.click.away="activeMenu = null">
     <nav class="relative topnav flex justify-between w-full h-16 bg-gray-50/98 dark:bg-gray-900/98 z-20 select-none">
         <div class="flex flex-shrink-0 justify-center items-center h-full">
             
@@ -23,7 +75,7 @@
             </button>
 
             <!-- Logotype -->
-            <a class="h-full text-center pt-4 px-2 border-b-6 mt-1 border-alvin text-4xl !text-black dark:!text-white" href="{% url 'start' %}">
+            <a class="h-full text-center p-4 border-b-6 border-alvin text-4xl !text-black dark:!text-white" href="{% url 'start' %}">
                 ALVIN
             </a>
 
@@ -91,7 +143,5 @@
         data-xcloak>
         {% include './_extended_search.html' %}
     </div>
-
-    {% include './_side_nav.html' %}
 
 </header>

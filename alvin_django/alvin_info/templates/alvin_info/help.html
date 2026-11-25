@@ -4,43 +4,7 @@
 {% block title %}Alvin - {% translate 'Hjälp' %}{% endblock %}
 {% block content %}
 <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
-    <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
-        <div class="md:flex flex-col md:flex-row">
-            <div class="flex flex-col w-full flex-shrink-0">
-                <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
-                    <div class="text-lg font-semibold tracking-widest text-gray-900 dark:text-gray-100 uppercase rounded-lg focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
-                    <!-- Mobile menu button-->
-                    <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
-                        <span class="absolute -inset-0.5"></span>
-                        <span class="sr-only">Open main menu</span>
-                        <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <title>Mobile-menu is not open</title>
-                            <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
-                            <title>Mobile-menu is open</title>
-                            <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                </div>
-                <nav class="pagenav hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#search">{% translate 'Sök' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#download">{% translate 'Ladda ner och använd' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#imageviewer">{% translate 'Bildvisare' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#apis">{% translate 'API' %}</a>
-                </nav> 
-                
-                <!-- Mobile menu -->
-                
-                <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="pagenav block sm:hidden flex-grow px-4 pb-4">
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#search">{% translate 'Sök' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#download">{% translate 'Ladda ner och använd' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#imageviewer">{% translate 'Bildvisare' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-indigo-500 focus:text-white focus:outline-none focus:shadow-outline" href="#apis">{% translate 'API' %}</a>               
-                </div>     
-            </div>
-        </div>
-    </div>
+    {% include "alvin_info/partials/_sidebar.html" %}
     <span id="main-content-marker"></span>
     <main class="w-full md:w-2/4 flex-grow pt-1 px-3">
         <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">{% translate 'Hjälp' %}</h1>
@@ -65,20 +29,12 @@
         <p class="py-2">{% translate '<span class="font-semibold">Exempel:</span> "teknisk fysik"' %}</p>
         <p class="py-2">{% translate '<span class="font-semibold">Resultat:</span> Sökningen ger träff på orden ihop och i angiven ordning.' %}</p>
         <h3 class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Fulltextsökning' %}</h3>
-<p class="py-2">{% translate 'Enkel och utökad sökning i Alvin söker i all registrerad metadata (titlar, beskrivningar, ämnesord etc.) men inte i själva den inskannade dokument-texten eller transkriptioner av den.' %}</p>
- <p class="py-2">{% translate 'Eftersom en stor del av de tryckta textdokumenten i Alvin även publiceras som OCR (object character recognition)-tolkade PDF-filer är det dock möjligt att i viss utsträckning göra sådana sökningar i sökmotorer som indexerar PDF-filer, som t.ex. Google.' %}</p>
-
- <p class="py-2">{% translate 'Ange då ett eller flera sökord i Googles sökruta samt lägg till avgränsningarna site:www.alvin-portal.org respektive filetype:pdf för att söka specifikt i PDF-filer i Alvin.' %}</p>
-
-<p class="py-2">{% translate '<span class="font-semibold">Exempel:</span> ' %}<a href="https://www.google.com/search?q=mynt+site%3Awww.alvin-portal.org+filetype%3Apdf">mynt site:www.alvin-portal.org filetype:pdf</a></p>
-
-   <p class="py-2">{% translate 'för att hitta texter i Alvin med sökordet "mynt".' %}</p>
-
-   <p class="py-2">{% translate 'Observera att alla PDF-filer i Alvin inte garanterat är indexerade i Google..' %}</p>
-
-
-
-
+		<p class="py-2">{% translate 'Enkel och utökad sökning i Alvin söker i all registrerad metadata (titlar, beskrivningar, ämnesord etc.) men inte i själva den inskannade dokument-texten eller transkriptioner av den.' %}</p>
+		<p class="py-2">{% translate 'Eftersom en stor del av de tryckta textdokumenten i Alvin även publiceras som OCR (object character recognition)-tolkade PDF-filer är det dock möjligt att i viss utsträckning göra sådana sökningar i sökmotorer som indexerar PDF-filer, som t.ex. Google.' %}</p>
+		<p class="py-2">{% translate 'Ange då ett eller flera sökord i Googles sökruta samt lägg till avgränsningarna site:www.alvin-portal.org respektive filetype:pdf för att söka specifikt i PDF-filer i Alvin.' %}</p>
+		<p class="py-2">{% translate '<span class="font-semibold">Exempel:</span> ' %}<a href="https://www.google.com/search?q=mynt+site%3Awww.alvin-portal.org+filetype%3Apdf">mynt site:www.alvin-portal.org filetype:pdf</a></p>
+		<p class="py-2">{% translate 'för att hitta texter i Alvin med sökordet "mynt".' %}</p>
+		<p class="py-2">{% translate 'Observera att alla PDF-filer i Alvin inte garanterat är indexerade i Google..' %}</p>
         <h2 id="download" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Ladda ner och använd' %}</h2>
         <p class="py-2 font-bold">{% translate 'Hur laddar jag ner en högupplöst fil?' %}</p>
         <p class="py-2">{% translate 'Klicka på knappen "Ladda ned" under bildvisaren i posten. Då öppnas ett nytt fönster. Under fliken "Bilder" gå till "Ladda ner enskilda bilder" och klicka på den eller de bilder du vill hämta. Välj "Original" och klicka på "Ladda ned". De valda bilderna sparas i en zip-fil på din enhet. '%}</p>
@@ -115,13 +71,10 @@
             <dt class="font-bold"><a href="{% url 'iiif' %}">IIIF</a></dt>
             <dd class="py-2">{% translate 'International Image Interoperability Framework (IIIF) definierar universella standarder för att beskriva och leverera bilder över webben.' %}</dd>
         </dl>
+		<div class="font-bold pl-2 break-all">
+			<!-- Not used -->
+		</div>
     </main>
-  <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
-        <div class="sticky top-0 p-4 bg-white dark:bg-gray-800 rounded-xl w-full h-full">
-            <div class="flex justify-center py-4"> 
-                <img class="w-48 object-center" alt="Looking for help" src="{% static 'img/soktips.jpg' %}">
-            </div>
-      </div>   
-  </div>
+    {% include "alvin_info/partials/_right.html" %}
 </div>
 {% endblock %}

@@ -3,55 +3,15 @@
 {% load i18n %}
 {% block title %}Alvin - {% translate 'Vokabulär' %}{% endblock %}
 {% block content %}
-<div class="bg-white dark:bg-gray-800 dark:text-white w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
-    <div data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
-        <div class="md:flex flex-col md:flex-row">
-            <div class="flex flex-col w-full flex-shrink-0">
-                <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
-                    <div class="text-lg font-semibold tracking-widest text-gray-900 dark:text-gray-100 uppercase rounded-lg focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
-                     <!-- Mobile menu button-->
-                    <button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
-                        <span class="absolute -inset-0.5"></span>
-                        <span class="sr-only">Open main menu</span>
-                        <svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <title>Mobile-menu is not open</title>
-                            <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
-                            <title>Mobile-menu is open</title>
-                            <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                </div>
-                <nav class="pagenav hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">    
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#basevocabulary">{% translate 'Basvokabulär' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#coreclasses">{% translate 'Kärnklasser' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#properties">{% translate 'Klasser och egenskaper' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#linkeddata">{% translate 'Länkad data' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#object">{% translate 'Objekt' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#collection">{% translate 'Samling' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#digital">{% translate 'Digitala reproduktioner' %}</a>         
-                </nav> 
-	        <!-- Mobile menu -->
-                <div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="pagenav block sm:hidden flex-grow px-4 pb-4">
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#basevocabulary">{% translate 'Basvokabulär' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#coreclasses">{% translate 'Kärnklasser' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#properties">{% translate 'Klasser och egenskaper' %}</a>              
-	            <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#linkeddata">{% translate 'Länkad data' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#object">{% translate 'Objekt' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#collection">{% translate 'Samling' %}</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-normal text-gray-900 bg-light-alvin rounded-lg hover:bg-gray-700 hover:text-white focus:bg-blue-800 focus:text-white focus:outline-none focus:shadow-outline" href="#digital">{% translate 'Digitala reproduktioner' %}</a>   
-	        </div>
-            </div>
-        </div>
-    </div>
+<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+	{% include "vocabulary/partials/_sidebar.html" %}  
     <span id="main-content-marker"></span>
     <main class="w-full md:w-2/4 flex-grow pt-1 px-3">
         <h1 class="text-4xl md:text-5xl mb-4 font-bold" id="home">Alvin {% translate 'vokabulär' %}</h1>
         <p class="py-2 font-bold">{% translate 'Alvins datamodell är specifikt utformad för beskrivningar av material i kulturarvssamlingar på bibliotek, museer och arkiv.' %}</p>
         <p class="py-2 flex"><span class="font-bold">URI:</span><span class="pl-1" id="uri">{{ request.build_absolute_uri|cut:"en/" |cut:"no/" |cut:"sv/" }}</span></p>
-        <p class="py-2"><span class="font-bold">{% translate 'Vokabulären i RDF' %}:</span> <a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'alvinrdf' %}">alvin.rdf</a>.</p>
-        <p class="py-2"><span class="font-bold">{% translate 'Licens' %}:</span> <a class="text-blue-800 dark:text-blue-200 underline" href="https://creativecommons.org/public-domain/cc0/">Creative Commons CC0</a>.</p>
+        <p class="py-2"><span class="font-bold">{% translate 'Vokabulären i RDF' %}:</span> <a href="{% url 'alvinrdf' %}">alvin.rdf</a>.</p>
+        <p class="py-2"><span class="font-bold">{% translate 'Licens' %}:</span> <a href="https://creativecommons.org/public-domain/cc0/">Creative Commons CC0</a>.</p>
         <h2 id="basevocabulary" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Basvokabulär' %}</h2>
         <p class="py-2">{% translate 'För att kunna hantera olika typer av resurser i ett och samma system bygger den på en kombination av koncept från olika internationella standarder för bibliotek och arkiv:' %}</p>
         <dl>
@@ -79,15 +39,15 @@
         <h2 id="coreclasses" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Kärnklasser' %}</h2>
         <p class="py-2">{% translate 'Modellen är uppbyggd kring fem grundläggande kärnklasser <span class="italic">(core classes)</span>:' %}</p>
         <ul class="py-2 list-disc list-inside">
-            <li><span class="italic"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'onthology' 'Record' %}">Record</a></span> - {% translate 'en bibliografisk post som beskriver ett enskilt objekt eller en samling av objekt.' %}</li>
-            <li><span class="italic"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'onthology' 'Person' %}">Person</a></span> - {% translate 'en auktoritetspost för en person.' %}</li>
-            <li><span class="italic"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'onthology' 'Organisation' %}">Organisation</a></span> - {% translate 'en auktoritetspost för en organisation.' %}</li>
-            <li><span class="italic"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'onthology' 'Place' %}">Place</a></span> - {% translate 'en auktoritetspost för en plats.' %}</li>
-            <li><span class="italic"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'onthology' 'Work' %}">Work</a></span> - {% translate 'en auktoritetspost för ett verk.' %}</li>  
+            <li><span class="italic"><a href="{% url 'onthology' 'Record' %}">Record</a></span> - {% translate 'en bibliografisk post som beskriver ett enskilt objekt eller en samling av objekt.' %}</li>
+            <li><span class="italic"><a href="{% url 'onthology' 'Person' %}">Person</a></span> - {% translate 'en auktoritetspost för en person.' %}</li>
+            <li><span class="italic"><a href="{% url 'onthology' 'Organisation' %}">Organisation</a></span> - {% translate 'en auktoritetspost för en organisation.' %}</li>
+            <li><span class="italic"><a href="{% url 'onthology' 'Place' %}">Place</a></span> - {% translate 'en auktoritetspost för en plats.' %}</li>
+            <li><span class="italic"><a href="{% url 'onthology' 'Work' %}">Work</a></span> - {% translate 'en auktoritetspost för ett verk.' %}</li>  
         </ul>
         <p class="py-2">{% translate 'Samt förutom dessa även:' %}</p>
         <ul class="py-2 list-disc list-inside">
-            <li><span class="italic"><a class="text-blue-800 dark:text-blue-200 underline" href="{% url 'onthology' 'Location' %}">Location</a></span> - {% translate 'en särskild organisationspost som beskriver den arkivinstitution som innehar föremålet eller från vilken det är tillgängligt.' %}</li>           
+            <li><span class="italic"><a href="{% url 'onthology' 'Location' %}">Location</a></span> - {% translate 'en särskild organisationspost som beskriver den arkivinstitution som innehar föremålet eller från vilken det är tillgängligt.' %}</li>           
         </ul>
         <h2 id="properties" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Klasser och egenskaper' %}</h2>
         <p class="py-2">{% translate 'Vokabulären är en öppen länkad data-version av Alvins lagringsformat. Den består av RDF-klasser och egenskaper.' %}</p> 
@@ -110,12 +70,6 @@
         <h2 id="digital" class="text-3xl md:text-4xl font-bold pt-4">{% translate 'Digitala reproduktioner' %}</h2>
         <p class="py-2">{% translate 'Normalfallet i Alvin är också att göra en digital reproduktion av det fysiska objektet, t.ex. digitalisera en handskrift eller en bok. I dessa fall beskriver metadataposten fortfarande det fysiska objektet (inte den digitala reproduktionen). De digitala filerna är kopior av just detta exemplar som beskrivs i posten.' %}</p> 
     </main>
-    <div class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
-        <div class="sticky top-0 p-4 bg-off-white dark:bg-gray-700 rounded-xl w-full h-full">
-            <div class="flex flex-col justify-center"> 
-                {% include "vocabulary/partials/_standards.html" %}  
-            </div>
-	</div>
-    </div>
+	{% include "vocabulary/partials/_right.html" %}  
 </div>
 {% endblock %}

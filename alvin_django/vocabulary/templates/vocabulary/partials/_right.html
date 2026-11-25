@@ -1,0 +1,38 @@
+{% load i18n %}
+<aside class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+	<div class="sticky top-0 p-4 bg-white dark:bg-gray-800 rounded-xl w-full h-full">
+		{% with url_name=request.resolver_match.url_name %}
+			{% if url_name == 'rest-api' %}
+				{% include 'vocabulary/partials/_rest-api_right.html' %}
+			{% elif url_name == 'linkedart' %}
+				{% include 'vocabulary/partials/_linkedart_right.html' %}
+			{% elif url_name == 'oai-pmh' %}
+				{% include 'vocabulary/partials/_oai-pmh_right.html' %}
+			{% elif url_name == 'iiif' %}
+				{% include 'vocabulary/partials/_iiif_right.html' %}
+			{% elif url_name == 'vocabulary' %}
+				{% include 'vocabulary/partials/_standards.html' %}
+			{% elif url_name == 'classes' %}
+				{% include 'vocabulary/partials/_standards.html' %}
+			{% elif url_name == 'properties' %}
+				{% include 'vocabulary/partials/_standards.html' %}
+			{% elif url_name == 'onthology' %}
+				{% include 'vocabulary/partials/_standards.html' %}
+			{% elif url_name == 'metadata' %}
+				{% include 'vocabulary/partials/_standards.html' %}
+			{% elif url_name == 'manual' %}
+				{% include 'vocabulary/partials/_standards.html' %}
+			{% elif url_name == 'record' %}
+				{% include 'vocabulary/partials/_record_right.html' %}
+			{% elif url_name == 'place' %}
+				{% include 'vocabulary/partials/_place_right.html' %}
+			{% elif url_name == 'organisation' %}
+				{% include 'vocabulary/partials/_organisation_right.html' %}
+			{% elif url_name == 'person' %}
+				{% include 'vocabulary/partials/_person_right.html' %}
+			{% elif url_name == 'work' %}
+				{% include 'vocabulary/partials/_work_right.html' %}
+			{% endif %}
+		{% endwith %}   
+	</div>    
+</aside>

@@ -1,0 +1,50 @@
+{% load static i18n %}
+<aside data-xdata="{ sideMobileMenuIsOpen: false }" data-xon.click.away="sideMobileMenuIsOpen = false" class="w-fixed w-full md:w-1/4 flex-shrink flex-grow-0 px-4">
+	<div class="md:flex flex-col md:flex-row">
+		<div class="flex flex-col w-full flex-shrink-0">
+			<div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+				<div class="text-lg font-semibold tracking-widest text-gray-900 dark:text-gray-100 uppercase rounded-lg focus:outline-none focus:shadow-outline">{% translate 'På den här sidan' %}</div>
+				<!-- Mobile menu button-->
+				<button data-xon.click="sideMobileMenuIsOpen = !sideMobileMenuIsOpen" data-xbind.aria-expanded="sideMobileMenuIsOpen" type="button" class="md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800 dark:text-white hover:bg-gray-100 dark:hover:text-gray-700 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800" aria-label="mobile menu" aria-controls="mobileMenu">             
+					<span class="absolute -inset-0.5"></span>
+					<span class="sr-only">Open main menu</span>
+					<svg data-xcloak data-xshow="!sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+						<title>Mobile-menu is not open</title>
+						<path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+					</svg>
+					<svg data-xcloak data-xshow="sideMobileMenuIsOpen" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6 bg-red-500">
+						<title>Mobile-menu is open</title>
+						<path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+					</svg>
+				</button>
+			</div>
+			<nav class="pagenav hidden flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto"> 
+				{% with url_name=request.resolver_match.url_name %}
+					{% if url_name == 'about' %}
+						{% include 'alvin_info/partials/_about_sidebar.html' %}
+					{% elif url_name == 'institutions' %}
+						{% include 'alvin_info/partials/_institutions_sidebar.html' %}
+					{% elif url_name == 'copyright' %}
+						{% include 'alvin_info/partials/_copyright_sidebar.html' %}
+					{% elif url_name == 'help' %}
+						{% include 'alvin_info/partials/_help_sidebar.html' %}
+					{% endif %}
+				{% endwith %}   
+			</nav> 			
+			<!-- Mobile menu -->			
+			<div data-xcloak data-xshow="sideMobileMenuIsOpen" id="sideMobileMenu" class="pagenav block sm:hidden flex-grow px-4 pb-4">
+				{% with url_name=request.resolver_match.url_name %}
+					{% if url_name == 'about' %}
+						{% include 'alvin_info/partials/_about_sidebar.html' %}
+					{% elif url_name == 'institutions' %}
+						{% include 'alvin_info/partials/_institutions_sidebar.html' %}
+					{% elif url_name == 'copyright' %}
+						{% include 'alvin_info/partials/_copyright_sidebar.html' %}
+					{% elif url_name == 'help' %}
+						{% include 'alvin_info/partials/_help_sidebar.html' %}
+					{% endif %}
+				{% endwith %}                 
+			</div>     
+		</div>
+	</div>
+</aside>

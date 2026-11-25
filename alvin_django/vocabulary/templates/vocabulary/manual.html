@@ -1,0 +1,125 @@
+{% extends "userguidemaster.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Alvin - {% translate 'Formathandbok' %}{% endblock %}
+{% block content %}
+<div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+	{% include "vocabulary/partials/_sidebar.html" %}
+	<span id="main-content-marker"></span>
+	<main class="w-full md:w-2/4 flex-grow pt-1 px-3">
+		<h1 class="text-4xl md:text-5xl mb-4 font-bold" id="manual">{% translate 'Formathandbok' %}</h1>
+		<p class="py-2 font-bold">{% translate 'Alvins datamodell är specifikt utformad för beskrivningar av material i kulturarvssamlingar på bibliotek, museer och arkiv. För att kunna hantera olika typer av resurser i ett och samma system bygger den på en kombination av koncept från olika internationella standarder för bibliotek och arkiv.' %}</p>
+		<p class="py-2">{% translate 'Poster hanteras via Alvins dataformat i Cora antingen i katalogiseringsklienten eller API:et. Dataformatet i Cora är baserat på posttyper motsvarande Alvins huvudtyper post (bibliografiska poster för olika resurstyper) samt plats, organisation, person, arkivinstitution och verk (auktoritetsposter).' %}</p>
+		<p class="py-2">Bibliografiska poster samt verksposter kräver dessutom en specificering av en så kallad valideringstyp vilket innebär att fälten i posten anpassas till särskilda profiler för respektive resurstyp, dvs. att Arkiv har en uppsättning fält och Bild en annan.</p>
+		<p class="py-2">En bibliografisk post i Alvin beskriver antingen ett fysiskt objekt (som en bok) eller en samling av objekt (som ett arkiv).</p>
+		<h2 id="linked" class="text-3xl md:text-4xl font-bold pt-4 pb-4">{% translate 'Länkad data' %}</h2>
+		<p class="py-2">{% translate 'Modellen är baserad på <a href="https://en.wikipedia.org/wiki/Linked_data">länkade data</a> och beskrivningen av relationer mellan olika poster. Länkningen kan vara hierarkisk (värd/del), parallell (olika versioner eller format) eller till en annan relaterad post.' %}</p>
+		<p class="py-2">{% translate 'Bibliografiska poster och auktoritetsposter är länkade genom en typ av relation (roll) för så kallade agenter (personer eller organisationer). En bok kan länkas till en person genom rollen "författare". Ett arkiv kan länkas till en person genom rollen "arkivbildare".' %}</p>
+		<p class="py-2">{% translate 'Alvins datamodell är också tillgänglig som en RDF-baserad' %} <a href="{% url 'vocabulary' %}">{% translate 'vokabulär' %}</a> {% translate 'och alla poster kan laddas ner i antingen <a href="https://en.wikipedia.org/wiki/RDF/XML">RDF/XML</a> eller <a href="https://linked.art/api/1.0/json-ld/">Linked Art JSON-LD</a>.' %}</p>
+		<h2 id="rules" class="text-3xl md:text-4xl font-bold pt-4 pb-4">{% translate 'Katalogiseringsregler' %}</h2>
+		<p class="py-2">I första hand bör katalogiseringsstandarden RDA (Resource Description and Access) användas vid registrering i Alvin. Hela regelverket RDA beskrivs i onlinetjänsten RDA Toolkit som emellertid inte är öppet tillgänglig. Däremot erbjuder nationalbiblioteken i Sverige och Norge fria handledningar på <a href="https://metadatabyran.kb.se/">Metadatabyrån</a> respektive <a href="https://bibliotekutvikling.no/kompetansebank/ressurs/katalogiseringsregler-rda/">Katalogiseringsregler RDA</a>.</p>
+		<p class="py-2">För arkiv och handskrifter finns dock i Alvin utökade möjligheter där annan praxis kan tillämpas även om RDA också innehåller regler för dessa resurstyper.</p>
+		<h3 class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Arkiv' %}</h3>
+		<p class="py-2">En svensk praxis för registrering av arkivförteckningar i EAD utarbetades år 2004-2005 inom det nationella samarbetsprojektet Ediffah. Denna har legat till grund för det bibliografiska formatet för Arkiv i Alvin och tillämpas fortfarande för denna resurstyp. Huvudfunktionaliteten i EAD är möjligheten att bygga hierarkiskt ordnade förteckningar i en trädstruktur.</p>
+		<h3 class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Handskrifter' %}</h3>
+		<p class="py-2">För handskrifter finns i Alvin en utbyggd funktionalitet för beskrivningar av enstaka handskrifter eller handskriftsvolymer där fält från TEI - Manuscript Description har infogats. Detta gäller i första hand i grupperna Handskriftsbeskrivning och Övrig fysisk beskrivning i det bibliografiska formatet. Liksom för arkivförteckningar är det också möjligt att bygga en hierarkiskt ordnad innehållsförteckning i en trädstruktur där de olika delarna i en handskriftsvolym beskrivs separat.</p>
+		<h2 id="minimum" class="text-3xl md:text-4xl font-bold pt-4 pb-4">{% translate 'Miniminivå' %}</h2>
+		<p class="py-2">Ett litet antal element är obligatoriska och måste anges för att en registrering ska godkännas. Om dessa inte är angivna svarar systemet med ett felmeddelande.</p>
+		<h3 class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Bibliografiska poster' %}</h3>
+		<ul class="py-2 list-disc list-inside">
+			<li>Resurstyp + eventuellt tillägg tryck/handskrift. Skapas automatiskt i katalogiseringsklienten vid val av valideringstyp.</li>
+			<li>Arkivinstitution. Den institution som innehar föremålet eller från vilken det är tillgängligt. Skapas normalt automatiskt i katalogiseringsklienten beroende på inloggning.</li>
+			<li>Titel (huvudtitel).</li>
+		</ul>
+		<h3 class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Auktoritetsposter' %}</h3>
+		<p class="py-2">Minst en föredragen namnform måste anges på engelska, svenska eller norska.</p>
+		<h3 class="text-2xl md:text-3xl font-bold pt-4">{% translate 'Teknisk information' %}</h3>
+		<p class="py-2">Förutom detta krävs teknisk information som automatiskt genereras när en post skapas i katalogiseringsklienten. För information om hur detta görs vid skapande av poster i API:et se: <a href="{% url 'rest-api' %}#create">Cora REST-API</a></p>
+		<h2 id="special" class="text-3xl md:text-4xl font-bold pt-4 pb-4">{% translate 'Särskild praxis' %}</h2>
+		<details id="letters" class="group pb-4">
+			<summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+				<svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+					<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+				</svg>
+				<span class="text-2xl">{% translate 'Brev/brevsamlingar' %}</span>
+			</summary>
+			<div class="px-4 pb-4 pt-2 border-l border-r border-b">
+				<h3 class="text-2xl md:text-3xl font-bold pt-4">Roller för brev</h3>
+				<ul class="py-2 list-disc list-inside">
+					<li>För Avsändare/den som har skrivit brevet/breven: Författare, kod: aut.</li>
+					<li>För Mottagare av brevet/breven: Mottagare av korrespondens, kod: rcp.</li>
+				</ul>
+				<h3 class="text-2xl md:text-3xl font-bold pt-4">Fält i Alvin för samlingsposter för brev</h3>
+				<ul class="py-2 list-disc list-inside">
+					<li>Resurstyp: Text,handskrift och Samling vald.</li>
+					<li>Titel: Konstruerad titel enligt nedan.</li>
+					<li>Person: Koppling till auktoritetsposter med rollerna Författare resp. Mottagare av korrespondens</li>
+					<li>Tillkomstinformation: Ett årtal eller ett spann mellan två årtal.</li>
+					<li>Fysisk beskrivning: Antal brev i Omfång. Exempel: 2 brev</li>
+					<li>Form/genre: Brev (anges alltid för att skapa en kontrollerad ingång till alla brevposter).</li>
+					<li>Relaterade poster i Alvin: Ingår i Post för Arkivet (länk) om sådan finns.</li>
+				</ul>
+				<p class="py-2">Detta är de fält som alltid anges i brevdatabaserna. De kan exempelvis kompletteras med Språk och Plats (Avsändarort) i Alvin.</p>
+				<h3 class="text-2xl md:text-3xl font-bold pt-4">Konstruerad titel för brevposter</h3>
+				<p class="py-2 font-semibold">Samlingspost (korrespondens)</p>
+				<p class="py-2">För en "samlingspost" som beskriver brev som utväxlats mellan personer skall enligt RDA 6.2.2.10.2 den konstruerade titeln vara Korrespondens (inte Brev).</p>
+				<p class="py-2">Titeln i exempelposten ovan skall alltså vara Korrespondens med Karl August Hagson 1858-1916 istället för Brev till Karl August Hagson 1858-1916 enligt katalogiseringsreglerna.</p>
+				<p class="py-2">Obs. att en "samling" kan bestå av endast ett brev.</p>
+				<p class="py-2">Om samlingen endast består av en mindre del av korrespondensen läggs Urval till som Undertitel enligt RDA 6.2.2.10.3. Exempel: Korrespondens med Karl August Hagson 1858-1916 : Urval</p>
+				<p class="py-2 font-semibold">Enstaka brev/objekt</p>
+				<p class="py-2">Om man däremot beskriver endast ett specifikt brev (eller vykort, telegram etc.) som en enskild post konstrueras titeln enligt följande mall:</p>
+				<p class="py-2">Brev (alternativt Vykort, Telegram etc.) YYYY-MM-DD, Avsändarort till Mottagarnamn, Mottagaradress. De uppgifter som finns tillgängliga anges.</p>
+				<p class="py-2">Exempel: Brev 1874-01-31, Linköping till Karl August Hagson, Linköping</p>
+			</div>
+		</details>
+		<details id="provenance" class="group pb-4">
+			<summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+				<svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+					<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+				</svg>
+				<span class="text-2xl">{% translate 'Bilder på proveniensbelägg' %}</span>
+			</summary>
+			<div class="px-4 pb-4 pt-2 border-l border-r border-b">
+				<p class="py-2">{% translate 'Minst en föredragen namnform måste anges för webbsidorna på engelska, svenska eller norska. Detta språk anger språkversionen av webbsidan snarare än språket för namnformen. Om endast en namnform anges kommer den att visas på alla språkversioner av webbsidorna.' %}</p>
+				<p class="py-2">{% translate 'Hitta den aktuella auktoriserade formen i t.ex. GeoNames eller Wikipedia.' %}</p>
+				<p class="py-2">{% translate 'Det är möjligt, men inte obligatoriskt, att ange den auktoriserade formen på alla tre visningsspråk i de fall de är olika, t.ex. Copenhagen/København/Köpenhamn. De olika formerna kommer då att visas beroende på valt visningsspråk.' %}</p>
+				<p class="py-2">{% translate 'Ange inte mer än ett namn för samma språk.' %}</p>
+				<p class="py-2">{% translate 'Ange inte alternativa namnformer i det här avsnittet.' %}</p>
+				<h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Auktoritet' %}</h3>
+				<p class="italic">{% translate 'Visningsspråk' %}:</p>
+				<p class="py-2">{% translate 'Välj det språk som motsvarar namnformen, normalt baserat på organisationens plats.' %}</p>
+				<p class="font-bold">{% translate 'Plats' %}:</p>
+				<p class="py-2">{% translate 'Ange den auktoriserade namnformen för platsen som motsvarar det valda språket.' %}</p>
+				<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Oslo. (Ange inte Christiania).' %}</p>
+			</div>
+		</details>
+		<details id="binding" class="group pb-4">
+			<summary class="bg-dark-alvin text-white flex items-center gap-3 px-4 py-3 font-semibold marker:content-none hover:cursor-pointer">
+				<svg class="w-5 h-5 text-white transition group-open:rotate-90" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+					<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+				</svg>
+				<span class="text-2xl">{% translate 'Bokbandsregistrering' %}</span>
+			</summary>
+			<div class="px-4 pb-4 pt-2 border-l border-r border-b">
+				<p class="py-2">{% translate 'Minst en föredragen namnform måste anges för webbsidorna på engelska, svenska eller norska. Detta språk anger språkversionen av webbsidan snarare än språket för namnformen. Om endast en namnform anges kommer den att visas på alla språkversioner av webbsidorna.' %}</p>
+				<p class="py-2">{% translate 'Hitta den aktuella auktoriserade formen i t.ex. GeoNames eller Wikipedia.' %}</p>
+				<p class="py-2">{% translate 'Det är möjligt, men inte obligatoriskt, att ange den auktoriserade formen på alla tre visningsspråk i de fall de är olika, t.ex. Copenhagen/København/Köpenhamn. De olika formerna kommer då att visas beroende på valt visningsspråk.' %}</p>
+				<p class="py-2">{% translate 'Ange inte mer än ett namn för samma språk.' %}</p>
+				<p class="py-2">{% translate 'Ange inte alternativa namnformer i det här avsnittet.' %}</p>
+				<h3 class="py-2 font-bold text-2xl pb-2">{% translate 'Auktoritet' %}</h3>
+				<p class="italic">{% translate 'Visningsspråk' %}:</p>
+				<p class="py-2">{% translate 'Välj det språk som motsvarar namnformen, normalt baserat på organisationens plats.' %}</p>
+				<p class="font-bold">{% translate 'Plats' %}:</p>
+				<p class="py-2">{% translate 'Ange den auktoriserade namnformen för platsen som motsvarar det valda språket.' %}</p>
+				<p class="py-2"><span class="font-semibold">{% translate 'Exempel' %}:</span> {% translate 'Oslo. (Ange inte Christiania).' %}</p>
+			</div>
+		</details>
+		
+		
+		Bokbandsregistrering
+		
+
+	</main>
+	{% include "vocabulary/partials/_right.html" %}
+</div>
+{% endblock %}

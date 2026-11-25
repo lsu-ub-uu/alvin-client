@@ -20,7 +20,7 @@
     <link rel="icon" type="image/png" href="{% static 'img/android-chrome-192x192.png' %}">
     <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}"> 
     <!-- AlpineJS -->
-    <script src="//unpkg.com/alpinejs" defer></script>
+	<script src="/static/js/alpine-init.js" defer></script>
     <script src="{% static 'js/alpine-validation.js' %}"></script>
     <style>
         [x-cloak] {
@@ -29,23 +29,19 @@
         [data-xcloak] {
             display: none !important; /* Important to override any default */
         }
-    </style>
-  
+    </style> 
     {% block head %}
     {% endblock %}
-
     {% block jshead %}
     {% endblock %}
   </head>
-  <body class="min-h-screen flex flex-col"> 
+  <body class="bg-gray-50 dark:bg-gray-900 text-[#333333] dark:text-off-white min-h-screen flex flex-col"> 
     <span class="sr-only">
       <a class="skip-to-content" href="#main-content-marker">Skip to content</a>
     </span>
-    {% include "_partials/_userguidenavbar.html" %}
-	
+    {% include "_partials/_userguidenavbar.html" %}	
     {% block content %}
-    {% endblock %}    
-      
+    {% endblock %}         
     {% include '_partials/_back_to_top.html' %}
     {% include '_partials/_footer.html' %}
   </body>
